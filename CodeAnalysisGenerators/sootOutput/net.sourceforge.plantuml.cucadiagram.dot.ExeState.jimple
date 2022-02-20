@@ -1,0 +1,367 @@
+public final enum class net.sourceforge.plantuml.cucadiagram.dot.ExeState extends java.lang.Enum
+{
+    public static final enum net.sourceforge.plantuml.cucadiagram.dot.ExeState NULL_UNDEFINED;
+    public static final enum net.sourceforge.plantuml.cucadiagram.dot.ExeState OK;
+    public static final enum net.sourceforge.plantuml.cucadiagram.dot.ExeState DOES_NOT_EXIST;
+    public static final enum net.sourceforge.plantuml.cucadiagram.dot.ExeState IS_A_DIRECTORY;
+    public static final enum net.sourceforge.plantuml.cucadiagram.dot.ExeState NOT_A_FILE;
+    public static final enum net.sourceforge.plantuml.cucadiagram.dot.ExeState CANNOT_BE_READ;
+    private static final net.sourceforge.plantuml.cucadiagram.dot.ExeState[] $VALUES;
+
+    public static net.sourceforge.plantuml.cucadiagram.dot.ExeState[] values()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState[] $r0, $r2;
+        java.lang.Object $r1;
+
+        $r0 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState[] $VALUES>;
+
+        $r1 = virtualinvoke $r0.<java.lang.Object: java.lang.Object clone()>();
+
+        $r2 = (net.sourceforge.plantuml.cucadiagram.dot.ExeState[]) $r1;
+
+        return $r2;
+    }
+
+    public static net.sourceforge.plantuml.cucadiagram.dot.ExeState valueOf(java.lang.String)
+    {
+        java.lang.String r0;
+        java.lang.Enum $r1;
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <java.lang.Enum: java.lang.Enum valueOf(java.lang.Class,java.lang.String)>(class "Lnet/sourceforge/plantuml/cucadiagram/dot/ExeState;", r0);
+
+        $r2 = (net.sourceforge.plantuml.cucadiagram.dot.ExeState) $r1;
+
+        return $r2;
+    }
+
+    private void <init>(java.lang.String, int)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState r0;
+        java.lang.String r1;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        r1 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        specialinvoke r0.<java.lang.Enum: void <init>(java.lang.String,int)>(r1, i0);
+
+        return;
+    }
+
+    public static net.sourceforge.plantuml.cucadiagram.dot.ExeState checkFile(java.io.File)
+    {
+        java.io.File r0;
+        boolean $z0, $z1, $z2, $z3;
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState $r1, $r2, $r3, $r4, $r5, $r6;
+
+        r0 := @parameter0: java.io.File;
+
+        if r0 != null goto label1;
+
+        $r6 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState NULL_UNDEFINED>;
+
+        return $r6;
+
+     label1:
+        $z0 = virtualinvoke r0.<java.io.File: boolean exists()>();
+
+        if $z0 != 0 goto label2;
+
+        $r5 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState DOES_NOT_EXIST>;
+
+        return $r5;
+
+     label2:
+        $z1 = virtualinvoke r0.<java.io.File: boolean isDirectory()>();
+
+        if $z1 == 0 goto label3;
+
+        $r4 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState IS_A_DIRECTORY>;
+
+        return $r4;
+
+     label3:
+        $z2 = virtualinvoke r0.<java.io.File: boolean isFile()>();
+
+        if $z2 != 0 goto label4;
+
+        $r3 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState NOT_A_FILE>;
+
+        return $r3;
+
+     label4:
+        $z3 = virtualinvoke r0.<java.io.File: boolean canRead()>();
+
+        if $z3 != 0 goto label5;
+
+        $r2 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState CANNOT_BE_READ>;
+
+        return $r2;
+
+     label5:
+        $r1 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState OK>;
+
+        return $r1;
+    }
+
+    public java.lang.String getTextMessage()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState r0;
+        int[] $r1;
+        int $i0, $i1;
+        java.lang.IllegalStateException $r2;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        $r1 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState$1: int[] $SwitchMap$net$sourceforge$plantuml$cucadiagram$dot$ExeState>;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: int ordinal()>();
+
+        $i1 = $r1[$i0];
+
+        tableswitch($i1)
+        {
+            case 1: goto label1;
+            case 2: goto label2;
+            case 3: goto label3;
+            case 4: goto label4;
+            case 5: goto label5;
+            case 6: goto label6;
+            default: goto label7;
+        };
+
+     label1:
+        return "File OK";
+
+     label2:
+        return "No dot executable found";
+
+     label3:
+        return "File does not exist";
+
+     label4:
+        return "It should be an executable, not a directory";
+
+     label5:
+        return "Not a valid file";
+
+     label6:
+        return "File cannot be read";
+
+     label7:
+        $r2 = new java.lang.IllegalStateException;
+
+        specialinvoke $r2.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r2;
+    }
+
+    public java.lang.String getTextMessage(java.io.File)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState r0, $r27;
+        int[] $r1;
+        int $i0, $i1;
+        java.lang.StringBuilder $r2, $r3, $r6, $r7, $r9, $r10, $r12, $r13, $r15, $r16, $r18, $r19, $r21, $r22, $r24, $r25, $r29, $r30, $r32, $r33;
+        java.io.File r4;
+        java.lang.String $r5, $r8, $r11, $r14, $r17, $r20, $r23, $r26, $r28, $r31, $r34;
+        java.lang.IllegalStateException $r35;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        r4 := @parameter0: java.io.File;
+
+        $r1 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState$1: int[] $SwitchMap$net$sourceforge$plantuml$cucadiagram$dot$ExeState>;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: int ordinal()>();
+
+        $i1 = $r1[$i0];
+
+        tableswitch($i1)
+        {
+            case 1: goto label1;
+            case 2: goto label2;
+            case 3: goto label3;
+            case 4: goto label4;
+            case 5: goto label5;
+            case 6: goto label6;
+            default: goto label7;
+        };
+
+     label1:
+        $r29 = new java.lang.StringBuilder;
+
+        specialinvoke $r29.<java.lang.StringBuilder: void <init>()>();
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("File ");
+
+        $r31 = virtualinvoke r4.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        $r32 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r31);
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" OK");
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r34;
+
+     label2:
+        $r27 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState NULL_UNDEFINED>;
+
+        $r28 = virtualinvoke $r27.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: java.lang.String getTextMessage()>();
+
+        return $r28;
+
+     label3:
+        $r21 = new java.lang.StringBuilder;
+
+        specialinvoke $r21.<java.lang.StringBuilder: void <init>()>();
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("File ");
+
+        $r23 = virtualinvoke r4.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        $r24 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r23);
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" does not exist");
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r26;
+
+     label4:
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("File ");
+
+        $r17 = virtualinvoke r4.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        $r18 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r17);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" should be an executable, not a directory");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r20;
+
+     label5:
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("File ");
+
+        $r11 = virtualinvoke r4.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        $r12 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" is not a valid file");
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r14;
+
+     label6:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("File ");
+
+        $r5 = virtualinvoke r4.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        $r6 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" cannot be read");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r8;
+
+     label7:
+        $r35 = new java.lang.IllegalStateException;
+
+        specialinvoke $r35.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r35;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState $r0, $r1, $r2, $r3, $r4, $r5, $r7, $r8, $r9, $r10, $r11, $r12;
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState[] $r6;
+
+        $r0 = new net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: void <init>(java.lang.String,int)>("NULL_UNDEFINED", 0);
+
+        <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState NULL_UNDEFINED> = $r0;
+
+        $r1 = new net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: void <init>(java.lang.String,int)>("OK", 1);
+
+        <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState OK> = $r1;
+
+        $r2 = new net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: void <init>(java.lang.String,int)>("DOES_NOT_EXIST", 2);
+
+        <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState DOES_NOT_EXIST> = $r2;
+
+        $r3 = new net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: void <init>(java.lang.String,int)>("IS_A_DIRECTORY", 3);
+
+        <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState IS_A_DIRECTORY> = $r3;
+
+        $r4 = new net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: void <init>(java.lang.String,int)>("NOT_A_FILE", 4);
+
+        <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState NOT_A_FILE> = $r4;
+
+        $r5 = new net.sourceforge.plantuml.cucadiagram.dot.ExeState;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.cucadiagram.dot.ExeState: void <init>(java.lang.String,int)>("CANNOT_BE_READ", 5);
+
+        <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState CANNOT_BE_READ> = $r5;
+
+        $r6 = newarray (net.sourceforge.plantuml.cucadiagram.dot.ExeState)[6];
+
+        $r7 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState NULL_UNDEFINED>;
+
+        $r6[0] = $r7;
+
+        $r8 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState OK>;
+
+        $r6[1] = $r8;
+
+        $r9 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState DOES_NOT_EXIST>;
+
+        $r6[2] = $r9;
+
+        $r10 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState IS_A_DIRECTORY>;
+
+        $r6[3] = $r10;
+
+        $r11 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState NOT_A_FILE>;
+
+        $r6[4] = $r11;
+
+        $r12 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState CANNOT_BE_READ>;
+
+        $r6[5] = $r12;
+
+        <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState[] $VALUES> = $r6;
+
+        return;
+    }
+}
