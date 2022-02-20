@@ -5,15 +5,14 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Targets;
 import soot.options.Options;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 public class CallGraphGenerator {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		// Soot classpath
-		String path = "/Users/Paris/Downloads/plantuml-master/target/classes";
+		String path = "exampleProjects/plantuml-master/target/classes";
 
 		// Setting the classpath programmatically
 		Options.v().set_prepend_classpath(true);
@@ -32,20 +31,13 @@ public class CallGraphGenerator {
 		CallGraph cg = Scene.v().getCallGraph();
 		HashSet<String> strings = new HashSet<>();
 
-		// Create the folder for digraphsInText
-		File theDir = new File("digraphsInText");
-		if (!theDir.exists()){
-			boolean success = theDir.mkdirs();
-			if (!success){
-				System.out.println("The directory for digraphs could not be created");
-			}
-		}
-
 		// Create the file to write the call graph in text
-		FileWriter myFileWriter = new FileWriter("digraphsInText/g.gv");
+		FileWriter myFileWriter = new FileWriter("graphVisualizationSoftware/g.gv");
 		myFileWriter.write("digraph {\n");
 
 		int edgeLimit = 0;
+
+		callGraphProcess:
 		for (SootClass sc : Scene.v().getApplicationClasses()) {
 			for (SootMethod m : sc.getMethods()) {
 				Iterator<MethodOrMethodContext> targets = new Targets(cg.edgesOutOf(m));
@@ -56,16 +48,27 @@ public class CallGraphGenerator {
 						strings.add(call);
 						myFileWriter.write(call);
 						edgeLimit++;
-						if (edgeLimit > 50){
-							myFileWriter.write("}");
-							myFileWriter.close();
-							return;
+						if (edgeLimit > 20){
+							break callGraphProcess;
 						}
 					}
 				}
 			}
 		}
+
+		// Close the g.gv file
 		myFileWriter.write("}");
 		myFileWriter.close();
+
+		// Process the g.gv file to create the graph image
+		ProcessBuilder processBuilder = new ProcessBuilder();
+		processBuilder.command("cmd.exe", "/c", "graphVisualizationSoftware\\dot.exe -Tpng graphVisualizationSoftware\\g.gv -o file.png");
+		Process process = processBuilder.start();
+		int exitVal = process.waitFor();
+		if (exitVal == 0) {
+			System.out.println("Call graph image generated.");
+		} else {
+			System.out.println("Call graph image was not generated.");
+		}
 	}
 }
