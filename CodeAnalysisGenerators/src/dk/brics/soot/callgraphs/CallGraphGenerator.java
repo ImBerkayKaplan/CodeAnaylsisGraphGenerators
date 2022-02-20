@@ -15,14 +15,14 @@ public class CallGraphGenerator {
 
 		// Soot classpath
 		String path = "";
-		String project = "plantuml-master";
-		//String[] folders = (new File("../exampleProjects/" + project)).list();
-		//List<String> foldersAsList = new ArrayList<>(Arrays.asList(Objects.requireNonNull(folders)));
-		//if (foldersAsList.contains("target")) {
+		String project = args[0];
+		String[] folders = (new File("../exampleProjects/" + project)).list();
+		List<String> foldersAsList = new ArrayList<>(Arrays.asList(Objects.requireNonNull(folders)));
+		if (foldersAsList.contains("target")) {
 			path = "../exampleProjects/" + project + "/target/classes";
-		//}else if(foldersAsList.contains("build")){
-			//path = "../exampleProjects/" + project + "/build/classes";
-		//}
+		}else if(foldersAsList.contains("build")){
+			path = "../exampleProjects/" + project + "/build/classes";
+		}
 
 		// Setting the classpath programmatically
 		Options.v().set_prepend_classpath(true);
@@ -69,8 +69,9 @@ public class CallGraphGenerator {
 
 		// Process the g.gv file to create the graph image
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.command("bash", "/c", "graphVisualizationSoftware/dot.exe -Tpng graphVisualizationSoftware/" + project + ".gv -o ../results/" + project + ".png");
-		//processBuilder.command("cmd.exe", "/c", "graphVisualizationSoftware\\dot.exe -Tpng graphVisualizationSoftware\\" + project + ".gv -o graphImages\\" + project + ".png");
+		//processBuilder.command("bash", "/c", "sudo apt install graphviz");
+		//processBuilder.command("bash", "/c", "graphVisualizationSoftware/dot.exe -Tpng graphVisualizationSoftware/" + project + ".gv -o ../results/" + project + ".png");
+		processBuilder.command("cmd.exe", "/c", "graphVisualizationSoftware\\dot.exe -Tpng graphVisualizationSoftware\\" + project + ".gv -o graphImages\\" + project + ".png");
 
 		Process process = processBuilder.start();
 		process.waitFor();
