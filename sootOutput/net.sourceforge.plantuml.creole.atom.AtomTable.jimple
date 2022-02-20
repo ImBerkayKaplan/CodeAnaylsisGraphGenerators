@@ -1,0 +1,872 @@
+public class net.sourceforge.plantuml.creole.atom.AtomTable extends net.sourceforge.plantuml.creole.atom.AbstractAtom implements net.sourceforge.plantuml.creole.atom.Atom
+{
+    private final java.util.List lines;
+    private final java.util.Map positions;
+    private final net.sourceforge.plantuml.ugraphic.color.HColor lineColor;
+
+    public void <init>(net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        java.util.ArrayList $r1;
+        java.util.HashMap $r2;
+        net.sourceforge.plantuml.ugraphic.color.HColor r3;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        r3 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AbstractAtom: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines> = $r1;
+
+        $r2 = new java.util.HashMap;
+
+        specialinvoke $r2.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.Map positions> = $r2;
+
+        r0.<net.sourceforge.plantuml.creole.atom.AtomTable: net.sourceforge.plantuml.ugraphic.color.HColor lineColor> = r3;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        int $i0, $i1, $i2, $i3;
+        double d0, d1;
+        net.sourceforge.plantuml.Dimension2DDouble $r2;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: void initMap(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $i0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbCols()>();
+
+        $i1 = $i0 - 1;
+
+        d0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getEndingX(int)>($i1);
+
+        $i2 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbLines()>();
+
+        $i3 = $i2 - 1;
+
+        d1 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getEndingY(int)>($i3);
+
+        $r2 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>(d0, d1);
+
+        return $r2;
+    }
+
+    public double getStartingAltitude(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        return 0.0;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        net.sourceforge.plantuml.graphic.StringBounder $r1, $r19;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, i12, i13, $i14, i15, i16;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r2, $r9, r16, $r42;
+        double $d0, $d1, $d2, $d3, d4, $d5, $d6, $d7, $d8, $d9, d10, d11, d12, d13, d14, d15, d16, d17, d18;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r3, $r5, $r24, $r25, $r26, $r28, $r29, $r30, $r36, $r45;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r4, $r6, $r23, $r27, $r31, $r33, $r35, $r37, $r41, $r44, $r46, r48, r52;
+        java.util.List $r7, $r10, $r11, $r14;
+        java.lang.Object $r8, $r12, $r15, $r18;
+        net.sourceforge.plantuml.creole.atom.Atom r13;
+        boolean $z0;
+        java.util.Map $r17;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r20;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r21, r50;
+        net.sourceforge.plantuml.ugraphic.UBackground $r22, $r34, $r43;
+        net.sourceforge.plantuml.ugraphic.color.HColorNone $r32, $r40;
+        net.sourceforge.plantuml.ugraphic.URectangle $r38, $r47;
+        net.sourceforge.plantuml.creole.SheetBlock1 $r39;
+        net.sourceforge.plantuml.creole.atom.AtomTable$Line r49;
+        net.sourceforge.plantuml.creole.Position r51;
+        net.sourceforge.plantuml.ugraphic.ULine r53, r54;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        r48 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: void initMap(net.sourceforge.plantuml.graphic.StringBounder)>($r1);
+
+        i12 = 0;
+
+     label01:
+        $i0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbLines()>();
+
+        if i12 >= $i0 goto label12;
+
+        $r7 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $r8 = interfaceinvoke $r7.<java.util.List: java.lang.Object get(int)>(i12);
+
+        r49 = (net.sourceforge.plantuml.creole.atom.AtomTable$Line) $r8;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: net.sourceforge.plantuml.ugraphic.color.HColor access$000(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>(r49);
+
+        if $r9 == null goto label02;
+
+        d10 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingY(int)>(i12);
+
+        $i10 = i12 + 1;
+
+        d11 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingY(int)>($i10);
+
+        d12 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingX(int)>(0);
+
+        $i11 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbCols()>();
+
+        d13 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingX(int)>($i11);
+
+        $r40 = new net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        specialinvoke $r40.<net.sourceforge.plantuml.ugraphic.color.HColorNone: void <init>()>();
+
+        $r41 = interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r40);
+
+        $r42 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: net.sourceforge.plantuml.ugraphic.color.HColor access$000(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>(r49);
+
+        $r43 = interfaceinvoke $r42.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r44 = interfaceinvoke $r41.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r43);
+
+        $r45 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        specialinvoke $r45.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>(d12, d10);
+
+        $r46 = interfaceinvoke $r44.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r45);
+
+        $r47 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        $d9 = d13 - d12;
+
+        $d8 = d11 - d10;
+
+        specialinvoke $r47.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>($d9, $d8);
+
+        interfaceinvoke $r46.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r47);
+
+     label02:
+        i13 = 0;
+
+     label03:
+        $i14 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbCols()>();
+
+        if i13 >= $i14 goto label11;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: java.util.List access$100(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>(r49);
+
+        $i7 = interfaceinvoke $r10.<java.util.List: int size()>();
+
+        if i13 < $i7 goto label04;
+
+        goto label10;
+
+     label04:
+        $r11 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: java.util.List access$100(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>(r49);
+
+        $r12 = interfaceinvoke $r11.<java.util.List: java.lang.Object get(int)>(i13);
+
+        r13 = (net.sourceforge.plantuml.creole.atom.Atom) $r12;
+
+        r50 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        $z0 = r13 instanceof net.sourceforge.plantuml.creole.SheetBlock1;
+
+        if $z0 == 0 goto label05;
+
+        $r39 = (net.sourceforge.plantuml.creole.SheetBlock1) r13;
+
+        r50 = virtualinvoke $r39.<net.sourceforge.plantuml.creole.SheetBlock1: net.sourceforge.plantuml.graphic.HorizontalAlignment getCellAlignment()>();
+
+     label05:
+        $r14 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: java.util.List access$200(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>(r49);
+
+        $r15 = interfaceinvoke $r14.<java.util.List: java.lang.Object get(int)>(i13);
+
+        r16 = (net.sourceforge.plantuml.ugraphic.color.HColor) $r15;
+
+        d14 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingX(int)>(i13);
+
+        $i8 = i13 + 1;
+
+        d15 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingX(int)>($i8);
+
+        d4 = d15 - d14;
+
+        if r16 == null goto label06;
+
+        d16 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingY(int)>(i12);
+
+        $i9 = i12 + 1;
+
+        d17 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingY(int)>($i9);
+
+        $r32 = new net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        specialinvoke $r32.<net.sourceforge.plantuml.ugraphic.color.HColorNone: void <init>()>();
+
+        $r33 = interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r32);
+
+        $r34 = interfaceinvoke r16.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r35 = interfaceinvoke $r33.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r34);
+
+        $r36 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        specialinvoke $r36.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>(d14, d16);
+
+        $r37 = interfaceinvoke $r35.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r36);
+
+        $r38 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        $d7 = d15 - d14;
+
+        $d6 = d17 - d16;
+
+        specialinvoke $r38.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>($d7, $d6);
+
+        interfaceinvoke $r37.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r38);
+
+     label06:
+        $r17 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.Map positions>;
+
+        $r18 = interfaceinvoke $r17.<java.util.Map: java.lang.Object get(java.lang.Object)>(r13);
+
+        r51 = (net.sourceforge.plantuml.creole.Position) $r18;
+
+        $r19 = interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        r20 = interfaceinvoke r13.<net.sourceforge.plantuml.creole.atom.Atom: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r19);
+
+        $r21 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment RIGHT>;
+
+        if r50 != $r21 goto label07;
+
+        $d5 = virtualinvoke r20.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        d18 = d4 - $d5;
+
+        goto label08;
+
+     label07:
+        d18 = 0.0;
+
+     label08:
+        if r16 != null goto label09;
+
+        $r28 = virtualinvoke r51.<net.sourceforge.plantuml.creole.Position: net.sourceforge.plantuml.ugraphic.UTranslate getTranslate()>();
+
+        $r29 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d18);
+
+        $r30 = virtualinvoke $r28.<net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate compose(net.sourceforge.plantuml.ugraphic.UTranslate)>($r29);
+
+        $r31 = interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r30);
+
+        interfaceinvoke r13.<net.sourceforge.plantuml.creole.atom.Atom: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r31);
+
+        goto label10;
+
+     label09:
+        $r22 = interfaceinvoke r16.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r23 = interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r22);
+
+        $r24 = virtualinvoke r51.<net.sourceforge.plantuml.creole.Position: net.sourceforge.plantuml.ugraphic.UTranslate getTranslate()>();
+
+        $r25 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d18);
+
+        $r26 = virtualinvoke $r24.<net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate compose(net.sourceforge.plantuml.ugraphic.UTranslate)>($r25);
+
+        $r27 = interfaceinvoke $r23.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r26);
+
+        interfaceinvoke r13.<net.sourceforge.plantuml.creole.atom.Atom: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r27);
+
+     label10:
+        i13 = i13 + 1;
+
+        goto label03;
+
+     label11:
+        i12 = i12 + 1;
+
+        goto label01;
+
+     label12:
+        $r2 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: net.sourceforge.plantuml.ugraphic.color.HColor lineColor>;
+
+        r52 = interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r2);
+
+        $i1 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbCols()>();
+
+        $i2 = $i1 - 1;
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getEndingX(int)>($i2);
+
+        r53 = staticinvoke <net.sourceforge.plantuml.ugraphic.ULine: net.sourceforge.plantuml.ugraphic.ULine hline(double)>($d0);
+
+        i15 = 0;
+
+     label13:
+        $i3 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbLines()>();
+
+        if i15 > $i3 goto label14;
+
+        $d3 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingY(int)>(i15);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d3);
+
+        $r6 = interfaceinvoke r52.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r5);
+
+        interfaceinvoke $r6.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r53);
+
+        i15 = i15 + 1;
+
+        goto label13;
+
+     label14:
+        $i4 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbLines()>();
+
+        $i5 = $i4 - 1;
+
+        $d1 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getEndingY(int)>($i5);
+
+        r54 = staticinvoke <net.sourceforge.plantuml.ugraphic.ULine: net.sourceforge.plantuml.ugraphic.ULine vline(double)>($d1);
+
+        i16 = 0;
+
+     label15:
+        $i6 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbCols()>();
+
+        if i16 > $i6 goto label16;
+
+        $d2 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingX(int)>(i16);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d2);
+
+        $r4 = interfaceinvoke r52.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r3);
+
+        interfaceinvoke $r4.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r54);
+
+        i16 = i16 + 1;
+
+        goto label15;
+
+     label16:
+        return;
+    }
+
+    private void initMap(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        java.util.Map $r1, $r15, $r22;
+        int $i0, $i1, $i2, i3, i4;
+        java.util.List $r2, $r3, $r4, $r7, $r10, $r18;
+        boolean $z0, $z1;
+        java.lang.Object $r5, $r8, $r11, $r17, $r19;
+        net.sourceforge.plantuml.creole.atom.AtomTable$Line $r6, $r9, r25;
+        net.sourceforge.plantuml.graphic.StringBounder r12;
+        double d0, d1;
+        net.sourceforge.plantuml.creole.Position $r13, $r20;
+        java.util.Iterator r24, r26;
+        net.sourceforge.plantuml.creole.atom.Atom r27, r29;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r28, r30;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        r12 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.Map positions>;
+
+        $i0 = interfaceinvoke $r1.<java.util.Map: int size()>();
+
+        if $i0 <= 0 goto label1;
+
+        return;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        r24 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r24.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label5;
+
+        $r17 = interfaceinvoke r24.<java.util.Iterator: java.lang.Object next()>();
+
+        r25 = (net.sourceforge.plantuml.creole.atom.AtomTable$Line) $r17;
+
+        $r18 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: java.util.List access$100(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>(r25);
+
+        r26 = interfaceinvoke $r18.<java.util.List: java.util.Iterator iterator()>();
+
+     label3:
+        $z1 = interfaceinvoke r26.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r19 = interfaceinvoke r26.<java.util.Iterator: java.lang.Object next()>();
+
+        r27 = (net.sourceforge.plantuml.creole.atom.Atom) $r19;
+
+        r28 = interfaceinvoke r27.<net.sourceforge.plantuml.creole.atom.Atom: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r12);
+
+        $r20 = new net.sourceforge.plantuml.creole.Position;
+
+        specialinvoke $r20.<net.sourceforge.plantuml.creole.Position: void <init>(double,double,net.sourceforge.plantuml.awt.geom.Dimension2D)>(0.0, 0.0, r28);
+
+        $r22 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.Map positions>;
+
+        interfaceinvoke $r22.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r27, $r20);
+
+        goto label3;
+
+     label4:
+        goto label2;
+
+     label5:
+        i3 = 0;
+
+     label6:
+        $r3 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $i1 = interfaceinvoke $r3.<java.util.List: int size()>();
+
+        if i3 >= $i1 goto label9;
+
+        i4 = 0;
+
+     label7:
+        $r4 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $r5 = interfaceinvoke $r4.<java.util.List: java.lang.Object get(int)>(i3);
+
+        $r6 = (net.sourceforge.plantuml.creole.atom.AtomTable$Line) $r5;
+
+        $i2 = virtualinvoke $r6.<net.sourceforge.plantuml.creole.atom.AtomTable$Line: int size()>();
+
+        if i4 >= $i2 goto label8;
+
+        $r7 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $r8 = interfaceinvoke $r7.<java.util.List: java.lang.Object get(int)>(i3);
+
+        $r9 = (net.sourceforge.plantuml.creole.atom.AtomTable$Line) $r8;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: java.util.List access$100(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>($r9);
+
+        $r11 = interfaceinvoke $r10.<java.util.List: java.lang.Object get(int)>(i4);
+
+        r29 = (net.sourceforge.plantuml.creole.atom.Atom) $r11;
+
+        r30 = interfaceinvoke r29.<net.sourceforge.plantuml.creole.atom.Atom: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r12);
+
+        d1 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingX(int)>(i4);
+
+        d0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getStartingY(int)>(i3);
+
+        $r13 = new net.sourceforge.plantuml.creole.Position;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.creole.Position: void <init>(double,double,net.sourceforge.plantuml.awt.geom.Dimension2D)>(d1, d0, r30);
+
+        $r15 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.Map positions>;
+
+        interfaceinvoke $r15.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r29, $r13);
+
+        i4 = i4 + 1;
+
+        goto label7;
+
+     label8:
+        i3 = i3 + 1;
+
+        goto label6;
+
+     label9:
+        return;
+    }
+
+    private double getStartingX(int)
+    {
+        int i0, i1;
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        double $d0, d1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        i0 := @parameter0: int;
+
+        d1 = 0.0;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getColWidth(int)>(i1);
+
+        d1 = d1 + $d0;
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return d1;
+    }
+
+    private double getEndingX(int)
+    {
+        int i0, i1;
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        double $d0, d1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        i0 := @parameter0: int;
+
+        d1 = 0.0;
+
+        i1 = 0;
+
+     label1:
+        if i1 > i0 goto label2;
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getColWidth(int)>(i1);
+
+        d1 = d1 + $d0;
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return d1;
+    }
+
+    private double getStartingY(int)
+    {
+        int i0, i1;
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        double $d0, d1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        i0 := @parameter0: int;
+
+        d1 = 0.0;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getLineHeight(int)>(i1);
+
+        d1 = d1 + $d0;
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return d1;
+    }
+
+    private double getEndingY(int)
+    {
+        int i0, i1;
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        double $d0, d1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        i0 := @parameter0: int;
+
+        d1 = 0.0;
+
+        i1 = 0;
+
+     label1:
+        if i1 > i0 goto label2;
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: double getLineHeight(int)>(i1);
+
+        d1 = d1 + $d0;
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return d1;
+    }
+
+    private double getColWidth(int)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        int $i0, i1, i2;
+        net.sourceforge.plantuml.creole.Position r1;
+        double d0, d1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        i1 := @parameter0: int;
+
+        d1 = 0.0;
+
+        i2 = 0;
+
+     label1:
+        $i0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbLines()>();
+
+        if i2 >= $i0 goto label4;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: net.sourceforge.plantuml.creole.Position getPosition(int,int)>(i2, i1);
+
+        if r1 != null goto label2;
+
+        goto label3;
+
+     label2:
+        d0 = virtualinvoke r1.<net.sourceforge.plantuml.creole.Position: double getWidth()>();
+
+        d1 = staticinvoke <java.lang.Math: double max(double,double)>(d1, d0);
+
+     label3:
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label4:
+        return d1;
+    }
+
+    private double getLineHeight(int)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        int $i0, i1, i2;
+        net.sourceforge.plantuml.creole.Position r1;
+        double d0, d1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        i1 := @parameter0: int;
+
+        d1 = 0.0;
+
+        i2 = 0;
+
+     label1:
+        $i0 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: int getNbCols()>();
+
+        if i2 >= $i0 goto label4;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: net.sourceforge.plantuml.creole.Position getPosition(int,int)>(i1, i2);
+
+        if r1 != null goto label2;
+
+        goto label3;
+
+     label2:
+        d0 = virtualinvoke r1.<net.sourceforge.plantuml.creole.Position: double getHeight()>();
+
+        d1 = staticinvoke <java.lang.Math: double max(double,double)>(d1, d0);
+
+     label3:
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label4:
+        return d1;
+    }
+
+    private net.sourceforge.plantuml.creole.Position getPosition(int, int)
+    {
+        int i0, $i1, i2, $i3;
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        java.util.List $r1, $r2, $r5, $r6;
+        java.lang.Object $r3, $r7, $r10;
+        net.sourceforge.plantuml.creole.atom.AtomTable$Line r4;
+        net.sourceforge.plantuml.creole.atom.Atom r8;
+        java.util.Map $r9;
+        net.sourceforge.plantuml.creole.Position $r11;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        i0 := @parameter0: int;
+
+        i2 := @parameter1: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $i1 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if i0 < $i1 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i0);
+
+        r4 = (net.sourceforge.plantuml.creole.atom.AtomTable$Line) $r3;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: java.util.List access$100(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>(r4);
+
+        $i3 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        if i2 < $i3 goto label2;
+
+        return null;
+
+     label2:
+        $r6 = staticinvoke <net.sourceforge.plantuml.creole.atom.AtomTable$Line: java.util.List access$100(net.sourceforge.plantuml.creole.atom.AtomTable$Line)>(r4);
+
+        $r7 = interfaceinvoke $r6.<java.util.List: java.lang.Object get(int)>(i2);
+
+        r8 = (net.sourceforge.plantuml.creole.atom.Atom) $r7;
+
+        $r9 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.Map positions>;
+
+        $r10 = interfaceinvoke $r9.<java.util.Map: java.lang.Object get(java.lang.Object)>(r8);
+
+        $r11 = (net.sourceforge.plantuml.creole.Position) $r10;
+
+        return $r11;
+    }
+
+    private int getNbCols()
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        java.util.List $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.creole.atom.AtomTable$Line $r3;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        $r1 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r3 = (net.sourceforge.plantuml.creole.atom.AtomTable$Line) $r2;
+
+        $i0 = virtualinvoke $r3.<net.sourceforge.plantuml.creole.atom.AtomTable$Line: int size()>();
+
+        return $i0;
+    }
+
+    private int getNbLines()
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        java.util.List $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        $r1 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        return $i0;
+    }
+
+    private net.sourceforge.plantuml.creole.atom.AtomTable$Line lastLine()
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        java.util.List $r1, $r2;
+        int $i0, $i1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.creole.atom.AtomTable$Line $r4;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        $r2 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $r1 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>($i1);
+
+        $r4 = (net.sourceforge.plantuml.creole.atom.AtomTable$Line) $r3;
+
+        return $r4;
+    }
+
+    public void addCell(net.sourceforge.plantuml.creole.atom.Atom, net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        net.sourceforge.plantuml.creole.atom.AtomTable$Line $r1;
+        net.sourceforge.plantuml.creole.atom.Atom r2;
+        net.sourceforge.plantuml.ugraphic.color.HColor r3;
+        java.util.Map $r4;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        r2 := @parameter0: net.sourceforge.plantuml.creole.atom.Atom;
+
+        r3 := @parameter1: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.creole.atom.AtomTable: net.sourceforge.plantuml.creole.atom.AtomTable$Line lastLine()>();
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.creole.atom.AtomTable$Line: void add(net.sourceforge.plantuml.creole.atom.Atom,net.sourceforge.plantuml.ugraphic.color.HColor)>(r2, r3);
+
+        $r4 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.Map positions>;
+
+        interfaceinvoke $r4.<java.util.Map: void clear()>();
+
+        return;
+    }
+
+    public void newLine(net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.creole.atom.AtomTable r0;
+        net.sourceforge.plantuml.creole.atom.AtomTable$Line $r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor r2;
+        java.util.List $r3;
+
+        r0 := @this: net.sourceforge.plantuml.creole.atom.AtomTable;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        $r3 = r0.<net.sourceforge.plantuml.creole.atom.AtomTable: java.util.List lines>;
+
+        $r1 = new net.sourceforge.plantuml.creole.atom.AtomTable$Line;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.creole.atom.AtomTable$Line: void <init>(net.sourceforge.plantuml.creole.atom.AtomTable,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.creole.atom.AtomTable$1)>(r0, r2, null);
+
+        interfaceinvoke $r3.<java.util.List: boolean add(java.lang.Object)>($r1);
+
+        return;
+    }
+}

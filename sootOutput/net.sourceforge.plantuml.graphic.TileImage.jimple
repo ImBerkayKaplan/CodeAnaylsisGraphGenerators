@@ -1,0 +1,113 @@
+public class net.sourceforge.plantuml.graphic.TileImage extends net.sourceforge.plantuml.graphic.AbstractTextBlock implements net.sourceforge.plantuml.graphic.TextBlock
+{
+    private final java.awt.image.BufferedImage image;
+    private final int vspace;
+
+    public void <init>(java.awt.image.BufferedImage, net.sourceforge.plantuml.graphic.ImgValign, int)
+    {
+        net.sourceforge.plantuml.graphic.TileImage r0;
+        java.awt.image.BufferedImage r1, $r3;
+        java.lang.Object $r2;
+        int i0;
+        net.sourceforge.plantuml.graphic.ImgValign r4;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.TileImage;
+
+        r1 := @parameter0: java.awt.image.BufferedImage;
+
+        r4 := @parameter1: net.sourceforge.plantuml.graphic.ImgValign;
+
+        i0 := @parameter2: int;
+
+        specialinvoke r0.<net.sourceforge.plantuml.graphic.AbstractTextBlock: void <init>()>();
+
+        $r2 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r3 = (java.awt.image.BufferedImage) $r2;
+
+        r0.<net.sourceforge.plantuml.graphic.TileImage: java.awt.image.BufferedImage image> = $r3;
+
+        r0.<net.sourceforge.plantuml.graphic.TileImage: int vspace> = i0;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.Dimension2DDouble $r0;
+        net.sourceforge.plantuml.graphic.TileImage r1;
+        java.awt.image.BufferedImage $r2, $r3;
+        int $i0, $i1, $i2, $i3, $i4;
+        double $d0, $d1;
+        net.sourceforge.plantuml.graphic.StringBounder r4;
+
+        r1 := @this: net.sourceforge.plantuml.graphic.TileImage;
+
+        r4 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r0 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        $r2 = r1.<net.sourceforge.plantuml.graphic.TileImage: java.awt.image.BufferedImage image>;
+
+        $i0 = virtualinvoke $r2.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $d0 = (double) $i0;
+
+        $r3 = r1.<net.sourceforge.plantuml.graphic.TileImage: java.awt.image.BufferedImage image>;
+
+        $i1 = virtualinvoke $r3.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $i2 = r1.<net.sourceforge.plantuml.graphic.TileImage: int vspace>;
+
+        $i3 = 2 * $i2;
+
+        $i4 = $i1 + $i3;
+
+        $d1 = (double) $i4;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>($d0, $d1);
+
+        return $r0;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.UGraphic r0, $r3;
+        net.sourceforge.plantuml.graphic.TileImage r1;
+        int $i0;
+        double $d0;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r2;
+        net.sourceforge.plantuml.ugraphic.UImage $r4;
+        net.sourceforge.plantuml.ugraphic.PixelImage $r5;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r6;
+        java.awt.image.BufferedImage $r7;
+
+        r1 := @this: net.sourceforge.plantuml.graphic.TileImage;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $i0 = r1.<net.sourceforge.plantuml.graphic.TileImage: int vspace>;
+
+        $d0 = (double) $i0;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d0);
+
+        $r3 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r2);
+
+        $r4 = new net.sourceforge.plantuml.ugraphic.UImage;
+
+        $r5 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r7 = r1.<net.sourceforge.plantuml.graphic.TileImage: java.awt.image.BufferedImage image>;
+
+        $r6 = <net.sourceforge.plantuml.ugraphic.AffineTransformType: net.sourceforge.plantuml.ugraphic.AffineTransformType TYPE_BILINEAR>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType)>($r7, $r6);
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ugraphic.UImage: void <init>(net.sourceforge.plantuml.ugraphic.MutableImage)>($r5);
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r4);
+
+        return;
+    }
+}

@@ -1,0 +1,3758 @@
+public class org.stathissideris.ascii2image.graphics.DiagramShape extends org.stathissideris.ascii2image.graphics.DiagramComponent
+{
+    private static final boolean DEBUG;
+    public static final int TYPE_SIMPLE;
+    public static final int TYPE_ARROWHEAD;
+    public static final int TYPE_POINT_MARKER;
+    public static final int TYPE_DOCUMENT;
+    public static final int TYPE_STORAGE;
+    public static final int TYPE_IO;
+    public static final int TYPE_DECISION;
+    public static final int TYPE_MANUAL_OPERATION;
+    public static final int TYPE_TRAPEZOID;
+    public static final int TYPE_ELLIPSE;
+    public static final int TYPE_CUSTOM;
+    protected int type;
+    private java.awt.Color fillColor;
+    private java.awt.Color strokeColor;
+    private boolean isClosed;
+    private boolean isStrokeDashed;
+    protected java.util.ArrayList points;
+    org.stathissideris.ascii2image.graphics.CustomShapeDefinition definition;
+    private static final float KAPPA;
+
+    public void <init>()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.Color $r1;
+        java.util.ArrayList $r2;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramComponent: void <init>()>();
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int type> = 0;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color fillColor> = null;
+
+        $r1 = <java.awt.Color: java.awt.Color black>;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color strokeColor> = $r1;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed> = 0;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed> = 0;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points> = $r2;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.CustomShapeDefinition definition> = null;
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+
+        r0 := @parameter0: java.lang.String[];
+
+        return;
+    }
+
+    public static org.stathissideris.ascii2image.graphics.DiagramShape createArrowhead(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.text.TextGrid$Cell, int, int)
+    {
+        org.stathissideris.ascii2image.text.TextGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r1;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        int i0, i1;
+        org.stathissideris.ascii2image.graphics.DiagramShape $r2, $r3, $r4, $r5;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.text.TextGrid$Cell;
+
+        i0 := @parameter2: int;
+
+        i1 := @parameter3: int;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $z1 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isNorthArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z1 == 0 goto label2;
+
+        $r5 = staticinvoke <org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.DiagramShape createNorthArrowhead(org.stathissideris.ascii2image.text.TextGrid,org.stathissideris.ascii2image.text.TextGrid$Cell,int,int)>(r0, r1, i0, i1);
+
+        return $r5;
+
+     label2:
+        $z2 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isSouthArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z2 == 0 goto label3;
+
+        $r4 = staticinvoke <org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.DiagramShape createSouthArrowhead(org.stathissideris.ascii2image.text.TextGrid,org.stathissideris.ascii2image.text.TextGrid$Cell,int,int)>(r0, r1, i0, i1);
+
+        return $r4;
+
+     label3:
+        $z3 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isWestArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z3 == 0 goto label4;
+
+        $r3 = staticinvoke <org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.DiagramShape createWestArrowhead(org.stathissideris.ascii2image.text.TextGrid,org.stathissideris.ascii2image.text.TextGrid$Cell,int,int)>(r0, r1, i0, i1);
+
+        return $r3;
+
+     label4:
+        $z4 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isEastArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z4 == 0 goto label5;
+
+        $r2 = staticinvoke <org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.DiagramShape createEastArrowhead(org.stathissideris.ascii2image.text.TextGrid,org.stathissideris.ascii2image.text.TextGrid$Cell,int,int)>(r0, r1, i0, i1);
+
+        return $r2;
+
+     label5:
+        return null;
+    }
+
+    private static org.stathissideris.ascii2image.graphics.DiagramShape createNorthArrowhead(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.text.TextGrid$Cell, int, int)
+    {
+        org.stathissideris.ascii2image.text.TextGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r1;
+        boolean $z0;
+        org.stathissideris.ascii2image.graphics.DiagramShape $r2;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r5, $r6;
+        int i0, $i1, i2, $i3, $i4, $i5, $i6, $i7;
+        float $f0, $f1, $f2, $f3, $f4, $f5;
+        java.awt.Color $r7, $r8;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.text.TextGrid$Cell;
+
+        i0 := @parameter2: int;
+
+        i2 := @parameter3: int;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isNorthArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = new org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        specialinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void <init>()>();
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i1 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMidX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f0 = (float) $i1;
+
+        $i3 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f1 = (float) $i3;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f0, $f1);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r4);
+
+        $r5 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i4 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f2 = (float) $i4;
+
+        $i5 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f3 = (float) $i5;
+
+        specialinvoke $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r5);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i6 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f4 = (float) $i6;
+
+        $i7 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f5 = (float) $i7;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r6);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setClosed(boolean)>(1);
+
+        $r7 = <java.awt.Color: java.awt.Color black>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setFillColor(java.awt.Color)>($r7);
+
+        $r8 = <java.awt.Color: java.awt.Color black>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setStrokeColor(java.awt.Color)>($r8);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setType(int)>(1);
+
+        return $r2;
+    }
+
+    private static org.stathissideris.ascii2image.graphics.DiagramShape createSouthArrowhead(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.text.TextGrid$Cell, int, int)
+    {
+        org.stathissideris.ascii2image.text.TextGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r1;
+        boolean $z0;
+        org.stathissideris.ascii2image.graphics.DiagramShape $r2;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r5, $r6;
+        int i0, $i1, i2, $i3, $i4, $i5, $i6, $i7;
+        float $f0, $f1, $f2, $f3, $f4, $f5;
+        java.awt.Color $r7, $r8;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.text.TextGrid$Cell;
+
+        i0 := @parameter2: int;
+
+        i2 := @parameter3: int;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isSouthArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = new org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        specialinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void <init>()>();
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i1 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f0 = (float) $i1;
+
+        $i3 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f1 = (float) $i3;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f0, $f1);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r4);
+
+        $r5 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i4 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMidX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f2 = (float) $i4;
+
+        $i5 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f3 = (float) $i5;
+
+        specialinvoke $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r5);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i6 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f4 = (float) $i6;
+
+        $i7 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f5 = (float) $i7;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r6);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setClosed(boolean)>(1);
+
+        $r7 = <java.awt.Color: java.awt.Color black>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setFillColor(java.awt.Color)>($r7);
+
+        $r8 = <java.awt.Color: java.awt.Color black>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setStrokeColor(java.awt.Color)>($r8);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setType(int)>(1);
+
+        return $r2;
+    }
+
+    private static org.stathissideris.ascii2image.graphics.DiagramShape createWestArrowhead(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.text.TextGrid$Cell, int, int)
+    {
+        org.stathissideris.ascii2image.text.TextGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r1;
+        boolean $z0;
+        org.stathissideris.ascii2image.graphics.DiagramShape $r2;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r5, $r6;
+        int i0, $i1, i2, $i3, $i4, $i5, $i6, $i7;
+        float $f0, $f1, $f2, $f3, $f4, $f5;
+        java.awt.Color $r7, $r8;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.text.TextGrid$Cell;
+
+        i0 := @parameter2: int;
+
+        i2 := @parameter3: int;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isWestArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = new org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        specialinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void <init>()>();
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i1 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f0 = (float) $i1;
+
+        $i3 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f1 = (float) $i3;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f0, $f1);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r4);
+
+        $r5 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i4 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f2 = (float) $i4;
+
+        $i5 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMidY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f3 = (float) $i5;
+
+        specialinvoke $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r5);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i6 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f4 = (float) $i6;
+
+        $i7 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f5 = (float) $i7;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r6);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setClosed(boolean)>(1);
+
+        $r7 = <java.awt.Color: java.awt.Color black>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setFillColor(java.awt.Color)>($r7);
+
+        $r8 = <java.awt.Color: java.awt.Color black>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setStrokeColor(java.awt.Color)>($r8);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setType(int)>(1);
+
+        return $r2;
+    }
+
+    private static org.stathissideris.ascii2image.graphics.DiagramShape createEastArrowhead(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.text.TextGrid$Cell, int, int)
+    {
+        org.stathissideris.ascii2image.text.TextGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r1;
+        boolean $z0;
+        org.stathissideris.ascii2image.graphics.DiagramShape $r2;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r5, $r6;
+        int i0, $i1, i2, $i3, $i4, $i5, $i6, $i7;
+        float $f0, $f1, $f2, $f3, $f4, $f5;
+        java.awt.Color $r7, $r8;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.text.TextGrid$Cell;
+
+        i0 := @parameter2: int;
+
+        i2 := @parameter3: int;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isEastArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = new org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        specialinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void <init>()>();
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i1 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f0 = (float) $i1;
+
+        $i3 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f1 = (float) $i3;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f0, $f1);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r4);
+
+        $r5 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i4 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f2 = (float) $i4;
+
+        $i5 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMidY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f3 = (float) $i5;
+
+        specialinvoke $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r5);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i6 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMinX(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i0);
+
+        $f4 = (float) $i6;
+
+        $i7 = staticinvoke <org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxY(org.stathissideris.ascii2image.text.TextGrid$Cell,int)>(r1, i2);
+
+        $f5 = (float) $i7;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r6);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setClosed(boolean)>(1);
+
+        $r7 = <java.awt.Color: java.awt.Color black>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setFillColor(java.awt.Color)>($r7);
+
+        $r8 = <java.awt.Color: java.awt.Color black>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setStrokeColor(java.awt.Color)>($r8);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void setType(int)>(1);
+
+        return $r2;
+    }
+
+    public static org.stathissideris.ascii2image.graphics.DiagramShape createSmallLine(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.text.TextGrid$Cell, int, int)
+    {
+        org.stathissideris.ascii2image.text.TextGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r1;
+        boolean $z0, $z1, $z2;
+        org.stathissideris.ascii2image.graphics.DiagramShape $r2;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r5, $r6, $r7;
+        int i0, $i1, $i2, $i3, $i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.text.TextGrid$Cell;
+
+        i0 := @parameter2: int;
+
+        i5 := @parameter3: int;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isLine(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z0 == 0 goto label3;
+
+        $r2 = new org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        specialinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void <init>()>();
+
+        $z1 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isHorizontalLine(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z1 == 0 goto label1;
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i16 = r1.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i17 = $i16 * i0;
+
+        $f5 = (float) $i17;
+
+        $i18 = r1.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $i20 = $i18 * i5;
+
+        $i19 = i5 / 2;
+
+        $i21 = $i20 + $i19;
+
+        $f4 = (float) $i21;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f5, $f4);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r6);
+
+        $r7 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i22 = r1.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i23 = $i22 * i0;
+
+        $i24 = $i23 + i0;
+
+        $i25 = $i24 - 1;
+
+        $f7 = (float) $i25;
+
+        $i26 = r1.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $i28 = $i26 * i5;
+
+        $i27 = i5 / 2;
+
+        $i29 = $i28 + $i27;
+
+        $f6 = (float) $i29;
+
+        specialinvoke $r7.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f7, $f6);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r7);
+
+        goto label2;
+
+     label1:
+        $z2 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: boolean isVerticalLine(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r1);
+
+        if $z2 == 0 goto label2;
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i1 = r1.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i3 = $i1 * i0;
+
+        $i2 = i0 / 2;
+
+        $i4 = $i3 + $i2;
+
+        $f1 = (float) $i4;
+
+        $i6 = r1.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $i7 = $i6 * i5;
+
+        $f0 = (float) $i7;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f1, $f0);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r4);
+
+        $r5 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i8 = r1.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i10 = $i8 * i0;
+
+        $i9 = i0 / 2;
+
+        $i11 = $i10 + $i9;
+
+        $f3 = (float) $i11;
+
+        $i12 = r1.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $i13 = $i12 * i5;
+
+        $i14 = $i13 + i5;
+
+        $i15 = $i14 - 1;
+
+        $f2 = (float) $i15;
+
+        specialinvoke $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f3, $f2);
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.graphics.DiagramShape: void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)>($r5);
+
+     label2:
+        return $r2;
+
+     label3:
+        return null;
+    }
+
+    public void addToPoints(org.stathissideris.ascii2image.graphics.ShapePoint)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        org.stathissideris.ascii2image.graphics.ShapePoint r1;
+        java.util.ArrayList $r2;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r1 := @parameter0: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $r2 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        virtualinvoke $r2.<java.util.ArrayList: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public java.util.Iterator getPointsIterator()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        java.util.Iterator $r2;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r2 = virtualinvoke $r1.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+        return $r2;
+    }
+
+    public void scale(float)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.Iterator r1;
+        boolean $z0;
+        java.lang.Object $r2;
+        org.stathissideris.ascii2image.graphics.ShapePoint r3;
+        float f0, $f1, $f2, $f3, $f4;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        f0 := @parameter0: float;
+
+        r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.Iterator getPointsIterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r2 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r2;
+
+        $f1 = r3.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f2 = $f1 * f0;
+
+        r3.<org.stathissideris.ascii2image.graphics.ShapePoint: float x> = $f2;
+
+        $f3 = r3.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f4 = $f3 * f0;
+
+        r3.<org.stathissideris.ascii2image.graphics.ShapePoint: float y> = $f4;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public boolean isEmpty()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        boolean $z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $z0 = virtualinvoke $r1.<java.util.ArrayList: boolean isEmpty()>();
+
+        return $z0;
+    }
+
+    public boolean isFilled()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.Color $r1;
+        boolean $z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color fillColor>;
+
+        if $r1 == null goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public void setIsNotFilled()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color fillColor> = null;
+
+        return;
+    }
+
+    public boolean isPointLinesEnd(org.stathissideris.ascii2image.graphics.ShapePoint)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean $z0;
+        org.stathissideris.ascii2image.graphics.ShapePoint r1;
+        java.util.ArrayList $r2, $r4, $r5;
+        java.lang.Object $r3, $r6;
+        int $i0, $i1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r1 := @parameter0: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z0 == 0 goto label1;
+
+        return 0;
+
+     label1:
+        $r2 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r3 = virtualinvoke $r2.<java.util.ArrayList: java.lang.Object get(int)>(0);
+
+        if r1 != $r3 goto label2;
+
+        return 1;
+
+     label2:
+        $r5 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r4 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r4.<java.util.ArrayList: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r6 = virtualinvoke $r5.<java.util.ArrayList: java.lang.Object get(int)>($i1);
+
+        if r1 != $r6 goto label3;
+
+        return 1;
+
+     label3:
+        return 0;
+    }
+
+    public boolean isRectangle()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1, $r2, $r5, $r8, $r11;
+        int $i0;
+        java.lang.Object $r3, $r6, $r9, $r12;
+        org.stathissideris.ascii2image.graphics.ShapePoint r4, r7, r10, r13;
+        boolean $z0, $z1, $z2, $z3;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if $i0 == 4 goto label1;
+
+        return 0;
+
+     label1:
+        $r2 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r3 = virtualinvoke $r2.<java.util.ArrayList: java.lang.Object get(int)>(0);
+
+        r4 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r3;
+
+        $r5 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r6 = virtualinvoke $r5.<java.util.ArrayList: java.lang.Object get(int)>(1);
+
+        r7 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r6;
+
+        $r8 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r9 = virtualinvoke $r8.<java.util.ArrayList: java.lang.Object get(int)>(2);
+
+        r10 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r9;
+
+        $r11 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r12 = virtualinvoke $r11.<java.util.ArrayList: java.lang.Object get(int)>(3);
+
+        r13 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r12;
+
+        $z0 = virtualinvoke r4.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isInLineWith(org.stathissideris.ascii2image.graphics.ShapePoint)>(r7);
+
+        if $z0 == 0 goto label2;
+
+        $z1 = virtualinvoke r7.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isInLineWith(org.stathissideris.ascii2image.graphics.ShapePoint)>(r10);
+
+        if $z1 == 0 goto label2;
+
+        $z2 = virtualinvoke r10.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isInLineWith(org.stathissideris.ascii2image.graphics.ShapePoint)>(r13);
+
+        if $z2 == 0 goto label2;
+
+        $z3 = virtualinvoke r13.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isInLineWith(org.stathissideris.ascii2image.graphics.ShapePoint)>(r4);
+
+        if $z3 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    public boolean isSmallerThan(org.stathissideris.ascii2image.graphics.DiagramShape)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0, r2;
+        java.awt.Rectangle r1, r3;
+        int $i0, $i1, i2, $i3, $i4, i5;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r2 := @parameter0: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Rectangle getBounds()>();
+
+        r3 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Rectangle getBounds()>();
+
+        $i1 = r1.<java.awt.Rectangle: int height>;
+
+        $i0 = r1.<java.awt.Rectangle: int width>;
+
+        i2 = $i1 * $i0;
+
+        $i4 = r3.<java.awt.Rectangle: int height>;
+
+        $i3 = r3.<java.awt.Rectangle: int width>;
+
+        i5 = $i4 * $i3;
+
+        if i2 >= i5 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    public java.awt.Color getFillColor()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.Color $r1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color fillColor>;
+
+        return $r1;
+    }
+
+    public java.awt.Color getStrokeColor()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.Color $r1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color strokeColor>;
+
+        return $r1;
+    }
+
+    public void setFillColor(java.awt.Color)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.Color r1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r1 := @parameter0: java.awt.Color;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color fillColor> = r1;
+
+        return;
+    }
+
+    public void setStrokeColor(java.awt.Color)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.Color r1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r1 := @parameter0: java.awt.Color;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color strokeColor> = r1;
+
+        return;
+    }
+
+    public boolean isClosed()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean $z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $z0 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed>;
+
+        return $z0;
+    }
+
+    public void setClosed(boolean)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        z0 := @parameter0: boolean;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed> = z0;
+
+        return;
+    }
+
+    public void printDebug()
+    {
+        java.io.PrintStream $r0, $r2;
+        java.lang.StringBuilder $r1, $r5, $r6;
+        org.stathissideris.ascii2image.graphics.DiagramShape r3;
+        java.util.ArrayList $r4;
+        int $i0;
+        java.lang.String $r7;
+
+        r3 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r0.<java.io.PrintStream: void print(java.lang.String)>("DiagramShape: ");
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = r3.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r4.<java.util.ArrayList: int size()>();
+
+        $r5 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" points");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>($r7);
+
+        return;
+    }
+
+    public java.util.ArrayList getPoints()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        return $r1;
+    }
+
+    public org.stathissideris.ascii2image.graphics.ShapePoint getPoint(int)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        int i0;
+        java.util.ArrayList $r1;
+        java.lang.Object $r2;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r3;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r2 = virtualinvoke $r1.<java.util.ArrayList: java.lang.Object get(int)>(i0);
+
+        $r3 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r2;
+
+        return $r3;
+    }
+
+    public void setPoint(int, org.stathissideris.ascii2image.graphics.ShapePoint)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        int i0;
+        org.stathissideris.ascii2image.graphics.ShapePoint r1;
+        java.util.ArrayList $r2;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        i0 := @parameter0: int;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $r2 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        virtualinvoke $r2.<java.util.ArrayList: java.lang.Object set(int,java.lang.Object)>(i0, r1);
+
+        return;
+    }
+
+    public boolean equals(java.lang.Object)
+    {
+        java.lang.Object r0, $r8, $r9, $r16;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        org.stathissideris.ascii2image.graphics.DiagramShape r1, r23;
+        java.util.ArrayList $r2, $r3;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        java.util.HashMap $r4, $r6;
+        java.util.Set $r7;
+        java.lang.StringBuilder $r10, $r11, $r12, $r13, $r14, $r17, $r18, $r19, $r20, $r21;
+        float $f0, $f1, $f2, $f3;
+        java.lang.String $r15, $r22, r30;
+        java.util.Iterator r24, r27, r29;
+        org.stathissideris.ascii2image.graphics.ShapePoint r25, r28;
+
+        r1 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r0 := @parameter0: java.lang.Object;
+
+        $z0 = r0 instanceof org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        if $z0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        r23 = (org.stathissideris.ascii2image.graphics.DiagramShape) r0;
+
+        $r2 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $i0 = virtualinvoke $r2.<java.util.ArrayList: int size()>();
+
+        $r3 = virtualinvoke r23.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $i1 = virtualinvoke $r3.<java.util.ArrayList: int size()>();
+
+        if $i0 == $i1 goto label2;
+
+        return 0;
+
+     label2:
+        $r4 = new java.util.HashMap;
+
+        specialinvoke $r4.<java.util.HashMap: void <init>()>();
+
+        r24 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.Iterator getPointsIterator()>();
+
+     label3:
+        $z1 = interfaceinvoke r24.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r16 = interfaceinvoke r24.<java.util.Iterator: java.lang.Object next()>();
+
+        r25 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r16;
+
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>()>();
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $f2 = r25.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i4 = (int) $f2;
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i4);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $f3 = r25.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $i5 = (int) $f3;
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i5);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r4.<java.util.HashMap: java.lang.Object put(java.lang.Object,java.lang.Object)>($r22, null);
+
+        goto label3;
+
+     label4:
+        $r6 = new java.util.HashMap;
+
+        specialinvoke $r6.<java.util.HashMap: void <init>()>();
+
+        r27 = virtualinvoke r23.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.Iterator getPointsIterator()>();
+
+     label5:
+        $z2 = interfaceinvoke r27.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label6;
+
+        $r9 = interfaceinvoke r27.<java.util.Iterator: java.lang.Object next()>();
+
+        r28 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r9;
+
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>()>();
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $f0 = r28.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i2 = (int) $f0;
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i2);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $f1 = r28.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $i3 = (int) $f1;
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i3);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r6.<java.util.HashMap: java.lang.Object put(java.lang.Object,java.lang.Object)>($r15, null);
+
+        goto label5;
+
+     label6:
+        $r7 = virtualinvoke $r4.<java.util.HashMap: java.util.Set keySet()>();
+
+        r29 = interfaceinvoke $r7.<java.util.Set: java.util.Iterator iterator()>();
+
+     label7:
+        $z3 = interfaceinvoke r29.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 == 0 goto label9;
+
+        $r8 = interfaceinvoke r29.<java.util.Iterator: java.lang.Object next()>();
+
+        r30 = (java.lang.String) $r8;
+
+        $z4 = virtualinvoke $r6.<java.util.HashMap: boolean containsKey(java.lang.Object)>(r30);
+
+        if $z4 != 0 goto label8;
+
+        return 0;
+
+     label8:
+        goto label7;
+
+     label9:
+        return 1;
+    }
+
+    public java.awt.geom.GeneralPath makeIntoPath()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1, $r4, $r6;
+        int i0, $i1, $i2, $i3, $i4, i5;
+        java.awt.geom.GeneralPath $r2;
+        java.lang.Object $r5, $r7;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7;
+        boolean $z0;
+        org.stathissideris.ascii2image.graphics.ShapePoint r8, r9;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if i0 >= 2 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r2.<java.awt.geom.GeneralPath: void <init>()>();
+
+        $r4 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $r5 = virtualinvoke $r4.<java.util.ArrayList: java.lang.Object get(int)>(0);
+
+        r8 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r5;
+
+        $f0 = r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i1 = (int) $f0;
+
+        $f3 = (float) $i1;
+
+        $f1 = r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $i2 = (int) $f1;
+
+        $f2 = (float) $i2;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f3, $f2);
+
+        i5 = 1;
+
+     label2:
+        if i5 >= i0 goto label3;
+
+        $r6 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $r7 = virtualinvoke $r6.<java.util.ArrayList: java.lang.Object get(int)>(i5);
+
+        r9 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r7;
+
+        $f4 = r9.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i3 = (int) $f4;
+
+        $f7 = (float) $i3;
+
+        $f5 = r9.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $i4 = (int) $f5;
+
+        $f6 = (float) $i4;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f7, $f6);
+
+        i5 = i5 + 1;
+
+        goto label2;
+
+     label3:
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z0 == 0 goto label4;
+
+        if i0 <= 2 goto label4;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void closePath()>();
+
+     label4:
+        return $r2;
+    }
+
+    public java.awt.geom.GeneralPath makeMarkerPath(org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        int $i0, $i1, $i2, $i3;
+        org.stathissideris.ascii2image.graphics.ShapePoint r2;
+        org.stathissideris.ascii2image.graphics.Diagram r3;
+        float $f0, f1, $f2, $f3, $f4, $f5, $f6, $f7;
+        java.awt.geom.GeneralPath $r4;
+        java.awt.geom.Ellipse2D$Float $r5;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r3 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if $i0 == 1 goto label1;
+
+        return null;
+
+     label1:
+        r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.ShapePoint getPoint(int)>(0);
+
+        $i1 = virtualinvoke r3.<org.stathissideris.ascii2image.graphics.Diagram: int getCellWidth()>();
+
+        $i2 = virtualinvoke r3.<org.stathissideris.ascii2image.graphics.Diagram: int getCellHeight()>();
+
+        $i3 = staticinvoke <java.lang.Math: int min(int,int)>($i1, $i2);
+
+        $f0 = (float) $i3;
+
+        f1 = 0.7F * $f0;
+
+        $r4 = new java.awt.geom.GeneralPath;
+
+        $r5 = new java.awt.geom.Ellipse2D$Float;
+
+        $f3 = r2.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f2 = f1 / 2.0F;
+
+        $f7 = $f3 - $f2;
+
+        $f5 = r2.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f4 = f1 / 2.0F;
+
+        $f6 = $f5 - $f4;
+
+        specialinvoke $r5.<java.awt.geom.Ellipse2D$Float: void <init>(float,float,float,float)>($f7, $f6, f1, f1);
+
+        specialinvoke $r4.<java.awt.geom.GeneralPath: void <init>(java.awt.Shape)>($r5);
+
+        return $r4;
+    }
+
+    public java.awt.Rectangle getBounds()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.geom.GeneralPath $r1;
+        java.awt.Rectangle r2;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        r2 = virtualinvoke $r1.<java.awt.geom.GeneralPath: java.awt.Rectangle getBounds()>();
+
+        return r2;
+    }
+
+    public java.awt.geom.GeneralPath makeIntoRenderPath(org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1, $r4, $r7, $r9, $r11, $r13, $r15, $r17, $r19, $r21, $r23, $r25, $r27, $r29;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, i29;
+        java.awt.geom.GeneralPath $r2, $r18, $r20, $r22, $r24, $r26, $r28, $r30, $r31;
+        java.lang.Object $r5, $r8, $r10, $r12, $r14, $r16;
+        org.stathissideris.ascii2image.graphics.Diagram r6;
+        boolean $z0;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7, $f8, $f9, $f10, $f11, $f12, $f13, $f14, $f15, $f16, $f17, $f18, $f19, $f20, $f21, $f22, $f23;
+        org.stathissideris.ascii2image.graphics.ShapePoint r32, r34, r35, r36, r37, r38, r39, r41, r42, r43;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r6 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        $i1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i1 != 2 goto label01;
+
+        $r31 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeMarkerPath(org.stathissideris.ascii2image.graphics.Diagram)>(r6);
+
+        return $r31;
+
+     label01:
+        $i2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i2 != 3 goto label02;
+
+        $r29 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i28 = virtualinvoke $r29.<java.util.ArrayList: int size()>();
+
+        if $i28 != 4 goto label02;
+
+        $r30 = specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeDocumentPath(org.stathissideris.ascii2image.graphics.Diagram)>(r6);
+
+        return $r30;
+
+     label02:
+        $i3 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i3 != 4 goto label03;
+
+        $r27 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i27 = virtualinvoke $r27.<java.util.ArrayList: int size()>();
+
+        if $i27 != 4 goto label03;
+
+        $r28 = specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeStoragePath(org.stathissideris.ascii2image.graphics.Diagram)>(r6);
+
+        return $r28;
+
+     label03:
+        $i4 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i4 != 5 goto label04;
+
+        $r25 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i26 = virtualinvoke $r25.<java.util.ArrayList: int size()>();
+
+        if $i26 != 4 goto label04;
+
+        $r26 = specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIOPath(org.stathissideris.ascii2image.graphics.Diagram)>(r6);
+
+        return $r26;
+
+     label04:
+        $i5 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i5 != 6 goto label05;
+
+        $r23 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i25 = virtualinvoke $r23.<java.util.ArrayList: int size()>();
+
+        if $i25 != 4 goto label05;
+
+        $r24 = specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeDecisionPath(org.stathissideris.ascii2image.graphics.Diagram)>(r6);
+
+        return $r24;
+
+     label05:
+        $i6 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i6 != 7 goto label06;
+
+        $r21 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i24 = virtualinvoke $r21.<java.util.ArrayList: int size()>();
+
+        if $i24 != 4 goto label06;
+
+        $r22 = specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeTrapezoidPath(org.stathissideris.ascii2image.graphics.Diagram,boolean)>(r6, 1);
+
+        return $r22;
+
+     label06:
+        $i7 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i7 != 8 goto label07;
+
+        $r19 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i23 = virtualinvoke $r19.<java.util.ArrayList: int size()>();
+
+        if $i23 != 4 goto label07;
+
+        $r20 = specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeTrapezoidPath(org.stathissideris.ascii2image.graphics.Diagram,boolean)>(r6, 0);
+
+        return $r20;
+
+     label07:
+        $i8 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i8 != 9 goto label08;
+
+        $r17 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i22 = virtualinvoke $r17.<java.util.ArrayList: int size()>();
+
+        if $i22 != 4 goto label08;
+
+        $r18 = specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeEllipsePath(org.stathissideris.ascii2image.graphics.Diagram)>(r6);
+
+        return $r18;
+
+     label08:
+        if i0 >= 2 goto label09;
+
+        return null;
+
+     label09:
+        $r2 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r2.<java.awt.geom.GeneralPath: void <init>()>();
+
+        $r4 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $r5 = virtualinvoke $r4.<java.util.ArrayList: java.lang.Object get(int)>(0);
+
+        r32 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r5;
+
+        virtualinvoke r6.<org.stathissideris.ascii2image.graphics.Diagram: org.stathissideris.ascii2image.text.TextGrid$Cell getCellFor(org.stathissideris.ascii2image.graphics.ShapePoint)>(r32);
+
+        $r7 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $i9 = i0 - 1;
+
+        $r8 = virtualinvoke $r7.<java.util.ArrayList: java.lang.Object get(int)>($i9);
+
+        r34 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r8;
+
+        $r9 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $r10 = virtualinvoke $r9.<java.util.ArrayList: java.lang.Object get(int)>(1);
+
+        r35 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r10;
+
+        $i10 = virtualinvoke r32.<org.stathissideris.ascii2image.graphics.ShapePoint: int getType()>();
+
+        if $i10 != 0 goto label10;
+
+        $f20 = r32.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i20 = (int) $f20;
+
+        $f23 = (float) $i20;
+
+        $f21 = r32.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $i21 = (int) $f21;
+
+        $f22 = (float) $i21;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f23, $f22);
+
+        goto label11;
+
+     label10:
+        $i11 = virtualinvoke r32.<org.stathissideris.ascii2image.graphics.ShapePoint: int getType()>();
+
+        if $i11 != 1 goto label11;
+
+        r36 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgePointBetween(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.Diagram)>(r32, r34, r6);
+
+        r37 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgePointBetween(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.Diagram)>(r32, r35, r6);
+
+        $f15 = r36.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f14 = r36.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f15, $f14);
+
+        $f19 = r32.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f18 = r32.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f17 = r37.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f16 = r37.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void quadTo(float,float,float,float)>($f19, $f18, $f17, $f16);
+
+     label11:
+        i29 = 1;
+
+     label12:
+        if i29 >= i0 goto label18;
+
+        r38 = r32;
+
+        $r11 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $r12 = virtualinvoke $r11.<java.util.ArrayList: java.lang.Object get(int)>(i29);
+
+        r32 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r12;
+
+        $i12 = i0 - 1;
+
+        if i29 >= $i12 goto label13;
+
+        $r15 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $i19 = i29 + 1;
+
+        $r16 = virtualinvoke $r15.<java.util.ArrayList: java.lang.Object get(int)>($i19);
+
+        r39 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r16;
+
+        goto label14;
+
+     label13:
+        $r13 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $r14 = virtualinvoke $r13.<java.util.ArrayList: java.lang.Object get(int)>(0);
+
+        r39 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r14;
+
+     label14:
+        virtualinvoke r6.<org.stathissideris.ascii2image.graphics.Diagram: org.stathissideris.ascii2image.text.TextGrid$Cell getCellFor(org.stathissideris.ascii2image.graphics.ShapePoint)>(r32);
+
+        $i13 = virtualinvoke r32.<org.stathissideris.ascii2image.graphics.ShapePoint: int getType()>();
+
+        if $i13 != 0 goto label15;
+
+        $f10 = r32.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i17 = (int) $f10;
+
+        $f13 = (float) $i17;
+
+        $f11 = r32.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $i18 = (int) $f11;
+
+        $f12 = (float) $i18;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f13, $f12);
+
+        goto label17;
+
+     label15:
+        $i14 = virtualinvoke r32.<org.stathissideris.ascii2image.graphics.ShapePoint: int getType()>();
+
+        if $i14 != 1 goto label17;
+
+        r41 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgePointBetween(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.Diagram)>(r32, r38, r6);
+
+        r42 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgePointBetween(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.Diagram)>(r32, r39, r6);
+
+        $f1 = r41.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f0 = r41.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f1, $f0);
+
+        $f5 = r32.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f4 = r32.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f3 = r42.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f2 = r42.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void quadTo(float,float,float,float)>($f5, $f4, $f3, $f2);
+
+        $i15 = virtualinvoke r39.<org.stathissideris.ascii2image.graphics.ShapePoint: int getType()>();
+
+        if $i15 != 0 goto label16;
+
+        $f9 = r39.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f8 = r39.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f9, $f8);
+
+        goto label17;
+
+     label16:
+        $i16 = virtualinvoke r39.<org.stathissideris.ascii2image.graphics.ShapePoint: int getType()>();
+
+        if $i16 != 1 goto label17;
+
+        r43 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgePointBetween(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.Diagram)>(r39, r32, r6);
+
+        $f7 = r43.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f6 = r43.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f7, $f6);
+
+     label17:
+        i29 = i29 + 1;
+
+        goto label12;
+
+     label18:
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z0 == 0 goto label19;
+
+        if i0 <= 2 goto label19;
+
+        virtualinvoke $r2.<java.awt.geom.GeneralPath: void closePath()>();
+
+     label19:
+        return $r2;
+    }
+
+    public java.util.ArrayList getEdges()
+    {
+        java.util.ArrayList $r0, $r3, $r4, $r5, $r7, $r8, $r11, $r13;
+        org.stathissideris.ascii2image.graphics.DiagramShape r2;
+        int $i0, i1, $i2, $i3, $i4, $i5, i6;
+        boolean $z0;
+        java.lang.Object $r6, $r9, $r12, $r14;
+        org.stathissideris.ascii2image.graphics.ShapeEdge $r10, $r15;
+        org.stathissideris.ascii2image.graphics.ShapePoint r17, r18, r19, r20;
+
+        r2 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r3.<java.util.ArrayList: int size()>();
+
+        if $i0 != 1 goto label1;
+
+        return $r0;
+
+     label1:
+        $r4 = r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        i1 = virtualinvoke $r4.<java.util.ArrayList: int size()>();
+
+        i6 = 0;
+
+     label2:
+        $i2 = i1 - 1;
+
+        if i6 >= $i2 goto label3;
+
+        $r11 = r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r12 = virtualinvoke $r11.<java.util.ArrayList: java.lang.Object get(int)>(i6);
+
+        r17 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r12;
+
+        $r13 = r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i5 = i6 + 1;
+
+        $r14 = virtualinvoke $r13.<java.util.ArrayList: java.lang.Object get(int)>($i5);
+
+        r18 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r14;
+
+        $r15 = new org.stathissideris.ascii2image.graphics.ShapeEdge;
+
+        specialinvoke $r15.<org.stathissideris.ascii2image.graphics.ShapeEdge: void <init>(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.DiagramShape)>(r17, r18, r2);
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r15);
+
+        i6 = i6 + 1;
+
+        goto label2;
+
+     label3:
+        $z0 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z0 == 0 goto label4;
+
+        $r5 = r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r6 = virtualinvoke $r5.<java.util.ArrayList: java.lang.Object get(int)>(0);
+
+        r19 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r6;
+
+        $r8 = r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r7 = r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i3 = virtualinvoke $r7.<java.util.ArrayList: int size()>();
+
+        $i4 = $i3 - 1;
+
+        $r9 = virtualinvoke $r8.<java.util.ArrayList: java.lang.Object get(int)>($i4);
+
+        r20 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r9;
+
+        $r10 = new org.stathissideris.ascii2image.graphics.ShapeEdge;
+
+        specialinvoke $r10.<org.stathissideris.ascii2image.graphics.ShapeEdge: void <init>(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.DiagramShape)>(r20, r19, r2);
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r10);
+
+     label4:
+        return $r0;
+    }
+
+    public org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgePointBetween(org.stathissideris.ascii2image.graphics.ShapePoint, org.stathissideris.ascii2image.graphics.ShapePoint, org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.ShapePoint r0, r1, $r13, $r14, $r15, $r16, r27;
+        org.stathissideris.ascii2image.graphics.Diagram r2;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r3;
+        java.lang.RuntimeException $r4, $r17;
+        java.lang.StringBuilder $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r18, $r19, $r20, $r21, $r22;
+        java.lang.String $r12, $r23;
+        int $i0, $i1, $i2, $i3;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7;
+        java.lang.IllegalArgumentException $r24, $r26;
+        org.stathissideris.ascii2image.graphics.DiagramShape r25;
+
+        r25 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        r2 := @parameter2: org.stathissideris.ascii2image.graphics.Diagram;
+
+        if r0 == null goto label1;
+
+        if r1 == null goto label1;
+
+        if r2 != null goto label2;
+
+     label1:
+        $r26 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r26.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("None of the parameters can be null");
+
+        throw $r26;
+
+     label2:
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean equals(java.lang.Object)>(r1);
+
+        if $z0 == 0 goto label3;
+
+        $r24 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r24.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("The two points cannot be the same");
+
+        throw $r24;
+
+     label3:
+        r27 = null;
+
+        r3 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: org.stathissideris.ascii2image.text.TextGrid$Cell getCellFor(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if r3 != null goto label4;
+
+        $r17 = new java.lang.RuntimeException;
+
+        $r18 = new java.lang.StringBuilder;
+
+        specialinvoke $r18.<java.lang.StringBuilder: void <init>()>();
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Upexpected error, cannot find cell corresponding to point ");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" for diagram ");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r17.<java.lang.RuntimeException: void <init>(java.lang.String)>($r23);
+
+        throw $r17;
+
+     label4:
+        $z1 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isNorthOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if $z1 == 0 goto label5;
+
+        $r16 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $f6 = r0.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i3 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMinY(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r3);
+
+        $f7 = (float) $i3;
+
+        specialinvoke $r16.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f6, $f7);
+
+        r27 = $r16;
+
+        goto label8;
+
+     label5:
+        $z2 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isSouthOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if $z2 == 0 goto label6;
+
+        $r15 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $f4 = r0.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i2 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxY(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r3);
+
+        $f5 = (float) $i2;
+
+        specialinvoke $r15.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        r27 = $r15;
+
+        goto label8;
+
+     label6:
+        $z3 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isWestOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if $z3 == 0 goto label7;
+
+        $r14 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i1 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMinX(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r3);
+
+        $f3 = (float) $i1;
+
+        $f2 = r0.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        specialinvoke $r14.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f3, $f2);
+
+        r27 = $r14;
+
+        goto label8;
+
+     label7:
+        $z4 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isEastOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if $z4 == 0 goto label8;
+
+        $r13 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i0 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxX(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r3);
+
+        $f1 = (float) $i0;
+
+        $f0 = r0.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        specialinvoke $r13.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f1, $f0);
+
+        r27 = $r13;
+
+     label8:
+        if r27 != null goto label9;
+
+        $r4 = new java.lang.RuntimeException;
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Upexpected error, cannot find cell edge point for points ");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" and ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" for diagram ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>($r12);
+
+        throw $r4;
+
+     label9:
+        return r27;
+    }
+
+    public org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgeProjectionPointBetween(org.stathissideris.ascii2image.graphics.ShapePoint, org.stathissideris.ascii2image.graphics.ShapePoint, org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.ShapePoint r0, r1, $r13, $r14, $r15, $r16, r34;
+        org.stathissideris.ascii2image.graphics.Diagram r2;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r3;
+        java.lang.RuntimeException $r4, $r17;
+        java.lang.StringBuilder $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r18, $r19, $r20, $r21, $r22, $r25, $r26, $r27, $r28, $r29, $r30;
+        java.lang.String $r12, $r23, $r31;
+        int $i0, $i1, $i2, $i3;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7;
+        java.lang.IllegalArgumentException $r24, $r33;
+        org.stathissideris.ascii2image.graphics.DiagramShape r32;
+
+        r32 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        r1 := @parameter1: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        r2 := @parameter2: org.stathissideris.ascii2image.graphics.Diagram;
+
+        if r0 == null goto label1;
+
+        if r1 == null goto label1;
+
+        if r2 != null goto label2;
+
+     label1:
+        $r33 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r33.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("None of the parameters can be null");
+
+        throw $r33;
+
+     label2:
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean equals(java.lang.Object)>(r1);
+
+        if $z0 == 0 goto label3;
+
+        $r24 = new java.lang.IllegalArgumentException;
+
+        $r25 = new java.lang.StringBuilder;
+
+        specialinvoke $r25.<java.lang.StringBuilder: void <init>()>();
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("The two points cannot be the same: ");
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" and ");
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" passed");
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r24.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r31);
+
+        throw $r24;
+
+     label3:
+        r34 = null;
+
+        r3 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: org.stathissideris.ascii2image.text.TextGrid$Cell getCellFor(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if r3 != null goto label4;
+
+        $r17 = new java.lang.RuntimeException;
+
+        $r18 = new java.lang.StringBuilder;
+
+        specialinvoke $r18.<java.lang.StringBuilder: void <init>()>();
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Upexpected error, cannot find cell corresponding to point ");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" for diagram ");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r17.<java.lang.RuntimeException: void <init>(java.lang.String)>($r23);
+
+        throw $r17;
+
+     label4:
+        $z1 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isNorthOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if $z1 == 0 goto label5;
+
+        $r16 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $f6 = r0.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i3 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxY(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r3);
+
+        $f7 = (float) $i3;
+
+        specialinvoke $r16.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f6, $f7);
+
+        r34 = $r16;
+
+        goto label8;
+
+     label5:
+        $z2 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isSouthOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if $z2 == 0 goto label6;
+
+        $r15 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $f4 = r0.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i2 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMinY(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r3);
+
+        $f5 = (float) $i2;
+
+        specialinvoke $r15.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        r34 = $r15;
+
+        goto label8;
+
+     label6:
+        $z3 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isWestOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if $z3 == 0 goto label7;
+
+        $r14 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i1 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMaxX(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r3);
+
+        $f3 = (float) $i1;
+
+        $f2 = r0.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        specialinvoke $r14.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f3, $f2);
+
+        r34 = $r14;
+
+        goto label8;
+
+     label7:
+        $z4 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isEastOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r0);
+
+        if $z4 == 0 goto label8;
+
+        $r13 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $i0 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMinX(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r3);
+
+        $f1 = (float) $i0;
+
+        $f0 = r0.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        specialinvoke $r13.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f1, $f0);
+
+        r34 = $r13;
+
+     label8:
+        if r34 != null goto label9;
+
+        $r4 = new java.lang.RuntimeException;
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Upexpected error, cannot find cell edge point for points ");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" and ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" for diagram ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>($r12);
+
+        throw $r4;
+
+     label9:
+        return r34;
+    }
+
+    public boolean contains(org.stathissideris.ascii2image.graphics.ShapePoint)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.geom.GeneralPath r1;
+        org.stathissideris.ascii2image.graphics.ShapePoint r2;
+        boolean $z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r2 := @parameter0: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        if r1 == null goto label1;
+
+        $z0 = virtualinvoke r1.<java.awt.geom.GeneralPath: boolean contains(java.awt.geom.Point2D)>(r2);
+
+        return $z0;
+
+     label1:
+        return 0;
+    }
+
+    public boolean contains(java.awt.geom.Rectangle2D)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.geom.GeneralPath r1;
+        java.awt.geom.Rectangle2D r2;
+        boolean $z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r2 := @parameter0: java.awt.geom.Rectangle2D;
+
+        r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        if r1 == null goto label1;
+
+        $z0 = virtualinvoke r1.<java.awt.geom.GeneralPath: boolean contains(java.awt.geom.Rectangle2D)>(r2);
+
+        return $z0;
+
+     label1:
+        return 0;
+    }
+
+    public boolean intersects(java.awt.geom.Rectangle2D)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.awt.geom.GeneralPath r1;
+        java.awt.geom.Rectangle2D r2;
+        boolean $z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r2 := @parameter0: java.awt.geom.Rectangle2D;
+
+        r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        if r1 == null goto label1;
+
+        $z0 = virtualinvoke r1.<java.awt.geom.GeneralPath: boolean intersects(java.awt.geom.Rectangle2D)>(r2);
+
+        return $z0;
+
+     label1:
+        return 0;
+    }
+
+    public boolean dropsShadow()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean $z0, $z1, $z2;
+        int $i0, $i1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z0 == 0 goto label1;
+
+        $i0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i0 == 1 goto label1;
+
+        $i1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i1 == 2 goto label1;
+
+        $z1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed()>();
+
+        if $z1 != 0 goto label1;
+
+        $z2 = 1;
+
+        goto label2;
+
+     label1:
+        $z2 = 0;
+
+     label2:
+        return $z2;
+    }
+
+    public int getType()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        int $i0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $i0 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int type>;
+
+        return $i0;
+    }
+
+    public void setType(int)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        int i0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        i0 := @parameter0: int;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: int type> = i0;
+
+        return;
+    }
+
+    public void moveEndsToCellEdges(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean $z0;
+        java.util.ArrayList $r1, $r3, $r6, $r7, $r9, $r10;
+        java.lang.Object $r2, $r4, $r8, $r11;
+        org.stathissideris.ascii2image.graphics.Diagram r5;
+        int $i0, $i1, $i2, $i3;
+        org.stathissideris.ascii2image.text.TextGrid r12;
+        org.stathissideris.ascii2image.graphics.ShapePoint r13, r14, r15, r16, r17, r18;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r12 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r5 := @parameter1: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z0 == 0 goto label1;
+
+        return;
+
+     label1:
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r2 = virtualinvoke $r1.<java.util.ArrayList: java.lang.Object get(int)>(0);
+
+        r13 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r2;
+
+        $r3 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r4 = virtualinvoke $r3.<java.util.ArrayList: java.lang.Object get(int)>(1);
+
+        r14 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r4;
+
+        r15 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgeProjectionPointBetween(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.Diagram)>(r13, r14, r5);
+
+        virtualinvoke r13.<org.stathissideris.ascii2image.graphics.ShapePoint: void moveTo(org.stathissideris.ascii2image.graphics.ShapePoint)>(r15);
+
+        $r7 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r6 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r6.<java.util.ArrayList: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r8 = virtualinvoke $r7.<java.util.ArrayList: java.lang.Object get(int)>($i1);
+
+        r16 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r8;
+
+        $r10 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r9 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i2 = virtualinvoke $r9.<java.util.ArrayList: int size()>();
+
+        $i3 = $i2 - 2;
+
+        $r11 = virtualinvoke $r10.<java.util.ArrayList: java.lang.Object get(int)>($i3);
+
+        r17 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r11;
+
+        r18 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.ShapePoint getCellEdgeProjectionPointBetween(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.Diagram)>(r16, r17, r5);
+
+        virtualinvoke r16.<org.stathissideris.ascii2image.graphics.ShapePoint: void moveTo(org.stathissideris.ascii2image.graphics.ShapePoint)>(r18);
+
+        return;
+    }
+
+    public void connectEndsToAnchors(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean $z0;
+        java.util.ArrayList $r1, $r3, $r7, $r8, $r10, $r11;
+        java.lang.Object $r2, $r4, $r9, $r12;
+        org.stathissideris.ascii2image.text.TextGrid r5;
+        org.stathissideris.ascii2image.graphics.Diagram r6;
+        int $i0, $i1, $i2, $i3;
+        org.stathissideris.ascii2image.graphics.ShapePoint r13, r14, r15, r16;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r5 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r6 := @parameter1: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z0 == 0 goto label1;
+
+        return;
+
+     label1:
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r2 = virtualinvoke $r1.<java.util.ArrayList: java.lang.Object get(int)>(0);
+
+        r13 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r2;
+
+        $r3 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r4 = virtualinvoke $r3.<java.util.ArrayList: java.lang.Object get(int)>(1);
+
+        r14 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r4;
+
+        specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: void connectEndToAnchors(org.stathissideris.ascii2image.text.TextGrid,org.stathissideris.ascii2image.graphics.Diagram,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint)>(r5, r6, r14, r13);
+
+        $r8 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r7 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r7.<java.util.ArrayList: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r9 = virtualinvoke $r8.<java.util.ArrayList: java.lang.Object get(int)>($i1);
+
+        r15 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r9;
+
+        $r11 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $r10 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i2 = virtualinvoke $r10.<java.util.ArrayList: int size()>();
+
+        $i3 = $i2 - 2;
+
+        $r12 = virtualinvoke $r11.<java.util.ArrayList: java.lang.Object get(int)>($i3);
+
+        r16 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r12;
+
+        specialinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: void connectEndToAnchors(org.stathissideris.ascii2image.text.TextGrid,org.stathissideris.ascii2image.graphics.Diagram,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint)>(r5, r6, r16, r15);
+
+        return;
+    }
+
+    private void connectEndToAnchors(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.graphics.Diagram, org.stathissideris.ascii2image.graphics.ShapePoint, org.stathissideris.ascii2image.graphics.ShapePoint)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean $z0, $z1, $z2, $z3;
+        org.stathissideris.ascii2image.graphics.ShapePoint r1, r2;
+        org.stathissideris.ascii2image.graphics.Diagram r3;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r4;
+        org.stathissideris.ascii2image.text.TextGrid r5;
+        int $i0, $i1, $i2, $i3;
+        float $f0, $f1, $f2, $f3;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r5 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r3 := @parameter1: org.stathissideris.ascii2image.graphics.Diagram;
+
+        r2 := @parameter2: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        r1 := @parameter3: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z0 == 0 goto label1;
+
+        return;
+
+     label1:
+        r4 = staticinvoke <org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.text.TextGrid$Cell getPossibleAnchorCell(org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.ShapePoint,org.stathissideris.ascii2image.graphics.Diagram)>(r1, r2, r3);
+
+        $z1 = virtualinvoke r5.<org.stathissideris.ascii2image.text.TextGrid: boolean isArrowhead(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r4);
+
+        if $z1 == 0 goto label2;
+
+        $i2 = virtualinvoke r3.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMidX(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r4);
+
+        $f2 = (float) $i2;
+
+        r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float x> = $f2;
+
+        $i3 = virtualinvoke r3.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMidY(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r4);
+
+        $f3 = (float) $i3;
+
+        r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float y> = $f3;
+
+        virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: void setLocked(boolean)>(1);
+
+        goto label4;
+
+     label2:
+        $z2 = virtualinvoke r5.<org.stathissideris.ascii2image.text.TextGrid: boolean isCorner(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r4);
+
+        if $z2 != 0 goto label3;
+
+        $z3 = virtualinvoke r5.<org.stathissideris.ascii2image.text.TextGrid: boolean isIntersection(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r4);
+
+        if $z3 == 0 goto label4;
+
+     label3:
+        $i0 = virtualinvoke r3.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMidX(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r4);
+
+        $f0 = (float) $i0;
+
+        r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float x> = $f0;
+
+        $i1 = virtualinvoke r3.<org.stathissideris.ascii2image.graphics.Diagram: int getCellMidY(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r4);
+
+        $f1 = (float) $i1;
+
+        r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float y> = $f1;
+
+        virtualinvoke r1.<org.stathissideris.ascii2image.graphics.ShapePoint: void setLocked(boolean)>(1);
+
+     label4:
+        return;
+    }
+
+    private static org.stathissideris.ascii2image.text.TextGrid$Cell getPossibleAnchorCell(org.stathissideris.ascii2image.graphics.ShapePoint, org.stathissideris.ascii2image.graphics.ShapePoint, org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.ShapePoint r0, r1, $r4, $r5, $r6, $r7, r8;
+        boolean $z0, $z1, $z2, $z3;
+        org.stathissideris.ascii2image.graphics.Diagram r2;
+        org.stathissideris.ascii2image.text.TextGrid$Cell $r3;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7, $f8, $f9, $f10, $f11, $f12, $f13, $f14, $f15;
+        int $i0, $i1, $i2, $i3;
+
+        r1 := @parameter0: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        r0 := @parameter1: org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        r2 := @parameter2: org.stathissideris.ascii2image.graphics.Diagram;
+
+        r8 = null;
+
+        $z0 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isNorthOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        $r7 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $f12 = r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f13 = r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $i3 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellHeight()>();
+
+        $f14 = (float) $i3;
+
+        $f15 = $f13 + $f14;
+
+        specialinvoke $r7.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f12, $f15);
+
+        r8 = $r7;
+
+     label1:
+        $z1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isSouthOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r1);
+
+        if $z1 == 0 goto label2;
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $f8 = r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f9 = r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $i2 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellHeight()>();
+
+        $f10 = (float) $i2;
+
+        $f11 = $f9 - $f10;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f8, $f11);
+
+        r8 = $r6;
+
+     label2:
+        $z2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isWestOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r1);
+
+        if $z2 == 0 goto label3;
+
+        $r5 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $f4 = r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i1 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellWidth()>();
+
+        $f5 = (float) $i1;
+
+        $f7 = $f4 + $f5;
+
+        $f6 = r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        specialinvoke $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f7, $f6);
+
+        r8 = $r5;
+
+     label3:
+        $z3 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.ShapePoint: boolean isEastOf(org.stathissideris.ascii2image.graphics.ShapePoint)>(r1);
+
+        if $z3 == 0 goto label4;
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $f0 = r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $i0 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: int getCellWidth()>();
+
+        $f1 = (float) $i0;
+
+        $f3 = $f0 - $f1;
+
+        $f2 = r1.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f3, $f2);
+
+        r8 = $r4;
+
+     label4:
+        $r3 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.Diagram: org.stathissideris.ascii2image.text.TextGrid$Cell getCellFor(org.stathissideris.ascii2image.graphics.ShapePoint)>(r8);
+
+        return $r3;
+    }
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r1, $r4, $r5, $r9, $r10, $r11, $r12, $r13, $r14;
+        org.stathissideris.ascii2image.graphics.DiagramShape r2;
+        java.util.ArrayList $r3;
+        int $i0;
+        java.util.Iterator r6;
+        boolean $z0, $z1;
+        java.lang.Object $r7;
+        org.stathissideris.ascii2image.graphics.ShapePoint r8;
+        java.lang.String r15;
+
+        r2 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("DiagramShape, ");
+
+        $r3 = r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r3.<java.util.ArrayList: int size()>();
+
+        $r4 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" points: ");
+
+        r15 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r6 = virtualinvoke r2.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.Iterator getPointsIterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r7 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (org.stathissideris.ascii2image.graphics.ShapePoint) $r7;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r15);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r8);
+
+        r15 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $z1 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label2;
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r15);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label2:
+        goto label1;
+
+     label3:
+        return r15;
+    }
+
+    public boolean isStrokeDashed()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean $z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $z0 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed>;
+
+        return $z0;
+    }
+
+    public void setStrokeDashed(boolean)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        boolean z0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        z0 := @parameter0: boolean;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed> = z0;
+
+        return;
+    }
+
+    private java.awt.geom.GeneralPath makeStoragePath(org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9;
+        java.awt.geom.GeneralPath $r2, $r17;
+        java.awt.Rectangle r3;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r6, $r8, $r10, $r12, $r14;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7, $f8, $f9, $f10, $f11, f12, $f13, f15, f16, f17, $f18, $f19, $f20, $f21, $f22, $f23, $f24, $f25, $f26, $f27, $f28, $f29, $f30, $f31, $f32, $f33, $f34, $f35, $f36, $f37, $f38, $f39, $f40, $f41, $f42, $f43, $f44, $f45, $f46, $f47, $f48, $f49, $f50, $f51, $f52, $f53, $f54, $f55;
+        org.stathissideris.ascii2image.graphics.Diagram r16;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r16 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if $i0 == 4 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        r3 = virtualinvoke $r2.<java.awt.geom.GeneralPath: java.awt.Rectangle getBounds()>();
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d0 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f0 = (float) $d0;
+
+        $d1 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f1 = (float) $d1;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f0, $f1);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d2 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f2 = (float) $d2;
+
+        $d3 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f3 = (float) $d3;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        $r8 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d4 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f4 = (float) $d4;
+
+        $d5 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f5 = (float) $d5;
+
+        specialinvoke $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        $r10 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d6 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f6 = (float) $d6;
+
+        $d7 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f7 = (float) $d7;
+
+        specialinvoke $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f6, $f7);
+
+        $r12 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d8 = virtualinvoke r3.<java.awt.Rectangle: double getCenterX()>();
+
+        $f8 = (float) $d8;
+
+        $d9 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f9 = (float) $d9;
+
+        specialinvoke $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f8, $f9);
+
+        $r14 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d10 = virtualinvoke r3.<java.awt.Rectangle: double getCenterX()>();
+
+        $f10 = (float) $d10;
+
+        $d11 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f11 = (float) $d11;
+
+        specialinvoke $r14.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f10, $f11);
+
+        $i1 = r3.<java.awt.Rectangle: int width>;
+
+        f12 = (float) $i1;
+
+        $i2 = virtualinvoke r16.<org.stathissideris.ascii2image.graphics.Diagram: int getCellHeight()>();
+
+        $f13 = (float) $i2;
+
+        $i3 = r3.<java.awt.Rectangle: int width>;
+
+        $i4 = $i3 / 6;
+
+        f15 = (float) $i4;
+
+        $i5 = virtualinvoke r16.<org.stathissideris.ascii2image.graphics.Diagram: int getCellHeight()>();
+
+        $i6 = $i5 / 2;
+
+        f16 = (float) $i6;
+
+        $i7 = virtualinvoke r16.<org.stathissideris.ascii2image.graphics.Diagram: int getCellHeight()>();
+
+        $i8 = 10 * $i7;
+
+        $i9 = $i8 / 14;
+
+        f17 = (float) $i9;
+
+        $r17 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r17.<java.awt.geom.GeneralPath: void <init>()>();
+
+        $f19 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f18 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r17.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f19, $f18);
+
+        $f20 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f29 = $f20 + f15;
+
+        $f21 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f28 = $f21 + f16;
+
+        $f22 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f27 = $f22 - f15;
+
+        $f23 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f26 = $f23 + f16;
+
+        $f25 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f24 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r17.<java.awt.geom.GeneralPath: void curveTo(float,float,float,float,float,float)>($f29, $f28, $f27, $f26, $f25, $f24);
+
+        $f30 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f39 = $f30 - f15;
+
+        $f31 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f38 = $f31 - f16;
+
+        $f32 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f37 = $f32 + f15;
+
+        $f33 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f36 = $f33 - f16;
+
+        $f35 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f34 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r17.<java.awt.geom.GeneralPath: void curveTo(float,float,float,float,float,float)>($f39, $f38, $f37, $f36, $f35, $f34);
+
+        $f41 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f40 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r17.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f41, $f40);
+
+        $f43 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f42 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r17.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f43, $f42);
+
+        $f44 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f53 = $f44 + f15;
+
+        $f45 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f52 = $f45 + f17;
+
+        $f46 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f51 = $f46 - f15;
+
+        $f47 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f50 = $f47 + f17;
+
+        $f49 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f48 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r17.<java.awt.geom.GeneralPath: void curveTo(float,float,float,float,float,float)>($f53, $f52, $f51, $f50, $f49, $f48);
+
+        $f55 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f54 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r17.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f55, $f54);
+
+        return $r17;
+    }
+
+    private java.awt.geom.GeneralPath makeDocumentPath(org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        int $i0, $i1, i2, $i3, i4;
+        java.awt.geom.GeneralPath $r2, $r14;
+        java.awt.Rectangle r3;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r6, $r8, $r10, $r12;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7, $f8, $f9, $f10, $f11, $f12, $f13, $f14, $f15, $f16, $f17, $f18, $f19, $f20, $f21, $f22, $f23, $f24, $f25, $f26, $f27, $f28, $f29, $f30, $f31;
+        org.stathissideris.ascii2image.graphics.Diagram r16;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r16 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if $i0 == 4 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        r3 = virtualinvoke $r2.<java.awt.geom.GeneralPath: java.awt.Rectangle getBounds()>();
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d0 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f0 = (float) $d0;
+
+        $d1 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f1 = (float) $d1;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f0, $f1);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d2 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f2 = (float) $d2;
+
+        $d3 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f3 = (float) $d3;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        $r8 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d4 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f4 = (float) $d4;
+
+        $d5 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f5 = (float) $d5;
+
+        specialinvoke $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        $r10 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d6 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f6 = (float) $d6;
+
+        $d7 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f7 = (float) $d7;
+
+        specialinvoke $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f6, $f7);
+
+        $r12 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d8 = virtualinvoke r3.<java.awt.Rectangle: double getCenterX()>();
+
+        $f8 = (float) $d8;
+
+        $d9 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f9 = (float) $d9;
+
+        specialinvoke $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f8, $f9);
+
+        $r14 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r14.<java.awt.geom.GeneralPath: void <init>()>();
+
+        $f11 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f10 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f11, $f10);
+
+        $f13 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f12 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f13, $f12);
+
+        $f15 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f14 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f15, $f14);
+
+        $i1 = r3.<java.awt.Rectangle: int width>;
+
+        i2 = $i1 / 6;
+
+        $i3 = r3.<java.awt.Rectangle: int height>;
+
+        i4 = $i3 / 8;
+
+        $f17 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f16 = (float) i2;
+
+        $f23 = $f17 + $f16;
+
+        $f19 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f18 = (float) i4;
+
+        $f22 = $f19 - $f18;
+
+        $f21 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f20 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void quadTo(float,float,float,float)>($f23, $f22, $f21, $f20);
+
+        $f25 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f24 = (float) i2;
+
+        $f31 = $f25 - $f24;
+
+        $f27 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f26 = (float) i4;
+
+        $f30 = $f27 + $f26;
+
+        $f29 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f28 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void quadTo(float,float,float,float)>($f31, $f30, $f29, $f28);
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void closePath()>();
+
+        return $r14;
+    }
+
+    private java.awt.geom.GeneralPath makeEllipsePath(org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        int $i0;
+        java.awt.geom.GeneralPath $r2, $r14;
+        java.awt.Rectangle r3;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11;
+        float $f0, $f1, $f2, f3, $f4, $f5, $f6, f7, $f8, $f9, $f10, $f11, $f12, $f13, $f14, $f15, $f16, $f17, $f18, $f19, $f20, $f21, $f22, $f23, $f24, $f25, $f26, $f27, $f28, $f29, $f30, $f31, $f32, $f33, $f34, $f35, $f36, $f37, $f38, $f39, $f40, $f41, $f42, $f43, $f44, $f45, $f46, $f47, $f48, $f49, $f50, $f51;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r6, $r8, $r10, $r12;
+        org.stathissideris.ascii2image.graphics.Diagram r16;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r16 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if $i0 == 4 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        r3 = virtualinvoke $r2.<java.awt.geom.GeneralPath: java.awt.Rectangle getBounds()>();
+
+        $d0 = virtualinvoke r3.<java.awt.Rectangle: double getWidth()>();
+
+        $f0 = (float) $d0;
+
+        $f2 = $f0 * 0.5F;
+
+        $f1 = <org.stathissideris.ascii2image.graphics.DiagramShape: float KAPPA>;
+
+        f3 = $f2 * $f1;
+
+        $d1 = virtualinvoke r3.<java.awt.Rectangle: double getHeight()>();
+
+        $f4 = (float) $d1;
+
+        $f6 = $f4 * 0.5F;
+
+        $f5 = <org.stathissideris.ascii2image.graphics.DiagramShape: float KAPPA>;
+
+        f7 = $f6 * $f5;
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d2 = virtualinvoke r3.<java.awt.Rectangle: double getCenterX()>();
+
+        $f8 = (float) $d2;
+
+        $d3 = virtualinvoke r3.<java.awt.Rectangle: double getCenterY()>();
+
+        $f9 = (float) $d3;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f8, $f9);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d4 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f10 = (float) $d4;
+
+        $d5 = virtualinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: double getY()>();
+
+        $f11 = (float) $d5;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f10, $f11);
+
+        $r8 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d6 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f12 = (float) $d6;
+
+        $d7 = virtualinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: double getY()>();
+
+        $f13 = (float) $d7;
+
+        specialinvoke $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f12, $f13);
+
+        $r10 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d8 = virtualinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: double getX()>();
+
+        $f14 = (float) $d8;
+
+        $d9 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f15 = (float) $d9;
+
+        specialinvoke $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f14, $f15);
+
+        $r12 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d10 = virtualinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: double getX()>();
+
+        $f16 = (float) $d10;
+
+        $d11 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f17 = (float) $d11;
+
+        specialinvoke $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f16, $f17);
+
+        $r14 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r14.<java.awt.geom.GeneralPath: void <init>()>();
+
+        $f19 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f18 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f19, $f18);
+
+        $f20 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f27 = $f20 + f3;
+
+        $f26 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f25 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f21 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f24 = $f21 - f7;
+
+        $f23 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f22 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void curveTo(float,float,float,float,float,float)>($f27, $f26, $f25, $f24, $f23, $f22);
+
+        $f35 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f28 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f34 = $f28 + f7;
+
+        $f29 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f33 = $f29 + f3;
+
+        $f32 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f31 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f30 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void curveTo(float,float,float,float,float,float)>($f35, $f34, $f33, $f32, $f31, $f30);
+
+        $f36 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f43 = $f36 - f3;
+
+        $f42 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f41 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f37 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f40 = $f37 + f7;
+
+        $f39 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f38 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void curveTo(float,float,float,float,float,float)>($f43, $f42, $f41, $f40, $f39, $f38);
+
+        $f51 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f44 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f50 = $f44 - f7;
+
+        $f45 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f49 = $f45 - f3;
+
+        $f48 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        $f47 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f46 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void curveTo(float,float,float,float,float,float)>($f51, $f50, $f49, $f48, $f47, $f46);
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void closePath()>();
+
+        return $r14;
+    }
+
+    private java.awt.geom.GeneralPath makeTrapezoidPath(org.stathissideris.ascii2image.graphics.Diagram, boolean)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        int $i0, $i1;
+        java.awt.geom.GeneralPath $r2, $r15;
+        java.awt.Rectangle r3;
+        org.stathissideris.ascii2image.graphics.Diagram r4;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7, $f8, $f9, $f10, $f11, $f12, $f13, $f14, $f15, $f16, $f17, $f18, $f19, $f20, $f21, $f22, f23;
+        boolean z0;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r5, $r7, $r9, $r11, $r13;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r4 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        z0 := @parameter1: boolean;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if $i0 == 4 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        r3 = virtualinvoke $r2.<java.awt.geom.GeneralPath: java.awt.Rectangle getBounds()>();
+
+        $i1 = virtualinvoke r4.<org.stathissideris.ascii2image.graphics.Diagram: int getCellWidth()>();
+
+        $f0 = (float) $i1;
+
+        f23 = 0.7F * $f0;
+
+        if z0 == 0 goto label2;
+
+        f23 = neg f23;
+
+     label2:
+        $r5 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d0 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f1 = (float) $d0;
+
+        $f2 = $f1 + f23;
+
+        $d1 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f3 = (float) $d1;
+
+        specialinvoke $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        $r7 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d2 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f4 = (float) $d2;
+
+        $f5 = $f4 - f23;
+
+        $d3 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f6 = (float) $d3;
+
+        specialinvoke $r7.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f5, $f6);
+
+        $r9 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d4 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f7 = (float) $d4;
+
+        $f8 = $f7 + f23;
+
+        $d5 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f9 = (float) $d5;
+
+        specialinvoke $r9.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f8, $f9);
+
+        $r11 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d6 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f10 = (float) $d6;
+
+        $f11 = $f10 - f23;
+
+        $d7 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f12 = (float) $d7;
+
+        specialinvoke $r11.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f11, $f12);
+
+        $r13 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d8 = virtualinvoke r3.<java.awt.Rectangle: double getCenterX()>();
+
+        $f13 = (float) $d8;
+
+        $d9 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f14 = (float) $d9;
+
+        specialinvoke $r13.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f13, $f14);
+
+        $r15 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r15.<java.awt.geom.GeneralPath: void <init>()>();
+
+        $f16 = $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f15 = $r5.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r15.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f16, $f15);
+
+        $f18 = $r7.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f17 = $r7.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r15.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f18, $f17);
+
+        $f20 = $r9.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f19 = $r9.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r15.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f20, $f19);
+
+        $f22 = $r11.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f21 = $r11.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r15.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f22, $f21);
+
+        virtualinvoke $r15.<java.awt.geom.GeneralPath: void closePath()>();
+
+        return $r15;
+    }
+
+    private java.awt.geom.GeneralPath makeDecisionPath(org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        int $i0;
+        java.awt.geom.GeneralPath $r2, $r14;
+        java.awt.Rectangle r3;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r6, $r8, $r10, $r12;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7, $f8, $f9, $f10, $f11, $f12, $f13, $f14, $f15, $f16, $f17;
+        org.stathissideris.ascii2image.graphics.Diagram r16;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r16 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if $i0 == 4 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        r3 = virtualinvoke $r2.<java.awt.geom.GeneralPath: java.awt.Rectangle getBounds()>();
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d0 = virtualinvoke r3.<java.awt.Rectangle: double getCenterX()>();
+
+        $f0 = (float) $d0;
+
+        $d1 = virtualinvoke r3.<java.awt.Rectangle: double getCenterY()>();
+
+        $f1 = (float) $d1;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f0, $f1);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d2 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f2 = (float) $d2;
+
+        $d3 = virtualinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: double getY()>();
+
+        $f3 = (float) $d3;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        $r8 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d4 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f4 = (float) $d4;
+
+        $d5 = virtualinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: double getY()>();
+
+        $f5 = (float) $d5;
+
+        specialinvoke $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        $r10 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d6 = virtualinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: double getX()>();
+
+        $f6 = (float) $d6;
+
+        $d7 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f7 = (float) $d7;
+
+        specialinvoke $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f6, $f7);
+
+        $r12 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d8 = virtualinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: double getX()>();
+
+        $f8 = (float) $d8;
+
+        $d9 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f9 = (float) $d9;
+
+        specialinvoke $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f8, $f9);
+
+        $r14 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r14.<java.awt.geom.GeneralPath: void <init>()>();
+
+        $f11 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f10 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f11, $f10);
+
+        $f13 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f12 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f13, $f12);
+
+        $f15 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f14 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f15, $f14);
+
+        $f17 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f16 = $r12.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f17, $f16);
+
+        virtualinvoke $r14.<java.awt.geom.GeneralPath: void closePath()>();
+
+        return $r14;
+    }
+
+    private java.awt.geom.GeneralPath makeIOPath(org.stathissideris.ascii2image.graphics.Diagram)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        java.util.ArrayList $r1;
+        int $i0, $i1, $i2;
+        java.awt.geom.GeneralPath $r2, $r13;
+        java.awt.Rectangle r3;
+        org.stathissideris.ascii2image.graphics.ShapePoint $r4, $r6, $r8, $r10;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7;
+        float $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7, f8, $f9, $f10, $f11, $f12, $f13, $f14, $f15, $f16, $f17, $f18, $f19, $f20;
+        org.stathissideris.ascii2image.graphics.Diagram r12;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r12 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList points>;
+
+        $i0 = virtualinvoke $r1.<java.util.ArrayList: int size()>();
+
+        if $i0 == 4 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoPath()>();
+
+        r3 = virtualinvoke $r2.<java.awt.geom.GeneralPath: java.awt.Rectangle getBounds()>();
+
+        $r4 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d0 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f0 = (float) $d0;
+
+        $d1 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f1 = (float) $d1;
+
+        specialinvoke $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f0, $f1);
+
+        $r6 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d2 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f2 = (float) $d2;
+
+        $d3 = virtualinvoke r3.<java.awt.Rectangle: double getMinY()>();
+
+        $f3 = (float) $d3;
+
+        specialinvoke $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f2, $f3);
+
+        $r8 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d4 = virtualinvoke r3.<java.awt.Rectangle: double getMaxX()>();
+
+        $f4 = (float) $d4;
+
+        $d5 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f5 = (float) $d5;
+
+        specialinvoke $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f4, $f5);
+
+        $r10 = new org.stathissideris.ascii2image.graphics.ShapePoint;
+
+        $d6 = virtualinvoke r3.<java.awt.Rectangle: double getMinX()>();
+
+        $f6 = (float) $d6;
+
+        $d7 = virtualinvoke r3.<java.awt.Rectangle: double getMaxY()>();
+
+        $f7 = (float) $d7;
+
+        specialinvoke $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: void <init>(float,float)>($f6, $f7);
+
+        $i1 = virtualinvoke r12.<org.stathissideris.ascii2image.graphics.Diagram: int getCellWidth()>();
+
+        $i2 = $i1 / 2;
+
+        f8 = (float) $i2;
+
+        $r13 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r13.<java.awt.geom.GeneralPath: void <init>()>();
+
+        $f9 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f11 = $f9 + f8;
+
+        $f10 = $r4.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r13.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f11, $f10);
+
+        $f12 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f14 = $f12 + f8;
+
+        $f13 = $r6.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r13.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f14, $f13);
+
+        $f15 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f17 = $f15 - f8;
+
+        $f16 = $r8.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r13.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f17, $f16);
+
+        $f18 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float x>;
+
+        $f20 = $f18 - f8;
+
+        $f19 = $r10.<org.stathissideris.ascii2image.graphics.ShapePoint: float y>;
+
+        virtualinvoke $r13.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f20, $f19);
+
+        virtualinvoke $r13.<java.awt.geom.GeneralPath: void closePath()>();
+
+        return $r13;
+    }
+
+    public org.stathissideris.ascii2image.graphics.CustomShapeDefinition getDefinition()
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        org.stathissideris.ascii2image.graphics.CustomShapeDefinition $r1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        $r1 = r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.CustomShapeDefinition definition>;
+
+        return $r1;
+    }
+
+    public void setDefinition(org.stathissideris.ascii2image.graphics.CustomShapeDefinition)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        org.stathissideris.ascii2image.graphics.CustomShapeDefinition r1;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r1 := @parameter0: org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
+
+        r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.CustomShapeDefinition definition> = r1;
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        double $d0;
+        float $f0, $f1, $f2, $f3;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_CUSTOM> = 9999;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_ELLIPSE> = 9;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_TRAPEZOID> = 8;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_MANUAL_OPERATION> = 7;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_DECISION> = 6;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_IO> = 5;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_STORAGE> = 4;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_DOCUMENT> = 3;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_POINT_MARKER> = 2;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_ARROWHEAD> = 1;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: int TYPE_SIMPLE> = 0;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: boolean DEBUG> = 0;
+
+        $d0 = staticinvoke <java.lang.Math: double sqrt(double)>(2.0);
+
+        $f0 = (float) $d0;
+
+        $f1 = $f0 - 1.0F;
+
+        $f2 = 4.0F * $f1;
+
+        $f3 = $f2 / 3.0F;
+
+        <org.stathissideris.ascii2image.graphics.DiagramShape: float KAPPA> = $f3;
+
+        return;
+    }
+}

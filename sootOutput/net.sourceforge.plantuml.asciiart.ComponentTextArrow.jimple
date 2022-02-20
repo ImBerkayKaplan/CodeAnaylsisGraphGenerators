@@ -1,0 +1,493 @@
+public class net.sourceforge.plantuml.asciiart.ComponentTextArrow extends net.sourceforge.plantuml.asciiart.AbstractComponentText implements net.sourceforge.plantuml.skin.ArrowComponent
+{
+    private final net.sourceforge.plantuml.skin.ComponentType type;
+    private final net.sourceforge.plantuml.cucadiagram.Display stringsToDisplay;
+    private final net.sourceforge.plantuml.FileFormat fileFormat;
+    private final net.sourceforge.plantuml.skin.ArrowConfiguration config;
+    private final int maxAsciiMessageLength;
+
+    public void <init>(net.sourceforge.plantuml.skin.ComponentType, net.sourceforge.plantuml.skin.ArrowConfiguration, net.sourceforge.plantuml.cucadiagram.Display, net.sourceforge.plantuml.FileFormat, int)
+    {
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r0;
+        net.sourceforge.plantuml.FileFormat r1;
+        int i0;
+        net.sourceforge.plantuml.skin.ComponentType r2;
+        net.sourceforge.plantuml.skin.ArrowConfiguration r3;
+        net.sourceforge.plantuml.cucadiagram.Display r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        r2 := @parameter0: net.sourceforge.plantuml.skin.ComponentType;
+
+        r3 := @parameter1: net.sourceforge.plantuml.skin.ArrowConfiguration;
+
+        r4 := @parameter2: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r1 := @parameter3: net.sourceforge.plantuml.FileFormat;
+
+        i0 := @parameter4: int;
+
+        specialinvoke r0.<net.sourceforge.plantuml.asciiart.AbstractComponentText: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.FileFormat fileFormat> = r1;
+
+        r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: int maxAsciiMessageLength> = i0;
+
+        r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.skin.ComponentType type> = r2;
+
+        r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.skin.ArrowConfiguration config> = r3;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.cucadiagram.Display cleanAndManageBoldNumber(net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.FileFormat)>(r4, r1);
+
+        r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.cucadiagram.Display stringsToDisplay> = $r5;
+
+        return;
+    }
+
+    public static net.sourceforge.plantuml.cucadiagram.Display cleanAndManageBoldNumber(net.sourceforge.plantuml.cucadiagram.Display, net.sourceforge.plantuml.FileFormat)
+    {
+        net.sourceforge.plantuml.cucadiagram.Display r0, r10;
+        int $i0, $i1, i2;
+        java.lang.CharSequence $r1, $r3, r11;
+        boolean $z0;
+        java.lang.StringBuilder $r2, $r7, $r8, $r9;
+        java.lang.String $r4, $r6;
+        net.sourceforge.plantuml.FileFormat r5;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r5 := @parameter1: net.sourceforge.plantuml.FileFormat;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        if $i0 == 0 goto label1;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Display: java.lang.CharSequence get(int)>(0);
+
+        $z0 = $r1 instanceof net.sourceforge.plantuml.sequencediagram.MessageNumber;
+
+        if $z0 != 0 goto label2;
+
+     label1:
+        return r0;
+
+     label2:
+        r10 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display empty()>();
+
+        i2 = 0;
+
+     label3:
+        $i1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        if i2 >= $i1 goto label6;
+
+        r11 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Display: java.lang.CharSequence get(int)>(i2);
+
+        if i2 != 1 goto label4;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Display: java.lang.CharSequence get(int)>(0);
+
+        $r4 = interfaceinvoke $r3.<java.lang.CharSequence: java.lang.String toString()>();
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.asciiart.ComponentTextArrow: java.lang.String removeTagAndManageBoldNumber(java.lang.String,net.sourceforge.plantuml.FileFormat)>($r4, r5);
+
+        $r7 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r11);
+
+        r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label4:
+        if i2 == 0 goto label5;
+
+        r10 = virtualinvoke r10.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display add(java.lang.CharSequence)>(r11);
+
+     label5:
+        i2 = i2 + 1;
+
+        goto label3;
+
+     label6:
+        return r10;
+    }
+
+    private static java.lang.String removeTagAndManageBoldNumber(java.lang.String, net.sourceforge.plantuml.FileFormat)
+    {
+        net.sourceforge.plantuml.FileFormat r0, $r1;
+        java.lang.String $r2, r8, r9, $r10, r12;
+        java.util.regex.Pattern r3;
+        java.util.regex.Matcher r4;
+        java.lang.StringBuffer $r5;
+        boolean $z0;
+
+        r12 := @parameter0: java.lang.String;
+
+        r0 := @parameter1: net.sourceforge.plantuml.FileFormat;
+
+        $r1 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat UTXT>;
+
+        if r0 != $r1 goto label3;
+
+        r3 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("\\<b\\>([0-9]+)\\</b\\>");
+
+        r4 = virtualinvoke r3.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r12);
+
+        $r5 = new java.lang.StringBuffer;
+
+        specialinvoke $r5.<java.lang.StringBuffer: void <init>()>();
+
+     label1:
+        $z0 = virtualinvoke r4.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label2;
+
+        r8 = virtualinvoke r4.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        r9 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String toInternalBoldNumber(java.lang.String)>(r8);
+
+        $r10 = staticinvoke <java.util.regex.Matcher: java.lang.String quoteReplacement(java.lang.String)>(r9);
+
+        virtualinvoke r4.<java.util.regex.Matcher: java.util.regex.Matcher appendReplacement(java.lang.StringBuffer,java.lang.String)>($r5, $r10);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r4.<java.util.regex.Matcher: java.lang.StringBuffer appendTail(java.lang.StringBuffer)>($r5);
+
+        r12 = virtualinvoke $r5.<java.lang.StringBuffer: java.lang.String toString()>();
+
+     label3:
+        $r2 = virtualinvoke r12.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("\\<[^<>]+\\>", "");
+
+        return $r2;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.skin.Area, net.sourceforge.plantuml.skin.Context2D)
+    {
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r0;
+        net.sourceforge.plantuml.skin.ArrowConfiguration $r1, $r10, $r11, $r14, $r17;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.skin.Area r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r3;
+        net.sourceforge.plantuml.ugraphic.UGraphic r4;
+        net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt $r5;
+        net.sourceforge.plantuml.asciiart.UmlCharArea r6;
+        double $d0, $d1;
+        int i0, i1, i2, i3, $i4, $i5, $i6, $i7, $i8, $i9, i11;
+        net.sourceforge.plantuml.cucadiagram.Display $r7, $r21, $r23;
+        net.sourceforge.plantuml.FileFormat $r8, $r9, $r27, $r28;
+        net.sourceforge.plantuml.skin.ArrowDirection $r12, $r13, $r15, $r16, $r18, $r19;
+        java.lang.UnsupportedOperationException $r20;
+        java.util.List $r22, $r24;
+        net.sourceforge.plantuml.skin.Context2D r26;
+        char $c10;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        r4 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r2 := @parameter1: net.sourceforge.plantuml.skin.Area;
+
+        r26 := @parameter2: net.sourceforge.plantuml.skin.Context2D;
+
+        $r1 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.skin.ArrowConfiguration config>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.skin.ArrowConfiguration: boolean isHidden()>();
+
+        if $z0 == 0 goto label01;
+
+        return;
+
+     label01:
+        r3 = virtualinvoke r2.<net.sourceforge.plantuml.skin.Area: net.sourceforge.plantuml.awt.geom.Dimension2D getDimensionToUse()>();
+
+        $r5 = (net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt) r4;
+
+        r6 = virtualinvoke $r5.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: net.sourceforge.plantuml.asciiart.UmlCharArea getCharArea()>();
+
+        $d0 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        i0 = (int) $d0;
+
+        $d1 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        i1 = (int) $d1;
+
+        $r7 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.cucadiagram.Display stringsToDisplay>;
+
+        i2 = staticinvoke <net.sourceforge.plantuml.StringUtils: int getWcWidth(net.sourceforge.plantuml.cucadiagram.Display)>($r7);
+
+        i3 = i1 - 2;
+
+        $r9 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.FileFormat fileFormat>;
+
+        $r8 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat UTXT>;
+
+        if $r9 != $r8 goto label02;
+
+        $c10 = 9472;
+
+        goto label03;
+
+     label02:
+        $c10 = 45;
+
+     label03:
+        interfaceinvoke r6.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawHLine(char,int,int,int)>($c10, i3, 1, i0);
+
+        $r10 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.skin.ArrowConfiguration config>;
+
+        $z1 = virtualinvoke $r10.<net.sourceforge.plantuml.skin.ArrowConfiguration: boolean isDotted()>();
+
+        if $z1 == 0 goto label05;
+
+        i11 = 1;
+
+     label04:
+        if i11 >= i0 goto label05;
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawChar(char,int,int)>(32, i11, i3);
+
+        i11 = i11 + 2;
+
+        goto label04;
+
+     label05:
+        $r11 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.skin.ArrowConfiguration config>;
+
+        $r12 = virtualinvoke $r11.<net.sourceforge.plantuml.skin.ArrowConfiguration: net.sourceforge.plantuml.skin.ArrowDirection getArrowDirection()>();
+
+        $r13 = <net.sourceforge.plantuml.skin.ArrowDirection: net.sourceforge.plantuml.skin.ArrowDirection LEFT_TO_RIGHT_NORMAL>;
+
+        if $r12 != $r13 goto label06;
+
+        $i9 = i0 - 1;
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawChar(char,int,int)>(62, $i9, i3);
+
+        goto label09;
+
+     label06:
+        $r14 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.skin.ArrowConfiguration config>;
+
+        $r15 = virtualinvoke $r14.<net.sourceforge.plantuml.skin.ArrowConfiguration: net.sourceforge.plantuml.skin.ArrowDirection getArrowDirection()>();
+
+        $r16 = <net.sourceforge.plantuml.skin.ArrowDirection: net.sourceforge.plantuml.skin.ArrowDirection RIGHT_TO_LEFT_REVERSE>;
+
+        if $r15 != $r16 goto label07;
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawChar(char,int,int)>(60, 1, i3);
+
+        goto label09;
+
+     label07:
+        $r17 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.skin.ArrowConfiguration config>;
+
+        $r18 = virtualinvoke $r17.<net.sourceforge.plantuml.skin.ArrowConfiguration: net.sourceforge.plantuml.skin.ArrowDirection getArrowDirection()>();
+
+        $r19 = <net.sourceforge.plantuml.skin.ArrowDirection: net.sourceforge.plantuml.skin.ArrowDirection BOTH_DIRECTION>;
+
+        if $r18 != $r19 goto label08;
+
+        $i4 = i0 - 1;
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawChar(char,int,int)>(62, $i4, i3);
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawChar(char,int,int)>(60, 1, i3);
+
+        goto label09;
+
+     label08:
+        $r20 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r20.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r20;
+
+     label09:
+        $r27 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.FileFormat fileFormat>;
+
+        $r28 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat UTXT>;
+
+        if $r27 != $r28 goto label10;
+
+        $r23 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.cucadiagram.Display stringsToDisplay>;
+
+        $r24 = virtualinvoke $r23.<net.sourceforge.plantuml.cucadiagram.Display: java.util.List asList()>();
+
+        $i7 = i0 - i2;
+
+        $i8 = $i7 / 2;
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawStringsLRUnicode(java.util.Collection,int,int)>($r24, $i8, 0);
+
+        goto label11;
+
+     label10:
+        $r21 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.cucadiagram.Display stringsToDisplay>;
+
+        $r22 = virtualinvoke $r21.<net.sourceforge.plantuml.cucadiagram.Display: java.util.List asList()>();
+
+        $i5 = i0 - i2;
+
+        $i6 = $i5 / 2;
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawStringsLRSimple(java.util.Collection,int,int)>($r22, $i6, 0);
+
+     label11:
+        return;
+    }
+
+    public double getPreferredHeight(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r0;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+        int $i0, $i1;
+        double $d0;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.cucadiagram.Display stringsToDisplay>;
+
+        $i0 = staticinvoke <net.sourceforge.plantuml.StringUtils: int getHeight(net.sourceforge.plantuml.cucadiagram.Display)>($r1);
+
+        $i1 = $i0 + 2;
+
+        $d0 = (double) $i1;
+
+        return $d0;
+    }
+
+    public double getPreferredWidth(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r0;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+        int $i0, i1, $i2, $i3, $i4;
+        double $d0, $d1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: net.sourceforge.plantuml.cucadiagram.Display stringsToDisplay>;
+
+        $i0 = staticinvoke <net.sourceforge.plantuml.StringUtils: int getWcWidth(net.sourceforge.plantuml.cucadiagram.Display)>($r1);
+
+        i1 = $i0 + 2;
+
+        $i2 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: int maxAsciiMessageLength>;
+
+        if $i2 <= 0 goto label1;
+
+        $i3 = r0.<net.sourceforge.plantuml.asciiart.ComponentTextArrow: int maxAsciiMessageLength>;
+
+        $i4 = staticinvoke <java.lang.Math: int min(int,int)>($i3, i1);
+
+        $d1 = (double) $i4;
+
+        return $d1;
+
+     label1:
+        $d0 = (double) i1;
+
+        return $d0;
+    }
+
+    public java.awt.geom.Point2D getStartPoint(net.sourceforge.plantuml.graphic.StringBounder, net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        java.awt.geom.Point2D$Double $r0;
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r3;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        r3 := @parameter1: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        $r0 = new java.awt.geom.Point2D$Double;
+
+        specialinvoke $r0.<java.awt.geom.Point2D$Double: void <init>(double,double)>(0.0, 0.0);
+
+        return $r0;
+    }
+
+    public java.awt.geom.Point2D getEndPoint(net.sourceforge.plantuml.graphic.StringBounder, net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        java.awt.geom.Point2D$Double $r0;
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r3;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        r3 := @parameter1: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        $r0 = new java.awt.geom.Point2D$Double;
+
+        specialinvoke $r0.<java.awt.geom.Point2D$Double: void <init>(double,double)>(0.0, 0.0);
+
+        return $r0;
+    }
+
+    public double getPaddingY()
+    {
+        java.lang.UnsupportedOperationException $r0;
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r1;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        $r0 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r0.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r0;
+    }
+
+    public double getYPoint(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        java.lang.UnsupportedOperationException $r0;
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r0 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r0.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r0;
+    }
+
+    public double getPosArrow(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        java.lang.UnsupportedOperationException $r0;
+        net.sourceforge.plantuml.asciiart.ComponentTextArrow r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.ComponentTextArrow;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r0 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r0.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r0;
+    }
+}

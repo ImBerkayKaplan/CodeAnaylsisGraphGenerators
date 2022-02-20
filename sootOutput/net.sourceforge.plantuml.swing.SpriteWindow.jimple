@@ -1,0 +1,356 @@
+public class net.sourceforge.plantuml.swing.SpriteWindow extends javax.swing.JFrame
+{
+    private final javax.swing.JTextArea area;
+    private java.lang.String last;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.swing.SpriteWindow r0;
+        javax.swing.JTextArea $r1, $r4, $r5, $r7;
+        java.awt.image.BufferedImage $r2;
+        java.awt.Font $r3;
+        javax.swing.JScrollPane $r6;
+        java.awt.Container $r9;
+
+        r0 := @this: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        specialinvoke r0.<javax.swing.JFrame: void <init>(java.lang.String)>("SpriteWindows");
+
+        $r1 = new javax.swing.JTextArea;
+
+        specialinvoke $r1.<javax.swing.JTextArea: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.swing.SpriteWindow: javax.swing.JTextArea area> = $r1;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: java.awt.image.BufferedImage getPlantumlSmallIcon2()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.SpriteWindow: void setIconImage(java.awt.Image)>($r2);
+
+        $r4 = r0.<net.sourceforge.plantuml.swing.SpriteWindow: javax.swing.JTextArea area>;
+
+        $r3 = new java.awt.Font;
+
+        specialinvoke $r3.<java.awt.Font: void <init>(java.lang.String,int,int)>("Courier", 0, 14);
+
+        virtualinvoke $r4.<javax.swing.JTextArea: void setFont(java.awt.Font)>($r3);
+
+        $r5 = r0.<net.sourceforge.plantuml.swing.SpriteWindow: javax.swing.JTextArea area>;
+
+        virtualinvoke $r5.<javax.swing.JTextArea: void setText(java.lang.String)>("Copy an image to the clipboard.\nIt will be converted inside this window.\n");
+
+        $r6 = new javax.swing.JScrollPane;
+
+        $r7 = r0.<net.sourceforge.plantuml.swing.SpriteWindow: javax.swing.JTextArea area>;
+
+        specialinvoke $r6.<javax.swing.JScrollPane: void <init>(java.awt.Component)>($r7);
+
+        $r9 = virtualinvoke r0.<net.sourceforge.plantuml.swing.SpriteWindow: java.awt.Container getContentPane()>();
+
+        virtualinvoke $r9.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r6, "Center");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.SpriteWindow: void setSize(int,int)>(400, 320);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.SpriteWindow: void setVisible(boolean)>(1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.SpriteWindow: void setDefaultCloseOperation(int)>(3);
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.SpriteWindow: void startTimer()>();
+
+        return;
+    }
+
+    private void startTimer()
+    {
+        javax.swing.Timer $r0;
+        net.sourceforge.plantuml.swing.SpriteWindow$1 $r1;
+        net.sourceforge.plantuml.swing.SpriteWindow r2;
+
+        r2 := @this: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Init done");
+
+        $r0 = new javax.swing.Timer;
+
+        $r1 = new net.sourceforge.plantuml.swing.SpriteWindow$1;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.swing.SpriteWindow$1: void <init>(net.sourceforge.plantuml.swing.SpriteWindow)>(r2);
+
+        specialinvoke $r0.<javax.swing.Timer: void <init>(int,java.awt.event.ActionListener)>(10000, $r1);
+
+        virtualinvoke $r0.<javax.swing.Timer: void setInitialDelay(int)>(0);
+
+        virtualinvoke $r0.<javax.swing.Timer: void start()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Timer started");
+
+        return;
+    }
+
+    private void tick()
+    {
+        net.sourceforge.plantuml.swing.SpriteWindow$2 $r0;
+        net.sourceforge.plantuml.swing.SpriteWindow r1;
+
+        r1 := @this: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        $r0 = new net.sourceforge.plantuml.swing.SpriteWindow$2;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.swing.SpriteWindow$2: void <init>(net.sourceforge.plantuml.swing.SpriteWindow)>(r1);
+
+        staticinvoke <javax.swing.SwingUtilities: void invokeLater(java.lang.Runnable)>($r0);
+
+        return;
+    }
+
+    private void encode()
+    {
+        java.awt.image.BufferedImage r0;
+        java.lang.StringBuilder $r1;
+        net.sourceforge.plantuml.swing.SpriteWindow r3;
+        net.sourceforge.plantuml.sprite.SpriteGrayLevel $r4, $r5, $r6, $r7, $r8, $r9;
+        java.lang.String $r10;
+
+        r3 := @this: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.swing.SpriteWindow: java.awt.image.BufferedImage getClipboard()>();
+
+        if r0 != null goto label1;
+
+        return;
+
+     label1:
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        specialinvoke r3.<net.sourceforge.plantuml.swing.SpriteWindow: void encodeColor(java.awt.image.BufferedImage,java.lang.StringBuilder)>(r0, $r1);
+
+        $r4 = <net.sourceforge.plantuml.sprite.SpriteGrayLevel: net.sourceforge.plantuml.sprite.SpriteGrayLevel GRAY_16>;
+
+        specialinvoke r3.<net.sourceforge.plantuml.swing.SpriteWindow: void encode(java.awt.image.BufferedImage,net.sourceforge.plantuml.sprite.SpriteGrayLevel,java.lang.StringBuilder)>(r0, $r4, $r1);
+
+        $r5 = <net.sourceforge.plantuml.sprite.SpriteGrayLevel: net.sourceforge.plantuml.sprite.SpriteGrayLevel GRAY_16>;
+
+        specialinvoke r3.<net.sourceforge.plantuml.swing.SpriteWindow: void encodeCompressed(java.awt.image.BufferedImage,net.sourceforge.plantuml.sprite.SpriteGrayLevel,java.lang.StringBuilder)>(r0, $r5, $r1);
+
+        $r6 = <net.sourceforge.plantuml.sprite.SpriteGrayLevel: net.sourceforge.plantuml.sprite.SpriteGrayLevel GRAY_8>;
+
+        specialinvoke r3.<net.sourceforge.plantuml.swing.SpriteWindow: void encode(java.awt.image.BufferedImage,net.sourceforge.plantuml.sprite.SpriteGrayLevel,java.lang.StringBuilder)>(r0, $r6, $r1);
+
+        $r7 = <net.sourceforge.plantuml.sprite.SpriteGrayLevel: net.sourceforge.plantuml.sprite.SpriteGrayLevel GRAY_8>;
+
+        specialinvoke r3.<net.sourceforge.plantuml.swing.SpriteWindow: void encodeCompressed(java.awt.image.BufferedImage,net.sourceforge.plantuml.sprite.SpriteGrayLevel,java.lang.StringBuilder)>(r0, $r7, $r1);
+
+        $r8 = <net.sourceforge.plantuml.sprite.SpriteGrayLevel: net.sourceforge.plantuml.sprite.SpriteGrayLevel GRAY_4>;
+
+        specialinvoke r3.<net.sourceforge.plantuml.swing.SpriteWindow: void encode(java.awt.image.BufferedImage,net.sourceforge.plantuml.sprite.SpriteGrayLevel,java.lang.StringBuilder)>(r0, $r8, $r1);
+
+        $r9 = <net.sourceforge.plantuml.sprite.SpriteGrayLevel: net.sourceforge.plantuml.sprite.SpriteGrayLevel GRAY_4>;
+
+        specialinvoke r3.<net.sourceforge.plantuml.swing.SpriteWindow: void encodeCompressed(java.awt.image.BufferedImage,net.sourceforge.plantuml.sprite.SpriteGrayLevel,java.lang.StringBuilder)>(r0, $r9, $r1);
+
+        $r10 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke r3.<net.sourceforge.plantuml.swing.SpriteWindow: void printData(java.lang.String)>($r10);
+
+        return;
+    }
+
+    private void encodeColor(java.awt.image.BufferedImage, java.lang.StringBuilder)
+    {
+        java.lang.StringBuilder r0;
+        java.awt.image.BufferedImage r2;
+        java.lang.String $r3;
+        net.sourceforge.plantuml.swing.SpriteWindow r5;
+
+        r5 := @this: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        r2 := @parameter0: java.awt.image.BufferedImage;
+
+        r0 := @parameter1: java.lang.StringBuilder;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n");
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.sprite.SpriteUtils: java.lang.String encodeColor(java.awt.image.BufferedImage,java.lang.String)>(r2, "demo");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        return;
+    }
+
+    private void encodeCompressed(java.awt.image.BufferedImage, net.sourceforge.plantuml.sprite.SpriteGrayLevel, java.lang.StringBuilder)
+    {
+        java.lang.StringBuilder r0;
+        java.awt.image.BufferedImage r2;
+        net.sourceforge.plantuml.sprite.SpriteGrayLevel r3;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.swing.SpriteWindow r6;
+
+        r6 := @this: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        r2 := @parameter0: java.awt.image.BufferedImage;
+
+        r3 := @parameter1: net.sourceforge.plantuml.sprite.SpriteGrayLevel;
+
+        r0 := @parameter2: java.lang.StringBuilder;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n");
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.sprite.SpriteUtils: java.lang.String encodeCompressed(java.awt.image.BufferedImage,java.lang.String,net.sourceforge.plantuml.sprite.SpriteGrayLevel)>(r2, "demo", r3);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        return;
+    }
+
+    private void encode(java.awt.image.BufferedImage, net.sourceforge.plantuml.sprite.SpriteGrayLevel, java.lang.StringBuilder)
+    {
+        java.lang.StringBuilder r0;
+        java.awt.image.BufferedImage r2;
+        net.sourceforge.plantuml.sprite.SpriteGrayLevel r3;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.swing.SpriteWindow r6;
+
+        r6 := @this: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        r2 := @parameter0: java.awt.image.BufferedImage;
+
+        r3 := @parameter1: net.sourceforge.plantuml.sprite.SpriteGrayLevel;
+
+        r0 := @parameter2: java.lang.StringBuilder;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n");
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.sprite.SpriteUtils: java.lang.String encode(java.awt.image.BufferedImage,java.lang.String,net.sourceforge.plantuml.sprite.SpriteGrayLevel)>(r2, "demo", r3);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        return;
+    }
+
+    private void printData(java.lang.String)
+    {
+        java.lang.String r0, $r2;
+        net.sourceforge.plantuml.swing.SpriteWindow r1;
+        boolean $z0;
+        javax.swing.JTextArea $r3;
+
+        r1 := @this: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r2 = r1.<net.sourceforge.plantuml.swing.SpriteWindow: java.lang.String last>;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean equals(java.lang.Object)>($r2);
+
+        if $z0 != 0 goto label1;
+
+        $r3 = r1.<net.sourceforge.plantuml.swing.SpriteWindow: javax.swing.JTextArea area>;
+
+        virtualinvoke $r3.<javax.swing.JTextArea: void setText(java.lang.String)>(r0);
+
+        r1.<net.sourceforge.plantuml.swing.SpriteWindow: java.lang.String last> = r0;
+
+     label1:
+        return;
+    }
+
+    public static java.awt.image.BufferedImage getClipboard()
+    {
+        java.awt.Toolkit $r0;
+        java.awt.datatransfer.Clipboard $r1;
+        java.awt.datatransfer.Transferable r2;
+        java.awt.datatransfer.DataFlavor $r3, $r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        java.io.IOException $r6;
+        java.lang.String $r7, $r9;
+        java.awt.datatransfer.UnsupportedFlavorException $r8;
+        java.awt.image.BufferedImage r10;
+
+        $r0 = staticinvoke <java.awt.Toolkit: java.awt.Toolkit getDefaultToolkit()>();
+
+        $r1 = virtualinvoke $r0.<java.awt.Toolkit: java.awt.datatransfer.Clipboard getSystemClipboard()>();
+
+        r2 = virtualinvoke $r1.<java.awt.datatransfer.Clipboard: java.awt.datatransfer.Transferable getContents(java.lang.Object)>(null);
+
+     label1:
+        if r2 == null goto label3;
+
+        $r3 = <java.awt.datatransfer.DataFlavor: java.awt.datatransfer.DataFlavor imageFlavor>;
+
+        $z0 = interfaceinvoke r2.<java.awt.datatransfer.Transferable: boolean isDataFlavorSupported(java.awt.datatransfer.DataFlavor)>($r3);
+
+        if $z0 == 0 goto label3;
+
+        $r4 = <java.awt.datatransfer.DataFlavor: java.awt.datatransfer.DataFlavor imageFlavor>;
+
+        $r5 = interfaceinvoke r2.<java.awt.datatransfer.Transferable: java.lang.Object getTransferData(java.awt.datatransfer.DataFlavor)>($r4);
+
+        r10 = (java.awt.image.BufferedImage) $r5;
+
+     label2:
+        return r10;
+
+     label3:
+        goto label6;
+
+     label4:
+        $r8 := @caughtexception;
+
+        $r9 = virtualinvoke $r8.<java.awt.datatransfer.UnsupportedFlavorException: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r9);
+
+        goto label6;
+
+     label5:
+        $r6 := @caughtexception;
+
+        $r7 = virtualinvoke $r6.<java.io.IOException: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r7);
+
+     label6:
+        return null;
+
+        catch java.awt.datatransfer.UnsupportedFlavorException from label1 to label2 with label4;
+        catch java.io.IOException from label1 to label2 with label5;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        net.sourceforge.plantuml.swing.SpriteWindow $r0;
+        java.lang.String[] r1;
+
+        r1 := @parameter0: java.lang.String[];
+
+        $r0 = new net.sourceforge.plantuml.swing.SpriteWindow;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.swing.SpriteWindow: void <init>()>();
+
+        return;
+    }
+
+    static void access$000(net.sourceforge.plantuml.swing.SpriteWindow)
+    {
+        net.sourceforge.plantuml.swing.SpriteWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.SpriteWindow: void tick()>();
+
+        return;
+    }
+
+    static void access$100(net.sourceforge.plantuml.swing.SpriteWindow)
+    {
+        net.sourceforge.plantuml.swing.SpriteWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.SpriteWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.SpriteWindow: void encode()>();
+
+        return;
+    }
+}

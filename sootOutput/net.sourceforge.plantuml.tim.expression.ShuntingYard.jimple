@@ -1,0 +1,560 @@
+public class net.sourceforge.plantuml.tim.expression.ShuntingYard extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue;
+    private final java.util.Deque operatorStack;
+    private static final boolean TRACE;
+
+    private void traceMe()
+    {
+        net.sourceforge.plantuml.tim.expression.ShuntingYard r0;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ShuntingYard;
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.tim.expression.TokenIterator, net.sourceforge.plantuml.tim.expression.Knowledge) throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.expression.ShuntingYard r0;
+        net.sourceforge.plantuml.tim.expression.TokenStack $r1, $r7, $r10, $r39, $r55, $r60, $r65, $r70, $r74;
+        java.util.ArrayDeque $r2;
+        net.sourceforge.plantuml.tim.expression.TokenIterator r3;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
+        java.util.Deque $r4, $r5, $r31, $r33, $r38, $r42, $r47, $r52, $r54, $r58, $r61, $r62, $r63, $r64, $r80;
+        java.lang.Object $r6, $r32, $r34, $r40, $r43, $r48, $r56, $r59, $r66;
+        net.sourceforge.plantuml.tim.expression.TokenType $r8, $r9, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r22, $r23, $r24, $r25, $r26, $r27, $r28, $r36, $r37, $r45, $r46, $r50, $r51, $r73;
+        java.lang.UnsupportedOperationException $r29;
+        java.lang.String $r30, $r78, r82;
+        net.sourceforge.plantuml.tim.expression.Token $r35, $r41, $r44, $r49, $r57, $r67, $r71, $r72, r81, r83, r84;
+        net.sourceforge.plantuml.tim.expression.Knowledge r68;
+        net.sourceforge.plantuml.tim.expression.TValue r69;
+        java.lang.StringBuilder $r75, $r76, $r77;
+        net.sourceforge.plantuml.tim.EaterException $r79;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ShuntingYard;
+
+        r3 := @parameter0: net.sourceforge.plantuml.tim.expression.TokenIterator;
+
+        r68 := @parameter1: net.sourceforge.plantuml.tim.expression.Knowledge;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.tim.expression.TokenStack;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.tim.expression.TokenStack: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue> = $r1;
+
+        $r2 = new java.util.ArrayDeque;
+
+        specialinvoke $r2.<java.util.ArrayDeque: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack> = $r2;
+
+     label01:
+        $z0 = interfaceinvoke r3.<net.sourceforge.plantuml.tim.expression.TokenIterator: boolean hasMoreTokens()>();
+
+        if $z0 == 0 goto label22;
+
+        r81 = interfaceinvoke r3.<net.sourceforge.plantuml.tim.expression.TokenIterator: net.sourceforge.plantuml.tim.expression.Token nextToken()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: void traceMe()>();
+
+        $r8 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r9 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType NUMBER>;
+
+        if $r8 == $r9 goto label02;
+
+        $r11 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r12 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType QUOTED_STRING>;
+
+        if $r11 != $r12 goto label03;
+
+     label02:
+        $r10 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        virtualinvoke $r10.<net.sourceforge.plantuml.tim.expression.TokenStack: void add(net.sourceforge.plantuml.tim.expression.Token)>(r81);
+
+        goto label21;
+
+     label03:
+        $r13 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r14 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType FUNCTION_NAME>;
+
+        if $r13 != $r14 goto label04;
+
+        $r80 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        interfaceinvoke $r80.<java.util.Deque: void addFirst(java.lang.Object)>(r81);
+
+        goto label21;
+
+     label04:
+        $r15 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r16 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType PLAIN_TEXT>;
+
+        if $r15 != $r16 goto label08;
+
+        r82 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: java.lang.String getSurface()>();
+
+        r69 = interfaceinvoke r68.<net.sourceforge.plantuml.tim.expression.Knowledge: net.sourceforge.plantuml.tim.expression.TValue getVariable(java.lang.String)>(r82);
+
+        if r69 != null goto label06;
+
+        $z5 = specialinvoke r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: boolean isVariableName(java.lang.String)>(r82);
+
+        if $z5 != 0 goto label05;
+
+        $r75 = new java.lang.StringBuilder;
+
+        specialinvoke $r75.<java.lang.StringBuilder: void <init>()>();
+
+        $r76 = virtualinvoke $r75.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Parsing syntax error about ");
+
+        $r77 = virtualinvoke $r76.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r82);
+
+        $r78 = virtualinvoke $r77.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r79 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException unlocated(java.lang.String)>($r78);
+
+        throw $r79;
+
+     label05:
+        $r74 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        $r72 = new net.sourceforge.plantuml.tim.expression.Token;
+
+        $r73 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType QUOTED_STRING>;
+
+        specialinvoke $r72.<net.sourceforge.plantuml.tim.expression.Token: void <init>(java.lang.String,net.sourceforge.plantuml.tim.expression.TokenType,net.sourceforge.plantuml.json.JsonValue)>(r82, $r73, null);
+
+        virtualinvoke $r74.<net.sourceforge.plantuml.tim.expression.TokenStack: void add(net.sourceforge.plantuml.tim.expression.Token)>($r72);
+
+        goto label07;
+
+     label06:
+        $r70 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        $r71 = virtualinvoke r69.<net.sourceforge.plantuml.tim.expression.TValue: net.sourceforge.plantuml.tim.expression.Token toToken()>();
+
+        virtualinvoke $r70.<net.sourceforge.plantuml.tim.expression.TokenStack: void add(net.sourceforge.plantuml.tim.expression.Token)>($r71);
+
+     label07:
+        goto label21;
+
+     label08:
+        $r17 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r18 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPERATOR>;
+
+        if $r17 != $r18 goto label12;
+
+     label09:
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: boolean thereIsAFunctionAtTheTopOfTheOperatorStack(net.sourceforge.plantuml.tim.expression.Token)>(r81);
+
+        if $z2 != 0 goto label10;
+
+        $z3 = specialinvoke r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(net.sourceforge.plantuml.tim.expression.Token)>(r81);
+
+        if $z3 != 0 goto label10;
+
+        $z4 = specialinvoke r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: boolean theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(net.sourceforge.plantuml.tim.expression.Token)>(r81);
+
+        if $z4 == 0 goto label11;
+
+     label10:
+        $z6 = specialinvoke r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: boolean theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(net.sourceforge.plantuml.tim.expression.Token)>(r81);
+
+        if $z6 == 0 goto label11;
+
+        $r65 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        $r64 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r66 = interfaceinvoke $r64.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        $r67 = (net.sourceforge.plantuml.tim.expression.Token) $r66;
+
+        virtualinvoke $r65.<net.sourceforge.plantuml.tim.expression.TokenStack: void add(net.sourceforge.plantuml.tim.expression.Token)>($r67);
+
+        goto label09;
+
+     label11:
+        $r63 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        interfaceinvoke $r63.<java.util.Deque: void addFirst(java.lang.Object)>(r81);
+
+        goto label21;
+
+     label12:
+        $r19 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r20 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPEN_PAREN_FUNC>;
+
+        if $r19 != $r20 goto label13;
+
+        $r62 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        interfaceinvoke $r62.<java.util.Deque: void addFirst(java.lang.Object)>(r81);
+
+        goto label21;
+
+     label13:
+        $r21 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r22 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPEN_PAREN_MATH>;
+
+        if $r21 != $r22 goto label14;
+
+        $r61 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        interfaceinvoke $r61.<java.util.Deque: void addFirst(java.lang.Object)>(r81);
+
+        goto label21;
+
+     label14:
+        $r23 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r24 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType CLOSE_PAREN_FUNC>;
+
+        if $r23 != $r24 goto label15;
+
+        $r58 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r59 = interfaceinvoke $r58.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        r83 = (net.sourceforge.plantuml.tim.expression.Token) $r59;
+
+        $r60 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        virtualinvoke $r60.<net.sourceforge.plantuml.tim.expression.TokenStack: void add(net.sourceforge.plantuml.tim.expression.Token)>(r83);
+
+        goto label21;
+
+     label15:
+        $r25 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r26 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType CLOSE_PAREN_MATH>;
+
+        if $r25 != $r26 goto label18;
+
+     label16:
+        $r42 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r43 = interfaceinvoke $r42.<java.util.Deque: java.lang.Object peekFirst()>();
+
+        $r44 = (net.sourceforge.plantuml.tim.expression.Token) $r43;
+
+        $r45 = virtualinvoke $r44.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r46 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPEN_PAREN_MATH>;
+
+        if $r45 == $r46 goto label17;
+
+        $r55 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        $r54 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r56 = interfaceinvoke $r54.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        $r57 = (net.sourceforge.plantuml.tim.expression.Token) $r56;
+
+        virtualinvoke $r55.<net.sourceforge.plantuml.tim.expression.TokenStack: void add(net.sourceforge.plantuml.tim.expression.Token)>($r57);
+
+        goto label16;
+
+     label17:
+        $r47 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r48 = interfaceinvoke $r47.<java.util.Deque: java.lang.Object peekFirst()>();
+
+        $r49 = (net.sourceforge.plantuml.tim.expression.Token) $r48;
+
+        $r50 = virtualinvoke $r49.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r51 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPEN_PAREN_MATH>;
+
+        if $r50 != $r51 goto label21;
+
+        $r52 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        interfaceinvoke $r52.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        goto label21;
+
+     label18:
+        $r27 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r28 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType COMMA>;
+
+        if $r27 != $r28 goto label20;
+
+     label19:
+        $r31 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r32 = interfaceinvoke $r31.<java.util.Deque: java.lang.Object peekFirst()>();
+
+        if $r32 == null goto label21;
+
+        $r33 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r34 = interfaceinvoke $r33.<java.util.Deque: java.lang.Object peekFirst()>();
+
+        $r35 = (net.sourceforge.plantuml.tim.expression.Token) $r34;
+
+        $r36 = virtualinvoke $r35.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r37 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPEN_PAREN_FUNC>;
+
+        if $r36 == $r37 goto label21;
+
+        $r39 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        $r38 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r40 = interfaceinvoke $r38.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        $r41 = (net.sourceforge.plantuml.tim.expression.Token) $r40;
+
+        virtualinvoke $r39.<net.sourceforge.plantuml.tim.expression.TokenStack: void add(net.sourceforge.plantuml.tim.expression.Token)>($r41);
+
+        goto label19;
+
+     label20:
+        $r29 = new java.lang.UnsupportedOperationException;
+
+        $r30 = virtualinvoke r81.<net.sourceforge.plantuml.tim.expression.Token: java.lang.String toString()>();
+
+        specialinvoke $r29.<java.lang.UnsupportedOperationException: void <init>(java.lang.String)>($r30);
+
+        throw $r29;
+
+     label21:
+        goto label01;
+
+     label22:
+        $r4 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $z1 = interfaceinvoke $r4.<java.util.Deque: boolean isEmpty()>();
+
+        if $z1 != 0 goto label23;
+
+        $r5 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        r84 = (net.sourceforge.plantuml.tim.expression.Token) $r6;
+
+        $r7 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.tim.expression.TokenStack: void add(net.sourceforge.plantuml.tim.expression.Token)>(r84);
+
+        goto label22;
+
+     label23:
+        return;
+    }
+
+    private boolean isVariableName(java.lang.String)
+    {
+        java.lang.String r0;
+        boolean $z0;
+        net.sourceforge.plantuml.tim.expression.ShuntingYard r1;
+
+        r1 := @this: net.sourceforge.plantuml.tim.expression.ShuntingYard;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean matches(java.lang.String)>("[a-zA-Z0-9.$_]+");
+
+        return $z0;
+    }
+
+    private boolean thereIsAFunctionAtTheTopOfTheOperatorStack(net.sourceforge.plantuml.tim.expression.Token)
+    {
+        net.sourceforge.plantuml.tim.expression.ShuntingYard r0;
+        java.util.Deque $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.tim.expression.Token r3, r6;
+        net.sourceforge.plantuml.tim.expression.TokenType $r4, $r5;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ShuntingYard;
+
+        r6 := @parameter0: net.sourceforge.plantuml.tim.expression.Token;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Deque: java.lang.Object peekFirst()>();
+
+        r3 = (net.sourceforge.plantuml.tim.expression.Token) $r2;
+
+        if r3 == null goto label1;
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r5 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType FUNCTION_NAME>;
+
+        if $r4 != $r5 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(net.sourceforge.plantuml.tim.expression.Token)
+    {
+        net.sourceforge.plantuml.tim.expression.ShuntingYard r0;
+        java.util.Deque $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.tim.expression.Token r3, r7;
+        net.sourceforge.plantuml.tim.expression.TokenType $r4, $r5;
+        net.sourceforge.plantuml.tim.expression.TokenOperator $r6, $r8;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ShuntingYard;
+
+        r7 := @parameter0: net.sourceforge.plantuml.tim.expression.Token;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Deque: java.lang.Object peekFirst()>();
+
+        r3 = (net.sourceforge.plantuml.tim.expression.Token) $r2;
+
+        if r3 == null goto label1;
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r5 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPERATOR>;
+
+        if $r4 != $r5 goto label1;
+
+        $r6 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenOperator getTokenOperator()>();
+
+        $i0 = virtualinvoke $r6.<net.sourceforge.plantuml.tim.expression.TokenOperator: int getPrecedence()>();
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenOperator getTokenOperator()>();
+
+        $i1 = virtualinvoke $r8.<net.sourceforge.plantuml.tim.expression.TokenOperator: int getPrecedence()>();
+
+        if $i0 <= $i1 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    private boolean theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(net.sourceforge.plantuml.tim.expression.Token)
+    {
+        net.sourceforge.plantuml.tim.expression.ShuntingYard r0;
+        java.util.Deque $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.tim.expression.Token r3, r8;
+        net.sourceforge.plantuml.tim.expression.TokenType $r4, $r5;
+        net.sourceforge.plantuml.tim.expression.TokenOperator $r6, $r7, $r9;
+        boolean $z0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ShuntingYard;
+
+        r8 := @parameter0: net.sourceforge.plantuml.tim.expression.Token;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Deque: java.lang.Object peekFirst()>();
+
+        r3 = (net.sourceforge.plantuml.tim.expression.Token) $r2;
+
+        if r3 == null goto label1;
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r5 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPERATOR>;
+
+        if $r4 != $r5 goto label1;
+
+        $r6 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenOperator getTokenOperator()>();
+
+        $z0 = virtualinvoke $r6.<net.sourceforge.plantuml.tim.expression.TokenOperator: boolean isLeftAssociativity()>();
+
+        if $z0 == 0 goto label1;
+
+        $r7 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenOperator getTokenOperator()>();
+
+        $i0 = virtualinvoke $r7.<net.sourceforge.plantuml.tim.expression.TokenOperator: int getPrecedence()>();
+
+        $r9 = virtualinvoke r8.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenOperator getTokenOperator()>();
+
+        $i1 = virtualinvoke $r9.<net.sourceforge.plantuml.tim.expression.TokenOperator: int getPrecedence()>();
+
+        if $i0 != $i1 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    private boolean theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(net.sourceforge.plantuml.tim.expression.Token)
+    {
+        net.sourceforge.plantuml.tim.expression.ShuntingYard r0;
+        java.util.Deque $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.tim.expression.Token r3, r6;
+        net.sourceforge.plantuml.tim.expression.TokenType $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ShuntingYard;
+
+        r6 := @parameter0: net.sourceforge.plantuml.tim.expression.Token;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: java.util.Deque operatorStack>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Deque: java.lang.Object peekFirst()>();
+
+        r3 = (net.sourceforge.plantuml.tim.expression.Token) $r2;
+
+        if r3 == null goto label1;
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r5 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPEN_PAREN_MATH>;
+
+        if $r4 != $r5 goto label1;
+
+        return 1;
+
+     label1:
+        return 1;
+    }
+
+    public net.sourceforge.plantuml.tim.expression.TokenStack getQueue()
+    {
+        net.sourceforge.plantuml.tim.expression.ShuntingYard r0;
+        net.sourceforge.plantuml.tim.expression.TokenStack $r1;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ShuntingYard;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.expression.ShuntingYard: net.sourceforge.plantuml.tim.expression.TokenStack ouputQueue>;
+
+        return $r1;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.tim.expression.ShuntingYard: boolean TRACE> = 0;
+
+        return;
+    }
+}

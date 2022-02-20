@@ -1,0 +1,340 @@
+public class jcckit.GraphicsPlotCanvas extends jcckit.plot.PlotCanvas
+{
+    public static final java.lang.String BACKGROUND_KEY;
+    public static final java.lang.String FOREGROUND_KEY;
+    public static final java.lang.String DOUBLE_BUFFERING_KEY;
+    private final java.awt.image.BufferedImage img3;
+    private final java.awt.Graphics2D g3;
+    private jcckit.renderer.Transformation _transformation;
+    private java.lang.String _renderer;
+    private jcckit.graphic.GraphicalElement _marker;
+    private final java.awt.Color background;
+    private final java.awt.Color foreground;
+
+    public void <init>(jcckit.util.ConfigParameters, java.awt.image.BufferedImage)
+    {
+        jcckit.GraphicsPlotCanvas r0;
+        jcckit.util.ConfigParameters r1;
+        java.awt.image.BufferedImage r2;
+        java.awt.Graphics2D $r3, $r6;
+        java.lang.Object $r4;
+        java.awt.RenderingHints$Key $r5;
+        java.awt.Color $r7, $r8, $r9, $r10;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        r1 := @parameter0: jcckit.util.ConfigParameters;
+
+        r2 := @parameter1: java.awt.image.BufferedImage;
+
+        specialinvoke r0.<jcckit.plot.PlotCanvas: void <init>(jcckit.util.ConfigParameters)>(r1);
+
+        r0.<jcckit.GraphicsPlotCanvas: java.lang.String _renderer> = "jcckit.renderer.GraphicsRenderer";
+
+        r0.<jcckit.GraphicsPlotCanvas: java.awt.image.BufferedImage img3> = r2;
+
+        virtualinvoke r0.<jcckit.GraphicsPlotCanvas: void setRenderer(java.lang.String)>("jcckit.renderer.Graphics2DRenderer");
+
+        $r3 = virtualinvoke r2.<java.awt.image.BufferedImage: java.awt.Graphics2D createGraphics()>();
+
+        r0.<jcckit.GraphicsPlotCanvas: java.awt.Graphics2D g3> = $r3;
+
+        $r6 = r0.<jcckit.GraphicsPlotCanvas: java.awt.Graphics2D g3>;
+
+        $r5 = <java.awt.RenderingHints: java.awt.RenderingHints$Key KEY_ANTIALIASING>;
+
+        $r4 = <java.awt.RenderingHints: java.lang.Object VALUE_ANTIALIAS_ON>;
+
+        virtualinvoke $r6.<java.awt.Graphics2D: void setRenderingHint(java.awt.RenderingHints$Key,java.lang.Object)>($r5, $r4);
+
+        $r7 = <java.awt.Color: java.awt.Color WHITE>;
+
+        $r8 = virtualinvoke r1.<jcckit.util.ConfigParameters: java.awt.Color getColor(java.lang.String,java.awt.Color)>("background", $r7);
+
+        r0.<jcckit.GraphicsPlotCanvas: java.awt.Color background> = $r8;
+
+        $r9 = <java.awt.Color: java.awt.Color BLACK>;
+
+        $r10 = virtualinvoke r1.<jcckit.util.ConfigParameters: java.awt.Color getColor(java.lang.String,java.awt.Color)>("foreground", $r9);
+
+        r0.<jcckit.GraphicsPlotCanvas: java.awt.Color foreground> = $r10;
+
+        return;
+    }
+
+    public void paint()
+    {
+        java.awt.Dimension $r0;
+        jcckit.GraphicsPlotCanvas r1;
+        java.awt.image.BufferedImage $r2, $r3;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        java.awt.Color $r5;
+        java.awt.Graphics2D $r6, $r7, $r8;
+        jcckit.renderer.Transformation $r9;
+        jcckit.plot.Plot r10;
+        jcckit.graphic.GraphicalElement $r11, $r12;
+        jcckit.graphic.Renderer $r13;
+
+        r1 := @this: jcckit.GraphicsPlotCanvas;
+
+        $r0 = new java.awt.Dimension;
+
+        $r2 = r1.<jcckit.GraphicsPlotCanvas: java.awt.image.BufferedImage img3>;
+
+        $i0 = virtualinvoke $r2.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $r3 = r1.<jcckit.GraphicsPlotCanvas: java.awt.image.BufferedImage img3>;
+
+        $i1 = virtualinvoke $r3.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.Dimension: void <init>(int,int)>($i0, $i1);
+
+        $r6 = r1.<jcckit.GraphicsPlotCanvas: java.awt.Graphics2D g3>;
+
+        $r5 = r1.<jcckit.GraphicsPlotCanvas: java.awt.Color background>;
+
+        virtualinvoke $r6.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r5);
+
+        $r7 = r1.<jcckit.GraphicsPlotCanvas: java.awt.Graphics2D g3>;
+
+        $i2 = $r0.<java.awt.Dimension: int width>;
+
+        $i5 = $i2 + 1;
+
+        $i3 = $r0.<java.awt.Dimension: int height>;
+
+        $i4 = $i3 + 1;
+
+        virtualinvoke $r7.<java.awt.Graphics2D: void fillRect(int,int,int,int)>(0, 0, $i5, $i4);
+
+        specialinvoke r1.<jcckit.GraphicsPlotCanvas: void init(java.awt.Dimension)>($r0);
+
+        $r9 = r1.<jcckit.GraphicsPlotCanvas: jcckit.renderer.Transformation _transformation>;
+
+        $r8 = r1.<jcckit.GraphicsPlotCanvas: java.awt.Graphics2D g3>;
+
+        virtualinvoke $r9.<jcckit.renderer.Transformation: void apply(java.awt.Graphics2D)>($r8);
+
+        r10 = virtualinvoke r1.<jcckit.GraphicsPlotCanvas: jcckit.plot.Plot getPlot()>();
+
+        specialinvoke r1.<jcckit.GraphicsPlotCanvas: void drawCoordinateSystem(java.awt.Dimension,jcckit.plot.Plot)>($r0, r10);
+
+        specialinvoke r1.<jcckit.GraphicsPlotCanvas: void drawPlot(jcckit.plot.Plot)>(r10);
+
+        $r11 = r1.<jcckit.GraphicsPlotCanvas: jcckit.graphic.GraphicalElement _marker>;
+
+        if $r11 == null goto label1;
+
+        $r12 = r1.<jcckit.GraphicsPlotCanvas: jcckit.graphic.GraphicalElement _marker>;
+
+        $r13 = virtualinvoke r1.<jcckit.GraphicsPlotCanvas: jcckit.graphic.Renderer createRenderer()>();
+
+        interfaceinvoke $r12.<jcckit.graphic.GraphicalElement: void renderWith(jcckit.graphic.Renderer)>($r13);
+
+     label1:
+        return;
+    }
+
+    private void drawPlot(jcckit.plot.Plot)
+    {
+        jcckit.GraphicsPlotCanvas r0;
+        jcckit.graphic.Renderer r1;
+        jcckit.plot.Plot r2;
+        jcckit.graphic.GraphicalElement[] r3;
+        int $i0, i1;
+        boolean $z0;
+        jcckit.graphic.GraphicalElement $r4, $r5, r6;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        r2 := @parameter0: jcckit.plot.Plot;
+
+        virtualinvoke r0.<jcckit.GraphicsPlotCanvas: void prepare()>();
+
+        r1 = virtualinvoke r0.<jcckit.GraphicsPlotCanvas: jcckit.graphic.Renderer createRenderer()>();
+
+        r3 = virtualinvoke r2.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement[] getCurves()>();
+
+        i1 = 0;
+
+     label1:
+        $i0 = lengthof r3;
+
+        if i1 >= $i0 goto label2;
+
+        $r5 = r3[i1];
+
+        interfaceinvoke $r5.<jcckit.graphic.GraphicalElement: void renderWith(jcckit.graphic.Renderer)>(r1);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        r6 = virtualinvoke r2.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement getAnnotation()>();
+
+        if r6 == null goto label3;
+
+        interfaceinvoke r6.<jcckit.graphic.GraphicalElement: void renderWith(jcckit.graphic.Renderer)>(r1);
+
+     label3:
+        $z0 = virtualinvoke r2.<jcckit.plot.Plot: boolean isLegendVisible()>();
+
+        if $z0 == 0 goto label4;
+
+        $r4 = virtualinvoke r2.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement getLegend()>();
+
+        interfaceinvoke $r4.<jcckit.graphic.GraphicalElement: void renderWith(jcckit.graphic.Renderer)>(r1);
+
+     label4:
+        return;
+    }
+
+    private void init(java.awt.Dimension)
+    {
+        jcckit.GraphicsPlotCanvas r0;
+        java.awt.Dimension r1;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        r1 := @parameter0: java.awt.Dimension;
+
+        virtualinvoke r0.<jcckit.GraphicsPlotCanvas: void calculateTransformation(java.awt.Dimension)>(r1);
+
+        return;
+    }
+
+    private void drawCoordinateSystem(java.awt.Dimension, jcckit.plot.Plot)
+    {
+        jcckit.GraphicsPlotCanvas r0;
+        java.awt.Color $r1;
+        java.awt.Graphics2D $r2;
+        jcckit.plot.Plot r3;
+        jcckit.graphic.GraphicalElement $r4;
+        jcckit.graphic.Renderer $r5;
+        java.awt.Dimension r6;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        r6 := @parameter0: java.awt.Dimension;
+
+        r3 := @parameter1: jcckit.plot.Plot;
+
+        $r2 = r0.<jcckit.GraphicsPlotCanvas: java.awt.Graphics2D g3>;
+
+        $r1 = r0.<jcckit.GraphicsPlotCanvas: java.awt.Color foreground>;
+
+        virtualinvoke $r2.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r1);
+
+        $r4 = virtualinvoke r3.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement getCoordinateSystem()>();
+
+        $r5 = virtualinvoke r0.<jcckit.GraphicsPlotCanvas: jcckit.graphic.Renderer createRenderer()>();
+
+        interfaceinvoke $r4.<jcckit.graphic.GraphicalElement: void renderWith(jcckit.graphic.Renderer)>($r5);
+
+        return;
+    }
+
+    protected void prepare()
+    {
+        jcckit.GraphicsPlotCanvas r0;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        return;
+    }
+
+    protected void calculateTransformation(java.awt.Dimension)
+    {
+        jcckit.GraphicsPlotCanvas r0;
+        jcckit.renderer.Transformation $r1;
+        java.awt.Dimension r2;
+        int $i0, $i1;
+        jcckit.graphic.ClippingRectangle $r3;
+        jcckit.graphic.Anchor $r4, $r5;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        r2 := @parameter0: java.awt.Dimension;
+
+        $r1 = new jcckit.renderer.Transformation;
+
+        $i0 = r2.<java.awt.Dimension: int width>;
+
+        $i1 = r2.<java.awt.Dimension: int height>;
+
+        $r3 = virtualinvoke r0.<jcckit.GraphicsPlotCanvas: jcckit.graphic.ClippingRectangle getPaper()>();
+
+        $r4 = virtualinvoke r0.<jcckit.GraphicsPlotCanvas: jcckit.graphic.Anchor getHorizontalAnchor()>();
+
+        $r5 = virtualinvoke r0.<jcckit.GraphicsPlotCanvas: jcckit.graphic.Anchor getVerticalAnchor()>();
+
+        specialinvoke $r1.<jcckit.renderer.Transformation: void <init>(int,int,jcckit.graphic.ClippingRectangle,jcckit.graphic.Anchor,jcckit.graphic.Anchor)>($i0, $i1, $r3, $r4, $r5);
+
+        r0.<jcckit.GraphicsPlotCanvas: jcckit.renderer.Transformation _transformation> = $r1;
+
+        return;
+    }
+
+    protected jcckit.graphic.Renderer createRenderer()
+    {
+        jcckit.GraphicsPlotCanvas r0;
+        java.lang.String $r1;
+        java.lang.Object $r2;
+        java.awt.Graphics2D $r3;
+        jcckit.renderer.Graphics2DRenderer $r4, $r5;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        $r1 = r0.<jcckit.GraphicsPlotCanvas: java.lang.String _renderer>;
+
+        $r2 = staticinvoke <jcckit.util.Factory: java.lang.Object create(java.lang.String)>($r1);
+
+        $r4 = (jcckit.renderer.Graphics2DRenderer) $r2;
+
+        $r3 = r0.<jcckit.GraphicsPlotCanvas: java.awt.Graphics2D g3>;
+
+        $r5 = virtualinvoke $r4.<jcckit.renderer.Graphics2DRenderer: jcckit.renderer.Graphics2DRenderer init(java.awt.Graphics2D)>($r3);
+
+        return $r5;
+    }
+
+    public void setRenderer(java.lang.String)
+    {
+        jcckit.GraphicsPlotCanvas r0;
+        java.lang.String r1;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<jcckit.GraphicsPlotCanvas: java.lang.String _renderer> = r1;
+
+        return;
+    }
+
+    public void setMarker(jcckit.graphic.GraphicalElement)
+    {
+        jcckit.GraphicsPlotCanvas r0;
+        jcckit.graphic.GraphicalElement r1;
+
+        r0 := @this: jcckit.GraphicsPlotCanvas;
+
+        r1 := @parameter0: jcckit.graphic.GraphicalElement;
+
+        r0.<jcckit.GraphicsPlotCanvas: jcckit.graphic.GraphicalElement _marker> = r1;
+
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.GraphicsPlotCanvas: java.lang.String DOUBLE_BUFFERING_KEY> = "doubleBuffering";
+
+        <jcckit.GraphicsPlotCanvas: java.lang.String FOREGROUND_KEY> = "foreground";
+
+        <jcckit.GraphicsPlotCanvas: java.lang.String BACKGROUND_KEY> = "background";
+
+        return;
+    }
+}

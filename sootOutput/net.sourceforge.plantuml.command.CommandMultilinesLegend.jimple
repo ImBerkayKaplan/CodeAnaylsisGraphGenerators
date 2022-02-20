@@ -1,0 +1,201 @@
+public class net.sourceforge.plantuml.command.CommandMultilinesLegend extends net.sourceforge.plantuml.command.CommandMultilines2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.CommandMultilinesLegend r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+        net.sourceforge.plantuml.command.MultilinesStrategy $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilinesLegend;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.CommandMultilinesLegend: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        $r2 = <net.sourceforge.plantuml.command.MultilinesStrategy: net.sourceforge.plantuml.command.MultilinesStrategy REMOVE_STARTING_QUOTE>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.CommandMultilines2: void <init>(net.sourceforge.plantuml.command.regex.IRegex,net.sourceforge.plantuml.command.MultilinesStrategy)>($r1, $r2);
+
+        return;
+    }
+
+    private static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2, $r7, $r12;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r8, $r9, $r13, $r14, $r15;
+        net.sourceforge.plantuml.command.regex.RegexOptional $r5, $r10;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r6, $r11, $r16;
+
+        $r0 = class "Lnet/sourceforge/plantuml/command/CommandMultilinesLegend;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[5];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("legend");
+
+        $r2[1] = $r4;
+
+        $r5 = new net.sourceforge.plantuml.command.regex.RegexOptional;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r7 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[2];
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r7[0] = $r8;
+
+        $r9 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("VALIGN", "(top|bottom)");
+
+        $r7[1] = $r9;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexConcat: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>($r7);
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.regex.RegexOptional: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r6);
+
+        $r2[2] = $r5;
+
+        $r10 = new net.sourceforge.plantuml.command.regex.RegexOptional;
+
+        $r11 = new net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r12 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[2];
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r12[0] = $r13;
+
+        $r14 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("ALIGN", "(left|right|center)");
+
+        $r12[1] = $r14;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.command.regex.RegexConcat: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>($r12);
+
+        specialinvoke $r10.<net.sourceforge.plantuml.command.regex.RegexOptional: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r11);
+
+        $r2[3] = $r10;
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[4] = $r15;
+
+        $r16 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r16;
+    }
+
+    public java.lang.String getPatternEnd()
+    {
+        net.sourceforge.plantuml.command.CommandMultilinesLegend r0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilinesLegend;
+
+        return "^end[%s]?legend$";
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeNow(net.sourceforge.plantuml.TitledDiagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandMultilinesLegend r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+        net.sourceforge.plantuml.StringLocated $r2, $r3;
+        java.lang.String $r4, r6, r7;
+        net.sourceforge.plantuml.command.regex.RegexResult r5;
+        net.sourceforge.plantuml.cucadiagram.Display r8, $r12;
+        int $i0;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r9, $r14;
+        net.sourceforge.plantuml.graphic.VerticalAlignment r10;
+        net.sourceforge.plantuml.TitledDiagram r11;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned $r13;
+        net.sourceforge.plantuml.command.BlocLines r15, r16, r17, r18;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment r19;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilinesLegend;
+
+        r11 := @parameter0: net.sourceforge.plantuml.TitledDiagram;
+
+        r15 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        r16 = virtualinvoke r15.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines trimSmart(int)>(1);
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandMultilinesLegend: net.sourceforge.plantuml.command.regex.IRegex getStartingPattern()>();
+
+        $r2 = virtualinvoke r16.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r5 = interfaceinvoke $r1.<net.sourceforge.plantuml.command.regex.IRegex: net.sourceforge.plantuml.command.regex.RegexResult matcher(java.lang.String)>($r4);
+
+        r6 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("ALIGN", 0);
+
+        r7 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("VALIGN", 0);
+
+        r17 = virtualinvoke r16.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines subExtract(int,int)>(1, 1);
+
+        r18 = virtualinvoke r17.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines removeEmptyColumns()>();
+
+        r8 = virtualinvoke r18.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.cucadiagram.Display toDisplay()>();
+
+        $i0 = virtualinvoke r8.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        if $i0 <= 0 goto label2;
+
+        r10 = staticinvoke <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment fromString(java.lang.String)>(r7);
+
+        r19 = staticinvoke <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment fromString(java.lang.String)>(r6);
+
+        if r19 != null goto label1;
+
+        r19 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+     label1:
+        $r12 = virtualinvoke r8.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display replaceBackslashT()>();
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.cucadiagram.DisplayPositioned: net.sourceforge.plantuml.cucadiagram.DisplayPositioned single(net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.graphic.VerticalAlignment)>($r12, r19, r10);
+
+        virtualinvoke r11.<net.sourceforge.plantuml.TitledDiagram: void setLegend(net.sourceforge.plantuml.cucadiagram.DisplayPositioned)>($r13);
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r14;
+
+     label2:
+        $r9 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("No legend defined");
+
+        return $r9;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeNow(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandMultilinesLegend r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.command.BlocLines r2;
+        net.sourceforge.plantuml.TitledDiagram $r3;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r4;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilinesLegend;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $r3 = (net.sourceforge.plantuml.TitledDiagram) r1;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandMultilinesLegend: net.sourceforge.plantuml.command.CommandExecutionResult executeNow(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.command.BlocLines)>($r3, r2);
+
+        return $r4;
+    }
+}

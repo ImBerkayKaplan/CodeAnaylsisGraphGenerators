@@ -1,0 +1,133 @@
+public class net.sourceforge.plantuml.code.CompressionHuffman extends java.lang.Object implements net.sourceforge.plantuml.code.Compression
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.code.CompressionHuffman r0;
+
+        r0 := @this: net.sourceforge.plantuml.code.CompressionHuffman;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public byte[] compress(byte[])
+    {
+        java.io.ByteArrayOutputStream $r0;
+        java.util.zip.Deflater $r2;
+        java.util.zip.DeflaterOutputStream $r4;
+        byte[] r6, $r7;
+        java.io.IOException $r8;
+        java.lang.IllegalStateException $r10;
+        java.lang.String $r11;
+        net.sourceforge.plantuml.code.CompressionHuffman r12;
+
+        r12 := @this: net.sourceforge.plantuml.code.CompressionHuffman;
+
+        r6 := @parameter0: byte[];
+
+        $r0 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        $r2 = new java.util.zip.Deflater;
+
+        specialinvoke $r2.<java.util.zip.Deflater: void <init>(int)>(2);
+
+        virtualinvoke $r2.<java.util.zip.Deflater: void setLevel(int)>(9);
+
+        $r4 = new java.util.zip.DeflaterOutputStream;
+
+        specialinvoke $r4.<java.util.zip.DeflaterOutputStream: void <init>(java.io.OutputStream,java.util.zip.Deflater)>($r0, $r2);
+
+     label1:
+        virtualinvoke $r4.<java.util.zip.DeflaterOutputStream: void write(byte[])>(r6);
+
+        virtualinvoke $r4.<java.util.zip.DeflaterOutputStream: void close()>();
+
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void close()>();
+
+        $r7 = virtualinvoke $r0.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+     label2:
+        return $r7;
+
+     label3:
+        $r8 := @caughtexception;
+
+        $r10 = new java.lang.IllegalStateException;
+
+        $r11 = virtualinvoke $r8.<java.io.IOException: java.lang.String toString()>();
+
+        specialinvoke $r10.<java.lang.IllegalStateException: void <init>(java.lang.String)>($r11);
+
+        throw $r10;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+
+    public net.sourceforge.plantuml.code.ByteArray decompress(byte[]) throws net.sourceforge.plantuml.code.NoPlantumlCompressionException
+    {
+        java.io.ByteArrayOutputStream $r0;
+        java.io.ByteArrayInputStream $r1;
+        byte[] r2, $r6;
+        java.util.zip.InflaterInputStream $r4;
+        int $i0;
+        net.sourceforge.plantuml.code.ByteArray $r7;
+        java.io.IOException $r8;
+        net.sourceforge.plantuml.code.NoPlantumlCompressionException $r9;
+        net.sourceforge.plantuml.code.CompressionHuffman r10;
+
+        r10 := @this: net.sourceforge.plantuml.code.CompressionHuffman;
+
+        r2 := @parameter0: byte[];
+
+     label1:
+        $r0 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        $r1 = new java.io.ByteArrayInputStream;
+
+        specialinvoke $r1.<java.io.ByteArrayInputStream: void <init>(byte[])>(r2);
+
+        $r4 = new java.util.zip.InflaterInputStream;
+
+        specialinvoke $r4.<java.util.zip.InflaterInputStream: void <init>(java.io.InputStream)>($r1);
+
+     label2:
+        $i0 = virtualinvoke $r4.<java.util.zip.InflaterInputStream: int read()>();
+
+        if $i0 == -1 goto label3;
+
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void write(int)>($i0);
+
+        goto label2;
+
+     label3:
+        virtualinvoke $r4.<java.util.zip.InflaterInputStream: void close()>();
+
+        virtualinvoke $r1.<java.io.ByteArrayInputStream: void close()>();
+
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void close()>();
+
+        $r6 = virtualinvoke $r0.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.code.ByteArray: net.sourceforge.plantuml.code.ByteArray 'from'(byte[])>($r6);
+
+     label4:
+        return $r7;
+
+     label5:
+        $r8 := @caughtexception;
+
+        $r9 = new net.sourceforge.plantuml.code.NoPlantumlCompressionException;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.code.NoPlantumlCompressionException: void <init>(java.lang.Exception)>($r8);
+
+        throw $r9;
+
+        catch java.io.IOException from label1 to label4 with label5;
+    }
+}

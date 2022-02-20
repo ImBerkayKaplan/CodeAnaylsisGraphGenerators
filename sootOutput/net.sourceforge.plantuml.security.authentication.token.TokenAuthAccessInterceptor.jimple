@@ -1,0 +1,81 @@
+public class net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor extends java.lang.Object implements net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor r0;
+
+        r0 := @this: net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void apply(net.sourceforge.plantuml.security.authentication.SecurityAuthentication, java.net.URLConnection)
+    {
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r0;
+        java.util.Map $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        java.lang.Object $r4, $r6, $r8, $r9, $r12;
+        java.util.Map$Entry r5;
+        java.lang.String $r7, $r10, r11, r13;
+        boolean $z0, $z1;
+        java.net.URLConnection r14;
+        net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor r15;
+
+        r15 := @this: net.sourceforge.plantuml.security.authentication.token.TokenAuthAccessInterceptor;
+
+        r0 := @parameter0: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        r14 := @parameter1: java.net.URLConnection;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: java.util.Map getTokens()>();
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set entrySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.util.Map$Entry) $r4;
+
+        $r6 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r7 = (java.lang.String) $r6;
+
+        $z0 = virtualinvoke $r7.<java.lang.String: boolean startsWith(java.lang.String)>("headers.");
+
+        if $z0 == 0 goto label1;
+
+        $r8 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        if $r8 != null goto label2;
+
+        goto label1;
+
+     label2:
+        $r9 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r10 = (java.lang.String) $r9;
+
+        r11 = virtualinvoke $r10.<java.lang.String: java.lang.String substring(int)>(8);
+
+        $r12 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r13 = virtualinvoke $r12.<java.lang.Object: java.lang.String toString()>();
+
+        virtualinvoke r14.<java.net.URLConnection: void setRequestProperty(java.lang.String,java.lang.String)>(r11, r13);
+
+        goto label1;
+
+     label3:
+        return;
+    }
+}

@@ -1,0 +1,123 @@
+public class net.sourceforge.plantuml.command.CommandRankDir extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.CommandRankDir r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandRankDir;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.CommandRankDir: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6, $r7;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r8;
+
+        $r0 = class "Lnet/sourceforge/plantuml/command/CommandRankDir;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[5];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("DIRECTION", "(left[%s]to[%s]right|top[%s]to[%s]bottom)");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("direction");
+
+        $r2[3] = $r6;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[4] = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r8;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.cucadiagram.CucaDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult)
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String $r1, $r2, r3;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram r4;
+        net.sourceforge.plantuml.ISkinParam $r5;
+        net.sourceforge.plantuml.SkinParam $r6;
+        net.sourceforge.plantuml.cucadiagram.Rankdir $r7;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r8;
+        net.sourceforge.plantuml.command.CommandRankDir r9;
+        net.sourceforge.plantuml.LineLocation r10;
+
+        r9 := @this: net.sourceforge.plantuml.command.CommandRankDir;
+
+        r4 := @parameter0: net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+
+        r10 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("DIRECTION", 0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goUpperCase(java.lang.String)>($r1);
+
+        r3 = virtualinvoke $r2.<java.lang.String: java.lang.String replace(char,char)>(32, 95);
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r6 = (net.sourceforge.plantuml.SkinParam) $r5;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Rankdir: net.sourceforge.plantuml.cucadiagram.Rankdir valueOf(java.lang.String)>(r3);
+
+        virtualinvoke $r6.<net.sourceforge.plantuml.SkinParam: void setRankdir(net.sourceforge.plantuml.cucadiagram.Rankdir)>($r7);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r8;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandRankDir r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandRankDir;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.cucadiagram.CucaDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandRankDir: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.cucadiagram.CucaDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

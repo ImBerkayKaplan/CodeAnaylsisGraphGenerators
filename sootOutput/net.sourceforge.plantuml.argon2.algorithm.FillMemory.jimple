@@ -1,0 +1,212 @@
+public class net.sourceforge.plantuml.argon2.algorithm.FillMemory extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.argon2.algorithm.FillMemory r0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.algorithm.FillMemory;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void fillMemoryBlocks(net.sourceforge.plantuml.argon2.model.Instance)
+    {
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+        int $i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLanes()>();
+
+        if $i0 != 1 goto label1;
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillMemory: void fillMemoryBlockSingleThreaded(net.sourceforge.plantuml.argon2.model.Instance)>(r0);
+
+        goto label2;
+
+     label1:
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillMemory: void fillMemoryBlockMultiThreaded(net.sourceforge.plantuml.argon2.model.Instance)>(r0);
+
+     label2:
+        return;
+    }
+
+    private static void fillMemoryBlockSingleThreaded(net.sourceforge.plantuml.argon2.model.Instance)
+    {
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+        int $i0, i1, i2;
+        net.sourceforge.plantuml.argon2.model.Position $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        i1 = 0;
+
+     label1:
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getIterations()>();
+
+        if i1 >= $i0 goto label4;
+
+        i2 = 0;
+
+     label2:
+        if i2 >= 4 goto label3;
+
+        $r1 = new net.sourceforge.plantuml.argon2.model.Position;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.argon2.model.Position: void <init>(int,int,int,int)>(i1, 0, i2, 0);
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: void fillSegment(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.model.Position)>(r0, $r1);
+
+        i2 = i2 + 1;
+
+        goto label2;
+
+     label3:
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    private static void fillMemoryBlockMultiThreaded(net.sourceforge.plantuml.argon2.model.Instance)
+    {
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+        int $i0, $i1, $i2, i3, i4, i5;
+        java.util.concurrent.ExecutorService r1;
+        java.util.ArrayList $r2;
+        net.sourceforge.plantuml.argon2.model.Position $r5;
+        net.sourceforge.plantuml.argon2.algorithm.FillMemory$1 $r7;
+        java.util.concurrent.Future r8;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLanes()>();
+
+        r1 = staticinvoke <java.util.concurrent.Executors: java.util.concurrent.ExecutorService newFixedThreadPool(int)>($i0);
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        i3 = 0;
+
+     label1:
+        $i1 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getIterations()>();
+
+        if i3 >= $i1 goto label6;
+
+        i4 = 0;
+
+     label2:
+        if i4 >= 4 goto label5;
+
+        i5 = 0;
+
+     label3:
+        $i2 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLanes()>();
+
+        if i5 >= $i2 goto label4;
+
+        $r5 = new net.sourceforge.plantuml.argon2.model.Position;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.argon2.model.Position: void <init>(int,int,int,int)>(i3, i5, i4, 0);
+
+        $r7 = new net.sourceforge.plantuml.argon2.algorithm.FillMemory$1;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.argon2.algorithm.FillMemory$1: void <init>(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.model.Position)>(r0, $r5);
+
+        r8 = interfaceinvoke r1.<java.util.concurrent.ExecutorService: java.util.concurrent.Future submit(java.lang.Runnable)>($r7);
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r8);
+
+        i5 = i5 + 1;
+
+        goto label3;
+
+     label4:
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillMemory: void joinThreads(net.sourceforge.plantuml.argon2.model.Instance,java.util.List)>(r0, $r2);
+
+        i4 = i4 + 1;
+
+        goto label2;
+
+     label5:
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label6:
+        interfaceinvoke r1.<java.util.concurrent.ExecutorService: java.util.List shutdownNow()>();
+
+        return;
+    }
+
+    private static void joinThreads(net.sourceforge.plantuml.argon2.model.Instance, java.util.List)
+    {
+        java.util.List r0;
+        boolean $z0;
+        java.lang.Object $r1;
+        java.util.concurrent.Future r2;
+        java.util.concurrent.ExecutionException $r4;
+        net.sourceforge.plantuml.argon2.model.Instance r5;
+        java.lang.RuntimeException $r6, $r8;
+        java.lang.InterruptedException $r7;
+        java.util.Iterator r9;
+
+        r5 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r0 := @parameter1: java.util.List;
+
+     label1:
+        r9 = interfaceinvoke r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r9.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r1 = interfaceinvoke r9.<java.util.Iterator: java.lang.Object next()>();
+
+        r2 = (java.util.concurrent.Future) $r1;
+
+        interfaceinvoke r2.<java.util.concurrent.Future: java.lang.Object get()>();
+
+        goto label2;
+
+     label3:
+        goto label6;
+
+     label4:
+        $r7 := @caughtexception;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.argon2.model.Instance: void clear()>();
+
+        $r8 = new java.lang.RuntimeException;
+
+        specialinvoke $r8.<java.lang.RuntimeException: void <init>(java.lang.Throwable)>($r7);
+
+        throw $r8;
+
+     label5:
+        $r4 := @caughtexception;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.argon2.model.Instance: void clear()>();
+
+        $r6 = new java.lang.RuntimeException;
+
+        specialinvoke $r6.<java.lang.RuntimeException: void <init>(java.lang.Throwable)>($r4);
+
+        throw $r6;
+
+     label6:
+        return;
+
+        catch java.lang.InterruptedException from label1 to label3 with label4;
+        catch java.util.concurrent.ExecutionException from label1 to label3 with label5;
+    }
+}

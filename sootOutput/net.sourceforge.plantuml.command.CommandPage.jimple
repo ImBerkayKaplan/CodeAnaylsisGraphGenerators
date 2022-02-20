@@ -1,0 +1,149 @@
+public class net.sourceforge.plantuml.command.CommandPage extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.CommandPage r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandPage;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.CommandPage: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r12;
+
+        $r0 = class "Lnet/sourceforge/plantuml/command/CommandPage;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[9];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("page");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("NB1", "(\\d+)");
+
+        $r2[3] = $r6;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[4] = $r7;
+
+        $r8 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("x*");
+
+        $r2[5] = $r8;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[6] = $r9;
+
+        $r10 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("NB2", "(\\d+)");
+
+        $r2[7] = $r10;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[8] = $r11;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r12;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.AbstractPSystem, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult)
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String $r1, $r2;
+        int i0, i1;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r3, $r5;
+        net.sourceforge.plantuml.AbstractPSystem r4;
+        net.sourceforge.plantuml.command.CommandPage r6;
+        net.sourceforge.plantuml.LineLocation r7;
+
+        r6 := @this: net.sourceforge.plantuml.command.CommandPage;
+
+        r4 := @parameter0: net.sourceforge.plantuml.AbstractPSystem;
+
+        r7 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("NB1", 0);
+
+        i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r1);
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("NB2", 0);
+
+        i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r2);
+
+        if i0 <= 0 goto label1;
+
+        if i1 > 0 goto label2;
+
+     label1:
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("Argument must be positive");
+
+        return $r3;
+
+     label2:
+        virtualinvoke r4.<net.sourceforge.plantuml.AbstractPSystem: void setSplitPagesHorizontal(int)>(i0);
+
+        virtualinvoke r4.<net.sourceforge.plantuml.AbstractPSystem: void setSplitPagesVertical(int)>(i1);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r5;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandPage r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.AbstractPSystem $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandPage;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.AbstractPSystem) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandPage: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.AbstractPSystem,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

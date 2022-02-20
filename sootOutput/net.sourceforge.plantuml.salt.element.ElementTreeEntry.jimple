@@ -1,0 +1,235 @@
+public class net.sourceforge.plantuml.salt.element.ElementTreeEntry extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.salt.element.Element firstElement;
+    private final int level;
+    private final java.util.List otherElements;
+
+    public void <init>(int, net.sourceforge.plantuml.salt.element.Element)
+    {
+        net.sourceforge.plantuml.salt.element.ElementTreeEntry r0;
+        java.util.ArrayList $r1;
+        net.sourceforge.plantuml.salt.element.Element r2;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.salt.element.ElementTreeEntry;
+
+        i0 := @parameter0: int;
+
+        r2 := @parameter1: net.sourceforge.plantuml.salt.element.Element;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: java.util.List otherElements> = $r1;
+
+        r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: net.sourceforge.plantuml.salt.element.Element firstElement> = r2;
+
+        r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: int level> = i0;
+
+        return;
+    }
+
+    public void addCell(net.sourceforge.plantuml.salt.element.Element)
+    {
+        net.sourceforge.plantuml.salt.element.ElementTreeEntry r0;
+        net.sourceforge.plantuml.salt.element.Element r1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.salt.element.ElementTreeEntry;
+
+        r1 := @parameter0: net.sourceforge.plantuml.salt.element.Element;
+
+        $r2 = r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: java.util.List otherElements>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D getPreferredDimensionFirstCell(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.salt.element.ElementTreeEntry r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.salt.element.Element $r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r3, $r4;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.salt.element.ElementTreeEntry;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r2 = r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: net.sourceforge.plantuml.salt.element.Element firstElement>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.salt.element.Element: net.sourceforge.plantuml.awt.geom.Dimension2D getPreferredDimension(net.sourceforge.plantuml.graphic.StringBounder,double,double)>(r1, 0.0, 0.0);
+
+        $d0 = virtualinvoke r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: double getXDelta()>();
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.Dimension2DDouble: net.sourceforge.plantuml.awt.geom.Dimension2D delta(net.sourceforge.plantuml.awt.geom.Dimension2D,double,double)>($r3, $d0, 0.0);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.salt.element.ListWidth getPreferredDimensionOtherCell(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.salt.element.ListWidth $r0;
+        net.sourceforge.plantuml.salt.element.ElementTreeEntry r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.salt.element.Element r6;
+        net.sourceforge.plantuml.graphic.StringBounder r7;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r8;
+        double $d0;
+
+        r2 := @this: net.sourceforge.plantuml.salt.element.ElementTreeEntry;
+
+        r7 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r0 = new net.sourceforge.plantuml.salt.element.ListWidth;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.salt.element.ListWidth: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: java.util.List otherElements>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.salt.element.Element) $r5;
+
+        $r8 = interfaceinvoke r6.<net.sourceforge.plantuml.salt.element.Element: net.sourceforge.plantuml.awt.geom.Dimension2D getPreferredDimension(net.sourceforge.plantuml.graphic.StringBounder,double,double)>(r7, 0.0, 0.0);
+
+        $d0 = virtualinvoke $r8.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.salt.element.ListWidth: void add(double)>($d0);
+
+        goto label1;
+
+     label2:
+        return $r0;
+    }
+
+    public double getXDelta()
+    {
+        net.sourceforge.plantuml.salt.element.ElementTreeEntry r0;
+        int $i0, $i1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.salt.element.ElementTreeEntry;
+
+        $i0 = r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: int level>;
+
+        $i1 = $i0 * 10;
+
+        $d0 = (double) $i1;
+
+        return $d0;
+    }
+
+    public void drawFirstCell(net.sourceforge.plantuml.ugraphic.UGraphic, double, double)
+    {
+        net.sourceforge.plantuml.salt.element.ElementTreeEntry r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1, $r4;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r2;
+        double d0, $d1, d2, $d3;
+        net.sourceforge.plantuml.salt.element.Element $r3;
+
+        r0 := @this: net.sourceforge.plantuml.salt.element.ElementTreeEntry;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        d0 := @parameter1: double;
+
+        d2 := @parameter2: double;
+
+        $r3 = r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: net.sourceforge.plantuml.salt.element.Element firstElement>;
+
+        $r2 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d1 = virtualinvoke r0.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: double getXDelta()>();
+
+        $d3 = d0 + $d1;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d3, d2);
+
+        $r4 = interfaceinvoke r1.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r2);
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.salt.element.Element: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic,int,net.sourceforge.plantuml.awt.geom.Dimension2D)>($r4, 0, null);
+
+        return;
+    }
+
+    public void drawSecondCell(net.sourceforge.plantuml.ugraphic.UGraphic, double, double, net.sourceforge.plantuml.salt.element.ListWidth, double)
+    {
+        net.sourceforge.plantuml.salt.element.ListWidth r0;
+        java.util.Iterator r1, r4;
+        net.sourceforge.plantuml.salt.element.ElementTreeEntry r2;
+        java.util.List $r3;
+        boolean $z0;
+        java.lang.Object $r5, $r10;
+        net.sourceforge.plantuml.salt.element.Element r6;
+        net.sourceforge.plantuml.ugraphic.UGraphic r7, $r9;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r8;
+        double d0, $d1, d2, $d3, d4;
+        java.lang.Double $r11;
+
+        r2 := @this: net.sourceforge.plantuml.salt.element.ElementTreeEntry;
+
+        r7 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        d4 := @parameter1: double;
+
+        d0 := @parameter2: double;
+
+        r0 := @parameter3: net.sourceforge.plantuml.salt.element.ListWidth;
+
+        d2 := @parameter4: double;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.salt.element.ListWidth: java.util.Iterator iterator()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.salt.element.ElementTreeEntry: java.util.List otherElements>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.salt.element.Element) $r5;
+
+        $r8 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>(d4, d0);
+
+        $r9 = interfaceinvoke r7.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r8);
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.salt.element.Element: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic,int,net.sourceforge.plantuml.awt.geom.Dimension2D)>($r9, 0, null);
+
+        $r10 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        $r11 = (java.lang.Double) $r10;
+
+        $d1 = virtualinvoke $r11.<java.lang.Double: double doubleValue()>();
+
+        $d3 = $d1 + d2;
+
+        d4 = d4 + $d3;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+}

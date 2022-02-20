@@ -1,0 +1,391 @@
+public class net.sourceforge.plantuml.graphic.Splitter extends java.lang.Object
+{
+    static final java.lang.String endFontPattern;
+    static final java.lang.String endSupSub;
+    public static final java.lang.String fontPattern;
+    public static final java.lang.String fontColorPattern2;
+    public static final java.lang.String fontSizePattern2;
+    static final java.lang.String fontSup;
+    static final java.lang.String fontSub;
+    public static final java.lang.String qrcodePattern;
+    static final java.lang.String imgPattern;
+    public static final java.lang.String imgPatternNoSrcColon;
+    public static final java.lang.String fontFamilyPattern;
+    public static final java.lang.String svgAttributePattern;
+    private static final java.lang.String scale2;
+    private static final java.lang.String scale;
+    public static final java.lang.String emojiPattern;
+    public static final java.lang.String openiconPattern;
+    public static final java.lang.String spritePattern2;
+    public static final java.lang.String spritePatternForMatch;
+    static final java.lang.String htmlTag;
+    static final java.lang.String linkPattern;
+    public static final java.lang.String mathPattern;
+    public static final java.lang.String latexPattern;
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 tagOrText;
+    private final java.util.List splitted;
+
+    public void <init>(java.lang.String)
+    {
+        net.sourceforge.plantuml.graphic.Splitter r0;
+        java.util.ArrayList $r1;
+        java.lang.String r2, r6, r7;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r3;
+        net.sourceforge.plantuml.command.regex.Matcher2 r4;
+        boolean $z0;
+        java.util.List $r5;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.Splitter;
+
+        r2 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.graphic.Splitter: java.util.List splitted> = $r1;
+
+        $r3 = <net.sourceforge.plantuml.graphic.Splitter: net.sourceforge.plantuml.command.regex.Pattern2 tagOrText>;
+
+        r4 = virtualinvoke $r3.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r2);
+
+     label1:
+        $z0 = virtualinvoke r4.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 == 0 goto label2;
+
+        r6 = virtualinvoke r4.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(0);
+
+        r7 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String showComparatorCharacters(java.lang.String)>(r6);
+
+        $r5 = r0.<net.sourceforge.plantuml.graphic.Splitter: java.util.List splitted>;
+
+        interfaceinvoke $r5.<java.util.List: boolean add(java.lang.Object)>(r7);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    java.util.List getSplittedInternal()
+    {
+        net.sourceforge.plantuml.graphic.Splitter r0;
+        java.util.List $r1;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.Splitter;
+
+        $r1 = r0.<net.sourceforge.plantuml.graphic.Splitter: java.util.List splitted>;
+
+        return $r1;
+    }
+
+    public static java.lang.String purgeAllTag(java.lang.String)
+    {
+        java.lang.String r0, $r1, $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.graphic.Splitter: java.lang.String htmlTag>;
+
+        $r2 = virtualinvoke r0.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>($r1, "");
+
+        return $r2;
+    }
+
+    public java.util.List getHtmlCommands(net.sourceforge.plantuml.api.ThemeStyle, boolean)
+    {
+        net.sourceforge.plantuml.graphic.HtmlCommandFactory $r0;
+        java.util.ArrayList $r2;
+        net.sourceforge.plantuml.graphic.Splitter r4;
+        java.util.List $r5, $r7;
+        java.util.Iterator r6;
+        boolean $z0, z1, $z3;
+        java.lang.Object $r8;
+        java.lang.String r9;
+        net.sourceforge.plantuml.api.ThemeStyle r10;
+        net.sourceforge.plantuml.graphic.HtmlCommand r11;
+        net.sourceforge.plantuml.graphic.Text $r12;
+        java.util.Collection $r13;
+
+        r4 := @this: net.sourceforge.plantuml.graphic.Splitter;
+
+        r10 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        z1 := @parameter1: boolean;
+
+        $r0 = new net.sourceforge.plantuml.graphic.HtmlCommandFactory;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.graphic.HtmlCommandFactory: void <init>()>();
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.graphic.Splitter: java.util.List getSplittedInternal()>();
+
+        r6 = interfaceinvoke $r5.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r8 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r9 = (java.lang.String) $r8;
+
+        r11 = virtualinvoke $r0.<net.sourceforge.plantuml.graphic.HtmlCommandFactory: net.sourceforge.plantuml.graphic.HtmlCommand getHtmlCommand(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>(r10, r9);
+
+        if z1 == 0 goto label2;
+
+        $z3 = r11 instanceof net.sourceforge.plantuml.graphic.Text;
+
+        if $z3 == 0 goto label2;
+
+        $r12 = (net.sourceforge.plantuml.graphic.Text) r11;
+
+        $r13 = specialinvoke r4.<net.sourceforge.plantuml.graphic.Splitter: java.util.Collection splitText(net.sourceforge.plantuml.graphic.Text)>($r12);
+
+        interfaceinvoke $r2.<java.util.List: boolean addAll(java.util.Collection)>($r13);
+
+        goto label3;
+
+     label2:
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r11);
+
+     label3:
+        goto label1;
+
+     label4:
+        $r7 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r2);
+
+        return $r7;
+    }
+
+    private java.util.Collection splitText(net.sourceforge.plantuml.graphic.Text)
+    {
+        net.sourceforge.plantuml.graphic.Text r0, $r3, $r5, $r6, $r8;
+        java.util.ArrayList $r1;
+        java.lang.String $r4, $r7, r10;
+        int i0, $i1;
+        net.sourceforge.plantuml.graphic.Splitter r9;
+
+        r9 := @this: net.sourceforge.plantuml.graphic.Splitter;
+
+        r0 := @parameter0: net.sourceforge.plantuml.graphic.Text;
+
+        r10 = virtualinvoke r0.<net.sourceforge.plantuml.graphic.Text: java.lang.String getText()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+     label1:
+        $r3 = <net.sourceforge.plantuml.graphic.Text: net.sourceforge.plantuml.graphic.Text TEXT_BS_BS_N>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.graphic.Text: java.lang.String getText()>();
+
+        i0 = virtualinvoke r10.<java.lang.String: int indexOf(java.lang.String)>($r4);
+
+        if i0 != -1 goto label2;
+
+        $r8 = new net.sourceforge.plantuml.graphic.Text;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>(r10);
+
+        interfaceinvoke $r1.<java.util.Collection: boolean add(java.lang.Object)>($r8);
+
+        return $r1;
+
+     label2:
+        if i0 <= 0 goto label3;
+
+        $r6 = new net.sourceforge.plantuml.graphic.Text;
+
+        $r7 = virtualinvoke r10.<java.lang.String: java.lang.String substring(int,int)>(0, i0);
+
+        specialinvoke $r6.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>($r7);
+
+        interfaceinvoke $r1.<java.util.Collection: boolean add(java.lang.Object)>($r6);
+
+     label3:
+        $r5 = <net.sourceforge.plantuml.graphic.Text: net.sourceforge.plantuml.graphic.Text TEXT_BS_BS_N>;
+
+        interfaceinvoke $r1.<java.util.Collection: boolean add(java.lang.Object)>($r5);
+
+        $i1 = i0 + 2;
+
+        r10 = virtualinvoke r10.<java.lang.String: java.lang.String substring(int)>($i1);
+
+        goto label1;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.String $r0, $r30, $r32, $r35, $r38, $r42, $r45;
+        java.lang.StringBuilder $r1, $r31, $r33, $r34, $r36, $r37;
+        java.util.EnumSet $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r39;
+        java.lang.Object $r40;
+        net.sourceforge.plantuml.graphic.FontStyle r41;
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String latexPattern> = "\\<latex\\>(.+?)\\</latex\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String mathPattern> = "\\<math\\>(.+?)\\</math\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String linkPattern> = "\\[\\[([^\\[\\]]+)\\]\\]";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String spritePatternForMatch> = "\\<\\$([-\\p{L}0-9_/]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,color[= :](?:#[0-9a-fA-F]{6}|\\w+))?\\}?)?\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String spritePattern2> = "\\<\\$([-\\p{L}0-9_/]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,color[= :](?:#[0-9a-fA-F]{6}|\\w+))?\\}?)?\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String openiconPattern> = "\\<&([-\\w]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,color[= :](?:#[0-9a-fA-F]{6}|\\w+))?\\}?)?\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String scale> = "([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,color[= :](?:#[0-9a-fA-F]{6}|\\w+))?\\}?)?";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String scale2> = "((?:\\{scale=|\\*)[0-9.]+\\}?)?";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String svgAttributePattern> = "\\<text[\\s:]+([^>]+)/?\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String fontFamilyPattern> = "\\<font[\\s:]+([^>]+)/?\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String imgPatternNoSrcColon> = "\\<img[\\s:]+([^>{}]+)(\\{scale=(?:[0-9.]+)\\})?\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String imgPattern> = "\\<img\\s+(src[%s]*=[%s]*[%q%g]?[^\\s%g>]+[%q%g]?[%s]*|vspace\\s*=\\s*[%q%g]?\\d+[%q%g]?\\s*|valign[%s]*=[%s]*[%q%g]?(top|middle|bottom)[%q%g]?[%s]*)+\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String qrcodePattern> = "\\<qrcode[\\s:]+([^>{}]+)(\\{scale=(?:[0-9.]+)\\})?\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String fontSub> = "\\<sub\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String fontSup> = "\\<sup\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String fontSizePattern2> = "\\<size[\\s:]+(\\d+)[%s]*\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String fontColorPattern2> = "\\<color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)[%s]*\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String fontPattern> = "\\<font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String endSupSub> = "\\</sup\\>|\\</sub\\>";
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String endFontPattern> = "\\</font\\>|\\</color\\>|\\</size\\>|\\</text\\>";
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.emoji.Emoji: java.lang.String pattern()>();
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String emojiPattern> = $r0;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = staticinvoke <java.util.EnumSet: java.util.EnumSet allOf(java.lang.Class)>(class "Lnet/sourceforge/plantuml/graphic/FontStyle;");
+
+        r4 = virtualinvoke $r3.<java.util.EnumSet: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r40 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r41 = (net.sourceforge.plantuml.graphic.FontStyle) $r40;
+
+        $r42 = virtualinvoke r41.<net.sourceforge.plantuml.graphic.FontStyle: java.lang.String getActivationPattern()>();
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r42);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        $r45 = virtualinvoke r41.<net.sourceforge.plantuml.graphic.FontStyle: java.lang.String getDeactivationPattern()>();
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r45);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        goto label1;
+
+     label2:
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)[%s]*\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<size[\\s:]+(\\d+)[%s]*\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<sup\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<sub\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\</font\\>|\\</color\\>|\\</size\\>|\\</text\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\</sup\\>|\\</sub\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<qrcode[\\s:]+([^>{}]+)(\\{scale=(?:[0-9.]+)\\})?\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<img\\s+(src[%s]*=[%s]*[%q%g]?[^\\s%g>]+[%q%g]?[%s]*|vspace\\s*=\\s*[%q%g]?\\d+[%q%g]?\\s*|valign[%s]*=[%s]*[%q%g]?(top|middle|bottom)[%q%g]?[%s]*)+\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<img[\\s:]+([^>{}]+)(\\{scale=(?:[0-9.]+)\\})?\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<font[\\s:]+([^>]+)/?\\>");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\[\\[([^\\[\\]]+)\\]\\]");
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\<text[\\s:]+([^>]+)/?\\>");
+
+        $r30 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        <net.sourceforge.plantuml.graphic.Splitter: java.lang.String htmlTag> = $r30;
+
+        $r31 = new java.lang.StringBuilder;
+
+        specialinvoke $r31.<java.lang.StringBuilder: void <init>()>();
+
+        $r32 = <net.sourceforge.plantuml.graphic.Splitter: java.lang.String htmlTag>;
+
+        $r33 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r32);
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("|.+?(?=");
+
+        $r35 = <net.sourceforge.plantuml.graphic.Splitter: java.lang.String htmlTag>;
+
+        $r36 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r35);
+
+        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")|.+$");
+
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r39 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>($r38);
+
+        <net.sourceforge.plantuml.graphic.Splitter: net.sourceforge.plantuml.command.regex.Pattern2 tagOrText> = $r39;
+
+        return;
+    }
+}

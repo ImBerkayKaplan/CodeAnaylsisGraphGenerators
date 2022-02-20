@@ -1,0 +1,172 @@
+class net.sourceforge.plantuml.telnet.AcceptTelnetClient extends java.lang.Thread
+{
+    private final java.net.Socket clientSocket;
+    private final java.io.BufferedReader br;
+    private final java.io.OutputStream os;
+
+    void <init>(java.net.Socket) throws java.lang.Exception
+    {
+        net.sourceforge.plantuml.telnet.AcceptTelnetClient r0;
+        java.net.Socket r1, $r5, $r7;
+        java.io.PrintStream $r2;
+        java.io.BufferedReader $r3;
+        java.io.InputStreamReader $r4;
+        java.io.InputStream $r6;
+        java.io.OutputStream $r8;
+
+        r0 := @this: net.sourceforge.plantuml.telnet.AcceptTelnetClient;
+
+        r1 := @parameter0: java.net.Socket;
+
+        specialinvoke r0.<java.lang.Thread: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.net.Socket clientSocket> = r1;
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>("Client Connected ...");
+
+        $r3 = new java.io.BufferedReader;
+
+        $r4 = new java.io.InputStreamReader;
+
+        $r5 = r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.net.Socket clientSocket>;
+
+        $r6 = virtualinvoke $r5.<java.net.Socket: java.io.InputStream getInputStream()>();
+
+        specialinvoke $r4.<java.io.InputStreamReader: void <init>(java.io.InputStream)>($r6);
+
+        specialinvoke $r3.<java.io.BufferedReader: void <init>(java.io.Reader)>($r4);
+
+        r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.io.BufferedReader br> = $r3;
+
+        $r7 = r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.net.Socket clientSocket>;
+
+        $r8 = virtualinvoke $r7.<java.net.Socket: java.io.OutputStream getOutputStream()>();
+
+        r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.io.OutputStream os> = $r8;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: void start()>();
+
+        return;
+    }
+
+    public java.lang.String runInternal() throws java.io.IOException
+    {
+        java.lang.StringBuilder $r0, $r5, $r6, $r7;
+        net.sourceforge.plantuml.telnet.AcceptTelnetClient r2;
+        java.io.BufferedReader $r3;
+        java.lang.String r4, $r8, $r11, $r12;
+        boolean $z0;
+
+        r2 := @this: net.sourceforge.plantuml.telnet.AcceptTelnetClient;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+     label1:
+        $r3 = r2.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.io.BufferedReader br>;
+
+        r4 = virtualinvoke $r3.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        if r4 != null goto label2;
+
+        $r12 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r12;
+
+     label2:
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("S=");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r4);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r8);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r4);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+        $z0 = virtualinvoke r4.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("@enduml");
+
+        if $z0 == 0 goto label3;
+
+        $r11 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r11;
+
+     label3:
+        goto label1;
+    }
+
+    public void run()
+    {
+        net.sourceforge.plantuml.telnet.AcceptTelnetClient r0;
+        java.lang.StringBuilder $r1, $r2, $r3;
+        java.lang.String $r4, r14;
+        net.sourceforge.plantuml.SourceStringReader $r5;
+        net.sourceforge.plantuml.FileFormatOption $r7;
+        net.sourceforge.plantuml.FileFormat $r8;
+        java.io.OutputStream $r9, $r11;
+        java.io.BufferedReader $r12;
+        java.io.IOException $r13;
+
+        r0 := @this: net.sourceforge.plantuml.telnet.AcceptTelnetClient;
+
+     label1:
+        r14 = virtualinvoke r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.lang.String runInternal()>();
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("UML=");
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r14);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r4);
+
+        $r5 = new net.sourceforge.plantuml.SourceStringReader;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.SourceStringReader: void <init>(java.lang.String)>(r14);
+
+        $r9 = r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.io.OutputStream os>;
+
+        $r7 = new net.sourceforge.plantuml.FileFormatOption;
+
+        $r8 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat ATXT>;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>($r8);
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.SourceStringReader: net.sourceforge.plantuml.core.DiagramDescription outputImage(java.io.OutputStream,net.sourceforge.plantuml.FileFormatOption)>($r9, $r7);
+
+        $r11 = r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.io.OutputStream os>;
+
+        virtualinvoke $r11.<java.io.OutputStream: void close()>();
+
+        $r12 = r0.<net.sourceforge.plantuml.telnet.AcceptTelnetClient: java.io.BufferedReader br>;
+
+        virtualinvoke $r12.<java.io.BufferedReader: void close()>();
+
+     label2:
+        goto label4;
+
+     label3:
+        $r13 := @caughtexception;
+
+        virtualinvoke $r13.<java.io.IOException: void printStackTrace()>();
+
+     label4:
+        return;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+}

@@ -1,0 +1,332 @@
+public class net.sourceforge.plantuml.code.Upf9Encoder extends java.lang.Object
+{
+    static final boolean $assertionsDisabled;
+
+    private void <init>()
+    {
+        net.sourceforge.plantuml.code.Upf9Encoder r0;
+
+        r0 := @this: net.sourceforge.plantuml.code.Upf9Encoder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static byte[] encodeChar(char)
+    {
+        char c0;
+        byte[] r0;
+        boolean $z0, $z1;
+        java.lang.AssertionError $r1;
+
+        c0 := @parameter0: char;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte[] encodeCharInternal(char)>(c0);
+
+        $z0 = <net.sourceforge.plantuml.code.Upf9Encoder: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: boolean checkBack(char,byte[])>(c0, r0);
+
+        if $z1 != 0 goto label1;
+
+        $r1 = new java.lang.AssertionError;
+
+        specialinvoke $r1.<java.lang.AssertionError: void <init>()>();
+
+        throw $r1;
+
+     label1:
+        return r0;
+    }
+
+    private static boolean checkBack(char, byte[])
+    {
+        char c0;
+        java.io.ByteArrayInputStream $r0;
+        byte[] r1;
+        int $i1;
+        java.io.IOException $r2;
+
+        c0 := @parameter0: char;
+
+        r1 := @parameter1: byte[];
+
+     label1:
+        $r0 = new java.io.ByteArrayInputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayInputStream: void <init>(byte[])>(r1);
+
+        $i1 = staticinvoke <net.sourceforge.plantuml.code.Upf9Decoder: int decodeChar(java.io.InputStream)>($r0);
+
+        if c0 != $i1 goto label3;
+
+     label2:
+        return 1;
+
+     label3:
+        goto label5;
+
+     label4:
+        $r2 := @caughtexception;
+
+        virtualinvoke $r2.<java.io.IOException: void printStackTrace()>();
+
+     label5:
+        return 0;
+
+        catch java.io.IOException from label1 to label2 with label4;
+    }
+
+    private static byte[] encodeCharInternal(char)
+    {
+        char c0;
+        byte[] $r0, $r1, $r2, $r3, $r4, $r5, $r6, $r7;
+        byte $b1, $b2, $b3, $b4, $b6, $b7, $b8, $b9, $b10, $b11, $b12, $b13;
+        int $i5;
+
+        c0 := @parameter0: char;
+
+        if c0 == 10 goto label1;
+
+        if c0 == 13 goto label1;
+
+        if c0 != 9 goto label2;
+
+     label1:
+        $r7 = newarray (byte)[1];
+
+        $b13 = (byte) c0;
+
+        $r7[0] = $b13;
+
+        return $r7;
+
+     label2:
+        if c0 < 14 goto label3;
+
+        if c0 > 18 goto label3;
+
+        $r6 = newarray (byte)[1];
+
+        $b12 = (byte) c0;
+
+        $r6[0] = $b12;
+
+        return $r6;
+
+     label3:
+        if c0 < 32 goto label4;
+
+        if c0 > 126 goto label4;
+
+        $r5 = newarray (byte)[1];
+
+        $b11 = (byte) c0;
+
+        $r5[0] = $b11;
+
+        return $r5;
+
+     label4:
+        if c0 < 128 goto label5;
+
+        if c0 > 255 goto label5;
+
+        $r4 = newarray (byte)[2];
+
+        $r4[0] = 11;
+
+        $b10 = (byte) c0;
+
+        $r4[1] = $b10;
+
+        return $r4;
+
+     label5:
+        if c0 < 256 goto label6;
+
+        if c0 > 2303 goto label6;
+
+        $r3 = newarray (byte)[2];
+
+        $b8 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte highByte(char)>(c0);
+
+        $r3[0] = $b8;
+
+        $b9 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte lowByte(char)>(c0);
+
+        $r3[1] = $b9;
+
+        return $r3;
+
+     label6:
+        if c0 < 8192 goto label7;
+
+        if c0 > 40959 goto label7;
+
+        $r2 = newarray (byte)[2];
+
+        $b4 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte highByte(char)>(c0);
+
+        $i5 = 96 + $b4;
+
+        $b6 = (byte) $i5;
+
+        $r2[0] = $b6;
+
+        $b7 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte lowByte(char)>(c0);
+
+        $r2[1] = $b7;
+
+        return $r2;
+
+     label7:
+        if c0 < 57344 goto label8;
+
+        if c0 > 57471 goto label8;
+
+        $r1 = newarray (byte)[2];
+
+        $r1[0] = 11;
+
+        $b3 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte lowByte(char)>(c0);
+
+        $r1[1] = $b3;
+
+        return $r1;
+
+     label8:
+        $r0 = newarray (byte)[3];
+
+        $r0[0] = 12;
+
+        $b1 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte highByte(char)>(c0);
+
+        $r0[1] = $b1;
+
+        $b2 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte lowByte(char)>(c0);
+
+        $r0[2] = $b2;
+
+        return $r0;
+    }
+
+    private static byte lowByte(char)
+    {
+        char c0;
+        int $i1;
+        byte $b2;
+
+        c0 := @parameter0: char;
+
+        $i1 = c0 & 255;
+
+        $b2 = (byte) $i1;
+
+        return $b2;
+    }
+
+    private static byte highByte(char)
+    {
+        char c0;
+        int $i1, $i2;
+        byte $b3;
+
+        c0 := @parameter0: char;
+
+        $i1 = c0 & 65280;
+
+        $i2 = $i1 >> 8;
+
+        $b3 = (byte) $i2;
+
+        return $b3;
+    }
+
+    public static byte[] getBytes(java.lang.String) throws java.io.IOException
+    {
+        java.io.ByteArrayOutputStream $r0;
+        java.lang.String r2, $r3;
+        int $i0, $i1, i3;
+        boolean $z0, $z1;
+        java.lang.AssertionError $r4;
+        char $c2;
+        byte[] $r5, r6;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        i3 = 0;
+
+     label1:
+        $i0 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        if i3 >= $i0 goto label2;
+
+        $c2 = virtualinvoke r2.<java.lang.String: char charAt(int)>(i3);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.code.Upf9Encoder: byte[] encodeChar(char)>($c2);
+
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void write(byte[])>($r5);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void close()>();
+
+        r6 = virtualinvoke $r0.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        $z0 = <net.sourceforge.plantuml.code.Upf9Encoder: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label3;
+
+        $i1 = lengthof r6;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.code.Upf9Decoder: java.lang.String decodeString(byte[],int)>(r6, $i1);
+
+        $z1 = virtualinvoke r2.<java.lang.String: boolean endsWith(java.lang.String)>($r3);
+
+        if $z1 != 0 goto label3;
+
+        $r4 = new java.lang.AssertionError;
+
+        specialinvoke $r4.<java.lang.AssertionError: void <init>()>();
+
+        throw $r4;
+
+     label3:
+        return r6;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/code/Upf9Encoder;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.code.Upf9Encoder: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

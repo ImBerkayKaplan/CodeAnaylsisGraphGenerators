@@ -1,0 +1,133 @@
+public class net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced extends java.lang.Object implements net.sourceforge.plantuml.creole.command.Command
+{
+    private final net.sourceforge.plantuml.command.regex.Pattern2 pattern;
+
+    public java.lang.String startingChars()
+    {
+        net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced r0;
+
+        r0 := @this: net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
+
+        return "\"";
+    }
+
+    public static net.sourceforge.plantuml.creole.command.Command create()
+    {
+        net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced $r0;
+
+        $r0 = new net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced: void <init>(java.lang.String)>("^(\"\"(.*?)\"\")");
+
+        return $r0;
+    }
+
+    private void <init>(java.lang.String)
+    {
+        net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r2;
+
+        r0 := @this: net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
+
+        r1 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>(r1);
+
+        r0.<net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced: net.sourceforge.plantuml.command.regex.Pattern2 pattern> = $r2;
+
+        return;
+    }
+
+    public int matchingSize(java.lang.String)
+    {
+        net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced r0;
+        java.lang.String r1, $r4;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r2;
+        net.sourceforge.plantuml.command.regex.Matcher2 r3;
+        boolean $z0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced: net.sourceforge.plantuml.command.regex.Pattern2 pattern>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r1);
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        $i0 = virtualinvoke $r4.<java.lang.String: int length()>();
+
+        return $i0;
+    }
+
+    public java.lang.String executeAndGetRemaining(java.lang.String, net.sourceforge.plantuml.creole.legacy.StripeSimple)
+    {
+        net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced r0;
+        java.lang.String r1, $r7, $r9, $r10, $r11;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r2;
+        net.sourceforge.plantuml.command.regex.Matcher2 r3;
+        boolean $z0;
+        net.sourceforge.plantuml.creole.legacy.StripeSimple r4;
+        net.sourceforge.plantuml.graphic.FontConfiguration r5, r8;
+        net.sourceforge.plantuml.ISkinSimple $r6;
+        int $i0;
+        java.lang.IllegalStateException $r12;
+
+        r0 := @this: net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced;
+
+        r1 := @parameter0: java.lang.String;
+
+        r4 := @parameter1: net.sourceforge.plantuml.creole.legacy.StripeSimple;
+
+        $r2 = r0.<net.sourceforge.plantuml.creole.command.CommandCreoleMonospaced: net.sourceforge.plantuml.command.regex.Pattern2 pattern>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r1);
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        $r12 = new java.lang.IllegalStateException;
+
+        specialinvoke $r12.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r12;
+
+     label1:
+        r5 = virtualinvoke r4.<net.sourceforge.plantuml.creole.legacy.StripeSimple: net.sourceforge.plantuml.graphic.FontConfiguration getActualFontConfiguration()>();
+
+        $r6 = virtualinvoke r4.<net.sourceforge.plantuml.creole.legacy.StripeSimple: net.sourceforge.plantuml.ISkinSimple getSkinParam()>();
+
+        $r7 = interfaceinvoke $r6.<net.sourceforge.plantuml.ISkinSimple: java.lang.String getMonospacedFamily()>();
+
+        r8 = virtualinvoke r5.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration changeFamily(java.lang.String)>($r7);
+
+        virtualinvoke r4.<net.sourceforge.plantuml.creole.legacy.StripeSimple: void setActualFontConfiguration(net.sourceforge.plantuml.graphic.FontConfiguration)>(r8);
+
+        $r9 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(2);
+
+        virtualinvoke r4.<net.sourceforge.plantuml.creole.legacy.StripeSimple: void analyzeAndAdd(java.lang.String)>($r9);
+
+        virtualinvoke r4.<net.sourceforge.plantuml.creole.legacy.StripeSimple: void setActualFontConfiguration(net.sourceforge.plantuml.graphic.FontConfiguration)>(r5);
+
+        $r10 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        $i0 = virtualinvoke $r10.<java.lang.String: int length()>();
+
+        $r11 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int)>($i0);
+
+        return $r11;
+    }
+}

@@ -1,0 +1,251 @@
+public class net.sourceforge.plantuml.StdrptV1 extends java.lang.Object implements net.sourceforge.plantuml.Stdrpt
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.StdrptV1 r0;
+
+        r0 := @this: net.sourceforge.plantuml.StdrptV1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void printInfo(java.io.PrintStream, net.sourceforge.plantuml.core.Diagram)
+    {
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.StdrptV1 r0;
+        java.io.PrintStream r1;
+        net.sourceforge.plantuml.error.PSystemError $r2;
+        net.sourceforge.plantuml.core.Diagram r3;
+
+        r0 := @this: net.sourceforge.plantuml.StdrptV1;
+
+        r1 := @parameter0: java.io.PrintStream;
+
+        r3 := @parameter1: net.sourceforge.plantuml.core.Diagram;
+
+        $z0 = r3 instanceof net.sourceforge.plantuml.eggs.PSystemWelcome;
+
+        if $z0 == 0 goto label1;
+
+        r3 = null;
+
+     label1:
+        if r3 == null goto label2;
+
+        $z1 = r3 instanceof net.sourceforge.plantuml.error.PSystemError;
+
+        if $z1 == 0 goto label3;
+
+     label2:
+        $r2 = (net.sourceforge.plantuml.error.PSystemError) r3;
+
+        specialinvoke r0.<net.sourceforge.plantuml.StdrptV1: void out(java.io.PrintStream,net.sourceforge.plantuml.error.PSystemError)>(r1, $r2);
+
+     label3:
+        return;
+    }
+
+    public void errorLine(int, java.io.File)
+    {
+        java.lang.StringBuilder $r0, $r1, $r2, $r3, $r6;
+        int i0, $i1;
+        java.io.File r4;
+        java.lang.String $r5, $r7;
+        net.sourceforge.plantuml.StdrptV1 r8;
+
+        r8 := @this: net.sourceforge.plantuml.StdrptV1;
+
+        i0 := @parameter0: int;
+
+        r4 := @parameter1: java.io.File;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Error line ");
+
+        $i1 = i0 + 1;
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" in file: ");
+
+        $r5 = virtualinvoke r4.<java.io.File: java.lang.String getPath()>();
+
+        $r6 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r7);
+
+        return;
+    }
+
+    private void out(java.io.PrintStream, net.sourceforge.plantuml.error.PSystemError)
+    {
+        java.io.PrintStream r0;
+        net.sourceforge.plantuml.StdrptV1 r1;
+        net.sourceforge.plantuml.error.PSystemError r2;
+        boolean $z0, $z1;
+        java.lang.StringBuilder $r3, $r4, $r6, $r12, $r13, $r15;
+        net.sourceforge.plantuml.LineLocation $r5;
+        int $i0, $i1;
+        java.lang.String $r7, $r14, $r16;
+        java.util.Collection $r8;
+        java.util.Iterator r9;
+        java.lang.Object $r10;
+        net.sourceforge.plantuml.ErrorUml r11;
+
+        r1 := @this: net.sourceforge.plantuml.StdrptV1;
+
+        r0 := @parameter0: java.io.PrintStream;
+
+        r2 := @parameter1: net.sourceforge.plantuml.error.PSystemError;
+
+        virtualinvoke r0.<java.io.PrintStream: void println(java.lang.String)>("protocolVersion=1");
+
+        $z0 = specialinvoke r1.<net.sourceforge.plantuml.StdrptV1: boolean empty(net.sourceforge.plantuml.error.PSystemError)>(r2);
+
+        if $z0 == 0 goto label1;
+
+        virtualinvoke r0.<java.io.PrintStream: void println(java.lang.String)>("status=NO_DATA");
+
+        goto label3;
+
+     label1:
+        virtualinvoke r0.<java.io.PrintStream: void println(java.lang.String)>("status=ERROR");
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("lineNumber=");
+
+        $r5 = virtualinvoke r2.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.LineLocation getLineLocation()>();
+
+        $i0 = interfaceinvoke $r5.<net.sourceforge.plantuml.LineLocation: int getPosition()>();
+
+        $i1 = $i0 + 1;
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<java.io.PrintStream: void println(java.lang.String)>($r7);
+
+        $r8 = virtualinvoke r2.<net.sourceforge.plantuml.error.PSystemError: java.util.Collection getErrorsUml()>();
+
+        r9 = interfaceinvoke $r8.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label2:
+        $z1 = interfaceinvoke r9.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r10 = interfaceinvoke r9.<java.util.Iterator: java.lang.Object next()>();
+
+        r11 = (net.sourceforge.plantuml.ErrorUml) $r10;
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("label=");
+
+        $r14 = virtualinvoke r11.<net.sourceforge.plantuml.ErrorUml: java.lang.String getError()>();
+
+        $r15 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r14);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<java.io.PrintStream: void println(java.lang.String)>($r16);
+
+        goto label2;
+
+     label3:
+        virtualinvoke r0.<java.io.PrintStream: void flush()>();
+
+        return;
+    }
+
+    private boolean empty(net.sourceforge.plantuml.error.PSystemError)
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        java.util.Collection $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.ErrorUml r4;
+        java.lang.String $r5, $r6;
+        net.sourceforge.plantuml.StdrptV1 r7;
+
+        r7 := @this: net.sourceforge.plantuml.StdrptV1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.error.PSystemError;
+
+        if r0 != null goto label1;
+
+        return 1;
+
+     label1:
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.error.PSystemError: java.util.Collection getErrorsUml()>();
+
+        r2 = interfaceinvoke $r1.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.ErrorUml) $r3;
+
+        $r5 = "Empty description";
+
+        $r6 = virtualinvoke r4.<net.sourceforge.plantuml.ErrorUml: java.lang.String getError()>();
+
+        $z1 = virtualinvoke $r5.<java.lang.String: boolean equals(java.lang.Object)>($r6);
+
+        if $z1 == 0 goto label3;
+
+        return 1;
+
+     label3:
+        goto label2;
+
+     label4:
+        return 0;
+    }
+
+    public void finalMessage(net.sourceforge.plantuml.ErrorStatus)
+    {
+        net.sourceforge.plantuml.ErrorStatus r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.StdrptV1 r1;
+
+        r1 := @this: net.sourceforge.plantuml.StdrptV1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ErrorStatus;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.ErrorStatus: boolean hasError()>();
+
+        if $z0 == 0 goto label1;
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>("Some diagram description contains errors");
+
+     label1:
+        $z1 = virtualinvoke r0.<net.sourceforge.plantuml.ErrorStatus: boolean isNoData()>();
+
+        if $z1 == 0 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>("No diagram found");
+
+     label2:
+        return;
+    }
+}

@@ -1,0 +1,991 @@
+public class org.stathissideris.ascii2image.graphics.BitmapRenderer extends java.lang.Object
+{
+    private static final boolean DEBUG;
+    private static final java.lang.String IDREGEX;
+    java.awt.Stroke normalStroke;
+    java.awt.Stroke dashStroke;
+
+    public void <init>()
+    {
+        org.stathissideris.ascii2image.graphics.BitmapRenderer r0;
+
+        r0 := @this: org.stathissideris.ascii2image.graphics.BitmapRenderer;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.awt.image.RenderedImage renderToImage(org.stathissideris.ascii2image.graphics.Diagram, org.stathissideris.ascii2image.core.RenderingOptions)
+    {
+        java.awt.image.BufferedImage $r0;
+        org.stathissideris.ascii2image.graphics.Diagram r1;
+        int $i0, $i1;
+        org.stathissideris.ascii2image.graphics.BitmapRenderer r3;
+        org.stathissideris.ascii2image.core.RenderingOptions r4;
+        java.awt.image.RenderedImage $r5;
+
+        r3 := @this: org.stathissideris.ascii2image.graphics.BitmapRenderer;
+
+        r1 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        r4 := @parameter1: org.stathissideris.ascii2image.core.RenderingOptions;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.Diagram: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.Diagram: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        $r5 = virtualinvoke r3.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.image.RenderedImage render(org.stathissideris.ascii2image.graphics.Diagram,java.awt.image.BufferedImage,org.stathissideris.ascii2image.core.RenderingOptions)>(r1, $r0, r4);
+
+        return $r5;
+    }
+
+    public java.awt.image.RenderedImage render(org.stathissideris.ascii2image.graphics.Diagram, java.awt.image.BufferedImage, org.stathissideris.ascii2image.core.RenderingOptions)
+    {
+        java.awt.image.BufferedImage r0, $r51, r61;
+        org.stathissideris.ascii2image.core.RenderingOptions r1;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z12, $z14, $z15, $z16, $z17, $z18, $z19;
+        java.awt.RenderingHints$Key $r2, $r55;
+        java.awt.Color $r3, $r18, $r19, $r22, $r24, $r30, $r31, $r35, $r38, $r39, $r40, $r43, $r45, $r46, $r47, $r60;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, i37, i38, $i40, i41, i42;
+        java.awt.BasicStroke $r4, $r8, $r9, $r17;
+        org.stathissideris.ascii2image.graphics.Diagram r5;
+        java.util.ArrayList r6, $r11, $r14, $r16, $r33, $r34, $r57;
+        float $f0, $f1, f2, f3, f4, f5, f6;
+        org.stathissideris.ascii2image.graphics.BitmapRenderer r7;
+        float[] $r10, r69;
+        org.stathissideris.ascii2image.core.Shape3DOrderingComparator $r12;
+        java.awt.Stroke $r13, $r15, $r36, $r37, $r42, $r44;
+        java.lang.Object $r20, $r29, $r32, $r41, $r48, $r56, r63;
+        java.awt.Font $r21;
+        java.lang.String $r23, $r25, $r26, $r27, $r28;
+        java.awt.image.Kernel $r49;
+        java.awt.image.ConvolveOp $r50;
+        java.awt.Graphics $r54;
+        java.awt.geom.GeneralPath $r58, r66, r77, r81, r84;
+        java.awt.geom.AffineTransform $r59;
+        double $d0, $d1;
+        java.awt.Graphics2D r62;
+        java.util.Iterator r64, r73, r75, r79, r82, r85;
+        org.stathissideris.ascii2image.graphics.DiagramShape r65, r74, r76, r80, r83;
+        org.stathissideris.ascii2image.graphics.DiagramText r86;
+
+        r7 := @this: org.stathissideris.ascii2image.graphics.BitmapRenderer;
+
+        r5 := @parameter0: org.stathissideris.ascii2image.graphics.Diagram;
+
+        r0 := @parameter1: java.awt.image.BufferedImage;
+
+        r1 := @parameter2: org.stathissideris.ascii2image.core.RenderingOptions;
+
+        r61 = r0;
+
+        r62 = virtualinvoke r0.<java.awt.image.BufferedImage: java.awt.Graphics2D createGraphics()>();
+
+        r63 = <java.awt.RenderingHints: java.lang.Object VALUE_ANTIALIAS_OFF>;
+
+        $z0 = virtualinvoke r1.<org.stathissideris.ascii2image.core.RenderingOptions: boolean performAntialias()>();
+
+        if $z0 == 0 goto label01;
+
+        r63 = <java.awt.RenderingHints: java.lang.Object VALUE_ANTIALIAS_ON>;
+
+     label01:
+        $r2 = <java.awt.RenderingHints: java.awt.RenderingHints$Key KEY_ANTIALIASING>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setRenderingHint(java.awt.RenderingHints$Key,java.lang.Object)>($r2, r63);
+
+        $r3 = <java.awt.Color: java.awt.Color white>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r3);
+
+        $i0 = virtualinvoke r0.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i1 = $i0 + 10;
+
+        $i2 = virtualinvoke r0.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $i3 = $i2 + 10;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void fillRect(int,int,int,int)>(0, 0, $i1, $i3);
+
+        $r4 = new java.awt.BasicStroke;
+
+        specialinvoke $r4.<java.awt.BasicStroke: void <init>(float,int,int)>(1.0F, 2, 1);
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r4);
+
+        r6 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: java.util.ArrayList getAllDiagramShapes()>();
+
+        $z1 = virtualinvoke r1.<org.stathissideris.ascii2image.core.RenderingOptions: boolean dropShadows()>();
+
+        if $z1 == 0 goto label08;
+
+        r64 = virtualinvoke r6.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label02:
+        $z16 = interfaceinvoke r64.<java.util.Iterator: boolean hasNext()>();
+
+        if $z16 == 0 goto label05;
+
+        $r56 = interfaceinvoke r64.<java.util.Iterator: java.lang.Object next()>();
+
+        r65 = (org.stathissideris.ascii2image.graphics.DiagramShape) $r56;
+
+        $r57 = virtualinvoke r65.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $z14 = virtualinvoke $r57.<java.util.ArrayList: boolean isEmpty()>();
+
+        if $z14 == 0 goto label03;
+
+        goto label02;
+
+     label03:
+        r66 = virtualinvoke r65.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoRenderPath(org.stathissideris.ascii2image.graphics.Diagram)>(r5);
+
+        $f1 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: float getMinimumOfCellDimension()>();
+
+        f2 = $f1 / 3.333F;
+
+        if r66 == null goto label04;
+
+        $z15 = virtualinvoke r65.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean dropsShadow()>();
+
+        if $z15 == 0 goto label04;
+
+        $i35 = virtualinvoke r65.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i35 == 9999 goto label04;
+
+        $r58 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r58.<java.awt.geom.GeneralPath: void <init>(java.awt.Shape)>(r66);
+
+        $r59 = new java.awt.geom.AffineTransform;
+
+        specialinvoke $r59.<java.awt.geom.AffineTransform: void <init>()>();
+
+        $d1 = (double) f2;
+
+        $d0 = (double) f2;
+
+        virtualinvoke $r59.<java.awt.geom.AffineTransform: void setToTranslation(double,double)>($d1, $d0);
+
+        virtualinvoke $r58.<java.awt.geom.GeneralPath: void transform(java.awt.geom.AffineTransform)>($r59);
+
+        $r60 = new java.awt.Color;
+
+        specialinvoke $r60.<java.awt.Color: void <init>(int,int,int)>(150, 150, 150);
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r60);
+
+        virtualinvoke r62.<java.awt.Graphics2D: void fill(java.awt.Shape)>($r58);
+
+     label04:
+        goto label02;
+
+     label05:
+        i37 = 6 * 6;
+
+        f3 = (float) i37;
+
+        f4 = 1.0F / f3;
+
+        r69 = newarray (float)[i37];
+
+        i38 = 0;
+
+     label06:
+        if i38 >= i37 goto label07;
+
+        r69[i38] = f4;
+
+        i38 = i38 + 1;
+
+        goto label06;
+
+     label07:
+        $r49 = new java.awt.image.Kernel;
+
+        specialinvoke $r49.<java.awt.image.Kernel: void <init>(int,int,float[])>(6, 6, r69);
+
+        $r50 = new java.awt.image.ConvolveOp;
+
+        specialinvoke $r50.<java.awt.image.ConvolveOp: void <init>(java.awt.image.Kernel,int,java.awt.RenderingHints)>($r49, 1, null);
+
+        $r51 = new java.awt.image.BufferedImage;
+
+        $i32 = virtualinvoke r0.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i33 = virtualinvoke r0.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $i34 = virtualinvoke r0.<java.awt.image.BufferedImage: int getType()>();
+
+        specialinvoke $r51.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i32, $i33, $i34);
+
+        virtualinvoke $r50.<java.awt.image.ConvolveOp: java.awt.image.BufferedImage filter(java.awt.image.BufferedImage,java.awt.image.BufferedImage)>(r0, $r51);
+
+        $r54 = virtualinvoke $r51.<java.awt.image.BufferedImage: java.awt.Graphics getGraphics()>();
+
+        r62 = (java.awt.Graphics2D) $r54;
+
+        $r55 = <java.awt.RenderingHints: java.awt.RenderingHints$Key KEY_ANTIALIASING>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setRenderingHint(java.awt.RenderingHints$Key,java.lang.Object)>($r55, r63);
+
+        r61 = $r51;
+
+     label08:
+        $i4 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: int getCellWidth()>();
+
+        $i5 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: int getCellHeight()>();
+
+        $i6 = staticinvoke <java.lang.Math: int min(int,int)>($i4, $i5);
+
+        $i7 = $i6 / 2;
+
+        f5 = (float) $i7;
+
+        $f0 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: float getMinimumOfCellDimension()>();
+
+        f6 = $f0 / 10.0F;
+
+        $r8 = new java.awt.BasicStroke;
+
+        specialinvoke $r8.<java.awt.BasicStroke: void <init>(float,int,int)>(f6, 1, 1);
+
+        r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke normalStroke> = $r8;
+
+        $r9 = new java.awt.BasicStroke;
+
+        $r10 = newarray (float)[1];
+
+        $r10[0] = f5;
+
+        specialinvoke $r9.<java.awt.BasicStroke: void <init>(float,int,int,float,float[],float)>(f6, 0, 1, 0.0F, $r10, 0.0F);
+
+        r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke dashStroke> = $r9;
+
+        $r11 = new java.util.ArrayList;
+
+        specialinvoke $r11.<java.util.ArrayList: void <init>()>();
+
+        r73 = virtualinvoke r6.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label09:
+        $z17 = interfaceinvoke r73.<java.util.Iterator: boolean hasNext()>();
+
+        if $z17 == 0 goto label11;
+
+        $r48 = interfaceinvoke r73.<java.util.Iterator: java.lang.Object next()>();
+
+        r74 = (org.stathissideris.ascii2image.graphics.DiagramShape) $r48;
+
+        $i31 = virtualinvoke r74.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i31 != 4 goto label10;
+
+        virtualinvoke $r11.<java.util.ArrayList: boolean add(java.lang.Object)>(r74);
+
+        goto label09;
+
+     label10:
+        goto label09;
+
+     label11:
+        $r12 = new org.stathissideris.ascii2image.core.Shape3DOrderingComparator;
+
+        specialinvoke $r12.<org.stathissideris.ascii2image.core.Shape3DOrderingComparator: void <init>()>();
+
+        staticinvoke <java.util.Collections: void sort(java.util.List,java.util.Comparator)>($r11, $r12);
+
+        $r13 = r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke normalStroke>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r13);
+
+        r75 = virtualinvoke $r11.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label12:
+        $z2 = interfaceinvoke r75.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label18;
+
+        $r41 = interfaceinvoke r75.<java.util.Iterator: java.lang.Object next()>();
+
+        r76 = (org.stathissideris.ascii2image.graphics.DiagramShape) $r41;
+
+        r77 = virtualinvoke r76.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoRenderPath(org.stathissideris.ascii2image.graphics.Diagram)>(r5);
+
+        $z12 = virtualinvoke r76.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed()>();
+
+        if $z12 != 0 goto label15;
+
+        $r45 = virtualinvoke r76.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color getFillColor()>();
+
+        if $r45 == null goto label13;
+
+        $r47 = virtualinvoke r76.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color getFillColor()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r47);
+
+        goto label14;
+
+     label13:
+        $r46 = <java.awt.Color: java.awt.Color white>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r46);
+
+     label14:
+        virtualinvoke r62.<java.awt.Graphics2D: void fill(java.awt.Shape)>(r77);
+
+     label15:
+        $z18 = virtualinvoke r76.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed()>();
+
+        if $z18 == 0 goto label16;
+
+        $r44 = r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke dashStroke>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r44);
+
+        goto label17;
+
+     label16:
+        $r42 = r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke normalStroke>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r42);
+
+     label17:
+        $r43 = virtualinvoke r76.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color getStrokeColor()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r43);
+
+        virtualinvoke r62.<java.awt.Graphics2D: void draw(java.awt.Shape)>(r77);
+
+        goto label12;
+
+     label18:
+        $r14 = new java.util.ArrayList;
+
+        specialinvoke $r14.<java.util.ArrayList: void <init>()>();
+
+        r79 = virtualinvoke r6.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label19:
+        $z19 = interfaceinvoke r79.<java.util.Iterator: boolean hasNext()>();
+
+        if $z19 == 0 goto label30;
+
+        $r32 = interfaceinvoke r79.<java.util.Iterator: java.lang.Object next()>();
+
+        r80 = (org.stathissideris.ascii2image.graphics.DiagramShape) $r32;
+
+        $i28 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i28 != 2 goto label20;
+
+        virtualinvoke $r14.<java.util.ArrayList: boolean add(java.lang.Object)>(r80);
+
+        goto label19;
+
+     label20:
+        $i29 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i29 != 4 goto label21;
+
+        goto label19;
+
+     label21:
+        $i30 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i30 != 9999 goto label22;
+
+        specialinvoke r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: void renderCustomShape(org.stathissideris.ascii2image.graphics.DiagramShape,java.awt.Graphics2D)>(r80, r62);
+
+        goto label19;
+
+     label22:
+        $r33 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        $z7 = virtualinvoke $r33.<java.util.ArrayList: boolean isEmpty()>();
+
+        if $z7 == 0 goto label23;
+
+        goto label19;
+
+     label23:
+        $r34 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: java.util.ArrayList getPoints()>();
+
+        virtualinvoke $r34.<java.util.ArrayList: int size()>();
+
+        r81 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoRenderPath(org.stathissideris.ascii2image.graphics.Diagram)>(r5);
+
+        if r81 == null goto label26;
+
+        $z9 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isClosed()>();
+
+        if $z9 == 0 goto label26;
+
+        $z10 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed()>();
+
+        if $z10 != 0 goto label26;
+
+        $r38 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color getFillColor()>();
+
+        if $r38 == null goto label24;
+
+        $r40 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color getFillColor()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r40);
+
+        goto label25;
+
+     label24:
+        $r39 = <java.awt.Color: java.awt.Color white>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r39);
+
+     label25:
+        virtualinvoke r62.<java.awt.Graphics2D: void fill(java.awt.Shape)>(r81);
+
+     label26:
+        $i40 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: int getType()>();
+
+        if $i40 == 1 goto label29;
+
+        $r35 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color getStrokeColor()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r35);
+
+        $z8 = virtualinvoke r80.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed()>();
+
+        if $z8 == 0 goto label27;
+
+        $r37 = r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke dashStroke>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r37);
+
+        goto label28;
+
+     label27:
+        $r36 = r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke normalStroke>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r36);
+
+     label28:
+        virtualinvoke r62.<java.awt.Graphics2D: void draw(java.awt.Shape)>(r81);
+
+     label29:
+        goto label19;
+
+     label30:
+        $r15 = r7.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke normalStroke>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r15);
+
+        r82 = virtualinvoke $r14.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label31:
+        $z3 = interfaceinvoke r82.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 == 0 goto label32;
+
+        $r29 = interfaceinvoke r82.<java.util.Iterator: java.lang.Object next()>();
+
+        r83 = (org.stathissideris.ascii2image.graphics.DiagramShape) $r29;
+
+        r84 = virtualinvoke r83.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.geom.GeneralPath makeIntoRenderPath(org.stathissideris.ascii2image.graphics.Diagram)>(r5);
+
+        $r30 = <java.awt.Color: java.awt.Color white>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r30);
+
+        virtualinvoke r62.<java.awt.Graphics2D: void fill(java.awt.Shape)>(r84);
+
+        $r31 = virtualinvoke r83.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color getStrokeColor()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r31);
+
+        virtualinvoke r62.<java.awt.Graphics2D: void draw(java.awt.Shape)>(r84);
+
+        goto label31;
+
+     label32:
+        $r16 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: java.util.ArrayList getTextObjects()>();
+
+        r85 = virtualinvoke $r16.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label33:
+        $z4 = interfaceinvoke r85.<java.util.Iterator: boolean hasNext()>();
+
+        if $z4 == 0 goto label35;
+
+        $r20 = interfaceinvoke r85.<java.util.Iterator: java.lang.Object next()>();
+
+        r86 = (org.stathissideris.ascii2image.graphics.DiagramText) $r20;
+
+        $r21 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: java.awt.Font getFont()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setFont(java.awt.Font)>($r21);
+
+        $z6 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: boolean hasOutline()>();
+
+        if $z6 == 0 goto label34;
+
+        $r24 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: java.awt.Color getOutlineColor()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r24);
+
+        $r25 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: java.lang.String getText()>();
+
+        $i16 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getXPos()>();
+
+        $i17 = $i16 + 1;
+
+        $i18 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getYPos()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void drawString(java.lang.String,int,int)>($r25, $i17, $i18);
+
+        $r26 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: java.lang.String getText()>();
+
+        $i19 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getXPos()>();
+
+        $i20 = $i19 - 1;
+
+        $i21 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getYPos()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void drawString(java.lang.String,int,int)>($r26, $i20, $i21);
+
+        $r27 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: java.lang.String getText()>();
+
+        $i22 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getXPos()>();
+
+        $i23 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getYPos()>();
+
+        $i24 = $i23 + 1;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void drawString(java.lang.String,int,int)>($r27, $i22, $i24);
+
+        $r28 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: java.lang.String getText()>();
+
+        $i25 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getXPos()>();
+
+        $i26 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getYPos()>();
+
+        $i27 = $i26 - 1;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void drawString(java.lang.String,int,int)>($r28, $i25, $i27);
+
+     label34:
+        $r22 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: java.awt.Color getColor()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r22);
+
+        $r23 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: java.lang.String getText()>();
+
+        $i14 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getXPos()>();
+
+        $i15 = virtualinvoke r86.<org.stathissideris.ascii2image.graphics.DiagramText: int getYPos()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void drawString(java.lang.String,int,int)>($r23, $i14, $i15);
+
+        goto label33;
+
+     label35:
+        $z5 = virtualinvoke r1.<org.stathissideris.ascii2image.core.RenderingOptions: boolean renderDebugLines()>();
+
+        if $z5 != 0 goto label36;
+
+        goto label40;
+
+     label36:
+        $r17 = new java.awt.BasicStroke;
+
+        specialinvoke $r17.<java.awt.BasicStroke: void <init>(float,int,int)>(1.0F, 1, 1);
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r17);
+
+        $r18 = new java.awt.Color;
+
+        specialinvoke $r18.<java.awt.Color: void <init>(int,int,int)>(170, 170, 170);
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r18);
+
+        $r19 = <java.awt.Color: java.awt.Color white>;
+
+        virtualinvoke r62.<java.awt.Graphics2D: void setXORMode(java.awt.Color)>($r19);
+
+        i41 = 0;
+
+     label37:
+        $i8 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: int getWidth()>();
+
+        if i41 >= $i8 goto label38;
+
+        $i12 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: int getHeight()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void drawLine(int,int,int,int)>(i41, 0, i41, $i12);
+
+        $i13 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: int getCellWidth()>();
+
+        i41 = i41 + $i13;
+
+        goto label37;
+
+     label38:
+        i42 = 0;
+
+     label39:
+        $i9 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: int getHeight()>();
+
+        if i42 >= $i9 goto label40;
+
+        $i10 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: int getWidth()>();
+
+        virtualinvoke r62.<java.awt.Graphics2D: void drawLine(int,int,int,int)>(0, i42, $i10, i42);
+
+        $i11 = virtualinvoke r5.<org.stathissideris.ascii2image.graphics.Diagram: int getCellHeight()>();
+
+        i42 = i42 + $i11;
+
+        goto label39;
+
+     label40:
+        virtualinvoke r62.<java.awt.Graphics2D: void dispose()>();
+
+        return r61;
+    }
+
+    private java.awt.image.RenderedImage renderTextLayer(java.util.ArrayList, int, int)
+    {
+        org.stathissideris.ascii2image.graphics.BitmapRenderer$TextCanvas $r0;
+        org.stathissideris.ascii2image.graphics.BitmapRenderer r1;
+        java.util.ArrayList r2;
+        int i0, i1;
+        java.awt.Image r4;
+        java.awt.Graphics r5;
+        java.awt.image.RenderedImage $r6;
+
+        r1 := @this: org.stathissideris.ascii2image.graphics.BitmapRenderer;
+
+        r2 := @parameter0: java.util.ArrayList;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        $r0 = new org.stathissideris.ascii2image.graphics.BitmapRenderer$TextCanvas;
+
+        specialinvoke $r0.<org.stathissideris.ascii2image.graphics.BitmapRenderer$TextCanvas: void <init>(org.stathissideris.ascii2image.graphics.BitmapRenderer,java.util.ArrayList)>(r1, r2);
+
+        r4 = virtualinvoke $r0.<org.stathissideris.ascii2image.graphics.BitmapRenderer$TextCanvas: java.awt.Image createImage(int,int)>(i0, i1);
+
+        r5 = virtualinvoke r4.<java.awt.Image: java.awt.Graphics getGraphics()>();
+
+        virtualinvoke $r0.<org.stathissideris.ascii2image.graphics.BitmapRenderer$TextCanvas: void paint(java.awt.Graphics)>(r5);
+
+        $r6 = (java.awt.image.RenderedImage) r4;
+
+        return $r6;
+    }
+
+    private void renderCustomShape(org.stathissideris.ascii2image.graphics.DiagramShape, java.awt.Graphics2D)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        org.stathissideris.ascii2image.graphics.CustomShapeDefinition r1;
+        java.awt.Rectangle r2;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.String $r3, $r10;
+        java.lang.UnsupportedOperationException $r4;
+        org.stathissideris.ascii2image.graphics.BitmapRenderer r5;
+        java.awt.Graphics2D r6;
+        java.awt.Color $r7;
+        java.awt.Stroke $r8, $r9;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31;
+
+        r5 := @this: org.stathissideris.ascii2image.graphics.BitmapRenderer;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r6 := @parameter1: java.awt.Graphics2D;
+
+        r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.CustomShapeDefinition getDefinition()>();
+
+        r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Rectangle getBounds()>();
+
+        $z0 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.CustomShapeDefinition: boolean hasBorder()>();
+
+        if $z0 == 0 goto label3;
+
+        $r7 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Color getStrokeColor()>();
+
+        virtualinvoke r6.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r7);
+
+        $z2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: boolean isStrokeDashed()>();
+
+        if $z2 == 0 goto label1;
+
+        $r9 = r5.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke dashStroke>;
+
+        virtualinvoke r6.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r9);
+
+        goto label2;
+
+     label1:
+        $r8 = r5.<org.stathissideris.ascii2image.graphics.BitmapRenderer: java.awt.Stroke normalStroke>;
+
+        virtualinvoke r6.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r8);
+
+     label2:
+        $i5 = r2.<java.awt.Rectangle: int x>;
+
+        $i4 = r2.<java.awt.Rectangle: int y>;
+
+        $i1 = r2.<java.awt.Rectangle: int x>;
+
+        $i0 = r2.<java.awt.Rectangle: int width>;
+
+        $i3 = $i1 + $i0;
+
+        $i2 = r2.<java.awt.Rectangle: int y>;
+
+        virtualinvoke r6.<java.awt.Graphics2D: void drawLine(int,int,int,int)>($i5, $i4, $i3, $i2);
+
+        $i7 = r2.<java.awt.Rectangle: int x>;
+
+        $i6 = r2.<java.awt.Rectangle: int width>;
+
+        $i15 = $i7 + $i6;
+
+        $i14 = r2.<java.awt.Rectangle: int y>;
+
+        $i9 = r2.<java.awt.Rectangle: int x>;
+
+        $i8 = r2.<java.awt.Rectangle: int width>;
+
+        $i13 = $i9 + $i8;
+
+        $i11 = r2.<java.awt.Rectangle: int y>;
+
+        $i10 = r2.<java.awt.Rectangle: int height>;
+
+        $i12 = $i11 + $i10;
+
+        virtualinvoke r6.<java.awt.Graphics2D: void drawLine(int,int,int,int)>($i15, $i14, $i13, $i12);
+
+        $i25 = r2.<java.awt.Rectangle: int x>;
+
+        $i17 = r2.<java.awt.Rectangle: int y>;
+
+        $i16 = r2.<java.awt.Rectangle: int height>;
+
+        $i24 = $i17 + $i16;
+
+        $i19 = r2.<java.awt.Rectangle: int x>;
+
+        $i18 = r2.<java.awt.Rectangle: int width>;
+
+        $i23 = $i19 + $i18;
+
+        $i21 = r2.<java.awt.Rectangle: int y>;
+
+        $i20 = r2.<java.awt.Rectangle: int height>;
+
+        $i22 = $i21 + $i20;
+
+        virtualinvoke r6.<java.awt.Graphics2D: void drawLine(int,int,int,int)>($i25, $i24, $i23, $i22);
+
+        $i31 = r2.<java.awt.Rectangle: int x>;
+
+        $i30 = r2.<java.awt.Rectangle: int y>;
+
+        $i29 = r2.<java.awt.Rectangle: int x>;
+
+        $i27 = r2.<java.awt.Rectangle: int y>;
+
+        $i26 = r2.<java.awt.Rectangle: int height>;
+
+        $i28 = $i27 + $i26;
+
+        virtualinvoke r6.<java.awt.Graphics2D: void drawLine(int,int,int,int)>($i31, $i30, $i29, $i28);
+
+     label3:
+        $r10 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.CustomShapeDefinition: java.lang.String getFilename()>();
+
+        $z3 = virtualinvoke $r10.<java.lang.String: boolean endsWith(java.lang.String)>(".png");
+
+        if $z3 == 0 goto label4;
+
+        specialinvoke r5.<org.stathissideris.ascii2image.graphics.BitmapRenderer: void renderCustomPNGShape(org.stathissideris.ascii2image.graphics.DiagramShape,java.awt.Graphics2D)>(r0, r6);
+
+        goto label5;
+
+     label4:
+        $r3 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.CustomShapeDefinition: java.lang.String getFilename()>();
+
+        $z1 = virtualinvoke $r3.<java.lang.String: boolean endsWith(java.lang.String)>(".svg");
+
+        if $z1 == 0 goto label5;
+
+        $r4 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r4.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r4;
+
+     label5:
+        return;
+    }
+
+    private void renderCustomPNGShape(org.stathissideris.ascii2image.graphics.DiagramShape, java.awt.Graphics2D)
+    {
+        org.stathissideris.ascii2image.graphics.DiagramShape r0;
+        org.stathissideris.ascii2image.graphics.CustomShapeDefinition r1;
+        java.awt.Rectangle r2;
+        org.stathissideris.ascii2image.graphics.ImageHandler $r3;
+        java.lang.String $r4;
+        java.awt.Image r5;
+        boolean $z0;
+        int $i0, $i1, $i2, $i3, i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, i22, i23, i24, i25;
+        java.awt.Graphics2D r6;
+        org.stathissideris.ascii2image.graphics.BitmapRenderer r7;
+
+        r7 := @this: org.stathissideris.ascii2image.graphics.BitmapRenderer;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.graphics.DiagramShape;
+
+        r6 := @parameter1: java.awt.Graphics2D;
+
+        r1 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: org.stathissideris.ascii2image.graphics.CustomShapeDefinition getDefinition()>();
+
+        r2 = virtualinvoke r0.<org.stathissideris.ascii2image.graphics.DiagramShape: java.awt.Rectangle getBounds()>();
+
+        $r3 = staticinvoke <org.stathissideris.ascii2image.graphics.ImageHandler: org.stathissideris.ascii2image.graphics.ImageHandler instance()>();
+
+        $r4 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.CustomShapeDefinition: java.lang.String getFilename()>();
+
+        r5 = virtualinvoke $r3.<org.stathissideris.ascii2image.graphics.ImageHandler: java.awt.Image loadImage(java.lang.String)>($r4);
+
+        $z0 = virtualinvoke r1.<org.stathissideris.ascii2image.graphics.CustomShapeDefinition: boolean stretches()>();
+
+        if $z0 == 0 goto label1;
+
+        i22 = r2.<java.awt.Rectangle: int x>;
+
+        i23 = r2.<java.awt.Rectangle: int y>;
+
+        i24 = r2.<java.awt.Rectangle: int width>;
+
+        i25 = r2.<java.awt.Rectangle: int height>;
+
+        goto label3;
+
+     label1:
+        $i0 = r2.<java.awt.Rectangle: int width>;
+
+        $i1 = virtualinvoke r5.<java.awt.Image: int getHeight(java.awt.image.ImageObserver)>(null);
+
+        $i2 = $i0 * $i1;
+
+        $i3 = virtualinvoke r5.<java.awt.Image: int getWidth(java.awt.image.ImageObserver)>(null);
+
+        i4 = $i2 / $i3;
+
+        $i5 = r2.<java.awt.Rectangle: int height>;
+
+        if i4 >= $i5 goto label2;
+
+        i25 = i4;
+
+        i24 = r2.<java.awt.Rectangle: int width>;
+
+        i22 = r2.<java.awt.Rectangle: int x>;
+
+        $i18 = r2.<java.awt.Rectangle: int y>;
+
+        $i16 = r2.<java.awt.Rectangle: int height>;
+
+        $i17 = $i16 / 2;
+
+        $i19 = $i18 + $i17;
+
+        $i20 = virtualinvoke r5.<java.awt.Image: int getHeight(java.awt.image.ImageObserver)>(null);
+
+        $i21 = $i20 / 2;
+
+        i23 = $i19 - $i21;
+
+        goto label3;
+
+     label2:
+        $i6 = virtualinvoke r5.<java.awt.Image: int getWidth(java.awt.image.ImageObserver)>(null);
+
+        $i7 = r2.<java.awt.Rectangle: int height>;
+
+        $i8 = $i6 * $i7;
+
+        $i9 = virtualinvoke r5.<java.awt.Image: int getHeight(java.awt.image.ImageObserver)>(null);
+
+        i24 = $i8 / $i9;
+
+        i25 = r2.<java.awt.Rectangle: int height>;
+
+        $i12 = r2.<java.awt.Rectangle: int x>;
+
+        $i10 = r2.<java.awt.Rectangle: int width>;
+
+        $i11 = $i10 / 2;
+
+        $i13 = $i12 + $i11;
+
+        $i14 = virtualinvoke r5.<java.awt.Image: int getWidth(java.awt.image.ImageObserver)>(null);
+
+        $i15 = $i14 / 2;
+
+        i22 = $i13 - $i15;
+
+        i23 = r2.<java.awt.Rectangle: int y>;
+
+     label3:
+        virtualinvoke r6.<java.awt.Graphics2D: boolean drawImage(java.awt.Image,int,int,int,int,java.awt.image.ImageObserver)>(r5, i22, i23, i24, i25, null);
+
+        return;
+    }
+
+    public static boolean isColorDark(java.awt.Color)
+    {
+        java.awt.Color r0;
+        int $i0, $i1, $i2, i3, i4;
+
+        r0 := @parameter0: java.awt.Color;
+
+        $i0 = virtualinvoke r0.<java.awt.Color: int getRed()>();
+
+        $i1 = virtualinvoke r0.<java.awt.Color: int getGreen()>();
+
+        i3 = staticinvoke <java.lang.Math: int max(int,int)>($i0, $i1);
+
+        $i2 = virtualinvoke r0.<java.awt.Color: int getBlue()>();
+
+        i4 = staticinvoke <java.lang.Math: int max(int,int)>($i2, i3);
+
+        if i4 >= 200 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    public static void <clinit>()
+    {
+        <org.stathissideris.ascii2image.graphics.BitmapRenderer: java.lang.String IDREGEX> = "^.+_vfill$";
+
+        <org.stathissideris.ascii2image.graphics.BitmapRenderer: boolean DEBUG> = 0;
+
+        return;
+    }
+}

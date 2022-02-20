@@ -1,0 +1,901 @@
+public class net.sourceforge.plantuml.project.core.TaskImpl extends net.sourceforge.plantuml.project.core.AbstractTask implements net.sourceforge.plantuml.project.core.Task, net.sourceforge.plantuml.project.LoadPlanable
+{
+    private final java.util.SortedSet pausedDay;
+    private final java.util.Set pausedDayOfWeek;
+    private final net.sourceforge.plantuml.project.solver.Solver solver;
+    private final java.util.Map resources;
+    private final net.sourceforge.plantuml.project.LoadPlanable defaultPlan;
+    private boolean diamond;
+    private int completion;
+    private net.sourceforge.plantuml.cucadiagram.Display note;
+    private net.sourceforge.plantuml.Url url;
+    private net.sourceforge.plantuml.project.lang.CenterBorderColor[] colors;
+
+    public void setUrl(net.sourceforge.plantuml.Url)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.Url r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.Url;
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.Url url> = r1;
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.style.StyleBuilder, net.sourceforge.plantuml.project.core.TaskCode, net.sourceforge.plantuml.project.OpenClose)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.style.StyleBuilder r1;
+        net.sourceforge.plantuml.project.core.TaskCode r2;
+        java.util.TreeSet $r3;
+        java.util.HashSet $r4;
+        java.util.LinkedHashMap $r5;
+        net.sourceforge.plantuml.project.OpenClose r6;
+        net.sourceforge.plantuml.project.solver.SolverImpl $r7;
+        net.sourceforge.plantuml.project.time.Day $r8, $r9, $r11;
+        net.sourceforge.plantuml.project.Load $r10;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r2 := @parameter1: net.sourceforge.plantuml.project.core.TaskCode;
+
+        r6 := @parameter2: net.sourceforge.plantuml.project.OpenClose;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.core.AbstractTask: void <init>(net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.project.core.TaskCode)>(r1, r2);
+
+        $r3 = new java.util.TreeSet;
+
+        specialinvoke $r3.<java.util.TreeSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.SortedSet pausedDay> = $r3;
+
+        $r4 = new java.util.HashSet;
+
+        specialinvoke $r4.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Set pausedDayOfWeek> = $r4;
+
+        $r5 = new java.util.LinkedHashMap;
+
+        specialinvoke $r5.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources> = $r5;
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: int completion> = 100;
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.LoadPlanable defaultPlan> = r6;
+
+        $r7 = new net.sourceforge.plantuml.project.solver.SolverImpl;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.project.solver.SolverImpl: void <init>(net.sourceforge.plantuml.project.LoadPlanable)>(r0);
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.solver.Solver solver> = $r7;
+
+        $r8 = virtualinvoke r6.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        if $r8 != null goto label1;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day create(long)>(0L);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: void setStart(net.sourceforge.plantuml.project.time.Day)>($r11);
+
+        goto label2;
+
+     label1:
+        $r9 = virtualinvoke r6.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: void setStart(net.sourceforge.plantuml.project.time.Day)>($r9);
+
+     label2:
+        $r10 = staticinvoke <net.sourceforge.plantuml.project.Load: net.sourceforge.plantuml.project.Load inWinks(int)>(1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: void setLoad(net.sourceforge.plantuml.project.Load)>($r10);
+
+        return;
+    }
+
+    public int getLoadAt(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        boolean $z0;
+        java.util.Map $r2;
+        int $i0, $i1;
+        net.sourceforge.plantuml.project.LoadPlanable $r3, $r4, r5;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: boolean isPaused(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        return 0;
+
+     label1:
+        r5 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.LoadPlanable defaultPlan>;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources>;
+
+        $i0 = interfaceinvoke $r2.<java.util.Map: int size()>();
+
+        if $i0 <= 0 goto label2;
+
+        $r3 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.LoadPlanable defaultPlan>;
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.LoadPlanable getRessourcePlan()>();
+
+        r5 = staticinvoke <net.sourceforge.plantuml.project.PlanUtils: net.sourceforge.plantuml.project.LoadPlanable multiply(net.sourceforge.plantuml.project.LoadPlanable,net.sourceforge.plantuml.project.LoadPlanable)>($r3, $r4);
+
+     label2:
+        $i1 = interfaceinvoke r5.<net.sourceforge.plantuml.project.LoadPlanable: int getLoadAt(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        return $i1;
+    }
+
+    private boolean isPaused(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        java.util.SortedSet $r2;
+        boolean $z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.SortedSet pausedDay>;
+
+        $z0 = interfaceinvoke $r2.<java.util.SortedSet: boolean contains(java.lang.Object)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: boolean pausedDayOfWeek(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    private boolean pausedDayOfWeek(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        java.util.Set $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.project.time.DayOfWeek r4, $r6;
+        net.sourceforge.plantuml.project.time.Day r5;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r5 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Set pausedDayOfWeek>;
+
+        r2 = interfaceinvoke $r1.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.project.time.DayOfWeek) $r3;
+
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.DayOfWeek getDayOfWeek()>();
+
+        if $r6 != r4 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 0;
+    }
+
+    public int loadForResource(net.sourceforge.plantuml.project.core.Resource, net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        java.util.Map $r1, $r7;
+        java.util.Set $r2;
+        net.sourceforge.plantuml.project.core.Resource r3;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.project.time.Day r4, $r5, $r6;
+        int $i0, $i1, $i2;
+        java.lang.Object $r8;
+        java.lang.Integer $r9;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r3 := @parameter0: net.sourceforge.plantuml.project.core.Resource;
+
+        r4 := @parameter1: net.sourceforge.plantuml.project.time.Day;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set keySet()>();
+
+        $z0 = interfaceinvoke $r2.<java.util.Set: boolean contains(java.lang.Object)>(r3);
+
+        if $z0 == 0 goto label3;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getStart()>();
+
+        $i0 = virtualinvoke r4.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>($r5);
+
+        if $i0 < 0 goto label3;
+
+        $r6 = virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        $i1 = virtualinvoke r4.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>($r6);
+
+        if $i1 > 0 goto label3;
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: boolean isPaused(net.sourceforge.plantuml.project.time.Day)>(r4);
+
+        if $z1 == 0 goto label1;
+
+        return 0;
+
+     label1:
+        $z2 = virtualinvoke r3.<net.sourceforge.plantuml.project.core.Resource: boolean isClosedAt(net.sourceforge.plantuml.project.time.Day)>(r4);
+
+        if $z2 == 0 goto label2;
+
+        return 0;
+
+     label2:
+        $r7 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources>;
+
+        $r8 = interfaceinvoke $r7.<java.util.Map: java.lang.Object get(java.lang.Object)>(r3);
+
+        $r9 = (java.lang.Integer) $r8;
+
+        $i2 = virtualinvoke $r9.<java.lang.Integer: int intValue()>();
+
+        return $i2;
+
+     label3:
+        return 0;
+    }
+
+    public void addPause(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        java.util.SortedSet $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.SortedSet pausedDay>;
+
+        interfaceinvoke $r2.<java.util.SortedSet: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public void addPause(net.sourceforge.plantuml.project.time.DayOfWeek)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.time.DayOfWeek r1;
+        java.util.Set $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.DayOfWeek;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Set pausedDayOfWeek>;
+
+        interfaceinvoke $r2.<java.util.Set: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.project.LoadPlanable getRessourcePlan()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        java.util.Map $r1;
+        int $i0;
+        net.sourceforge.plantuml.project.core.TaskImpl$1 $r2;
+        java.lang.IllegalStateException $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources>;
+
+        $i0 = interfaceinvoke $r1.<java.util.Map: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $r3 = new java.lang.IllegalStateException;
+
+        specialinvoke $r3.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r3;
+
+     label1:
+        $r2 = new net.sourceforge.plantuml.project.core.TaskImpl$1;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.project.core.TaskImpl$1: void <init>(net.sourceforge.plantuml.project.core.TaskImpl)>(r0);
+
+        return $r2;
+    }
+
+    public java.lang.String getPrettyDisplay()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        java.util.Map $r1, $r9;
+        int $i0, i1;
+        net.sourceforge.plantuml.project.core.TaskCode $r2, $r5;
+        java.lang.String $r3, $r6, $r12, $r18, $r28;
+        java.lang.StringBuilder $r4, $r24, $r25, $r26, $r27;
+        java.util.Set $r10;
+        java.util.Iterator r11;
+        boolean $z0, $z1;
+        java.lang.Object $r13, $r16, $r20;
+        java.util.Map$Entry r14;
+        net.sourceforge.plantuml.project.core.Resource $r17;
+        java.lang.Integer $r21;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources>;
+
+        $i0 = interfaceinvoke $r1.<java.util.Map: int size()>();
+
+        if $i0 <= 0 goto label5;
+
+        $r4 = new java.lang.StringBuilder;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.core.TaskCode getCode()>();
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.project.core.TaskCode: java.lang.String getSimpleDisplay()>();
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>(java.lang.String)>($r6);
+
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r9 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources>;
+
+        $r10 = interfaceinvoke $r9.<java.util.Map: java.util.Set entrySet()>();
+
+        r11 = interfaceinvoke $r10.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r11.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r13 = interfaceinvoke r11.<java.util.Iterator: java.lang.Object next()>();
+
+        r14 = (java.util.Map$Entry) $r13;
+
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("{");
+
+        $r16 = interfaceinvoke r14.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r17 = (net.sourceforge.plantuml.project.core.Resource) $r16;
+
+        $r18 = virtualinvoke $r17.<net.sourceforge.plantuml.project.core.Resource: java.lang.String getName()>();
+
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r18);
+
+        $r20 = interfaceinvoke r14.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r21 = (java.lang.Integer) $r20;
+
+        i1 = virtualinvoke $r21.<java.lang.Integer: int intValue()>();
+
+        if i1 == 100 goto label2;
+
+        $r24 = new java.lang.StringBuilder;
+
+        specialinvoke $r24.<java.lang.StringBuilder: void <init>()>();
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(":");
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("%");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r28);
+
+     label2:
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("}");
+
+        $z1 = interfaceinvoke r11.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+     label3:
+        goto label1;
+
+     label4:
+        $r12 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r12;
+
+     label5:
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.core.TaskCode getCode()>();
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.project.core.TaskCode: java.lang.String getSimpleDisplay()>();
+
+        return $r3;
+    }
+
+    public java.lang.String toString()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.core.TaskCode $r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.core.TaskCode getCode()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.project.core.TaskCode: java.lang.String toString()>();
+
+        return $r2;
+    }
+
+    public java.lang.String debug()
+    {
+        java.lang.StringBuilder $r0, $r1, $r4, $r5, $r7, $r8, $r10, $r11;
+        net.sourceforge.plantuml.project.core.TaskImpl r2;
+        net.sourceforge.plantuml.project.time.Day $r3, $r6;
+        net.sourceforge.plantuml.project.Load $r9;
+        java.lang.String $r12;
+
+        r2 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getStart()>();
+
+        $r4 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ---> ");
+
+        $r6 = virtualinvoke r2.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("   [");
+
+        $r9 = virtualinvoke r2.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.Load getLoad()>();
+
+        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r9);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("]");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r12;
+    }
+
+    public net.sourceforge.plantuml.project.time.Day getStart()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r1;
+        net.sourceforge.plantuml.project.solver.Solver $r2;
+        net.sourceforge.plantuml.project.Value $r3;
+        int $i0;
+        net.sourceforge.plantuml.project.time.Day r4;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.solver.Solver solver>;
+
+        $r1 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute START>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.project.solver.Solver: net.sourceforge.plantuml.project.Value getData(net.sourceforge.plantuml.project.core.TaskAttribute)>($r1);
+
+        r4 = (net.sourceforge.plantuml.project.time.Day) $r3;
+
+     label1:
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: int getLoadAt(net.sourceforge.plantuml.project.time.Day)>(r4);
+
+        if $i0 != 0 goto label2;
+
+        r4 = virtualinvoke r4.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day increment()>();
+
+        goto label1;
+
+     label2:
+        return r4;
+    }
+
+    public net.sourceforge.plantuml.project.time.Day getEnd()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r1;
+        net.sourceforge.plantuml.project.solver.Solver $r2;
+        net.sourceforge.plantuml.project.Value $r3;
+        net.sourceforge.plantuml.project.time.Day $r4;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.solver.Solver solver>;
+
+        $r1 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute END>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.project.solver.Solver: net.sourceforge.plantuml.project.Value getData(net.sourceforge.plantuml.project.core.TaskAttribute)>($r1);
+
+        $r4 = (net.sourceforge.plantuml.project.time.Day) $r3;
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.project.Load getLoad()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r1;
+        net.sourceforge.plantuml.project.solver.Solver $r2;
+        net.sourceforge.plantuml.project.Value $r3;
+        net.sourceforge.plantuml.project.Load $r4;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.solver.Solver solver>;
+
+        $r1 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute LOAD>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.project.solver.Solver: net.sourceforge.plantuml.project.Value getData(net.sourceforge.plantuml.project.core.TaskAttribute)>($r1);
+
+        $r4 = (net.sourceforge.plantuml.project.Load) $r3;
+
+        return $r4;
+    }
+
+    public void setLoad(net.sourceforge.plantuml.project.Load)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.Load r1;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r2;
+        net.sourceforge.plantuml.project.solver.Solver $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.Load;
+
+        $r3 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.solver.Solver solver>;
+
+        $r2 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute LOAD>;
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.project.solver.Solver: void setData(net.sourceforge.plantuml.project.core.TaskAttribute,net.sourceforge.plantuml.project.Value)>($r2, r1);
+
+        return;
+    }
+
+    public void setStart(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r2;
+        net.sourceforge.plantuml.project.solver.Solver $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r3 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.solver.Solver solver>;
+
+        $r2 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute START>;
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.project.solver.Solver: void setData(net.sourceforge.plantuml.project.core.TaskAttribute,net.sourceforge.plantuml.project.Value)>($r2, r1);
+
+        return;
+    }
+
+    public void setEnd(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r2;
+        net.sourceforge.plantuml.project.solver.Solver $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r3 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.solver.Solver solver>;
+
+        $r2 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute END>;
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.project.solver.Solver: void setData(net.sourceforge.plantuml.project.core.TaskAttribute,net.sourceforge.plantuml.project.Value)>($r2, r1);
+
+        return;
+    }
+
+    public transient void setColors(net.sourceforge.plantuml.project.lang.CenterBorderColor[])
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.lang.CenterBorderColor[] r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.lang.CenterBorderColor[];
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.lang.CenterBorderColor[] colors> = r1;
+
+        return;
+    }
+
+    public void addResource(net.sourceforge.plantuml.project.core.Resource, int)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.core.Resource r1;
+        int i0;
+        java.util.Map $r2;
+        java.lang.Integer $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.core.Resource;
+
+        i0 := @parameter1: int;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources>;
+
+        $r3 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(i0);
+
+        interfaceinvoke $r2.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, $r3);
+
+        return;
+    }
+
+    public void setDiamond(boolean)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: boolean diamond> = z0;
+
+        return;
+    }
+
+    public boolean isDiamond()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $z0 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: boolean diamond>;
+
+        return $z0;
+    }
+
+    public void setCompletion(int)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: int completion> = i0;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.Url getUrl()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.Url $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.Url url>;
+
+        return $r1;
+    }
+
+    public final net.sourceforge.plantuml.project.lang.CenterBorderColor getColors()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.lang.CenterBorderColor[] $r1, $r2, $r3, $r4, $r8;
+        int $i0, $i1;
+        net.sourceforge.plantuml.project.lang.CenterBorderColor $r5, $r6, $r7, $r9;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.lang.CenterBorderColor[] colors>;
+
+        if $r1 != null goto label1;
+
+        return null;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.lang.CenterBorderColor[] colors>;
+
+        $i0 = lengthof $r2;
+
+        if $i0 != 1 goto label2;
+
+        $r8 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.lang.CenterBorderColor[] colors>;
+
+        $r9 = $r8[0];
+
+        return $r9;
+
+     label2:
+        $r3 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.lang.CenterBorderColor[] colors>;
+
+        $r6 = $r3[0];
+
+        $r4 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.lang.CenterBorderColor[] colors>;
+
+        $r5 = $r4[1];
+
+        $i1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: int completion>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.project.lang.CenterBorderColor: net.sourceforge.plantuml.project.lang.CenterBorderColor unlinearTo(net.sourceforge.plantuml.project.lang.CenterBorderColor,int)>($r5, $i1);
+
+        return $r7;
+    }
+
+    public final int getCompletion()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $i0 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: int completion>;
+
+        return $i0;
+    }
+
+    public final java.util.Collection getAllPaused()
+    {
+        java.util.TreeSet $r0;
+        net.sourceforge.plantuml.project.core.TaskImpl r1;
+        java.util.SortedSet $r2;
+        java.util.Set $r4;
+        java.util.Iterator r5;
+        boolean $z0;
+        java.util.Collection $r6;
+        java.lang.Object $r7;
+        net.sourceforge.plantuml.project.time.DayOfWeek r8;
+
+        r1 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r0 = new java.util.TreeSet;
+
+        $r2 = r1.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.SortedSet pausedDay>;
+
+        specialinvoke $r0.<java.util.TreeSet: void <init>(java.util.SortedSet)>($r2);
+
+        $r4 = r1.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Set pausedDayOfWeek>;
+
+        r5 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r7 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (net.sourceforge.plantuml.project.time.DayOfWeek) $r7;
+
+        specialinvoke r1.<net.sourceforge.plantuml.project.core.TaskImpl: void addAll(java.util.SortedSet,net.sourceforge.plantuml.project.time.DayOfWeek)>($r0, r8);
+
+        goto label1;
+
+     label2:
+        $r6 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>($r0);
+
+        return $r6;
+    }
+
+    private void addAll(java.util.SortedSet, net.sourceforge.plantuml.project.time.DayOfWeek)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.project.time.Day r1, r2, r6;
+        int $i0;
+        net.sourceforge.plantuml.project.time.DayOfWeek $r3, r4;
+        java.util.SortedSet r5;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r5 := @parameter0: java.util.SortedSet;
+
+        r4 := @parameter1: net.sourceforge.plantuml.project.time.DayOfWeek;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getStart()>();
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        r6 = r1;
+
+     label1:
+        $i0 = virtualinvoke r6.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r2);
+
+        if $i0 > 0 goto label3;
+
+        $r3 = virtualinvoke r6.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.DayOfWeek getDayOfWeek()>();
+
+        if $r3 != r4 goto label2;
+
+        interfaceinvoke r5.<java.util.SortedSet: boolean add(java.lang.Object)>(r6);
+
+     label2:
+        r6 = virtualinvoke r6.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day increment()>();
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    public void setNote(net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.cucadiagram.Display r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.cucadiagram.Display note> = r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.Display getNote()
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.cucadiagram.Display note>;
+
+        return $r1;
+    }
+
+    static java.util.Map access$000(net.sourceforge.plantuml.project.core.TaskImpl)
+    {
+        net.sourceforge.plantuml.project.core.TaskImpl r0;
+        java.util.Map $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Map resources>;
+
+        return $r1;
+    }
+}

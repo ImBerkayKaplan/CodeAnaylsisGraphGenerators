@@ -1,0 +1,89 @@
+public abstract class net.sourceforge.plantuml.PlainDiagram extends net.sourceforge.plantuml.AbstractPSystem
+{
+
+    public void <init>(net.sourceforge.plantuml.core.UmlSource)
+    {
+        net.sourceforge.plantuml.PlainDiagram r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+
+        r0 := @this: net.sourceforge.plantuml.PlainDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.PlainDiagram r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r4, $r5, $r6;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r3;
+        boolean $z0;
+        long $l0;
+        java.lang.String $r7;
+
+        r0 := @this: net.sourceforge.plantuml.PlainDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.PlainDiagram: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getDefaultMargins()>();
+
+        $r4 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder margin(net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft)>($r3);
+
+        $z0 = virtualinvoke r1.<net.sourceforge.plantuml.FileFormatOption: boolean isWithMetadata()>();
+
+        if $z0 == 0 goto label1;
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.PlainDiagram: java.lang.String getMetadata()>();
+
+        goto label2;
+
+     label1:
+        $r7 = null;
+
+     label2:
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder metadata(java.lang.String)>($r7);
+
+        $l0 = virtualinvoke r0.<net.sourceforge.plantuml.PlainDiagram: long seed()>();
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder seed(long)>($l0);
+
+        return $r6;
+    }
+
+    protected net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.PlainDiagram r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r4;
+        net.sourceforge.plantuml.graphic.UDrawable $r3;
+        java.io.OutputStream r5;
+        net.sourceforge.plantuml.core.ImageData $r6;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.PlainDiagram;
+
+        r5 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.PlainDiagram: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.PlainDiagram: net.sourceforge.plantuml.graphic.UDrawable getRootDrawable(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r4 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>($r3);
+
+        $r6 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r5);
+
+        return $r6;
+    }
+
+    protected abstract net.sourceforge.plantuml.graphic.UDrawable getRootDrawable(net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException;
+}

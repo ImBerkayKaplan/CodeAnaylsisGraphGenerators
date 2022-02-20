@@ -1,0 +1,216 @@
+public class net.sourceforge.plantuml.sudoku.SudokuDLX extends java.lang.Object implements net.sourceforge.plantuml.sudoku.ISudoku
+{
+    private final java.lang.String[] tab;
+    private final long seed;
+    private final long rate;
+
+    public void <init>(java.lang.Long)
+    {
+        net.sourceforge.plantuml.sudoku.SudokuDLX r0;
+        java.lang.Long r1;
+        long $l0, $l1, $l2, $l3, $l4, $l5;
+        net.sourceforge.plantuml.sudoku.DLXEngine $r2;
+        java.util.Random $r3, $r9;
+        java.lang.String r5, $r6, $r7;
+        java.lang.String[] $r8;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.SudokuDLX;
+
+        r1 := @parameter0: java.lang.Long;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        if r1 != null goto label1;
+
+        $r9 = new java.util.Random;
+
+        specialinvoke $r9.<java.util.Random: void <init>()>();
+
+        $l4 = virtualinvoke $r9.<java.util.Random: long nextLong()>();
+
+        $l5 = staticinvoke <java.lang.Math: long abs(long)>($l4);
+
+        r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: long seed> = $l5;
+
+        goto label2;
+
+     label1:
+        $l0 = virtualinvoke r1.<java.lang.Long: long longValue()>();
+
+        $l1 = staticinvoke <java.lang.Math: long abs(long)>($l0);
+
+        r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: long seed> = $l1;
+
+     label2:
+        $r2 = new net.sourceforge.plantuml.sudoku.DLXEngine;
+
+        $r3 = new java.util.Random;
+
+        $l2 = r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: long seed>;
+
+        specialinvoke $r3.<java.util.Random: void <init>(long)>($l2);
+
+        specialinvoke $r2.<net.sourceforge.plantuml.sudoku.DLXEngine: void <init>(java.util.Random)>($r3);
+
+        r5 = virtualinvoke $r2.<net.sourceforge.plantuml.sudoku.DLXEngine: java.lang.String generate(int,int)>(10000, 100000);
+
+        $r6 = virtualinvoke r5.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("\n", "");
+
+        $r7 = virtualinvoke $r6.<java.lang.String: java.lang.String trim()>();
+
+        $l3 = virtualinvoke $r2.<net.sourceforge.plantuml.sudoku.DLXEngine: long rate(java.lang.String)>($r7);
+
+        r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: long rate> = $l3;
+
+        $r8 = virtualinvoke r5.<java.lang.String: java.lang.String[] split(java.lang.String)>("\\s");
+
+        r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: java.lang.String[] tab> = $r8;
+
+        return;
+    }
+
+    public long getRatting()
+    {
+        net.sourceforge.plantuml.sudoku.SudokuDLX r0;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.SudokuDLX;
+
+        $l0 = r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: long rate>;
+
+        return $l0;
+    }
+
+    public long getSeed()
+    {
+        net.sourceforge.plantuml.sudoku.SudokuDLX r0;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.SudokuDLX;
+
+        $l0 = r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: long seed>;
+
+        return $l0;
+    }
+
+    public int getGiven(int, int)
+    {
+        net.sourceforge.plantuml.sudoku.SudokuDLX r0;
+        int i0, i1, $i3;
+        java.lang.String[] $r1;
+        java.lang.String $r2;
+        char c2;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.SudokuDLX;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: java.lang.String[] tab>;
+
+        $r2 = $r1[i0];
+
+        c2 = virtualinvoke $r2.<java.lang.String: char charAt(int)>(i1);
+
+        if c2 != 46 goto label1;
+
+        return 0;
+
+     label1:
+        $i3 = c2 - 48;
+
+        return $i3;
+    }
+
+    public void print()
+    {
+        net.sourceforge.plantuml.sudoku.SudokuDLX r0;
+        java.lang.String[] r1;
+        int i0, i3;
+        java.lang.StringBuilder $r2, $r3, $r4, $r6, $r7, $r10;
+        long $l1, $l2;
+        java.lang.String $r5, $r8, $r9, $r11, r12;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.SudokuDLX;
+
+        r1 = r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: java.lang.String[] tab>;
+
+        i0 = lengthof r1;
+
+        i3 = 0;
+
+     label1:
+        if i3 >= i0 goto label2;
+
+        r12 = r1[i3];
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>(r12);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Rate=");
+
+        $l1 = r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: long rate>;
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l1);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r5);
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Seed=");
+
+        $l2 = r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: long seed>;
+
+        $r8 = staticinvoke <java.lang.Long: java.lang.String toString(long,int)>($l2, 36);
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goUpperCase(java.lang.String)>($r8);
+
+        $r10 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r9);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r11);
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        net.sourceforge.plantuml.sudoku.SudokuDLX $r0;
+        java.lang.String[] r2;
+        int i0;
+
+        r2 := @parameter0: java.lang.String[];
+
+        i0 = 0;
+
+     label1:
+        if i0 >= 1 goto label2;
+
+        $r0 = new net.sourceforge.plantuml.sudoku.SudokuDLX;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: void <init>(java.lang.Long)>(null);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.sudoku.SudokuDLX: void print()>();
+
+        i0 = i0 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+}

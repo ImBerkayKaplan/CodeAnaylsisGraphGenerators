@@ -1,0 +1,891 @@
+public class net.sourceforge.plantuml.ugraphic.color.HColorSimple extends net.sourceforge.plantuml.ugraphic.color.HColorAbstract implements net.sourceforge.plantuml.ugraphic.color.HColor
+{
+    private final java.awt.Color color;
+    private final boolean monochrome;
+    private net.sourceforge.plantuml.ugraphic.color.HColor dark;
+    static final boolean $assertionsDisabled;
+
+    public int hashCode()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        java.awt.Color $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i0 = virtualinvoke $r1.<java.awt.Color: int hashCode()>();
+
+        return $i0;
+    }
+
+    public java.lang.String toString()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        boolean $z0, $z2, $z3;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1;
+        java.lang.StringBuilder $r2;
+        java.awt.Color $r4, $r8;
+        java.lang.String $r5, $r10;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean isTransparent()>();
+
+        if $z0 == 0 goto label1;
+
+        return "transparent";
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: net.sourceforge.plantuml.ugraphic.color.HColor dark>;
+
+        if r0 == $r1 goto label2;
+
+        $z3 = 1;
+
+        goto label3;
+
+     label2:
+        $z3 = 0;
+
+     label3:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        if $z3 == 0 goto label4;
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("WITHDARK ");
+
+     label4:
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $r5 = virtualinvoke $r4.<java.awt.Color: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" \u03b1=");
+
+        $r8 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i0 = virtualinvoke $r8.<java.awt.Color: int getAlpha()>();
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $z2 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome>;
+
+        if $z2 == 0 goto label5;
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("MONOCHROME");
+
+     label5:
+        $r10 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r10;
+    }
+
+    public java.lang.String asString()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        boolean $z0;
+        java.awt.Color $r1, $r4, $r8;
+        int $i0, $i1, $i2;
+        java.lang.StringBuilder $r2, $r3, $r6;
+        java.lang.String $r5, $r7, $r9;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean isTransparent()>();
+
+        if $z0 == 0 goto label1;
+
+        return "transparent";
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i0 = virtualinvoke $r1.<java.awt.Color: int getAlpha()>();
+
+        if $i0 != 255 goto label2;
+
+        $r8 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i2 = virtualinvoke $r8.<java.awt.Color: int getRGB()>();
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String sharp000000(int)>($i2);
+
+        return $r9;
+
+     label2:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("#");
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i1 = virtualinvoke $r4.<java.awt.Color: int getRGB()>();
+
+        $r5 = staticinvoke <java.lang.Integer: java.lang.String toHexString(int)>($i1);
+
+        $r6 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r7;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor lighten(int)
+    {
+        net.sourceforge.plantuml.ugraphic.color.HSLColor $r0, $r5;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r1, $r4;
+        java.awt.Color $r2, $r6;
+        float[] r3;
+        float $f0, $f1, $f2;
+        int i0;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        i0 := @parameter0: int;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.HSLColor;
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HSLColor: void <init>(java.awt.Color)>($r2);
+
+        r3 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HSLColor: float[] getHSL()>();
+
+        $f0 = r3[2];
+
+        $d4 = (double) $f0;
+
+        $f1 = r3[2];
+
+        $d2 = (double) $f1;
+
+        $d0 = (double) i0;
+
+        $d1 = $d0 / 100.0;
+
+        $d3 = $d2 * $d1;
+
+        $d5 = $d4 + $d3;
+
+        $f2 = (float) $d5;
+
+        r3[2] = $f2;
+
+        $r4 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r5 = new net.sourceforge.plantuml.ugraphic.color.HSLColor;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.ugraphic.color.HSLColor: void <init>(float[])>(r3);
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.ugraphic.color.HSLColor: java.awt.Color getRGB()>();
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r6, 0);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor darken(int)
+    {
+        net.sourceforge.plantuml.ugraphic.color.HSLColor $r0, $r5;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r1, $r4;
+        java.awt.Color $r2, $r6;
+        float[] r3;
+        float $f0, $f1, $f2;
+        int i0;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        i0 := @parameter0: int;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.HSLColor;
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HSLColor: void <init>(java.awt.Color)>($r2);
+
+        r3 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HSLColor: float[] getHSL()>();
+
+        $f0 = r3[2];
+
+        $d4 = (double) $f0;
+
+        $f1 = r3[2];
+
+        $d2 = (double) $f1;
+
+        $d0 = (double) i0;
+
+        $d1 = $d0 / 100.0;
+
+        $d3 = $d2 * $d1;
+
+        $d5 = $d4 - $d3;
+
+        $f2 = (float) $d5;
+
+        r3[2] = $f2;
+
+        $r4 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r5 = new net.sourceforge.plantuml.ugraphic.color.HSLColor;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.ugraphic.color.HSLColor: void <init>(float[])>(r3);
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.ugraphic.color.HSLColor: java.awt.Color getRGB()>();
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r6, 0);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor reverseHsluv()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r0, r1;
+        java.awt.Color $r2, $r3;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.ColorUtils: java.awt.Color reverseHsluv(java.awt.Color)>($r2);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r3, 0);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor reverse()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r0, r1;
+        java.awt.Color $r2, $r4;
+        net.sourceforge.plantuml.ugraphic.color.ColorOrder $r3;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r3 = <net.sourceforge.plantuml.ugraphic.color.ColorOrder: net.sourceforge.plantuml.ugraphic.color.ColorOrder RGB>;
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.ugraphic.color.ColorOrder: java.awt.Color getReverse(java.awt.Color)>($r2);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r4, 0);
+
+        return $r0;
+    }
+
+    public boolean isDark()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        java.awt.Color $r1;
+        int $i0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i0 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.ColorUtils: int getGrayScale(java.awt.Color)>($r1);
+
+        if $i0 >= 128 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public boolean isTransparent()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        java.awt.Color $r1;
+        int $i0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i0 = virtualinvoke $r1.<java.awt.Color: int getAlpha()>();
+
+        if $i0 != 0 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public boolean equals(java.lang.Object)
+    {
+        java.lang.Object r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r1, $r2;
+        java.awt.Color $r3, $r4;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        r0 := @parameter0: java.lang.Object;
+
+        $z0 = r0 instanceof net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        if $z0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        $r4 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $r2 = (net.sourceforge.plantuml.ugraphic.color.HColorSimple) r0;
+
+        $r3 = $r2.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $z1 = virtualinvoke $r4.<java.awt.Color: boolean equals(java.lang.Object)>($r3);
+
+        return $z1;
+    }
+
+    public void <init>(java.awt.Color, boolean)
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        java.awt.Color r1;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        r1 := @parameter0: java.awt.Color;
+
+        z0 := @parameter1: boolean;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.color.HColorAbstract: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color> = r1;
+
+        r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome> = z0;
+
+        r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: net.sourceforge.plantuml.ugraphic.color.HColor dark> = r0;
+
+        return;
+    }
+
+    private void <init>(java.awt.Color, boolean, net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        java.awt.Color r1;
+        boolean z0;
+        net.sourceforge.plantuml.ugraphic.color.HColor r2;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        r1 := @parameter0: java.awt.Color;
+
+        z0 := @parameter1: boolean;
+
+        r2 := @parameter2: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.color.HColorAbstract: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color> = r1;
+
+        r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome> = z0;
+
+        r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: net.sourceforge.plantuml.ugraphic.color.HColor dark> = r2;
+
+        return;
+    }
+
+    public java.awt.Color getColor999()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        java.awt.Color $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColorSimple asMonochrome()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r0, r2;
+        net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome $r1;
+        java.awt.Color $r3, $r4;
+        boolean $z0;
+
+        r2 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r1 = new net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $r4 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome: java.awt.Color getChangedColor(java.awt.Color)>($r3);
+
+        $z0 = r2.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r4, $z0);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor asMonochrome(net.sourceforge.plantuml.ugraphic.color.HColorSimple, double, double)
+    {
+        net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome $r0;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r1, r4, $r7;
+        java.awt.Color $r2, r3, $r5, r6;
+        int i0, $i1, $i2;
+        boolean $z0, $z1, $z2;
+        double d0, $d1, $d2, d3, d4;
+        java.lang.AssertionError $r8, $r9;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        r4 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        d0 := @parameter1: double;
+
+        d4 := @parameter2: double;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome: void <init>()>();
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        r3 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome: java.awt.Color getChangedColor(java.awt.Color)>($r2);
+
+        i0 = virtualinvoke r3.<java.awt.Color: int getGreen()>();
+
+        $z0 = <net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        $i2 = virtualinvoke r3.<java.awt.Color: int getBlue()>();
+
+        if i0 == $i2 goto label1;
+
+        $r9 = new java.lang.AssertionError;
+
+        specialinvoke $r9.<java.lang.AssertionError: void <init>()>();
+
+        throw $r9;
+
+     label1:
+        $z1 = <net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean $assertionsDisabled>;
+
+        if $z1 != 0 goto label2;
+
+        $i1 = virtualinvoke r3.<java.awt.Color: int getRed()>();
+
+        if i0 == $i1 goto label2;
+
+        $r8 = new java.lang.AssertionError;
+
+        specialinvoke $r8.<java.lang.AssertionError: void <init>()>();
+
+        throw $r8;
+
+     label2:
+        $d1 = (double) i0;
+
+        $d2 = $d1 - d0;
+
+        d3 = $d2 / 256.0;
+
+        $r5 = r4.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        r6 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.ColorUtils: java.awt.Color grayToColor(double,java.awt.Color)>(d3, $r5);
+
+        $r7 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $z2 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome>;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>(r6, $z2);
+
+        return $r7;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColorSimple opposite()
+    {
+        net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome $r0;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r1, $r4;
+        java.awt.Color $r2, r3, $r5;
+        int $i0, $i1;
+        short $s3;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome: void <init>()>();
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        r3 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.ColorChangerMonochrome: java.awt.Color getChangedColor(java.awt.Color)>($r2);
+
+        $i0 = virtualinvoke r3.<java.awt.Color: int getGreen()>();
+
+        $i1 = 255 - $i0;
+
+        if $i1 <= 127 goto label1;
+
+        $s3 = 255;
+
+        goto label2;
+
+     label1:
+        $s3 = 0;
+
+     label2:
+        $r4 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r5 = new java.awt.Color;
+
+        specialinvoke $r5.<java.awt.Color: void <init>(int,int,int)>($s3, $s3, $s3);
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r5, 1);
+
+        return $r4;
+    }
+
+    public double distance(net.sourceforge.plantuml.ugraphic.color.HColorSimple)
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0, r2;
+        java.awt.Color $r1, $r3, $r4, $r5, $r6, $r7;
+        int $i0, $i1, $i2, i3, $i4, $i5, $i6, i7, $i8, $i9, $i10, i11;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i0 = virtualinvoke $r1.<java.awt.Color: int getRed()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i1 = virtualinvoke $r3.<java.awt.Color: int getRed()>();
+
+        $i2 = $i0 - $i1;
+
+        i3 = staticinvoke <java.lang.Math: int abs(int)>($i2);
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i4 = virtualinvoke $r4.<java.awt.Color: int getGreen()>();
+
+        $r5 = r2.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i5 = virtualinvoke $r5.<java.awt.Color: int getGreen()>();
+
+        $i6 = $i4 - $i5;
+
+        i7 = staticinvoke <java.lang.Math: int abs(int)>($i6);
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i8 = virtualinvoke $r6.<java.awt.Color: int getBlue()>();
+
+        $r7 = r2.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i9 = virtualinvoke $r7.<java.awt.Color: int getBlue()>();
+
+        $i10 = $i8 - $i9;
+
+        i11 = staticinvoke <java.lang.Math: int abs(int)>($i10);
+
+        $d0 = (double) i3;
+
+        $d3 = $d0 * 0.3;
+
+        $d1 = (double) i7;
+
+        $d2 = $d1 * 0.59;
+
+        $d6 = $d3 + $d2;
+
+        $d4 = (double) i11;
+
+        $d5 = $d4 * 0.11;
+
+        $d7 = $d6 + $d5;
+
+        return $d7;
+    }
+
+    public final boolean isMonochrome()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $z0 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome>;
+
+        return $z0;
+    }
+
+    public boolean isGray()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        boolean $z0;
+        java.awt.Color $r1, $r2, $r3, $r4;
+        int $i0, $i1, $i2, $i3;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $z0 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome>;
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i0 = virtualinvoke $r1.<java.awt.Color: int getRed()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i1 = virtualinvoke $r2.<java.awt.Color: int getGreen()>();
+
+        if $i0 != $i1 goto label2;
+
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i2 = virtualinvoke $r3.<java.awt.Color: int getGreen()>();
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $i3 = virtualinvoke $r4.<java.awt.Color: int getBlue()>();
+
+        if $i2 != $i3 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    public static net.sourceforge.plantuml.ugraphic.color.HColorSimple unlinear(net.sourceforge.plantuml.ugraphic.color.HColorSimple, net.sourceforge.plantuml.ugraphic.color.HColorSimple, int)
+    {
+        net.sourceforge.plantuml.ugraphic.color.HSLColor $r0, $r4, $r11;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r1, r5, $r13;
+        java.awt.Color $r2, $r6, $r14;
+        float[] r8, r9, r10;
+        double $d0, $d1;
+        float $f0, f1, f2;
+        boolean $z0;
+        int i0;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        r5 := @parameter1: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        i0 := @parameter2: int;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.HSLColor;
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HSLColor: void <init>(java.awt.Color)>($r2);
+
+        $r4 = new net.sourceforge.plantuml.ugraphic.color.HSLColor;
+
+        $r6 = r5.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ugraphic.color.HSLColor: void <init>(java.awt.Color)>($r6);
+
+        r8 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HSLColor: float[] getHSL()>();
+
+        r9 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.color.HSLColor: float[] getHSL()>();
+
+        if i0 <= 100 goto label1;
+
+        i0 = 100;
+
+     label1:
+        $d0 = (double) i0;
+
+        $d1 = $d0 / 100.0;
+
+        f1 = (float) $d1;
+
+        $f0 = f1 * f1;
+
+        f2 = $f0 * f1;
+
+        r10 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSimple: float[] linear(float,float[],float[])>(f2, r8, r9);
+
+        $r11 = new net.sourceforge.plantuml.ugraphic.color.HSLColor;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.ugraphic.color.HSLColor: void <init>(float[])>(r10);
+
+        $r13 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r14 = virtualinvoke $r11.<net.sourceforge.plantuml.ugraphic.color.HSLColor: java.awt.Color getRGB()>();
+
+        $z0 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome>;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r14, $z0);
+
+        return $r13;
+    }
+
+    private static float[] linear(float, float[], float[])
+    {
+        float f0, $f1, $f2, f3, $f4, $f5, f6, $f7, $f8, f9;
+        float[] r0, r1, $r2;
+
+        f0 := @parameter0: float;
+
+        r0 := @parameter1: float[];
+
+        r1 := @parameter2: float[];
+
+        $f2 = r0[0];
+
+        $f1 = r1[0];
+
+        f3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSimple: float linear(float,float,float)>(f0, $f2, $f1);
+
+        $f5 = r0[1];
+
+        $f4 = r1[1];
+
+        f6 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSimple: float linear(float,float,float)>(f0, $f5, $f4);
+
+        $f8 = r0[2];
+
+        $f7 = r1[2];
+
+        f9 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSimple: float linear(float,float,float)>(f0, $f8, $f7);
+
+        $r2 = newarray (float)[3];
+
+        $r2[0] = f3;
+
+        $r2[1] = f6;
+
+        $r2[2] = f9;
+
+        return $r2;
+    }
+
+    private static float linear(float, float, float)
+    {
+        float f0, f1, f2, $f3, $f4, $f5;
+
+        f2 := @parameter0: float;
+
+        f0 := @parameter1: float;
+
+        f1 := @parameter2: float;
+
+        $f3 = f1 - f0;
+
+        $f4 = $f3 * f2;
+
+        $f5 = f0 + $f4;
+
+        return $f5;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor withDark(net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r0, r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor r2;
+        boolean $z0;
+        java.awt.Color $r3;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r3 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color color>;
+
+        $z0 = r1.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean monochrome>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean,net.sourceforge.plantuml.ugraphic.color.HColor)>($r3, $z0, r2);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor darkSchemeTheme()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: net.sourceforge.plantuml.ugraphic.color.HColor dark>;
+
+        return $r1;
+    }
+
+    public volatile net.sourceforge.plantuml.ugraphic.UBackground bg()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r0;
+        net.sourceforge.plantuml.ugraphic.UBackground $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.color.HColorAbstract: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        return $r1;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/ugraphic/color/HColorSimple;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.ugraphic.color.HColorSimple: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

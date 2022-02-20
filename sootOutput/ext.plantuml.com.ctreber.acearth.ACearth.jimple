@@ -1,0 +1,854 @@
+public class ext.plantuml.com.ctreber.acearth.ACearth extends java.lang.Object
+{
+    public static final java.lang.String VERSION;
+    public static final java.lang.String BUILD;
+    private ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf;
+    private long fCurrentTime;
+    private ext.plantuml.com.ctreber.acearth.gui.CanvasACearth fCanvas;
+    private ext.plantuml.com.ctreber.acearth.util.Coordinate fViewPos;
+    private double fViewRotation;
+    private java.util.List fPlugins;
+
+    public void <init>(java.util.List)
+    {
+        ext.plantuml.com.ctreber.acearth.ACearth r0;
+        ext.plantuml.com.ctreber.acearth.ConfigurationACearth $r1;
+        java.util.ArrayList $r2;
+        ext.plantuml.com.ctreber.acearth.plugins.markers.PluginMarkers $r3;
+        java.util.List r4, $r5;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.ACearth;
+
+        r4 := @parameter0: java.util.List;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new ext.plantuml.com.ctreber.acearth.ConfigurationACearth;
+
+        specialinvoke $r1.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: void <init>()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf> = $r1;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: java.util.List fPlugins> = $r2;
+
+        $r5 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: java.util.List fPlugins>;
+
+        $r3 = new ext.plantuml.com.ctreber.acearth.plugins.markers.PluginMarkers;
+
+        specialinvoke $r3.<ext.plantuml.com.ctreber.acearth.plugins.markers.PluginMarkers: void <init>(java.util.List)>(r4);
+
+        interfaceinvoke $r5.<java.util.List: boolean add(java.lang.Object)>($r3);
+
+        return;
+    }
+
+    public void exportPng(java.io.OutputStream) throws java.io.IOException
+    {
+        ext.plantuml.com.ctreber.acearth.ACearth r0;
+        ext.plantuml.com.ctreber.acearth.gui.CanvasACearth $r1, $r5;
+        ext.plantuml.com.ctreber.acearth.ConfigurationACearth $r2, $r3;
+        int $i0, $i1;
+        java.io.OutputStream r4;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.ACearth;
+
+        r4 := @parameter0: java.io.OutputStream;
+
+        $r1 = new ext.plantuml.com.ctreber.acearth.gui.CanvasACearth;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i0 = virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("imageWidth");
+
+        $r3 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i1 = virtualinvoke $r3.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("imageHeight");
+
+        specialinvoke $r1.<ext.plantuml.com.ctreber.acearth.gui.CanvasACearth: void <init>(ext.plantuml.com.ctreber.acearth.ACearth,int,int)>(r0, $i0, $i1);
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.gui.CanvasACearth fCanvas> = $r1;
+
+        virtualinvoke r0.<ext.plantuml.com.ctreber.acearth.ACearth: void update()>();
+
+        $r5 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.gui.CanvasACearth fCanvas>;
+
+        virtualinvoke $r5.<ext.plantuml.com.ctreber.acearth.gui.CanvasACearth: void saveToImage(java.io.OutputStream)>(r4);
+
+        return;
+    }
+
+    public void update() throws java.io.IOException
+    {
+        ext.plantuml.com.ctreber.acearth.ACearth r0;
+        ext.plantuml.com.ctreber.acearth.ConfigurationACearth $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r10, $r11, $r15, $r16, $r21, $r22, $r24, $r25, $r26, $r42, $r43, $r46, $r47, $r48, $r49;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z8;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+        ext.plantuml.com.ctreber.acearth.util.Coordinate $r9, $r23;
+        ext.plantuml.com.ctreber.acearth.util.Polygon[] $r12;
+        java.util.ArrayList $r13;
+        ext.plantuml.com.ctreber.aclib.sort.QuickSort $r17;
+        ext.plantuml.com.ctreber.acearth.scandot.ScanDot[] $r18, r20;
+        java.lang.Object[] $r19;
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer $r27;
+        ext.plantuml.com.ctreber.acearth.gui.CanvasACearth $r28, $r39;
+        ext.plantuml.com.ctreber.acearth.renderer.RowTypeRendererScanBit $r30;
+        ext.plantuml.com.ctreber.acearth.scanbit.ScanBit[] $r32;
+        ext.plantuml.com.ctreber.acearth.renderer.RowTypeRendererScanDot $r33;
+        java.util.List $r35, $r44, $r51;
+        java.util.Iterator r36;
+        java.lang.Object $r37;
+        ext.plantuml.com.ctreber.acearth.plugins.Plugin r38;
+        ext.plantuml.com.ctreber.acearth.shader.ShaderFlat $r40;
+        ext.plantuml.com.ctreber.acearth.scandot.DotGeneratorLines $r41;
+        ext.plantuml.com.ctreber.acearth.scandot.DotGeneratorStars $r45;
+        java.util.Random $r50;
+        long $l14;
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionOrtho $r52;
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMapOrtho $r53;
+        ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho $r54;
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionMerc $r55;
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMapDefault $r56, $r59;
+        ext.plantuml.com.ctreber.acearth.shader.ShaderDefault $r57, $r60;
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl $r58;
+        ext.plantuml.com.ctreber.acearth.projection.Projection r61;
+        ext.plantuml.com.ctreber.acearth.shader.Shader r62;
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap r63;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.ACearth;
+
+        r61 = null;
+
+        r62 = null;
+
+        r63 = null;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z0 = virtualinvoke $r1.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("projection", "Cylindrical");
+
+        if $z0 == 0 goto label1;
+
+        $r58 = new ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        specialinvoke $r58.<ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl: void <init>()>();
+
+        r61 = $r58;
+
+        $r59 = new ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMapDefault;
+
+        specialinvoke $r59.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMapDefault: void <init>(ext.plantuml.com.ctreber.acearth.projection.Projection)>($r58);
+
+        r63 = $r59;
+
+        $r60 = new ext.plantuml.com.ctreber.acearth.shader.ShaderDefault;
+
+        specialinvoke $r60.<ext.plantuml.com.ctreber.acearth.shader.ShaderDefault: void <init>()>();
+
+        r62 = $r60;
+
+     label1:
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z1 = virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("projection", "Mercator");
+
+        if $z1 == 0 goto label2;
+
+        $r55 = new ext.plantuml.com.ctreber.acearth.projection.ProjectionMerc;
+
+        specialinvoke $r55.<ext.plantuml.com.ctreber.acearth.projection.ProjectionMerc: void <init>()>();
+
+        r61 = $r55;
+
+        $r56 = new ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMapDefault;
+
+        specialinvoke $r56.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMapDefault: void <init>(ext.plantuml.com.ctreber.acearth.projection.Projection)>($r55);
+
+        r63 = $r56;
+
+        $r57 = new ext.plantuml.com.ctreber.acearth.shader.ShaderDefault;
+
+        specialinvoke $r57.<ext.plantuml.com.ctreber.acearth.shader.ShaderDefault: void <init>()>();
+
+        r62 = $r57;
+
+     label2:
+        $r3 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z2 = virtualinvoke $r3.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("projection", "Orthographic");
+
+        if $z2 == 0 goto label3;
+
+        $r52 = new ext.plantuml.com.ctreber.acearth.projection.ProjectionOrtho;
+
+        specialinvoke $r52.<ext.plantuml.com.ctreber.acearth.projection.ProjectionOrtho: void <init>()>();
+
+        r61 = $r52;
+
+        $r53 = new ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMapOrtho;
+
+        specialinvoke $r53.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMapOrtho: void <init>(ext.plantuml.com.ctreber.acearth.projection.Projection)>($r52);
+
+        r63 = $r53;
+
+        $r54 = new ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho;
+
+        specialinvoke $r54.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: void <init>()>();
+
+        r62 = $r54;
+
+     label3:
+        specialinvoke r0.<ext.plantuml.com.ctreber.acearth.ACearth: void computePositions()>();
+
+        $r4 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i0 = virtualinvoke $r4.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("imageWidth");
+
+        virtualinvoke r61.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setImageWidth(int)>($i0);
+
+        $r5 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i1 = virtualinvoke $r5.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("imageHeight");
+
+        virtualinvoke r61.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setImageHeight(int)>($i1);
+
+        $r6 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i2 = virtualinvoke $r6.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("shiftX");
+
+        virtualinvoke r61.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setShiftX(int)>($i2);
+
+        $r7 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i3 = virtualinvoke $r7.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("shiftY");
+
+        virtualinvoke r61.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setShiftY(int)>($i3);
+
+        $r8 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $d0 = virtualinvoke $r8.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: double getDouble(java.lang.String)>("viewMagnification");
+
+        virtualinvoke r61.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setViewMagnification(double)>($d0);
+
+        $r9 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate fViewPos>;
+
+        virtualinvoke r61.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setViewPos(ext.plantuml.com.ctreber.acearth.util.Coordinate)>($r9);
+
+        $d1 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: double fViewRotation>;
+
+        virtualinvoke r61.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setViewRotation(double)>($d1);
+
+        $r10 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i4 = virtualinvoke $r10.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("imageWidth");
+
+        virtualinvoke r63.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: void setImageWidth(int)>($i4);
+
+        $r11 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i5 = virtualinvoke $r11.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("imageHeight");
+
+        virtualinvoke r63.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: void setImageHeight(int)>($i5);
+
+        $r12 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: ext.plantuml.com.ctreber.acearth.util.Polygon[] readMapData()>();
+
+        virtualinvoke r63.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: void setMapData(ext.plantuml.com.ctreber.acearth.util.Polygon[])>($r12);
+
+        virtualinvoke r63.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: void generateScanBits()>();
+
+        $r13 = new java.util.ArrayList;
+
+        specialinvoke $r13.<java.util.ArrayList: void <init>()>();
+
+        $r15 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z3 = virtualinvoke $r15.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean getBoolean(java.lang.String)>("starsP");
+
+        if $z3 == 0 goto label4;
+
+        $r45 = new ext.plantuml.com.ctreber.acearth.scandot.DotGeneratorStars;
+
+        $r46 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i11 = virtualinvoke $r46.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("imageWidth");
+
+        $r47 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i12 = virtualinvoke $r47.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("imageHeight");
+
+        $r48 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $d5 = virtualinvoke $r48.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: double getDouble(java.lang.String)>("starFrequency");
+
+        $r49 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i13 = virtualinvoke $r49.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("bigStars");
+
+        $r50 = new java.util.Random;
+
+        $l14 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: long fCurrentTime>;
+
+        specialinvoke $r50.<java.util.Random: void <init>(long)>($l14);
+
+        specialinvoke $r45.<ext.plantuml.com.ctreber.acearth.scandot.DotGeneratorStars: void <init>(int,int,double,int,java.util.Random)>($i11, $i12, $d5, $i13, $r50);
+
+        virtualinvoke $r45.<ext.plantuml.com.ctreber.acearth.scandot.ScanDotGenerator: void generateScanDots()>();
+
+        $r51 = virtualinvoke $r45.<ext.plantuml.com.ctreber.acearth.scandot.ScanDotGenerator: java.util.List getScanDots()>();
+
+        interfaceinvoke $r13.<java.util.List: boolean addAll(java.util.Collection)>($r51);
+
+     label4:
+        $r16 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z4 = virtualinvoke $r16.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean getBoolean(java.lang.String)>("gridP");
+
+        if $z4 == 0 goto label5;
+
+        $r41 = new ext.plantuml.com.ctreber.acearth.scandot.DotGeneratorLines;
+
+        $r42 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i9 = virtualinvoke $r42.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("gridDivision");
+
+        $r43 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i10 = virtualinvoke $r43.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("gridPixelDivision");
+
+        specialinvoke $r41.<ext.plantuml.com.ctreber.acearth.scandot.DotGeneratorLines: void <init>(ext.plantuml.com.ctreber.acearth.projection.Projection,int,int)>(r61, $i9, $i10);
+
+        virtualinvoke $r41.<ext.plantuml.com.ctreber.acearth.scandot.ScanDotGenerator: void generateScanDots()>();
+
+        $r44 = virtualinvoke $r41.<ext.plantuml.com.ctreber.acearth.scandot.ScanDotGenerator: java.util.List getScanDots()>();
+
+        interfaceinvoke $r13.<java.util.List: boolean addAll(java.util.Collection)>($r44);
+
+     label5:
+        $r17 = new ext.plantuml.com.ctreber.aclib.sort.QuickSort;
+
+        specialinvoke $r17.<ext.plantuml.com.ctreber.aclib.sort.QuickSort: void <init>()>();
+
+        $r18 = newarray (ext.plantuml.com.ctreber.acearth.scandot.ScanDot)[0];
+
+        $r19 = interfaceinvoke $r13.<java.util.List: java.lang.Object[] toArray(java.lang.Object[])>($r18);
+
+        r20 = (ext.plantuml.com.ctreber.acearth.scandot.ScanDot[]) $r19;
+
+        virtualinvoke $r17.<ext.plantuml.com.ctreber.aclib.sort.CTSort: void sort(java.lang.Object[])>(r20);
+
+        $r21 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z5 = virtualinvoke $r21.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean getBoolean(java.lang.String)>("shadeP");
+
+        if $z5 != 0 goto label6;
+
+        $r40 = new ext.plantuml.com.ctreber.acearth.shader.ShaderFlat;
+
+        specialinvoke $r40.<ext.plantuml.com.ctreber.acearth.shader.ShaderFlat: void <init>()>();
+
+        r62 = $r40;
+
+     label6:
+        virtualinvoke r62.<ext.plantuml.com.ctreber.acearth.shader.Shader: void setProjection(ext.plantuml.com.ctreber.acearth.projection.Projection)>(r61);
+
+        $r22 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $r23 = virtualinvoke $r22.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getSunPos()>();
+
+        virtualinvoke r62.<ext.plantuml.com.ctreber.acearth.shader.Shader: void setSunPos(ext.plantuml.com.ctreber.acearth.util.Coordinate)>($r23);
+
+        $r24 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i6 = virtualinvoke $r24.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("daySideBrightness");
+
+        $d2 = (double) $i6;
+
+        virtualinvoke r62.<ext.plantuml.com.ctreber.acearth.shader.Shader: void setDaySideBrightness(double)>($d2);
+
+        $r25 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i7 = virtualinvoke $r25.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("terminatorDiscontinuity");
+
+        $d3 = (double) $i7;
+
+        virtualinvoke r62.<ext.plantuml.com.ctreber.acearth.shader.Shader: void setTerminatorDiscontinuity(double)>($d3);
+
+        $r26 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i8 = virtualinvoke $r26.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("nightSideBrightness");
+
+        $d4 = (double) $i8;
+
+        virtualinvoke r62.<ext.plantuml.com.ctreber.acearth.shader.Shader: void setNightSideBrightness(double)>($d4);
+
+        virtualinvoke r62.<ext.plantuml.com.ctreber.acearth.shader.Shader: void init()>();
+
+        $r27 = new ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        $r28 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.gui.CanvasACearth fCanvas>;
+
+        specialinvoke $r27.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: void <init>(ext.plantuml.com.ctreber.acearth.renderer.RenderTarget)>($r28);
+
+        $r30 = new ext.plantuml.com.ctreber.acearth.renderer.RowTypeRendererScanBit;
+
+        specialinvoke $r30.<ext.plantuml.com.ctreber.acearth.renderer.RowTypeRendererScanBit: void <init>()>();
+
+        $r32 = virtualinvoke r63.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.scanbit.ScanBit[] getScanBits()>();
+
+        virtualinvoke $r30.<ext.plantuml.com.ctreber.acearth.renderer.RowTypeRendererScanBit: void setScanBits(ext.plantuml.com.ctreber.acearth.scanbit.ScanBit[])>($r32);
+
+        virtualinvoke $r27.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: void addRowTypeRenderer(ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer)>($r30);
+
+        $r33 = new ext.plantuml.com.ctreber.acearth.renderer.RowTypeRendererScanDot;
+
+        specialinvoke $r33.<ext.plantuml.com.ctreber.acearth.renderer.RowTypeRendererScanDot: void <init>()>();
+
+        virtualinvoke $r33.<ext.plantuml.com.ctreber.acearth.renderer.RowTypeRendererScanDot: void setScanDots(ext.plantuml.com.ctreber.acearth.scandot.ScanDot[])>(r20);
+
+        virtualinvoke $r27.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: void addRowTypeRenderer(ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer)>($r33);
+
+        virtualinvoke $r27.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: void setShader(ext.plantuml.com.ctreber.acearth.shader.Shader)>(r62);
+
+        virtualinvoke $r27.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: void render()>();
+
+        $r35 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: java.util.List fPlugins>;
+
+        r36 = interfaceinvoke $r35.<java.util.List: java.util.Iterator iterator()>();
+
+     label7:
+        $z8 = interfaceinvoke r36.<java.util.Iterator: boolean hasNext()>();
+
+        if $z8 == 0 goto label8;
+
+        $r37 = interfaceinvoke r36.<java.util.Iterator: java.lang.Object next()>();
+
+        r38 = (ext.plantuml.com.ctreber.acearth.plugins.Plugin) $r37;
+
+        virtualinvoke r38.<ext.plantuml.com.ctreber.acearth.plugins.Plugin: void setProjection(ext.plantuml.com.ctreber.acearth.projection.Projection)>(r61);
+
+        $r39 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.gui.CanvasACearth fCanvas>;
+
+        virtualinvoke r38.<ext.plantuml.com.ctreber.acearth.plugins.Plugin: void setRenderTarget(ext.plantuml.com.ctreber.acearth.gui.PixelCanvas)>($r39);
+
+        virtualinvoke r38.<ext.plantuml.com.ctreber.acearth.plugins.Plugin: void setParent(ext.plantuml.com.ctreber.acearth.ACearth)>(r0);
+
+        virtualinvoke r38.<ext.plantuml.com.ctreber.acearth.plugins.Plugin: void render()>();
+
+        goto label7;
+
+     label8:
+        return;
+    }
+
+    private void computePositions()
+    {
+        ext.plantuml.com.ctreber.acearth.ACearth r0;
+        ext.plantuml.com.ctreber.acearth.ConfigurationACearth $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r13, $r19, $r21, $r23;
+        int $i0, $i1;
+        long $l2, $l3, $l4, $l5, $l6, $l7;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7;
+        ext.plantuml.com.ctreber.acearth.util.Coordinate $r11, $r12, $r14, $r15, $r16, $r17, $r18, $r20, $r22;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.ACearth;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i0 = virtualinvoke $r1.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("fixedTime");
+
+        if $i0 != 0 goto label01;
+
+        $l7 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: long fCurrentTime> = $l7;
+
+        goto label02;
+
+     label01:
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $i1 = virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: int getInt(java.lang.String)>("fixedTime");
+
+        $l2 = (long) $i1;
+
+        $l3 = $l2 * 1000L;
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: long fCurrentTime> = $l3;
+
+     label02:
+        $r3 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z0 = virtualinvoke $r3.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean getBoolean(java.lang.String)>("sunMovesP");
+
+        if $z0 == 0 goto label03;
+
+        $r21 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $l6 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: long fCurrentTime>;
+
+        $r22 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: ext.plantuml.com.ctreber.acearth.util.Coordinate getSunPositionOnEarth(long)>($l6);
+
+        virtualinvoke $r21.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: void setSunPos(ext.plantuml.com.ctreber.acearth.util.Coordinate)>($r22);
+
+     label03:
+        $r4 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z1 = virtualinvoke $r4.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("viewPositionType", "Fixed");
+
+        if $z1 == 0 goto label04;
+
+        $r19 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $r20 = virtualinvoke $r19.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getViewPos()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate fViewPos> = $r20;
+
+        goto label08;
+
+     label04:
+        $r5 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z2 = virtualinvoke $r5.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("viewPositionType", "Sun-relative");
+
+        if $z2 == 0 goto label05;
+
+        $r18 = specialinvoke r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getSunRelativePosition()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate fViewPos> = $r18;
+
+        goto label08;
+
+     label05:
+        $r6 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z3 = virtualinvoke $r6.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("viewPositionType", "Orbit");
+
+        if $z3 == 0 goto label06;
+
+        $l5 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: long fCurrentTime>;
+
+        $r17 = specialinvoke r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getOrbitPosition(long)>($l5);
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate fViewPos> = $r17;
+
+        goto label08;
+
+     label06:
+        $r7 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z4 = virtualinvoke $r7.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("viewPositionType", "Random");
+
+        if $z4 == 0 goto label07;
+
+        $r16 = staticinvoke <ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getRandomPosition()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate fViewPos> = $r16;
+
+        goto label08;
+
+     label07:
+        $r8 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z5 = virtualinvoke $r8.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("viewPositionType", "Moon");
+
+        if $z5 == 0 goto label08;
+
+        $l4 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: long fCurrentTime>;
+
+        $r15 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: ext.plantuml.com.ctreber.acearth.util.Coordinate getMoonPositionOnEarth(long)>($l4);
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate fViewPos> = $r15;
+
+     label08:
+        $r23 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $z6 = virtualinvoke $r23.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: boolean is(java.lang.String,java.lang.Object)>("viewRotationType", "Galactic");
+
+        if $z6 == 0 goto label09;
+
+        $r10 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $r11 = virtualinvoke $r10.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getSunPos()>();
+
+        $d1 = virtualinvoke $r11.<ext.plantuml.com.ctreber.acearth.util.Coordinate: double getLat()>();
+
+        $r12 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate fViewPos>;
+
+        $d2 = virtualinvoke $r12.<ext.plantuml.com.ctreber.acearth.util.Coordinate: double getLong()>();
+
+        $r13 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $r14 = virtualinvoke $r13.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getSunPos()>();
+
+        $d3 = virtualinvoke $r14.<ext.plantuml.com.ctreber.acearth.util.Coordinate: double getLong()>();
+
+        $d4 = $d2 - $d3;
+
+        $d5 = staticinvoke <java.lang.Math: double sin(double)>($d4);
+
+        $d6 = $d1 * $d5;
+
+        $d7 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>($d6);
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: double fViewRotation> = $d7;
+
+        goto label10;
+
+     label09:
+        $r9 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $d0 = virtualinvoke $r9.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: double getDouble(java.lang.String)>("viewRotation");
+
+        r0.<ext.plantuml.com.ctreber.acearth.ACearth: double fViewRotation> = $d0;
+
+     label10:
+        return;
+    }
+
+    private ext.plantuml.com.ctreber.acearth.util.Coordinate getSunRelativePosition()
+    {
+        ext.plantuml.com.ctreber.acearth.ACearth r0;
+        ext.plantuml.com.ctreber.acearth.ConfigurationACearth $r1, $r3;
+        ext.plantuml.com.ctreber.acearth.util.Coordinate r2, $r4;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.ACearth;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        r2 = virtualinvoke $r1.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getSunPos()>();
+
+        $r3 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $r4 = virtualinvoke $r3.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: ext.plantuml.com.ctreber.acearth.util.Coordinate getSunPosRel()>();
+
+        virtualinvoke r2.<ext.plantuml.com.ctreber.acearth.util.Coordinate: void add(ext.plantuml.com.ctreber.acearth.util.Coordinate)>($r4);
+
+        return r2;
+    }
+
+    private ext.plantuml.com.ctreber.acearth.util.Coordinate getOrbitPosition(long)
+    {
+        long l0;
+        ext.plantuml.com.ctreber.acearth.ACearth r0;
+        ext.plantuml.com.ctreber.acearth.ConfigurationACearth $r1, $r2;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, $d24, d28, d29, d30, d31, d32, d35, d36, d37, d38, d39, d42, d43, d44, d45, d46;
+        ext.plantuml.com.ctreber.acearth.util.Coordinate $r3;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.ACearth;
+
+        l0 := @parameter0: long;
+
+        $d0 = (double) l0;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $d1 = virtualinvoke $r1.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: double getDouble(java.lang.String)>("orbitPeriod");
+
+        $d2 = $d1 * 3600.0;
+
+        $d3 = $d2 * 1000.0;
+
+        $d4 = $d0 / $d3;
+
+        $d5 = $d4 * 2.0;
+
+        d28 = $d5 * 3.141592653589793;
+
+        d29 = staticinvoke <java.lang.Math: double cos(double)>(d28);
+
+        d30 = staticinvoke <java.lang.Math: double sin(double)>(d28);
+
+        $d7 = d29 * 1.0;
+
+        $d6 = d30 * 0.0;
+
+        d31 = $d7 - $d6;
+
+        $d9 = d30 * 1.0;
+
+        $d8 = d29 * 0.0;
+
+        d32 = $d9 + $d8;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        $d10 = virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.ConfigurationACearth: double getDouble(java.lang.String)>("orbitInclination");
+
+        d35 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>($d10);
+
+        d36 = staticinvoke <java.lang.Math: double cos(double)>(d35);
+
+        d37 = staticinvoke <java.lang.Math: double sin(double)>(d35);
+
+        $d12 = d36 * d32;
+
+        $d11 = d37 * 0.0;
+
+        d38 = $d12 - $d11;
+
+        $d14 = d37 * d32;
+
+        $d13 = d36 * 0.0;
+
+        d39 = $d14 + $d13;
+
+        $d15 = (double) l0;
+
+        $d16 = $d15 / 8.64E7;
+
+        d42 = $d16 * 6.283185307179586;
+
+        d43 = staticinvoke <java.lang.Math: double cos(double)>(d42);
+
+        d44 = staticinvoke <java.lang.Math: double sin(double)>(d42);
+
+        $d18 = d43 * d38;
+
+        $d17 = d44 * d31;
+
+        d45 = $d18 - $d17;
+
+        $d20 = d44 * d38;
+
+        $d19 = d43 * d31;
+
+        d46 = $d20 + $d19;
+
+        $r3 = new ext.plantuml.com.ctreber.acearth.util.Coordinate;
+
+        $d21 = staticinvoke <java.lang.Math: double asin(double)>(d39);
+
+        $d22 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double radsToDegs(double)>($d21);
+
+        $d23 = staticinvoke <java.lang.Math: double atan2(double,double)>(d45, d46);
+
+        $d24 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double radsToDegs(double)>($d23);
+
+        specialinvoke $r3.<ext.plantuml.com.ctreber.acearth.util.Coordinate: void <init>(double,double)>($d22, $d24);
+
+        return $r3;
+    }
+
+    private static ext.plantuml.com.ctreber.acearth.util.Coordinate getRandomPosition()
+    {
+        double[] r0;
+        byte $b0, $b1;
+        double $d0, $d1, d2, $d3, d4, $d5, d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, d20, d21, d22;
+        ext.plantuml.com.ctreber.acearth.util.Coordinate $r1;
+        int i2, i3;
+
+        r0 = newarray (double)[3];
+
+        d20 = 0.0;
+
+     label1:
+        i2 = 0;
+
+     label2:
+        if i2 >= 3 goto label3;
+
+        $d13 = staticinvoke <java.lang.Math: double random()>();
+
+        $d14 = $d13 * 20000.0;
+
+        $d15 = $d14 * 1.0E-4;
+
+        $d16 = $d15 - 1.0;
+
+        r0[i2] = $d16;
+
+        $d18 = r0[i2];
+
+        $d17 = r0[i2];
+
+        $d19 = $d18 * $d17;
+
+        d20 = d20 + $d19;
+
+        i2 = i2 + 1;
+
+        goto label2;
+
+     label3:
+        $b0 = d20 cmpl 1.0;
+
+        if $b0 > 0 goto label1;
+
+        $b1 = d20 cmpg 0.01;
+
+        if $b1 < 0 goto label1;
+
+        d21 = staticinvoke <java.lang.Math: double sqrt(double)>(d20);
+
+        i3 = 0;
+
+     label4:
+        if i3 >= 3 goto label5;
+
+        $d11 = r0[i3];
+
+        $d12 = $d11 / d21;
+
+        r0[i3] = $d12;
+
+        i3 = i3 + 1;
+
+        goto label4;
+
+     label5:
+        d22 = r0[1];
+
+        $d0 = d22 * d22;
+
+        $d1 = 1.0 - $d0;
+
+        d2 = staticinvoke <java.lang.Math: double sqrt(double)>($d1);
+
+        $d3 = r0[0];
+
+        d4 = $d3 / d2;
+
+        $d5 = r0[2];
+
+        d6 = $d5 / d2;
+
+        $r1 = new ext.plantuml.com.ctreber.acearth.util.Coordinate;
+
+        $d7 = staticinvoke <java.lang.Math: double atan2(double,double)>(d22, d2);
+
+        $d8 = $d7 * 57.29577951308232;
+
+        $d9 = staticinvoke <java.lang.Math: double atan2(double,double)>(d4, d6);
+
+        $d10 = $d9 * 57.29577951308232;
+
+        specialinvoke $r1.<ext.plantuml.com.ctreber.acearth.util.Coordinate: void <init>(double,double)>($d8, $d10);
+
+        return $r1;
+    }
+
+    public ext.plantuml.com.ctreber.acearth.ConfigurationACearth getConf()
+    {
+        ext.plantuml.com.ctreber.acearth.ACearth r0;
+        ext.plantuml.com.ctreber.acearth.ConfigurationACearth $r1;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.ACearth;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.ACearth: ext.plantuml.com.ctreber.acearth.ConfigurationACearth fConf>;
+
+        return $r1;
+    }
+
+    public static void <clinit>()
+    {
+        <ext.plantuml.com.ctreber.acearth.ACearth: java.lang.String BUILD> = "22.11.2002 004";
+
+        <ext.plantuml.com.ctreber.acearth.ACearth: java.lang.String VERSION> = "1.1";
+
+        return;
+    }
+}

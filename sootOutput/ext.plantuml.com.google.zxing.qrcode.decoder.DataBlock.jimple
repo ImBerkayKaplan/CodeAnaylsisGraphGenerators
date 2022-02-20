@@ -1,0 +1,297 @@
+final class ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock extends java.lang.Object
+{
+    private final int numDataCodewords;
+    private final byte[] codewords;
+
+    private void <init>(int, byte[])
+    {
+        ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock r0;
+        int i0;
+        byte[] r1;
+
+        r0 := @this: ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock;
+
+        i0 := @parameter0: int;
+
+        r1 := @parameter1: byte[];
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: int numDataCodewords> = i0;
+
+        r0.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: byte[] codewords> = r1;
+
+        return;
+    }
+
+    static ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock[] getDataBlocks(byte[], ext.plantuml.com.google.zxing.qrcode.decoder.Version, ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel)
+    {
+        byte[] r0, $r6, $r8, $r10, $r12, $r14, $r16, $r18;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Version r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i7, $i9, $i11, $i13, $i14, $i15, $i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29, i30, i31, i32, i33, i34, i35, $i36;
+        ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel r2;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks r3;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECB[] r4;
+        ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock $r5, $r7, $r9, $r11, $r13, $r15, $r17;
+        byte $b8, $b10, $b12;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECB $r19, r22;
+        java.lang.IllegalArgumentException $r20;
+        ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock[] r21;
+
+        r0 := @parameter0: byte[];
+
+        r1 := @parameter1: ext.plantuml.com.google.zxing.qrcode.decoder.Version;
+
+        r2 := @parameter2: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+        $i0 = lengthof r0;
+
+        $i1 = virtualinvoke r1.<ext.plantuml.com.google.zxing.qrcode.decoder.Version: int getTotalCodewords()>();
+
+        if $i0 == $i1 goto label01;
+
+        $r20 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r20.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r20;
+
+     label01:
+        r3 = virtualinvoke r1.<ext.plantuml.com.google.zxing.qrcode.decoder.Version: ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks getECBlocksForLevel(ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel)>(r2);
+
+        i17 = 0;
+
+        r4 = virtualinvoke r3.<ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks: ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECB[] getECBlocks()>();
+
+        i18 = 0;
+
+     label02:
+        $i2 = lengthof r4;
+
+        if i18 >= $i2 goto label03;
+
+        $r19 = r4[i18];
+
+        $i16 = virtualinvoke $r19.<ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECB: int getCount()>();
+
+        i17 = i17 + $i16;
+
+        i18 = i18 + 1;
+
+        goto label02;
+
+     label03:
+        r21 = newarray (ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock)[i17];
+
+        i19 = 0;
+
+        i20 = 0;
+
+     label04:
+        $i3 = lengthof r4;
+
+        if i20 >= $i3 goto label07;
+
+        r22 = r4[i20];
+
+        i21 = 0;
+
+     label05:
+        $i13 = virtualinvoke r22.<ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECB: int getCount()>();
+
+        if i21 >= $i13 goto label06;
+
+        i22 = virtualinvoke r22.<ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECB: int getDataCodewords()>();
+
+        $i14 = virtualinvoke r3.<ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks: int getECCodewordsPerBlock()>();
+
+        i23 = $i14 + i22;
+
+        $i15 = i19;
+
+        i19 = i19 + 1;
+
+        $r17 = new ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock;
+
+        $r18 = newarray (byte)[i23];
+
+        specialinvoke $r17.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: void <init>(int,byte[])>(i22, $r18);
+
+        r21[$i15] = $r17;
+
+        i21 = i21 + 1;
+
+        goto label05;
+
+     label06:
+        i20 = i20 + 1;
+
+        goto label04;
+
+     label07:
+        $r5 = r21[0];
+
+        $r6 = $r5.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: byte[] codewords>;
+
+        i24 = lengthof $r6;
+
+        $i4 = lengthof r21;
+
+        i25 = $i4 - 1;
+
+     label08:
+        if i25 < 0 goto label10;
+
+        $r15 = r21[i25];
+
+        $r16 = $r15.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: byte[] codewords>;
+
+        i26 = lengthof $r16;
+
+        if i26 != i24 goto label09;
+
+        goto label10;
+
+     label09:
+        i25 = i25 + -1;
+
+        goto label08;
+
+     label10:
+        i27 = i25 + 1;
+
+        $i5 = virtualinvoke r3.<ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks: int getECCodewordsPerBlock()>();
+
+        i28 = i24 - $i5;
+
+        i29 = 0;
+
+        i30 = 0;
+
+     label11:
+        if i30 >= i28 goto label14;
+
+        i31 = 0;
+
+     label12:
+        if i31 >= i19 goto label13;
+
+        $r13 = r21[i31];
+
+        $r14 = $r13.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: byte[] codewords>;
+
+        $i11 = i29;
+
+        i29 = i29 + 1;
+
+        $b12 = r0[$i11];
+
+        $r14[i30] = $b12;
+
+        i31 = i31 + 1;
+
+        goto label12;
+
+     label13:
+        i30 = i30 + 1;
+
+        goto label11;
+
+     label14:
+        i32 = i27;
+
+     label15:
+        if i32 >= i19 goto label16;
+
+        $r11 = r21[i32];
+
+        $r12 = $r11.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: byte[] codewords>;
+
+        $i9 = i29;
+
+        i29 = i29 + 1;
+
+        $b10 = r0[$i9];
+
+        $r12[i28] = $b10;
+
+        i32 = i32 + 1;
+
+        goto label15;
+
+     label16:
+        $r7 = r21[0];
+
+        $r8 = $r7.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: byte[] codewords>;
+
+        i33 = lengthof $r8;
+
+        i34 = i28;
+
+     label17:
+        if i34 >= i33 goto label22;
+
+        i35 = 0;
+
+     label18:
+        if i35 >= i19 goto label21;
+
+        if i35 >= i27 goto label19;
+
+        $i36 = i34;
+
+        goto label20;
+
+     label19:
+        $i36 = i34 + 1;
+
+     label20:
+        $r9 = r21[i35];
+
+        $r10 = $r9.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: byte[] codewords>;
+
+        $i7 = i29;
+
+        i29 = i29 + 1;
+
+        $b8 = r0[$i7];
+
+        $r10[$i36] = $b8;
+
+        i35 = i35 + 1;
+
+        goto label18;
+
+     label21:
+        i34 = i34 + 1;
+
+        goto label17;
+
+     label22:
+        return r21;
+    }
+
+    int getNumDataCodewords()
+    {
+        ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock r0;
+        int $i0;
+
+        r0 := @this: ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock;
+
+        $i0 = r0.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: int numDataCodewords>;
+
+        return $i0;
+    }
+
+    byte[] getCodewords()
+    {
+        ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock r0;
+        byte[] $r1;
+
+        r0 := @this: ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock;
+
+        $r1 = r0.<ext.plantuml.com.google.zxing.qrcode.decoder.DataBlock: byte[] codewords>;
+
+        return $r1;
+    }
+}

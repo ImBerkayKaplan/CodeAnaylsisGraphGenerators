@@ -1,0 +1,171 @@
+public class net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1, $r12, $r15;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r16, $r17, $r18, $r19, $r20;
+        java.lang.StringBuilder $r10, $r11, $r13, $r14;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r21;
+
+        $r0 = class "Lnet/sourceforge/plantuml/project/command/CommandWeekNumberStrategy;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[12];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("weeks?");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("starts?");
+
+        $r2[3] = $r6;
+
+        $r7 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("[^0-9]*?");
+
+        $r2[4] = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[5] = $r8;
+
+        $r9 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>()>();
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(");
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.project.time.DayOfWeek: java.lang.String getRegexString()>();
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r12);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r9.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("WEEKDAY", $r15);
+
+        $r2[6] = $r9;
+
+        $r16 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[7] = $r16;
+
+        $r17 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r17.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("[^0-9]*?");
+
+        $r2[8] = $r17;
+
+        $r18 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("NUM", "([0-9]+)");
+
+        $r2[9] = $r18;
+
+        $r19 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r19.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("[^0-9]*?");
+
+        $r2[10] = $r19;
+
+        $r20 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[11] = $r20;
+
+        $r21 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r21;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult)
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String $r1, r3;
+        net.sourceforge.plantuml.project.time.DayOfWeek r2;
+        net.sourceforge.plantuml.project.GanttDiagram r4;
+        int $i0;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+        net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy r6;
+        net.sourceforge.plantuml.LineLocation r7;
+
+        r6 := @this: net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
+
+        r4 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r7 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("WEEKDAY", 0);
+
+        r2 = staticinvoke <net.sourceforge.plantuml.project.time.DayOfWeek: net.sourceforge.plantuml.project.time.DayOfWeek fromString(java.lang.String)>($r1);
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("NUM", 0);
+
+        $i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>(r3);
+
+        virtualinvoke r4.<net.sourceforge.plantuml.project.GanttDiagram: void setWeekNumberStrategy(net.sourceforge.plantuml.project.time.DayOfWeek,int)>(r2, $i0);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r5;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.project.GanttDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.project.GanttDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

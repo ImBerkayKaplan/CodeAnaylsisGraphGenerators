@@ -1,0 +1,594 @@
+public class org.stathissideris.ascii2image.text.AbstractionGrid extends java.lang.Object
+{
+    private static final boolean DEBUG;
+    private org.stathissideris.ascii2image.text.TextGrid grid;
+
+    public static org.stathissideris.ascii2image.text.AbstractionGrid makeUsingBuffer(org.stathissideris.ascii2image.text.TextGrid)
+    {
+        org.stathissideris.ascii2image.text.TextGrid r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7;
+        java.lang.IllegalArgumentException $r1;
+        org.stathissideris.ascii2image.text.AbstractionGrid $r2;
+
+        r0 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        $i0 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: int getWidth()>();
+
+        $i1 = $i0 % 3;
+
+        if $i1 != 0 goto label1;
+
+        $i2 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: int getHeight()>();
+
+        $i3 = $i2 % 3;
+
+        if $i3 == 0 goto label2;
+
+     label1:
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("Passed TextGrid must have dimensions that are divisible by 3.");
+
+        throw $r1;
+
+     label2:
+        $r2 = new org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        $i4 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: int getWidth()>();
+
+        $i5 = $i4 / 3;
+
+        $i6 = virtualinvoke r0.<org.stathissideris.ascii2image.text.TextGrid: int getHeight()>();
+
+        $i7 = $i6 / 3;
+
+        specialinvoke $r2.<org.stathissideris.ascii2image.text.AbstractionGrid: void <init>(int,int)>($i5, $i7);
+
+        specialinvoke $r2.<org.stathissideris.ascii2image.text.AbstractionGrid: void setInternalBuffer(org.stathissideris.ascii2image.text.TextGrid)>(r0);
+
+        return $r2;
+    }
+
+    public void <init>(org.stathissideris.ascii2image.text.TextGrid, org.stathissideris.ascii2image.text.CellSet)
+    {
+        org.stathissideris.ascii2image.text.AbstractionGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27;
+        org.stathissideris.ascii2image.text.CellSet r2;
+        java.util.Iterator r3;
+        java.lang.Object $r4;
+        org.stathissideris.ascii2image.text.TextGrid$Cell r5;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14;
+        org.stathissideris.ascii2image.text.AbstractCell $r6, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18;
+
+        r0 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        r1 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r2 := @parameter1: org.stathissideris.ascii2image.text.CellSet;
+
+        $i0 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: int getHeight()>();
+
+        specialinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void <init>(int,int)>($i0, $i1);
+
+        r3 = virtualinvoke r2.<org.stathissideris.ascii2image.text.CellSet: java.util.Iterator iterator()>();
+
+     label01:
+        $z14 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z14 == 0 goto label16;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (org.stathissideris.ascii2image.text.TextGrid$Cell) $r4;
+
+        $z0 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isBlank(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z0 == 0 goto label02;
+
+        goto label01;
+
+     label02:
+        $z1 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isCross(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z1 == 0 goto label03;
+
+        $i26 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i27 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r18 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeCross()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i26, $i27, $r18);
+
+        goto label15;
+
+     label03:
+        $z2 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isT(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z2 == 0 goto label04;
+
+        $i24 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i25 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r17 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeT()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i24, $i25, $r17);
+
+        goto label15;
+
+     label04:
+        $z3 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isK(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z3 == 0 goto label05;
+
+        $i22 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i23 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r16 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeK()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i22, $i23, $r16);
+
+        goto label15;
+
+     label05:
+        $z4 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isInverseT(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z4 == 0 goto label06;
+
+        $i20 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i21 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r15 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeInverseT()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i20, $i21, $r15);
+
+        goto label15;
+
+     label06:
+        $z5 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isInverseK(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z5 == 0 goto label07;
+
+        $i18 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i19 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r14 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeInverseK()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i18, $i19, $r14);
+
+        goto label15;
+
+     label07:
+        $z6 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isCorner1(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z6 == 0 goto label08;
+
+        $i16 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i17 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r13 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeCorner1()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i16, $i17, $r13);
+
+        goto label15;
+
+     label08:
+        $z7 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isCorner2(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z7 == 0 goto label09;
+
+        $i14 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i15 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r12 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeCorner2()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i14, $i15, $r12);
+
+        goto label15;
+
+     label09:
+        $z8 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isCorner3(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z8 == 0 goto label10;
+
+        $i12 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i13 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r11 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeCorner3()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i12, $i13, $r11);
+
+        goto label15;
+
+     label10:
+        $z9 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isCorner4(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z9 == 0 goto label11;
+
+        $i10 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i11 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r10 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeCorner4()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i10, $i11, $r10);
+
+        goto label15;
+
+     label11:
+        $z10 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isHorizontalLine(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z10 == 0 goto label12;
+
+        $i8 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i9 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r9 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeHorizontalLine()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i8, $i9, $r9);
+
+        goto label15;
+
+     label12:
+        $z11 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isVerticalLine(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z11 == 0 goto label13;
+
+        $i6 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i7 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r8 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeVerticalLine()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i6, $i7, $r8);
+
+        goto label15;
+
+     label13:
+        $z12 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isCrossOnLine(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z12 == 0 goto label14;
+
+        $i4 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i5 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r7 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeCross()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i4, $i5, $r7);
+
+        goto label15;
+
+     label14:
+        $z13 = virtualinvoke r1.<org.stathissideris.ascii2image.text.TextGrid: boolean isStarOnLine(org.stathissideris.ascii2image.text.TextGrid$Cell)>(r5);
+
+        if $z13 == 0 goto label15;
+
+        $i2 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int x>;
+
+        $i3 = r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: int y>;
+
+        $r6 = staticinvoke <org.stathissideris.ascii2image.text.AbstractCell: org.stathissideris.ascii2image.text.AbstractCell makeStar()>();
+
+        virtualinvoke r0.<org.stathissideris.ascii2image.text.AbstractionGrid: void set(int,int,org.stathissideris.ascii2image.text.AbstractCell)>($i2, $i3, $r6);
+
+     label15:
+        goto label01;
+
+     label16:
+        return;
+    }
+
+    private void <init>(int, int)
+    {
+        org.stathissideris.ascii2image.text.AbstractionGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid $r1;
+        int i0, i1, $i2, $i3;
+
+        r0 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new org.stathissideris.ascii2image.text.TextGrid;
+
+        $i3 = i0 * 3;
+
+        $i2 = i1 * 3;
+
+        specialinvoke $r1.<org.stathissideris.ascii2image.text.TextGrid: void <init>(int,int)>($i3, $i2);
+
+        r0.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid> = $r1;
+
+        return;
+    }
+
+    public org.stathissideris.ascii2image.text.TextGrid getCopyOfInternalBuffer()
+    {
+        org.stathissideris.ascii2image.text.TextGrid $r0, $r2;
+        org.stathissideris.ascii2image.text.AbstractionGrid r1;
+
+        r1 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        $r0 = new org.stathissideris.ascii2image.text.TextGrid;
+
+        $r2 = r1.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        specialinvoke $r0.<org.stathissideris.ascii2image.text.TextGrid: void <init>(org.stathissideris.ascii2image.text.TextGrid)>($r2);
+
+        return $r0;
+    }
+
+    private void setInternalBuffer(org.stathissideris.ascii2image.text.TextGrid)
+    {
+        org.stathissideris.ascii2image.text.AbstractionGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid r1;
+
+        r0 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        r1 := @parameter0: org.stathissideris.ascii2image.text.TextGrid;
+
+        r0.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid> = r1;
+
+        return;
+    }
+
+    public int getWidth()
+    {
+        org.stathissideris.ascii2image.text.AbstractionGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid $r1;
+        int $i0, $i1;
+
+        r0 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        $r1 = r0.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        $i0 = virtualinvoke $r1.<org.stathissideris.ascii2image.text.TextGrid: int getWidth()>();
+
+        $i1 = $i0 / 3;
+
+        return $i1;
+    }
+
+    public int getHeight()
+    {
+        org.stathissideris.ascii2image.text.AbstractionGrid r0;
+        org.stathissideris.ascii2image.text.TextGrid $r1;
+        int $i0, $i1;
+
+        r0 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        $r1 = r0.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        $i0 = virtualinvoke $r1.<org.stathissideris.ascii2image.text.TextGrid: int getHeight()>();
+
+        $i1 = $i0 / 3;
+
+        return $i1;
+    }
+
+    public org.stathissideris.ascii2image.text.TextGrid getAsTextGrid()
+    {
+        org.stathissideris.ascii2image.text.TextGrid $r0, $r3, $r4, $r6, $r9;
+        org.stathissideris.ascii2image.text.AbstractionGrid r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6, i7;
+        org.stathissideris.ascii2image.text.TextGrid$Cell $r5;
+        boolean $z0;
+
+        r1 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        $r0 = new org.stathissideris.ascii2image.text.TextGrid;
+
+        $i0 = virtualinvoke r1.<org.stathissideris.ascii2image.text.AbstractionGrid: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<org.stathissideris.ascii2image.text.AbstractionGrid: int getHeight()>();
+
+        specialinvoke $r0.<org.stathissideris.ascii2image.text.TextGrid: void <init>(int,int)>($i0, $i1);
+
+        i6 = 0;
+
+     label1:
+        $r3 = r1.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        $i2 = virtualinvoke $r3.<org.stathissideris.ascii2image.text.TextGrid: int getHeight()>();
+
+        if i6 >= $i2 goto label5;
+
+        i7 = 0;
+
+     label2:
+        $r4 = r1.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        $i3 = virtualinvoke $r4.<org.stathissideris.ascii2image.text.TextGrid: int getWidth()>();
+
+        if i7 >= $i3 goto label4;
+
+        $r5 = new org.stathissideris.ascii2image.text.TextGrid$Cell;
+
+        $r6 = r1.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>($r6);
+
+        specialinvoke $r5.<org.stathissideris.ascii2image.text.TextGrid$Cell: void <init>(org.stathissideris.ascii2image.text.TextGrid,int,int)>($r6, i7, i6);
+
+        $r9 = r1.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        $z0 = virtualinvoke $r9.<org.stathissideris.ascii2image.text.TextGrid: boolean isBlank(org.stathissideris.ascii2image.text.TextGrid$Cell)>($r5);
+
+        if $z0 != 0 goto label3;
+
+        $i5 = i7 / 3;
+
+        $i4 = i6 / 3;
+
+        virtualinvoke $r0.<org.stathissideris.ascii2image.text.TextGrid: void set(int,int,char)>($i5, $i4, 42);
+
+     label3:
+        i7 = i7 + 1;
+
+        goto label2;
+
+     label4:
+        i6 = i6 + 1;
+
+        goto label1;
+
+     label5:
+        return $r0;
+    }
+
+    public java.util.ArrayList getDistinctShapes()
+    {
+        java.util.ArrayList $r0, r5;
+        org.stathissideris.ascii2image.text.AbstractionGrid r2, $r9;
+        org.stathissideris.ascii2image.text.TextGrid $r3, $r11;
+        org.stathissideris.ascii2image.text.CellSet r4, r8, $r12;
+        java.util.Iterator r6;
+        boolean $z0;
+        java.lang.Object $r7;
+        int $i0, $i1;
+
+        r2 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        r4 = virtualinvoke $r3.<org.stathissideris.ascii2image.text.TextGrid: org.stathissideris.ascii2image.text.CellSet getAllNonBlank()>();
+
+        r5 = virtualinvoke r4.<org.stathissideris.ascii2image.text.CellSet: java.util.ArrayList breakIntoDistinctBoundaries()>();
+
+        r6 = virtualinvoke r5.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r7 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (org.stathissideris.ascii2image.text.CellSet) $r7;
+
+        $r9 = new org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        $i0 = virtualinvoke r2.<org.stathissideris.ascii2image.text.AbstractionGrid: int getWidth()>();
+
+        $i1 = virtualinvoke r2.<org.stathissideris.ascii2image.text.AbstractionGrid: int getHeight()>();
+
+        specialinvoke $r9.<org.stathissideris.ascii2image.text.AbstractionGrid: void <init>(int,int)>($i0, $i1);
+
+        virtualinvoke $r9.<org.stathissideris.ascii2image.text.AbstractionGrid: void fillCells(org.stathissideris.ascii2image.text.CellSet)>(r8);
+
+        $r11 = virtualinvoke $r9.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid getAsTextGrid()>();
+
+        $r12 = virtualinvoke $r11.<org.stathissideris.ascii2image.text.TextGrid: org.stathissideris.ascii2image.text.CellSet getAllNonBlank()>();
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r12);
+
+        goto label1;
+
+     label2:
+        return $r0;
+    }
+
+    protected void fillCells(org.stathissideris.ascii2image.text.CellSet)
+    {
+        org.stathissideris.ascii2image.text.AbstractionGrid r0;
+        org.stathissideris.ascii2image.text.CellSet r1;
+        org.stathissideris.ascii2image.text.TextGrid $r2;
+
+        r0 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        r1 := @parameter0: org.stathissideris.ascii2image.text.CellSet;
+
+        $r2 = r0.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        virtualinvoke $r2.<org.stathissideris.ascii2image.text.TextGrid: void fillCellsWith(java.lang.Iterable,char)>(r1, 42);
+
+        return;
+    }
+
+    public void set(int, int, org.stathissideris.ascii2image.text.AbstractCell)
+    {
+        org.stathissideris.ascii2image.text.AbstractCell r0;
+        int[][] $r1;
+        int[] $r2;
+        int $i0, $i1, $i2, i3, i4, i5, i6, i7, i8;
+        org.stathissideris.ascii2image.text.AbstractionGrid r3;
+        org.stathissideris.ascii2image.text.TextGrid $r4;
+
+        r3 := @this: org.stathissideris.ascii2image.text.AbstractionGrid;
+
+        i3 := @parameter0: int;
+
+        i4 := @parameter1: int;
+
+        r0 := @parameter2: org.stathissideris.ascii2image.text.AbstractCell;
+
+        i5 = i3 * 3;
+
+        i6 = i4 * 3;
+
+        i7 = 0;
+
+     label1:
+        if i7 >= 3 goto label5;
+
+        i8 = 0;
+
+     label2:
+        if i8 >= 3 goto label4;
+
+        $r1 = r0.<org.stathissideris.ascii2image.text.AbstractCell: int[][] rows>;
+
+        $r2 = $r1[i8];
+
+        $i0 = $r2[i7];
+
+        if $i0 != 1 goto label3;
+
+        $r4 = r3.<org.stathissideris.ascii2image.text.AbstractionGrid: org.stathissideris.ascii2image.text.TextGrid grid>;
+
+        $i2 = i5 + i8;
+
+        $i1 = i6 + i7;
+
+        virtualinvoke $r4.<org.stathissideris.ascii2image.text.TextGrid: void set(int,int,char)>($i2, $i1, 42);
+
+     label3:
+        i8 = i8 + 1;
+
+        goto label2;
+
+     label4:
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label5:
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <org.stathissideris.ascii2image.text.AbstractionGrid: boolean DEBUG> = 0;
+
+        return;
+    }
+}

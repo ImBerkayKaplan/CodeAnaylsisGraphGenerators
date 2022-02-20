@@ -1,0 +1,75 @@
+public class net.sourceforge.plantuml.project.lang.SentenceDisplayOnSameRowAs extends net.sourceforge.plantuml.project.lang.SentenceSimple
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.project.lang.SentenceDisplayOnSameRowAs r0;
+        net.sourceforge.plantuml.project.lang.SubjectTask $r1;
+        net.sourceforge.plantuml.command.regex.IRegex $r2;
+        net.sourceforge.plantuml.project.lang.ComplementNamed $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.lang.SentenceDisplayOnSameRowAs;
+
+        $r1 = new net.sourceforge.plantuml.project.lang.SubjectTask;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.project.lang.SubjectTask: void <init>()>();
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.project.lang.Verbs: net.sourceforge.plantuml.command.regex.IRegex displayOnSameRowAs()>();
+
+        $r3 = new net.sourceforge.plantuml.project.lang.ComplementNamed;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.project.lang.ComplementNamed: void <init>()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.lang.SentenceSimple: void <init>(net.sourceforge.plantuml.project.lang.Subject,net.sourceforge.plantuml.command.regex.IRegex,net.sourceforge.plantuml.project.lang.Something)>($r1, $r2, $r3);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.project.GanttDiagram, java.lang.Object, java.lang.Object)
+    {
+        java.lang.Object r0, r3;
+        net.sourceforge.plantuml.project.core.Task r1, r5;
+        net.sourceforge.plantuml.project.GanttDiagram r2;
+        java.lang.String $r4, $r10;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r6, $r11;
+        java.lang.StringBuilder $r7, $r8, $r9;
+        net.sourceforge.plantuml.project.lang.SentenceDisplayOnSameRowAs r12;
+
+        r12 := @this: net.sourceforge.plantuml.project.lang.SentenceDisplayOnSameRowAs;
+
+        r2 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0 := @parameter1: java.lang.Object;
+
+        r3 := @parameter2: java.lang.Object;
+
+        r1 = (net.sourceforge.plantuml.project.core.Task) r0;
+
+        $r4 = (java.lang.String) r3;
+
+        r5 = virtualinvoke r2.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.Task getExistingTask(java.lang.String)>($r4);
+
+        if r5 != null goto label1;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("No such task ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r5);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r10);
+
+        return $r11;
+
+     label1:
+        interfaceinvoke r1.<net.sourceforge.plantuml.project.core.Task: void putInSameRowAs(net.sourceforge.plantuml.project.core.Task)>(r5);
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r6;
+    }
+}

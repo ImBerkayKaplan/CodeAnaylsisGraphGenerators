@@ -1,0 +1,309 @@
+public class net.sourceforge.plantuml.dedication.Noise extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.dedication.Noise r0;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.Noise;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static net.sourceforge.plantuml.argon2.Argon2 argon2(byte[], byte[])
+    {
+        net.sourceforge.plantuml.argon2.Argon2 $r0, $r2, $r3, $r7, $r8, r12;
+        net.sourceforge.plantuml.argon2.model.Argon2Type $r1;
+        byte[] r4, $r6, r9, $r11;
+        java.lang.Object $r5, $r10;
+
+        r9 := @parameter0: byte[];
+
+        r4 := @parameter1: byte[];
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.argon2.Argon2Factory: net.sourceforge.plantuml.argon2.Argon2 create()>();
+
+        $r1 = <net.sourceforge.plantuml.argon2.model.Argon2Type: net.sourceforge.plantuml.argon2.model.Argon2Type Argon2id>;
+
+        $r2 = virtualinvoke $r0.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.Argon2 setType(net.sourceforge.plantuml.argon2.model.Argon2Type)>($r1);
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.Argon2 setMemory(int)>(8);
+
+        $r5 = virtualinvoke r4.<java.lang.Object: java.lang.Object clone()>();
+
+        $r6 = (byte[]) $r5;
+
+        $r7 = virtualinvoke $r3.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.Argon2 setSalt(byte[])>($r6);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.Argon2 setIterations(int)>(50);
+
+        $r10 = virtualinvoke r9.<java.lang.Object: java.lang.Object clone()>();
+
+        $r11 = (byte[]) $r10;
+
+        r12 = virtualinvoke $r8.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.Argon2 setPassword(byte[])>($r11);
+
+        virtualinvoke r12.<net.sourceforge.plantuml.argon2.Argon2: void hashNow()>();
+
+        return r12;
+    }
+
+    public static java.lang.String computeArgon2String(byte[], byte[])
+    {
+        byte[] r0, r1;
+        net.sourceforge.plantuml.argon2.Argon2 $r2;
+        java.lang.String $r3;
+
+        r0 := @parameter0: byte[];
+
+        r1 := @parameter1: byte[];
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.dedication.Noise: net.sourceforge.plantuml.argon2.Argon2 argon2(byte[],byte[])>(r0, r1);
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.argon2.Argon2: java.lang.String getOutputString()>();
+
+        return $r3;
+    }
+
+    public static byte[] computeArgon2bytes(byte[], byte[])
+    {
+        byte[] r0, r1, $r3;
+        net.sourceforge.plantuml.argon2.Argon2 $r2;
+
+        r0 := @parameter0: byte[];
+
+        r1 := @parameter1: byte[];
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.dedication.Noise: net.sourceforge.plantuml.argon2.Argon2 argon2(byte[],byte[])>(r0, r1);
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.argon2.Argon2: byte[] getOutput()>();
+
+        return $r3;
+    }
+
+    public static int shortHash(byte[], byte[])
+    {
+        byte[] r0, r1, r3;
+        net.sourceforge.plantuml.argon2.Argon2 $r2;
+        int i0, i2, $i3, i4, $i5, i6, i7;
+        byte b1;
+
+        r0 := @parameter0: byte[];
+
+        r1 := @parameter1: byte[];
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.dedication.Noise: net.sourceforge.plantuml.argon2.Argon2 argon2(byte[],byte[])>(r0, r1);
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.argon2.Argon2: byte[] getOutput()>();
+
+        i6 = 0;
+
+        i0 = lengthof r3;
+
+        i7 = 0;
+
+     label1:
+        if i7 >= i0 goto label2;
+
+        b1 = r3[i7];
+
+        i2 = b1 & 15;
+
+        $i3 = b1 & 240;
+
+        i4 = $i3 >> 4;
+
+        $i5 = i2 ^ i4;
+
+        i6 = i6 ^ $i5;
+
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label2:
+        return i6;
+    }
+
+    public static void shuffle(byte[], net.sourceforge.plantuml.utils.MTRandom)
+    {
+        byte[] r0;
+        int $i0, i1, i2, $i3, $i4, i5, $i6, $i7, i8, i11;
+        net.sourceforge.plantuml.utils.MTRandom r1;
+        byte b9, $b10;
+
+        r0 := @parameter0: byte[];
+
+        r1 := @parameter1: net.sourceforge.plantuml.utils.MTRandom;
+
+        i11 = 0;
+
+     label1:
+        $i0 = lengthof r0;
+
+        if i11 >= $i0 goto label2;
+
+        i1 = virtualinvoke r1.<net.sourceforge.plantuml.utils.MTRandom: int nextInt()>();
+
+        i2 = virtualinvoke r1.<net.sourceforge.plantuml.utils.MTRandom: int nextInt()>();
+
+        $i3 = staticinvoke <java.lang.Math: int abs(int)>(i1);
+
+        $i4 = lengthof r0;
+
+        i5 = $i3 % $i4;
+
+        $i6 = staticinvoke <java.lang.Math: int abs(int)>(i2);
+
+        $i7 = lengthof r0;
+
+        i8 = $i6 % $i7;
+
+        b9 = r0[i5];
+
+        $b10 = r0[i8];
+
+        r0[i5] = $b10;
+
+        r0[i8] = b9;
+
+        i11 = i11 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public static void xor(byte[], byte[])
+    {
+        byte[] r0, r1;
+        int $i0, $i1, $i2, $i5, i7;
+        byte $b3, $b4, $b6;
+
+        r0 := @parameter0: byte[];
+
+        r1 := @parameter1: byte[];
+
+        i7 = 0;
+
+     label1:
+        $i0 = lengthof r0;
+
+        if i7 >= $i0 goto label2;
+
+        $b4 = r0[i7];
+
+        $i1 = lengthof r1;
+
+        $i2 = i7 % $i1;
+
+        $b3 = r1[$i2];
+
+        $i5 = $b4 ^ $b3;
+
+        $b6 = (byte) $i5;
+
+        r0[i7] = $b6;
+
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public static void xor(byte[], net.sourceforge.plantuml.dedication.BlumBlumShub)
+    {
+        byte[] r0;
+        int $i0, $i1, $i2, $i5, i7;
+        net.sourceforge.plantuml.dedication.BlumBlumShub r1;
+        byte b3, $b4, $b6;
+
+        r0 := @parameter0: byte[];
+
+        r1 := @parameter1: net.sourceforge.plantuml.dedication.BlumBlumShub;
+
+        i7 = 0;
+
+     label1:
+        $i0 = lengthof r0;
+
+        if i7 >= $i0 goto label2;
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.dedication.BlumBlumShub: int nextRnd(int)>(8);
+
+        $i2 = $i1 & 255;
+
+        b3 = (byte) $i2;
+
+        $b4 = r0[i7];
+
+        $i5 = $b4 ^ b3;
+
+        $b6 = (byte) $i5;
+
+        r0[i7] = $b6;
+
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public static byte[] reverse(byte[], int)
+    {
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, i11, i12, i13;
+        byte[] r0, r1;
+        byte $b10;
+
+        r0 := @parameter0: byte[];
+
+        i11 := @parameter1: int;
+
+        $i0 = staticinvoke <java.lang.Math: int abs(int)>(i11);
+
+        $i1 = lengthof r0;
+
+        i12 = $i0 % $i1;
+
+        $i2 = lengthof r0;
+
+        r1 = newarray (byte)[$i2];
+
+        i13 = 0;
+
+     label1:
+        $i3 = lengthof r0;
+
+        if i13 >= $i3 goto label2;
+
+        $i4 = lengthof r0;
+
+        $i5 = $i4 - 1;
+
+        $i6 = $i5 - i13;
+
+        $i8 = $i6 + i12;
+
+        $i7 = lengthof r0;
+
+        $i9 = $i8 % $i7;
+
+        $b10 = r0[$i9];
+
+        r1[i13] = $b10;
+
+        i13 = i13 + 1;
+
+        goto label1;
+
+     label2:
+        return r1;
+    }
+}

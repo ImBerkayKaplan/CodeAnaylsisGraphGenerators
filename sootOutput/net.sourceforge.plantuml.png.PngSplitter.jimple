@@ -1,0 +1,244 @@
+public class net.sourceforge.plantuml.png.PngSplitter extends java.lang.Object
+{
+    private final java.util.List files;
+
+    public void <init>(net.sourceforge.plantuml.SuggestedFile, int, int, java.lang.String, int, net.sourceforge.plantuml.SplitParam) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.png.PngSplitter r0;
+        java.util.ArrayList $r1;
+        int i0, i1, $i2, $i3, $i4, i5, i6, $i7, $i8, i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, i28, i29, i30;
+        java.lang.StringBuilder $r2, $r3, $r4, $r5, $r6;
+        java.lang.String $r7, r19;
+        net.sourceforge.plantuml.SuggestedFile r8;
+        net.sourceforge.plantuml.security.SFile r9, $r10, r16, $r29;
+        boolean z0, $z2;
+        java.awt.image.BufferedImage r11, $r20, r30;
+        net.sourceforge.plantuml.png.PngSegment $r12, $r14;
+        java.util.List $r17, $r28;
+        net.sourceforge.plantuml.SplitParam r18;
+        java.awt.Graphics2D r22;
+        java.awt.Color $r23, $r24, $r25, $r26;
+        java.io.IOException $r27;
+
+        r0 := @this: net.sourceforge.plantuml.png.PngSplitter;
+
+        r8 := @parameter0: net.sourceforge.plantuml.SuggestedFile;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        r19 := @parameter3: java.lang.String;
+
+        i9 := @parameter4: int;
+
+        r18 := @parameter5: net.sourceforge.plantuml.SplitParam;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.png.PngSplitter: java.util.List files> = $r1;
+
+        if i0 != 1 goto label1;
+
+        if i1 != 1 goto label1;
+
+        $r28 = r0.<net.sourceforge.plantuml.png.PngSplitter: java.util.List files>;
+
+        $r29 = virtualinvoke r8.<net.sourceforge.plantuml.SuggestedFile: net.sourceforge.plantuml.security.SFile getFile(int)>(0);
+
+        interfaceinvoke $r28.<java.util.List: boolean add(java.lang.Object)>($r29);
+
+        return;
+
+     label1:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Splitting ");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" x ");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r7);
+
+        r9 = virtualinvoke r8.<net.sourceforge.plantuml.SuggestedFile: net.sourceforge.plantuml.security.SFile getTmpFile()>();
+
+        virtualinvoke r9.<net.sourceforge.plantuml.security.SFile: void delete()>();
+
+        $r10 = virtualinvoke r8.<net.sourceforge.plantuml.SuggestedFile: net.sourceforge.plantuml.security.SFile getFile(int)>(0);
+
+        z0 = virtualinvoke $r10.<net.sourceforge.plantuml.security.SFile: boolean renameTo(net.sourceforge.plantuml.security.SFile)>(r9);
+
+        if z0 != 0 goto label2;
+
+        $r27 = new java.io.IOException;
+
+        specialinvoke $r27.<java.io.IOException: void <init>(java.lang.String)>("Cannot rename");
+
+        throw $r27;
+
+     label2:
+        r11 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(net.sourceforge.plantuml.security.SFile)>(r9);
+
+        $r12 = new net.sourceforge.plantuml.png.PngSegment;
+
+        $i2 = virtualinvoke r11.<java.awt.image.BufferedImage: int getWidth()>();
+
+        specialinvoke $r12.<net.sourceforge.plantuml.png.PngSegment: void <init>(int,int)>($i2, i0);
+
+        $r14 = new net.sourceforge.plantuml.png.PngSegment;
+
+        $i3 = virtualinvoke r11.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r14.<net.sourceforge.plantuml.png.PngSegment: void <init>(int,int)>($i3, i1);
+
+        i28 = 0;
+
+        i29 = 0;
+
+     label3:
+        if i29 >= i0 goto label9;
+
+        i30 = 0;
+
+     label4:
+        if i30 >= i1 goto label8;
+
+        $i4 = i28;
+
+        i28 = i28 + 1;
+
+        r16 = virtualinvoke r8.<net.sourceforge.plantuml.SuggestedFile: net.sourceforge.plantuml.security.SFile getFile(int)>($i4);
+
+        $r17 = r0.<net.sourceforge.plantuml.png.PngSplitter: java.util.List files>;
+
+        interfaceinvoke $r17.<java.util.List: boolean add(java.lang.Object)>(r16);
+
+        i5 = virtualinvoke $r12.<net.sourceforge.plantuml.png.PngSegment: int getLen(int)>(i29);
+
+        i6 = virtualinvoke $r14.<net.sourceforge.plantuml.png.PngSegment: int getLen(int)>(i30);
+
+        $i7 = virtualinvoke $r12.<net.sourceforge.plantuml.png.PngSegment: int getStart(int)>(i29);
+
+        $i8 = virtualinvoke $r14.<net.sourceforge.plantuml.png.PngSegment: int getStart(int)>(i30);
+
+        r30 = virtualinvoke r11.<java.awt.image.BufferedImage: java.awt.image.BufferedImage getSubimage(int,int,int,int)>($i7, $i8, i5, i6);
+
+        $z2 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: boolean isSet()>();
+
+        if $z2 == 0 goto label7;
+
+        $r20 = new java.awt.image.BufferedImage;
+
+        $i10 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: int getExternalMargin()>();
+
+        $i11 = 2 * $i10;
+
+        $i12 = i5 + $i11;
+
+        $i13 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: int getExternalMargin()>();
+
+        $i14 = 2 * $i13;
+
+        $i15 = i6 + $i14;
+
+        specialinvoke $r20.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i12, $i15, 2);
+
+        r22 = virtualinvoke $r20.<java.awt.image.BufferedImage: java.awt.Graphics2D createGraphics()>();
+
+        $r23 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: java.awt.Color getExternalColor()>();
+
+        if $r23 == null goto label5;
+
+        $r26 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: java.awt.Color getExternalColor()>();
+
+        virtualinvoke r22.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r26);
+
+        $i26 = virtualinvoke $r20.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i27 = virtualinvoke $r20.<java.awt.image.BufferedImage: int getHeight()>();
+
+        virtualinvoke r22.<java.awt.Graphics2D: void fillRect(int,int,int,int)>(0, 0, $i26, $i27);
+
+     label5:
+        $i16 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: int getExternalMargin()>();
+
+        $i17 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: int getExternalMargin()>();
+
+        virtualinvoke r22.<java.awt.Graphics2D: boolean drawImage(java.awt.Image,int,int,java.awt.image.ImageObserver)>(r30, $i16, $i17, null);
+
+        $r24 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: java.awt.Color getBorderColor()>();
+
+        if $r24 == null goto label6;
+
+        $r25 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: java.awt.Color getBorderColor()>();
+
+        virtualinvoke r22.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r25);
+
+        $i18 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: int getExternalMargin()>();
+
+        $i19 = $i18 - 1;
+
+        $i20 = virtualinvoke r18.<net.sourceforge.plantuml.SplitParam: int getExternalMargin()>();
+
+        $i21 = $i20 - 1;
+
+        $i22 = virtualinvoke r30.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i23 = $i22 + 1;
+
+        $i24 = virtualinvoke r30.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $i25 = $i24 + 1;
+
+        virtualinvoke r22.<java.awt.Graphics2D: void drawRect(int,int,int,int)>($i19, $i21, $i23, $i25);
+
+     label6:
+        r30 = $r20;
+
+        virtualinvoke r22.<java.awt.Graphics2D: void dispose()>();
+
+     label7:
+        staticinvoke <net.sourceforge.plantuml.png.PngIO: void write(java.awt.image.RenderedImage,net.sourceforge.plantuml.security.SFile,java.lang.String,int)>(r30, r16, r19, i9);
+
+        i30 = i30 + 1;
+
+        goto label4;
+
+     label8:
+        i29 = i29 + 1;
+
+        goto label3;
+
+     label9:
+        virtualinvoke r9.<net.sourceforge.plantuml.security.SFile: void delete()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("End of splitting");
+
+        return;
+    }
+
+    public java.util.List getFiles()
+    {
+        net.sourceforge.plantuml.png.PngSplitter r0;
+        java.util.List $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.png.PngSplitter;
+
+        $r1 = r0.<net.sourceforge.plantuml.png.PngSplitter: java.util.List files>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r2;
+    }
+}

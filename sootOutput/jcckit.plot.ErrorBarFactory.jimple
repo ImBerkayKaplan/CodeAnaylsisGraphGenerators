@@ -1,0 +1,225 @@
+public class jcckit.plot.ErrorBarFactory extends java.lang.Object implements jcckit.plot.SymbolFactory
+{
+    public static final java.lang.String SYMBOL_FACTORY_KEY;
+    private final jcckit.plot.SymbolFactory _symbolFactory;
+    private final jcckit.graphic.GraphicAttributes _attributes;
+    private final double _size;
+
+    public void <init>(jcckit.util.ConfigParameters)
+    {
+        jcckit.plot.ErrorBarFactory r0;
+        jcckit.util.ConfigParameters r1, $r2, $r5;
+        java.lang.Object $r3, $r6;
+        jcckit.plot.SymbolFactory $r4;
+        double $d0;
+        jcckit.graphic.GraphicAttributes $r7;
+
+        r0 := @this: jcckit.plot.ErrorBarFactory;
+
+        r1 := @parameter0: jcckit.util.ConfigParameters;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = virtualinvoke r1.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("symbolFactory");
+
+        $r3 = staticinvoke <jcckit.util.Factory: java.lang.Object createOrGet(jcckit.util.ConfigParameters,java.lang.Object)>($r2, null);
+
+        $r4 = (jcckit.plot.SymbolFactory) $r3;
+
+        r0.<jcckit.plot.ErrorBarFactory: jcckit.plot.SymbolFactory _symbolFactory> = $r4;
+
+        $d0 = virtualinvoke r1.<jcckit.util.ConfigParameters: double getDouble(java.lang.String,double)>("size", 0.0);
+
+        r0.<jcckit.plot.ErrorBarFactory: double _size> = $d0;
+
+        $r5 = virtualinvoke r1.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("attributes");
+
+        $r6 = staticinvoke <jcckit.util.Factory: java.lang.Object createOrGet(jcckit.util.ConfigParameters,java.lang.Object)>($r5, null);
+
+        $r7 = (jcckit.graphic.GraphicAttributes) $r6;
+
+        r0.<jcckit.plot.ErrorBarFactory: jcckit.graphic.GraphicAttributes _attributes> = $r7;
+
+        return;
+    }
+
+    public jcckit.graphic.GraphicalElement createLegendSymbol(jcckit.graphic.GraphPoint, double)
+    {
+        jcckit.plot.ErrorBarFactory r0;
+        jcckit.plot.SymbolFactory $r1, $r3;
+        jcckit.graphic.GraphPoint r2;
+        double d0;
+        jcckit.graphic.GraphicalElement $r4;
+        jcckit.graphic.GraphicalComposite $r5;
+
+        r0 := @this: jcckit.plot.ErrorBarFactory;
+
+        r2 := @parameter0: jcckit.graphic.GraphPoint;
+
+        d0 := @parameter1: double;
+
+        $r1 = r0.<jcckit.plot.ErrorBarFactory: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        if $r1 != null goto label1;
+
+        $r5 = new jcckit.graphic.GraphicalComposite;
+
+        $r4 = $r5;
+
+        specialinvoke $r5.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(null);
+
+        goto label2;
+
+     label1:
+        $r3 = r0.<jcckit.plot.ErrorBarFactory: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        $r4 = interfaceinvoke $r3.<jcckit.plot.SymbolFactory: jcckit.graphic.GraphicalElement createLegendSymbol(jcckit.graphic.GraphPoint,double)>(r2, d0);
+
+     label2:
+        return $r4;
+    }
+
+    public jcckit.plot.Symbol createSymbol(jcckit.graphic.GraphPoint, jcckit.plot.Hint, jcckit.plot.Hint)
+    {
+        jcckit.graphic.GraphPoint $r0, r2, r22, r23;
+        jcckit.plot.Hint r1, r6;
+        boolean $z0;
+        double $d0, $d1, d2, $d3, $d4, d5, $d6, $d7, $d8, $d9;
+        jcckit.graphic.GraphicalComposite $r3, $r18;
+        byte $b0, $b1;
+        jcckit.plot.Symbol $r5, $r16, $r17;
+        jcckit.plot.PositionHint $r7, $r14, $r19, $r20, $r21;
+        jcckit.graphic.Rectangle $r8, $r11;
+        jcckit.plot.ErrorBarFactory r9;
+        jcckit.graphic.GraphicAttributes $r10, $r12;
+        jcckit.plot.SymbolFactory $r13, $r15;
+
+        r9 := @this: jcckit.plot.ErrorBarFactory;
+
+        r2 := @parameter0: jcckit.graphic.GraphPoint;
+
+        r6 := @parameter1: jcckit.plot.Hint;
+
+        r1 := @parameter2: jcckit.plot.Hint;
+
+        $r0 = new jcckit.graphic.GraphPoint;
+
+        specialinvoke $r0.<jcckit.graphic.GraphPoint: void <init>(double[])>(null);
+
+        r22 = $r0;
+
+        r23 = null;
+
+        $z0 = r1 instanceof jcckit.plot.PositionHint;
+
+        if $z0 == 0 goto label1;
+
+        $r20 = (jcckit.plot.PositionHint) r1;
+
+        r22 = virtualinvoke $r20.<jcckit.plot.PositionHint: jcckit.graphic.GraphPoint getOrigin()>();
+
+        $r21 = (jcckit.plot.PositionHint) r1;
+
+        r23 = virtualinvoke $r21.<jcckit.plot.PositionHint: jcckit.graphic.GraphPoint getPosition()>();
+
+     label1:
+        if r23 != null goto label3;
+
+        $r13 = r9.<jcckit.plot.ErrorBarFactory: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        if $r13 != null goto label2;
+
+        $r17 = new jcckit.plot.Symbol;
+
+        $r18 = new jcckit.graphic.GraphicalComposite;
+
+        specialinvoke $r18.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(null);
+
+        $r19 = new jcckit.plot.PositionHint;
+
+        specialinvoke $r19.<jcckit.plot.PositionHint: void <init>(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint)>(r22, r2);
+
+        specialinvoke $r17.<jcckit.plot.Symbol: void <init>(jcckit.graphic.GraphicalElement,jcckit.plot.Hint,jcckit.plot.Hint)>($r18, r6, $r19);
+
+        return $r17;
+
+     label2:
+        $r15 = r9.<jcckit.plot.ErrorBarFactory: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        $r14 = new jcckit.plot.PositionHint;
+
+        specialinvoke $r14.<jcckit.plot.PositionHint: void <init>(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint)>(r22, r2);
+
+        $r16 = interfaceinvoke $r15.<jcckit.plot.SymbolFactory: jcckit.plot.Symbol createSymbol(jcckit.graphic.GraphPoint,jcckit.plot.Hint,jcckit.plot.Hint)>(r2, r6, $r14);
+
+        return $r16;
+
+     label3:
+        $d0 = virtualinvoke r2.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $d1 = virtualinvoke r22.<jcckit.graphic.GraphPoint: double getX()>();
+
+        d2 = $d0 - $d1;
+
+        $d3 = virtualinvoke r2.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d4 = virtualinvoke r22.<jcckit.graphic.GraphPoint: double getY()>();
+
+        d5 = $d3 - $d4;
+
+        $r3 = new jcckit.graphic.GraphicalComposite;
+
+        specialinvoke $r3.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(null);
+
+        $b0 = d2 cmpl 0.0;
+
+        if $b0 <= 0 goto label4;
+
+        $r11 = new jcckit.graphic.Rectangle;
+
+        $d9 = 2.0 * d2;
+
+        $d8 = r9.<jcckit.plot.ErrorBarFactory: double _size>;
+
+        $r12 = r9.<jcckit.plot.ErrorBarFactory: jcckit.graphic.GraphicAttributes _attributes>;
+
+        specialinvoke $r11.<jcckit.graphic.Rectangle: void <init>(jcckit.graphic.GraphPoint,double,double,jcckit.graphic.GraphicAttributes)>(r23, $d9, $d8, $r12);
+
+        virtualinvoke $r3.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r11);
+
+     label4:
+        $b1 = d5 cmpl 0.0;
+
+        if $b1 <= 0 goto label5;
+
+        $r8 = new jcckit.graphic.Rectangle;
+
+        $d7 = r9.<jcckit.plot.ErrorBarFactory: double _size>;
+
+        $d6 = 2.0 * d5;
+
+        $r10 = r9.<jcckit.plot.ErrorBarFactory: jcckit.graphic.GraphicAttributes _attributes>;
+
+        specialinvoke $r8.<jcckit.graphic.Rectangle: void <init>(jcckit.graphic.GraphPoint,double,double,jcckit.graphic.GraphicAttributes)>(r23, $d7, $d6, $r10);
+
+        virtualinvoke $r3.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r8);
+
+     label5:
+        $r5 = new jcckit.plot.Symbol;
+
+        $r7 = new jcckit.plot.PositionHint;
+
+        specialinvoke $r7.<jcckit.plot.PositionHint: void <init>(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint)>(r22, null);
+
+        specialinvoke $r5.<jcckit.plot.Symbol: void <init>(jcckit.graphic.GraphicalElement,jcckit.plot.Hint,jcckit.plot.Hint)>($r3, r6, $r7);
+
+        return $r5;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.plot.ErrorBarFactory: java.lang.String SYMBOL_FACTORY_KEY> = "symbolFactory";
+
+        return;
+    }
+}

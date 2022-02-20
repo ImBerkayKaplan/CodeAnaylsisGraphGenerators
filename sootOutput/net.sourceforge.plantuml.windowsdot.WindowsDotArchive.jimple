@@ -1,0 +1,371 @@
+public final class net.sourceforge.plantuml.windowsdot.WindowsDotArchive extends java.lang.Object
+{
+    private static net.sourceforge.plantuml.windowsdot.WindowsDotArchive singleton;
+    private java.lang.Boolean isThereArchive;
+    private java.io.File exe;
+
+    private void <init>()
+    {
+        net.sourceforge.plantuml.windowsdot.WindowsDotArchive r0;
+
+        r0 := @this: net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static final synchronized net.sourceforge.plantuml.windowsdot.WindowsDotArchive getInstance()
+    {
+        net.sourceforge.plantuml.windowsdot.WindowsDotArchive $r0, $r1, $r2;
+
+        $r0 = <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: net.sourceforge.plantuml.windowsdot.WindowsDotArchive singleton>;
+
+        if $r0 != null goto label1;
+
+        $r2 = new net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: void <init>()>();
+
+        <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: net.sourceforge.plantuml.windowsdot.WindowsDotArchive singleton> = $r2;
+
+     label1:
+        $r1 = <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: net.sourceforge.plantuml.windowsdot.WindowsDotArchive singleton>;
+
+        return $r1;
+    }
+
+    public static final java.lang.String readString(java.io.InputStream) throws java.io.IOException
+    {
+        java.io.InputStream r0;
+        int i0, $i1, i3;
+        java.lang.StringBuilder $r1;
+        java.lang.String $r3;
+        char $c2;
+
+        r0 := @parameter0: java.io.InputStream;
+
+        i0 = staticinvoke <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: int readByte(java.io.InputStream)>(r0);
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>(int)>(i0);
+
+        i3 = 0;
+
+     label1:
+        if i3 >= i0 goto label2;
+
+        $i1 = staticinvoke <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: int readByte(java.io.InputStream)>(r0);
+
+        $c2 = (char) $i1;
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c2);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+
+    public static final int readNumber(java.io.InputStream) throws java.io.IOException
+    {
+        java.io.InputStream r0;
+        int $i0, $i1, $i2, $i3, i4, i5, i6;
+
+        r0 := @parameter0: java.io.InputStream;
+
+        i4 = staticinvoke <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: int readByte(java.io.InputStream)>(r0);
+
+        $i0 = i4 * 256;
+
+        $i1 = staticinvoke <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: int readByte(java.io.InputStream)>(r0);
+
+        i5 = $i0 + $i1;
+
+        $i2 = i5 * 256;
+
+        $i3 = staticinvoke <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: int readByte(java.io.InputStream)>(r0);
+
+        i6 = $i2 + $i3;
+
+        return i6;
+    }
+
+    private static int readByte(java.io.InputStream) throws java.io.IOException
+    {
+        java.io.InputStream r0;
+        int $i0;
+
+        r0 := @parameter0: java.io.InputStream;
+
+        $i0 = virtualinvoke r0.<java.io.InputStream: int read()>();
+
+        return $i0;
+    }
+
+    private static void extract(java.io.File) throws java.io.IOException
+    {
+        java.lang.Class $r0;
+        java.io.InputStream r1;
+        net.sourceforge.plantuml.brotli.BrotliInputStream $r2;
+        int $i0, $i1, i2, i3;
+        java.io.BufferedOutputStream $r4;
+        java.io.FileOutputStream $r5;
+        java.io.File $r6, r7;
+        java.lang.Throwable $r9, $r10, $r11, $r13;
+        java.lang.String r14;
+
+        r7 := @parameter0: java.io.File;
+
+        $r0 = class "Lnet/sourceforge/plantuml/windowsdot/WindowsDotArchive;";
+
+        r1 = virtualinvoke $r0.<java.lang.Class: java.io.InputStream getResourceAsStream(java.lang.String)>("graphviz.dat");
+
+        $r2 = new net.sourceforge.plantuml.brotli.BrotliInputStream;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.brotli.BrotliInputStream: void <init>(java.io.InputStream)>(r1);
+
+     label01:
+        r14 = staticinvoke <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: java.lang.String readString(java.io.InputStream)>($r2);
+
+        $i0 = virtualinvoke r14.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label02;
+
+        goto label12;
+
+     label02:
+        i2 = staticinvoke <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: int readNumber(java.io.InputStream)>($r2);
+
+        $r4 = new java.io.BufferedOutputStream;
+
+        $r5 = new java.io.FileOutputStream;
+
+        $r6 = new java.io.File;
+
+        specialinvoke $r6.<java.io.File: void <init>(java.io.File,java.lang.String)>(r7, r14);
+
+        specialinvoke $r5.<java.io.FileOutputStream: void <init>(java.io.File)>($r6);
+
+        specialinvoke $r4.<java.io.BufferedOutputStream: void <init>(java.io.OutputStream)>($r5);
+
+     label03:
+        i3 = 0;
+
+     label04:
+        if i3 >= i2 goto label05;
+
+        $i1 = virtualinvoke $r2.<net.sourceforge.plantuml.brotli.BrotliInputStream: int read()>();
+
+        virtualinvoke $r4.<java.io.OutputStream: void write(int)>($i1);
+
+        i3 = i3 + 1;
+
+        goto label04;
+
+     label05:
+        virtualinvoke $r4.<java.io.OutputStream: void close()>();
+
+        goto label11;
+
+     label06:
+        $r13 := @caughtexception;
+
+     label07:
+        virtualinvoke $r4.<java.io.OutputStream: void close()>();
+
+     label08:
+        goto label10;
+
+     label09:
+        $r11 := @caughtexception;
+
+        virtualinvoke $r13.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r11);
+
+     label10:
+        throw $r13;
+
+     label11:
+        goto label01;
+
+     label12:
+        virtualinvoke $r2.<net.sourceforge.plantuml.brotli.BrotliInputStream: void close()>();
+
+        goto label18;
+
+     label13:
+        $r10 := @caughtexception;
+
+     label14:
+        virtualinvoke $r2.<net.sourceforge.plantuml.brotli.BrotliInputStream: void close()>();
+
+     label15:
+        goto label17;
+
+     label16:
+        $r9 := @caughtexception;
+
+        virtualinvoke $r10.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r9);
+
+     label17:
+        throw $r10;
+
+     label18:
+        return;
+
+        catch java.lang.Throwable from label03 to label05 with label06;
+        catch java.lang.Throwable from label07 to label08 with label09;
+        catch java.lang.Throwable from label01 to label12 with label13;
+        catch java.lang.Throwable from label14 to label15 with label16;
+    }
+
+    public synchronized boolean isThereArchive()
+    {
+        net.sourceforge.plantuml.windowsdot.WindowsDotArchive r0;
+        java.lang.Boolean $r1, $r3, $r6, $r13;
+        java.lang.Class $r2;
+        java.lang.Exception $r5;
+        java.lang.Throwable $r7, $r10;
+        java.io.InputStream r11;
+        boolean $z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
+
+        $r1 = r0.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: java.lang.Boolean isThereArchive>;
+
+        if $r1 != null goto label13;
+
+     label01:
+        $r2 = class "Lnet/sourceforge/plantuml/windowsdot/WindowsDotArchive;";
+
+        r11 = virtualinvoke $r2.<java.lang.Class: java.io.InputStream getResourceAsStream(java.lang.String)>("graphviz.dat");
+
+     label02:
+        if r11 == null goto label03;
+
+        $z0 = 1;
+
+        goto label04;
+
+     label03:
+        $z0 = 0;
+
+     label04:
+        $r3 = staticinvoke <java.lang.Boolean: java.lang.Boolean valueOf(boolean)>($z0);
+
+        r0.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: java.lang.Boolean isThereArchive> = $r3;
+
+     label05:
+        if r11 == null goto label11;
+
+        virtualinvoke r11.<java.io.InputStream: void close()>();
+
+        goto label11;
+
+     label06:
+        $r10 := @caughtexception;
+
+        if r11 == null goto label10;
+
+     label07:
+        virtualinvoke r11.<java.io.InputStream: void close()>();
+
+     label08:
+        goto label10;
+
+     label09:
+        $r7 := @caughtexception;
+
+        virtualinvoke $r10.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r7);
+
+     label10:
+        throw $r10;
+
+     label11:
+        goto label13;
+
+     label12:
+        $r5 := @caughtexception;
+
+        $r6 = staticinvoke <java.lang.Boolean: java.lang.Boolean valueOf(boolean)>(0);
+
+        r0.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: java.lang.Boolean isThereArchive> = $r6;
+
+     label13:
+        $r13 = r0.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: java.lang.Boolean isThereArchive>;
+
+        $z1 = virtualinvoke $r13.<java.lang.Boolean: boolean booleanValue()>();
+
+        return $z1;
+
+        catch java.lang.Throwable from label02 to label05 with label06;
+        catch java.lang.Throwable from label07 to label08 with label09;
+        catch java.lang.Exception from label01 to label11 with label12;
+    }
+
+    public synchronized java.io.File getWindowsExeLite()
+    {
+        net.sourceforge.plantuml.windowsdot.WindowsDotArchive r0;
+        boolean $z0;
+        java.io.File $r1, $r2, $r4, $r8;
+        java.lang.String $r3;
+        java.io.IOException $r5;
+
+        r0 := @this: net.sourceforge.plantuml.windowsdot.WindowsDotArchive;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: boolean isThereArchive()>();
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: java.io.File exe>;
+
+        if $r1 != null goto label5;
+
+     label2:
+        $r2 = new java.io.File;
+
+        $r3 = staticinvoke <java.lang.System: java.lang.String getProperty(java.lang.String)>("java.io.tmpdir");
+
+        specialinvoke $r2.<java.io.File: void <init>(java.lang.String,java.lang.String)>($r3, "_graphviz");
+
+        virtualinvoke $r2.<java.io.File: boolean mkdirs()>();
+
+        staticinvoke <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: void extract(java.io.File)>($r2);
+
+        $r4 = new java.io.File;
+
+        specialinvoke $r4.<java.io.File: void <init>(java.io.File,java.lang.String)>($r2, "dot.exe");
+
+        r0.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: java.io.File exe> = $r4;
+
+     label3:
+        goto label5;
+
+     label4:
+        $r5 := @caughtexception;
+
+        virtualinvoke $r5.<java.io.IOException: void printStackTrace()>();
+
+     label5:
+        $r8 = r0.<net.sourceforge.plantuml.windowsdot.WindowsDotArchive: java.io.File exe>;
+
+        return $r8;
+
+        catch java.io.IOException from label2 to label3 with label4;
+    }
+
+    static void <clinit>()
+    {
+        <net.sourceforge.plantuml.windowsdot.WindowsDotArchive: net.sourceforge.plantuml.windowsdot.WindowsDotArchive singleton> = null;
+
+        return;
+    }
+}

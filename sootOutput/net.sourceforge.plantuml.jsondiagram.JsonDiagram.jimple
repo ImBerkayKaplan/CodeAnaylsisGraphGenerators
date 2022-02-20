@@ -1,0 +1,252 @@
+public class net.sourceforge.plantuml.jsondiagram.JsonDiagram extends net.sourceforge.plantuml.TitledDiagram
+{
+    private final net.sourceforge.plantuml.json.JsonValue root;
+    private final java.util.List highlighted;
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.UmlDiagramType, net.sourceforge.plantuml.json.JsonValue, java.util.List)
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType r3;
+        net.sourceforge.plantuml.json.JsonValue r4, $r8;
+        java.util.List r5;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.json.JsonArray $r7, $r9;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r3 := @parameter2: net.sourceforge.plantuml.UmlDiagramType;
+
+        r4 := @parameter3: net.sourceforge.plantuml.json.JsonValue;
+
+        r5 := @parameter4: java.util.List;
+
+        specialinvoke r0.<net.sourceforge.plantuml.TitledDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType)>(r1, r2, r3);
+
+        if r4 == null goto label2;
+
+        $z0 = virtualinvoke r4.<net.sourceforge.plantuml.json.JsonValue: boolean isString()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = virtualinvoke r4.<net.sourceforge.plantuml.json.JsonValue: boolean isBoolean()>();
+
+        if $z1 != 0 goto label1;
+
+        $z2 = virtualinvoke r4.<net.sourceforge.plantuml.json.JsonValue: boolean isNumber()>();
+
+        if $z2 == 0 goto label2;
+
+     label1:
+        $r7 = new net.sourceforge.plantuml.json.JsonArray;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.json.JsonArray: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.json.JsonValue root> = $r7;
+
+        $r8 = r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.json.JsonValue root>;
+
+        $r9 = (net.sourceforge.plantuml.json.JsonArray) $r8;
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.json.JsonArray: net.sourceforge.plantuml.json.JsonArray add(net.sourceforge.plantuml.json.JsonValue)>(r4);
+
+        goto label3;
+
+     label2:
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.json.JsonValue root> = r4;
+
+     label3:
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: java.util.List highlighted> = r5;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram r0;
+        net.sourceforge.plantuml.UmlDiagramType $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.core.DiagramDescription $r5, $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        $r2 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType YAML>;
+
+        if $r1 != $r2 goto label1;
+
+        $r7 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Yaml)");
+
+        return $r7;
+
+     label1:
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        $r4 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType HCL>;
+
+        if $r3 != $r4 goto label2;
+
+        $r6 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(HCL)");
+
+        return $r6;
+
+     label2:
+        $r5 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Json)");
+
+        return $r5;
+    }
+
+    protected net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r4;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r3;
+        java.io.OutputStream r5;
+        net.sourceforge.plantuml.core.ImageData $r6;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        r5 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock()>();
+
+        $r4 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>($r3);
+
+        $r6 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r5);
+
+        return $r6;
+    }
+
+    private void drawInternal(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram r0;
+        net.sourceforge.plantuml.json.JsonValue $r1, $r6;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson $r2;
+        net.sourceforge.plantuml.ugraphic.UGraphic r3;
+        net.sourceforge.plantuml.ISkinParam $r4, $r17;
+        java.util.List $r5;
+        java.lang.StringBuilder $r7, $r8, $r10, $r11;
+        net.sourceforge.plantuml.UmlDiagramType $r9;
+        java.lang.String $r12;
+        net.sourceforge.plantuml.cucadiagram.Display r13;
+        net.sourceforge.plantuml.ugraphic.UFont $r14;
+        net.sourceforge.plantuml.graphic.FontConfiguration r15;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r16;
+        net.sourceforge.plantuml.graphic.TextBlock r18, r19;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        r3 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.json.JsonValue root>;
+
+        if $r1 != null goto label1;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Your data does not sound like ");
+
+        $r9 = virtualinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r9);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" data");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r13 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r12);
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.ugraphic.UFont: net.sourceforge.plantuml.ugraphic.UFont courier(int)>(14);
+
+        r15 = staticinvoke <net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration blackBlueTrue(net.sourceforge.plantuml.ugraphic.UFont)>($r14);
+
+        $r16 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        $r17 = virtualinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        r18 = virtualinvoke r13.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>(r15, $r16, $r17);
+
+        r19 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double)>(r18, 5.0, 2.0);
+
+        interfaceinvoke r19.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r3);
+
+        goto label2;
+
+     label1:
+        $r2 = new net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        specialinvoke $r2.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: void <init>(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.ISkinParam)>(r3, $r4);
+
+        $r6 = r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.json.JsonValue root>;
+
+        $r5 = r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: java.util.List highlighted>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: void drawMe(net.sourceforge.plantuml.json.JsonValue,java.util.List)>($r6, $r5);
+
+     label2:
+        return;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock()
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram$1 $r0;
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        $r0 = new net.sourceforge.plantuml.jsondiagram.JsonDiagram$1;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram$1: void <init>(net.sourceforge.plantuml.jsondiagram.JsonDiagram)>(r1);
+
+        return $r0;
+    }
+
+    static void access$000(net.sourceforge.plantuml.jsondiagram.JsonDiagram, net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: void drawInternal(net.sourceforge.plantuml.ugraphic.UGraphic)>(r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.svek.TextBlockBackcolored access$100(net.sourceforge.plantuml.jsondiagram.JsonDiagram)
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram r0;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock()>();
+
+        return $r1;
+    }
+}

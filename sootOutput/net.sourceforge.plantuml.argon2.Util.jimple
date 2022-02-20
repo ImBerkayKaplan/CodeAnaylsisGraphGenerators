@@ -1,0 +1,298 @@
+public class net.sourceforge.plantuml.argon2.Util extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.argon2.Util r0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Util;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static java.lang.String bytesToHexString(byte[])
+    {
+        java.lang.StringBuilder $r0;
+        byte[] r2;
+        int i0, $i2, i3;
+        java.lang.String $r4, $r7;
+        byte b1;
+        java.lang.Object[] $r5;
+        java.lang.Integer $r6;
+
+        r2 := @parameter0: byte[];
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        i0 = lengthof r2;
+
+        i3 = 0;
+
+     label1:
+        if i3 >= i0 goto label2;
+
+        b1 = r2[i3];
+
+        $r5 = newarray (java.lang.Object)[1];
+
+        $i2 = b1 & 255;
+
+        $r6 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i2);
+
+        $r5[0] = $r6;
+
+        $r7 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("%02x", $r5);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        $r4 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r4;
+    }
+
+    public static byte[] hexStringToByteArray(java.lang.String)
+    {
+        java.lang.String r0;
+        int i0, $i1, $i2, $i4, $i5, $i6, $i8, $i9, i11;
+        byte[] r1;
+        char $c3, $c7;
+        byte $b10;
+
+        r0 := @parameter0: java.lang.String;
+
+        i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i1 = i0 / 2;
+
+        r1 = newarray (byte)[$i1];
+
+        i11 = 0;
+
+     label1:
+        if i11 >= i0 goto label2;
+
+        $i2 = i11 / 2;
+
+        $c3 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i11);
+
+        $i4 = staticinvoke <java.lang.Character: int digit(char,int)>($c3, 16);
+
+        $i6 = $i4 << 4;
+
+        $i5 = i11 + 1;
+
+        $c7 = virtualinvoke r0.<java.lang.String: char charAt(int)>($i5);
+
+        $i8 = staticinvoke <java.lang.Character: int digit(char,int)>($c7, 16);
+
+        $i9 = $i6 + $i8;
+
+        $b10 = (byte) $i9;
+
+        r1[$i2] = $b10;
+
+        i11 = i11 + 2;
+
+        goto label1;
+
+     label2:
+        return r1;
+    }
+
+    public static long littleEndianBytesToLong(byte[])
+    {
+        byte[] r0;
+        byte $b0;
+        int $i1, i4;
+        long $l2, l3, l5;
+
+        r0 := @parameter0: byte[];
+
+        l3 = 0L;
+
+        i4 = 7;
+
+     label1:
+        if i4 < 0 goto label2;
+
+        l5 = l3 << 8;
+
+        $b0 = r0[i4];
+
+        $i1 = $b0 & 255;
+
+        $l2 = (long) $i1;
+
+        l3 = l5 | $l2;
+
+        i4 = i4 + -1;
+
+        goto label1;
+
+     label2:
+        return l3;
+    }
+
+    public static byte[] intToLittleEndianBytes(int)
+    {
+        byte[] r0;
+        int i0, $i1, $i3, $i4, $i6, $i7, $i9, $i10;
+        byte $b2, $b5, $b8, $b11;
+
+        i0 := @parameter0: int;
+
+        r0 = newarray (byte)[4];
+
+        $i1 = i0 & 255;
+
+        $b2 = (byte) $i1;
+
+        r0[0] = $b2;
+
+        $i3 = i0 >> 8;
+
+        $i4 = $i3 & 255;
+
+        $b5 = (byte) $i4;
+
+        r0[1] = $b5;
+
+        $i6 = i0 >> 16;
+
+        $i7 = $i6 & 255;
+
+        $b8 = (byte) $i7;
+
+        r0[2] = $b8;
+
+        $i9 = i0 >> 24;
+
+        $i10 = $i9 & 255;
+
+        $b11 = (byte) $i10;
+
+        r0[3] = $b11;
+
+        return r0;
+    }
+
+    public static byte[] longToLittleEndianBytes(long)
+    {
+        byte[] r0;
+        long l0, $l1, $l4, $l5, $l8, $l9, $l12, $l13, $l16, $l17, $l20, $l21, $l24, $l25, $l28, $l29;
+        int $i2, $i6, $i10, $i14, $i18, $i22, $i26, $i30;
+        byte $b3, $b7, $b11, $b15, $b19, $b23, $b27, $b31;
+
+        l0 := @parameter0: long;
+
+        r0 = newarray (byte)[8];
+
+        $l1 = l0 & 255L;
+
+        $i2 = (int) $l1;
+
+        $b3 = (byte) $i2;
+
+        r0[0] = $b3;
+
+        $l4 = l0 >> 8;
+
+        $l5 = $l4 & 255L;
+
+        $i6 = (int) $l5;
+
+        $b7 = (byte) $i6;
+
+        r0[1] = $b7;
+
+        $l8 = l0 >> 16;
+
+        $l9 = $l8 & 255L;
+
+        $i10 = (int) $l9;
+
+        $b11 = (byte) $i10;
+
+        r0[2] = $b11;
+
+        $l12 = l0 >> 24;
+
+        $l13 = $l12 & 255L;
+
+        $i14 = (int) $l13;
+
+        $b15 = (byte) $i14;
+
+        r0[3] = $b15;
+
+        $l16 = l0 >> 32;
+
+        $l17 = $l16 & 255L;
+
+        $i18 = (int) $l17;
+
+        $b19 = (byte) $i18;
+
+        r0[4] = $b19;
+
+        $l20 = l0 >> 40;
+
+        $l21 = $l20 & 255L;
+
+        $i22 = (int) $l21;
+
+        $b23 = (byte) $i22;
+
+        r0[5] = $b23;
+
+        $l24 = l0 >> 48;
+
+        $l25 = $l24 & 255L;
+
+        $i26 = (int) $l25;
+
+        $b27 = (byte) $i26;
+
+        r0[6] = $b27;
+
+        $l28 = l0 >> 56;
+
+        $l29 = $l28 & 255L;
+
+        $i30 = (int) $l29;
+
+        $b31 = (byte) $i30;
+
+        r0[7] = $b31;
+
+        return r0;
+    }
+
+    public static long intToLong(int)
+    {
+        int i0;
+        byte[] r0, r1;
+        long $l1;
+
+        i0 := @parameter0: int;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.argon2.Util: byte[] intToLittleEndianBytes(int)>(i0);
+
+        r1 = newarray (byte)[8];
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r0, 0, r1, 0, 4);
+
+        $l1 = staticinvoke <net.sourceforge.plantuml.argon2.Util: long littleEndianBytesToLong(byte[])>(r1);
+
+        return $l1;
+    }
+}

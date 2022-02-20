@@ -1,0 +1,327 @@
+public abstract class ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap extends ext.plantuml.com.ctreber.acearth.scanbit.ScanBitGenerator
+{
+    public static final int PixTypeSpace;
+    public static final int PixTypeLand;
+    public static final int PixTypeWater;
+    public static final int PixTypeStar;
+    public static final int PixTypeGridLand;
+    public static final int PixTypeGridWater;
+    private ext.plantuml.com.ctreber.acearth.util.Polygon[] fMapData;
+    ext.plantuml.com.ctreber.acearth.projection.Projection fProjection;
+    private java.util.List fScanbitsVector;
+    java.util.List fEdgeCrossings;
+
+    protected abstract ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf scanOutline();
+
+    protected abstract void handleCrossings(ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf, ext.plantuml.com.ctreber.acearth.util.EdgeCrossing[]);
+
+    protected abstract java.util.Comparator getEdgeXingComparator();
+
+    protected abstract void scanPolygon(ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf, ext.plantuml.com.ctreber.acearth.util.Point3D[], ext.plantuml.com.ctreber.acearth.util.Point2D[], int);
+
+    public void <init>(ext.plantuml.com.ctreber.acearth.projection.Projection)
+    {
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap r0;
+        java.util.ArrayList $r1;
+        ext.plantuml.com.ctreber.acearth.projection.Projection r2;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap;
+
+        r2 := @parameter0: ext.plantuml.com.ctreber.acearth.projection.Projection;
+
+        specialinvoke r0.<ext.plantuml.com.ctreber.acearth.scanbit.ScanBitGenerator: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fScanbitsVector> = $r1;
+
+        r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection> = r2;
+
+        return;
+    }
+
+    public void generateScanBits()
+    {
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap r0;
+        java.util.ArrayList $r1;
+        int $i0, $i1;
+        ext.plantuml.com.ctreber.acearth.projection.Projection $r2, $r3, $r4;
+        ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf r5;
+        java.util.List $r6, $r7, $r11;
+        ext.plantuml.com.ctreber.aclib.sort.QuickSort $r8;
+        ext.plantuml.com.ctreber.acearth.scanbit.ScanBit[] $r10, $r13, $r14;
+        java.lang.Object[] $r12;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fScanbitsVector> = $r1;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        $i0 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int fImageWidth>;
+
+        virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setImageWidth(int)>($i0);
+
+        $r3 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        $i1 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int fImageHeight>;
+
+        virtualinvoke $r3.<ext.plantuml.com.ctreber.acearth.projection.Projection: void setImageHeight(int)>($i1);
+
+        $r4 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        virtualinvoke $r4.<ext.plantuml.com.ctreber.acearth.projection.Projection: void initTransformTable()>();
+
+        r5 = virtualinvoke r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf scanOutline()>();
+
+        $r6 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fScanbitsVector>;
+
+        $r7 = virtualinvoke r5.<ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf: java.util.List getScanbits(int)>(64);
+
+        interfaceinvoke $r6.<java.util.List: boolean addAll(java.util.Collection)>($r7);
+
+        specialinvoke r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: void scanPolygons()>();
+
+        $r8 = new ext.plantuml.com.ctreber.aclib.sort.QuickSort;
+
+        specialinvoke $r8.<ext.plantuml.com.ctreber.aclib.sort.QuickSort: void <init>()>();
+
+        $r11 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fScanbitsVector>;
+
+        $r10 = newarray (ext.plantuml.com.ctreber.acearth.scanbit.ScanBit)[0];
+
+        $r12 = interfaceinvoke $r11.<java.util.List: java.lang.Object[] toArray(java.lang.Object[])>($r10);
+
+        $r13 = (ext.plantuml.com.ctreber.acearth.scanbit.ScanBit[]) $r12;
+
+        r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.scanbit.ScanBit[] fScanBitsArray> = $r13;
+
+        $r14 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.scanbit.ScanBit[] fScanBitsArray>;
+
+        virtualinvoke $r8.<ext.plantuml.com.ctreber.aclib.sort.CTSort: void sort(java.lang.Object[])>($r14);
+
+        return;
+    }
+
+    private void scanPolygons()
+    {
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap r0;
+        ext.plantuml.com.ctreber.acearth.util.Polygon[] $r1, $r2;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9;
+        ext.plantuml.com.ctreber.acearth.util.Polygon r3;
+        ext.plantuml.com.ctreber.acearth.util.Point3D[] r4;
+        ext.plantuml.com.ctreber.acearth.util.Point2D[] r5;
+        java.util.ArrayList $r6;
+        ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf $r7;
+        java.util.List $r9, $r10, $r11, $r13;
+        boolean $z0;
+        ext.plantuml.com.ctreber.acearth.util.EdgeCrossing[] $r12, r18;
+        java.lang.Object[] $r14;
+        ext.plantuml.com.ctreber.aclib.sort.QuickSort $r15;
+        java.util.Comparator $r17;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap;
+
+        i8 = 0;
+
+     label1:
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.util.Polygon[] fMapData>;
+
+        $i0 = lengthof $r1;
+
+        if i8 >= $i0 goto label6;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.util.Polygon[] fMapData>;
+
+        r3 = $r2[i8];
+
+        $i1 = virtualinvoke r3.<ext.plantuml.com.ctreber.acearth.util.Polygon: int getSize()>();
+
+        r4 = newarray (ext.plantuml.com.ctreber.acearth.util.Point3D)[$i1];
+
+        $i2 = virtualinvoke r3.<ext.plantuml.com.ctreber.acearth.util.Polygon: int getSize()>();
+
+        r5 = newarray (ext.plantuml.com.ctreber.acearth.util.Point2D)[$i2];
+
+        specialinvoke r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: void transformPolygonPoints(ext.plantuml.com.ctreber.acearth.util.Polygon,ext.plantuml.com.ctreber.acearth.util.Point3D[],ext.plantuml.com.ctreber.acearth.util.Point2D[])>(r3, r4, r5);
+
+        $r6 = new java.util.ArrayList;
+
+        specialinvoke $r6.<java.util.ArrayList: void <init>()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fEdgeCrossings> = $r6;
+
+        $r7 = new ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf;
+
+        $i4 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int fImageHeight>;
+
+        $i3 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int fImageWidth>;
+
+        specialinvoke $r7.<ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf: void <init>(int,int)>($i4, $i3);
+
+        i9 = 0;
+
+     label2:
+        $i5 = lengthof r5;
+
+        if i9 >= $i5 goto label3;
+
+        virtualinvoke r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: void scanPolygon(ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf,ext.plantuml.com.ctreber.acearth.util.Point3D[],ext.plantuml.com.ctreber.acearth.util.Point2D[],int)>($r7, r4, r5, i9);
+
+        i9 = i9 + 1;
+
+        goto label2;
+
+     label3:
+        $r9 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fEdgeCrossings>;
+
+        $i6 = interfaceinvoke $r9.<java.util.List: int size()>();
+
+        if $i6 <= 0 goto label4;
+
+        $r13 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fEdgeCrossings>;
+
+        $r12 = newarray (ext.plantuml.com.ctreber.acearth.util.EdgeCrossing)[0];
+
+        $r14 = interfaceinvoke $r13.<java.util.List: java.lang.Object[] toArray(java.lang.Object[])>($r12);
+
+        r18 = (ext.plantuml.com.ctreber.acearth.util.EdgeCrossing[]) $r14;
+
+        $r15 = new ext.plantuml.com.ctreber.aclib.sort.QuickSort;
+
+        specialinvoke $r15.<ext.plantuml.com.ctreber.aclib.sort.QuickSort: void <init>()>();
+
+        $r17 = virtualinvoke r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.Comparator getEdgeXingComparator()>();
+
+        virtualinvoke $r15.<ext.plantuml.com.ctreber.aclib.sort.CTSort: void sort(java.lang.Object[],java.util.Comparator)>(r18, $r17);
+
+        virtualinvoke r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: void handleCrossings(ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf,ext.plantuml.com.ctreber.acearth.util.EdgeCrossing[])>($r7, r18);
+
+     label4:
+        $z0 = virtualinvoke $r7.<ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf: boolean containsPoints()>();
+
+        if $z0 == 0 goto label5;
+
+        $r10 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fScanbitsVector>;
+
+        $i7 = virtualinvoke r3.<ext.plantuml.com.ctreber.acearth.util.Polygon: int getType()>();
+
+        $r11 = virtualinvoke $r7.<ext.plantuml.com.ctreber.acearth.scanbit.ScanBuf: java.util.List getScanbits(int)>($i7);
+
+        interfaceinvoke $r10.<java.util.List: boolean addAll(java.util.Collection)>($r11);
+
+     label5:
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label6:
+        return;
+    }
+
+    private void transformPolygonPoints(ext.plantuml.com.ctreber.acearth.util.Polygon, ext.plantuml.com.ctreber.acearth.util.Point3D[], ext.plantuml.com.ctreber.acearth.util.Point2D[])
+    {
+        ext.plantuml.com.ctreber.acearth.util.Polygon r0;
+        ext.plantuml.com.ctreber.acearth.util.Point3D[] $r1, $r2, r7;
+        int $i0, i1;
+        ext.plantuml.com.ctreber.acearth.util.Point3D r3, r6;
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap r4;
+        ext.plantuml.com.ctreber.acearth.projection.Projection $r5, $r9;
+        ext.plantuml.com.ctreber.acearth.util.Point2D[] r8;
+        ext.plantuml.com.ctreber.acearth.util.Point2D $r10;
+
+        r4 := @this: ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap;
+
+        r0 := @parameter0: ext.plantuml.com.ctreber.acearth.util.Polygon;
+
+        r7 := @parameter1: ext.plantuml.com.ctreber.acearth.util.Point3D[];
+
+        r8 := @parameter2: ext.plantuml.com.ctreber.acearth.util.Point2D[];
+
+        i1 = 0;
+
+     label1:
+        $r1 = virtualinvoke r0.<ext.plantuml.com.ctreber.acearth.util.Polygon: ext.plantuml.com.ctreber.acearth.util.Point3D[] getPoints()>();
+
+        $i0 = lengthof $r1;
+
+        if i1 >= $i0 goto label2;
+
+        $r2 = virtualinvoke r0.<ext.plantuml.com.ctreber.acearth.util.Polygon: ext.plantuml.com.ctreber.acearth.util.Point3D[] getPoints()>();
+
+        r3 = $r2[i1];
+
+        $r5 = r4.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        r6 = virtualinvoke $r5.<ext.plantuml.com.ctreber.acearth.projection.Projection: ext.plantuml.com.ctreber.acearth.util.Point3D rotate(ext.plantuml.com.ctreber.acearth.util.Point3D)>(r3);
+
+        r7[i1] = r6;
+
+        $r9 = r4.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        $r10 = virtualinvoke $r9.<ext.plantuml.com.ctreber.acearth.projection.Projection: ext.plantuml.com.ctreber.acearth.util.Point2D project2D(ext.plantuml.com.ctreber.acearth.util.Point3D)>(r6);
+
+        r8[i1] = $r10;
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void setMapData(ext.plantuml.com.ctreber.acearth.util.Polygon[])
+    {
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap r0;
+        ext.plantuml.com.ctreber.acearth.util.Polygon[] r1;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.acearth.util.Polygon[];
+
+        r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: ext.plantuml.com.ctreber.acearth.util.Polygon[] fMapData> = r1;
+
+        return;
+    }
+
+    protected void addEdgeXing(ext.plantuml.com.ctreber.acearth.util.EdgeCrossing)
+    {
+        ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap r0;
+        ext.plantuml.com.ctreber.acearth.util.EdgeCrossing r1;
+        java.util.List $r2;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.acearth.util.EdgeCrossing;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: java.util.List fEdgeCrossings>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int PixTypeGridWater> = 5;
+
+        <ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int PixTypeGridLand> = 4;
+
+        <ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int PixTypeStar> = 3;
+
+        <ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int PixTypeWater> = 2;
+
+        <ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int PixTypeLand> = 1;
+
+        <ext.plantuml.com.ctreber.acearth.scanbit.BitGeneratorMap: int PixTypeSpace> = 0;
+
+        return;
+    }
+}

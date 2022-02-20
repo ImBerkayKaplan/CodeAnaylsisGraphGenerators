@@ -1,0 +1,159 @@
+public class net.sourceforge.plantuml.logo.PSystemLogo extends net.sourceforge.plantuml.AbstractPSystem
+{
+    private final java.util.List lines;
+
+    public void <init>(net.sourceforge.plantuml.core.UmlSource)
+    {
+        net.sourceforge.plantuml.logo.PSystemLogo r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        java.util.ArrayList $r2;
+
+        r0 := @this: net.sourceforge.plantuml.logo.PSystemLogo;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.logo.PSystemLogo: java.util.List lines> = $r2;
+
+        return;
+    }
+
+    protected final net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.FileFormat $r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.EmptyImageBuilder $r2;
+        net.sourceforge.plantuml.FileFormatOption r3;
+        java.lang.String $r4, r24;
+        java.awt.Color $r5;
+        java.awt.image.BufferedImage r7;
+        net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d $r8, $r13;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity $r9;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r10;
+        java.awt.Graphics2D $r11;
+        net.sourceforge.plantuml.logo.TurtleGraphicsPane $r14;
+        net.sourceforge.plantuml.logo.TinyJavaLogo $r16;
+        net.sourceforge.plantuml.logo.PSystemLogo r18;
+        java.util.List $r19;
+        java.util.Iterator r20;
+        boolean $z0;
+        java.io.OutputStream r21;
+        net.sourceforge.plantuml.api.ImageDataSimple $r22;
+        int $i2, $i3, i4;
+        java.lang.Object $r23;
+
+        r18 := @this: net.sourceforge.plantuml.logo.PSystemLogo;
+
+        r21 := @parameter0: java.io.OutputStream;
+
+        i4 := @parameter1: int;
+
+        r3 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r0 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat PNG>;
+
+        r1 = virtualinvoke $r0.<net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.graphic.StringBounder getDefaultStringBounder()>();
+
+        $r2 = new net.sourceforge.plantuml.EmptyImageBuilder;
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.FileFormatOption: java.lang.String getWatermark()>();
+
+        $r5 = <java.awt.Color: java.awt.Color WHITE>;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.EmptyImageBuilder: void <init>(java.lang.String,int,int,java.awt.Color,net.sourceforge.plantuml.graphic.StringBounder)>($r4, 640, 480, $r5, r1);
+
+        r7 = virtualinvoke $r2.<net.sourceforge.plantuml.EmptyImageBuilder: java.awt.image.BufferedImage getBufferedImage()>();
+
+        $r8 = new net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
+
+        $r10 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple WHITE>;
+
+        $r9 = new net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity: void <init>()>();
+
+        $r11 = virtualinvoke $r2.<net.sourceforge.plantuml.EmptyImageBuilder: java.awt.Graphics2D getGraphics2D()>();
+
+        specialinvoke $r8.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder,java.awt.Graphics2D,double)>($r10, $r9, r1, $r11, 1.0);
+
+        $r13 = (net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d) $r8;
+
+        virtualinvoke $r13.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: void setBufferedImage(java.awt.image.BufferedImage)>(r7);
+
+        $r14 = new net.sourceforge.plantuml.logo.TurtleGraphicsPane;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.logo.TurtleGraphicsPane: void <init>(int,int)>(640, 480);
+
+        $r16 = new net.sourceforge.plantuml.logo.TinyJavaLogo;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.logo.TinyJavaLogo: void <init>(net.sourceforge.plantuml.logo.TurtleGraphicsPane)>($r14);
+
+        $r19 = r18.<net.sourceforge.plantuml.logo.PSystemLogo: java.util.List lines>;
+
+        r20 = interfaceinvoke $r19.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r20.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r23 = interfaceinvoke r20.<java.util.Iterator: java.lang.Object next()>();
+
+        r24 = (java.lang.String) $r23;
+
+        virtualinvoke $r16.<net.sourceforge.plantuml.logo.TinyJavaLogo: void doCommandLine(java.lang.String)>(r24);
+
+        goto label1;
+
+     label2:
+        virtualinvoke $r14.<net.sourceforge.plantuml.logo.TurtleGraphicsPane: void paint(net.sourceforge.plantuml.ugraphic.UGraphic)>($r8);
+
+        staticinvoke <net.sourceforge.plantuml.png.PngIO: void write(java.awt.image.RenderedImage,java.io.OutputStream,int)>(r7, r21, 96);
+
+        $r22 = new net.sourceforge.plantuml.api.ImageDataSimple;
+
+        $i2 = virtualinvoke r7.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i3 = virtualinvoke r7.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r22.<net.sourceforge.plantuml.api.ImageDataSimple: void <init>(int,int)>($i2, $i3);
+
+        return $r22;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.logo.PSystemLogo r1;
+
+        r1 := @this: net.sourceforge.plantuml.logo.PSystemLogo;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Logo)");
+
+        return $r0;
+    }
+
+    public void doCommandLine(java.lang.String)
+    {
+        net.sourceforge.plantuml.logo.PSystemLogo r0;
+        java.lang.String r1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.logo.PSystemLogo;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.logo.PSystemLogo: java.util.List lines>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+}

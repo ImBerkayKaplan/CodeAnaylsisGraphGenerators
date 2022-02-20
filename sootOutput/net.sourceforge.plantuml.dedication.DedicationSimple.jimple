@@ -1,0 +1,111 @@
+public class net.sourceforge.plantuml.dedication.DedicationSimple extends java.lang.Object implements net.sourceforge.plantuml.dedication.Dedication
+{
+    private final byte[] crypted;
+    private final java.lang.String sentence;
+
+    public void <init>(byte[], java.lang.String)
+    {
+        net.sourceforge.plantuml.dedication.DedicationSimple r0;
+        byte[] r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.DedicationSimple;
+
+        r1 := @parameter0: byte[];
+
+        r2 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.dedication.DedicationSimple: byte[] crypted> = r1;
+
+        r0.<net.sourceforge.plantuml.dedication.DedicationSimple: java.lang.String sentence> = r2;
+
+        return;
+    }
+
+    public synchronized java.awt.image.BufferedImage getImage(net.sourceforge.plantuml.dedication.TinyHashableString)
+    {
+        net.sourceforge.plantuml.dedication.DedicationSimple r0;
+        net.sourceforge.plantuml.dedication.TinyHashableString r1;
+        java.lang.String $r2, $r3;
+        boolean $z0;
+        byte[] $r4, r13, r14;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.dedication.RBlocks r6, r9;
+        java.math.BigInteger $r7, $r8;
+        java.io.ByteArrayInputStream $r10;
+        java.awt.image.BufferedImage $r11;
+        java.lang.Throwable $r12;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.DedicationSimple;
+
+        r1 := @parameter0: net.sourceforge.plantuml.dedication.TinyHashableString;
+
+        $r2 = r0.<net.sourceforge.plantuml.dedication.DedicationSimple: java.lang.String sentence>;
+
+        $r3 = virtualinvoke r1.<net.sourceforge.plantuml.dedication.TinyHashableString: java.lang.String getSentence()>();
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.dedication.DedicationSimple: boolean same(java.lang.String,java.lang.String)>($r2, $r3);
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.dedication.DedicationSimple: byte[] crypted>;
+
+        $r5 = virtualinvoke $r4.<java.lang.Object: java.lang.Object clone()>();
+
+        r13 = (byte[]) $r5;
+
+        r6 = staticinvoke <net.sourceforge.plantuml.dedication.RBlocks: net.sourceforge.plantuml.dedication.RBlocks readFrom(byte[],int)>(r13, 513);
+
+        $r8 = <net.sourceforge.plantuml.dedication.DedicationSimple: java.math.BigInteger E>;
+
+        $r7 = <net.sourceforge.plantuml.dedication.DedicationSimple: java.math.BigInteger N>;
+
+        r9 = virtualinvoke r6.<net.sourceforge.plantuml.dedication.RBlocks: net.sourceforge.plantuml.dedication.RBlocks change(java.math.BigInteger,java.math.BigInteger)>($r8, $r7);
+
+        r14 = virtualinvoke r9.<net.sourceforge.plantuml.dedication.RBlocks: byte[] toByteArray(int)>(512);
+
+        $r10 = new java.io.ByteArrayInputStream;
+
+        specialinvoke $r10.<java.io.ByteArrayInputStream: void <init>(byte[])>(r14);
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.dedication.PSystemDedication: java.awt.image.BufferedImage getBufferedImage(java.io.InputStream)>($r10);
+
+     label2:
+        return $r11;
+
+     label3:
+        $r12 := @caughtexception;
+
+        virtualinvoke $r12.<java.lang.Throwable: void printStackTrace()>();
+
+        return null;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    private boolean same(java.lang.String, java.lang.String)
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.dedication.DedicationSimple r0;
+        java.lang.String r1, r2, r3, r4;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.DedicationSimple;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.lang.String;
+
+        r3 = virtualinvoke r1.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("[^\\p{L}0-9]+", "");
+
+        r4 = virtualinvoke r2.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("[^\\p{L}0-9]+", "");
+
+        $z0 = virtualinvoke r3.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>(r4);
+
+        return $z0;
+    }
+}

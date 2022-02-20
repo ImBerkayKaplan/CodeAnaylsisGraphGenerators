@@ -1,0 +1,702 @@
+public class smetana.core.debug.Purify extends java.lang.Object
+{
+    private final java.util.Map methods;
+    private final java.io.File out2;
+    private java.io.PrintWriter pw2;
+    private int currentLevel;
+
+    public void <init>()
+    {
+        smetana.core.debug.Purify r0;
+        java.util.LinkedHashMap $r1;
+        java.io.File $r2, $r3, $r4, $r6, $r10;
+        java.io.PrintWriter $r5;
+        java.lang.StringBuilder $r7, $r9, $r12;
+        java.io.PrintStream $r8;
+        java.lang.String $r11, $r13;
+        java.io.FileNotFoundException $r14;
+
+        r0 := @this: smetana.core.debug.Purify;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.LinkedHashMap;
+
+        specialinvoke $r1.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<smetana.core.debug.Purify: java.util.Map methods> = $r1;
+
+        $r2 = new java.io.File;
+
+        specialinvoke $r2.<java.io.File: void <init>(java.lang.String,java.lang.String)>("../out-smetana", "smetana.txt");
+
+        r0.<smetana.core.debug.Purify: java.io.File out2> = $r2;
+
+     label1:
+        $r3 = r0.<smetana.core.debug.Purify: java.io.File out2>;
+
+        $r4 = virtualinvoke $r3.<java.io.File: java.io.File getParentFile()>();
+
+        virtualinvoke $r4.<java.io.File: boolean mkdirs()>();
+
+        $r5 = new java.io.PrintWriter;
+
+        $r6 = r0.<smetana.core.debug.Purify: java.io.File out2>;
+
+        specialinvoke $r5.<java.io.PrintWriter: void <init>(java.io.File)>($r6);
+
+        r0.<smetana.core.debug.Purify: java.io.PrintWriter pw2> = $r5;
+
+        $r8 = <java.lang.System: java.io.PrintStream err>;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("CREATING ");
+
+        $r10 = r0.<smetana.core.debug.Purify: java.io.File out2>;
+
+        $r11 = virtualinvoke $r10.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        $r12 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r8.<java.io.PrintStream: void println(java.lang.String)>($r13);
+
+     label2:
+        goto label4;
+
+     label3:
+        $r14 := @caughtexception;
+
+        virtualinvoke $r14.<java.io.FileNotFoundException: void printStackTrace()>();
+
+     label4:
+        return;
+
+        catch java.io.FileNotFoundException from label1 to label2 with label3;
+    }
+
+    synchronized void logline(java.lang.String)
+    {
+        java.lang.String r0;
+        java.io.PrintStream $r1;
+        smetana.core.debug.Purify r2;
+        java.io.PrintWriter $r3, $r4, $r5;
+
+        r2 := @this: smetana.core.debug.Purify;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>(r0);
+
+        $r3 = r2.<smetana.core.debug.Purify: java.io.PrintWriter pw2>;
+
+        if $r3 != null goto label1;
+
+        return;
+
+     label1:
+        $r4 = r2.<smetana.core.debug.Purify: java.io.PrintWriter pw2>;
+
+        virtualinvoke $r4.<java.io.PrintWriter: void println(java.lang.String)>(r0);
+
+        $r5 = r2.<smetana.core.debug.Purify: java.io.PrintWriter pw2>;
+
+        virtualinvoke $r5.<java.io.PrintWriter: void flush()>();
+
+        return;
+    }
+
+    public synchronized void entering(java.lang.String, java.lang.String)
+    {
+        smetana.core.debug.Purify r0;
+        java.lang.String r1, r3, r6;
+        java.util.Map $r2, $r4;
+        boolean $z0, $z1;
+        int $i0, $i1, $i2;
+        java.lang.IllegalStateException $r7;
+        java.lang.Exception $r8;
+        java.lang.reflect.Method r9;
+        java.io.PrintWriter $r12;
+
+        r0 := @this: smetana.core.debug.Purify;
+
+        r1 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: java.lang.String;
+
+        $r2 = r0.<smetana.core.debug.Purify: java.util.Map methods>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+
+        if $z0 != 0 goto label4;
+
+     label1:
+        r9 = specialinvoke r0.<smetana.core.debug.Purify: java.lang.reflect.Method recordMe(java.lang.String)>(r3);
+
+        $r4 = r0.<smetana.core.debug.Purify: java.util.Map methods>;
+
+        interfaceinvoke $r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, r9);
+
+        r6 = specialinvoke r0.<smetana.core.debug.Purify: java.lang.String getKey(java.lang.reflect.Method)>(r9);
+
+        $i0 = virtualinvoke r6.<java.lang.String: int length()>();
+
+        if $i0 <= 2 goto label2;
+
+        $z1 = virtualinvoke r6.<java.lang.String: boolean equals(java.lang.Object)>(r1);
+
+        if $z1 != 0 goto label2;
+
+        $r7 = new java.lang.IllegalStateException;
+
+        specialinvoke $r7.<java.lang.IllegalStateException: void <init>(java.lang.String)>(r1);
+
+        throw $r7;
+
+     label2:
+        goto label4;
+
+     label3:
+        $r8 := @caughtexception;
+
+        virtualinvoke $r8.<java.lang.Exception: void printStackTrace()>();
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+     label4:
+        $i1 = r0.<smetana.core.debug.Purify: int currentLevel>;
+
+        $i2 = $i1 + 1;
+
+        r0.<smetana.core.debug.Purify: int currentLevel> = $i2;
+
+        $r12 = r0.<smetana.core.debug.Purify: java.io.PrintWriter pw2>;
+
+        specialinvoke r0.<smetana.core.debug.Purify: void traceCall(java.io.PrintWriter,java.lang.String,java.lang.String)>($r12, r1, r3);
+
+        return;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    public synchronized void leaving(java.lang.String, java.lang.String)
+    {
+        smetana.core.debug.Purify r0;
+        int $i0, $i1;
+        java.lang.String r1, r2;
+
+        r0 := @this: smetana.core.debug.Purify;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.lang.String;
+
+        $i0 = r0.<smetana.core.debug.Purify: int currentLevel>;
+
+        $i1 = $i0 - 1;
+
+        r0.<smetana.core.debug.Purify: int currentLevel> = $i1;
+
+        return;
+    }
+
+    private void traceCall(java.io.PrintWriter, java.lang.String, java.lang.String)
+    {
+        smetana.core.debug.Purify r0;
+        java.lang.String r1, $r7, r8, r9;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        java.lang.reflect.Method r4;
+        java.lang.Object[] $r5;
+        int $i0;
+        java.lang.Integer $r6;
+        boolean $z0;
+        java.io.PrintWriter r10;
+        java.io.PrintStream $r11;
+
+        r0 := @this: smetana.core.debug.Purify;
+
+        r10 := @parameter0: java.io.PrintWriter;
+
+        r1 := @parameter1: java.lang.String;
+
+        r8 := @parameter2: java.lang.String;
+
+        $r2 = r0.<smetana.core.debug.Purify: java.util.Map methods>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        r4 = (java.lang.reflect.Method) $r3;
+
+        $r5 = newarray (java.lang.Object)[4];
+
+        $i0 = r0.<smetana.core.debug.Purify: int currentLevel>;
+
+        $r6 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i0);
+
+        $r5[0] = $r6;
+
+        $r5[1] = r1;
+
+        $r7 = specialinvoke r0.<smetana.core.debug.Purify: java.lang.String getReviewedWhen(java.lang.reflect.Method)>(r4);
+
+        $r5[2] = $r7;
+
+        $r5[3] = r8;
+
+        r9 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("(%02d) %-26.26s [%-10.10s] %s", $r5);
+
+        $z0 = <smetana.core.debug.SmetanaDebug: boolean VERY_VERBOSE>;
+
+        if $z0 == 0 goto label1;
+
+        $r11 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r11.<java.io.PrintStream: void println(java.lang.String)>(r9);
+
+     label1:
+        if r10 != null goto label2;
+
+        return;
+
+     label2:
+        virtualinvoke r10.<java.io.PrintWriter: void println(java.lang.String)>(r9);
+
+        virtualinvoke r10.<java.io.PrintWriter: void flush()>();
+
+        return;
+    }
+
+    private synchronized java.lang.reflect.Method recordMe(java.lang.String) throws java.lang.ClassNotFoundException
+    {
+        java.lang.Throwable $r0;
+        java.lang.StackTraceElement[] $r3, $r5;
+        java.lang.StackTraceElement r4, r6;
+        java.lang.String r7, r8, r9, r13, $r14, $r17;
+        java.lang.Class r10;
+        smetana.core.debug.Purify r11;
+        java.lang.reflect.Method r12, r15;
+        boolean $z0, $z1, $z2;
+        java.lang.IllegalArgumentException $r16;
+
+        r11 := @this: smetana.core.debug.Purify;
+
+        r13 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.Throwable;
+
+        specialinvoke $r0.<java.lang.Throwable: void <init>()>();
+
+        virtualinvoke $r0.<java.lang.Throwable: java.lang.Throwable fillInStackTrace()>();
+
+        $r3 = virtualinvoke $r0.<java.lang.Throwable: java.lang.StackTraceElement[] getStackTrace()>();
+
+        r4 = $r3[3];
+
+        $r5 = virtualinvoke $r0.<java.lang.Throwable: java.lang.StackTraceElement[] getStackTrace()>();
+
+        r6 = $r5[4];
+
+        r7 = virtualinvoke r4.<java.lang.StackTraceElement: java.lang.String getClassName()>();
+
+        r8 = virtualinvoke r4.<java.lang.StackTraceElement: java.lang.String getMethodName()>();
+
+        r9 = virtualinvoke r6.<java.lang.StackTraceElement: java.lang.String getMethodName()>();
+
+        r10 = staticinvoke <java.lang.Class: java.lang.Class forName(java.lang.String)>(r7);
+
+        r12 = specialinvoke r11.<smetana.core.debug.Purify: java.lang.reflect.Method getTheMethod(java.lang.Class,java.lang.String)>(r10, r8);
+
+        $r14 = virtualinvoke r12.<java.lang.reflect.Method: java.lang.String getName()>();
+
+        $z0 = virtualinvoke r13.<java.lang.String: boolean equals(java.lang.Object)>($r14);
+
+        if $z0 == 0 goto label1;
+
+        return r12;
+
+     label1:
+        r15 = specialinvoke r11.<smetana.core.debug.Purify: java.lang.reflect.Method getTheMethod(java.lang.Class,java.lang.String)>(r10, r9);
+
+        $z1 = specialinvoke r11.<smetana.core.debug.Purify: boolean checkWarning(java.lang.String,java.lang.reflect.Method)>(r13, r12);
+
+        if $z1 == 0 goto label2;
+
+        $r17 = virtualinvoke r15.<java.lang.reflect.Method: java.lang.String getName()>();
+
+        $z2 = virtualinvoke r13.<java.lang.String: boolean equals(java.lang.Object)>($r17);
+
+        if $z2 == 0 goto label2;
+
+        return r15;
+
+     label2:
+        virtualinvoke $r0.<java.lang.Throwable: void printStackTrace()>();
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+        $r16 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r16.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r16;
+    }
+
+    private synchronized boolean checkWarning(java.lang.String, java.lang.reflect.Method)
+    {
+        java.lang.StringBuilder $r0, $r2, $r3, $r7, $r8, $r9;
+        java.lang.String r1, $r4, $r6, $r10, $r11;
+        java.lang.reflect.Method r5;
+        boolean $z0, $z1;
+        smetana.core.debug.Purify r12;
+
+        r12 := @this: smetana.core.debug.Purify;
+
+        r1 := @parameter0: java.lang.String;
+
+        r5 := @parameter1: java.lang.reflect.Method;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r6 = virtualinvoke r5.<java.lang.reflect.Method: java.lang.String getName()>();
+
+        $z0 = virtualinvoke $r4.<java.lang.String: boolean equals(java.lang.Object)>($r6);
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_w_");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r11 = virtualinvoke r5.<java.lang.reflect.Method: java.lang.String getName()>();
+
+        $z1 = virtualinvoke $r10.<java.lang.String: boolean equals(java.lang.Object)>($r11);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    private synchronized java.lang.reflect.Method getTheMethod(java.lang.Class, java.lang.String)
+    {
+        java.lang.Class r0;
+        int i0, i1;
+        java.lang.Throwable $r1;
+        java.lang.IllegalArgumentException $r3;
+        java.lang.reflect.Method r4;
+        java.lang.String $r5, r6;
+        boolean $z0;
+        smetana.core.debug.Purify r7;
+        java.lang.reflect.Method[] r8;
+
+        r7 := @this: smetana.core.debug.Purify;
+
+        r0 := @parameter0: java.lang.Class;
+
+        r6 := @parameter1: java.lang.String;
+
+        r8 = virtualinvoke r0.<java.lang.Class: java.lang.reflect.Method[] getDeclaredMethods()>();
+
+        i0 = lengthof r8;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label3;
+
+        r4 = r8[i1];
+
+        $r5 = virtualinvoke r4.<java.lang.reflect.Method: java.lang.String getName()>();
+
+        $z0 = virtualinvoke $r5.<java.lang.String: boolean equals(java.lang.Object)>(r6);
+
+        if $z0 == 0 goto label2;
+
+        return r4;
+
+     label2:
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label3:
+        $r1 = new java.lang.Throwable;
+
+        specialinvoke $r1.<java.lang.Throwable: void <init>()>();
+
+        virtualinvoke $r1.<java.lang.Throwable: java.lang.Throwable fillInStackTrace()>();
+
+        virtualinvoke $r1.<java.lang.Throwable: void printStackTrace()>();
+
+        staticinvoke <java.lang.System: void exit(int)>(0);
+
+        $r3 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r3.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r3;
+    }
+
+    public void reset()
+    {
+        smetana.core.debug.Purify r0;
+        java.util.Map $r1;
+
+        r0 := @this: smetana.core.debug.Purify;
+
+        $r1 = r0.<smetana.core.debug.Purify: java.util.Map methods>;
+
+        interfaceinvoke $r1.<java.util.Map: void clear()>();
+
+        return;
+    }
+
+    public void printMe()
+    {
+        java.util.ArrayList $r0;
+        smetana.core.debug.Purify r1;
+        java.util.Map $r2;
+        java.util.Set $r3;
+        java.util.Iterator r5;
+        boolean $z0, $z1;
+        java.lang.Object $r6, $r8, $r10;
+        java.util.Map$Entry r7;
+        java.lang.String r9, r12, r13, r14, $r18, $r20;
+        java.lang.reflect.Method r11;
+        java.lang.Object[] $r16;
+        java.io.PrintStream $r17;
+
+        r1 := @this: smetana.core.debug.Purify;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<smetana.core.debug.Purify: java.util.Map methods>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Set entrySet()>();
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+        staticinvoke <java.util.Collections: void reverse(java.util.List)>($r0);
+
+        r5 = interfaceinvoke $r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (java.util.Map$Entry) $r6;
+
+        $r8 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r9 = (java.lang.String) $r8;
+
+        $r10 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r11 = (java.lang.reflect.Method) $r10;
+
+        r12 = specialinvoke r1.<smetana.core.debug.Purify: java.lang.String getReviewedWhen(java.lang.reflect.Method)>(r11);
+
+        r13 = specialinvoke r1.<smetana.core.debug.Purify: java.lang.String getVersion(java.lang.reflect.Method)>(r11);
+
+        r14 = specialinvoke r1.<smetana.core.debug.Purify: java.lang.String getPath(java.lang.reflect.Method)>(r11);
+
+        $z1 = specialinvoke r1.<smetana.core.debug.Purify: boolean hasND_Rank(java.lang.reflect.Method)>(r11);
+
+        if $z1 == 0 goto label2;
+
+        $r20 = "*";
+
+        goto label3;
+
+     label2:
+        $r20 = " ";
+
+     label3:
+        $r17 = <java.lang.System: java.io.PrintStream err>;
+
+        $r16 = newarray (java.lang.Object)[6];
+
+        $r16[0] = r13;
+
+        $r16[1] = r9;
+
+        $r16[2] = r12;
+
+        $r16[3] = $r20;
+
+        $r18 = virtualinvoke r11.<java.lang.reflect.Method: java.lang.String getName()>();
+
+        $r16[4] = $r18;
+
+        $r16[5] = r14;
+
+        virtualinvoke $r17.<java.io.PrintStream: java.io.PrintStream printf(java.lang.String,java.lang.Object[])>("%-8s %-26s %-12s %s %-30s %s%n", $r16);
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    private java.lang.String getVersion(java.lang.reflect.Method)
+    {
+        java.lang.reflect.Method r0;
+        java.lang.'annotation'.Annotation $r1;
+        gen.'annotation'.Original r2;
+        java.lang.String $r3;
+        smetana.core.debug.Purify r4;
+
+        r4 := @this: smetana.core.debug.Purify;
+
+        r0 := @parameter0: java.lang.reflect.Method;
+
+        $r1 = virtualinvoke r0.<java.lang.reflect.Method: java.lang.'annotation'.Annotation getDeclaredAnnotation(java.lang.Class)>(class "Lgen/annotation/Original;");
+
+        r2 = (gen.'annotation'.Original) $r1;
+
+        if r2 != null goto label1;
+
+        return "XX";
+
+     label1:
+        $r3 = interfaceinvoke r2.<gen.'annotation'.Original: java.lang.String version()>();
+
+        return $r3;
+    }
+
+    private java.lang.String getPath(java.lang.reflect.Method)
+    {
+        java.lang.reflect.Method r0;
+        java.lang.'annotation'.Annotation $r1;
+        gen.'annotation'.Original r2;
+        java.lang.String $r3;
+        smetana.core.debug.Purify r4;
+
+        r4 := @this: smetana.core.debug.Purify;
+
+        r0 := @parameter0: java.lang.reflect.Method;
+
+        $r1 = virtualinvoke r0.<java.lang.reflect.Method: java.lang.'annotation'.Annotation getDeclaredAnnotation(java.lang.Class)>(class "Lgen/annotation/Original;");
+
+        r2 = (gen.'annotation'.Original) $r1;
+
+        if r2 != null goto label1;
+
+        return "XX";
+
+     label1:
+        $r3 = interfaceinvoke r2.<gen.'annotation'.Original: java.lang.String path()>();
+
+        return $r3;
+    }
+
+    private java.lang.String getReviewedWhen(java.lang.reflect.Method)
+    {
+        java.lang.reflect.Method r0;
+        java.lang.'annotation'.Annotation $r1;
+        gen.'annotation'.Reviewed r2;
+        java.lang.String $r3;
+        smetana.core.debug.Purify r4;
+
+        r4 := @this: smetana.core.debug.Purify;
+
+        r0 := @parameter0: java.lang.reflect.Method;
+
+        $r1 = virtualinvoke r0.<java.lang.reflect.Method: java.lang.'annotation'.Annotation getDeclaredAnnotation(java.lang.Class)>(class "Lgen/annotation/Reviewed;");
+
+        r2 = (gen.'annotation'.Reviewed) $r1;
+
+        if r2 != null goto label1;
+
+        return "?";
+
+     label1:
+        $r3 = interfaceinvoke r2.<gen.'annotation'.Reviewed: java.lang.String when()>();
+
+        return $r3;
+    }
+
+    private boolean hasND_Rank(java.lang.reflect.Method)
+    {
+        java.lang.reflect.Method r0;
+        java.lang.'annotation'.Annotation $r1;
+        gen.'annotation'.HasND_Rank r2;
+        smetana.core.debug.Purify r3;
+        boolean $z0;
+
+        r3 := @this: smetana.core.debug.Purify;
+
+        r0 := @parameter0: java.lang.reflect.Method;
+
+        $r1 = virtualinvoke r0.<java.lang.reflect.Method: java.lang.'annotation'.Annotation getDeclaredAnnotation(java.lang.Class)>(class "Lgen/annotation/HasND_Rank;");
+
+        r2 = (gen.'annotation'.HasND_Rank) $r1;
+
+        if r2 == null goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private java.lang.String getKey(java.lang.reflect.Method)
+    {
+        java.lang.reflect.Method r0;
+        java.lang.'annotation'.Annotation $r1;
+        gen.'annotation'.Original r2;
+        java.lang.String $r3;
+        smetana.core.debug.Purify r4;
+
+        r4 := @this: smetana.core.debug.Purify;
+
+        r0 := @parameter0: java.lang.reflect.Method;
+
+        $r1 = virtualinvoke r0.<java.lang.reflect.Method: java.lang.'annotation'.Annotation getDeclaredAnnotation(java.lang.Class)>(class "Lgen/annotation/Original;");
+
+        r2 = (gen.'annotation'.Original) $r1;
+
+        if r2 != null goto label1;
+
+        return "?";
+
+     label1:
+        $r3 = interfaceinvoke r2.<gen.'annotation'.Original: java.lang.String key()>();
+
+        return $r3;
+    }
+}

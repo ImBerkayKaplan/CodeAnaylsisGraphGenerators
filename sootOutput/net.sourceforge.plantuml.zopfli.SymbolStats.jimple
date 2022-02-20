@@ -1,0 +1,662 @@
+final class net.sourceforge.plantuml.zopfli.SymbolStats extends java.lang.Object
+{
+    private static final double INV_LOG_2;
+    private final int[] litLens;
+    private final int[] dists;
+    final long[] lLiterals;
+    final long[] lLengths;
+    final long[] dSymbols;
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0;
+        int[] $r1, $r2;
+        long[] $r3, $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = newarray (int)[288];
+
+        r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens> = $r1;
+
+        $r2 = newarray (int)[32];
+
+        r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] dists> = $r2;
+
+        $r3 = newarray (long)[288];
+
+        r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLiterals> = $r3;
+
+        $r4 = newarray (long)[259];
+
+        r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLengths> = $r4;
+
+        $r5 = newarray (long)[32];
+
+        r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] dSymbols> = $r5;
+
+        return;
+    }
+
+    void getFreqs(net.sourceforge.plantuml.zopfli.LzStore)
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0;
+        int[] r1, r2, $r3, $r4, r8, r9;
+        net.sourceforge.plantuml.zopfli.LzStore r5;
+        int i0, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, i11;
+        char[] r6, r7;
+        char c1, c2;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        r5 := @parameter0: net.sourceforge.plantuml.zopfli.LzStore;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens>;
+
+        r2 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] dists>;
+
+        $r3 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r3, 0, r1, 0, 288);
+
+        $r4 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r4, 0, r2, 0, 32);
+
+        i0 = r5.<net.sourceforge.plantuml.zopfli.LzStore: int size>;
+
+        r6 = r5.<net.sourceforge.plantuml.zopfli.LzStore: char[] litLens>;
+
+        r7 = r5.<net.sourceforge.plantuml.zopfli.LzStore: char[] dists>;
+
+        r8 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_SYMBOL>;
+
+        r9 = <net.sourceforge.plantuml.zopfli.Util: int[] CACHED_DIST_SYMBOL>;
+
+        i11 = 0;
+
+     label1:
+        if i11 >= i0 goto label4;
+
+        c1 = r7[i11];
+
+        c2 = r6[i11];
+
+        if c1 != 0 goto label2;
+
+        $i9 = r1[c2];
+
+        $i10 = $i9 + 1;
+
+        r1[c2] = $i10;
+
+        goto label3;
+
+     label2:
+        $i3 = r8[c2];
+
+        $i4 = r1[$i3];
+
+        $i5 = $i4 + 1;
+
+        r1[$i3] = $i5;
+
+        $i6 = r9[c1];
+
+        $i7 = r2[$i6];
+
+        $i8 = $i7 + 1;
+
+        r2[$i6] = $i8;
+
+     label3:
+        i11 = i11 + 1;
+
+        goto label1;
+
+     label4:
+        r1[256] = 1;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.SymbolStats: void calculate()>();
+
+        return;
+    }
+
+    final void copy(net.sourceforge.plantuml.zopfli.SymbolStats)
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0, r1;
+        int[] $r2, $r3, $r4, $r5;
+        long[] $r6, $r7, $r8, $r9, $r10, $r11;
+
+        r1 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        $r3 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens>;
+
+        $r2 = r1.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r3, 0, $r2, 0, 288);
+
+        $r5 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] dists>;
+
+        $r4 = r1.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] dists>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r5, 0, $r4, 0, 32);
+
+        $r7 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLiterals>;
+
+        $r6 = r1.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLiterals>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r7, 0, $r6, 0, 288);
+
+        $r9 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLengths>;
+
+        $r8 = r1.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLengths>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r9, 0, $r8, 0, 259);
+
+        $r11 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] dSymbols>;
+
+        $r10 = r1.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] dSymbols>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r11, 0, $r10, 0, 32);
+
+        return;
+    }
+
+    final void calculate()
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.SymbolStats: void calculateLens()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.SymbolStats: void calculateDists()>();
+
+        return;
+    }
+
+    final void calculateLens()
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0;
+        int[] r1, r3, r4;
+        double $d0, $d1, $d2, $d3, $d4, $d5, d6;
+        long[] r2, r5;
+        int $i0, $i1, $i6, $i7, $i12, i13, i14, i15, i16;
+        long $l2, $l3, $l4, $l5, $l8, $l9, $l11;
+        byte $b10;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        i13 = 0;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens>;
+
+        i14 = 0;
+
+     label01:
+        if i14 >= 288 goto label02;
+
+        $i12 = r1[i14];
+
+        i13 = i13 + $i12;
+
+        i14 = i14 + 1;
+
+        goto label01;
+
+     label02:
+        if i13 != 0 goto label03;
+
+        $d5 = staticinvoke <java.lang.Math: double log(double)>(288.0);
+
+        goto label04;
+
+     label03:
+        $d0 = (double) i13;
+
+        $d5 = staticinvoke <java.lang.Math: double log(double)>($d0);
+
+     label04:
+        d6 = $d5 * 94548.46219969496;
+
+        r2 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLiterals>;
+
+        i15 = 0;
+
+     label05:
+        if i15 >= 288 goto label09;
+
+        $i6 = r1[i15];
+
+        if $i6 != 0 goto label06;
+
+        $l11 = (long) d6;
+
+        r2[i15] = $l11;
+
+        goto label07;
+
+     label06:
+        $i7 = r1[i15];
+
+        $d1 = (double) $i7;
+
+        $d2 = staticinvoke <java.lang.Math: double log(double)>($d1);
+
+        $d3 = $d2 * 94548.46219969496;
+
+        $d4 = d6 - $d3;
+
+        $l8 = (long) $d4;
+
+        r2[i15] = $l8;
+
+     label07:
+        $l9 = r2[i15];
+
+        $b10 = $l9 cmp 0L;
+
+        if $b10 >= 0 goto label08;
+
+        r2[i15] = 0L;
+
+     label08:
+        i15 = i15 + 1;
+
+        goto label05;
+
+     label09:
+        r5 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLengths>;
+
+        r3 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_SYMBOL>;
+
+        r4 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_EXTRA_BITS>;
+
+        i16 = 0;
+
+     label10:
+        if i16 >= 259 goto label11;
+
+        $i0 = r3[i16];
+
+        $l4 = r2[$i0];
+
+        $i1 = r4[i16];
+
+        $l2 = (long) $i1;
+
+        $l3 = $l2 * 65536L;
+
+        $l5 = $l4 + $l3;
+
+        r5[i16] = $l5;
+
+        i16 = i16 + 1;
+
+        goto label10;
+
+     label11:
+        return;
+    }
+
+    final void calculateDists()
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0;
+        int[] r1;
+        double $d0, $d1, $d2, $d3, $d4, $d5, d6;
+        long[] r2;
+        int $i0, $i1, $i6, $i7, $i12, i13, i14, i15, i16;
+        long $l2, $l3, $l4, $l5, $l8, $l9, $l11;
+        byte $b10;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        i13 = 0;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] dists>;
+
+        i14 = 0;
+
+     label01:
+        if i14 >= 32 goto label02;
+
+        $i12 = r1[i14];
+
+        i13 = i13 + $i12;
+
+        i14 = i14 + 1;
+
+        goto label01;
+
+     label02:
+        if i13 != 0 goto label03;
+
+        $d5 = staticinvoke <java.lang.Math: double log(double)>(32.0);
+
+        goto label04;
+
+     label03:
+        $d0 = (double) i13;
+
+        $d5 = staticinvoke <java.lang.Math: double log(double)>($d0);
+
+     label04:
+        d6 = $d5 * 94548.46219969496;
+
+        r2 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] dSymbols>;
+
+        i15 = 0;
+
+     label05:
+        if i15 >= 32 goto label09;
+
+        $i6 = r1[i15];
+
+        if $i6 != 0 goto label06;
+
+        $l11 = (long) d6;
+
+        r2[i15] = $l11;
+
+        goto label07;
+
+     label06:
+        $i7 = r1[i15];
+
+        $d1 = (double) $i7;
+
+        $d2 = staticinvoke <java.lang.Math: double log(double)>($d1);
+
+        $d3 = $d2 * 94548.46219969496;
+
+        $d4 = d6 - $d3;
+
+        $l8 = (long) $d4;
+
+        r2[i15] = $l8;
+
+     label07:
+        $l9 = r2[i15];
+
+        $b10 = $l9 cmp 0L;
+
+        if $b10 >= 0 goto label08;
+
+        r2[i15] = 0L;
+
+     label08:
+        i15 = i15 + 1;
+
+        goto label05;
+
+     label09:
+        i16 = 4;
+
+     label10:
+        if i16 >= 30 goto label11;
+
+        $l4 = r2[i16];
+
+        $i0 = i16 / 2;
+
+        $i1 = $i0 - 1;
+
+        $l2 = (long) $i1;
+
+        $l3 = 65536L * $l2;
+
+        $l5 = $l4 + $l3;
+
+        r2[i16] = $l5;
+
+        i16 = i16 + 1;
+
+        goto label10;
+
+     label11:
+        return;
+    }
+
+    final void alloy(net.sourceforge.plantuml.zopfli.SymbolStats)
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0, r2;
+        int[] r1, $r3, $r4, $r5, r6;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9;
+
+        r2 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens>;
+
+        i8 = 0;
+
+     label1:
+        if i8 >= 288 goto label2;
+
+        $r5 = r2.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens>;
+
+        $i6 = $r5[i8];
+
+        $i4 = r1[i8];
+
+        $i5 = $i4 / 2;
+
+        $i7 = $i6 + $i5;
+
+        $r5[i8] = $i7;
+
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label2:
+        $r3 = r2.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens>;
+
+        $r3[256] = 1;
+
+        r6 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] dists>;
+
+        i9 = 0;
+
+     label3:
+        if i9 >= 32 goto label4;
+
+        $r4 = r2.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] dists>;
+
+        $i2 = $r4[i9];
+
+        $i0 = r6[i9];
+
+        $i1 = $i0 / 2;
+
+        $i3 = $i2 + $i1;
+
+        $r4[i9] = $i3;
+
+        i9 = i9 + 1;
+
+        goto label3;
+
+     label4:
+        return;
+    }
+
+    final int randomizeFreqs(int)
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, i18, i19, i20, i21, i22, i23, i24;
+        int[] r1, r2;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        i18 := @parameter0: int;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] litLens>;
+
+        i19 = lengthof r1;
+
+        i20 = 0;
+
+     label1:
+        if i20 >= i19 goto label3;
+
+        $i9 = 1103515245 * i18;
+
+        $i10 = $i9 + 12345;
+
+        i18 = 2147483647 & $i10;
+
+        $i11 = i18 >>> 4;
+
+        $i12 = $i11 % 3;
+
+        if $i12 != 0 goto label2;
+
+        $i13 = 1103515245 * i18;
+
+        $i14 = $i13 + 12345;
+
+        i18 = 2147483647 & $i14;
+
+        i21 = i18 % i19;
+
+        $i16 = r1[i20];
+
+        $i15 = r1[i21];
+
+        if $i16 >= $i15 goto label2;
+
+        $i17 = r1[i21];
+
+        r1[i20] = $i17;
+
+     label2:
+        i20 = i20 + 1;
+
+        goto label1;
+
+     label3:
+        r1[256] = 1;
+
+        r2 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: int[] dists>;
+
+        i22 = lengthof r2;
+
+        i23 = 0;
+
+     label4:
+        if i23 >= i22 goto label6;
+
+        $i0 = 1103515245 * i18;
+
+        $i1 = $i0 + 12345;
+
+        i18 = 2147483647 & $i1;
+
+        $i2 = i18 >>> 4;
+
+        $i3 = $i2 % 3;
+
+        if $i3 != 0 goto label5;
+
+        $i4 = 1103515245 * i18;
+
+        $i5 = $i4 + 12345;
+
+        i18 = 2147483647 & $i5;
+
+        i24 = i18 % i22;
+
+        $i7 = r2[i23];
+
+        $i6 = r2[i24];
+
+        if $i7 >= $i6 goto label5;
+
+        $i8 = r2[i24];
+
+        r2[i23] = $i8;
+
+     label5:
+        i23 = i23 + 1;
+
+        goto label4;
+
+     label6:
+        return i18;
+    }
+
+    final long minCost()
+    {
+        net.sourceforge.plantuml.zopfli.SymbolStats r0;
+        long[] r1, r2;
+        long $l0, l1, l4, l6, l7;
+        byte $b2, $b3;
+        int i5, i8;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLengths>;
+
+        l4 = r1[3];
+
+        i5 = 4;
+
+     label1:
+        if i5 >= 259 goto label3;
+
+        l6 = r1[i5];
+
+        $b3 = l6 cmp l4;
+
+        if $b3 >= 0 goto label2;
+
+        l4 = l6;
+
+     label2:
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label3:
+        r2 = r0.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] dSymbols>;
+
+        l7 = r2[0];
+
+        i8 = 1;
+
+     label4:
+        if i8 >= 30 goto label6;
+
+        l1 = r2[i8];
+
+        $b2 = l1 cmp l7;
+
+        if $b2 >= 0 goto label5;
+
+        l7 = l1;
+
+     label5:
+        i8 = i8 + 1;
+
+        goto label4;
+
+     label6:
+        $l0 = l7 + l4;
+
+        return $l0;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.zopfli.SymbolStats: double INV_LOG_2> = 94548.46219969496;
+
+        return;
+    }
+}

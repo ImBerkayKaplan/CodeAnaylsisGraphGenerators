@@ -1,0 +1,331 @@
+public class jcckit.plot.SimpleCurve extends java.lang.Object implements jcckit.plot.Curve
+{
+    public static final java.lang.String SYMBOL_FACTORY_KEY;
+    public static final java.lang.String WITH_LINE_KEY;
+    public static final java.lang.String SOFT_CLIPPING_KEY;
+    public static final java.lang.String LINE_ATTRIBUTES_KEY;
+    public static final java.lang.String INITIAL_HINT_FOR_NEXT_POINT_KEY;
+    private final jcckit.graphic.ClippingShape _clippingShape;
+    private final jcckit.plot.SymbolFactory _symbolFactory;
+    private final jcckit.graphic.GraphicalComposite _symbols;
+    private final jcckit.graphic.GraphicalComposite _completeCurve;
+    private final jcckit.graphic.GraphicalElement _legendSymbol;
+    private final jcckit.plot.Hint _initialHintForNextPoint;
+    private final jcckit.graphic.Polygon _curve;
+    private final boolean _softClipping;
+    private jcckit.plot.Hint _hintForNextPoint;
+
+    public void <init>(jcckit.util.ConfigParameters, int, int, jcckit.graphic.ClippingShape, jcckit.plot.Legend)
+    {
+        jcckit.plot.SimpleCurve r0;
+        jcckit.util.ConfigParameters r1, $r2, $r5, $r14;
+        java.lang.Object $r3, $r8, $r15;
+        jcckit.plot.SymbolFactory $r4, $r10, $r13, $r18;
+        boolean z0, $z1, $z2;
+        jcckit.graphic.ShapeAttributes $r6;
+        int i0, $i1, i2;
+        float $f0, $f1;
+        java.awt.Color $r7;
+        jcckit.graphic.LineAttributes r9;
+        jcckit.graphic.ClippingShape r11, $r30;
+        jcckit.graphic.GraphicalComposite $r12, $r20, $r21, $r22, $r24, $r28;
+        jcckit.plot.Hint $r16;
+        jcckit.plot.Legend r17;
+        jcckit.graphic.GraphicalElement $r19;
+        jcckit.graphic.Polygon $r26, $r27;
+        java.lang.IllegalArgumentException $r29;
+
+        r0 := @this: jcckit.plot.SimpleCurve;
+
+        r1 := @parameter0: jcckit.util.ConfigParameters;
+
+        i0 := @parameter1: int;
+
+        i2 := @parameter2: int;
+
+        r11 := @parameter3: jcckit.graphic.ClippingShape;
+
+        r17 := @parameter4: jcckit.plot.Legend;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = virtualinvoke r1.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("symbolFactory");
+
+        $r3 = staticinvoke <jcckit.util.Factory: java.lang.Object createOrGet(jcckit.util.ConfigParameters,java.lang.Object)>($r2, null);
+
+        $r4 = (jcckit.plot.SymbolFactory) $r3;
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.plot.SymbolFactory _symbolFactory> = $r4;
+
+        z0 = virtualinvoke r1.<jcckit.util.ConfigParameters: boolean getBoolean(java.lang.String,boolean)>("withLine", 1);
+
+        $r5 = virtualinvoke r1.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("lineAttributes");
+
+        $r6 = new jcckit.graphic.ShapeAttributes;
+
+        $i1 = i0 % 6;
+
+        $f0 = (float) $i1;
+
+        $f1 = $f0 / 6.0F;
+
+        $r7 = staticinvoke <java.awt.Color: java.awt.Color getHSBColor(float,float,float)>($f1, 1.0F, 0.8F);
+
+        specialinvoke $r6.<jcckit.graphic.ShapeAttributes: void <init>(java.awt.Color,java.awt.Color,double,double[])>(null, $r7, 0.0, null);
+
+        $r8 = staticinvoke <jcckit.util.Factory: java.lang.Object createOrGet(jcckit.util.ConfigParameters,java.lang.Object)>($r5, $r6);
+
+        r9 = (jcckit.graphic.LineAttributes) $r8;
+
+        $r10 = r0.<jcckit.plot.SimpleCurve: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        if $r10 != null goto label1;
+
+        if z0 == 0 goto label7;
+
+     label1:
+        r0.<jcckit.plot.SimpleCurve: jcckit.graphic.ClippingShape _clippingShape> = r11;
+
+        $r12 = new jcckit.graphic.GraphicalComposite;
+
+        specialinvoke $r12.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(null);
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _completeCurve> = $r12;
+
+        if z0 == 0 goto label2;
+
+        $r24 = new jcckit.graphic.GraphicalComposite;
+
+        specialinvoke $r24.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(r11);
+
+        $r26 = new jcckit.graphic.Polygon;
+
+        specialinvoke $r26.<jcckit.graphic.Polygon: void <init>(jcckit.graphic.GraphicAttributes,boolean)>(r9, 0);
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.graphic.Polygon _curve> = $r26;
+
+        $r27 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.Polygon _curve>;
+
+        virtualinvoke $r24.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r27);
+
+        $r28 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _completeCurve>;
+
+        virtualinvoke $r28.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r24);
+
+        goto label3;
+
+     label2:
+        r0.<jcckit.plot.SimpleCurve: jcckit.graphic.Polygon _curve> = null;
+
+     label3:
+        $z1 = virtualinvoke r1.<jcckit.util.ConfigParameters: boolean getBoolean(java.lang.String,boolean)>("softClipping", 1);
+
+        r0.<jcckit.plot.SimpleCurve: boolean _softClipping> = $z1;
+
+        $r13 = r0.<jcckit.plot.SimpleCurve: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        if $r13 == null goto label6;
+
+        $r20 = new jcckit.graphic.GraphicalComposite;
+
+        $z2 = r0.<jcckit.plot.SimpleCurve: boolean _softClipping>;
+
+        if $z2 == 0 goto label4;
+
+        $r30 = null;
+
+        goto label5;
+
+     label4:
+        $r30 = r11;
+
+     label5:
+        specialinvoke $r20.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>($r30);
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _symbols> = $r20;
+
+        $r22 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _completeCurve>;
+
+        $r21 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _symbols>;
+
+        virtualinvoke $r22.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r21);
+
+        goto label8;
+
+     label6:
+        r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _symbols> = null;
+
+        goto label8;
+
+     label7:
+        $r29 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r29.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("Either a SymbolFactory must exist or withLines == true.");
+
+        throw $r29;
+
+     label8:
+        $r14 = virtualinvoke r1.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("initialHintForNextPoint");
+
+        $r15 = staticinvoke <jcckit.util.Factory: java.lang.Object createOrGet(jcckit.util.ConfigParameters,java.lang.Object)>($r14, null);
+
+        $r16 = (jcckit.plot.Hint) $r15;
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.plot.Hint _initialHintForNextPoint> = $r16;
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.plot.Hint _hintForNextPoint> = $r16;
+
+        $r18 = r0.<jcckit.plot.SimpleCurve: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        $r19 = virtualinvoke r17.<jcckit.plot.Legend: jcckit.graphic.GraphicalElement createSymbol(int,int,jcckit.plot.SymbolFactory,boolean,jcckit.graphic.GraphicAttributes)>(i0, i2, $r18, z0, r9);
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalElement _legendSymbol> = $r19;
+
+        return;
+    }
+
+    public jcckit.graphic.GraphicalElement getView()
+    {
+        jcckit.plot.SimpleCurve r0;
+        jcckit.graphic.GraphicalComposite $r1;
+
+        r0 := @this: jcckit.plot.SimpleCurve;
+
+        $r1 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _completeCurve>;
+
+        return $r1;
+    }
+
+    public jcckit.graphic.GraphicalElement getLegendSymbol()
+    {
+        jcckit.plot.SimpleCurve r0;
+        jcckit.graphic.GraphicalElement $r1;
+
+        r0 := @this: jcckit.plot.SimpleCurve;
+
+        $r1 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalElement _legendSymbol>;
+
+        return $r1;
+    }
+
+    public jcckit.plot.Hint addPoint(jcckit.graphic.GraphPoint, jcckit.plot.Hint)
+    {
+        jcckit.plot.SimpleCurve r0;
+        jcckit.graphic.Polygon $r1, $r10;
+        jcckit.plot.Hint r2, $r5, r11, $r14;
+        jcckit.plot.SymbolFactory $r3, $r6;
+        jcckit.graphic.GraphPoint r4;
+        jcckit.plot.Symbol r7;
+        jcckit.graphic.ClippingShape $r8, $r9;
+        boolean $z0, $z1;
+        jcckit.graphic.GraphicalComposite $r12;
+        jcckit.graphic.GraphicalElement $r13;
+
+        r0 := @this: jcckit.plot.SimpleCurve;
+
+        r4 := @parameter0: jcckit.graphic.GraphPoint;
+
+        r2 := @parameter1: jcckit.plot.Hint;
+
+        $r1 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.Polygon _curve>;
+
+        if $r1 == null goto label1;
+
+        $r10 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.Polygon _curve>;
+
+        virtualinvoke $r10.<jcckit.graphic.Polygon: void addPoint(jcckit.graphic.GraphPoint)>(r4);
+
+     label1:
+        r11 = r2;
+
+        $r3 = r0.<jcckit.plot.SimpleCurve: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        if $r3 == null goto label4;
+
+        $r6 = r0.<jcckit.plot.SimpleCurve: jcckit.plot.SymbolFactory _symbolFactory>;
+
+        $r5 = r0.<jcckit.plot.SimpleCurve: jcckit.plot.Hint _hintForNextPoint>;
+
+        r7 = interfaceinvoke $r6.<jcckit.plot.SymbolFactory: jcckit.plot.Symbol createSymbol(jcckit.graphic.GraphPoint,jcckit.plot.Hint,jcckit.plot.Hint)>(r4, $r5, r2);
+
+        $r8 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.ClippingShape _clippingShape>;
+
+        if $r8 == null goto label2;
+
+        $z0 = r0.<jcckit.plot.SimpleCurve: boolean _softClipping>;
+
+        if $z0 == 0 goto label2;
+
+        $r9 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.ClippingShape _clippingShape>;
+
+        $z1 = interfaceinvoke $r9.<jcckit.graphic.ClippingShape: boolean isInside(jcckit.graphic.GraphPoint)>(r4);
+
+        if $z1 == 0 goto label3;
+
+     label2:
+        $r12 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _symbols>;
+
+        $r13 = virtualinvoke r7.<jcckit.plot.Symbol: jcckit.graphic.GraphicalElement getSymbol()>();
+
+        virtualinvoke $r12.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r13);
+
+     label3:
+        $r14 = virtualinvoke r7.<jcckit.plot.Symbol: jcckit.plot.Hint getHintForNextPoint()>();
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.plot.Hint _hintForNextPoint> = $r14;
+
+        r11 = virtualinvoke r7.<jcckit.plot.Symbol: jcckit.plot.Hint getHintForNextCurve()>();
+
+     label4:
+        return r11;
+    }
+
+    public void removeAllPoints()
+    {
+        jcckit.plot.SimpleCurve r0;
+        jcckit.graphic.Polygon $r1, $r5;
+        jcckit.graphic.GraphicalComposite $r2, $r4;
+        jcckit.plot.Hint $r3;
+
+        r0 := @this: jcckit.plot.SimpleCurve;
+
+        $r1 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.Polygon _curve>;
+
+        if $r1 == null goto label1;
+
+        $r5 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.Polygon _curve>;
+
+        virtualinvoke $r5.<jcckit.graphic.Polygon: void removeAllPoints()>();
+
+     label1:
+        $r2 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _symbols>;
+
+        if $r2 == null goto label2;
+
+        $r4 = r0.<jcckit.plot.SimpleCurve: jcckit.graphic.GraphicalComposite _symbols>;
+
+        virtualinvoke $r4.<jcckit.graphic.GraphicalComposite: void removeAllElements()>();
+
+     label2:
+        $r3 = r0.<jcckit.plot.SimpleCurve: jcckit.plot.Hint _initialHintForNextPoint>;
+
+        r0.<jcckit.plot.SimpleCurve: jcckit.plot.Hint _hintForNextPoint> = $r3;
+
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.plot.SimpleCurve: java.lang.String INITIAL_HINT_FOR_NEXT_POINT_KEY> = "initialHintForNextPoint";
+
+        <jcckit.plot.SimpleCurve: java.lang.String LINE_ATTRIBUTES_KEY> = "lineAttributes";
+
+        <jcckit.plot.SimpleCurve: java.lang.String SOFT_CLIPPING_KEY> = "softClipping";
+
+        <jcckit.plot.SimpleCurve: java.lang.String WITH_LINE_KEY> = "withLine";
+
+        <jcckit.plot.SimpleCurve: java.lang.String SYMBOL_FACTORY_KEY> = "symbolFactory";
+
+        return;
+    }
+}

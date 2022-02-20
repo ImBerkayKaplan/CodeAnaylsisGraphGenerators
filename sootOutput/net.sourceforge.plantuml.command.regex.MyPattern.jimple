@@ -1,0 +1,226 @@
+public abstract class net.sourceforge.plantuml.command.regex.MyPattern extends java.lang.Object
+{
+    private static final java.util.Map cache;
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 EMPTY;
+    static final boolean $assertionsDisabled;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.regex.MyPattern r0;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.MyPattern;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)
+    {
+        java.lang.String r0, $r6;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1, $r5, r16;
+        int $i0;
+        java.util.Map $r2, $r3, $r8, $r9;
+        java.lang.Object $r4;
+        boolean $z0;
+        java.util.regex.Pattern $r7;
+        java.lang.AssertionError $r10;
+        java.lang.Throwable $r11, $r13;
+
+        r0 := @parameter0: java.lang.String;
+
+        if r0 == null goto label01;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label02;
+
+     label01:
+        $r1 = <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 EMPTY>;
+
+        return $r1;
+
+     label02:
+        $r2 = <net.sourceforge.plantuml.command.regex.MyPattern: java.util.Map cache>;
+
+        entermonitor $r2;
+
+     label03:
+        $r3 = <net.sourceforge.plantuml.command.regex.MyPattern: java.util.Map cache>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r16 = (net.sourceforge.plantuml.command.regex.Pattern2) $r4;
+
+        if r16 == null goto label05;
+
+        exitmonitor $r2;
+
+     label04:
+        return r16;
+
+     label05:
+        exitmonitor $r2;
+
+     label06:
+        goto label09;
+
+     label07:
+        $r13 := @caughtexception;
+
+        exitmonitor $r2;
+
+     label08:
+        throw $r13;
+
+     label09:
+        $z0 = <net.sourceforge.plantuml.command.regex.MyPattern: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label10;
+
+        if r16 == null goto label10;
+
+        $r10 = new java.lang.AssertionError;
+
+        specialinvoke $r10.<java.lang.AssertionError: void <init>()>();
+
+        throw $r10;
+
+     label10:
+        $r5 = new net.sourceforge.plantuml.command.regex.Pattern2;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: java.lang.String transform(java.lang.String)>(r0);
+
+        $r7 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String,int)>($r6, 2);
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.regex.Pattern2: void <init>(java.util.regex.Pattern)>($r7);
+
+        $r8 = <net.sourceforge.plantuml.command.regex.MyPattern: java.util.Map cache>;
+
+        entermonitor $r8;
+
+     label11:
+        $r9 = <net.sourceforge.plantuml.command.regex.MyPattern: java.util.Map cache>;
+
+        interfaceinvoke $r9.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r0, $r5);
+
+        exitmonitor $r8;
+
+     label12:
+        goto label15;
+
+     label13:
+        $r11 := @caughtexception;
+
+        exitmonitor $r8;
+
+     label14:
+        throw $r11;
+
+     label15:
+        return $r5;
+
+        catch java.lang.Throwable from label03 to label04 with label07;
+        catch java.lang.Throwable from label05 to label06 with label07;
+        catch java.lang.Throwable from label07 to label08 with label07;
+        catch java.lang.Throwable from label11 to label12 with label13;
+        catch java.lang.Throwable from label13 to label14 with label13;
+    }
+
+    private static java.lang.String transform(java.lang.String)
+    {
+        java.lang.String r0, r1, r2, r3, r4;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = virtualinvoke r0.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("%pLN", "\\p{L}0-9");
+
+        r2 = virtualinvoke r1.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("%s", "\\s\u00a0");
+
+        r3 = virtualinvoke r2.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("%q", "\'\u2018\u2019");
+
+        r4 = virtualinvoke r3.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("%g", "\"\u201c\u201d\u00ab\u00bb");
+
+        return r4;
+    }
+
+    public static boolean mtches(java.lang.CharSequence, java.lang.String)
+    {
+        java.lang.String r0;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        java.lang.CharSequence r2;
+        net.sourceforge.plantuml.command.regex.Matcher2 $r3;
+        boolean $z0;
+
+        r2 := @parameter0: java.lang.CharSequence;
+
+        r0 := @parameter1: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>(r0);
+
+        $r3 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r2);
+
+        $z0 = virtualinvoke $r3.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        return $z0;
+    }
+
+    public static java.lang.CharSequence removeAll(java.lang.CharSequence, java.lang.String)
+    {
+        java.lang.CharSequence r0;
+        java.lang.String $r1, r2, $r3, $r4;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        r2 := @parameter1: java.lang.String;
+
+        $r1 = interfaceinvoke r0.<java.lang.CharSequence: java.lang.String toString()>();
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: java.lang.String transform(java.lang.String)>(r2);
+
+        $r4 = virtualinvoke $r1.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>($r3, "");
+
+        return $r4;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.command.regex.MaxSizeHashMap $r1;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r2;
+        java.util.regex.Pattern $r3;
+
+        $r0 = class "Lnet/sourceforge/plantuml/command/regex/MyPattern;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.command.regex.MyPattern: boolean $assertionsDisabled> = $z1;
+
+        $r1 = new net.sourceforge.plantuml.command.regex.MaxSizeHashMap;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.command.regex.MaxSizeHashMap: void <init>(int)>(512);
+
+        <net.sourceforge.plantuml.command.regex.MyPattern: java.util.Map cache> = $r1;
+
+        $r2 = new net.sourceforge.plantuml.command.regex.Pattern2;
+
+        $r3 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("");
+
+        specialinvoke $r2.<net.sourceforge.plantuml.command.regex.Pattern2: void <init>(java.util.regex.Pattern)>($r3);
+
+        <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 EMPTY> = $r2;
+
+        return;
+    }
+}

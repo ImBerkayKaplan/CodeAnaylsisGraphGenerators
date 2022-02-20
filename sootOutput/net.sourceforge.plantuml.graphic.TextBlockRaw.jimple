@@ -1,0 +1,217 @@
+public class net.sourceforge.plantuml.graphic.TextBlockRaw extends net.sourceforge.plantuml.graphic.AbstractTextBlock implements net.sourceforge.plantuml.graphic.TextBlock
+{
+    private java.util.List lines2;
+    private final java.util.List strings;
+    private final net.sourceforge.plantuml.graphic.FontConfiguration fontConfiguration;
+
+    public void <init>(java.util.List, net.sourceforge.plantuml.graphic.FontConfiguration)
+    {
+        net.sourceforge.plantuml.graphic.TextBlockRaw r0;
+        java.util.List r1;
+        net.sourceforge.plantuml.graphic.FontConfiguration r2;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        r1 := @parameter0: java.util.List;
+
+        r2 := @parameter1: net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        specialinvoke r0.<net.sourceforge.plantuml.graphic.AbstractTextBlock: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: java.util.List strings> = r1;
+
+        r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: net.sourceforge.plantuml.graphic.FontConfiguration fontConfiguration> = r2;
+
+        return;
+    }
+
+    private java.util.List getLines(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.graphic.TextBlockRaw r0;
+        java.util.List $r1, $r2, $r5, $r10;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+        java.util.ArrayList $r4;
+        java.util.Iterator r6;
+        boolean $z0;
+        java.lang.Object $r7;
+        java.lang.String r8;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r9;
+        net.sourceforge.plantuml.graphic.SingleLine $r11;
+        java.lang.IllegalStateException $r12;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: java.util.List lines2>;
+
+        if $r1 != null goto label3;
+
+        if r3 != null goto label1;
+
+        $r12 = new java.lang.IllegalStateException;
+
+        specialinvoke $r12.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r12;
+
+     label1:
+        $r4 = new java.util.ArrayList;
+
+        specialinvoke $r4.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: java.util.List lines2> = $r4;
+
+        $r5 = r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: java.util.List strings>;
+
+        r6 = interfaceinvoke $r5.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r7 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (java.lang.String) $r7;
+
+        $r10 = r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: java.util.List lines2>;
+
+        $r9 = r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: net.sourceforge.plantuml.graphic.FontConfiguration fontConfiguration>;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.graphic.SingleLine: net.sourceforge.plantuml.graphic.SingleLine rawText(java.lang.String,net.sourceforge.plantuml.graphic.FontConfiguration)>(r8, $r9);
+
+        interfaceinvoke $r10.<java.util.List: boolean add(java.lang.Object)>($r11);
+
+        goto label2;
+
+     label3:
+        $r2 = r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: java.util.List lines2>;
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.graphic.TextBlockRaw r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r2;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: net.sourceforge.plantuml.awt.geom.Dimension2D getTextDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        return $r2;
+    }
+
+    protected final net.sourceforge.plantuml.awt.geom.Dimension2D getTextDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.graphic.TextBlockRaw r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        net.sourceforge.plantuml.Dimension2DDouble $r4;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.graphic.Line r6;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r7;
+        double $d0, $d1, d2, d3;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        d2 = 0.0;
+
+        d3 = 0.0;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: java.util.List getLines(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.graphic.Line) $r5;
+
+        r7 = interfaceinvoke r6.<net.sourceforge.plantuml.graphic.Line: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $d0 = virtualinvoke r7.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d3 = d3 + $d0;
+
+        $d1 = virtualinvoke r7.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        d2 = staticinvoke <java.lang.Math: double max(double,double)>(d2, $d1);
+
+        goto label1;
+
+     label2:
+        $r4 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>(d2, d3);
+
+        return $r4;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.graphic.TextBlockRaw r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1, $r8;
+        net.sourceforge.plantuml.graphic.StringBounder $r2, $r9;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.graphic.Line r6;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r7;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r10;
+        double $d0, d1;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        d1 = 0.0;
+
+        $r2 = interfaceinvoke r1.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.graphic.TextBlockRaw: java.util.List getLines(net.sourceforge.plantuml.graphic.StringBounder)>($r2);
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.graphic.Line) $r5;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>(d1);
+
+        $r8 = interfaceinvoke r1.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r7);
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.graphic.Line: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r8);
+
+        $r9 = interfaceinvoke r1.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r10 = interfaceinvoke r6.<net.sourceforge.plantuml.graphic.Line: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r9);
+
+        $d0 = virtualinvoke $r10.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d1 = d1 + $d0;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+}

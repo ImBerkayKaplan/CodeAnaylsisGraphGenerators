@@ -1,0 +1,351 @@
+public class net.sourceforge.plantuml.graphic.UnusedSpace extends java.lang.Object
+{
+    private static final int HALF_SIZE;
+    private double meanX2;
+    private double meanY2;
+    private final java.util.List points;
+    private static final java.util.Map cache;
+
+    public static net.sourceforge.plantuml.graphic.UnusedSpace getUnusedSpace(net.sourceforge.plantuml.ugraphic.UFont, char)
+    {
+        java.lang.Object[] $r0;
+        net.sourceforge.plantuml.ugraphic.UFont r1;
+        char c0;
+        java.lang.Character $r2;
+        java.util.List r3;
+        java.util.Map $r4, $r7;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.graphic.UnusedSpace $r6, r9;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UFont;
+
+        c0 := @parameter1: char;
+
+        $r0 = newarray (java.lang.Object)[2];
+
+        $r0[0] = r1;
+
+        $r2 = staticinvoke <java.lang.Character: java.lang.Character valueOf(char)>(c0);
+
+        $r0[1] = $r2;
+
+        r3 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r0);
+
+        $r4 = <net.sourceforge.plantuml.graphic.UnusedSpace: java.util.Map cache>;
+
+        $r5 = interfaceinvoke $r4.<java.util.Map: java.lang.Object get(java.lang.Object)>(r3);
+
+        r9 = (net.sourceforge.plantuml.graphic.UnusedSpace) $r5;
+
+        if r9 != null goto label1;
+
+        $r6 = new net.sourceforge.plantuml.graphic.UnusedSpace;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.graphic.UnusedSpace: void <init>(net.sourceforge.plantuml.ugraphic.UFont,char)>(r1, c0);
+
+        r9 = $r6;
+
+        $r7 = <net.sourceforge.plantuml.graphic.UnusedSpace: java.util.Map cache>;
+
+        interfaceinvoke $r7.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r3, $r6);
+
+     label1:
+        return r9;
+    }
+
+    private void <init>(net.sourceforge.plantuml.ugraphic.UFont, char)
+    {
+        net.sourceforge.plantuml.graphic.UnusedSpace r0;
+        java.util.ArrayList $r1;
+        java.awt.image.BufferedImage $r2;
+        java.awt.Graphics2D r4;
+        net.sourceforge.plantuml.ugraphic.UFont r5;
+        java.awt.Font $r6;
+        java.lang.StringBuilder $r7, $r8, $r9;
+        char c0;
+        java.lang.String $r10;
+        int $i1, $i2, $i3, $i5, i6, i7, i8, i9, i10, i11, i12, i13;
+        net.sourceforge.plantuml.graphic.UnusedSpace$Point $r11, $r13;
+        double $d0, $d1, $d2, $d3, d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, d13;
+        byte $b4;
+        boolean $z0;
+        java.util.List $r14;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.UnusedSpace;
+
+        r5 := @parameter0: net.sourceforge.plantuml.ugraphic.UFont;
+
+        c0 := @parameter1: char;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.graphic.UnusedSpace: java.util.List points> = $r1;
+
+        $r2 = new java.awt.image.BufferedImage;
+
+        specialinvoke $r2.<java.awt.image.BufferedImage: void <init>(int,int,int)>(40, 40, 1);
+
+        r4 = virtualinvoke $r2.<java.awt.image.BufferedImage: java.awt.Graphics2D createGraphics()>();
+
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.ugraphic.UFont: java.awt.Font getUnderlayingFont()>();
+
+        virtualinvoke r4.<java.awt.Graphics2D: void setFont(java.awt.Font)>($r6);
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c0);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r4.<java.awt.Graphics2D: void drawString(java.lang.String,int,int)>($r10, 20, 20);
+
+        i6 = 2147483647;
+
+        i7 = 2147483647;
+
+        i8 = -2147483648;
+
+        i9 = -2147483648;
+
+        i10 = 0;
+
+     label01:
+        $i1 = virtualinvoke $r2.<java.awt.image.BufferedImage: int getWidth()>();
+
+        if i10 >= $i1 goto label09;
+
+        i11 = 0;
+
+     label02:
+        $i5 = virtualinvoke $r2.<java.awt.image.BufferedImage: int getHeight()>();
+
+        if i11 >= $i5 goto label08;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.graphic.UnusedSpace: boolean isPoint(java.awt.image.BufferedImage,int,int)>($r2, i10, i11);
+
+        if $z0 == 0 goto label07;
+
+        if i10 >= i6 goto label03;
+
+        i6 = i10;
+
+     label03:
+        if i11 >= i7 goto label04;
+
+        i7 = i11;
+
+     label04:
+        if i10 <= i8 goto label05;
+
+        i8 = i10;
+
+     label05:
+        if i11 <= i9 goto label06;
+
+        i9 = i11;
+
+     label06:
+        $r14 = r0.<net.sourceforge.plantuml.graphic.UnusedSpace: java.util.List points>;
+
+        $r13 = new net.sourceforge.plantuml.graphic.UnusedSpace$Point;
+
+        $d12 = (double) i10;
+
+        $d11 = (double) i11;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.graphic.UnusedSpace$Point: void <init>(double,double)>($d12, $d11);
+
+        interfaceinvoke $r14.<java.util.List: boolean add(java.lang.Object)>($r13);
+
+     label07:
+        i11 = i11 + 1;
+
+        goto label02;
+
+     label08:
+        i10 = i10 + 1;
+
+        goto label01;
+
+     label09:
+        d13 = 1.7976931348623157E308;
+
+        i12 = i6 * 4;
+
+     label10:
+        $i2 = i8 * 4;
+
+        if i12 > $i2 goto label14;
+
+        i13 = i7 * 4;
+
+     label11:
+        $i3 = i9 * 4;
+
+        if i13 >= $i3 goto label13;
+
+        $r11 = new net.sourceforge.plantuml.graphic.UnusedSpace$Point;
+
+        $d0 = (double) i12;
+
+        $d3 = $d0 / 4.0;
+
+        $d1 = (double) i13;
+
+        $d2 = $d1 / 4.0;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.graphic.UnusedSpace$Point: void <init>(double,double)>($d3, $d2);
+
+        d4 = specialinvoke r0.<net.sourceforge.plantuml.graphic.UnusedSpace: double biggestDistSqFromPoint(net.sourceforge.plantuml.graphic.UnusedSpace$Point)>($r11);
+
+        $b4 = d4 cmpg d13;
+
+        if $b4 >= 0 goto label12;
+
+        d13 = d4;
+
+        $d5 = (double) i12;
+
+        $d6 = $d5 / 4.0;
+
+        $d7 = $d6 - 20.0;
+
+        r0.<net.sourceforge.plantuml.graphic.UnusedSpace: double meanX2> = $d7;
+
+        $d8 = (double) i13;
+
+        $d9 = $d8 / 4.0;
+
+        $d10 = $d9 - 20.0;
+
+        r0.<net.sourceforge.plantuml.graphic.UnusedSpace: double meanY2> = $d10;
+
+     label12:
+        i13 = i13 + 1;
+
+        goto label11;
+
+     label13:
+        i12 = i12 + 1;
+
+        goto label10;
+
+     label14:
+        return;
+    }
+
+    private double biggestDistSqFromPoint(net.sourceforge.plantuml.graphic.UnusedSpace$Point)
+    {
+        net.sourceforge.plantuml.graphic.UnusedSpace r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.graphic.UnusedSpace$Point r4, r5;
+        double d0, d1;
+        byte $b0;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.UnusedSpace;
+
+        r5 := @parameter0: net.sourceforge.plantuml.graphic.UnusedSpace$Point;
+
+        d1 = 0.0;
+
+        $r1 = r0.<net.sourceforge.plantuml.graphic.UnusedSpace: java.util.List points>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.graphic.UnusedSpace$Point) $r3;
+
+        d0 = virtualinvoke r5.<net.sourceforge.plantuml.graphic.UnusedSpace$Point: double getDistSq(net.sourceforge.plantuml.graphic.UnusedSpace$Point)>(r4);
+
+        $b0 = d0 cmpl d1;
+
+        if $b0 <= 0 goto label2;
+
+        d1 = d0;
+
+     label2:
+        goto label1;
+
+     label3:
+        return d1;
+    }
+
+    private static boolean isPoint(java.awt.image.BufferedImage, int, int)
+    {
+        java.awt.image.BufferedImage r0;
+        int i0, i1, $i2, i3;
+
+        r0 := @parameter0: java.awt.image.BufferedImage;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        $i2 = virtualinvoke r0.<java.awt.image.BufferedImage: int getRGB(int,int)>(i0, i1);
+
+        i3 = $i2 & 16777215;
+
+        if i3 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        return 1;
+    }
+
+    public double getCenterX()
+    {
+        net.sourceforge.plantuml.graphic.UnusedSpace r0;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.UnusedSpace;
+
+        $d0 = r0.<net.sourceforge.plantuml.graphic.UnusedSpace: double meanX2>;
+
+        return $d0;
+    }
+
+    public double getCenterY()
+    {
+        net.sourceforge.plantuml.graphic.UnusedSpace r0;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.UnusedSpace;
+
+        $d0 = r0.<net.sourceforge.plantuml.graphic.UnusedSpace: double meanY2>;
+
+        return $d0;
+    }
+
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        <net.sourceforge.plantuml.graphic.UnusedSpace: int HALF_SIZE> = 20;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <net.sourceforge.plantuml.graphic.UnusedSpace: java.util.Map cache> = $r0;
+
+        return;
+    }
+}

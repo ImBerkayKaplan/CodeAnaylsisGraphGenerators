@@ -1,0 +1,557 @@
+public class net.sourceforge.plantuml.code.AsciiEncoderBase64 extends java.lang.Object implements net.sourceforge.plantuml.code.URLEncoder
+{
+    private static final char[] encode6bit;
+    private static final byte[] decode6bit;
+    static final boolean $assertionsDisabled;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.code.AsciiEncoderBase64 r0;
+
+        r0 := @this: net.sourceforge.plantuml.code.AsciiEncoderBase64;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.String encode(byte[])
+    {
+        byte[] r0;
+        java.lang.StringBuilder $r1;
+        int $i0, $i1, $i2, $i3, $i4, $i6, $i7, $i8, $i9, $i10, $i12, i14, $i15, $i16, $i17;
+        java.lang.String $r3;
+        net.sourceforge.plantuml.code.AsciiEncoderBase64 r4;
+        byte $b5, $b11, $b13;
+
+        r4 := @this: net.sourceforge.plantuml.code.AsciiEncoderBase64;
+
+        r0 := @parameter0: byte[];
+
+        if r0 != null goto label1;
+
+        return "";
+
+     label1:
+        $r1 = new java.lang.StringBuilder;
+
+        $i0 = lengthof r0;
+
+        $i1 = $i0 * 4;
+
+        $i2 = $i1 + 2;
+
+        $i3 = $i2 / 3;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>(int)>($i3);
+
+        i14 = 0;
+
+     label2:
+        $i4 = lengthof r0;
+
+        if i14 >= $i4 goto label7;
+
+        $b5 = r0[i14];
+
+        $i15 = $b5 & 255;
+
+        $i7 = i14 + 1;
+
+        $i6 = lengthof r0;
+
+        if $i7 >= $i6 goto label3;
+
+        $i12 = i14 + 1;
+
+        $b13 = r0[$i12];
+
+        $i16 = $b13 & 255;
+
+        goto label4;
+
+     label3:
+        $i16 = 0;
+
+     label4:
+        $i9 = i14 + 2;
+
+        $i8 = lengthof r0;
+
+        if $i9 >= $i8 goto label5;
+
+        $i10 = i14 + 2;
+
+        $b11 = r0[$i10];
+
+        $i17 = $b11 & 255;
+
+        goto label6;
+
+     label5:
+        $i17 = 0;
+
+     label6:
+        specialinvoke r4.<net.sourceforge.plantuml.code.AsciiEncoderBase64: void append3bytes(java.lang.StringBuilder,int,int,int)>($r1, $i15, $i16, $i17);
+
+        i14 = i14 + 3;
+
+        goto label2;
+
+     label7:
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+
+    public byte[] decode(java.lang.String)
+    {
+        net.sourceforge.plantuml.code.AsciiEncoderBase64 r0;
+        java.lang.String r1;
+        int $i0, $i1, $i2, $i4, $i6, $i8, i10, i11;
+        byte[] r2;
+        char $c3, $c5, $c7, $c9;
+
+        r0 := @this: net.sourceforge.plantuml.code.AsciiEncoderBase64;
+
+        r1 := @parameter0: java.lang.String;
+
+        $i0 = virtualinvoke r1.<java.lang.String: int length()>();
+
+        $i1 = specialinvoke r0.<net.sourceforge.plantuml.code.AsciiEncoderBase64: int computeSize(int)>($i0);
+
+        r2 = newarray (byte)[$i1];
+
+        i10 = 0;
+
+        i11 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<java.lang.String: int length()>();
+
+        if i11 >= $i2 goto label2;
+
+        $c3 = specialinvoke r0.<net.sourceforge.plantuml.code.AsciiEncoderBase64: char scharAt(java.lang.String,int)>(r1, i11);
+
+        $i4 = i11 + 1;
+
+        $c5 = specialinvoke r0.<net.sourceforge.plantuml.code.AsciiEncoderBase64: char scharAt(java.lang.String,int)>(r1, $i4);
+
+        $i6 = i11 + 2;
+
+        $c7 = specialinvoke r0.<net.sourceforge.plantuml.code.AsciiEncoderBase64: char scharAt(java.lang.String,int)>(r1, $i6);
+
+        $i8 = i11 + 3;
+
+        $c9 = specialinvoke r0.<net.sourceforge.plantuml.code.AsciiEncoderBase64: char scharAt(java.lang.String,int)>(r1, $i8);
+
+        specialinvoke r0.<net.sourceforge.plantuml.code.AsciiEncoderBase64: void decode3bytes(byte[],int,char,char,char,char)>(r2, i10, $c3, $c5, $c7, $c9);
+
+        i10 = i10 + 3;
+
+        i11 = i11 + 4;
+
+        goto label1;
+
+     label2:
+        return r2;
+    }
+
+    private int computeSize(int)
+    {
+        int i0, $i1, $i2, $i3, $i4, $i5, i6;
+        boolean $z0;
+        java.lang.AssertionError $r0;
+        java.lang.StringBuilder $r1, $r2, $r3;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.code.AsciiEncoderBase64 r5;
+
+        r5 := @this: net.sourceforge.plantuml.code.AsciiEncoderBase64;
+
+        i6 := @parameter0: int;
+
+        i0 = i6 % 4;
+
+        if i0 == 0 goto label1;
+
+        $i5 = 4 - i0;
+
+        i6 = i6 + $i5;
+
+     label1:
+        $z0 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label2;
+
+        $i4 = i6 % 4;
+
+        if $i4 == 0 goto label2;
+
+        $r0 = new java.lang.AssertionError;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("length=");
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i6);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r0.<java.lang.AssertionError: void <init>(java.lang.Object)>($r4);
+
+        throw $r0;
+
+     label2:
+        $i1 = i6 * 3;
+
+        $i2 = $i1 + 3;
+
+        $i3 = $i2 / 4;
+
+        return $i3;
+    }
+
+    private char scharAt(java.lang.String, int)
+    {
+        int i0, $i1;
+        java.lang.String r0;
+        char $c2;
+        net.sourceforge.plantuml.code.AsciiEncoderBase64 r1;
+
+        r1 := @this: net.sourceforge.plantuml.code.AsciiEncoderBase64;
+
+        r0 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        $i1 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if i0 < $i1 goto label1;
+
+        return 65;
+
+     label1:
+        $c2 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i0);
+
+        return $c2;
+    }
+
+    public static int decode6bit(char)
+    {
+        char c0;
+        byte[] $r0;
+        byte $b1;
+
+        c0 := @parameter0: char;
+
+        $r0 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: byte[] decode6bit>;
+
+        $b1 = $r0[c0];
+
+        return $b1;
+    }
+
+    public static char encode6bit(byte)
+    {
+        boolean $z0, $z1;
+        int $i0, $i1, $i2, $i3, $i5, $i7;
+        java.lang.AssertionError $r0, $r1;
+        char $c4, $c6, $c8;
+        byte b9, b10, b11, b12;
+
+        b9 := @parameter0: byte;
+
+        $z0 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label2;
+
+        if b9 < 0 goto label1;
+
+        if b9 < 64 goto label2;
+
+     label1:
+        $r1 = new java.lang.AssertionError;
+
+        specialinvoke $r1.<java.lang.AssertionError: void <init>()>();
+
+        throw $r1;
+
+     label2:
+        if b9 >= 26 goto label3;
+
+        $i7 = 65 + b9;
+
+        $c8 = (char) $i7;
+
+        return $c8;
+
+     label3:
+        $i0 = b9 - 26;
+
+        b10 = (byte) $i0;
+
+        if b10 >= 26 goto label4;
+
+        $i5 = 97 + b10;
+
+        $c6 = (char) $i5;
+
+        return $c6;
+
+     label4:
+        $i1 = b10 - 26;
+
+        b11 = (byte) $i1;
+
+        if b11 >= 10 goto label5;
+
+        $i3 = 48 + b11;
+
+        $c4 = (char) $i3;
+
+        return $c4;
+
+     label5:
+        $i2 = b11 - 10;
+
+        b12 = (byte) $i2;
+
+        if b12 != 0 goto label6;
+
+        return 45;
+
+     label6:
+        if b12 != 1 goto label7;
+
+        return 95;
+
+     label7:
+        $z1 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: boolean $assertionsDisabled>;
+
+        if $z1 != 0 goto label8;
+
+        $r0 = new java.lang.AssertionError;
+
+        specialinvoke $r0.<java.lang.AssertionError: void <init>()>();
+
+        throw $r0;
+
+     label8:
+        return 63;
+    }
+
+    private void append3bytes(java.lang.StringBuilder, int, int, int)
+    {
+        int i0, i1, $i2, i3, $i4, $i5, i6, $i7, i8, $i9, $i10, i11, i12, $i13, $i15, $i17, $i19;
+        java.lang.StringBuilder r0;
+        char[] $r1, $r3, $r5, $r7;
+        char $c14, $c16, $c18, $c20;
+        net.sourceforge.plantuml.code.AsciiEncoderBase64 r9;
+
+        r9 := @this: net.sourceforge.plantuml.code.AsciiEncoderBase64;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        i0 := @parameter1: int;
+
+        i3 := @parameter2: int;
+
+        i8 := @parameter3: int;
+
+        i1 = i0 >> 2;
+
+        $i2 = i0 & 3;
+
+        $i5 = $i2 << 4;
+
+        $i4 = i3 >> 4;
+
+        i6 = $i5 | $i4;
+
+        $i7 = i3 & 15;
+
+        $i10 = $i7 << 2;
+
+        $i9 = i8 >> 6;
+
+        i11 = $i10 | $i9;
+
+        i12 = i8 & 63;
+
+        $r1 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: char[] encode6bit>;
+
+        $i13 = i1 & 63;
+
+        $c14 = $r1[$i13];
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c14);
+
+        $r3 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: char[] encode6bit>;
+
+        $i15 = i6 & 63;
+
+        $c16 = $r3[$i15];
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c16);
+
+        $r5 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: char[] encode6bit>;
+
+        $i17 = i11 & 63;
+
+        $c18 = $r5[$i17];
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c18);
+
+        $r7 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: char[] encode6bit>;
+
+        $i19 = i12 & 63;
+
+        $c20 = $r7[$i19];
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c20);
+
+        return;
+    }
+
+    private void decode3bytes(byte[], int, char, char, char, char)
+    {
+        char c0, c2, c4, c6;
+        byte[] $r0, $r1, $r2, $r3, r4;
+        byte b1, b3, b5, b7, $b12, $b17, $b22;
+        int i8, $i9, $i10, $i11, $i13, $i14, $i15, $i16, $i18, $i19, $i20, $i21, $i23;
+        net.sourceforge.plantuml.code.AsciiEncoderBase64 r5;
+
+        r5 := @this: net.sourceforge.plantuml.code.AsciiEncoderBase64;
+
+        r4 := @parameter0: byte[];
+
+        i8 := @parameter1: int;
+
+        c0 := @parameter2: char;
+
+        c2 := @parameter3: char;
+
+        c4 := @parameter4: char;
+
+        c6 := @parameter5: char;
+
+        $r0 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: byte[] decode6bit>;
+
+        b1 = $r0[c0];
+
+        $r1 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: byte[] decode6bit>;
+
+        b3 = $r1[c2];
+
+        $r2 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: byte[] decode6bit>;
+
+        b5 = $r2[c4];
+
+        $r3 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: byte[] decode6bit>;
+
+        b7 = $r3[c6];
+
+        $i10 = b1 << 2;
+
+        $i9 = b3 >> 4;
+
+        $i11 = $i10 | $i9;
+
+        $b12 = (byte) $i11;
+
+        r4[i8] = $b12;
+
+        $i18 = i8 + 1;
+
+        $i13 = b3 & 15;
+
+        $i15 = $i13 << 4;
+
+        $i14 = b5 >> 2;
+
+        $i16 = $i15 | $i14;
+
+        $b17 = (byte) $i16;
+
+        r4[$i18] = $b17;
+
+        $i23 = i8 + 2;
+
+        $i19 = b5 & 3;
+
+        $i20 = $i19 << 6;
+
+        $i21 = $i20 | b7;
+
+        $b22 = (byte) $i21;
+
+        r4[$i23] = $b22;
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+        char[] $r1, $r3, $r4;
+        byte[] $r2, $r5;
+        char $c0, $c1;
+        int $i2;
+        byte b3;
+
+        $r0 = class "Lnet/sourceforge/plantuml/code/AsciiEncoderBase64;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.code.AsciiEncoderBase64: boolean $assertionsDisabled> = $z1;
+
+        $r1 = newarray (char)[64];
+
+        <net.sourceforge.plantuml.code.AsciiEncoderBase64: char[] encode6bit> = $r1;
+
+        $r2 = newarray (byte)[128];
+
+        <net.sourceforge.plantuml.code.AsciiEncoderBase64: byte[] decode6bit> = $r2;
+
+        b3 = 0;
+
+     label3:
+        if b3 >= 64 goto label4;
+
+        $r3 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: char[] encode6bit>;
+
+        $c0 = staticinvoke <net.sourceforge.plantuml.code.AsciiEncoderBase64: char encode6bit(byte)>(b3);
+
+        $r3[b3] = $c0;
+
+        $r5 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: byte[] decode6bit>;
+
+        $r4 = <net.sourceforge.plantuml.code.AsciiEncoderBase64: char[] encode6bit>;
+
+        $c1 = $r4[b3];
+
+        $r5[$c1] = b3;
+
+        $i2 = b3 + 1;
+
+        b3 = (byte) $i2;
+
+        goto label3;
+
+     label4:
+        return;
+    }
+}

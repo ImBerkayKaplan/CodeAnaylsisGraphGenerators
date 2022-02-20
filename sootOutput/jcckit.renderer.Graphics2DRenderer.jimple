@@ -1,0 +1,741 @@
+public class jcckit.renderer.Graphics2DRenderer extends java.lang.Object implements jcckit.graphic.GraphicalCompositeRenderer, jcckit.graphic.PolygonRenderer, jcckit.graphic.OvalRenderer, jcckit.graphic.TextRenderer, jcckit.graphic.RectangleRenderer
+{
+    private static final int FS;
+    private static final java.lang.String DEFAULT_FONT_NAME;
+    private static final jcckit.graphic.FontStyle DEFAULT_FONT_STYLE;
+    private static final int DEFAULT_FONT_SIZE;
+    private java.awt.Color _defaultColor;
+    private java.awt.Graphics2D _graphics;
+
+    public void <init>()
+    {
+        jcckit.renderer.Graphics2DRenderer r0;
+
+        r0 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public jcckit.renderer.Graphics2DRenderer init(java.awt.Graphics2D)
+    {
+        jcckit.renderer.Graphics2DRenderer r0;
+        java.awt.Graphics2D r1;
+        java.awt.Color $r2;
+
+        r0 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        r1 := @parameter0: java.awt.Graphics2D;
+
+        r0.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics> = r1;
+
+        $r2 = virtualinvoke r1.<java.awt.Graphics2D: java.awt.Color getColor()>();
+
+        r0.<jcckit.renderer.Graphics2DRenderer: java.awt.Color _defaultColor> = $r2;
+
+        return r0;
+    }
+
+    public void startRendering(jcckit.graphic.GraphicalComposite)
+    {
+        jcckit.graphic.GraphicalComposite r0;
+        jcckit.graphic.ClippingShape r1;
+        jcckit.graphic.ClippingRectangle r2;
+        jcckit.renderer.Graphics2DRenderer r3;
+        java.awt.geom.Rectangle2D$Double $r4;
+        java.awt.Graphics2D $r5;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7;
+
+        r3 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        r0 := @parameter0: jcckit.graphic.GraphicalComposite;
+
+        r1 = virtualinvoke r0.<jcckit.graphic.GraphicalComposite: jcckit.graphic.ClippingShape getClippingShape()>();
+
+        if r1 == null goto label1;
+
+        r2 = interfaceinvoke r1.<jcckit.graphic.ClippingShape: jcckit.graphic.ClippingRectangle getBoundingBox()>();
+
+        $r5 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        $r4 = new java.awt.geom.Rectangle2D$Double;
+
+        $d0 = virtualinvoke r2.<jcckit.graphic.ClippingRectangle: double getMinX()>();
+
+        $d1 = virtualinvoke r2.<jcckit.graphic.ClippingRectangle: double getMinY()>();
+
+        $d2 = virtualinvoke r2.<jcckit.graphic.ClippingRectangle: double getMaxX()>();
+
+        $d3 = virtualinvoke r2.<jcckit.graphic.ClippingRectangle: double getMinX()>();
+
+        $d4 = $d2 - $d3;
+
+        $d5 = virtualinvoke r2.<jcckit.graphic.ClippingRectangle: double getMaxY()>();
+
+        $d6 = virtualinvoke r2.<jcckit.graphic.ClippingRectangle: double getMinY()>();
+
+        $d7 = $d5 - $d6;
+
+        specialinvoke $r4.<java.awt.geom.Rectangle2D$Double: void <init>(double,double,double,double)>($d0, $d1, $d4, $d7);
+
+        virtualinvoke $r5.<java.awt.Graphics2D: void clip(java.awt.Shape)>($r4);
+
+     label1:
+        return;
+    }
+
+    public void finishRendering(jcckit.graphic.GraphicalComposite)
+    {
+        jcckit.renderer.Graphics2DRenderer r0;
+        java.awt.Graphics2D $r1;
+        jcckit.graphic.GraphicalComposite r2;
+
+        r0 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        r2 := @parameter0: jcckit.graphic.GraphicalComposite;
+
+        $r1 = r0.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r1.<java.awt.Graphics2D: void setClip(java.awt.Shape)>(null);
+
+        return;
+    }
+
+    public void render(jcckit.graphic.Polygon)
+    {
+        jcckit.graphic.Polygon r0;
+        int i0, i1;
+        jcckit.renderer.Graphics2DRenderer r1;
+        java.awt.Graphics2D $r2;
+        java.awt.Color r3;
+        java.awt.geom.GeneralPath $r4;
+        jcckit.graphic.GraphPoint $r6, $r7, $r8, $r9;
+        double $d0, $d1, $d2, $d3;
+        float $f0, $f1, $f2, $f3;
+        boolean $z0;
+
+        r1 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        r0 := @parameter0: jcckit.graphic.Polygon;
+
+        i0 = virtualinvoke r0.<jcckit.graphic.Polygon: int getNumberOfPoints()>();
+
+        if i0 <= 0 goto label4;
+
+        $r2 = r1.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        r3 = virtualinvoke $r2.<java.awt.Graphics2D: java.awt.Color getColor()>();
+
+        $r4 = new java.awt.geom.GeneralPath;
+
+        specialinvoke $r4.<java.awt.geom.GeneralPath: void <init>(int,int)>(0, i0);
+
+        $r6 = virtualinvoke r0.<jcckit.graphic.Polygon: jcckit.graphic.GraphPoint getPoint(int)>(0);
+
+        $d0 = virtualinvoke $r6.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $f0 = (float) $d0;
+
+        $r7 = virtualinvoke r0.<jcckit.graphic.Polygon: jcckit.graphic.GraphPoint getPoint(int)>(0);
+
+        $d1 = virtualinvoke $r7.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $f1 = (float) $d1;
+
+        virtualinvoke $r4.<java.awt.geom.GeneralPath: void moveTo(float,float)>($f0, $f1);
+
+        i1 = 1;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        $r8 = virtualinvoke r0.<jcckit.graphic.Polygon: jcckit.graphic.GraphPoint getPoint(int)>(i1);
+
+        $d2 = virtualinvoke $r8.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $f2 = (float) $d2;
+
+        $r9 = virtualinvoke r0.<jcckit.graphic.Polygon: jcckit.graphic.GraphPoint getPoint(int)>(i1);
+
+        $d3 = virtualinvoke $r9.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $f3 = (float) $d3;
+
+        virtualinvoke $r4.<java.awt.geom.GeneralPath: void lineTo(float,float)>($f2, $f3);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        $z0 = virtualinvoke r0.<jcckit.graphic.Polygon: boolean isClosed()>();
+
+        if $z0 == 0 goto label3;
+
+        virtualinvoke $r4.<java.awt.geom.GeneralPath: void closePath()>();
+
+     label3:
+        specialinvoke r1.<jcckit.renderer.Graphics2DRenderer: void drawShape(java.awt.Shape,jcckit.graphic.BasicGraphicalElement,java.awt.Color)>($r4, r0, r3);
+
+     label4:
+        return;
+    }
+
+    public void render(jcckit.graphic.Rectangle)
+    {
+        jcckit.renderer.Graphics2DRenderer r0;
+        java.awt.Graphics2D $r1;
+        java.awt.Color r2;
+        jcckit.graphic.Rectangle r3;
+        jcckit.graphic.GraphPoint r4;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7;
+        java.awt.geom.Rectangle2D$Double $r5;
+
+        r0 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        r3 := @parameter0: jcckit.graphic.Rectangle;
+
+        $r1 = r0.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        r2 = virtualinvoke $r1.<java.awt.Graphics2D: java.awt.Color getColor()>();
+
+        r4 = virtualinvoke r3.<jcckit.graphic.Rectangle: jcckit.graphic.GraphPoint getCenter()>();
+
+        d0 = virtualinvoke r3.<jcckit.graphic.Rectangle: double getWidth()>();
+
+        d1 = virtualinvoke r3.<jcckit.graphic.Rectangle: double getHeight()>();
+
+        $r5 = new java.awt.geom.Rectangle2D$Double;
+
+        $d2 = virtualinvoke r4.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $d3 = 0.5 * d0;
+
+        $d4 = $d2 - $d3;
+
+        $d5 = virtualinvoke r4.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d6 = 0.5 * d1;
+
+        $d7 = $d5 - $d6;
+
+        specialinvoke $r5.<java.awt.geom.Rectangle2D$Double: void <init>(double,double,double,double)>($d4, $d7, d0, d1);
+
+        specialinvoke r0.<jcckit.renderer.Graphics2DRenderer: void drawShape(java.awt.Shape,jcckit.graphic.BasicGraphicalElement,java.awt.Color)>($r5, r3, r2);
+
+        return;
+    }
+
+    public void render(jcckit.graphic.Oval)
+    {
+        jcckit.renderer.Graphics2DRenderer r0;
+        java.awt.Graphics2D $r1;
+        java.awt.Color r2;
+        jcckit.graphic.Oval r3;
+        jcckit.graphic.GraphPoint r4;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7;
+        java.awt.geom.Ellipse2D$Double $r5;
+
+        r0 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        r3 := @parameter0: jcckit.graphic.Oval;
+
+        $r1 = r0.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        r2 = virtualinvoke $r1.<java.awt.Graphics2D: java.awt.Color getColor()>();
+
+        r4 = virtualinvoke r3.<jcckit.graphic.Oval: jcckit.graphic.GraphPoint getCenter()>();
+
+        d0 = virtualinvoke r3.<jcckit.graphic.Oval: double getWidth()>();
+
+        d1 = virtualinvoke r3.<jcckit.graphic.Oval: double getHeight()>();
+
+        $r5 = new java.awt.geom.Ellipse2D$Double;
+
+        $d2 = virtualinvoke r4.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $d3 = 0.5 * d0;
+
+        $d4 = $d2 - $d3;
+
+        $d5 = virtualinvoke r4.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d6 = 0.5 * d1;
+
+        $d7 = $d5 - $d6;
+
+        specialinvoke $r5.<java.awt.geom.Ellipse2D$Double: void <init>(double,double,double,double)>($d4, $d7, d0, d1);
+
+        specialinvoke r0.<jcckit.renderer.Graphics2DRenderer: void drawShape(java.awt.Shape,jcckit.graphic.BasicGraphicalElement,java.awt.Color)>($r5, r3, r2);
+
+        return;
+    }
+
+    private void drawShape(java.awt.Shape, jcckit.graphic.BasicGraphicalElement, java.awt.Color)
+    {
+        jcckit.graphic.BasicGraphicalElement r0;
+        jcckit.graphic.GraphicAttributes r1;
+        boolean $z0, $z1, $z2;
+        jcckit.renderer.Graphics2DRenderer r2;
+        java.awt.Color r3, $r12, r19, r20;
+        java.awt.Graphics2D $r4, $r5, $r7, $r11, $r16, $r17;
+        java.awt.Shape r6;
+        jcckit.graphic.LineAttributes r8;
+        java.awt.BasicStroke $r9, $r14, r21;
+        double $d0, $d1;
+        float $f0, $f1, $f2;
+        double[] r10, $r15;
+        int $i0, $i1, i2;
+        float[] r13;
+        jcckit.graphic.FillAttributes $r18;
+
+        r2 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        r6 := @parameter0: java.awt.Shape;
+
+        r0 := @parameter1: jcckit.graphic.BasicGraphicalElement;
+
+        r3 := @parameter2: java.awt.Color;
+
+        r1 = virtualinvoke r0.<jcckit.graphic.BasicGraphicalElement: jcckit.graphic.GraphicAttributes getGraphicAttributes()>();
+
+        r19 = null;
+
+        $z0 = virtualinvoke r0.<jcckit.graphic.BasicGraphicalElement: boolean isClosed()>();
+
+        if $z0 == 0 goto label1;
+
+        $z2 = r1 instanceof jcckit.graphic.FillAttributes;
+
+        if $z2 == 0 goto label1;
+
+        $r18 = (jcckit.graphic.FillAttributes) r1;
+
+        r19 = interfaceinvoke $r18.<jcckit.graphic.FillAttributes: java.awt.Color getFillColor()>();
+
+     label1:
+        if r19 == null goto label2;
+
+        $r16 = r2.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r16.<java.awt.Graphics2D: void setColor(java.awt.Color)>(r19);
+
+        $r17 = r2.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r17.<java.awt.Graphics2D: void fill(java.awt.Shape)>(r6);
+
+     label2:
+        r20 = r2.<jcckit.renderer.Graphics2DRenderer: java.awt.Color _defaultColor>;
+
+        $z1 = r1 instanceof jcckit.graphic.LineAttributes;
+
+        if $z1 == 0 goto label7;
+
+        r8 = (jcckit.graphic.LineAttributes) r1;
+
+        $r9 = new java.awt.BasicStroke;
+
+        $d0 = interfaceinvoke r8.<jcckit.graphic.LineAttributes: double getLineThickness()>();
+
+        $f0 = (float) $d0;
+
+        specialinvoke $r9.<java.awt.BasicStroke: void <init>(float)>($f0);
+
+        r21 = $r9;
+
+        r10 = interfaceinvoke r8.<jcckit.graphic.LineAttributes: double[] getLinePattern()>();
+
+        if r10 == null goto label5;
+
+        $i0 = lengthof r10;
+
+        r13 = newarray (float)[$i0];
+
+        i2 = 0;
+
+     label3:
+        $i1 = lengthof r13;
+
+        if i2 >= $i1 goto label4;
+
+        $r15 = interfaceinvoke r8.<jcckit.graphic.LineAttributes: double[] getLinePattern()>();
+
+        $d1 = $r15[i2];
+
+        $f2 = (float) $d1;
+
+        r13[i2] = $f2;
+
+        i2 = i2 + 1;
+
+        goto label3;
+
+     label4:
+        $r14 = new java.awt.BasicStroke;
+
+        $f1 = virtualinvoke $r9.<java.awt.BasicStroke: float getLineWidth()>();
+
+        specialinvoke $r14.<java.awt.BasicStroke: void <init>(float,int,int,float,float[],float)>($f1, 0, 0, 10.0F, r13, 0.0F);
+
+        r21 = $r14;
+
+     label5:
+        $r11 = r2.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r11.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>(r21);
+
+        $r12 = interfaceinvoke r8.<jcckit.graphic.LineAttributes: java.awt.Color getLineColor()>();
+
+        if $r12 != null goto label6;
+
+        if r19 == null goto label7;
+
+     label6:
+        r20 = interfaceinvoke r8.<jcckit.graphic.LineAttributes: java.awt.Color getLineColor()>();
+
+     label7:
+        if r20 == null goto label8;
+
+        $r5 = r2.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r5.<java.awt.Graphics2D: void setColor(java.awt.Color)>(r20);
+
+        $r7 = r2.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r7.<java.awt.Graphics2D: void draw(java.awt.Shape)>(r6);
+
+     label8:
+        $r4 = r2.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r4.<java.awt.Graphics2D: void setColor(java.awt.Color)>(r3);
+
+        return;
+    }
+
+    public void render(jcckit.graphic.Text)
+    {
+        jcckit.graphic.Text r0;
+        jcckit.graphic.GraphicAttributes r1;
+        boolean $z0;
+        jcckit.graphic.TextAttributes r2;
+        jcckit.renderer.Graphics2DRenderer r3;
+        java.awt.Graphics2D $r4, $r6, $r7, $r10, $r13, $r16, $r17, $r19, $r28, $r29, $r30;
+        java.awt.Color r5, r33;
+        java.awt.geom.AffineTransform $r8, r11, $r12, $r14;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, $d24, $d25, $d26, $d27, $d28, $d29, $d30, $d31, $d32, d33, $d34, d38, d39, d40, d41, d42, d43;
+        java.lang.String r9;
+        byte $b0, $b1;
+        java.awt.FontMetrics $r18;
+        java.awt.geom.Rectangle2D r20;
+        java.awt.geom.Point2D$Double $r21;
+        jcckit.graphic.GraphPoint $r22, $r23;
+        jcckit.graphic.Anchor $r26, $r27, $r31, $r32;
+        int $i2, $i3, $i4, $i5;
+        float $f0, $f1;
+        java.awt.Font r34, r35;
+
+        r3 := @this: jcckit.renderer.Graphics2DRenderer;
+
+        r0 := @parameter0: jcckit.graphic.Text;
+
+        r1 = virtualinvoke r0.<jcckit.graphic.Text: jcckit.graphic.GraphicAttributes getGraphicAttributes()>();
+
+        $z0 = r1 instanceof jcckit.graphic.TextAttributes;
+
+        if $z0 == 0 goto label6;
+
+        r2 = (jcckit.graphic.TextAttributes) r1;
+
+        $r4 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        r5 = virtualinvoke $r4.<java.awt.Graphics2D: java.awt.Color getColor()>();
+
+        r33 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: java.awt.Color getTextColor()>();
+
+        if r33 != null goto label1;
+
+        r33 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Color _defaultColor>;
+
+     label1:
+        $r6 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r6.<java.awt.Graphics2D: void setColor(java.awt.Color)>(r33);
+
+        $r7 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        $r8 = virtualinvoke $r7.<java.awt.Graphics2D: java.awt.geom.AffineTransform getTransform()>();
+
+        d0 = virtualinvoke $r8.<java.awt.geom.AffineTransform: double getScaleX()>();
+
+        r9 = virtualinvoke r0.<jcckit.graphic.Text: java.lang.String getText()>();
+
+        $r10 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        r11 = virtualinvoke $r10.<java.awt.Graphics2D: java.awt.geom.AffineTransform getTransform()>();
+
+        $r13 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        $r12 = new java.awt.geom.AffineTransform;
+
+        specialinvoke $r12.<java.awt.geom.AffineTransform: void <init>()>();
+
+        virtualinvoke $r13.<java.awt.Graphics2D: void setTransform(java.awt.geom.AffineTransform)>($r12);
+
+        d33 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: double getFontSize()>();
+
+        $b0 = d33 cmpl 0.0;
+
+        if $b0 != 0 goto label2;
+
+        $d34 = 1.0;
+
+        goto label3;
+
+     label2:
+        $d1 = d33 * d0;
+
+        $d34 = $d1 / 12.0;
+
+     label3:
+        r34 = staticinvoke <jcckit.renderer.Graphics2DRenderer: java.awt.Font createFont(jcckit.graphic.TextAttributes,int)>(r2, 0);
+
+        $r14 = new java.awt.geom.AffineTransform;
+
+        specialinvoke $r14.<java.awt.geom.AffineTransform: void <init>()>();
+
+        virtualinvoke $r14.<java.awt.geom.AffineTransform: void scale(double,double)>($d34, $d34);
+
+        $d2 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: double getOrientationAngle()>();
+
+        $d3 = neg $d2;
+
+        $d4 = $d3 * 3.141592653589793;
+
+        $d5 = $d4 / 180.0;
+
+        virtualinvoke $r14.<java.awt.geom.AffineTransform: void rotate(double)>($d5);
+
+        r35 = virtualinvoke r34.<java.awt.Font: java.awt.Font deriveFont(java.awt.geom.AffineTransform)>($r14);
+
+        $r16 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r16.<java.awt.Graphics2D: void setFont(java.awt.Font)>(r35);
+
+        $r17 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        $r18 = virtualinvoke $r17.<java.awt.Graphics2D: java.awt.FontMetrics getFontMetrics()>();
+
+        $r19 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        r20 = virtualinvoke $r18.<java.awt.FontMetrics: java.awt.geom.Rectangle2D getStringBounds(java.lang.String,java.awt.Graphics)>(r9, $r19);
+
+        $d6 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: double getOrientationAngle()>();
+
+        $d7 = neg $d6;
+
+        $d8 = $d7 * 3.141592653589793;
+
+        $d9 = $d8 / 180.0;
+
+        virtualinvoke $r14.<java.awt.geom.AffineTransform: void rotate(double)>($d9);
+
+        $d10 = virtualinvoke r20.<java.awt.geom.Rectangle2D: double getHeight()>();
+
+        $d11 = virtualinvoke r20.<java.awt.geom.Rectangle2D: double getY()>();
+
+        d12 = $d10 + $d11;
+
+        $r21 = new java.awt.geom.Point2D$Double;
+
+        $r22 = virtualinvoke r0.<jcckit.graphic.Text: jcckit.graphic.GraphPoint getPosition()>();
+
+        $d13 = virtualinvoke $r22.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $r23 = virtualinvoke r0.<jcckit.graphic.Text: jcckit.graphic.GraphPoint getPosition()>();
+
+        $d14 = virtualinvoke $r23.<jcckit.graphic.GraphPoint: double getY()>();
+
+        specialinvoke $r21.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d13, $d14);
+
+        virtualinvoke r11.<java.awt.geom.AffineTransform: java.awt.geom.Point2D transform(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r21, $r21);
+
+        $d15 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: double getOrientationAngle()>();
+
+        $b1 = $d15 cmpl 0.0;
+
+        if $b1 != 0 goto label4;
+
+        $r31 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: jcckit.graphic.Anchor getHorizontalAnchor()>();
+
+        $i4 = virtualinvoke $r31.<jcckit.graphic.Anchor: int getFactor()>();
+
+        $d24 = (double) $i4;
+
+        $d25 = -0.5 * $d24;
+
+        $d26 = virtualinvoke r20.<java.awt.geom.Rectangle2D: double getWidth()>();
+
+        d38 = $d25 * $d26;
+
+        $r32 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: jcckit.graphic.Anchor getVerticalAnchor()>();
+
+        $i5 = virtualinvoke $r32.<jcckit.graphic.Anchor: int getFactor()>();
+
+        $d27 = (double) $i5;
+
+        $d28 = 0.5 * $d27;
+
+        $d29 = virtualinvoke r20.<java.awt.geom.Rectangle2D: double getHeight()>();
+
+        $d30 = $d28 * $d29;
+
+        d39 = $d30 - d12;
+
+        $d31 = $r21.<java.awt.geom.Point2D$Double: double x>;
+
+        d40 = $d31 + d38;
+
+        $d32 = $r21.<java.awt.geom.Point2D$Double: double y>;
+
+        d41 = $d32 + d39;
+
+        goto label5;
+
+     label4:
+        $r26 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: jcckit.graphic.Anchor getVerticalAnchor()>();
+
+        $i2 = virtualinvoke $r26.<jcckit.graphic.Anchor: int getFactor()>();
+
+        $d16 = (double) $i2;
+
+        $d17 = 0.5 * $d16;
+
+        $d18 = virtualinvoke r20.<java.awt.geom.Rectangle2D: double getHeight()>();
+
+        d42 = $d17 * $d18;
+
+        $r27 = interfaceinvoke r2.<jcckit.graphic.TextAttributes: jcckit.graphic.Anchor getHorizontalAnchor()>();
+
+        $i3 = virtualinvoke $r27.<jcckit.graphic.Anchor: int getFactor()>();
+
+        $d19 = (double) $i3;
+
+        $d20 = 0.5 * $d19;
+
+        $d21 = virtualinvoke r20.<java.awt.geom.Rectangle2D: double getWidth()>();
+
+        d43 = $d20 * $d21;
+
+        $d22 = $r21.<java.awt.geom.Point2D$Double: double x>;
+
+        d40 = $d22 + d42;
+
+        $d23 = $r21.<java.awt.geom.Point2D$Double: double y>;
+
+        d41 = $d23 + d43;
+
+     label5:
+        $r28 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        $f1 = (float) d40;
+
+        $f0 = (float) d41;
+
+        virtualinvoke $r28.<java.awt.Graphics2D: void drawString(java.lang.String,float,float)>(r9, $f1, $f0);
+
+        $r29 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r29.<java.awt.Graphics2D: void setTransform(java.awt.geom.AffineTransform)>(r11);
+
+        $r30 = r3.<jcckit.renderer.Graphics2DRenderer: java.awt.Graphics2D _graphics>;
+
+        virtualinvoke $r30.<java.awt.Graphics2D: void setColor(java.awt.Color)>(r5);
+
+     label6:
+        return;
+    }
+
+    static java.awt.Font createFont(jcckit.graphic.TextAttributes, int)
+    {
+        jcckit.graphic.TextAttributes r0;
+        jcckit.graphic.FontStyle $r1, $r2, $r3, r6;
+        java.awt.Font $r4;
+        int i0;
+        java.lang.String r5;
+        byte b1;
+
+        r0 := @parameter0: jcckit.graphic.TextAttributes;
+
+        i0 := @parameter1: int;
+
+        r5 = interfaceinvoke r0.<jcckit.graphic.TextAttributes: java.lang.String getFontName()>();
+
+        if r5 != null goto label1;
+
+        r5 = "SansSerif";
+
+     label1:
+        r6 = interfaceinvoke r0.<jcckit.graphic.TextAttributes: jcckit.graphic.FontStyle getFontStyle()>();
+
+        if r6 != null goto label2;
+
+        r6 = <jcckit.renderer.Graphics2DRenderer: jcckit.graphic.FontStyle DEFAULT_FONT_STYLE>;
+
+     label2:
+        b1 = 0;
+
+        $r1 = <jcckit.graphic.FontStyle: jcckit.graphic.FontStyle BOLD>;
+
+        if r6 != $r1 goto label3;
+
+        b1 = 1;
+
+        goto label5;
+
+     label3:
+        $r2 = <jcckit.graphic.FontStyle: jcckit.graphic.FontStyle ITALIC>;
+
+        if r6 != $r2 goto label4;
+
+        b1 = 2;
+
+        goto label5;
+
+     label4:
+        $r3 = <jcckit.graphic.FontStyle: jcckit.graphic.FontStyle BOLD_ITALIC>;
+
+        if r6 != $r3 goto label5;
+
+        b1 = 3;
+
+     label5:
+        if i0 != 0 goto label6;
+
+        i0 = 12;
+
+     label6:
+        $r4 = new java.awt.Font;
+
+        specialinvoke $r4.<java.awt.Font: void <init>(java.lang.String,int,int)>(r5, b1, i0);
+
+        return $r4;
+    }
+
+    static void <clinit>()
+    {
+        jcckit.graphic.FontStyle $r0;
+
+        <jcckit.renderer.Graphics2DRenderer: int DEFAULT_FONT_SIZE> = 12;
+
+        <jcckit.renderer.Graphics2DRenderer: java.lang.String DEFAULT_FONT_NAME> = "SansSerif";
+
+        <jcckit.renderer.Graphics2DRenderer: int FS> = 1;
+
+        $r0 = <jcckit.graphic.FontStyle: jcckit.graphic.FontStyle NORMAL>;
+
+        <jcckit.renderer.Graphics2DRenderer: jcckit.graphic.FontStyle DEFAULT_FONT_STYLE> = $r0;
+
+        return;
+    }
+}

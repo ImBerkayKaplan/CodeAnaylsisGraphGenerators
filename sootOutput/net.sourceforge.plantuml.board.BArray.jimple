@@ -1,0 +1,180 @@
+public class net.sourceforge.plantuml.board.BArray extends java.lang.Object implements java.lang.Iterable
+{
+    private final java.util.Map data;
+    private int maxX;
+    private int maxY;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.board.BArray r0;
+        java.util.HashMap $r1;
+
+        r0 := @this: net.sourceforge.plantuml.board.BArray;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.board.BArray: java.util.Map data> = $r1;
+
+        return;
+    }
+
+    public void put(net.sourceforge.plantuml.board.BNode)
+    {
+        net.sourceforge.plantuml.board.BArray r0;
+        net.sourceforge.plantuml.board.BNode r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7;
+        java.lang.String r2;
+        java.util.Map $r3, $r4;
+        boolean $z0;
+        java.lang.IllegalArgumentException $r6;
+
+        r0 := @this: net.sourceforge.plantuml.board.BArray;
+
+        r1 := @parameter0: net.sourceforge.plantuml.board.BNode;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.board.BNode: int getX()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.board.BNode: int getStage()>();
+
+        r2 = specialinvoke r0.<net.sourceforge.plantuml.board.BArray: java.lang.String getKey(int,int)>($i0, $i1);
+
+        $r3 = r0.<net.sourceforge.plantuml.board.BArray: java.util.Map data>;
+
+        $z0 = interfaceinvoke $r3.<java.util.Map: boolean containsKey(java.lang.Object)>(r2);
+
+        if $z0 == 0 goto label1;
+
+        $r6 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r6.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r6;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.board.BArray: java.util.Map data>;
+
+        interfaceinvoke $r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r2, r1);
+
+        $i2 = r0.<net.sourceforge.plantuml.board.BArray: int maxX>;
+
+        $i3 = virtualinvoke r1.<net.sourceforge.plantuml.board.BNode: int getX()>();
+
+        $i4 = staticinvoke <java.lang.Math: int max(int,int)>($i2, $i3);
+
+        r0.<net.sourceforge.plantuml.board.BArray: int maxX> = $i4;
+
+        $i5 = r0.<net.sourceforge.plantuml.board.BArray: int maxY>;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.board.BNode: int getStage()>();
+
+        $i7 = staticinvoke <java.lang.Math: int max(int,int)>($i5, $i6);
+
+        r0.<net.sourceforge.plantuml.board.BArray: int maxY> = $i7;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.board.BNode getCell(int, int)
+    {
+        net.sourceforge.plantuml.board.BArray r0;
+        int i0, i1;
+        java.lang.String r1;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.board.BNode $r4;
+
+        r0 := @this: net.sourceforge.plantuml.board.BArray;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.board.BArray: java.lang.String getKey(int,int)>(i0, i1);
+
+        $r2 = r0.<net.sourceforge.plantuml.board.BArray: java.util.Map data>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r4 = (net.sourceforge.plantuml.board.BNode) $r3;
+
+        return $r4;
+    }
+
+    private java.lang.String getKey(int, int)
+    {
+        java.lang.StringBuilder $r0, $r1, $r2, $r3, $r4;
+        int i0, i1;
+        java.lang.String $r5;
+        net.sourceforge.plantuml.board.BArray r6;
+
+        r6 := @this: net.sourceforge.plantuml.board.BArray;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+
+    public java.util.Iterator iterator()
+    {
+        net.sourceforge.plantuml.board.BArray r0;
+        java.util.Map $r1;
+        java.util.Collection $r2, $r3;
+        java.util.Iterator $r4;
+
+        r0 := @this: net.sourceforge.plantuml.board.BArray;
+
+        $r1 = r0.<net.sourceforge.plantuml.board.BArray: java.util.Map data>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        $r3 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>($r2);
+
+        $r4 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+        return $r4;
+    }
+
+    public final int getMaxX()
+    {
+        net.sourceforge.plantuml.board.BArray r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.board.BArray;
+
+        $i0 = r0.<net.sourceforge.plantuml.board.BArray: int maxX>;
+
+        return $i0;
+    }
+
+    public final int getMaxY()
+    {
+        net.sourceforge.plantuml.board.BArray r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.board.BArray;
+
+        $i0 = r0.<net.sourceforge.plantuml.board.BArray: int maxY>;
+
+        return $i0;
+    }
+}

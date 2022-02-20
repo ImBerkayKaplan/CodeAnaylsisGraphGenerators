@@ -1,0 +1,172 @@
+public class net.sourceforge.plantuml.preproc.Sub extends java.lang.Object
+{
+    private final java.lang.String name;
+    private final java.util.List lines;
+
+    public void <init>(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.Sub r0;
+        java.util.ArrayList $r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Sub;
+
+        r2 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.preproc.Sub: java.util.List lines> = $r1;
+
+        r0.<net.sourceforge.plantuml.preproc.Sub: java.lang.String name> = r2;
+
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r3, $r4, $r6;
+        net.sourceforge.plantuml.preproc.Sub r1;
+        java.lang.String $r2, $r5, $r7;
+
+        r1 := @this: net.sourceforge.plantuml.preproc.Sub;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = specialinvoke r1.<java.lang.Object: java.lang.String toString()>();
+
+        $r3 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r5 = r1.<net.sourceforge.plantuml.preproc.Sub: java.lang.String name>;
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r7;
+    }
+
+    public void add(net.sourceforge.plantuml.StringLocated)
+    {
+        net.sourceforge.plantuml.preproc.Sub r0;
+        net.sourceforge.plantuml.StringLocated r1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Sub;
+
+        r1 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        $r2 = r0.<net.sourceforge.plantuml.preproc.Sub: java.util.List lines>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public final java.util.List lines()
+    {
+        net.sourceforge.plantuml.preproc.Sub r0;
+        java.util.List $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Sub;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc.Sub: java.util.List lines>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    public static net.sourceforge.plantuml.preproc.Sub fromFile(net.sourceforge.plantuml.preproc.ReadLine, java.lang.String, net.sourceforge.plantuml.tim.TContext, net.sourceforge.plantuml.tim.TMemory) throws java.io.IOException, net.sourceforge.plantuml.tim.EaterException
+    {
+        net.sourceforge.plantuml.preproc.ReadLine r0;
+        net.sourceforge.plantuml.StringLocated $r1, $r6, $r14;
+        net.sourceforge.plantuml.tim.TLineType r2, $r3, $r4;
+        net.sourceforge.plantuml.tim.EaterStartsub $r5;
+        net.sourceforge.plantuml.tim.TContext r8;
+        net.sourceforge.plantuml.tim.TMemory r9;
+        java.lang.String $r10, r11;
+        boolean $z0, z1;
+        net.sourceforge.plantuml.preproc.Sub $r12, r13;
+
+        r0 := @parameter0: net.sourceforge.plantuml.preproc.ReadLine;
+
+        r11 := @parameter1: java.lang.String;
+
+        r8 := @parameter2: net.sourceforge.plantuml.tim.TContext;
+
+        r9 := @parameter3: net.sourceforge.plantuml.tim.TMemory;
+
+        r13 = null;
+
+        z1 = 0;
+
+     label1:
+        $r14 = interfaceinvoke r0.<net.sourceforge.plantuml.preproc.ReadLine: net.sourceforge.plantuml.StringLocated readLine()>();
+
+        if $r14 == null goto label5;
+
+        $r1 = virtualinvoke $r14.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r3 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType STARTSUB>;
+
+        if r2 != $r3 goto label2;
+
+        $r5 = new net.sourceforge.plantuml.tim.EaterStartsub;
+
+        $r6 = virtualinvoke $r14.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        specialinvoke $r5.<net.sourceforge.plantuml.tim.EaterStartsub: void <init>(net.sourceforge.plantuml.StringLocated)>($r6);
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.tim.EaterStartsub: void analyze(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory)>(r8, r9);
+
+        $r10 = virtualinvoke $r5.<net.sourceforge.plantuml.tim.EaterStartsub: java.lang.String getSubname()>();
+
+        $z0 = virtualinvoke $r10.<java.lang.String: boolean equals(java.lang.Object)>(r11);
+
+        if $z0 == 0 goto label1;
+
+        z1 = 0;
+
+        if r13 != null goto label1;
+
+        $r12 = new net.sourceforge.plantuml.preproc.Sub;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.preproc.Sub: void <init>(java.lang.String)>(r11);
+
+        r13 = $r12;
+
+        goto label1;
+
+     label2:
+        $r4 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType ENDSUB>;
+
+        if r2 != $r4 goto label3;
+
+        if r13 == null goto label3;
+
+        z1 = 1;
+
+     label3:
+        if r13 == null goto label4;
+
+        if z1 != 0 goto label4;
+
+        virtualinvoke r13.<net.sourceforge.plantuml.preproc.Sub: void add(net.sourceforge.plantuml.StringLocated)>($r14);
+
+     label4:
+        goto label1;
+
+     label5:
+        return r13;
+    }
+}

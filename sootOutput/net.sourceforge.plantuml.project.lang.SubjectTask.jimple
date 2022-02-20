@@ -1,0 +1,302 @@
+public class net.sourceforge.plantuml.project.lang.SubjectTask extends java.lang.Object implements net.sourceforge.plantuml.project.lang.Subject
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.project.lang.SubjectTask r0;
+
+        r0 := @this: net.sourceforge.plantuml.project.lang.SubjectTask;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.project.Failable getMe(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.command.regex.RegexResult)
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String r1, r2, r3, r4, $r10, r11;
+        net.sourceforge.plantuml.project.GanttDiagram r5;
+        net.sourceforge.plantuml.project.core.Task r6;
+        net.sourceforge.plantuml.project.Failable $r7, $r12;
+        java.util.StringTokenizer $r8;
+        boolean $z0, z1, $z2;
+        int $i0;
+        java.lang.IllegalStateException $r13;
+        net.sourceforge.plantuml.project.lang.SubjectTask r17;
+
+        r17 := @this: net.sourceforge.plantuml.project.lang.SubjectTask;
+
+        r5 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0 := @parameter1: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("SUBJECT", 0);
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("SUBJECT", 1);
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("THEN", 0);
+
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("RESOURCE", 0);
+
+        if r3 == null goto label1;
+
+        $z2 = 1;
+
+        goto label2;
+
+     label1:
+        $z2 = 0;
+
+     label2:
+        r6 = virtualinvoke r5.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.Task getOrCreateTask(java.lang.String,java.lang.String,boolean)>(r1, r2, $z2);
+
+        if r6 != null goto label3;
+
+        $r13 = new java.lang.IllegalStateException;
+
+        specialinvoke $r13.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r13;
+
+     label3:
+        if r4 == null goto label6;
+
+        $r8 = new java.util.StringTokenizer;
+
+        specialinvoke $r8.<java.util.StringTokenizer: void <init>(java.lang.String,java.lang.String)>(r4, "{}");
+
+     label4:
+        $z0 = virtualinvoke $r8.<java.util.StringTokenizer: boolean hasMoreTokens()>();
+
+        if $z0 == 0 goto label6;
+
+        $r10 = virtualinvoke $r8.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        r11 = virtualinvoke $r10.<java.lang.String: java.lang.String trim()>();
+
+        $i0 = virtualinvoke r11.<java.lang.String: int length()>();
+
+        if $i0 <= 0 goto label5;
+
+        z1 = virtualinvoke r5.<net.sourceforge.plantuml.project.GanttDiagram: boolean affectResource(net.sourceforge.plantuml.project.core.Task,java.lang.String)>(r6, r11);
+
+        if z1 != 0 goto label5;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.project.Failable: net.sourceforge.plantuml.project.Failable error(java.lang.String)>("Bad argument for resource");
+
+        return $r12;
+
+     label5:
+        goto label4;
+
+     label6:
+        $r7 = staticinvoke <net.sourceforge.plantuml.project.Failable: net.sourceforge.plantuml.project.Failable ok(java.lang.Object)>(r6);
+
+        return $r7;
+    }
+
+    public java.util.Collection getSentences()
+    {
+        net.sourceforge.plantuml.project.lang.SentenceSimple[] $r0;
+        net.sourceforge.plantuml.project.lang.SentenceLasts $r1;
+        net.sourceforge.plantuml.project.lang.SentenceTaskStarts $r2;
+        net.sourceforge.plantuml.project.lang.SentenceTaskStartsWithColor $r3;
+        net.sourceforge.plantuml.project.lang.SentenceTaskStartsAbsolute $r4;
+        net.sourceforge.plantuml.project.lang.SentenceHappens $r5;
+        net.sourceforge.plantuml.project.lang.SentenceHappensDate $r6;
+        net.sourceforge.plantuml.project.lang.SentenceEnds $r7;
+        net.sourceforge.plantuml.project.lang.SentenceTaskEndsAbsolute $r8;
+        net.sourceforge.plantuml.project.lang.SentenceIsColored $r9;
+        net.sourceforge.plantuml.project.lang.SentenceIsColoredForCompletion $r10;
+        net.sourceforge.plantuml.project.lang.SentenceIsDeleted $r11;
+        net.sourceforge.plantuml.project.lang.SentenceIsForTask $r12;
+        net.sourceforge.plantuml.project.lang.SentenceLinksTo $r13;
+        net.sourceforge.plantuml.project.lang.SentenceOccurs $r14;
+        net.sourceforge.plantuml.project.lang.SentenceDisplayOnSameRowAs $r15;
+        net.sourceforge.plantuml.project.lang.SentencePausesDate $r16;
+        net.sourceforge.plantuml.project.lang.SentencePausesDates $r17;
+        net.sourceforge.plantuml.project.lang.SentencePausesDayOfWeek $r18;
+        java.util.List $r19;
+        net.sourceforge.plantuml.project.lang.SubjectTask r20;
+
+        r20 := @this: net.sourceforge.plantuml.project.lang.SubjectTask;
+
+        $r0 = newarray (net.sourceforge.plantuml.project.lang.SentenceSimple)[18];
+
+        $r1 = new net.sourceforge.plantuml.project.lang.SentenceLasts;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.project.lang.SentenceLasts: void <init>()>();
+
+        $r0[0] = $r1;
+
+        $r2 = new net.sourceforge.plantuml.project.lang.SentenceTaskStarts;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.project.lang.SentenceTaskStarts: void <init>()>();
+
+        $r0[1] = $r2;
+
+        $r3 = new net.sourceforge.plantuml.project.lang.SentenceTaskStartsWithColor;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.project.lang.SentenceTaskStartsWithColor: void <init>()>();
+
+        $r0[2] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.project.lang.SentenceTaskStartsAbsolute;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.project.lang.SentenceTaskStartsAbsolute: void <init>()>();
+
+        $r0[3] = $r4;
+
+        $r5 = new net.sourceforge.plantuml.project.lang.SentenceHappens;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.project.lang.SentenceHappens: void <init>()>();
+
+        $r0[4] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.project.lang.SentenceHappensDate;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.project.lang.SentenceHappensDate: void <init>()>();
+
+        $r0[5] = $r6;
+
+        $r7 = new net.sourceforge.plantuml.project.lang.SentenceEnds;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.project.lang.SentenceEnds: void <init>()>();
+
+        $r0[6] = $r7;
+
+        $r8 = new net.sourceforge.plantuml.project.lang.SentenceTaskEndsAbsolute;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.project.lang.SentenceTaskEndsAbsolute: void <init>()>();
+
+        $r0[7] = $r8;
+
+        $r9 = new net.sourceforge.plantuml.project.lang.SentenceIsColored;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.project.lang.SentenceIsColored: void <init>()>();
+
+        $r0[8] = $r9;
+
+        $r10 = new net.sourceforge.plantuml.project.lang.SentenceIsColoredForCompletion;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.project.lang.SentenceIsColoredForCompletion: void <init>()>();
+
+        $r0[9] = $r10;
+
+        $r11 = new net.sourceforge.plantuml.project.lang.SentenceIsDeleted;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.project.lang.SentenceIsDeleted: void <init>()>();
+
+        $r0[10] = $r11;
+
+        $r12 = new net.sourceforge.plantuml.project.lang.SentenceIsForTask;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.project.lang.SentenceIsForTask: void <init>()>();
+
+        $r0[11] = $r12;
+
+        $r13 = new net.sourceforge.plantuml.project.lang.SentenceLinksTo;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.project.lang.SentenceLinksTo: void <init>()>();
+
+        $r0[12] = $r13;
+
+        $r14 = new net.sourceforge.plantuml.project.lang.SentenceOccurs;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.project.lang.SentenceOccurs: void <init>()>();
+
+        $r0[13] = $r14;
+
+        $r15 = new net.sourceforge.plantuml.project.lang.SentenceDisplayOnSameRowAs;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.project.lang.SentenceDisplayOnSameRowAs: void <init>()>();
+
+        $r0[14] = $r15;
+
+        $r16 = new net.sourceforge.plantuml.project.lang.SentencePausesDate;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.project.lang.SentencePausesDate: void <init>()>();
+
+        $r0[15] = $r16;
+
+        $r17 = new net.sourceforge.plantuml.project.lang.SentencePausesDates;
+
+        specialinvoke $r17.<net.sourceforge.plantuml.project.lang.SentencePausesDates: void <init>()>();
+
+        $r0[16] = $r17;
+
+        $r18 = new net.sourceforge.plantuml.project.lang.SentencePausesDayOfWeek;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.project.lang.SentencePausesDayOfWeek: void <init>()>();
+
+        $r0[17] = $r18;
+
+        $r19 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r0);
+
+        return $r19;
+    }
+
+    public net.sourceforge.plantuml.command.regex.IRegex toRegex()
+    {
+        net.sourceforge.plantuml.command.regex.RegexConcat $r0, $r5;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r1, $r6;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r2, $r3, $r7, $r8, $r9, $r10;
+        net.sourceforge.plantuml.command.regex.RegexOptional $r4;
+        net.sourceforge.plantuml.project.lang.SubjectTask r11;
+
+        r11 := @this: net.sourceforge.plantuml.project.lang.SubjectTask;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r1 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[3];
+
+        $r2 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("THEN", "(then[%s]+)?");
+
+        $r1[0] = $r2;
+
+        $r3 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?");
+
+        $r1[1] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexOptional;
+
+        $r5 = new net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r6 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[4];
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r6[0] = $r7;
+
+        $r8 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("on");
+
+        $r6[1] = $r8;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r6[2] = $r9;
+
+        $r10 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)");
+
+        $r6[3] = $r10;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.regex.RegexConcat: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>($r6);
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexOptional: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r5);
+
+        $r1[2] = $r4;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexConcat: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>($r1);
+
+        return $r0;
+    }
+}

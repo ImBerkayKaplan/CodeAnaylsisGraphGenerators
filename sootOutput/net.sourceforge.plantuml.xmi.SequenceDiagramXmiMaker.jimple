@@ -1,0 +1,171 @@
+public final class net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker extends java.lang.Object implements net.sourceforge.plantuml.sequencediagram.graphic.FileMaker
+{
+    private final net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram;
+    private final net.sourceforge.plantuml.FileFormat fileFormat;
+
+    public void <init>(net.sourceforge.plantuml.sequencediagram.SequenceDiagram, net.sourceforge.plantuml.FileFormat)
+    {
+        net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker r0;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram r1;
+        net.sourceforge.plantuml.FileFormat r2;
+
+        r0 := @this: net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
+
+        r1 := @parameter0: net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.FileFormat;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker: net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram> = r1;
+
+        r0.<net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker: net.sourceforge.plantuml.FileFormat fileFormat> = r2;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.ImageData createOne(java.io.OutputStream, int, boolean) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.api.ImageDataSimple $r0;
+        javax.xml.parsers.DocumentBuilder r2;
+        net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker r3;
+        net.sourceforge.plantuml.FileFormat $r4, $r5;
+        net.sourceforge.plantuml.xmi.XmiSequenceDiagramStandard $r6;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram $r7, $r10;
+        java.io.OutputStream r8;
+        net.sourceforge.plantuml.xmi.XmiSequenceDiagramArgo $r9;
+        java.lang.Exception $r11;
+        javax.xml.parsers.ParserConfigurationException $r13;
+        int i0;
+        boolean z0;
+        org.w3c.dom.Document r15;
+        net.sourceforge.plantuml.xmi.XmiSequenceDiagram r16;
+
+        r3 := @this: net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
+
+        r8 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        z0 := @parameter2: boolean;
+
+        $r0 = new net.sourceforge.plantuml.api.ImageDataSimple;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.api.ImageDataSimple: void <init>(int,int)>(0, 0);
+
+     label01:
+        r2 = staticinvoke <net.sourceforge.plantuml.xml.XmlFactories: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>();
+
+     label02:
+        goto label04;
+
+     label03:
+        $r13 := @caughtexception;
+
+        virtualinvoke $r13.<javax.xml.parsers.ParserConfigurationException: void printStackTrace()>();
+
+        return $r0;
+
+     label04:
+        r15 = virtualinvoke r2.<javax.xml.parsers.DocumentBuilder: org.w3c.dom.Document newDocument()>();
+
+        interfaceinvoke r15.<org.w3c.dom.Document: void setXmlVersion(java.lang.String)>("1.0");
+
+        interfaceinvoke r15.<org.w3c.dom.Document: void setXmlStandalone(boolean)>(1);
+
+        $r5 = r3.<net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker: net.sourceforge.plantuml.FileFormat fileFormat>;
+
+        $r4 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat XMI_ARGO>;
+
+        if $r5 != $r4 goto label05;
+
+        $r9 = new net.sourceforge.plantuml.xmi.XmiSequenceDiagramArgo;
+
+        $r10 = r3.<net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker: net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.xmi.XmiSequenceDiagramArgo: void <init>(net.sourceforge.plantuml.sequencediagram.SequenceDiagram,org.w3c.dom.Document)>($r10, r15);
+
+        r16 = $r9;
+
+        goto label06;
+
+     label05:
+        $r6 = new net.sourceforge.plantuml.xmi.XmiSequenceDiagramStandard;
+
+        $r7 = r3.<net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker: net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram>;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.xmi.XmiSequenceDiagramStandard: void <init>(net.sourceforge.plantuml.sequencediagram.SequenceDiagram,org.w3c.dom.Document)>($r7, r15);
+
+        r16 = $r6;
+
+     label06:
+        virtualinvoke r16.<net.sourceforge.plantuml.xmi.XmiSequenceDiagram: void build()>();
+
+     label07:
+        specialinvoke r3.<net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker: void writeDocument(org.w3c.dom.Document,java.io.OutputStream)>(r15, r8);
+
+     label08:
+        goto label10;
+
+     label09:
+        $r11 := @caughtexception;
+
+        virtualinvoke $r11.<java.lang.Exception: void printStackTrace()>();
+
+     label10:
+        return $r0;
+
+        catch javax.xml.parsers.ParserConfigurationException from label01 to label02 with label03;
+        catch javax.xml.transform.TransformerException from label07 to label08 with label09;
+        catch javax.xml.parsers.ParserConfigurationException from label07 to label08 with label09;
+    }
+
+    public int getNbPages()
+    {
+        net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker r0;
+
+        r0 := @this: net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
+
+        return 1;
+    }
+
+    private void writeDocument(org.w3c.dom.Document, java.io.OutputStream) throws javax.xml.transform.TransformerException, javax.xml.parsers.ParserConfigurationException
+    {
+        javax.xml.transform.dom.DOMSource $r0;
+        org.w3c.dom.Document r1;
+        javax.xml.transform.stream.StreamResult $r3;
+        java.io.OutputStream r4;
+        javax.xml.transform.Transformer r6;
+        java.nio.charset.Charset $r7;
+        java.lang.String $r8;
+        net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker r9;
+
+        r9 := @this: net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
+
+        r1 := @parameter0: org.w3c.dom.Document;
+
+        r4 := @parameter1: java.io.OutputStream;
+
+        $r0 = new javax.xml.transform.dom.DOMSource;
+
+        specialinvoke $r0.<javax.xml.transform.dom.DOMSource: void <init>(org.w3c.dom.Node)>(r1);
+
+        $r3 = new javax.xml.transform.stream.StreamResult;
+
+        specialinvoke $r3.<javax.xml.transform.stream.StreamResult: void <init>(java.io.OutputStream)>(r4);
+
+        r6 = staticinvoke <net.sourceforge.plantuml.xml.XmlFactories: javax.xml.transform.Transformer newTransformer()>();
+
+        virtualinvoke r6.<javax.xml.transform.Transformer: void setOutputProperty(java.lang.String,java.lang.String)>("indent", "yes");
+
+        $r7 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r8 = virtualinvoke $r7.<java.nio.charset.Charset: java.lang.String name()>();
+
+        virtualinvoke r6.<javax.xml.transform.Transformer: void setOutputProperty(java.lang.String,java.lang.String)>("encoding", $r8);
+
+        virtualinvoke r6.<javax.xml.transform.Transformer: void transform(javax.xml.transform.Source,javax.xml.transform.Result)>($r0, $r3);
+
+        return;
+    }
+}

@@ -1,0 +1,258 @@
+public class jcckit.plot.BarFactory extends jcckit.plot.AbstractSymbolFactory
+{
+    public static final java.lang.String STACKED_KEY;
+    public static final java.lang.String HORIZONTAL_BARS_KEY;
+    private final boolean _stacked;
+    private final boolean _horizontalBars;
+
+    public void <init>(jcckit.util.ConfigParameters)
+    {
+        jcckit.plot.BarFactory r0;
+        jcckit.util.ConfigParameters r1;
+        boolean $z0, $z1;
+
+        r0 := @this: jcckit.plot.BarFactory;
+
+        r1 := @parameter0: jcckit.util.ConfigParameters;
+
+        specialinvoke r0.<jcckit.plot.AbstractSymbolFactory: void <init>(jcckit.util.ConfigParameters)>(r1);
+
+        $z0 = virtualinvoke r1.<jcckit.util.ConfigParameters: boolean getBoolean(java.lang.String,boolean)>("horizontalBars", 0);
+
+        r0.<jcckit.plot.BarFactory: boolean _horizontalBars> = $z0;
+
+        $z1 = virtualinvoke r1.<jcckit.util.ConfigParameters: boolean getBoolean(java.lang.String,boolean)>("stacked", 0);
+
+        r0.<jcckit.plot.BarFactory: boolean _stacked> = $z1;
+
+        return;
+    }
+
+    protected jcckit.plot.Symbol createSymbol(jcckit.graphic.GraphPoint, jcckit.graphic.GraphicAttributes, jcckit.plot.Hint, jcckit.plot.Hint)
+    {
+        jcckit.graphic.GraphPoint $r0, r2, $r4, $r8, r11, r12, r13, $r15;
+        jcckit.plot.Hint r1, r7;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d10, $d11, $d12, $d13, d16, d17, d18, d19, $d20, d21, $d22, d23, $d24, $d25, $d26, $d27;
+        jcckit.plot.BarFactory r3;
+        jcckit.graphic.GraphicAttributes r6;
+        jcckit.plot.PositionHint $r9, $r10, $r14;
+        jcckit.plot.Symbol $r16;
+        jcckit.graphic.Rectangle $r17;
+
+        r3 := @this: jcckit.plot.BarFactory;
+
+        r2 := @parameter0: jcckit.graphic.GraphPoint;
+
+        r6 := @parameter1: jcckit.graphic.GraphicAttributes;
+
+        r7 := @parameter2: jcckit.plot.Hint;
+
+        r1 := @parameter3: jcckit.plot.Hint;
+
+        $r0 = new jcckit.graphic.GraphPoint;
+
+        specialinvoke $r0.<jcckit.graphic.GraphPoint: void <init>(double[])>(null);
+
+        r11 = $r0;
+
+        r12 = $r0;
+
+        $z0 = r1 instanceof jcckit.plot.PositionHint;
+
+        if $z0 == 0 goto label01;
+
+        $r9 = (jcckit.plot.PositionHint) r1;
+
+        r11 = virtualinvoke $r9.<jcckit.plot.PositionHint: jcckit.graphic.GraphPoint getOrigin()>();
+
+        $r10 = (jcckit.plot.PositionHint) r1;
+
+        r12 = virtualinvoke $r10.<jcckit.plot.PositionHint: jcckit.graphic.GraphPoint getPosition()>();
+
+     label01:
+        d16 = virtualinvoke r12.<jcckit.graphic.GraphPoint: double getX()>();
+
+        d17 = virtualinvoke r12.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d0 = virtualinvoke r2.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $d1 = virtualinvoke r11.<jcckit.graphic.GraphPoint: double getX()>();
+
+        d18 = $d0 - $d1;
+
+        $d2 = virtualinvoke r2.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d3 = virtualinvoke r11.<jcckit.graphic.GraphPoint: double getY()>();
+
+        d19 = $d2 - $d3;
+
+        $z1 = r3.<jcckit.plot.BarFactory: boolean _horizontalBars>;
+
+        if $z1 == 0 goto label06;
+
+        d19 = r3.<jcckit.plot.BarFactory: double _size>;
+
+        $r8 = new jcckit.graphic.GraphPoint;
+
+        $d10 = 0.5 * d18;
+
+        $d11 = d16 + $d10;
+
+        $d12 = virtualinvoke r2.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d13 = $d12 + d17;
+
+        specialinvoke $r8.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d11, $d13);
+
+        r13 = $r8;
+
+        $z4 = r3.<jcckit.plot.BarFactory: boolean _stacked>;
+
+        if $z4 == 0 goto label02;
+
+        $d20 = d18;
+
+        goto label03;
+
+     label02:
+        $d20 = 0.0;
+
+     label03:
+        d21 = d16 + $d20;
+
+        $z5 = r3.<jcckit.plot.BarFactory: boolean _stacked>;
+
+        if $z5 == 0 goto label04;
+
+        $d22 = 0.0;
+
+        goto label05;
+
+     label04:
+        $d22 = r3.<jcckit.plot.BarFactory: double _size>;
+
+     label05:
+        d23 = d17 + $d22;
+
+        goto label11;
+
+     label06:
+        d18 = r3.<jcckit.plot.BarFactory: double _size>;
+
+        $r4 = new jcckit.graphic.GraphPoint;
+
+        $d4 = virtualinvoke r2.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $d7 = $d4 + d16;
+
+        $d5 = 0.5 * d19;
+
+        $d6 = d17 + $d5;
+
+        specialinvoke $r4.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d7, $d6);
+
+        r13 = $r4;
+
+        $z2 = r3.<jcckit.plot.BarFactory: boolean _stacked>;
+
+        if $z2 == 0 goto label07;
+
+        $d24 = 0.0;
+
+        goto label08;
+
+     label07:
+        $d24 = r3.<jcckit.plot.BarFactory: double _size>;
+
+     label08:
+        d21 = d16 + $d24;
+
+        $z3 = r3.<jcckit.plot.BarFactory: boolean _stacked>;
+
+        if $z3 == 0 goto label09;
+
+        $d25 = d19;
+
+        goto label10;
+
+     label09:
+        $d25 = 0.0;
+
+     label10:
+        d23 = d17 + $d25;
+
+     label11:
+        $r14 = new jcckit.plot.PositionHint;
+
+        $r15 = new jcckit.graphic.GraphPoint;
+
+        specialinvoke $r15.<jcckit.graphic.GraphPoint: void <init>(double,double)>(d21, d23);
+
+        specialinvoke $r14.<jcckit.plot.PositionHint: void <init>(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint)>(r11, $r15);
+
+        $r16 = new jcckit.plot.Symbol;
+
+        $r17 = new jcckit.graphic.Rectangle;
+
+        $d26 = staticinvoke <java.lang.Math: double abs(double)>(d18);
+
+        $d27 = staticinvoke <java.lang.Math: double abs(double)>(d19);
+
+        specialinvoke $r17.<jcckit.graphic.Rectangle: void <init>(jcckit.graphic.GraphPoint,double,double,jcckit.graphic.GraphicAttributes)>(r13, $d26, $d27, r6);
+
+        specialinvoke $r16.<jcckit.plot.Symbol: void <init>(jcckit.graphic.GraphicalElement,jcckit.plot.Hint,jcckit.plot.Hint)>($r17, r7, $r14);
+
+        return $r16;
+    }
+
+    public jcckit.graphic.GraphicalElement createLegendSymbol(jcckit.graphic.GraphPoint, double)
+    {
+        jcckit.graphic.Rectangle $r0;
+        jcckit.graphic.GraphPoint r1;
+        double d0;
+        jcckit.plot.BarFactory r2;
+        jcckit.graphic.GraphicAttributes $r3;
+
+        r2 := @this: jcckit.plot.BarFactory;
+
+        r1 := @parameter0: jcckit.graphic.GraphPoint;
+
+        d0 := @parameter1: double;
+
+        $r0 = new jcckit.graphic.Rectangle;
+
+        $r3 = r2.<jcckit.plot.BarFactory: jcckit.graphic.GraphicAttributes _attributes>;
+
+        specialinvoke $r0.<jcckit.graphic.Rectangle: void <init>(jcckit.graphic.GraphPoint,double,double,jcckit.graphic.GraphicAttributes)>(r1, d0, d0, $r3);
+
+        return $r0;
+    }
+
+    protected jcckit.graphic.GraphicalElement createPlainSymbol(jcckit.graphic.GraphPoint, double, jcckit.graphic.GraphicAttributes)
+    {
+        jcckit.plot.BarFactory r0;
+        jcckit.graphic.GraphPoint r1;
+        double d0;
+        jcckit.graphic.GraphicAttributes r2;
+
+        r0 := @this: jcckit.plot.BarFactory;
+
+        r1 := @parameter0: jcckit.graphic.GraphPoint;
+
+        d0 := @parameter1: double;
+
+        r2 := @parameter2: jcckit.graphic.GraphicAttributes;
+
+        return null;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.plot.BarFactory: java.lang.String HORIZONTAL_BARS_KEY> = "horizontalBars";
+
+        <jcckit.plot.BarFactory: java.lang.String STACKED_KEY> = "stacked";
+
+        return;
+    }
+}

@@ -1,0 +1,111 @@
+public class net.sourceforge.plantuml.jcckit.PSystemJcckit extends net.sourceforge.plantuml.AbstractPSystem
+{
+    private final jcckit.util.PropertiesBasedConfigData prop;
+    private final int width;
+    private final int height;
+
+    public void <init>(net.sourceforge.plantuml.core.UmlSource, java.util.Properties, int, int)
+    {
+        net.sourceforge.plantuml.jcckit.PSystemJcckit r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        int i0, i1;
+        jcckit.util.PropertiesBasedConfigData $r2;
+        java.util.Properties r3;
+
+        r0 := @this: net.sourceforge.plantuml.jcckit.PSystemJcckit;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        r3 := @parameter1: java.util.Properties;
+
+        i0 := @parameter2: int;
+
+        i1 := @parameter3: int;
+
+        specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        r0.<net.sourceforge.plantuml.jcckit.PSystemJcckit: int width> = i0;
+
+        r0.<net.sourceforge.plantuml.jcckit.PSystemJcckit: int height> = i1;
+
+        $r2 = new jcckit.util.PropertiesBasedConfigData;
+
+        specialinvoke $r2.<jcckit.util.PropertiesBasedConfigData: void <init>(java.util.Properties)>(r3);
+
+        r0.<net.sourceforge.plantuml.jcckit.PSystemJcckit: jcckit.util.PropertiesBasedConfigData prop> = $r2;
+
+        return;
+    }
+
+    protected final net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.jcckit.PSystemJcckit r1;
+        int $i0, $i1, $i2, $i3, i4;
+        jcckit.util.ConfigParameters $r3;
+        jcckit.util.PropertiesBasedConfigData $r4;
+        jcckit.GraphicsPlotCanvas $r6;
+        jcckit.data.DataPlot $r8;
+        java.io.OutputStream r9;
+        net.sourceforge.plantuml.api.ImageDataSimple $r10;
+        net.sourceforge.plantuml.FileFormatOption r11;
+
+        r1 := @this: net.sourceforge.plantuml.jcckit.PSystemJcckit;
+
+        r9 := @parameter0: java.io.OutputStream;
+
+        i4 := @parameter1: int;
+
+        r11 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i1 = r1.<net.sourceforge.plantuml.jcckit.PSystemJcckit: int width>;
+
+        $i0 = r1.<net.sourceforge.plantuml.jcckit.PSystemJcckit: int height>;
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i1, $i0, 1);
+
+        $r3 = new jcckit.util.ConfigParameters;
+
+        $r4 = r1.<net.sourceforge.plantuml.jcckit.PSystemJcckit: jcckit.util.PropertiesBasedConfigData prop>;
+
+        specialinvoke $r3.<jcckit.util.ConfigParameters: void <init>(jcckit.util.ConfigData)>($r4);
+
+        $r6 = new jcckit.GraphicsPlotCanvas;
+
+        specialinvoke $r6.<jcckit.GraphicsPlotCanvas: void <init>(jcckit.util.ConfigParameters,java.awt.image.BufferedImage)>($r3, $r0);
+
+        $r8 = staticinvoke <jcckit.data.DataPlot: jcckit.data.DataPlot create(jcckit.util.ConfigParameters)>($r3);
+
+        virtualinvoke $r6.<jcckit.GraphicsPlotCanvas: void connect(jcckit.data.DataPlot)>($r8);
+
+        virtualinvoke $r6.<jcckit.GraphicsPlotCanvas: void paint()>();
+
+        staticinvoke <net.sourceforge.plantuml.security.SImageIO: void write(java.awt.image.RenderedImage,java.lang.String,java.io.OutputStream)>($r0, "png", r9);
+
+        $r10 = new net.sourceforge.plantuml.api.ImageDataSimple;
+
+        $i3 = r1.<net.sourceforge.plantuml.jcckit.PSystemJcckit: int width>;
+
+        $i2 = r1.<net.sourceforge.plantuml.jcckit.PSystemJcckit: int height>;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.api.ImageDataSimple: void <init>(int,int)>($i3, $i2);
+
+        return $r10;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.jcckit.PSystemJcckit r1;
+
+        r1 := @this: net.sourceforge.plantuml.jcckit.PSystemJcckit;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(JCCKit)");
+
+        return $r0;
+    }
+}

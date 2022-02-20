@@ -1,0 +1,267 @@
+public abstract class net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager extends java.lang.Object implements net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager r0;
+
+        r0 := @this: net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    protected java.util.Map headers()
+    {
+        java.util.HashMap $r0;
+        net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager r4;
+
+        r4 := @this: net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("Accept", "application/json");
+
+        return $r0;
+    }
+
+    protected java.util.Map buildAccessDataFromResponse(net.sourceforge.plantuml.json.JsonObject, java.lang.String)
+    {
+        java.util.HashMap $r0;
+        net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager r2;
+        net.sourceforge.plantuml.json.JsonObject r3;
+        net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens $r4, $r5, $r6, $r8, $r11, $r12, $r14;
+        java.lang.String r7, $r9, $r13, $r15;
+        boolean $z0, $z1, $z2;
+
+        r2 := @this: net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager;
+
+        r3 := @parameter0: net.sourceforge.plantuml.json.JsonObject;
+
+        r7 := @parameter1: java.lang.String;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        $r4 = <net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens ACCESS_TOKEN>;
+
+        specialinvoke r2.<net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager: void toMap(java.util.Map,net.sourceforge.plantuml.json.JsonObject,net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens)>($r0, r3, $r4);
+
+        $r5 = <net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens SCOPE>;
+
+        specialinvoke r2.<net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager: void toMap(java.util.Map,net.sourceforge.plantuml.json.JsonObject,net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens)>($r0, r3, $r5);
+
+        $r6 = <net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens EXPIRES_IN>;
+
+        specialinvoke r2.<net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager: void toMap(java.util.Map,net.sourceforge.plantuml.json.JsonObject,net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens)>($r0, r3, $r6);
+
+        if r7 != null goto label1;
+
+        $r11 = <net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens TOKEN_TYPE>;
+
+        specialinvoke r2.<net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager: void toMap(java.util.Map,net.sourceforge.plantuml.json.JsonObject,net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens)>($r0, r3, $r11);
+
+        $z1 = interfaceinvoke $r0.<java.util.Map: boolean isEmpty()>();
+
+        if $z1 != 0 goto label2;
+
+        $r12 = <net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens TOKEN_TYPE>;
+
+        $r13 = virtualinvoke $r12.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: java.lang.String key()>();
+
+        $z2 = interfaceinvoke $r0.<java.util.Map: boolean containsKey(java.lang.Object)>($r13);
+
+        if $z2 != 0 goto label2;
+
+        $r14 = <net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens TOKEN_TYPE>;
+
+        $r15 = virtualinvoke $r14.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: java.lang.String key()>();
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r15, "bearer");
+
+        goto label2;
+
+     label1:
+        $z0 = interfaceinvoke $r0.<java.util.Map: boolean isEmpty()>();
+
+        if $z0 != 0 goto label2;
+
+        $r8 = <net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens TOKEN_TYPE>;
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: java.lang.String key()>();
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r9, r7);
+
+     label2:
+        return $r0;
+    }
+
+    private void toMap(java.util.Map, net.sourceforge.plantuml.json.JsonObject, net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens r1;
+        java.lang.String $r2, $r5, $r8, $r11, $r12;
+        net.sourceforge.plantuml.json.JsonValue r3;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        java.util.Map r4;
+        java.lang.Boolean $r6;
+        int $i0;
+        java.lang.Integer $r9;
+        net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager r14;
+
+        r14 := @this: net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager;
+
+        r4 := @parameter0: java.util.Map;
+
+        r0 := @parameter1: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter2: net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: java.lang.String key()>();
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>($r2);
+
+        if r3 == null goto label3;
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.json.JsonValue: boolean isNull()>();
+
+        if $z0 != 0 goto label3;
+
+        $z1 = virtualinvoke r3.<net.sourceforge.plantuml.json.JsonValue: boolean isString()>();
+
+        if $z1 == 0 goto label1;
+
+        $r11 = virtualinvoke r1.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: java.lang.String key()>();
+
+        $r12 = virtualinvoke r3.<net.sourceforge.plantuml.json.JsonValue: java.lang.String asString()>();
+
+        interfaceinvoke r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r11, $r12);
+
+        goto label3;
+
+     label1:
+        $z2 = virtualinvoke r3.<net.sourceforge.plantuml.json.JsonValue: boolean isNumber()>();
+
+        if $z2 == 0 goto label2;
+
+        $r8 = virtualinvoke r1.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: java.lang.String key()>();
+
+        $i0 = virtualinvoke r3.<net.sourceforge.plantuml.json.JsonValue: int asInt()>();
+
+        $r9 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i0);
+
+        interfaceinvoke r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r8, $r9);
+
+        goto label3;
+
+     label2:
+        $z3 = virtualinvoke r3.<net.sourceforge.plantuml.json.JsonValue: boolean isBoolean()>();
+
+        if $z3 == 0 goto label3;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2Tokens: java.lang.String key()>();
+
+        $z4 = virtualinvoke r3.<net.sourceforge.plantuml.json.JsonValue: boolean asBoolean()>();
+
+        $r6 = staticinvoke <java.lang.Boolean: java.lang.Boolean valueOf(boolean)>($z4);
+
+        interfaceinvoke r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r5, $r6);
+
+     label3:
+        return;
+    }
+
+    protected java.lang.String urlEncode(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+        java.io.UnsupportedEncodingException $r2;
+        net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager r4;
+
+        r4 := @this: net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager;
+
+        r0 := @parameter0: java.lang.String;
+
+     label1:
+        $r1 = staticinvoke <java.net.URLEncoder: java.lang.String encode(java.lang.String,java.lang.String)>(r0, "UTF-8");
+
+     label2:
+        return $r1;
+
+     label3:
+        $r2 := @caughtexception;
+
+        virtualinvoke $r2.<java.io.UnsupportedEncodingException: void printStackTrace()>();
+
+        return r0;
+
+        catch java.io.UnsupportedEncodingException from label1 to label2 with label3;
+    }
+
+    protected net.sourceforge.plantuml.security.authentication.SecurityAuthentication requestAndCreateAuthFromResponse(java.net.Proxy, java.lang.String, java.lang.String, net.sourceforge.plantuml.security.SURL, java.lang.String, net.sourceforge.plantuml.security.authentication.SecurityAuthentication)
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        java.net.Proxy r1;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r2, $r10;
+        java.lang.String r3, $r7, r11, r13;
+        net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager r4;
+        java.util.Map $r5, $r14;
+        byte[] r6;
+        java.nio.charset.Charset $r8;
+        net.sourceforge.plantuml.json.JsonValue r9;
+        boolean $z0;
+        net.sourceforge.plantuml.json.JsonObject $r12;
+
+        r4 := @this: net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager;
+
+        r1 := @parameter0: java.net.Proxy;
+
+        r11 := @parameter1: java.lang.String;
+
+        r13 := @parameter2: java.lang.String;
+
+        r0 := @parameter3: net.sourceforge.plantuml.security.SURL;
+
+        r3 := @parameter4: java.lang.String;
+
+        r2 := @parameter5: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager: java.util.Map headers()>();
+
+        r6 = virtualinvoke r0.<net.sourceforge.plantuml.security.SURL: byte[] getBytesOnPost(java.net.Proxy,net.sourceforge.plantuml.security.authentication.SecurityAuthentication,java.lang.String,java.util.Map)>(r1, r2, r3, $r5);
+
+        if r6 == null goto label1;
+
+        $r7 = new java.lang.String;
+
+        $r8 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        specialinvoke $r7.<java.lang.String: void <init>(byte[],java.nio.charset.Charset)>(r6, $r8);
+
+        r9 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue parse(java.lang.String)>($r7);
+
+        if r9 == null goto label1;
+
+        $z0 = virtualinvoke r9.<net.sourceforge.plantuml.json.JsonValue: boolean isNull()>();
+
+        if $z0 != 0 goto label1;
+
+        $r10 = new net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        $r12 = virtualinvoke r9.<net.sourceforge.plantuml.json.JsonValue: net.sourceforge.plantuml.json.JsonObject asObject()>();
+
+        $r14 = virtualinvoke r4.<net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager: java.util.Map buildAccessDataFromResponse(net.sourceforge.plantuml.json.JsonObject,java.lang.String)>($r12, r13);
+
+        specialinvoke $r10.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: void <init>(java.lang.String,java.lang.String,java.lang.String,java.util.Map)>("oauth2", null, r11, $r14);
+
+        return $r10;
+
+     label1:
+        return null;
+    }
+}

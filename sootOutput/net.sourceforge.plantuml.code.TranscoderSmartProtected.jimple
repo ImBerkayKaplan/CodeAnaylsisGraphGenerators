@@ -1,0 +1,405 @@
+public class net.sourceforge.plantuml.code.TranscoderSmartProtected extends java.lang.Object implements net.sourceforge.plantuml.code.Transcoder
+{
+    private final net.sourceforge.plantuml.code.Transcoder oldOne;
+    private final net.sourceforge.plantuml.code.Transcoder zlib;
+    private final net.sourceforge.plantuml.code.Transcoder hexOnly;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r0;
+        net.sourceforge.plantuml.code.AsciiEncoder $r1, $r5;
+        net.sourceforge.plantuml.code.ArobaseStringCompressor $r2, $r6, $r10;
+        net.sourceforge.plantuml.code.CompressionHuffman $r3;
+        net.sourceforge.plantuml.code.Transcoder $r4, $r8, $r12;
+        net.sourceforge.plantuml.code.CompressionZlib $r7;
+        net.sourceforge.plantuml.code.AsciiEncoderHex $r9;
+        net.sourceforge.plantuml.code.CompressionNone $r11;
+
+        r0 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.code.AsciiEncoder;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.code.AsciiEncoder: void <init>()>();
+
+        $r2 = new net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.code.ArobaseStringCompressor: void <init>()>();
+
+        $r3 = new net.sourceforge.plantuml.code.CompressionHuffman;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.code.CompressionHuffman: void <init>()>();
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.code.TranscoderImpl: net.sourceforge.plantuml.code.Transcoder utf8(net.sourceforge.plantuml.code.URLEncoder,net.sourceforge.plantuml.code.StringCompressor,net.sourceforge.plantuml.code.Compression)>($r1, $r2, $r3);
+
+        r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: net.sourceforge.plantuml.code.Transcoder oldOne> = $r4;
+
+        $r5 = new net.sourceforge.plantuml.code.AsciiEncoder;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.code.AsciiEncoder: void <init>()>();
+
+        $r6 = new net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.code.ArobaseStringCompressor: void <init>()>();
+
+        $r7 = new net.sourceforge.plantuml.code.CompressionZlib;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.code.CompressionZlib: void <init>()>();
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.code.TranscoderImpl: net.sourceforge.plantuml.code.Transcoder utf8(net.sourceforge.plantuml.code.URLEncoder,net.sourceforge.plantuml.code.StringCompressor,net.sourceforge.plantuml.code.Compression)>($r5, $r6, $r7);
+
+        r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: net.sourceforge.plantuml.code.Transcoder zlib> = $r8;
+
+        $r9 = new net.sourceforge.plantuml.code.AsciiEncoderHex;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.code.AsciiEncoderHex: void <init>()>();
+
+        $r10 = new net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.code.ArobaseStringCompressor: void <init>()>();
+
+        $r11 = new net.sourceforge.plantuml.code.CompressionNone;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.code.CompressionNone: void <init>()>();
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.code.TranscoderImpl: net.sourceforge.plantuml.code.Transcoder utf8(net.sourceforge.plantuml.code.URLEncoder,net.sourceforge.plantuml.code.StringCompressor,net.sourceforge.plantuml.code.Compression)>($r9, $r10, $r11);
+
+        r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: net.sourceforge.plantuml.code.Transcoder hexOnly> = $r12;
+
+        return;
+    }
+
+    public java.lang.String decode(java.lang.String) throws net.sourceforge.plantuml.code.NoPlantumlCompressionException
+    {
+        java.lang.String r0, $r2, $r4, $r5, $r6, $r7, $r8, $r9;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r1;
+        net.sourceforge.plantuml.code.Transcoder $r3;
+
+        r1 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("~0");
+
+        if $z0 == 0 goto label1;
+
+        $r8 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>(2);
+
+        $r9 = specialinvoke r1.<net.sourceforge.plantuml.code.TranscoderSmartProtected: java.lang.String decodeZlib(java.lang.String)>($r8);
+
+        return $r9;
+
+     label1:
+        $z1 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("~1");
+
+        if $z1 == 0 goto label2;
+
+        $r6 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>(2);
+
+        $r7 = specialinvoke r1.<net.sourceforge.plantuml.code.TranscoderSmartProtected: java.lang.String decodeHuffman(java.lang.String)>($r6);
+
+        return $r7;
+
+     label2:
+        $z2 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("~h");
+
+        if $z2 == 0 goto label3;
+
+        $r3 = r1.<net.sourceforge.plantuml.code.TranscoderSmartProtected: net.sourceforge.plantuml.code.Transcoder hexOnly>;
+
+        $r4 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>(2);
+
+        $r5 = interfaceinvoke $r3.<net.sourceforge.plantuml.code.Transcoder: java.lang.String decode(java.lang.String)>($r4);
+
+        return $r5;
+
+     label3:
+        $r2 = specialinvoke r1.<net.sourceforge.plantuml.code.TranscoderSmartProtected: java.lang.String decodeZlib(java.lang.String)>(r0);
+
+        return $r2;
+    }
+
+    private java.lang.String decodeZlib(java.lang.String)
+    {
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r0;
+        java.lang.String r1, $r3, $r6;
+        net.sourceforge.plantuml.code.Transcoder $r2;
+        java.lang.Exception $r4;
+
+        r0 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        r1 := @parameter0: java.lang.String;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: net.sourceforge.plantuml.code.Transcoder zlib>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.code.Transcoder: java.lang.String decode(java.lang.String)>(r1);
+
+     label2:
+        return $r3;
+
+     label3:
+        $r4 := @caughtexception;
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: java.lang.String textProtectedDeflate2(java.lang.String)>(r1);
+
+        return $r6;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    private java.lang.String decodeHuffman(java.lang.String)
+    {
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r0;
+        java.lang.String r1, $r3, $r6;
+        net.sourceforge.plantuml.code.Transcoder $r2;
+        java.lang.Exception $r4;
+
+        r0 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        r1 := @parameter0: java.lang.String;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: net.sourceforge.plantuml.code.Transcoder oldOne>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.code.Transcoder: java.lang.String decode(java.lang.String)>(r1);
+
+     label2:
+        return $r3;
+
+     label3:
+        $r4 := @caughtexception;
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: java.lang.String textProtectedHuffman(java.lang.String)>(r1);
+
+        return $r6;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    private java.lang.String textProtectedHuffman(java.lang.String)
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r2;
+        java.lang.String r3, $r4;
+
+        r2 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "@startuml");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "legend");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "The plugin you are using seems to generated a bad URL.");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "This URL does not look like HUFFMAN data.");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "See https://plantuml.com/pte");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "You may contact the PlantUML team at plantuml@gmail.com");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "But you should also probably contact the plugin authors you are currently using and send them this image");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "For the record, here is your data:");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendURL(java.lang.StringBuilder,java.lang.String)>($r0, r3);
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "endlegend");
+
+        specialinvoke r2.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "@enduml");
+
+        $r4 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r4;
+    }
+
+    private java.lang.String textProtectedDeflate2(java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r5, $r6, $r7, $r9, $r10, $r11, $r14, $r16, $r17;
+        java.lang.String r2, $r8, $r12, $r13, $r15, $r18;
+        int $i0;
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r4;
+
+        r4 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $i0 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        if $i0 <= 30 goto label1;
+
+        $r14 = new java.lang.StringBuilder;
+
+        specialinvoke $r14.<java.lang.StringBuilder: void <init>()>();
+
+        $r15 = virtualinvoke r2.<java.lang.String: java.lang.String substring(int,int)>(0, 30);
+
+        $r16 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r15);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("...");
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        goto label2;
+
+     label1:
+        $r18 = r2;
+
+     label2:
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "@startuml");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "legend");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "The plugin you are using seems to generated a bad URL.");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "This URL does not look like DEFLATE data.");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "It looks like your plugin is using HUFFMAN encoding.");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "This means you have now to add an header ~1 to your data. For example, you have to change:");
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("http://www.plantuml.com/plantuml/png/");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r18);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, $r8);
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "to");
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("http://www.plantuml.com/plantuml/png/~1");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r18);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, $r12);
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "It will work this way");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "You may contact the PlantUML team at plantuml@gmail.com");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "But you should also probably contact the plugin authors you are currently using and send them this image");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "For the record, here is your data:");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendURL(java.lang.StringBuilder,java.lang.String)>($r0, r2);
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "endlegend");
+
+        specialinvoke r4.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>($r0, "@enduml");
+
+        $r13 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r13;
+    }
+
+    private void appendURL(java.lang.StringBuilder, java.lang.String)
+    {
+        int $i0, $i1;
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r0;
+        java.lang.StringBuilder r1;
+        java.lang.String $r2, r3;
+
+        r0 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        r1 := @parameter0: java.lang.StringBuilder;
+
+        r3 := @parameter1: java.lang.String;
+
+     label1:
+        $i0 = virtualinvoke r3.<java.lang.String: int length()>();
+
+        if $i0 <= 80 goto label2;
+
+        $r2 = virtualinvoke r3.<java.lang.String: java.lang.String substring(int,int)>(0, 80);
+
+        specialinvoke r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>(r1, $r2);
+
+        r3 = virtualinvoke r3.<java.lang.String: java.lang.String substring(int)>(80);
+
+        goto label1;
+
+     label2:
+        $i1 = virtualinvoke r3.<java.lang.String: int length()>();
+
+        if $i1 <= 0 goto label3;
+
+        specialinvoke r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: void appendLine(java.lang.StringBuilder,java.lang.String)>(r1, r3);
+
+     label3:
+        return;
+    }
+
+    private void appendLine(java.lang.StringBuilder, java.lang.String)
+    {
+        java.lang.StringBuilder r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r4;
+
+        r4 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        r1 := @parameter1: java.lang.String;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n");
+
+        return;
+    }
+
+    public java.lang.String encode(java.lang.String) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.TranscoderSmartProtected r0;
+        java.lang.String r1, $r3;
+        net.sourceforge.plantuml.code.Transcoder $r2;
+
+        r0 := @this: net.sourceforge.plantuml.code.TranscoderSmartProtected;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.code.TranscoderSmartProtected: net.sourceforge.plantuml.code.Transcoder zlib>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.code.Transcoder: java.lang.String encode(java.lang.String)>(r1);
+
+        return $r3;
+    }
+}

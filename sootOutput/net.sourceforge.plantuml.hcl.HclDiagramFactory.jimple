@@ -1,0 +1,109 @@
+public class net.sourceforge.plantuml.hcl.HclDiagramFactory extends net.sourceforge.plantuml.command.PSystemAbstractFactory
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.hcl.HclDiagramFactory r0;
+        net.sourceforge.plantuml.core.DiagramType $r1;
+
+        r0 := @this: net.sourceforge.plantuml.hcl.HclDiagramFactory;
+
+        $r1 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType HCL>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemAbstractFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r1);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.Diagram createSystem(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.ISkinSimple)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.hcl.HclSource $r2;
+        net.sourceforge.plantuml.jsondiagram.StyleExtractor $r3;
+        net.sourceforge.plantuml.core.UmlSource r4;
+        net.sourceforge.plantuml.version.IteratorCounter2 $r5;
+        java.util.Iterator r6;
+        java.lang.Object $r7;
+        boolean $z0;
+        net.sourceforge.plantuml.hcl.HclParser $r8;
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram $r9;
+        net.sourceforge.plantuml.api.ThemeStyle r10;
+        net.sourceforge.plantuml.UmlDiagramType $r11;
+        java.lang.Exception $r12;
+        net.sourceforge.plantuml.hcl.HclDiagramFactory r13;
+        net.sourceforge.plantuml.ISkinSimple r14;
+        net.sourceforge.plantuml.json.JsonObject r15;
+        java.lang.String r18;
+
+        r13 := @this: net.sourceforge.plantuml.hcl.HclDiagramFactory;
+
+        r10 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r4 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r14 := @parameter2: net.sourceforge.plantuml.ISkinSimple;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        r15 = null;
+
+     label1:
+        $r2 = new net.sourceforge.plantuml.hcl.HclSource;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.hcl.HclSource: void <init>()>();
+
+        $r3 = new net.sourceforge.plantuml.jsondiagram.StyleExtractor;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.core.UmlSource: net.sourceforge.plantuml.version.IteratorCounter2 iterator2()>();
+
+        specialinvoke $r3.<net.sourceforge.plantuml.jsondiagram.StyleExtractor: void <init>(java.util.Iterator)>($r5);
+
+        r6 = virtualinvoke $r3.<net.sourceforge.plantuml.jsondiagram.StyleExtractor: java.util.Iterator getIterator()>();
+
+        interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+     label2:
+        $r7 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r18 = (java.lang.String) $r7;
+
+        $z0 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 != 0 goto label3;
+
+        goto label4;
+
+     label3:
+        virtualinvoke $r2.<net.sourceforge.plantuml.hcl.HclSource: void add(java.lang.String)>(r18);
+
+        goto label2;
+
+     label4:
+        $r8 = new net.sourceforge.plantuml.hcl.HclParser;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.hcl.HclParser: void <init>(java.lang.Iterable)>($r2);
+
+        r15 = virtualinvoke $r8.<net.sourceforge.plantuml.hcl.HclParser: net.sourceforge.plantuml.json.JsonObject parseMe()>();
+
+     label5:
+        goto label7;
+
+     label6:
+        $r12 := @caughtexception;
+
+        virtualinvoke $r12.<java.lang.Exception: void printStackTrace()>();
+
+     label7:
+        $r9 = new net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        $r11 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType HCL>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType,net.sourceforge.plantuml.json.JsonValue,java.util.List)>(r10, r4, $r11, r15, $r0);
+
+        return $r9;
+
+        catch java.lang.Exception from label1 to label5 with label6;
+    }
+}

@@ -1,0 +1,189 @@
+public class net.sourceforge.plantuml.sprite.SpriteColorBuilder extends java.lang.Object
+{
+    private static final net.sourceforge.plantuml.sprite.ColorPalette COLOR_PALETTE;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.sprite.SpriteColorBuilder r0;
+
+        r0 := @this: net.sourceforge.plantuml.sprite.SpriteColorBuilder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static net.sourceforge.plantuml.sprite.Sprite buildSprite(java.util.List)
+    {
+        net.sourceforge.plantuml.sprite.SpriteColor $r0;
+        java.util.List r1;
+        java.lang.Object $r2, $r5, $r7;
+        java.lang.CharSequence $r3, $r6, $r8;
+        int $i0, $i1, $i2, $i3, $i4, i6, $i7, $i8, i9, i10;
+        char c5;
+        java.lang.String $r9;
+        net.sourceforge.plantuml.sprite.ColorPalette $r10;
+        java.awt.Color r11;
+
+        r1 := @parameter0: java.util.List;
+
+        $r0 = new net.sourceforge.plantuml.sprite.SpriteColor;
+
+        $r2 = interfaceinvoke r1.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r3 = (java.lang.CharSequence) $r2;
+
+        $i0 = interfaceinvoke $r3.<java.lang.CharSequence: int length()>();
+
+        $i1 = interfaceinvoke r1.<java.util.List: int size()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.sprite.SpriteColor: void <init>(int,int)>($i0, $i1);
+
+        i9 = 0;
+
+     label1:
+        $i2 = virtualinvoke $r0.<net.sourceforge.plantuml.sprite.SpriteColor: int getWidth()>();
+
+        if i9 >= $i2 goto label7;
+
+        i10 = 0;
+
+     label2:
+        $i3 = virtualinvoke $r0.<net.sourceforge.plantuml.sprite.SpriteColor: int getHeight()>();
+
+        if i10 >= $i3 goto label6;
+
+        $r5 = interfaceinvoke r1.<java.util.List: java.lang.Object get(int)>(i10);
+
+        $r6 = (java.lang.CharSequence) $r5;
+
+        $i4 = interfaceinvoke $r6.<java.lang.CharSequence: int length()>();
+
+        if i9 < $i4 goto label3;
+
+        goto label5;
+
+     label3:
+        $r7 = interfaceinvoke r1.<java.util.List: java.lang.Object get(int)>(i10);
+
+        $r8 = (java.lang.CharSequence) $r7;
+
+        c5 = interfaceinvoke $r8.<java.lang.CharSequence: char charAt(int)>(i9);
+
+        $r9 = "0123456789ABCDEF";
+
+        i6 = virtualinvoke $r9.<java.lang.String: int indexOf(int)>(c5);
+
+        if i6 == -1 goto label4;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.sprite.SpriteColor: void setGray(int,int,int)>(i9, i10, i6);
+
+        goto label5;
+
+     label4:
+        $r10 = <net.sourceforge.plantuml.sprite.SpriteColorBuilder: net.sourceforge.plantuml.sprite.ColorPalette COLOR_PALETTE>;
+
+        r11 = virtualinvoke $r10.<net.sourceforge.plantuml.sprite.ColorPalette: java.awt.Color getColorFor(char)>(c5);
+
+        $i7 = virtualinvoke r11.<java.awt.Color: int getRGB()>();
+
+        $i8 = $i7 & 16777215;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.sprite.SpriteColor: void setColor(int,int,int)>(i9, i10, $i8);
+
+     label5:
+        i10 = i10 + 1;
+
+        goto label2;
+
+     label6:
+        i9 = i9 + 1;
+
+        goto label1;
+
+     label7:
+        return $r0;
+    }
+
+    public static java.util.List encodeColor(java.awt.image.BufferedImage)
+    {
+        java.awt.image.BufferedImage r0;
+        int i0, i1, $i2, i3, i5, i6;
+        java.util.ArrayList $r1;
+        java.util.List $r3;
+        java.lang.StringBuilder $r4;
+        java.lang.String $r6;
+        java.awt.Color $r7;
+        net.sourceforge.plantuml.sprite.ColorPalette $r8;
+        char c4;
+
+        r0 := @parameter0: java.awt.image.BufferedImage;
+
+        i0 = virtualinvoke r0.<java.awt.image.BufferedImage: int getWidth()>();
+
+        i1 = virtualinvoke r0.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        i5 = 0;
+
+     label1:
+        if i5 >= i1 goto label4;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        i6 = 0;
+
+     label2:
+        if i6 >= i0 goto label3;
+
+        $i2 = virtualinvoke r0.<java.awt.image.BufferedImage: int getRGB(int,int)>(i6, i5);
+
+        i3 = $i2 & 16777215;
+
+        $r8 = <net.sourceforge.plantuml.sprite.SpriteColorBuilder: net.sourceforge.plantuml.sprite.ColorPalette COLOR_PALETTE>;
+
+        $r7 = new java.awt.Color;
+
+        specialinvoke $r7.<java.awt.Color: void <init>(int)>(i3);
+
+        c4 = virtualinvoke $r8.<net.sourceforge.plantuml.sprite.ColorPalette: char getCharFor(java.awt.Color)>($r7);
+
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c4);
+
+        i6 = i6 + 1;
+
+        goto label2;
+
+     label3:
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label4:
+        $r3 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r3;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.sprite.ColorPalette $r0;
+
+        $r0 = new net.sourceforge.plantuml.sprite.ColorPalette;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.sprite.ColorPalette: void <init>()>();
+
+        <net.sourceforge.plantuml.sprite.SpriteColorBuilder: net.sourceforge.plantuml.sprite.ColorPalette COLOR_PALETTE> = $r0;
+
+        return;
+    }
+}

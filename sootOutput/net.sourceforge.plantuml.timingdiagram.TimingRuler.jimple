@@ -1,0 +1,1184 @@
+public class net.sourceforge.plantuml.timingdiagram.TimingRuler extends java.lang.Object
+{
+    private final java.util.SortedSet times;
+    private final net.sourceforge.plantuml.ISkinParam skinParam;
+    private long tickIntervalInPixels;
+    private long tickUnitary;
+    private net.sourceforge.plantuml.timingdiagram.TimingFormat format;
+    private long highestCommonFactorInternal;
+
+    static net.sourceforge.plantuml.ugraphic.UGraphic applyForVLines(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.style.Style, net.sourceforge.plantuml.ISkinParam)
+    {
+        net.sourceforge.plantuml.ugraphic.UStroke $r0;
+        boolean $z0;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r2, $r12;
+        net.sourceforge.plantuml.api.ThemeStyle $r3, $r11;
+        net.sourceforge.plantuml.ugraphic.UGraphic r4, $r5, $r6;
+        net.sourceforge.plantuml.style.Style r7;
+        net.sourceforge.plantuml.style.PName $r8;
+        net.sourceforge.plantuml.style.Value $r9;
+        net.sourceforge.plantuml.ISkinParam r10;
+        net.sourceforge.plantuml.ugraphic.color.HColor r13;
+
+        r4 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r7 := @parameter1: net.sourceforge.plantuml.style.Style;
+
+        r10 := @parameter2: net.sourceforge.plantuml.ISkinParam;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UStroke;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UStroke: void <init>(double,double,double)>(3.0, 5.0, 0.5);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 == 0 goto label1;
+
+        $r8 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName LineColor>;
+
+        $r9 = virtualinvoke r7.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r8);
+
+        $r11 = interfaceinvoke r10.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r12 = interfaceinvoke r10.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        r13 = interfaceinvoke $r9.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.ugraphic.color.HColor asColor(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r11, $r12);
+
+        goto label2;
+
+     label1:
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColorSet instance()>();
+
+        $r3 = <net.sourceforge.plantuml.api.ThemeStyle: net.sourceforge.plantuml.api.ThemeStyle LIGHT_REGULAR>;
+
+        r13 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColorOrWhite(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>($r3, "#AAA");
+
+     label2:
+        $r5 = interfaceinvoke r4.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r0);
+
+        $r6 = interfaceinvoke $r5.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r13);
+
+        return $r6;
+    }
+
+    public void ensureNotEmpty()
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        java.util.SortedSet $r1, $r9, $r13;
+        int $i0, $i1, $i2;
+        net.sourceforge.plantuml.timingdiagram.TimeTick $r2, $r4, $r6, $r10;
+        java.math.BigDecimal $r3, $r5, $r8, $r12;
+        net.sourceforge.plantuml.timingdiagram.TimingFormat $r7, $r11;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r1 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        $i0 = interfaceinvoke $r1.<java.util.SortedSet: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $r13 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        $r10 = new net.sourceforge.plantuml.timingdiagram.TimeTick;
+
+        $r12 = <java.math.BigDecimal: java.math.BigDecimal ZERO>;
+
+        $r11 = <net.sourceforge.plantuml.timingdiagram.TimingFormat: net.sourceforge.plantuml.timingdiagram.TimingFormat DECIMAL>;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.timingdiagram.TimeTick: void <init>(java.math.BigDecimal,net.sourceforge.plantuml.timingdiagram.TimingFormat)>($r12, $r11);
+
+        interfaceinvoke $r13.<java.util.SortedSet: boolean add(java.lang.Object)>($r10);
+
+     label1:
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMax()>();
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $i1 = virtualinvoke $r3.<java.math.BigDecimal: int signum()>();
+
+        if $i1 <= 0 goto label2;
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMin()>();
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $i2 = virtualinvoke $r5.<java.math.BigDecimal: int signum()>();
+
+        if $i2 >= 0 goto label2;
+
+        $r9 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        $r6 = new net.sourceforge.plantuml.timingdiagram.TimeTick;
+
+        $r8 = <java.math.BigDecimal: java.math.BigDecimal ZERO>;
+
+        $r7 = <net.sourceforge.plantuml.timingdiagram.TimingFormat: net.sourceforge.plantuml.timingdiagram.TimingFormat DECIMAL>;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.timingdiagram.TimeTick: void <init>(java.math.BigDecimal,net.sourceforge.plantuml.timingdiagram.TimingFormat)>($r8, $r7);
+
+        interfaceinvoke $r9.<java.util.SortedSet: boolean add(java.lang.Object)>($r6);
+
+     label2:
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.ISkinParam)
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        java.util.TreeSet $r1;
+        net.sourceforge.plantuml.timingdiagram.TimingFormat $r2;
+        net.sourceforge.plantuml.ISkinParam r3;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        r3 := @parameter0: net.sourceforge.plantuml.ISkinParam;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.TreeSet;
+
+        specialinvoke $r1.<java.util.TreeSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times> = $r1;
+
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickIntervalInPixels> = 50L;
+
+        $r2 = <net.sourceforge.plantuml.timingdiagram.TimingFormat: net.sourceforge.plantuml.timingdiagram.TimingFormat DECIMAL>;
+
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimingFormat format> = $r2;
+
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal> = -1L;
+
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam> = r3;
+
+        return;
+    }
+
+    public void scaleInPixels(long, long)
+    {
+        long l0, l2;
+        byte $b1, $b3;
+        java.lang.IllegalArgumentException $r0;
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r1;
+
+        r1 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        l2 := @parameter0: long;
+
+        l0 := @parameter1: long;
+
+        $b1 = l0 cmp 0L;
+
+        if $b1 <= 0 goto label1;
+
+        $b3 = l2 cmp 0L;
+
+        if $b3 > 0 goto label2;
+
+     label1:
+        $r0 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r0.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r0;
+
+     label2:
+        r1.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickIntervalInPixels> = l0;
+
+        r1.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickUnitary> = l2;
+
+        return;
+    }
+
+    private long tickUnitary()
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        long $l0, $l2, $l3;
+        byte $b1;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $l0 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickUnitary>;
+
+        $b1 = $l0 cmp 0L;
+
+        if $b1 != 0 goto label1;
+
+        $l3 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactor()>();
+
+        return $l3;
+
+     label1:
+        $l2 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickUnitary>;
+
+        return $l2;
+    }
+
+    private long highestCommonFactor()
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        long $l0, $l2, l3, $l4, $l6, l7, $l9;
+        byte $b1, $b5, $b8;
+        java.util.Set $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        java.lang.Long $r4;
+        net.sourceforge.plantuml.timingdiagram.TimeTick $r5, $r7;
+        java.math.BigDecimal $r6, $r8;
+        double $d0, $d1, $d2, $d3, d4;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $l0 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal>;
+
+        $b1 = $l0 cmp -1L;
+
+        if $b1 != 0 goto label5;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.Set getAbsolutesTicks()>();
+
+        r2 = interfaceinvoke $r1.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label5;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        $r4 = (java.lang.Long) $r3;
+
+        l3 = virtualinvoke $r4.<java.lang.Long: long longValue()>();
+
+        $l4 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal>;
+
+        $b5 = $l4 cmp -1L;
+
+        if $b5 != 0 goto label2;
+
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal> = l3;
+
+        goto label4;
+
+     label2:
+        $l6 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal>;
+
+        l7 = staticinvoke <net.sourceforge.plantuml.timingdiagram.TimingRuler: long computeHighestCommonFactor(long,long)>($l6, l3);
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMax()>();
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $d0 = virtualinvoke $r6.<java.math.BigDecimal: double doubleValue()>();
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMin()>();
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $d1 = virtualinvoke $r8.<java.math.BigDecimal: double doubleValue()>();
+
+        $d3 = $d0 - $d1;
+
+        $d2 = (double) l7;
+
+        d4 = $d3 / $d2;
+
+        $b8 = d4 cmpl 200.0;
+
+        if $b8 <= 0 goto label3;
+
+        $l9 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal>;
+
+        return $l9;
+
+     label3:
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal> = l7;
+
+     label4:
+        goto label1;
+
+     label5:
+        $l2 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal>;
+
+        return $l2;
+    }
+
+    private java.util.Set getAbsolutesTicks()
+    {
+        java.util.TreeSet $r0;
+        net.sourceforge.plantuml.timingdiagram.TimingRuler$1 $r1;
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r2;
+        java.util.SortedSet $r4;
+        java.util.Iterator r5;
+        boolean $z0;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.timingdiagram.TimeTick r7;
+        java.math.BigDecimal $r8;
+        long $l0, l1;
+        byte $b2;
+        java.lang.Long $r9;
+
+        r2 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r0 = new java.util.TreeSet;
+
+        $r1 = new net.sourceforge.plantuml.timingdiagram.TimingRuler$1;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.timingdiagram.TimingRuler$1: void <init>(net.sourceforge.plantuml.timingdiagram.TimingRuler)>(r2);
+
+        specialinvoke $r0.<java.util.TreeSet: void <init>(java.util.Comparator)>($r1);
+
+        $r4 = r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        r5 = interfaceinvoke $r4.<java.util.SortedSet: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.timingdiagram.TimeTick) $r6;
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $l0 = virtualinvoke $r8.<java.math.BigDecimal: long longValue()>();
+
+        l1 = staticinvoke <java.lang.Math: long abs(long)>($l0);
+
+        $b2 = l1 cmp 0L;
+
+        if $b2 <= 0 goto label2;
+
+        $r9 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>(l1);
+
+        interfaceinvoke $r0.<java.util.Set: boolean add(java.lang.Object)>($r9);
+
+     label2:
+        goto label1;
+
+     label3:
+        return $r0;
+    }
+
+    private int getNbTick()
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        java.util.SortedSet $r1;
+        int $i0, $i7, $i8;
+        net.sourceforge.plantuml.timingdiagram.TimeTick $r2, $r4;
+        java.math.BigDecimal $r3, $r5;
+        long $l1, $l2, l3, $l4, $l5, $l6;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r1 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        $i0 = interfaceinvoke $r1.<java.util.SortedSet: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        return 1;
+
+     label1:
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMax()>();
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $l1 = virtualinvoke $r3.<java.math.BigDecimal: long longValue()>();
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMin()>();
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $l2 = virtualinvoke $r5.<java.math.BigDecimal: long longValue()>();
+
+        l3 = $l1 - $l2;
+
+        $l4 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickUnitary()>();
+
+        $l5 = l3 / $l4;
+
+        $l6 = 1L + $l5;
+
+        $i7 = (int) $l6;
+
+        $i8 = staticinvoke <java.lang.Math: int min(int,int)>(1000, $i7);
+
+        return $i8;
+    }
+
+    public double getWidth()
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        net.sourceforge.plantuml.timingdiagram.TimeTick $r1, $r3;
+        java.math.BigDecimal $r2, $r4;
+        double $d0, $d1, d2, $d3, $d4, $d5, $d6, $d7;
+        long $l0, $l1;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMax()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $d0 = virtualinvoke $r2.<java.math.BigDecimal: double doubleValue()>();
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMin()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $d1 = virtualinvoke $r4.<java.math.BigDecimal: double doubleValue()>();
+
+        d2 = $d0 - $d1;
+
+        $l0 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickUnitary()>();
+
+        $d3 = (double) $l0;
+
+        $d4 = d2 / $d3;
+
+        $d6 = $d4 + 1.0;
+
+        $l1 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickIntervalInPixels>;
+
+        $d5 = (double) $l1;
+
+        $d7 = $d6 * $d5;
+
+        return $d7;
+    }
+
+    public final double getPosInPixel(net.sourceforge.plantuml.timingdiagram.TimeTick)
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        net.sourceforge.plantuml.timingdiagram.TimeTick r1;
+        java.math.BigDecimal $r2;
+        double $d0, $d1;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        r1 := @parameter0: net.sourceforge.plantuml.timingdiagram.TimeTick;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $d0 = virtualinvoke $r2.<java.math.BigDecimal: double doubleValue()>();
+
+        $d1 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: double getPosInPixelInternal(double)>($d0);
+
+        return $d1;
+    }
+
+    private double getPosInPixelInternal(double)
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        net.sourceforge.plantuml.timingdiagram.TimeTick $r1;
+        java.math.BigDecimal $r2;
+        double $d0, $d1, $d2, $d3, $d4, d5, d6;
+        long $l0, $l1;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        d5 := @parameter0: double;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMin()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $d0 = virtualinvoke $r2.<java.math.BigDecimal: double doubleValue()>();
+
+        d6 = d5 - $d0;
+
+        $l0 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickUnitary()>();
+
+        $d1 = (double) $l0;
+
+        $d3 = d6 / $d1;
+
+        $l1 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickIntervalInPixels>;
+
+        $d2 = (double) $l1;
+
+        $d4 = $d3 * $d2;
+
+        return $d4;
+    }
+
+    private long tickToTime(int)
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        int i0;
+        long $l1, $l2, $l3, $l4, $l5;
+        net.sourceforge.plantuml.timingdiagram.TimeTick $r1;
+        java.math.BigDecimal $r2;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        i0 := @parameter0: int;
+
+        $l2 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickUnitary>;
+
+        $l1 = (long) i0;
+
+        $l3 = $l2 * $l1;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimeTick getMin()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $l4 = virtualinvoke $r2.<java.math.BigDecimal: long longValue()>();
+
+        $l5 = $l3 + $l4;
+
+        return $l5;
+    }
+
+    public void addTime(net.sourceforge.plantuml.timingdiagram.TimeTick)
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        net.sourceforge.plantuml.timingdiagram.TimeTick r1;
+        java.util.SortedSet $r2;
+        net.sourceforge.plantuml.timingdiagram.TimingFormat $r3, $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        r1 := @parameter0: net.sourceforge.plantuml.timingdiagram.TimeTick;
+
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long highestCommonFactorInternal> = -1L;
+
+        $r2 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        interfaceinvoke $r2.<java.util.SortedSet: boolean add(java.lang.Object)>(r1);
+
+        $r3 = virtualinvoke r1.<net.sourceforge.plantuml.timingdiagram.TimeTick: net.sourceforge.plantuml.timingdiagram.TimingFormat getFormat()>();
+
+        $r4 = <net.sourceforge.plantuml.timingdiagram.TimingFormat: net.sourceforge.plantuml.timingdiagram.TimingFormat DECIMAL>;
+
+        if $r3 == $r4 goto label1;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.timingdiagram.TimeTick: net.sourceforge.plantuml.timingdiagram.TimingFormat getFormat()>();
+
+        r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimingFormat format> = $r5;
+
+     label1:
+        return;
+    }
+
+    private net.sourceforge.plantuml.graphic.FontConfiguration getFontConfiguration()
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r0, $r4;
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r1;
+        net.sourceforge.plantuml.ISkinParam $r2, $r6;
+        net.sourceforge.plantuml.style.Style $r3;
+        net.sourceforge.plantuml.FontParam $r5;
+
+        r1 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 != 0 goto label1;
+
+        $r4 = new net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r6 = r1.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r5 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam TIMING>;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.graphic.FontConfiguration: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.FontParam,net.sourceforge.plantuml.cucadiagram.Stereotype)>($r6, $r5, null);
+
+        return $r4;
+
+     label1:
+        $r0 = new net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r2 = r1.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r3 = specialinvoke r1.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.style.Style getStyle()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.graphic.FontConfiguration: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.style.Style)>($r2, $r3);
+
+        return $r0;
+    }
+
+    private net.sourceforge.plantuml.style.Style getStyle()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r6;
+        net.sourceforge.plantuml.ISkinParam $r7;
+        net.sourceforge.plantuml.style.StyleBuilder $r8;
+        net.sourceforge.plantuml.style.Style $r9;
+
+        r6 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName timingDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName timeline>;
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r7 = r6.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r8 = interfaceinvoke $r7.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r9 = virtualinvoke $r5.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r8);
+
+        return $r9;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock getTimeTextBlock(long)
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        long l0;
+        net.sourceforge.plantuml.timingdiagram.TimingFormat $r1;
+        java.lang.String $r2;
+        net.sourceforge.plantuml.cucadiagram.Display r3;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r4;
+        net.sourceforge.plantuml.ISkinParam $r5;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r6;
+        net.sourceforge.plantuml.graphic.TextBlock $r7;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        l0 := @parameter0: long;
+
+        $r1 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.timingdiagram.TimingFormat format>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.timingdiagram.TimingFormat: java.lang.String formatTime(long)>(l0);
+
+        r3 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r2);
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.graphic.FontConfiguration getFontConfiguration()>();
+
+        $r6 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        $r5 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r7 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>($r4, $r6, $r5);
+
+        return $r7;
+    }
+
+    public void drawTimeAxis(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.UStroke $r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r1, $r7, $r17, $r19, r20, r21;
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r2;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r3;
+        net.sourceforge.plantuml.ugraphic.ULine r4, $r8;
+        java.math.BigDecimal $r5;
+        double $d1, d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13;
+        long $l0, $l1, $l2, $l5, $l6, $l7, l8, $l9, $l10, $l11;
+        byte $b3;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r6, $r16, $r18;
+        int $i4, i12;
+        java.util.Collection $r9;
+        java.util.Iterator r10;
+        boolean $z0;
+        java.lang.Object $r11;
+        java.lang.Long $r12;
+        net.sourceforge.plantuml.graphic.TextBlock r13;
+        net.sourceforge.plantuml.graphic.StringBounder $r14;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r15;
+
+        r2 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        r20 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UStroke;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UStroke: void <init>(double)>(2.0);
+
+        $r1 = interfaceinvoke r20.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r0);
+
+        $r3 = specialinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ugraphic.color.HColor black()>();
+
+        r21 = interfaceinvoke $r1.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r3);
+
+        r4 = staticinvoke <net.sourceforge.plantuml.ugraphic.ULine: net.sourceforge.plantuml.ugraphic.ULine vline(double)>(5.0);
+
+        $r5 = specialinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.math.BigDecimal getFirstPositiveOrZeroValue()>();
+
+        $d1 = virtualinvoke $r5.<java.math.BigDecimal: double doubleValue()>();
+
+        d2 = specialinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: double getPosInPixelInternal(double)>($d1);
+
+        i12 = 0;
+
+     label1:
+        $l1 = (long) i12;
+
+        $l0 = r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickIntervalInPixels>;
+
+        $l2 = $l1 * $l0;
+
+        $d3 = (double) $l2;
+
+        $d4 = d2 + $d3;
+
+        $d5 = virtualinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: double getWidth()>();
+
+        $b3 = $d4 cmpg $d5;
+
+        if $b3 > 0 goto label2;
+
+        $l10 = (long) i12;
+
+        $l9 = r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickIntervalInPixels>;
+
+        $l11 = $l10 * $l9;
+
+        $d12 = (double) $l11;
+
+        $d13 = d2 + $d12;
+
+        $r18 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d13);
+
+        $r19 = interfaceinvoke r21.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r18);
+
+        interfaceinvoke $r19.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r4);
+
+        i12 = i12 + 1;
+
+        goto label1;
+
+     label2:
+        $r6 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r7 = interfaceinvoke r21.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r6);
+
+        $i4 = i12 - 1;
+
+        $l6 = (long) $i4;
+
+        $l5 = r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickIntervalInPixels>;
+
+        $l7 = $l6 * $l5;
+
+        $d6 = (double) $l7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.ugraphic.ULine: net.sourceforge.plantuml.ugraphic.ULine hline(double)>($d6);
+
+        interfaceinvoke $r7.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r8);
+
+        $r9 = specialinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.Collection roundValues()>();
+
+        r10 = interfaceinvoke $r9.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label3:
+        $z0 = interfaceinvoke r10.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r11 = interfaceinvoke r10.<java.util.Iterator: java.lang.Object next()>();
+
+        $r12 = (java.lang.Long) $r11;
+
+        l8 = virtualinvoke $r12.<java.lang.Long: long longValue()>();
+
+        r13 = specialinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.graphic.TextBlock getTimeTextBlock(long)>(l8);
+
+        $r14 = interfaceinvoke r21.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        r15 = interfaceinvoke r13.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r14);
+
+        $r16 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d7 = (double) l8;
+
+        $d8 = specialinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: double getPosInPixelInternal(double)>($d7);
+
+        $d9 = virtualinvoke r15.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d10 = $d9 / 2.0;
+
+        $d11 = $d8 - $d10;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d11, 6.0);
+
+        $r17 = interfaceinvoke r21.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r16);
+
+        interfaceinvoke r13.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r17);
+
+        goto label3;
+
+     label4:
+        return;
+    }
+
+    private net.sourceforge.plantuml.ugraphic.color.HColor black()
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3;
+        net.sourceforge.plantuml.style.StyleSignature $r4;
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r5;
+        net.sourceforge.plantuml.ISkinParam $r6, $r11, $r13;
+        net.sourceforge.plantuml.style.StyleBuilder $r7;
+        net.sourceforge.plantuml.style.Style r8;
+        net.sourceforge.plantuml.style.PName $r9;
+        net.sourceforge.plantuml.style.Value $r10;
+        net.sourceforge.plantuml.api.ThemeStyle $r12;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r14;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r15;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r16;
+
+        r5 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 != 0 goto label1;
+
+        $r16 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        return $r16;
+
+     label1:
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[3];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName timingDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r6 = r5.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r7 = interfaceinvoke $r6.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        r8 = virtualinvoke $r4.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r7);
+
+        $r9 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName LineColor>;
+
+        $r10 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r9);
+
+        $r11 = r5.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r12 = interfaceinvoke $r11.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r13 = r5.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r14 = interfaceinvoke $r13.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r15 = interfaceinvoke $r10.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.ugraphic.color.HColor asColor(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r12, $r14);
+
+        return $r15;
+    }
+
+    private java.math.BigDecimal getFirstPositiveOrZeroValue()
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        java.util.SortedSet $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.IllegalStateException $r3;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.timingdiagram.TimeTick r5;
+        java.math.BigDecimal $r6, $r7;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r1 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        r2 = interfaceinvoke $r1.<java.util.SortedSet: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.timingdiagram.TimeTick) $r4;
+
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        $i0 = virtualinvoke $r6.<java.math.BigDecimal: int signum()>();
+
+        if $i0 < 0 goto label2;
+
+        $r7 = virtualinvoke r5.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        return $r7;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r3 = new java.lang.IllegalStateException;
+
+        specialinvoke $r3.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r3;
+    }
+
+    private java.util.Collection roundValues()
+    {
+        java.util.TreeSet $r0;
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r2;
+        long $l0, $l2, $l4, l6, l9;
+        byte $b1, $b3, $b5;
+        java.lang.Object $r3, $r5, $r10;
+        java.lang.Long $r4, $r6, $r7, $r8, $r12;
+        java.util.SortedSet $r9;
+        boolean $z2;
+        java.math.BigDecimal $r11;
+        java.util.Iterator r13;
+        net.sourceforge.plantuml.timingdiagram.TimeTick r14;
+        int i7, i8;
+
+        r2 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r0 = new java.util.TreeSet;
+
+        specialinvoke $r0.<java.util.TreeSet: void <init>()>();
+
+        $l0 = r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickUnitary>;
+
+        $b1 = $l0 cmp 0L;
+
+        if $b1 != 0 goto label3;
+
+        $r9 = r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        r13 = interfaceinvoke $r9.<java.util.SortedSet: java.util.Iterator iterator()>();
+
+     label1:
+        $z2 = interfaceinvoke r13.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label2;
+
+        $r10 = interfaceinvoke r13.<java.util.Iterator: java.lang.Object next()>();
+
+        r14 = (net.sourceforge.plantuml.timingdiagram.TimeTick) $r10;
+
+        $r11 = virtualinvoke r14.<net.sourceforge.plantuml.timingdiagram.TimeTick: java.math.BigDecimal getTime()>();
+
+        l6 = virtualinvoke $r11.<java.math.BigDecimal: long longValue()>();
+
+        $r12 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>(l6);
+
+        interfaceinvoke $r0.<java.util.SortedSet: boolean add(java.lang.Object)>($r12);
+
+        goto label1;
+
+     label2:
+        goto label5;
+
+     label3:
+        i7 = specialinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: int getNbTick()>();
+
+        i8 = 0;
+
+     label4:
+        if i8 > i7 goto label5;
+
+        l9 = specialinvoke r2.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickToTime(int)>(i8);
+
+        $r8 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>(l9);
+
+        interfaceinvoke $r0.<java.util.SortedSet: boolean add(java.lang.Object)>($r8);
+
+        i8 = i8 + 1;
+
+        goto label4;
+
+     label5:
+        $r3 = interfaceinvoke $r0.<java.util.SortedSet: java.lang.Object first()>();
+
+        $r4 = (java.lang.Long) $r3;
+
+        $l2 = virtualinvoke $r4.<java.lang.Long: long longValue()>();
+
+        $b3 = $l2 cmp 0L;
+
+        if $b3 >= 0 goto label6;
+
+        $r5 = interfaceinvoke $r0.<java.util.SortedSet: java.lang.Object last()>();
+
+        $r6 = (java.lang.Long) $r5;
+
+        $l4 = virtualinvoke $r6.<java.lang.Long: long longValue()>();
+
+        $b5 = $l4 cmp 0L;
+
+        if $b5 <= 0 goto label6;
+
+        $r7 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>(0L);
+
+        interfaceinvoke $r0.<java.util.SortedSet: boolean add(java.lang.Object)>($r7);
+
+     label6:
+        return $r0;
+    }
+
+    public void drawVlines(net.sourceforge.plantuml.ugraphic.UGraphic, double)
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        net.sourceforge.plantuml.style.Style $r1;
+        net.sourceforge.plantuml.ISkinParam $r2;
+        double d0, $d1;
+        net.sourceforge.plantuml.ugraphic.ULine r3;
+        int i0, i4;
+        long $l1, $l2, $l3;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r4;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r5, r6, r7;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        r6 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        d0 := @parameter1: double;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.style.Style getStyle()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        r7 = staticinvoke <net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.ugraphic.UGraphic applyForVLines(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.ISkinParam)>(r6, $r1, $r2);
+
+        r3 = staticinvoke <net.sourceforge.plantuml.ugraphic.ULine: net.sourceforge.plantuml.ugraphic.ULine vline(double)>(d0);
+
+        i0 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: int getNbTick()>();
+
+        i4 = 0;
+
+     label1:
+        if i4 > i0 goto label2;
+
+        $l2 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: long tickIntervalInPixels>;
+
+        $l1 = (long) i4;
+
+        $l3 = $l2 * $l1;
+
+        $d1 = (double) $l3;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d1);
+
+        $r5 = interfaceinvoke r7.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r4);
+
+        interfaceinvoke $r5.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r3);
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public double getHeight(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        net.sourceforge.plantuml.graphic.TextBlock $r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r3;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: net.sourceforge.plantuml.graphic.TextBlock getTimeTextBlock(long)>(0L);
+
+        $r3 = interfaceinvoke $r1.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r2);
+
+        $d0 = virtualinvoke $r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        return $d0;
+    }
+
+    private net.sourceforge.plantuml.timingdiagram.TimeTick getMax()
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        java.util.SortedSet $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.timingdiagram.TimeTick $r3;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r1 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        $r2 = interfaceinvoke $r1.<java.util.SortedSet: java.lang.Object last()>();
+
+        $r3 = (net.sourceforge.plantuml.timingdiagram.TimeTick) $r2;
+
+        return $r3;
+    }
+
+    private net.sourceforge.plantuml.timingdiagram.TimeTick getMin()
+    {
+        net.sourceforge.plantuml.timingdiagram.TimingRuler r0;
+        java.util.SortedSet $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.timingdiagram.TimeTick $r3;
+
+        r0 := @this: net.sourceforge.plantuml.timingdiagram.TimingRuler;
+
+        $r1 = r0.<net.sourceforge.plantuml.timingdiagram.TimingRuler: java.util.SortedSet times>;
+
+        $r2 = interfaceinvoke $r1.<java.util.SortedSet: java.lang.Object first()>();
+
+        $r3 = (net.sourceforge.plantuml.timingdiagram.TimeTick) $r2;
+
+        return $r3;
+    }
+
+    private static long computeHighestCommonFactor(long, long)
+    {
+        byte $b0;
+        long $l1, l2, l3, l4;
+
+        l2 := @parameter0: long;
+
+        l3 := @parameter1: long;
+
+        l4 = l2;
+
+     label1:
+        $b0 = l4 cmp 0L;
+
+        if $b0 == 0 goto label2;
+
+        l4 = l2 % l3;
+
+        l2 = l3;
+
+        l3 = l4;
+
+        goto label1;
+
+     label2:
+        $l1 = staticinvoke <java.lang.Math: long abs(long)>(l2);
+
+        return $l1;
+    }
+}

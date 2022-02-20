@@ -1,0 +1,918 @@
+public abstract class net.sourceforge.plantuml.UmlDiagram extends net.sourceforge.plantuml.TitledDiagram implements net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.Annotated, net.sourceforge.plantuml.WithSprite
+{
+    private boolean rotation;
+    private int minwidth;
+    private net.sourceforge.plantuml.awt.geom.Dimension2D lastInfo;
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.UmlDiagramType)
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType r3;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r3 := @parameter2: net.sourceforge.plantuml.UmlDiagramType;
+
+        specialinvoke r0.<net.sourceforge.plantuml.TitledDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType)>(r1, r2, r3);
+
+        r0.<net.sourceforge.plantuml.UmlDiagram: int minwidth> = 2147483647;
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.UmlDiagramType, net.sourceforge.plantuml.ISkinSimple)
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType r3;
+        net.sourceforge.plantuml.ISkinSimple r4;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r3 := @parameter2: net.sourceforge.plantuml.UmlDiagramType;
+
+        r4 := @parameter3: net.sourceforge.plantuml.ISkinSimple;
+
+        specialinvoke r0.<net.sourceforge.plantuml.TitledDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType,net.sourceforge.plantuml.ISkinSimple)>(r1, r2, r3, r4);
+
+        r0.<net.sourceforge.plantuml.UmlDiagram: int minwidth> = 2147483647;
+
+        return;
+    }
+
+    public final int getMinwidth()
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        $i0 = r0.<net.sourceforge.plantuml.UmlDiagram: int minwidth>;
+
+        return $i0;
+    }
+
+    public final void setMinwidth(int)
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.UmlDiagram: int minwidth> = i0;
+
+        return;
+    }
+
+    public final boolean isRotation()
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        $z0 = r0.<net.sourceforge.plantuml.UmlDiagram: boolean rotation>;
+
+        return $z0;
+    }
+
+    public final void setRotation(boolean)
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.UmlDiagram: boolean rotation> = z0;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.DisplaySection getFooterOrHeaderTeoz(net.sourceforge.plantuml.FontParam)
+    {
+        net.sourceforge.plantuml.FontParam r0, $r1, $r2;
+        java.lang.IllegalArgumentException $r3;
+        net.sourceforge.plantuml.UmlDiagram r4;
+        net.sourceforge.plantuml.cucadiagram.DisplaySection $r5, $r6;
+
+        r4 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.FontParam;
+
+        $r1 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam FOOTER>;
+
+        if r0 != $r1 goto label1;
+
+        $r6 = virtualinvoke r4.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.cucadiagram.DisplaySection getFooter()>();
+
+        return $r6;
+
+     label1:
+        $r2 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam HEADER>;
+
+        if r0 != $r2 goto label2;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.cucadiagram.DisplaySection getHeader()>();
+
+        return $r5;
+
+     label2:
+        $r3 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r3.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r3;
+    }
+
+    protected final net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        net.sourceforge.plantuml.ISkinParam $r1;
+        net.sourceforge.plantuml.TikzFontDistortion $r2;
+        net.sourceforge.plantuml.FileFormat $r3, $r4;
+        java.io.OutputStream r5;
+        int i0, $i1, $i2;
+        net.sourceforge.plantuml.Dimension2DDouble $r6;
+        double $d0, $d1;
+        net.sourceforge.plantuml.core.ImageData $r7, r15, $r19;
+        java.lang.Throwable $r8, $r10;
+        net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException $r9;
+        java.lang.String $r11;
+        net.sourceforge.plantuml.style.NoStyleAvailableException $r12;
+        net.sourceforge.plantuml.FileFormatOption r13, r14;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r5 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r13 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r2 = interfaceinvoke $r1.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.TikzFontDistortion getTikzFontDistortion()>();
+
+        r14 = virtualinvoke r13.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormatOption withTikzFontDistortion(net.sourceforge.plantuml.TikzFontDistortion)>($r2);
+
+        $r3 = virtualinvoke r14.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r4 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat PDF>;
+
+        if $r3 != $r4 goto label1;
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.core.ImageData exportDiagramInternalPdf(java.io.OutputStream,int)>(r5, i0);
+
+        return $r7;
+
+     label1:
+        r15 = virtualinvoke r0.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.core.ImageData exportDiagramInternal(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)>(r5, i0, r14);
+
+        $r6 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        $i1 = interfaceinvoke r15.<net.sourceforge.plantuml.core.ImageData: int getWidth()>();
+
+        $d0 = (double) $i1;
+
+        $i2 = interfaceinvoke r15.<net.sourceforge.plantuml.core.ImageData: int getHeight()>();
+
+        $d1 = (double) $i2;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>($d0, $d1);
+
+        r0.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.awt.geom.Dimension2D lastInfo> = $r6;
+
+     label2:
+        return r15;
+
+     label3:
+        $r12 := @caughtexception;
+
+        specialinvoke r0.<net.sourceforge.plantuml.UmlDiagram: void exportDiagramError(java.io.OutputStream,java.lang.Throwable,net.sourceforge.plantuml.FileFormatOption,java.lang.String)>(r5, $r12, r14, null);
+
+        goto label6;
+
+     label4:
+        $r9 := @caughtexception;
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException: void printStackTrace()>();
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException: java.lang.Throwable getCause()>();
+
+        $r11 = virtualinvoke $r9.<net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException: java.lang.String getGraphvizVersion()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.UmlDiagram: void exportDiagramError(java.io.OutputStream,java.lang.Throwable,net.sourceforge.plantuml.FileFormatOption,java.lang.String)>(r5, $r10, r14, $r11);
+
+        goto label6;
+
+     label5:
+        $r8 := @caughtexception;
+
+        specialinvoke r0.<net.sourceforge.plantuml.UmlDiagram: void exportDiagramError(java.io.OutputStream,java.lang.Throwable,net.sourceforge.plantuml.FileFormatOption,java.lang.String)>(r5, $r8, r14, null);
+
+     label6:
+        $r19 = staticinvoke <net.sourceforge.plantuml.api.ImageDataSimple: net.sourceforge.plantuml.core.ImageData error()>();
+
+        return $r19;
+
+        catch net.sourceforge.plantuml.style.NoStyleAvailableException from label1 to label2 with label3;
+        catch net.sourceforge.plantuml.cucadiagram.UnparsableGraphvizException from label1 to label2 with label4;
+        catch java.lang.Throwable from label1 to label2 with label5;
+    }
+
+    private void exportDiagramError(java.io.OutputStream, java.lang.Throwable, net.sourceforge.plantuml.FileFormatOption, java.lang.String) throws java.io.IOException
+    {
+        java.io.OutputStream r0;
+        java.lang.Throwable r1;
+        net.sourceforge.plantuml.FileFormatOption r2;
+        net.sourceforge.plantuml.UmlDiagram r3;
+        long $l0;
+        java.lang.String $r4, $r5, r6, $r7;
+        java.util.List $r8;
+
+        r3 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r0 := @parameter0: java.io.OutputStream;
+
+        r1 := @parameter1: java.lang.Throwable;
+
+        r2 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        r6 := @parameter3: java.lang.String;
+
+        $l0 = virtualinvoke r3.<net.sourceforge.plantuml.UmlDiagram: long seed()>();
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.UmlDiagram: java.lang.String getMetadata()>();
+
+        $r5 = virtualinvoke r3.<net.sourceforge.plantuml.UmlDiagram: java.lang.String getFlashData()>();
+
+        $r7 = virtualinvoke r3.<net.sourceforge.plantuml.UmlDiagram: java.lang.String getFlashData()>();
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.UmlDiagram: java.util.List getFailureText1(java.lang.Throwable,java.lang.String,java.lang.String)>(r1, r6, $r7);
+
+        staticinvoke <net.sourceforge.plantuml.UmlDiagram: void exportDiagramError(java.io.OutputStream,java.lang.Throwable,net.sourceforge.plantuml.FileFormatOption,long,java.lang.String,java.lang.String,java.util.List)>(r0, r1, r2, $l0, $r4, $r5, $r8);
+
+        return;
+    }
+
+    public static void exportDiagramError(java.io.OutputStream, java.lang.Throwable, net.sourceforge.plantuml.FileFormatOption, long, java.lang.String, java.lang.String, java.util.List) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.FileFormatOption r0;
+        net.sourceforge.plantuml.FileFormat $r1, $r2, $r6, $r7;
+        java.io.OutputStream r3;
+        java.lang.Throwable r4, $r18;
+        java.util.List r5, $r8;
+        java.lang.String r9, r12, $r22;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r11, $r13, $r14;
+        long l0;
+        java.awt.Color $r16, $r17;
+        java.lang.StringBuilder $r20, $r21, $r31;
+        java.awt.image.BufferedImage r23, $r27;
+        net.sourceforge.plantuml.flashcode.FlashCodeUtils r24;
+        net.sourceforge.plantuml.graphic.GraphicPosition $r28;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r29;
+        net.sourceforge.plantuml.graphic.UDrawable $r30;
+        net.sourceforge.plantuml.UmlDiagram$1 $r32;
+
+        r3 := @parameter0: java.io.OutputStream;
+
+        r4 := @parameter1: java.lang.Throwable;
+
+        r0 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        l0 := @parameter3: long;
+
+        r12 := @parameter4: java.lang.String;
+
+        r9 := @parameter5: java.lang.String;
+
+        r5 := @parameter6: java.util.List;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r2 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat ATXT>;
+
+        if $r1 == $r2 goto label1;
+
+        $r6 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r7 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat UTXT>;
+
+        if $r6 != $r7 goto label2;
+
+     label1:
+        staticinvoke <net.sourceforge.plantuml.UmlDiagram: void exportDiagramErrorText(java.io.OutputStream,java.lang.Throwable,java.util.List)>(r3, r4, r5);
+
+        return;
+
+     label2:
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: java.util.List getStackTrace(java.lang.Throwable)>(r4);
+
+        interfaceinvoke r5.<java.util.List: boolean addAll(java.util.Collection)>($r8);
+
+        r23 = null;
+
+        if r9 == null goto label7;
+
+        r24 = staticinvoke <net.sourceforge.plantuml.flashcode.FlashCodeFactory: net.sourceforge.plantuml.flashcode.FlashCodeUtils getFlashCodeUtils()>();
+
+     label3:
+        $r17 = <java.awt.Color: java.awt.Color BLACK>;
+
+        $r16 = <java.awt.Color: java.awt.Color WHITE>;
+
+        r23 = interfaceinvoke r24.<net.sourceforge.plantuml.flashcode.FlashCodeUtils: java.awt.image.BufferedImage exportFlashcode(java.lang.String,java.awt.Color,java.awt.Color)>(r9, $r17, $r16);
+
+     label4:
+        goto label6;
+
+     label5:
+        $r18 := @caughtexception;
+
+        $r31 = new java.lang.StringBuilder;
+
+        specialinvoke $r31.<java.lang.StringBuilder: void <init>()>();
+
+        $r20 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Issue in flashcode generation ");
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r18);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r22);
+
+     label6:
+        if r23 == null goto label7;
+
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void addDecodeHint(java.util.List)>(r5);
+
+     label7:
+        $r27 = staticinvoke <net.sourceforge.plantuml.fun.IconLoader: java.awt.image.BufferedImage getRandom()>();
+
+        $r28 = <net.sourceforge.plantuml.graphic.GraphicPosition: net.sourceforge.plantuml.graphic.GraphicPosition BACKGROUND_CORNER_TOP_RIGHT>;
+
+        r29 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.svek.TextBlockBackcolored createBlackOnWhite(java.util.List,java.awt.image.BufferedImage,net.sourceforge.plantuml.graphic.GraphicPosition)>(r5, $r27, $r28);
+
+        if r23 != null goto label8;
+
+        $r30 = r29;
+
+        goto label9;
+
+     label8:
+        $r32 = new net.sourceforge.plantuml.UmlDiagram$1;
+
+        $r30 = $r32;
+
+        specialinvoke $r32.<net.sourceforge.plantuml.UmlDiagram$1: void <init>(net.sourceforge.plantuml.svek.TextBlockBackcolored,java.awt.image.BufferedImage)>(r29, r23);
+
+     label9:
+        $r11 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder plainImageBuilder(net.sourceforge.plantuml.graphic.UDrawable,net.sourceforge.plantuml.FileFormatOption)>($r30, r0);
+
+        $r13 = virtualinvoke $r11.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder metadata(java.lang.String)>(r12);
+
+        $r14 = virtualinvoke $r13.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder seed(long)>(l0);
+
+        virtualinvoke $r14.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r3);
+
+        return;
+
+        catch java.lang.Throwable from label3 to label4 with label5;
+    }
+
+    private static void exportDiagramErrorText(java.io.OutputStream, java.lang.Throwable, java.util.List)
+    {
+        java.io.OutputStream r0;
+        java.io.PrintWriter r1;
+        java.lang.Throwable r2;
+        java.util.List r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        java.lang.String r6, r7;
+
+        r0 := @parameter0: java.io.OutputStream;
+
+        r2 := @parameter1: java.lang.Throwable;
+
+        r3 := @parameter2: java.util.List;
+
+        r1 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.io.PrintWriter createPrintWriter(java.io.OutputStream)>(r0);
+
+        virtualinvoke r2.<java.lang.Throwable: void printStackTrace(java.io.PrintWriter)>(r1);
+
+        virtualinvoke r1.<java.io.PrintWriter: void println()>();
+
+        virtualinvoke r1.<java.io.PrintWriter: void println()>();
+
+        r4 = interfaceinvoke r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (java.lang.String) $r5;
+
+        r7 = virtualinvoke r6.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("\\</?\\w+?\\>", "");
+
+        virtualinvoke r1.<java.io.PrintWriter: void println(java.lang.String)>(r7);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r1.<java.io.PrintWriter: void flush()>();
+
+        return;
+    }
+
+    public java.lang.String getFlashData()
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.core.UmlSource getSource()>();
+
+        if r1 != null goto label1;
+
+        return "";
+
+     label1:
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.core.UmlSource: java.lang.String getPlainString()>();
+
+        return $r2;
+    }
+
+    private static java.util.List getFailureText1(java.lang.Throwable, java.lang.String, java.lang.String)
+    {
+        java.lang.Throwable r0;
+        java.lang.String r1, $r5, $r8, r9, $r13;
+        java.util.List r2;
+        java.lang.StringBuilder $r3, $r4, $r6, $r7, $r10, $r11, $r12;
+        boolean $z1;
+
+        r0 := @parameter0: java.lang.Throwable;
+
+        r9 := @parameter1: java.lang.String;
+
+        r1 := @parameter2: java.lang.String;
+
+        r2 = staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: java.util.List anErrorHasOccured(java.lang.Throwable,java.lang.String)>(r0, r1);
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("PlantUML (");
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.version.Version: java.lang.String versionString()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(") cannot parse result from dot/GraphViz.");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>($r8);
+
+        $z1 = r0 instanceof net.sourceforge.plantuml.svek.EmptySvgException;
+
+        if $z1 == 0 goto label1;
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>("Because dot/GraphViz returns an empty string.");
+
+     label1:
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void checkOldVersionWarning(java.util.List)>(r2);
+
+        if r9 == null goto label2;
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>()>();
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("GraphViz version used : ");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r9);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>($r13);
+
+     label2:
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void pleaseGoTo(java.util.List)>(r2);
+
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void addProperties(java.util.List)>(r2);
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void thisMayBeCaused(java.util.List)>(r2);
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void youShouldSendThisDiagram(java.util.List)>(r2);
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        return r2;
+    }
+
+    public static java.util.List getFailureText2(java.lang.Throwable, java.lang.String)
+    {
+        java.lang.Throwable r0;
+        java.lang.String r1, $r5, $r8;
+        java.util.List r2;
+        java.lang.StringBuilder $r3, $r4, $r6, $r7;
+
+        r0 := @parameter0: java.lang.Throwable;
+
+        r1 := @parameter1: java.lang.String;
+
+        r2 = staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: java.util.List anErrorHasOccured(java.lang.Throwable,java.lang.String)>(r0, r1);
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("PlantUML (");
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.version.Version: java.lang.String versionString()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(") has crashed.");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>($r8);
+
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void checkOldVersionWarning(java.util.List)>(r2);
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void youShouldSendThisDiagram(java.util.List)>(r2);
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        return r2;
+    }
+
+    private void exportDiagramInternalMjpeg(java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.security.SFile $r0;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator $r2;
+        java.awt.geom.AffineTransform $r4;
+        int $i1, i2;
+        double $d1, $d2, d3;
+        java.io.ByteArrayOutputStream $r6;
+        byte[] $r8;
+        java.awt.image.BufferedImage r9;
+        net.sourceforge.plantuml.UmlDiagram r10;
+        java.io.OutputStream r11;
+
+        r10 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r11 := @parameter0: java.io.OutputStream;
+
+        $r0 = new net.sourceforge.plantuml.security.SFile;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.security.SFile: void <init>(java.lang.String)>("c:/test.avi");
+
+        $r2 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: void <init>(net.sourceforge.plantuml.security.SFile,int,int,double,int)>($r0, 640, 480, 30.0, 150);
+
+        i2 = 0;
+
+     label1:
+        if i2 >= 150 goto label2;
+
+        $r4 = new java.awt.geom.AffineTransform;
+
+        specialinvoke $r4.<java.awt.geom.AffineTransform: void <init>()>();
+
+        $i1 = 149 - i2;
+
+        $d1 = (double) $i1;
+
+        $d2 = $d1 * 1.0;
+
+        d3 = $d2 / 150.0;
+
+        virtualinvoke $r4.<java.awt.geom.AffineTransform: void setToShear(double,double)>(d3, d3);
+
+        $r6 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r6.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        virtualinvoke $r6.<java.io.ByteArrayOutputStream: void close()>();
+
+        $r8 = virtualinvoke $r6.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        r9 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(byte[])>($r8);
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: void addImage(java.awt.Image)>(r9);
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label2:
+        virtualinvoke $r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: void finishAVI()>();
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.core.ImageData exportDiagramInternalPdf(java.io.OutputStream, int) throws java.io.IOException
+    {
+        java.io.File r0, r1;
+        java.io.BufferedOutputStream $r2;
+        java.io.FileOutputStream $r3;
+        net.sourceforge.plantuml.UmlDiagram r5;
+        int i0;
+        net.sourceforge.plantuml.FileFormatOption $r6;
+        net.sourceforge.plantuml.FileFormat $r7;
+        net.sourceforge.plantuml.core.ImageData r8;
+        java.io.OutputStream r9;
+        java.lang.Throwable $r10, $r13;
+
+        r5 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r9 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.FileUtils: java.io.File createTempFileLegacy(java.lang.String,java.lang.String)>("pdf", ".svf");
+
+        r1 = staticinvoke <net.sourceforge.plantuml.FileUtils: java.io.File createTempFileLegacy(java.lang.String,java.lang.String)>("pdf", ".pdf");
+
+        $r2 = new java.io.BufferedOutputStream;
+
+        $r3 = new java.io.FileOutputStream;
+
+        specialinvoke $r3.<java.io.FileOutputStream: void <init>(java.io.File)>(r0);
+
+        specialinvoke $r2.<java.io.BufferedOutputStream: void <init>(java.io.OutputStream)>($r3);
+
+     label1:
+        $r6 = new net.sourceforge.plantuml.FileFormatOption;
+
+        $r7 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat SVG>;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>($r7);
+
+        r8 = virtualinvoke r5.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.core.ImageData exportDiagram(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)>($r2, i0, $r6);
+
+     label2:
+        virtualinvoke $r2.<java.io.OutputStream: void close()>();
+
+        goto label8;
+
+     label3:
+        $r13 := @caughtexception;
+
+     label4:
+        virtualinvoke $r2.<java.io.OutputStream: void close()>();
+
+     label5:
+        goto label7;
+
+     label6:
+        $r10 := @caughtexception;
+
+        virtualinvoke $r13.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r10);
+
+     label7:
+        throw $r13;
+
+     label8:
+        staticinvoke <net.sourceforge.plantuml.pdf.PdfConverter: void convert(java.io.File,java.io.File)>(r0, r1);
+
+        staticinvoke <net.sourceforge.plantuml.FileUtils: void copyToStream(java.io.File,java.io.OutputStream)>(r1, r9);
+
+        return r8;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label4 to label5 with label6;
+    }
+
+    protected abstract net.sourceforge.plantuml.core.ImageData exportDiagramInternal(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException;
+
+    protected final void exportCmap(net.sourceforge.plantuml.SuggestedFile, int, net.sourceforge.plantuml.core.ImageData) throws java.io.FileNotFoundException
+    {
+        net.sourceforge.plantuml.SuggestedFile r0;
+        int i0, $i1, $i2;
+        net.sourceforge.plantuml.security.SFile $r1, $r4;
+        java.lang.String $r2, r3, $r8, $r9, $r10, $r11;
+        java.io.PrintWriter r6;
+        boolean $z0;
+        net.sourceforge.plantuml.core.ImageData r7;
+        java.lang.Throwable $r12, $r15;
+        net.sourceforge.plantuml.UmlDiagram r16;
+
+        r16 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.SuggestedFile;
+
+        i0 := @parameter1: int;
+
+        r7 := @parameter2: net.sourceforge.plantuml.core.ImageData;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.SuggestedFile: net.sourceforge.plantuml.security.SFile getFile(int)>(i0);
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.security.SFile: java.lang.String getAbsolutePath()>();
+
+        r3 = staticinvoke <net.sourceforge.plantuml.UmlDiagram: java.lang.String changeName(java.lang.String)>($r2);
+
+        $r4 = new net.sourceforge.plantuml.security.SFile;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.security.SFile: void <init>(java.lang.String)>(r3);
+
+        r6 = virtualinvoke $r4.<net.sourceforge.plantuml.security.SFile: java.io.PrintWriter createPrintWriter()>();
+
+     label01:
+        $z0 = staticinvoke <net.sourceforge.plantuml.PSystemUtils: boolean canFileBeWritten(net.sourceforge.plantuml.security.SFile)>($r4);
+
+        if $z0 != 0 goto label04;
+
+     label02:
+        if r6 == null goto label03;
+
+        virtualinvoke r6.<java.io.PrintWriter: void close()>();
+
+     label03:
+        return;
+
+     label04:
+        $r8 = virtualinvoke $r4.<net.sourceforge.plantuml.security.SFile: java.lang.String getName()>();
+
+        $r9 = virtualinvoke $r4.<net.sourceforge.plantuml.security.SFile: java.lang.String getName()>();
+
+        $i1 = virtualinvoke $r9.<java.lang.String: int length()>();
+
+        $i2 = $i1 - 6;
+
+        $r10 = virtualinvoke $r8.<java.lang.String: java.lang.String substring(int,int)>(0, $i2);
+
+        $r11 = interfaceinvoke r7.<net.sourceforge.plantuml.core.ImageData: java.lang.String getCMapData(java.lang.String)>($r10);
+
+        virtualinvoke r6.<java.io.PrintWriter: void print(java.lang.String)>($r11);
+
+     label05:
+        if r6 == null goto label11;
+
+        virtualinvoke r6.<java.io.PrintWriter: void close()>();
+
+        goto label11;
+
+     label06:
+        $r15 := @caughtexception;
+
+        if r6 == null goto label10;
+
+     label07:
+        virtualinvoke r6.<java.io.PrintWriter: void close()>();
+
+     label08:
+        goto label10;
+
+     label09:
+        $r12 := @caughtexception;
+
+        virtualinvoke $r15.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r12);
+
+     label10:
+        throw $r15;
+
+     label11:
+        return;
+
+        catch java.lang.Throwable from label01 to label02 with label06;
+        catch java.lang.Throwable from label04 to label05 with label06;
+        catch java.lang.Throwable from label07 to label08 with label09;
+    }
+
+    static java.lang.String changeName(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = virtualinvoke r0.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("(?i)\\.\\w{3}$", ".cmapx");
+
+        return $r1;
+    }
+
+    public java.lang.String getWarningOrError()
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r1, $r2;
+        double d0, $d1;
+        byte $b0, $b2;
+        net.sourceforge.plantuml.ISkinParam $r3;
+        java.lang.String r4, $r11;
+        boolean $z0;
+        int i1, $i3;
+        java.lang.StringBuilder $r5, $r6, $r7, $r8, $r9, $r10;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.awt.geom.Dimension2D lastInfo>;
+
+        if $r1 != null goto label1;
+
+        return null;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.awt.geom.Dimension2D lastInfo>;
+
+        d0 = virtualinvoke $r2.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $b0 = d0 cmpl 0.0;
+
+        if $b0 != 0 goto label2;
+
+        return null;
+
+     label2:
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        r4 = interfaceinvoke $r3.<net.sourceforge.plantuml.ISkinParam: java.lang.String getValue(java.lang.String)>("widthwarning");
+
+        if r4 != null goto label3;
+
+        return null;
+
+     label3:
+        $z0 = virtualinvoke r4.<java.lang.String: boolean matches(java.lang.String)>("\\d+");
+
+        if $z0 != 0 goto label4;
+
+        return null;
+
+     label4:
+        i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>(r4);
+
+        $d1 = (double) i1;
+
+        $b2 = d0 cmpl $d1;
+
+        if $b2 <= 0 goto label5;
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("The image is ");
+
+        $i3 = (int) d0;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i3);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" pixel width. (Warning limit is ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r11;
+
+     label5:
+        return null;
+    }
+
+    public void setHideEmptyDescription(boolean)
+    {
+        net.sourceforge.plantuml.UmlDiagram r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.UmlDiagram;
+
+        z0 := @parameter0: boolean;
+
+        return;
+    }
+}

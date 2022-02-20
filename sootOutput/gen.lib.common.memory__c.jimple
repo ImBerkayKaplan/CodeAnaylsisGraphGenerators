@@ -1,0 +1,132 @@
+public class gen.lib.common.memory__c extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        gen.lib.common.memory__c r0;
+
+        r0 := @this: gen.lib.common.memory__c;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static smetana.core.__ptr__ zmalloc(smetana.core.size_t)
+    {
+        smetana.core.size_t r0;
+        boolean $z0;
+        smetana.core.__ptr__ r1;
+        java.lang.Throwable $r2;
+
+        r0 := @parameter0: smetana.core.size_t;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("6hfkgng9qf75cucpojc4r8x6w", "zmalloc");
+
+     label1:
+        $z0 = virtualinvoke r0.<smetana.core.size_t: boolean isZero()>();
+
+        if $z0 == 0 goto label3;
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6hfkgng9qf75cucpojc4r8x6w", "zmalloc");
+
+        return null;
+
+     label3:
+        r1 = staticinvoke <gen.lib.common.memory__c: smetana.core.__ptr__ gmalloc(smetana.core.size_t)>(r0);
+
+        staticinvoke <smetana.core.JUtils: void memset(smetana.core.__ptr__,int,smetana.core.size_t)>(r1, 0, r0);
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6hfkgng9qf75cucpojc4r8x6w", "zmalloc");
+
+        return r1;
+
+     label5:
+        $r2 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6hfkgng9qf75cucpojc4r8x6w", "zmalloc");
+
+        throw $r2;
+
+        catch java.lang.Throwable from label1 to label2 with label5;
+        catch java.lang.Throwable from label3 to label4 with label5;
+    }
+
+    public static smetana.core.__ptr__ gmalloc(smetana.core.size_t)
+    {
+        smetana.core.size_t r0;
+        boolean $z0;
+        smetana.core.__ptr__ r1;
+        java.lang.Throwable $r2;
+
+        r0 := @parameter0: smetana.core.size_t;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("4mfikqpmxyxrke46i5xakatmc", "gmalloc");
+
+     label1:
+        $z0 = virtualinvoke r0.<smetana.core.size_t: boolean isZero()>();
+
+        if $z0 == 0 goto label3;
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4mfikqpmxyxrke46i5xakatmc", "gmalloc");
+
+        return null;
+
+     label3:
+        r1 = virtualinvoke r0.<smetana.core.size_t: smetana.core.__ptr__ malloc()>();
+
+        if r1 != null goto label4;
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("out of memory");
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4mfikqpmxyxrke46i5xakatmc", "gmalloc");
+
+        return r1;
+
+     label5:
+        $r2 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4mfikqpmxyxrke46i5xakatmc", "gmalloc");
+
+        throw $r2;
+
+        catch java.lang.Throwable from label1 to label2 with label5;
+        catch java.lang.Throwable from label3 to label4 with label5;
+    }
+
+    public static smetana.core.__ptr__ grealloc(smetana.core.__ptr__, smetana.core.size_t)
+    {
+        smetana.core.size_t r0;
+        smetana.core.__ptr__ r1, r2;
+        java.lang.Throwable $r4;
+
+        r1 := @parameter0: smetana.core.__ptr__;
+
+        r0 := @parameter1: smetana.core.size_t;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("1ed55yig6d18nhtbyqlf37jik", "grealloc");
+
+     label1:
+        r2 = virtualinvoke r0.<smetana.core.size_t: smetana.core.__ptr__ realloc(java.lang.Object)>(r1);
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("1ed55yig6d18nhtbyqlf37jik", "grealloc");
+
+        return r2;
+
+     label3:
+        $r4 := @caughtexception;
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("1ed55yig6d18nhtbyqlf37jik", "grealloc");
+
+        throw $r4;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+}

@@ -1,0 +1,156 @@
+public class net.sourceforge.plantuml.help.CommandHelpType extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.help.CommandHelpType r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.help.CommandHelpType;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.help.CommandHelpType: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6, $r7;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r8;
+
+        $r0 = class "Lnet/sourceforge/plantuml/help/CommandHelpType;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[5];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("help");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("types?");
+
+        $r2[3] = $r6;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[4] = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r8;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.help.Help, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult)
+    {
+        net.sourceforge.plantuml.help.Help r0;
+        net.sourceforge.plantuml.syntax.LanguageDescriptor $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r4;
+        java.lang.Object $r5;
+        java.lang.String r6, $r10;
+        java.lang.StringBuilder $r7, $r8, $r9;
+        net.sourceforge.plantuml.help.CommandHelpType r11;
+        net.sourceforge.plantuml.LineLocation r12;
+        net.sourceforge.plantuml.command.regex.RegexResult r13;
+
+        r11 := @this: net.sourceforge.plantuml.help.CommandHelpType;
+
+        r0 := @parameter0: net.sourceforge.plantuml.help.Help;
+
+        r12 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r13 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.help.Help: void add(java.lang.CharSequence)>("<b>Help on types");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.help.Help: void add(java.lang.CharSequence)>(" ");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.help.Help: void add(java.lang.CharSequence)>("The code of this command is located in <i>net.sourceforge.plantuml.help</i> package.");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.help.Help: void add(java.lang.CharSequence)>("You may improve it on <i>https://github.com/plantuml/plantuml/tree/master/src/net/sourceforge/plantuml/help</i>");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.help.Help: void add(java.lang.CharSequence)>(" ");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.help.Help: void add(java.lang.CharSequence)>(" The possible types are :");
+
+        $r1 = new net.sourceforge.plantuml.syntax.LanguageDescriptor;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.syntax.LanguageDescriptor: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.syntax.LanguageDescriptor: java.util.Set getType()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (java.lang.String) $r5;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("* ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r6);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.help.Help: void add(java.lang.CharSequence)>($r10);
+
+        goto label1;
+
+     label2:
+        $r4 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r4;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.help.CommandHelpType r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.help.Help $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.help.CommandHelpType;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.help.Help) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.help.CommandHelpType: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.help.Help,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

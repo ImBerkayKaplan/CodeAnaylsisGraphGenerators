@@ -1,0 +1,357 @@
+final class net.sourceforge.plantuml.brotli.Transform extends java.lang.Object
+{
+    static final int NUM_TRANSFORMS;
+    private static final int[] TRANSFORMS;
+    private static final byte[] PREFIX_SUFFIX;
+    private static final int[] PREFIX_SUFFIX_HEADS;
+    private static final java.lang.String PREFIX_SUFFIX_SRC;
+    private static final java.lang.String TRANSFORMS_SRC;
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.brotli.Transform r0;
+
+        r0 := @this: net.sourceforge.plantuml.brotli.Transform;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static void unpackTransforms(byte[], int[], int[], java.lang.String, java.lang.String)
+    {
+        java.lang.String r0, r2;
+        int i0, $i2, $i5, $i6, i7, i8, i9;
+        int[] r1, r4;
+        char $c1, c3;
+        byte[] r3;
+        byte $b4;
+
+        r3 := @parameter0: byte[];
+
+        r4 := @parameter1: int[];
+
+        r1 := @parameter2: int[];
+
+        r0 := @parameter3: java.lang.String;
+
+        r2 := @parameter4: java.lang.String;
+
+        i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        i7 = 1;
+
+        i8 = 0;
+
+     label1:
+        if i8 >= i0 goto label3;
+
+        c3 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i8);
+
+        $b4 = (byte) c3;
+
+        r3[i8] = $b4;
+
+        if c3 != 35 goto label2;
+
+        $i5 = i7;
+
+        i7 = i7 + 1;
+
+        $i6 = i8 + 1;
+
+        r4[$i5] = $i6;
+
+        r3[i8] = 0;
+
+     label2:
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label3:
+        i9 = 0;
+
+     label4:
+        if i9 >= 363 goto label5;
+
+        $c1 = virtualinvoke r2.<java.lang.String: char charAt(int)>(i9);
+
+        $i2 = $c1 - 32;
+
+        r1[i9] = $i2;
+
+        i9 = i9 + 1;
+
+        goto label4;
+
+     label5:
+        return;
+    }
+
+    static int transformDictionaryWord(byte[], int, java.nio.ByteBuffer, int, int, int)
+    {
+        int i0, i1, i2, $i3, $i4, i5, $i6, $i7, $i9, $i10, $i11, i14, $i15, $i17, $i19, $i21, $i24, $i26, $i27, $i30, $i31, i33, i34, i35, i36, i37, $i38, i39, i40, i41, $i42, i43, i44, i45;
+        int[] $r0, $r1, $r2, $r3, $r4;
+        byte[] $r5, r6, $r7, $r9, $r10;
+        byte $b8, $b12, $b13, $b16, $b18, $b20, $b22, $b23, $b25, $b28, $b32, $b46;
+        java.nio.ByteBuffer r8;
+
+        r6 := @parameter0: byte[];
+
+        i0 := @parameter1: int;
+
+        r8 := @parameter2: java.nio.ByteBuffer;
+
+        i33 := @parameter3: int;
+
+        i34 := @parameter4: int;
+
+        i1 := @parameter5: int;
+
+        i35 = i0;
+
+        i2 = 3 * i1;
+
+        $r1 = <net.sourceforge.plantuml.brotli.Transform: int[] PREFIX_SUFFIX_HEADS>;
+
+        $r0 = <net.sourceforge.plantuml.brotli.Transform: int[] TRANSFORMS>;
+
+        $i3 = $r0[i2];
+
+        i36 = $r1[$i3];
+
+        $r2 = <net.sourceforge.plantuml.brotli.Transform: int[] TRANSFORMS>;
+
+        $i4 = i2 + 1;
+
+        i5 = $r2[$i4];
+
+        $r4 = <net.sourceforge.plantuml.brotli.Transform: int[] PREFIX_SUFFIX_HEADS>;
+
+        $r3 = <net.sourceforge.plantuml.brotli.Transform: int[] TRANSFORMS>;
+
+        $i6 = i2 + 2;
+
+        $i7 = $r3[$i6];
+
+        i37 = $r4[$i7];
+
+     label01:
+        $r5 = <net.sourceforge.plantuml.brotli.Transform: byte[] PREFIX_SUFFIX>;
+
+        $b8 = $r5[i36];
+
+        if $b8 == 0 goto label02;
+
+        $i30 = i35;
+
+        i35 = i35 + 1;
+
+        $r9 = <net.sourceforge.plantuml.brotli.Transform: byte[] PREFIX_SUFFIX>;
+
+        $i31 = i36;
+
+        i36 = i36 + 1;
+
+        $b32 = $r9[$i31];
+
+        r6[$i30] = $b32;
+
+        goto label01;
+
+     label02:
+        if i5 < 12 goto label03;
+
+        $i38 = i5 - 11;
+
+        goto label04;
+
+     label03:
+        $i38 = 0;
+
+     label04:
+        i39 = $i38;
+
+        if $i38 <= i34 goto label05;
+
+        i39 = i34;
+
+     label05:
+        i40 = i33 + i39;
+
+        i41 = i34 - i39;
+
+        if i5 > 9 goto label06;
+
+        $i42 = i5;
+
+        goto label07;
+
+     label06:
+        $i42 = 0;
+
+     label07:
+        i43 = i41 - $i42;
+
+        i44 = i43;
+
+     label08:
+        if i44 <= 0 goto label09;
+
+        $i26 = i35;
+
+        i35 = i35 + 1;
+
+        $i27 = i40;
+
+        i40 = i40 + 1;
+
+        $b28 = virtualinvoke r8.<java.nio.ByteBuffer: byte get(int)>($i27);
+
+        r6[$i26] = $b28;
+
+        i44 = i44 + -1;
+
+        goto label08;
+
+     label09:
+        if i5 == 11 goto label10;
+
+        if i5 != 10 goto label16;
+
+     label10:
+        i45 = i35 - i43;
+
+        if i5 != 10 goto label11;
+
+        i43 = 1;
+
+     label11:
+        if i43 <= 0 goto label16;
+
+        $b13 = r6[i45];
+
+        i14 = $b13 & 255;
+
+        if i14 >= 192 goto label13;
+
+        if i14 < 97 goto label12;
+
+        if i14 > 122 goto label12;
+
+        $b23 = r6[i45];
+
+        $i24 = $b23 ^ 32;
+
+        $b25 = (byte) $i24;
+
+        r6[i45] = $b25;
+
+     label12:
+        i45 = i45 + 1;
+
+        i43 = i43 + -1;
+
+        goto label15;
+
+     label13:
+        if i14 >= 224 goto label14;
+
+        $i19 = i45 + 1;
+
+        $b20 = r6[$i19];
+
+        $i21 = $b20 ^ 32;
+
+        $b22 = (byte) $i21;
+
+        r6[$i19] = $b22;
+
+        i45 = i45 + 2;
+
+        i43 = i43 + -2;
+
+        goto label15;
+
+     label14:
+        $i15 = i45 + 2;
+
+        $b16 = r6[$i15];
+
+        $i17 = $b16 ^ 5;
+
+        $b18 = (byte) $i17;
+
+        r6[$i15] = $b18;
+
+        i45 = i45 + 3;
+
+        i43 = i43 + -3;
+
+     label15:
+        goto label11;
+
+     label16:
+        $r10 = <net.sourceforge.plantuml.brotli.Transform: byte[] PREFIX_SUFFIX>;
+
+        $b46 = $r10[i37];
+
+        if $b46 == 0 goto label17;
+
+        $i10 = i35;
+
+        i35 = i35 + 1;
+
+        $r7 = <net.sourceforge.plantuml.brotli.Transform: byte[] PREFIX_SUFFIX>;
+
+        $i11 = i37;
+
+        i37 = i37 + 1;
+
+        $b12 = $r7[$i11];
+
+        r6[$i10] = $b12;
+
+        goto label16;
+
+     label17:
+        $i9 = i35 - i0;
+
+        return $i9;
+    }
+
+    static void <clinit>()
+    {
+        int[] $r0, $r2, $r3, $r4;
+        byte[] $r1, $r5;
+
+        <net.sourceforge.plantuml.brotli.Transform: java.lang.String TRANSFORMS_SRC> = "     !! ! ,  *!  &!  \" !  ) *   * -  ! # !  #!*!  +  ,$ !  -  %  .  / #   0  1 .  \"   2  3!*   4%  ! # /   5  6  7  8 0  1 &   $   9 +   :  ;  < \'  !=  >  ?! 4  @ 4  2  &   A *# (   B  C& ) %  ) !*# *-% A +! *.  D! %\'  & E *6  F  G% ! *A *%  H! D  I!+!  J!+   K +- *4! A  L!*4  M  N +6  O!*% +.! K *G  P +%(  ! G *D +D  Q +# *K!*G!+D!+# +G +A +4!+% +K!+4!*D!+K!*K";
+
+        <net.sourceforge.plantuml.brotli.Transform: java.lang.String PREFIX_SUFFIX_SRC> = "# #s #, #e #.# the #.com/#\u00c2\u00a0# of # and # in # to #\"#\">#\n#]# for # a # that #. # with #\'# from # by #. The # on # as # is #ing #\n\t#:#ed #(# at #ly #=\"# of the #. This #,# not #er #al #=\'#ful #ive #less #est #ize #ous #";
+
+        <net.sourceforge.plantuml.brotli.Transform: int NUM_TRANSFORMS> = 121;
+
+        $r0 = newarray (int)[363];
+
+        <net.sourceforge.plantuml.brotli.Transform: int[] TRANSFORMS> = $r0;
+
+        $r1 = newarray (byte)[217];
+
+        <net.sourceforge.plantuml.brotli.Transform: byte[] PREFIX_SUFFIX> = $r1;
+
+        $r2 = newarray (int)[51];
+
+        <net.sourceforge.plantuml.brotli.Transform: int[] PREFIX_SUFFIX_HEADS> = $r2;
+
+        $r5 = <net.sourceforge.plantuml.brotli.Transform: byte[] PREFIX_SUFFIX>;
+
+        $r4 = <net.sourceforge.plantuml.brotli.Transform: int[] PREFIX_SUFFIX_HEADS>;
+
+        $r3 = <net.sourceforge.plantuml.brotli.Transform: int[] TRANSFORMS>;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Transform: void unpackTransforms(byte[],int[],int[],java.lang.String,java.lang.String)>($r5, $r4, $r3, "# #s #, #e #.# the #.com/#\u00c2\u00a0# of # and # in # to #\"#\">#\n#]# for # a # that #. # with #\'# from # by #. The # on # as # is #ing #\n\t#:#ed #(# at #ly #=\"# of the #. This #,# not #er #al #=\'#ful #ive #less #est #ize #ous #", "     !! ! ,  *!  &!  \" !  ) *   * -  ! # !  #!*!  +  ,$ !  -  %  .  / #   0  1 .  \"   2  3!*   4%  ! # /   5  6  7  8 0  1 &   $   9 +   :  ;  < \'  !=  >  ?! 4  @ 4  2  &   A *# (   B  C& ) %  ) !*# *-% A +! *.  D! %\'  & E *6  F  G% ! *A *%  H! D  I!+!  J!+   K +- *4! A  L!*4  M  N +6  O!*% +.! K *G  P +%(  ! G *D +D  Q +# *K!*G!+D!+# +G +A +4!+% +K!+4!*D!+K!*K");
+
+        return;
+    }
+}

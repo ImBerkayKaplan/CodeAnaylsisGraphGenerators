@@ -1,0 +1,146 @@
+public abstract class net.sourceforge.plantuml.command.PSystemSingleLineFactory extends net.sourceforge.plantuml.command.PSystemAbstractFactory
+{
+
+    protected abstract net.sourceforge.plantuml.AbstractPSystem executeLine(net.sourceforge.plantuml.core.UmlSource, java.lang.String);
+
+    protected void <init>()
+    {
+        net.sourceforge.plantuml.command.PSystemSingleLineFactory r0;
+        net.sourceforge.plantuml.core.DiagramType $r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+
+        $r1 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemAbstractFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r1);
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.core.Diagram createSystem(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.ISkinSimple)
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        int $i0;
+        net.sourceforge.plantuml.version.IteratorCounter2 r1;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.Object $r2, $r4, $r23;
+        java.lang.String $r3, $r6, $r8;
+        net.sourceforge.plantuml.StringLocated r5, $r24, r30;
+        net.sourceforge.plantuml.command.PSystemSingleLineFactory r7;
+        net.sourceforge.plantuml.AbstractPSystem r9;
+        net.sourceforge.plantuml.ErrorUml $r10;
+        net.sourceforge.plantuml.ErrorUmlType $r11;
+        net.sourceforge.plantuml.LineLocation $r12, $r16, $r19, r29;
+        java.util.List $r14, $r17, $r20, $r25;
+        net.sourceforge.plantuml.error.PSystemError $r15, $r18, $r21, $r26;
+        java.lang.UnsupportedOperationException $r22;
+        net.sourceforge.plantuml.api.ThemeStyle r27;
+        net.sourceforge.plantuml.ISkinSimple r28;
+
+        r7 := @this: net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+
+        r27 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r0 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r28 := @parameter2: net.sourceforge.plantuml.ISkinSimple;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.core.UmlSource: int getTotalLineCount()>();
+
+        if $i0 == 3 goto label1;
+
+        return null;
+
+     label1:
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.core.UmlSource: net.sourceforge.plantuml.version.IteratorCounter2 iterator2()>();
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.core.UmlSource: boolean isEmpty()>();
+
+        if $z0 == 0 goto label2;
+
+        $r23 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        $r24 = (net.sourceforge.plantuml.StringLocated) $r23;
+
+        r29 = virtualinvoke $r24.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $r25 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        $r26 = virtualinvoke r7.<net.sourceforge.plantuml.command.PSystemSingleLineFactory: net.sourceforge.plantuml.error.PSystemError buildEmptyError(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.LineLocation,java.util.List)>(r0, r29, $r25);
+
+        return $r26;
+
+     label2:
+        $r2 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        r30 = (net.sourceforge.plantuml.StringLocated) $r2;
+
+        $r3 = virtualinvoke r30.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseStartDiagram(java.lang.String)>($r3);
+
+        if $z1 != 0 goto label3;
+
+        $r22 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r22.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r22;
+
+     label3:
+        $z2 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: boolean hasNext()>();
+
+        if $z2 != 0 goto label4;
+
+        $r19 = virtualinvoke r30.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $r20 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        $r21 = virtualinvoke r7.<net.sourceforge.plantuml.command.PSystemSingleLineFactory: net.sourceforge.plantuml.error.PSystemError buildEmptyError(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.LineLocation,java.util.List)>(r0, $r19, $r20);
+
+        return $r21;
+
+     label4:
+        $r4 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.StringLocated) $r4;
+
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z3 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseEndDiagram(java.lang.String)>($r6);
+
+        if $z3 == 0 goto label5;
+
+        $r16 = virtualinvoke r5.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $r17 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        $r18 = virtualinvoke r7.<net.sourceforge.plantuml.command.PSystemSingleLineFactory: net.sourceforge.plantuml.error.PSystemError buildEmptyError(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.LineLocation,java.util.List)>(r0, $r16, $r17);
+
+        return $r18;
+
+     label5:
+        $r8 = virtualinvoke r5.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r9 = virtualinvoke r7.<net.sourceforge.plantuml.command.PSystemSingleLineFactory: net.sourceforge.plantuml.AbstractPSystem executeLine(net.sourceforge.plantuml.core.UmlSource,java.lang.String)>(r0, $r8);
+
+        if r9 != null goto label6;
+
+        $r10 = new net.sourceforge.plantuml.ErrorUml;
+
+        $r11 = <net.sourceforge.plantuml.ErrorUmlType: net.sourceforge.plantuml.ErrorUmlType SYNTAX_ERROR>;
+
+        $r12 = virtualinvoke r5.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        specialinvoke $r10.<net.sourceforge.plantuml.ErrorUml: void <init>(net.sourceforge.plantuml.ErrorUmlType,java.lang.String,int,net.sourceforge.plantuml.LineLocation)>($r11, "Syntax Error?", 0, $r12);
+
+        $r14 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.error.PSystemErrorUtils: net.sourceforge.plantuml.error.PSystemError buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List)>(r0, $r10, null, $r14);
+
+        return $r15;
+
+     label6:
+        return r9;
+    }
+}

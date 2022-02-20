@@ -1,0 +1,189 @@
+public final class net.sourceforge.plantuml.code.deflate.ByteBitInputStream extends java.lang.Object implements net.sourceforge.plantuml.code.deflate.BitInputStream
+{
+    private java.io.InputStream input;
+    private int currentByte;
+    private int numBitsRemaining;
+
+    public void <init>(java.io.InputStream)
+    {
+        net.sourceforge.plantuml.code.deflate.ByteBitInputStream r0;
+        java.io.InputStream r1, $r3;
+        java.lang.Object $r2;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.ByteBitInputStream;
+
+        r1 := @parameter0: java.io.InputStream;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r3 = (java.io.InputStream) $r2;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: java.io.InputStream input> = $r3;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int currentByte> = 0;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining> = 0;
+
+        return;
+    }
+
+    public int getBitPosition()
+    {
+        net.sourceforge.plantuml.code.deflate.ByteBitInputStream r0;
+        int $i0, $i1, $i2, $i3, $i4;
+        java.lang.IllegalStateException $r1;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.ByteBitInputStream;
+
+        $i0 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining>;
+
+        if $i0 < 0 goto label1;
+
+        $i1 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining>;
+
+        if $i1 <= 7 goto label2;
+
+     label1:
+        $r1 = new java.lang.IllegalStateException;
+
+        specialinvoke $r1.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r1;
+
+     label2:
+        $i2 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining>;
+
+        $i3 = 8 - $i2;
+
+        $i4 = $i3 % 8;
+
+        return $i4;
+    }
+
+    public int readByte() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.deflate.ByteBitInputStream r0;
+        java.io.InputStream $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.ByteBitInputStream;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int currentByte> = 0;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining> = 0;
+
+        $r1 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: java.io.InputStream input>;
+
+        $i0 = virtualinvoke $r1.<java.io.InputStream: int read()>();
+
+        return $i0;
+    }
+
+    public int read() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.deflate.ByteBitInputStream r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11;
+        java.lang.IllegalStateException $r1;
+        java.io.InputStream $r2;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.ByteBitInputStream;
+
+        $i0 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int currentByte>;
+
+        if $i0 != -1 goto label1;
+
+        return -1;
+
+     label1:
+        $i1 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining>;
+
+        if $i1 != 0 goto label3;
+
+        $r2 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: java.io.InputStream input>;
+
+        $i10 = virtualinvoke $r2.<java.io.InputStream: int read()>();
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int currentByte> = $i10;
+
+        $i11 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int currentByte>;
+
+        if $i11 != -1 goto label2;
+
+        return -1;
+
+     label2:
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining> = 8;
+
+     label3:
+        $i2 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining>;
+
+        if $i2 > 0 goto label4;
+
+        $r1 = new java.lang.IllegalStateException;
+
+        specialinvoke $r1.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r1;
+
+     label4:
+        $i3 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining>;
+
+        $i4 = $i3 - 1;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining> = $i4;
+
+        $i7 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int currentByte>;
+
+        $i5 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining>;
+
+        $i6 = 7 - $i5;
+
+        $i8 = $i7 >>> $i6;
+
+        $i9 = $i8 & 1;
+
+        return $i9;
+    }
+
+    public int readNoEof() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.deflate.ByteBitInputStream r0;
+        int i0;
+        java.io.EOFException $r1;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.ByteBitInputStream;
+
+        i0 = virtualinvoke r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int read()>();
+
+        if i0 != -1 goto label1;
+
+        $r1 = new java.io.EOFException;
+
+        specialinvoke $r1.<java.io.EOFException: void <init>()>();
+
+        throw $r1;
+
+     label1:
+        return i0;
+    }
+
+    public void close() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.deflate.ByteBitInputStream r0;
+        java.io.InputStream $r1;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.ByteBitInputStream;
+
+        $r1 = r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: java.io.InputStream input>;
+
+        virtualinvoke $r1.<java.io.InputStream: void close()>();
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int currentByte> = -1;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteBitInputStream: int numBitsRemaining> = 0;
+
+        return;
+    }
+}

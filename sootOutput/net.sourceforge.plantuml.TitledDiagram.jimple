@@ -1,0 +1,646 @@
+public abstract class net.sourceforge.plantuml.TitledDiagram extends net.sourceforge.plantuml.AbstractPSystem implements net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.Annotated
+{
+    public static boolean FORCE_SMETANA;
+    public static boolean FORCE_ELK;
+    private net.sourceforge.plantuml.cucadiagram.DisplayPositioned title;
+    private net.sourceforge.plantuml.cucadiagram.DisplayPositioned caption;
+    private net.sourceforge.plantuml.cucadiagram.DisplayPositioned legend;
+    private final net.sourceforge.plantuml.cucadiagram.DisplaySection header;
+    private final net.sourceforge.plantuml.cucadiagram.DisplaySection footer;
+    private net.sourceforge.plantuml.cucadiagram.Display mainFrame;
+    private final net.sourceforge.plantuml.UmlDiagramType type;
+    private final net.sourceforge.plantuml.SkinParam skinParam;
+    private net.sourceforge.plantuml.anim.Animation animation;
+    private final net.sourceforge.plantuml.Pragma pragma;
+    private boolean useSmetana;
+    private boolean useElk;
+
+    public net.sourceforge.plantuml.Pragma getPragma()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.Pragma $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.Pragma pragma>;
+
+        return $r1;
+    }
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.UmlDiagramType)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        net.sourceforge.plantuml.graphic.VerticalAlignment $r2, $r5, $r8;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r3, $r6, $r9;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned $r4, $r7, $r10;
+        net.sourceforge.plantuml.cucadiagram.DisplaySection $r11, $r12;
+        net.sourceforge.plantuml.Pragma $r13;
+        net.sourceforge.plantuml.UmlDiagramType r14;
+        net.sourceforge.plantuml.api.ThemeStyle r15;
+        net.sourceforge.plantuml.SkinParam $r16;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r15 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r1 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r14 := @parameter2: net.sourceforge.plantuml.UmlDiagramType;
+
+        specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        $r3 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r2 = <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment TOP>;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.cucadiagram.DisplayPositioned: net.sourceforge.plantuml.cucadiagram.DisplayPositioned none(net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.graphic.VerticalAlignment)>($r3, $r2);
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned title> = $r4;
+
+        $r6 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r5 = <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment BOTTOM>;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.cucadiagram.DisplayPositioned: net.sourceforge.plantuml.cucadiagram.DisplayPositioned none(net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.graphic.VerticalAlignment)>($r6, $r5);
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned caption> = $r7;
+
+        $r9 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r8 = <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment BOTTOM>;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.cucadiagram.DisplayPositioned: net.sourceforge.plantuml.cucadiagram.DisplayPositioned none(net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.graphic.VerticalAlignment)>($r9, $r8);
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned legend> = $r10;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.cucadiagram.DisplaySection: net.sourceforge.plantuml.cucadiagram.DisplaySection none()>();
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplaySection header> = $r11;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.cucadiagram.DisplaySection: net.sourceforge.plantuml.cucadiagram.DisplaySection none()>();
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplaySection footer> = $r12;
+
+        $r13 = new net.sourceforge.plantuml.Pragma;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.Pragma: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.Pragma pragma> = $r13;
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.UmlDiagramType type> = r14;
+
+        $r16 = staticinvoke <net.sourceforge.plantuml.SkinParam: net.sourceforge.plantuml.SkinParam create(net.sourceforge.plantuml.UmlDiagramType,net.sourceforge.plantuml.api.ThemeStyle)>(r14, r15);
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.SkinParam skinParam> = $r16;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.SkinParam $r1;
+        net.sourceforge.plantuml.style.StyleBuilder $r2;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.SkinParam skinParam>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.SkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        return $r2;
+    }
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.UmlDiagramType, net.sourceforge.plantuml.ISkinSimple)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType r3;
+        net.sourceforge.plantuml.ISkinSimple r4;
+        net.sourceforge.plantuml.SkinParam $r5;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r3 := @parameter2: net.sourceforge.plantuml.UmlDiagramType;
+
+        r4 := @parameter3: net.sourceforge.plantuml.ISkinSimple;
+
+        specialinvoke r0.<net.sourceforge.plantuml.TitledDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType)>(r1, r2, r3);
+
+        if r4 == null goto label1;
+
+        $r5 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.SkinParam skinParam>;
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.SkinParam: void copyAllFrom(net.sourceforge.plantuml.ISkinSimple)>(r4);
+
+     label1:
+        return;
+    }
+
+    public final net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.UmlDiagramType $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.UmlDiagramType type>;
+
+        return $r1;
+    }
+
+    public final net.sourceforge.plantuml.ISkinParam getSkinParam()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.SkinParam $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.SkinParam skinParam>;
+
+        return $r1;
+    }
+
+    public void setParam(java.lang.String, java.lang.String)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        java.lang.String r1, $r3, r4;
+        net.sourceforge.plantuml.SkinParam $r2;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: java.lang.String;
+
+        r4 := @parameter1: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.SkinParam skinParam>;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goLowerCase(java.lang.String)>(r1);
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.SkinParam: void setParam(java.lang.String,java.lang.String)>($r3, r4);
+
+        return;
+    }
+
+    public void addSprite(java.lang.String, net.sourceforge.plantuml.sprite.Sprite)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.sprite.Sprite r2;
+        net.sourceforge.plantuml.SkinParam $r3;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: net.sourceforge.plantuml.sprite.Sprite;
+
+        $r3 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.SkinParam skinParam>;
+
+        virtualinvoke $r3.<net.sourceforge.plantuml.SkinParam: void addSprite(java.lang.String,net.sourceforge.plantuml.sprite.Sprite)>(r1, r2);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult loadSkin(java.lang.String) throws java.io.IOException
+    {
+        java.lang.StringBuilder $r0, $r2, $r3, $r9, $r10, $r11;
+        java.lang.String r1, r4, $r12;
+        java.io.InputStream r5;
+        net.sourceforge.plantuml.TitledDiagram r6;
+        net.sourceforge.plantuml.ISkinParam $r7;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r8, $r13;
+
+        r6 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".skin");
+
+        r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r5 = staticinvoke <net.sourceforge.plantuml.style.StyleLoader: java.io.InputStream getInputStreamForStyle(java.lang.String)>(r4);
+
+        if r5 != null goto label1;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot find style ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r12);
+
+        return $r13;
+
+     label1:
+        virtualinvoke r5.<java.io.InputStream: void close()>();
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        interfaceinvoke $r7.<net.sourceforge.plantuml.ISkinParam: void setDefaultSkin(java.lang.String)>(r4);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r8;
+    }
+
+    public final void setTitle(net.sourceforge.plantuml.cucadiagram.DisplayPositioned)
+    {
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+        net.sourceforge.plantuml.TitledDiagram r2;
+
+        r2 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.DisplayPositioned: boolean isNull()>();
+
+        if $z0 != 0 goto label1;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.DisplayPositioned: net.sourceforge.plantuml.cucadiagram.Display getDisplay()>();
+
+        $z1 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Display: boolean isWhite()>();
+
+        if $z1 == 0 goto label2;
+
+     label1:
+        return;
+
+     label2:
+        r2.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned title> = r0;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.DisplayPositionned getTitle()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned title>;
+
+        return $r1;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.Display getTitleDisplay()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned $r1, $r2;
+        net.sourceforge.plantuml.cucadiagram.Display $r3;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned title>;
+
+        if $r1 != null goto label1;
+
+        return null;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned title>;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.DisplayPositioned: net.sourceforge.plantuml.cucadiagram.Display getDisplay()>();
+
+        return $r3;
+    }
+
+    public final void setMainFrame(net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.Display r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.Display mainFrame> = r1;
+
+        return;
+    }
+
+    public final void setCaption(net.sourceforge.plantuml.cucadiagram.DisplayPositioned)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned caption> = r1;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.DisplayPositioned getCaption()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned caption>;
+
+        return $r1;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.DisplaySection getHeader()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.DisplaySection $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplaySection header>;
+
+        return $r1;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.DisplaySection getFooter()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.DisplaySection $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplaySection footer>;
+
+        return $r1;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.DisplayPositioned getLegend()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned legend>;
+
+        return $r1;
+    }
+
+    public void setLegend(net.sourceforge.plantuml.cucadiagram.DisplayPositioned)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositioned legend> = r1;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.Display getMainFrame()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.Display mainFrame>;
+
+        return $r1;
+    }
+
+    public void setUseSmetana(boolean)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: boolean useSmetana> = z0;
+
+        return;
+    }
+
+    public void setUseElk(boolean)
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.TitledDiagram: boolean useElk> = z0;
+
+        return;
+    }
+
+    public boolean isUseElk()
+    {
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.TitledDiagram r0;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $z0 = <net.sourceforge.plantuml.TitledDiagram: boolean FORCE_ELK>;
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $z1 = r0.<net.sourceforge.plantuml.TitledDiagram: boolean useElk>;
+
+        return $z1;
+    }
+
+    public boolean isUseSmetana()
+    {
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.TitledDiagram r0;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $z0 = <net.sourceforge.plantuml.TitledDiagram: boolean FORCE_SMETANA>;
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $z1 = r0.<net.sourceforge.plantuml.TitledDiagram: boolean useSmetana>;
+
+        return $z1;
+    }
+
+    public net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getDefaultMargins()
+    {
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r0;
+        net.sourceforge.plantuml.TitledDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft same(double)>(10.0);
+
+        return $r0;
+    }
+
+    public final void setAnimation(java.lang.Iterable)
+    {
+        net.sourceforge.plantuml.anim.AnimationDecoder $r0;
+        java.lang.Iterable r1;
+        net.sourceforge.plantuml.TitledDiagram r3;
+        java.util.List $r4;
+        net.sourceforge.plantuml.anim.Animation $r5;
+
+        r3 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: java.lang.Iterable;
+
+        $r0 = new net.sourceforge.plantuml.anim.AnimationDecoder;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.anim.AnimationDecoder: void <init>(java.lang.Iterable)>(r1);
+
+        $r4 = virtualinvoke $r0.<net.sourceforge.plantuml.anim.AnimationDecoder: java.util.List decode()>();
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.anim.Animation: net.sourceforge.plantuml.anim.Animation create(java.util.List)>($r4);
+
+        r3.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.anim.Animation animation> = $r5;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.anim.Animation getAnimation()
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.anim.Animation $r1;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.anim.Animation animation>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder styled(net.sourceforge.plantuml.TitledDiagram)>(r0);
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor calculateBackColor()
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.ISkinParam $r1, $r9, $r14, $r16;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r2, r18;
+        net.sourceforge.plantuml.style.SName[] $r3;
+        net.sourceforge.plantuml.style.SName $r4, $r5, $r7;
+        net.sourceforge.plantuml.UmlDiagramType $r6;
+        net.sourceforge.plantuml.style.StyleSignature $r8;
+        net.sourceforge.plantuml.style.StyleBuilder $r10;
+        net.sourceforge.plantuml.style.Style r11;
+        net.sourceforge.plantuml.style.PName $r12;
+        net.sourceforge.plantuml.style.Value $r13;
+        net.sourceforge.plantuml.api.ThemeStyle $r15;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r17;
+
+        r0 := @this: net.sourceforge.plantuml.TitledDiagram;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = newarray (net.sourceforge.plantuml.style.SName)[3];
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r3[0] = $r4;
+
+        $r5 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName document>;
+
+        $r3[1] = $r5;
+
+        $r6 = virtualinvoke r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.style.SName getStyleName()>();
+
+        $r3[2] = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r3);
+
+        $r9 = virtualinvoke r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r10 = interfaceinvoke $r9.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        r11 = virtualinvoke $r8.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r10);
+
+        $r12 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName BackGroundColor>;
+
+        $r13 = virtualinvoke r11.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r12);
+
+        $r14 = virtualinvoke r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r15 = interfaceinvoke $r14.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r16 = virtualinvoke r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r17 = interfaceinvoke $r16.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        r18 = interfaceinvoke $r13.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.ugraphic.color.HColor asColor(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r15, $r17);
+
+        if r18 != null goto label1;
+
+        r18 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor transparent()>();
+
+     label1:
+        return r18;
+
+     label2:
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r2 = interfaceinvoke $r1.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor getBackgroundColor()>();
+
+        return $r2;
+    }
+
+    static void <clinit>()
+    {
+        <net.sourceforge.plantuml.TitledDiagram: boolean FORCE_SMETANA> = 0;
+
+        <net.sourceforge.plantuml.TitledDiagram: boolean FORCE_ELK> = 0;
+
+        return;
+    }
+}

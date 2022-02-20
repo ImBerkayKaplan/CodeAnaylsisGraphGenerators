@@ -1,0 +1,50 @@
+public class net.sourceforge.plantuml.eggs.PSystemColorsFactory extends net.sourceforge.plantuml.command.PSystemSingleLineFactory
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.eggs.PSystemColorsFactory r0;
+
+        r0 := @this: net.sourceforge.plantuml.eggs.PSystemColorsFactory;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemSingleLineFactory: void <init>()>();
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.AbstractPSystem executeLine(net.sourceforge.plantuml.core.UmlSource, java.lang.String)
+    {
+        java.util.regex.Pattern r0;
+        java.lang.String r1, $r5;
+        java.util.regex.Matcher r2;
+        boolean $z0;
+        net.sourceforge.plantuml.eggs.PSystemColors $r3;
+        net.sourceforge.plantuml.core.UmlSource r4;
+        net.sourceforge.plantuml.eggs.PSystemColorsFactory r6;
+
+        r6 := @this: net.sourceforge.plantuml.eggs.PSystemColorsFactory;
+
+        r4 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        r1 := @parameter1: java.lang.String;
+
+        r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("^colors?\\s*(#?\\w+)?\\s*$");
+
+        r2 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r1);
+
+        $z0 = virtualinvoke r2.<java.util.regex.Matcher: boolean matches()>();
+
+        if $z0 == 0 goto label1;
+
+        $r3 = new net.sourceforge.plantuml.eggs.PSystemColors;
+
+        $r5 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        specialinvoke $r3.<net.sourceforge.plantuml.eggs.PSystemColors: void <init>(net.sourceforge.plantuml.core.UmlSource,java.lang.String)>(r4, $r5);
+
+        return $r3;
+
+     label1:
+        return null;
+    }
+}

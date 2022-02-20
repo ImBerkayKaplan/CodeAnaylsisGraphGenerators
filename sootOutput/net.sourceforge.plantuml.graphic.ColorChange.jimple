@@ -1,0 +1,91 @@
+class net.sourceforge.plantuml.graphic.ColorChange extends java.lang.Object implements net.sourceforge.plantuml.graphic.FontChange
+{
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 colorPattern;
+    private final net.sourceforge.plantuml.ugraphic.color.HColor color;
+
+    void <init>(net.sourceforge.plantuml.api.ThemeStyle, java.lang.String)
+    {
+        net.sourceforge.plantuml.graphic.ColorChange r0;
+        java.lang.String r1, r4;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r2;
+        net.sourceforge.plantuml.command.regex.Matcher2 r3;
+        boolean $z0;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r5;
+        net.sourceforge.plantuml.api.ThemeStyle r6;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r7;
+        java.lang.IllegalArgumentException $r8;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.ColorChange;
+
+        r6 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r1 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = <net.sourceforge.plantuml.graphic.ColorChange: net.sourceforge.plantuml.command.regex.Pattern2 colorPattern>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r1);
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        $r8 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r8.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r8;
+
+     label1:
+        r4 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColorSet instance()>();
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColorOrWhite(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>(r6, r4);
+
+        r0.<net.sourceforge.plantuml.graphic.ColorChange: net.sourceforge.plantuml.ugraphic.color.HColor color> = $r7;
+
+        return;
+    }
+
+    net.sourceforge.plantuml.ugraphic.color.HColor getColor()
+    {
+        net.sourceforge.plantuml.graphic.ColorChange r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.ColorChange;
+
+        $r1 = r0.<net.sourceforge.plantuml.graphic.ColorChange: net.sourceforge.plantuml.ugraphic.color.HColor color>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.graphic.FontConfiguration apply(net.sourceforge.plantuml.graphic.FontConfiguration)
+    {
+        net.sourceforge.plantuml.graphic.FontConfiguration r0, $r3;
+        net.sourceforge.plantuml.graphic.ColorChange r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r2;
+
+        r1 := @this: net.sourceforge.plantuml.graphic.ColorChange;
+
+        r0 := @parameter0: net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r2 = r1.<net.sourceforge.plantuml.graphic.ColorChange: net.sourceforge.plantuml.ugraphic.color.HColor color>;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration changeColor(net.sourceforge.plantuml.ugraphic.color.HColor)>($r2);
+
+        return $r3;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.command.regex.Pattern2 $r0;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("\\<color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)[%s]*\\>");
+
+        <net.sourceforge.plantuml.graphic.ColorChange: net.sourceforge.plantuml.command.regex.Pattern2 colorPattern> = $r0;
+
+        return;
+    }
+}

@@ -1,0 +1,228 @@
+public class net.sourceforge.plantuml.eggs.EggUtils extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.eggs.EggUtils r0;
+
+        r0 := @this: net.sourceforge.plantuml.eggs.EggUtils;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static java.lang.String fromByteArrays(byte[])
+    {
+        java.lang.StringBuilder $r0;
+        byte[] r2;
+        int i0, $i2, $i3, i4;
+        java.lang.String $r4, r5;
+        byte b1;
+
+        r2 := @parameter0: byte[];
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        i0 = lengthof r2;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= i0 goto label3;
+
+        b1 = r2[i4];
+
+        $i2 = b1 & 255;
+
+        r5 = staticinvoke <java.lang.Integer: java.lang.String toHexString(int)>($i2);
+
+        $i3 = virtualinvoke r5.<java.lang.String: int length()>();
+
+        if $i3 != 1 goto label2;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(48);
+
+     label2:
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r5);
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label3:
+        $r4 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r4;
+    }
+
+    public static byte[] toByteArrays(java.lang.String)
+    {
+        java.lang.String r0, $r2;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, i8;
+        byte[] r1;
+        byte $b7;
+
+        r0 := @parameter0: java.lang.String;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i1 = $i0 / 2;
+
+        r1 = newarray (byte)[$i1];
+
+        i8 = 0;
+
+     label1:
+        $i2 = lengthof r1;
+
+        if i8 >= $i2 goto label2;
+
+        $i5 = i8 * 2;
+
+        $i3 = i8 * 2;
+
+        $i4 = $i3 + 2;
+
+        $r2 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>($i5, $i4);
+
+        $i6 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String,int)>($r2, 16);
+
+        $b7 = (byte) $i6;
+
+        r1[i8] = $b7;
+
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label2:
+        return r1;
+    }
+
+    public static java.math.BigInteger fromSecretSentence(java.lang.String)
+    {
+        java.math.BigInteger r0, $r2, r4, r7;
+        char[] r1;
+        int i0, i2, i4;
+        char c1;
+        long $l3;
+        java.lang.String r3, r5, r6;
+
+        r3 := @parameter0: java.lang.String;
+
+        r4 = <java.math.BigInteger: java.math.BigInteger ZERO>;
+
+        r0 = staticinvoke <java.math.BigInteger: java.math.BigInteger valueOf(long)>(26L);
+
+        r5 = virtualinvoke r3.<java.lang.String: java.lang.String replace(char,char)>(233, 101);
+
+        r6 = virtualinvoke r5.<java.lang.String: java.lang.String replace(char,char)>(234, 101);
+
+        r1 = virtualinvoke r6.<java.lang.String: char[] toCharArray()>();
+
+        i0 = lengthof r1;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= i0 goto label3;
+
+        c1 = r1[i4];
+
+        i2 = staticinvoke <net.sourceforge.plantuml.eggs.EggUtils: int convertChar(char)>(c1);
+
+        if i2 == -1 goto label2;
+
+        r7 = virtualinvoke r4.<java.math.BigInteger: java.math.BigInteger multiply(java.math.BigInteger)>(r0);
+
+        $l3 = (long) i2;
+
+        $r2 = staticinvoke <java.math.BigInteger: java.math.BigInteger valueOf(long)>($l3);
+
+        r4 = virtualinvoke r7.<java.math.BigInteger: java.math.BigInteger add(java.math.BigInteger)>($r2);
+
+     label2:
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label3:
+        return r4;
+    }
+
+    private static int convertChar(char)
+    {
+        int $i0;
+        char c1, c2;
+
+        c1 := @parameter0: char;
+
+        c2 = staticinvoke <net.sourceforge.plantuml.StringUtils: char goLowerCase(char)>(c1);
+
+        if c2 < 97 goto label1;
+
+        if c2 > 122 goto label1;
+
+        $i0 = c2 - 97;
+
+        return $i0;
+
+     label1:
+        return -1;
+    }
+
+    public static byte[] xor(byte[], byte[])
+    {
+        byte[] r0, r1, r2;
+        int $i0, $i1, $i2, $i5, $i7, i8, i9;
+        byte $b3, $b4, $b6;
+
+        r0 := @parameter0: byte[];
+
+        r2 := @parameter1: byte[];
+
+        $i0 = lengthof r0;
+
+        r1 = newarray (byte)[$i0];
+
+        i8 = 0;
+
+        i9 = 0;
+
+     label1:
+        $i1 = lengthof r1;
+
+        if i9 >= $i1 goto label3;
+
+        $b4 = r0[i9];
+
+        $i2 = i8;
+
+        i8 = i8 + 1;
+
+        $b3 = r2[$i2];
+
+        $i5 = $b4 ^ $b3;
+
+        $b6 = (byte) $i5;
+
+        r1[i9] = $b6;
+
+        $i7 = lengthof r2;
+
+        if i8 != $i7 goto label2;
+
+        i8 = 0;
+
+     label2:
+        i9 = i9 + 1;
+
+        goto label1;
+
+     label3:
+        return r1;
+    }
+}

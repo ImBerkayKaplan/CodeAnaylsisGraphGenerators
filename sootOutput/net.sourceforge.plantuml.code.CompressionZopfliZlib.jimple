@@ -1,0 +1,84 @@
+public class net.sourceforge.plantuml.code.CompressionZopfliZlib extends java.lang.Object implements net.sourceforge.plantuml.code.Compression
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.code.CompressionZopfliZlib r0;
+
+        r0 := @this: net.sourceforge.plantuml.code.CompressionZopfliZlib;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public byte[] compress(byte[])
+    {
+        byte[] r0, $r8;
+        int $i0, $i1, i2;
+        net.sourceforge.plantuml.zopfli.Zopfli $r1;
+        net.sourceforge.plantuml.zopfli.Options $r3;
+        net.sourceforge.plantuml.zopfli.Options$BlockSplitting $r4;
+        net.sourceforge.plantuml.zopfli.Options$OutputFormat $r5;
+        net.sourceforge.plantuml.zopfli.Buffer $r7;
+        net.sourceforge.plantuml.code.CompressionZopfliZlib r9;
+
+        r9 := @this: net.sourceforge.plantuml.code.CompressionZopfliZlib;
+
+        r0 := @parameter0: byte[];
+
+        $i0 = lengthof r0;
+
+        if $i0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $i1 = lengthof r0;
+
+        i2 = $i1 * 2;
+
+        if i2 >= 100 goto label2;
+
+        i2 = 100;
+
+     label2:
+        $r1 = new net.sourceforge.plantuml.zopfli.Zopfli;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.zopfli.Zopfli: void <init>(int)>(i2);
+
+        $r3 = new net.sourceforge.plantuml.zopfli.Options;
+
+        $r5 = <net.sourceforge.plantuml.zopfli.Options$OutputFormat: net.sourceforge.plantuml.zopfli.Options$OutputFormat DEFLATE>;
+
+        $r4 = <net.sourceforge.plantuml.zopfli.Options$BlockSplitting: net.sourceforge.plantuml.zopfli.Options$BlockSplitting FIRST>;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.zopfli.Options: void <init>(net.sourceforge.plantuml.zopfli.Options$OutputFormat,net.sourceforge.plantuml.zopfli.Options$BlockSplitting,int)>($r5, $r4, 30);
+
+        $r7 = virtualinvoke $r1.<net.sourceforge.plantuml.zopfli.Zopfli: net.sourceforge.plantuml.zopfli.Buffer compress(net.sourceforge.plantuml.zopfli.Options,byte[])>($r3, r0);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.zopfli.Buffer: byte[] getResult()>();
+
+        return $r8;
+    }
+
+    public net.sourceforge.plantuml.code.ByteArray decompress(byte[]) throws net.sourceforge.plantuml.code.NoPlantumlCompressionException
+    {
+        net.sourceforge.plantuml.code.CompressionZlib $r0;
+        byte[] r1;
+        net.sourceforge.plantuml.code.ByteArray $r2;
+        net.sourceforge.plantuml.code.CompressionZopfliZlib r3;
+
+        r3 := @this: net.sourceforge.plantuml.code.CompressionZopfliZlib;
+
+        r1 := @parameter0: byte[];
+
+        $r0 = new net.sourceforge.plantuml.code.CompressionZlib;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.code.CompressionZlib: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<net.sourceforge.plantuml.code.CompressionZlib: net.sourceforge.plantuml.code.ByteArray decompress(byte[])>(r1);
+
+        return $r2;
+    }
+}

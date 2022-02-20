@@ -1,0 +1,267 @@
+public class net.sourceforge.plantuml.graphic.color.ColorParser extends java.lang.Object
+{
+    private static final java.lang.String COLOR_REGEXP;
+    private static final java.lang.String PART2;
+    private static final java.lang.String COLORS_REGEXP;
+    private final net.sourceforge.plantuml.command.regex.RegexLeaf regex;
+    private final java.lang.String name;
+    private final net.sourceforge.plantuml.graphic.color.ColorType mainType;
+
+    private void <init>(java.lang.String, net.sourceforge.plantuml.command.regex.RegexLeaf, net.sourceforge.plantuml.graphic.color.ColorType)
+    {
+        net.sourceforge.plantuml.graphic.color.ColorParser r0;
+        net.sourceforge.plantuml.command.regex.RegexLeaf r1;
+        java.lang.String r2;
+        net.sourceforge.plantuml.graphic.color.ColorType r3;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.color.ColorParser;
+
+        r2 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        r3 := @parameter2: net.sourceforge.plantuml.graphic.color.ColorType;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.graphic.color.ColorParser: net.sourceforge.plantuml.command.regex.RegexLeaf regex> = r1;
+
+        r0.<net.sourceforge.plantuml.graphic.color.ColorParser: java.lang.String name> = r2;
+
+        r0.<net.sourceforge.plantuml.graphic.color.ColorParser: net.sourceforge.plantuml.graphic.color.ColorType mainType> = r3;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.graphic.color.Colors getColor(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.command.regex.RegexResult, net.sourceforge.plantuml.ugraphic.color.HColorSet) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.graphic.color.ColorParser r0;
+        net.sourceforge.plantuml.graphic.color.ColorType $r1, $r8;
+        net.sourceforge.plantuml.command.regex.RegexResult r2;
+        java.lang.String $r3, r4;
+        net.sourceforge.plantuml.graphic.color.Colors $r5, $r9;
+        net.sourceforge.plantuml.api.ThemeStyle r6;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet r7;
+        java.lang.IllegalStateException $r10;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.color.ColorParser;
+
+        r6 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r7 := @parameter2: net.sourceforge.plantuml.ugraphic.color.HColorSet;
+
+        $r1 = r0.<net.sourceforge.plantuml.graphic.color.ColorParser: net.sourceforge.plantuml.graphic.color.ColorType mainType>;
+
+        if $r1 != null goto label1;
+
+        $r10 = new java.lang.IllegalStateException;
+
+        specialinvoke $r10.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r10;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.graphic.color.ColorParser: java.lang.String name>;
+
+        r4 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String getLazzy(java.lang.String,int)>($r3, 0);
+
+        if r4 != null goto label2;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.graphic.color.Colors empty()>();
+
+        return $r9;
+
+     label2:
+        $r5 = new net.sourceforge.plantuml.graphic.color.Colors;
+
+        $r8 = r0.<net.sourceforge.plantuml.graphic.color.ColorParser: net.sourceforge.plantuml.graphic.color.ColorType mainType>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.graphic.color.Colors: void <init>(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.graphic.color.ColorType)>(r6, r4, r7, $r8);
+
+        return $r5;
+    }
+
+    public static net.sourceforge.plantuml.graphic.color.ColorParser simpleColor(net.sourceforge.plantuml.graphic.color.ColorType)
+    {
+        net.sourceforge.plantuml.graphic.color.ColorType r0;
+        net.sourceforge.plantuml.graphic.color.ColorParser $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.graphic.color.ColorType;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.graphic.color.ColorParser: net.sourceforge.plantuml.graphic.color.ColorParser simpleColor(net.sourceforge.plantuml.graphic.color.ColorType,java.lang.String)>(r0, "COLOR");
+
+        return $r1;
+    }
+
+    public static net.sourceforge.plantuml.graphic.color.ColorParser simpleColor(net.sourceforge.plantuml.graphic.color.ColorType, java.lang.String)
+    {
+        net.sourceforge.plantuml.graphic.color.ColorParser $r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r2;
+        net.sourceforge.plantuml.graphic.color.ColorType r3;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.color.ColorType;
+
+        r1 := @parameter1: java.lang.String;
+
+        $r0 = new net.sourceforge.plantuml.graphic.color.ColorParser;
+
+        $r2 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>(r1, "((?:#(?:\\w+[-\\\\|/]?\\w+;)?(?:(?:text|back|header|line|line\\.dashed|line\\.dotted|line\\.bold|shadowing)(?::\\w+[-\\\\|/]?\\w+)?(?:;|(?![\\w;:.])))+)|(?:#\\w+[-\\\\|/]?\\w+))?");
+
+        specialinvoke $r0.<net.sourceforge.plantuml.graphic.color.ColorParser: void <init>(java.lang.String,net.sourceforge.plantuml.command.regex.RegexLeaf,net.sourceforge.plantuml.graphic.color.ColorType)>(r1, $r2, r3);
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.graphic.color.ColorParser mandatoryColor(net.sourceforge.plantuml.graphic.color.ColorType)
+    {
+        net.sourceforge.plantuml.graphic.color.ColorParser $r0;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r1;
+        net.sourceforge.plantuml.graphic.color.ColorType r2;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.color.ColorType;
+
+        $r0 = new net.sourceforge.plantuml.graphic.color.ColorParser;
+
+        $r1 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("COLOR", "((?:#(?:\\w+[-\\\\|/]?\\w+;)?(?:(?:text|back|header|line|line\\.dashed|line\\.dotted|line\\.bold|shadowing)(?::\\w+[-\\\\|/]?\\w+)?(?:;|(?![\\w;:.])))+)|(?:#\\w+[-\\\\|/]?\\w+))");
+
+        specialinvoke $r0.<net.sourceforge.plantuml.graphic.color.ColorParser: void <init>(java.lang.String,net.sourceforge.plantuml.command.regex.RegexLeaf,net.sourceforge.plantuml.graphic.color.ColorType)>("COLOR", $r1, r2);
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.graphic.color.ColorParser simpleColor(java.lang.String, net.sourceforge.plantuml.graphic.color.ColorType)
+    {
+        net.sourceforge.plantuml.graphic.color.ColorParser $r0;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r1;
+        java.lang.StringBuilder $r2, $r3, $r5, $r6, $r7, $r8;
+        java.lang.String r4, $r9;
+        net.sourceforge.plantuml.graphic.color.ColorType r10;
+
+        r4 := @parameter0: java.lang.String;
+
+        r10 := @parameter1: net.sourceforge.plantuml.graphic.color.ColorType;
+
+        $r0 = new net.sourceforge.plantuml.graphic.color.ColorParser;
+
+        $r1 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(?:");
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" (");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(?:#(?:\\w+[-\\\\|/]?\\w+;)?(?:(?:text|back|header|line|line\\.dashed|line\\.dotted|line\\.bold|shadowing)(?::\\w+[-\\\\|/]?\\w+)?(?:;|(?![\\w;:.])))+)|(?:#\\w+[-\\\\|/]?\\w+)");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("))?");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r1.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("COLOR", $r9);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.graphic.color.ColorParser: void <init>(java.lang.String,net.sourceforge.plantuml.command.regex.RegexLeaf,net.sourceforge.plantuml.graphic.color.ColorType)>("COLOR", $r1, r10);
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.command.regex.RegexLeaf exp1()
+    {
+        net.sourceforge.plantuml.graphic.color.ColorParser $r0;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r1;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.graphic.color.ColorParser: net.sourceforge.plantuml.graphic.color.ColorParser simpleColor(net.sourceforge.plantuml.graphic.color.ColorType)>(null);
+
+        $r1 = $r0.<net.sourceforge.plantuml.graphic.color.ColorParser: net.sourceforge.plantuml.command.regex.RegexLeaf regex>;
+
+        return $r1;
+    }
+
+    public static net.sourceforge.plantuml.command.regex.RegexLeaf exp2()
+    {
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r0;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("BACKCOLOR", "(#\\w+[-\\\\|/]?\\w+)?");
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.command.regex.RegexLeaf exp3()
+    {
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r0;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("BACKCOLOR2", "(#\\w+[-\\\\|/]?\\w+)?");
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.command.regex.RegexLeaf exp4()
+    {
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r0;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("COLOR", "(?:(#\\w+[-\\\\|/]?\\w+):)?");
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.command.regex.RegexLeaf exp6()
+    {
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r0;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("COLOR", "(?:(#\\w+[-\\\\|/]?\\w+)\\|)?");
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.command.regex.RegexLeaf exp7()
+    {
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r0;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("COLOR", "(?:(#\\w+[-\\\\|/]?\\w+))?");
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.command.regex.RegexLeaf getRegex()
+    {
+        net.sourceforge.plantuml.graphic.color.ColorParser r0;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r1;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.color.ColorParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.graphic.color.ColorParser: net.sourceforge.plantuml.command.regex.RegexLeaf regex>;
+
+        return $r1;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.graphic.color.ColorParser: java.lang.String COLORS_REGEXP> = "(?:#(?:\\w+[-\\\\|/]?\\w+;)?(?:(?:text|back|header|line|line\\.dashed|line\\.dotted|line\\.bold|shadowing)(?::\\w+[-\\\\|/]?\\w+)?(?:;|(?![\\w;:.])))+)|(?:#\\w+[-\\\\|/]?\\w+)";
+
+        <net.sourceforge.plantuml.graphic.color.ColorParser: java.lang.String PART2> = "#(?:\\w+[-\\\\|/]?\\w+;)?(?:(?:text|back|header|line|line\\.dashed|line\\.dotted|line\\.bold|shadowing)(?::\\w+[-\\\\|/]?\\w+)?(?:;|(?![\\w;:.])))+";
+
+        <net.sourceforge.plantuml.graphic.color.ColorParser: java.lang.String COLOR_REGEXP> = "#\\w+[-\\\\|/]?\\w+";
+
+        return;
+    }
+}

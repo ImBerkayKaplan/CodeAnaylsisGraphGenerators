@@ -1,0 +1,170 @@
+public class net.sourceforge.plantuml.stats.TextConverter extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.stats.api.Stats stats;
+    private int linesUsed;
+
+    public void <init>(net.sourceforge.plantuml.stats.api.Stats)
+    {
+        net.sourceforge.plantuml.stats.TextConverter r0;
+        net.sourceforge.plantuml.stats.api.Stats r1;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextConverter;
+
+        r1 := @parameter0: net.sourceforge.plantuml.stats.api.Stats;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.stats.TextConverter: net.sourceforge.plantuml.stats.api.Stats stats> = r1;
+
+        return;
+    }
+
+    public void printMe(java.io.PrintStream)
+    {
+        net.sourceforge.plantuml.stats.TextTable $r0;
+        java.lang.Object[] $r2, $r25;
+        net.sourceforge.plantuml.stats.TextConverter r3;
+        net.sourceforge.plantuml.stats.api.Stats $r4;
+        net.sourceforge.plantuml.stats.api.StatsTable $r5;
+        java.util.List $r6;
+        java.util.Iterator r7;
+        boolean $z0;
+        int $i0;
+        java.io.PrintStream r8;
+        java.lang.Object $r9, $r12, $r14, $r17, $r20, $r23;
+        net.sourceforge.plantuml.stats.api.StatsLine r10;
+        net.sourceforge.plantuml.stats.api.StatsColumn $r11, $r13, $r16, $r19, $r22;
+        java.util.Date r15;
+        java.lang.String r18;
+        java.lang.Long r21, r24;
+        java.lang.Comparable r26;
+
+        r3 := @this: net.sourceforge.plantuml.stats.TextConverter;
+
+        r8 := @parameter0: java.io.PrintStream;
+
+        $r0 = new net.sourceforge.plantuml.stats.TextTable;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.stats.TextTable: void <init>()>();
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.TextTable: void addSeparator()>();
+
+        $r2 = newarray (java.lang.Object)[5];
+
+        $r2[0] = "ID";
+
+        $r2[1] = "Start";
+
+        $r2[2] = "Duration";
+
+        $r2[3] = "Generated";
+
+        $r2[4] = "Mean(ms)";
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.TextTable: void addLine(java.lang.Object[])>($r2);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.TextTable: void addSeparator()>();
+
+        $r4 = r3.<net.sourceforge.plantuml.stats.TextConverter: net.sourceforge.plantuml.stats.api.Stats stats>;
+
+        $r5 = interfaceinvoke $r4.<net.sourceforge.plantuml.stats.api.Stats: net.sourceforge.plantuml.stats.api.StatsTable getLastSessions()>();
+
+        $r6 = interfaceinvoke $r5.<net.sourceforge.plantuml.stats.api.StatsTable: java.util.List getLines()>();
+
+        r7 = interfaceinvoke $r6.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r9 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (net.sourceforge.plantuml.stats.api.StatsLine) $r9;
+
+        $r11 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn SESSION_ID>;
+
+        $r12 = interfaceinvoke r10.<net.sourceforge.plantuml.stats.api.StatsLine: java.lang.Object getValue(net.sourceforge.plantuml.stats.api.StatsColumn)>($r11);
+
+        r26 = (java.lang.Long) $r12;
+
+        if r26 != null goto label2;
+
+        r26 = "";
+
+     label2:
+        $r13 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn STARTING>;
+
+        $r14 = interfaceinvoke r10.<net.sourceforge.plantuml.stats.api.StatsLine: java.lang.Object getValue(net.sourceforge.plantuml.stats.api.StatsColumn)>($r13);
+
+        r15 = (java.util.Date) $r14;
+
+        $r16 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn DURATION_STRING>;
+
+        $r17 = interfaceinvoke r10.<net.sourceforge.plantuml.stats.api.StatsLine: java.lang.Object getValue(net.sourceforge.plantuml.stats.api.StatsColumn)>($r16);
+
+        r18 = virtualinvoke $r17.<java.lang.Object: java.lang.String toString()>();
+
+        $r19 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_COUNT>;
+
+        $r20 = interfaceinvoke r10.<net.sourceforge.plantuml.stats.api.StatsLine: java.lang.Object getValue(net.sourceforge.plantuml.stats.api.StatsColumn)>($r19);
+
+        r21 = (java.lang.Long) $r20;
+
+        $r22 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_MEAN_TIME>;
+
+        $r23 = interfaceinvoke r10.<net.sourceforge.plantuml.stats.api.StatsLine: java.lang.Object getValue(net.sourceforge.plantuml.stats.api.StatsColumn)>($r22);
+
+        r24 = (java.lang.Long) $r23;
+
+        $r25 = newarray (java.lang.Object)[5];
+
+        $r25[0] = r26;
+
+        $r25[1] = r15;
+
+        $r25[2] = r18;
+
+        $r25[3] = r21;
+
+        $r25[4] = r24;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.TextTable: void addLine(java.lang.Object[])>($r25);
+
+        goto label1;
+
+     label3:
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.TextTable: void addSeparator()>();
+
+        $i0 = virtualinvoke $r0.<net.sourceforge.plantuml.stats.TextTable: int getLines()>();
+
+        r3.<net.sourceforge.plantuml.stats.TextConverter: int linesUsed> = $i0;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.TextTable: void printMe(java.io.PrintStream)>(r8);
+
+        return;
+    }
+
+    public int getLinesUsed()
+    {
+        net.sourceforge.plantuml.stats.TextConverter r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextConverter;
+
+        $i0 = r0.<net.sourceforge.plantuml.stats.TextConverter: int linesUsed>;
+
+        return $i0;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] r0;
+
+        r0 := @parameter0: java.lang.String[];
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void dumpStats()>();
+
+        return;
+    }
+}

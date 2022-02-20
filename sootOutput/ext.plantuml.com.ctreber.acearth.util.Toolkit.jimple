@@ -1,0 +1,279 @@
+public class ext.plantuml.com.ctreber.acearth.util.Toolkit extends java.lang.Object
+{
+    public static final double TWOPI;
+    public static final double PI;
+    public static final double HALFPI;
+    private static final java.util.HashSet fsNoCap;
+
+    public void <init>()
+    {
+        ext.plantuml.com.ctreber.acearth.util.Toolkit r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.util.Toolkit;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static double degsToRads(double)
+    {
+        double d0, $d1, $d2;
+
+        d0 := @parameter0: double;
+
+        $d1 = d0 * 6.283185307179586;
+
+        $d2 = $d1 / 360.0;
+
+        return $d2;
+    }
+
+    public static double radsToDegs(double)
+    {
+        double d0, $d1, $d2;
+
+        d0 := @parameter0: double;
+
+        $d1 = d0 * 360.0;
+
+        $d2 = $d1 / 6.283185307179586;
+
+        return $d2;
+    }
+
+    public static double limitRads(double)
+    {
+        double d0, $d1;
+
+        d0 := @parameter0: double;
+
+        $d1 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double fmod(double,double,double)>(d0, -3.141592653589793, 3.141592653589793);
+
+        return $d1;
+    }
+
+    public static double fmod(double, double)
+    {
+        byte $b0, $b1;
+        double d0, d1;
+
+        d1 := @parameter0: double;
+
+        d0 := @parameter1: double;
+
+     label1:
+        $b0 = d1 cmpg 0.0;
+
+        if $b0 >= 0 goto label2;
+
+        d1 = d1 + d0;
+
+        goto label1;
+
+     label2:
+        $b1 = d1 cmpl d0;
+
+        if $b1 <= 0 goto label3;
+
+        d1 = d1 - d0;
+
+        goto label2;
+
+     label3:
+        return d1;
+    }
+
+    public static double fmod(double, double, double)
+    {
+        double d0, d1, d2, d3, $d4, $d5, $d6, $d7, $d8;
+        byte $b0;
+        int i1;
+
+        d3 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        d0 := @parameter2: double;
+
+        d2 = d0 - d1;
+
+        $d4 = d3 - d1;
+
+        $d5 = $d4 / d2;
+
+        i1 = (int) $d5;
+
+        $b0 = d3 cmpg d1;
+
+        if $b0 >= 0 goto label1;
+
+        i1 = i1 + -1;
+
+     label1:
+        $d6 = (double) i1;
+
+        $d7 = $d6 * d2;
+
+        $d8 = d3 - $d7;
+
+        return $d8;
+    }
+
+    public static java.lang.String intelligentCapitalize(java.lang.String)
+    {
+        java.util.StringTokenizer $r0;
+        java.lang.String r1, $r5, r6, $r9, $r10, $r13, $r14, $r16;
+        java.lang.StringBuilder $r3;
+        boolean $z0, $z1, $z2, $z3, z4, $z5;
+        char $c0, $c1;
+        int $i2;
+        java.util.HashSet $r12;
+
+        r1 := @parameter0: java.lang.String;
+
+        z4 = 0;
+
+        $r0 = new java.util.StringTokenizer;
+
+        specialinvoke $r0.<java.util.StringTokenizer: void <init>(java.lang.String,java.lang.String,boolean)>(r1, ".- ", 1);
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>(int)>(50);
+
+     label1:
+        $z5 = virtualinvoke $r0.<java.util.StringTokenizer: boolean hasMoreTokens()>();
+
+        if $z5 == 0 goto label9;
+
+        r6 = virtualinvoke $r0.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $z0 = virtualinvoke r6.<java.lang.String: boolean equals(java.lang.Object)>(".");
+
+        if $z0 != 0 goto label2;
+
+        $z1 = virtualinvoke r6.<java.lang.String: boolean equals(java.lang.Object)>("-");
+
+        if $z1 == 0 goto label3;
+
+     label2:
+        z4 = 1;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r6);
+
+        goto label1;
+
+     label3:
+        $z2 = virtualinvoke r6.<java.lang.String: boolean equals(java.lang.Object)>(" ");
+
+        if $z2 == 0 goto label4;
+
+        z4 = 0;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r6);
+
+        goto label1;
+
+     label4:
+        if z4 != 0 goto label5;
+
+        $i2 = virtualinvoke r6.<java.lang.String: int length()>();
+
+        if $i2 <= 3 goto label6;
+
+     label5:
+        $c0 = virtualinvoke r6.<java.lang.String: char charAt(int)>(0);
+
+        $c1 = staticinvoke <java.lang.Character: char toUpperCase(char)>($c0);
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c1);
+
+        $r9 = virtualinvoke r6.<java.lang.String: java.lang.String substring(int)>(1);
+
+        $r10 = virtualinvoke $r9.<java.lang.String: java.lang.String toLowerCase()>();
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        goto label8;
+
+     label6:
+        $r12 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        $r13 = virtualinvoke r6.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $z3 = virtualinvoke $r12.<java.util.HashSet: boolean contains(java.lang.Object)>($r13);
+
+        if $z3 == 0 goto label7;
+
+        $r16 = virtualinvoke r6.<java.lang.String: java.lang.String toLowerCase()>();
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r16);
+
+        goto label8;
+
+     label7:
+        $r14 = virtualinvoke r6.<java.lang.String: java.lang.String toUpperCase()>();
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r14);
+
+     label8:
+        goto label1;
+
+     label9:
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+
+    static void <clinit>()
+    {
+        java.util.HashSet $r0, $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8;
+
+        <ext.plantuml.com.ctreber.acearth.util.Toolkit: double HALFPI> = 1.5707963267948966;
+
+        <ext.plantuml.com.ctreber.acearth.util.Toolkit: double PI> = 3.141592653589793;
+
+        <ext.plantuml.com.ctreber.acearth.util.Toolkit: double TWOPI> = 6.283185307179586;
+
+        $r0 = new java.util.HashSet;
+
+        specialinvoke $r0.<java.util.HashSet: void <init>()>();
+
+        <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap> = $r0;
+
+        $r1 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        virtualinvoke $r1.<java.util.HashSet: boolean add(java.lang.Object)>("a");
+
+        $r2 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        virtualinvoke $r2.<java.util.HashSet: boolean add(java.lang.Object)>("as");
+
+        $r3 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        virtualinvoke $r3.<java.util.HashSet: boolean add(java.lang.Object)>("to");
+
+        $r4 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        virtualinvoke $r4.<java.util.HashSet: boolean add(java.lang.Object)>("of");
+
+        $r5 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        virtualinvoke $r5.<java.util.HashSet: boolean add(java.lang.Object)>("the");
+
+        $r6 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        virtualinvoke $r6.<java.util.HashSet: boolean add(java.lang.Object)>("off");
+
+        $r7 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        virtualinvoke $r7.<java.util.HashSet: boolean add(java.lang.Object)>("and");
+
+        $r8 = <ext.plantuml.com.ctreber.acearth.util.Toolkit: java.util.HashSet fsNoCap>;
+
+        virtualinvoke $r8.<java.util.HashSet: boolean add(java.lang.Object)>("mid");
+
+        return;
+    }
+}

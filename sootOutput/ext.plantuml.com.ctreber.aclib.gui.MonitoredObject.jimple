@@ -1,0 +1,90 @@
+public abstract class ext.plantuml.com.ctreber.aclib.gui.MonitoredObject extends java.lang.Object
+{
+    private java.util.List fListeners;
+
+    public void <init>()
+    {
+        ext.plantuml.com.ctreber.aclib.gui.MonitoredObject r0;
+        java.util.ArrayList $r1;
+
+        r0 := @this: ext.plantuml.com.ctreber.aclib.gui.MonitoredObject;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<ext.plantuml.com.ctreber.aclib.gui.MonitoredObject: java.util.List fListeners> = $r1;
+
+        return;
+    }
+
+    public void addChangeListener(ext.plantuml.com.ctreber.aclib.gui.MOChangeListener)
+    {
+        ext.plantuml.com.ctreber.aclib.gui.MonitoredObject r0;
+        ext.plantuml.com.ctreber.aclib.gui.MOChangeListener r1;
+        java.util.List $r2;
+
+        r0 := @this: ext.plantuml.com.ctreber.aclib.gui.MonitoredObject;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.aclib.gui.MOChangeListener;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.aclib.gui.MonitoredObject: java.util.List fListeners>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public void removeChangeListener(ext.plantuml.com.ctreber.aclib.gui.MOChangeListener)
+    {
+        ext.plantuml.com.ctreber.aclib.gui.MonitoredObject r0;
+        ext.plantuml.com.ctreber.aclib.gui.MOChangeListener r1;
+        java.util.List $r2;
+
+        r0 := @this: ext.plantuml.com.ctreber.aclib.gui.MonitoredObject;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.aclib.gui.MOChangeListener;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.aclib.gui.MonitoredObject: java.util.List fListeners>;
+
+        interfaceinvoke $r2.<java.util.List: boolean remove(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    void fireValueChanged()
+    {
+        ext.plantuml.com.ctreber.aclib.gui.MonitoredObject r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        ext.plantuml.com.ctreber.aclib.gui.MOChangeListener r4;
+
+        r0 := @this: ext.plantuml.com.ctreber.aclib.gui.MonitoredObject;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.aclib.gui.MonitoredObject: java.util.List fListeners>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (ext.plantuml.com.ctreber.aclib.gui.MOChangeListener) $r3;
+
+        interfaceinvoke r4.<ext.plantuml.com.ctreber.aclib.gui.MOChangeListener: void valueChanged(ext.plantuml.com.ctreber.aclib.gui.MonitoredObject)>(r0);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public abstract boolean checkRange();
+}

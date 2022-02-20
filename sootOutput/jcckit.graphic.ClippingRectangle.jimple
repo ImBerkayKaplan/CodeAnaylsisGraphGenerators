@@ -1,0 +1,199 @@
+public class jcckit.graphic.ClippingRectangle extends java.lang.Object implements jcckit.graphic.ClippingShape
+{
+    private final double _minX;
+    private final double _minY;
+    private final double _maxX;
+    private final double _maxY;
+
+    public void <init>(double, double, double, double)
+    {
+        jcckit.graphic.ClippingRectangle r0;
+        double d0, d1, $d2, d3, d4, $d5, $d6, $d7;
+
+        r0 := @this: jcckit.graphic.ClippingRectangle;
+
+        d0 := @parameter0: double;
+
+        d3 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        d4 := @parameter3: double;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $d2 = staticinvoke <java.lang.Math: double min(double,double)>(d0, d1);
+
+        r0.<jcckit.graphic.ClippingRectangle: double _minX> = $d2;
+
+        $d5 = staticinvoke <java.lang.Math: double min(double,double)>(d3, d4);
+
+        r0.<jcckit.graphic.ClippingRectangle: double _minY> = $d5;
+
+        $d6 = staticinvoke <java.lang.Math: double max(double,double)>(d0, d1);
+
+        r0.<jcckit.graphic.ClippingRectangle: double _maxX> = $d6;
+
+        $d7 = staticinvoke <java.lang.Math: double max(double,double)>(d3, d4);
+
+        r0.<jcckit.graphic.ClippingRectangle: double _maxY> = $d7;
+
+        return;
+    }
+
+    public boolean isInside(jcckit.graphic.GraphPoint)
+    {
+        jcckit.graphic.GraphPoint r0;
+        double d0, d1, $d2, $d3, $d4, $d5;
+        jcckit.graphic.ClippingRectangle r1;
+        byte $b0, $b1, $b2, $b3;
+        boolean $z0;
+
+        r1 := @this: jcckit.graphic.ClippingRectangle;
+
+        r0 := @parameter0: jcckit.graphic.GraphPoint;
+
+        d0 = virtualinvoke r0.<jcckit.graphic.GraphPoint: double getX()>();
+
+        d1 = virtualinvoke r0.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d2 = r1.<jcckit.graphic.ClippingRectangle: double _minX>;
+
+        $b0 = $d2 cmpg d0;
+
+        if $b0 > 0 goto label1;
+
+        $d3 = r1.<jcckit.graphic.ClippingRectangle: double _maxX>;
+
+        $b1 = d0 cmpg $d3;
+
+        if $b1 > 0 goto label1;
+
+        $d4 = r1.<jcckit.graphic.ClippingRectangle: double _minY>;
+
+        $b2 = $d4 cmpg d1;
+
+        if $b2 > 0 goto label1;
+
+        $d5 = r1.<jcckit.graphic.ClippingRectangle: double _maxY>;
+
+        $b3 = d1 cmpg $d5;
+
+        if $b3 > 0 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public double getMinX()
+    {
+        jcckit.graphic.ClippingRectangle r0;
+        double $d0;
+
+        r0 := @this: jcckit.graphic.ClippingRectangle;
+
+        $d0 = r0.<jcckit.graphic.ClippingRectangle: double _minX>;
+
+        return $d0;
+    }
+
+    public double getMaxX()
+    {
+        jcckit.graphic.ClippingRectangle r0;
+        double $d0;
+
+        r0 := @this: jcckit.graphic.ClippingRectangle;
+
+        $d0 = r0.<jcckit.graphic.ClippingRectangle: double _maxX>;
+
+        return $d0;
+    }
+
+    public double getMinY()
+    {
+        jcckit.graphic.ClippingRectangle r0;
+        double $d0;
+
+        r0 := @this: jcckit.graphic.ClippingRectangle;
+
+        $d0 = r0.<jcckit.graphic.ClippingRectangle: double _minY>;
+
+        return $d0;
+    }
+
+    public double getMaxY()
+    {
+        jcckit.graphic.ClippingRectangle r0;
+        double $d0;
+
+        r0 := @this: jcckit.graphic.ClippingRectangle;
+
+        $d0 = r0.<jcckit.graphic.ClippingRectangle: double _maxY>;
+
+        return $d0;
+    }
+
+    public jcckit.graphic.ClippingRectangle getBoundingBox()
+    {
+        jcckit.graphic.ClippingRectangle r0;
+
+        r0 := @this: jcckit.graphic.ClippingRectangle;
+
+        return r0;
+    }
+
+    public jcckit.graphic.BasicGraphicalElement getGraphicalElement()
+    {
+        jcckit.graphic.Rectangle $r0;
+        jcckit.graphic.GraphPoint $r1;
+        jcckit.graphic.ClippingRectangle r2;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13;
+
+        r2 := @this: jcckit.graphic.ClippingRectangle;
+
+        $r0 = new jcckit.graphic.Rectangle;
+
+        $r1 = new jcckit.graphic.GraphPoint;
+
+        $d1 = r2.<jcckit.graphic.ClippingRectangle: double _minX>;
+
+        $d0 = r2.<jcckit.graphic.ClippingRectangle: double _maxX>;
+
+        $d2 = $d1 + $d0;
+
+        $d7 = 0.5 * $d2;
+
+        $d4 = r2.<jcckit.graphic.ClippingRectangle: double _minY>;
+
+        $d3 = r2.<jcckit.graphic.ClippingRectangle: double _maxY>;
+
+        $d5 = $d4 + $d3;
+
+        $d6 = 0.5 * $d5;
+
+        specialinvoke $r1.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d7, $d6);
+
+        $d9 = r2.<jcckit.graphic.ClippingRectangle: double _maxX>;
+
+        $d8 = r2.<jcckit.graphic.ClippingRectangle: double _minX>;
+
+        $d13 = $d9 - $d8;
+
+        $d11 = r2.<jcckit.graphic.ClippingRectangle: double _maxY>;
+
+        $d10 = r2.<jcckit.graphic.ClippingRectangle: double _minY>;
+
+        $d12 = $d11 - $d10;
+
+        specialinvoke $r0.<jcckit.graphic.Rectangle: void <init>(jcckit.graphic.GraphPoint,double,double,jcckit.graphic.GraphicAttributes)>($r1, $d13, $d12, null);
+
+        return $r0;
+    }
+}

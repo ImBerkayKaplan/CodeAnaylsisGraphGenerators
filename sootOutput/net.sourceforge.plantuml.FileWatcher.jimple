@@ -1,0 +1,138 @@
+public class net.sourceforge.plantuml.FileWatcher extends java.lang.Object
+{
+    private final java.util.Map modified2;
+
+    public void <init>(java.util.Set)
+    {
+        net.sourceforge.plantuml.FileWatcher r0;
+        java.util.HashMap $r1;
+        java.util.Set r2;
+        int $i0;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        java.io.File r5;
+        java.util.Map $r6;
+        long $l1;
+        java.lang.Long $r7;
+        java.lang.IllegalArgumentException $r9;
+
+        r0 := @this: net.sourceforge.plantuml.FileWatcher;
+
+        r2 := @parameter0: java.util.Set;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.FileWatcher: java.util.Map modified2> = $r1;
+
+        $i0 = interfaceinvoke r2.<java.util.Set: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $r9 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r9.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r9;
+
+     label1:
+        r3 = interfaceinvoke r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.io.File) $r4;
+
+        $r6 = r0.<net.sourceforge.plantuml.FileWatcher: java.util.Map modified2>;
+
+        $l1 = virtualinvoke r5.<java.io.File: long lastModified()>();
+
+        $r7 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l1);
+
+        interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r5, $r7);
+
+        goto label2;
+
+     label3:
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        net.sourceforge.plantuml.FileWatcher r0;
+        java.util.Map $r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.FileWatcher;
+
+        $r1 = r0.<net.sourceforge.plantuml.FileWatcher: java.util.Map modified2>;
+
+        $r2 = virtualinvoke $r1.<java.lang.Object: java.lang.String toString()>();
+
+        return $r2;
+    }
+
+    public boolean hasChanged()
+    {
+        net.sourceforge.plantuml.FileWatcher r0;
+        java.util.Map $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4, $r6, $r8;
+        java.util.Map$Entry r5;
+        java.io.File $r7;
+        long l0, $l1;
+        java.lang.Long $r9;
+        byte $b2;
+
+        r0 := @this: net.sourceforge.plantuml.FileWatcher;
+
+        $r1 = r0.<net.sourceforge.plantuml.FileWatcher: java.util.Map modified2>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set entrySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.util.Map$Entry) $r4;
+
+        $r6 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r7 = (java.io.File) $r6;
+
+        l0 = virtualinvoke $r7.<java.io.File: long lastModified()>();
+
+        $r8 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r9 = (java.lang.Long) $r8;
+
+        $l1 = virtualinvoke $r9.<java.lang.Long: long longValue()>();
+
+        $b2 = $l1 cmp l0;
+
+        if $b2 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 0;
+    }
+}

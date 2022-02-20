@@ -1,0 +1,377 @@
+public class net.sourceforge.plantuml.svek.SvekUtils extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.svek.SvekUtils r0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekUtils;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void traceString(net.sourceforge.plantuml.security.SFile, java.lang.String) throws java.io.IOException
+    {
+        java.lang.StringBuilder $r0, $r1, $r4;
+        net.sourceforge.plantuml.security.SFile r2;
+        java.lang.String $r3, $r5, r7;
+        java.io.PrintWriter r6;
+        java.lang.Throwable $r8, $r11;
+
+        r2 := @parameter0: net.sourceforge.plantuml.security.SFile;
+
+        r7 := @parameter1: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Creating intermediate file ");
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.security.SFile: java.lang.String getPrintablePath()>();
+
+        $r4 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r5);
+
+        r6 = virtualinvoke r2.<net.sourceforge.plantuml.security.SFile: java.io.PrintWriter createPrintWriter()>();
+
+     label1:
+        virtualinvoke r6.<java.io.PrintWriter: void print(java.lang.String)>(r7);
+
+     label2:
+        if r6 == null goto label8;
+
+        virtualinvoke r6.<java.io.PrintWriter: void close()>();
+
+        goto label8;
+
+     label3:
+        $r11 := @caughtexception;
+
+        if r6 == null goto label7;
+
+     label4:
+        virtualinvoke r6.<java.io.PrintWriter: void close()>();
+
+     label5:
+        goto label7;
+
+     label6:
+        $r8 := @caughtexception;
+
+        virtualinvoke $r11.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r8);
+
+     label7:
+        throw $r11;
+
+     label8:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label4 to label5 with label6;
+    }
+
+    public static double getValue(java.lang.String, int, java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r2, $r3;
+        java.lang.String r1, r4, r5, $r6;
+        int i0, $i1, i2, i3, i4;
+        double $d0;
+        java.lang.IllegalStateException $r7;
+
+        r5 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("=\"");
+
+        r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        i3 = virtualinvoke r5.<java.lang.String: int indexOf(java.lang.String,int)>(r4, i0);
+
+        if i3 != -1 goto label1;
+
+        $r7 = new java.lang.IllegalStateException;
+
+        specialinvoke $r7.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r7;
+
+     label1:
+        $i1 = virtualinvoke r4.<java.lang.String: int length()>();
+
+        i4 = i3 + $i1;
+
+        i2 = virtualinvoke r5.<java.lang.String: int indexOf(int,int)>(34, i4);
+
+        $r6 = virtualinvoke r5.<java.lang.String: java.lang.String substring(int,int)>(i4, i2);
+
+        $d0 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r6);
+
+        return $d0;
+    }
+
+    public static double getMaxX(java.util.List)
+    {
+        java.util.List r0;
+        java.lang.Object $r1, $r3, $r5;
+        java.awt.geom.Point2D$Double $r2, $r4, $r6;
+        int $i0, i2;
+        double $d0, d1;
+        byte $b1;
+
+        r0 := @parameter0: java.util.List;
+
+        $r1 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r2 = (java.awt.geom.Point2D$Double) $r1;
+
+        d1 = $r2.<java.awt.geom.Point2D$Double: double x>;
+
+        i2 = 1;
+
+     label1:
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        if i2 >= $i0 goto label3;
+
+        $r3 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r4 = (java.awt.geom.Point2D$Double) $r3;
+
+        $d0 = $r4.<java.awt.geom.Point2D$Double: double x>;
+
+        $b1 = $d0 cmpl d1;
+
+        if $b1 <= 0 goto label2;
+
+        $r5 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r6 = (java.awt.geom.Point2D$Double) $r5;
+
+        d1 = $r6.<java.awt.geom.Point2D$Double: double x>;
+
+     label2:
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label3:
+        return d1;
+    }
+
+    public static double getMinX(java.util.List)
+    {
+        java.util.List r0;
+        java.lang.Object $r1, $r3, $r5;
+        java.awt.geom.Point2D$Double $r2, $r4, $r6;
+        int $i0, i2;
+        double $d0, d1;
+        byte $b1;
+
+        r0 := @parameter0: java.util.List;
+
+        $r1 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r2 = (java.awt.geom.Point2D$Double) $r1;
+
+        d1 = $r2.<java.awt.geom.Point2D$Double: double x>;
+
+        i2 = 1;
+
+     label1:
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        if i2 >= $i0 goto label3;
+
+        $r3 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r4 = (java.awt.geom.Point2D$Double) $r3;
+
+        $d0 = $r4.<java.awt.geom.Point2D$Double: double x>;
+
+        $b1 = $d0 cmpg d1;
+
+        if $b1 >= 0 goto label2;
+
+        $r5 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r6 = (java.awt.geom.Point2D$Double) $r5;
+
+        d1 = $r6.<java.awt.geom.Point2D$Double: double x>;
+
+     label2:
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label3:
+        return d1;
+    }
+
+    public static java.awt.geom.Point2D$Double getMinXY(java.util.List)
+    {
+        java.awt.geom.Point2D$Double $r0;
+        java.util.List r1;
+        double $d0, $d1;
+
+        r1 := @parameter0: java.util.List;
+
+        $r0 = new java.awt.geom.Point2D$Double;
+
+        $d0 = staticinvoke <net.sourceforge.plantuml.svek.SvekUtils: double getMinX(java.util.List)>(r1);
+
+        $d1 = staticinvoke <net.sourceforge.plantuml.svek.SvekUtils: double getMinY(java.util.List)>(r1);
+
+        specialinvoke $r0.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d0, $d1);
+
+        return $r0;
+    }
+
+    public static double getMaxY(java.util.List)
+    {
+        java.util.List r0;
+        java.lang.Object $r1, $r3, $r5;
+        java.awt.geom.Point2D$Double $r2, $r4, $r6;
+        int $i0, i2;
+        double $d0, d1;
+        byte $b1;
+
+        r0 := @parameter0: java.util.List;
+
+        $r1 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r2 = (java.awt.geom.Point2D$Double) $r1;
+
+        d1 = $r2.<java.awt.geom.Point2D$Double: double y>;
+
+        i2 = 1;
+
+     label1:
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        if i2 >= $i0 goto label3;
+
+        $r3 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r4 = (java.awt.geom.Point2D$Double) $r3;
+
+        $d0 = $r4.<java.awt.geom.Point2D$Double: double y>;
+
+        $b1 = $d0 cmpl d1;
+
+        if $b1 <= 0 goto label2;
+
+        $r5 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r6 = (java.awt.geom.Point2D$Double) $r5;
+
+        d1 = $r6.<java.awt.geom.Point2D$Double: double y>;
+
+     label2:
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label3:
+        return d1;
+    }
+
+    public static double getMinY(java.util.List)
+    {
+        java.util.List r0;
+        java.lang.Object $r1, $r3, $r5;
+        java.awt.geom.Point2D$Double $r2, $r4, $r6;
+        int $i0, i2;
+        double $d0, d1;
+        byte $b1;
+
+        r0 := @parameter0: java.util.List;
+
+        $r1 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r2 = (java.awt.geom.Point2D$Double) $r1;
+
+        d1 = $r2.<java.awt.geom.Point2D$Double: double y>;
+
+        i2 = 1;
+
+     label1:
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        if i2 >= $i0 goto label3;
+
+        $r3 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r4 = (java.awt.geom.Point2D$Double) $r3;
+
+        $d0 = $r4.<java.awt.geom.Point2D$Double: double y>;
+
+        $b1 = $d0 cmpg d1;
+
+        if $b1 >= 0 goto label2;
+
+        $r5 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r6 = (java.awt.geom.Point2D$Double) $r5;
+
+        d1 = $r6.<java.awt.geom.Point2D$Double: double y>;
+
+     label2:
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label3:
+        return d1;
+    }
+
+    public static void println(java.lang.StringBuilder)
+    {
+        java.lang.StringBuilder r0;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+        return;
+    }
+
+    public static java.lang.String pixelToInches(double)
+    {
+        double d0, d1;
+        java.lang.Object[] $r0;
+        java.util.Locale $r1;
+        java.lang.Double $r2;
+        java.lang.String $r3;
+
+        d0 := @parameter0: double;
+
+        d1 = d0 / 72.0;
+
+        $r1 = <java.util.Locale: java.util.Locale US>;
+
+        $r0 = newarray (java.lang.Object)[1];
+
+        $r2 = staticinvoke <java.lang.Double: java.lang.Double valueOf(double)>(d1);
+
+        $r0[0] = $r2;
+
+        $r3 = staticinvoke <java.lang.String: java.lang.String format(java.util.Locale,java.lang.String,java.lang.Object[])>($r1, "%6.6f", $r0);
+
+        return $r3;
+    }
+}

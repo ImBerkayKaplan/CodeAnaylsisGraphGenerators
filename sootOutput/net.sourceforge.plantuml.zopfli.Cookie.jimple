@@ -1,0 +1,506 @@
+class net.sourceforge.plantuml.zopfli.Cookie extends java.lang.Object
+{
+    static final int SPLIT_PARTITIONS;
+    private static final int POOL_MAX;
+    static final int[] intZeroes;
+    static final char[] charZeroes;
+    static final byte[] byteZeroes;
+    static final int[] intMOnes;
+    static final char[] charOnes;
+    static final long[] costMax;
+    final net.sourceforge.plantuml.zopfli.Cookie$Node[] list0;
+    final net.sourceforge.plantuml.zopfli.Cookie$Node[] list1;
+    final net.sourceforge.plantuml.zopfli.Cookie$Node[] leaves1;
+    final net.sourceforge.plantuml.zopfli.Cookie$Node[] leaves2;
+    private final net.sourceforge.plantuml.zopfli.Cookie$Node[] nodes;
+    private int nextNode;
+    final int[] i320a;
+    final int[] i320b;
+    final int[] i320c;
+    final int[] i288a;
+    final int[] i288b;
+    final int[] i288c;
+    final int[] i289a;
+    final char[] c259a;
+    final int[] i32a;
+    final int[] i32b;
+    final int[] i32c;
+    final int[] i19a;
+    final int[] i19b;
+    final int[] i19c;
+    final int[] i16a;
+    final int[] i16b;
+    final int[] p;
+    final int[] vp;
+    final char[] lengthArray;
+    final long[] costs;
+    final char[] path;
+    final int[] splitPoints;
+    final int[] splitSize;
+    final net.sourceforge.plantuml.zopfli.SymbolStats stats;
+    final net.sourceforge.plantuml.zopfli.SymbolStats bestStats;
+    final net.sourceforge.plantuml.zopfli.SymbolStats lastStats;
+    final net.sourceforge.plantuml.zopfli.Hash h;
+    int lenVal;
+    int distVal;
+    int rnd;
+    final net.sourceforge.plantuml.zopfli.LzStore store1;
+    final net.sourceforge.plantuml.zopfli.LzStore store2;
+    final net.sourceforge.plantuml.zopfli.LongestMatchCache lmc;
+    final int masterBlockSize;
+    final int blockSplittingMax;
+
+    static void expand(java.lang.Object)
+    {
+        java.lang.Object r0;
+        int i0;
+
+        r0 := @parameter0: java.lang.Object;
+
+        i0 = 64;
+
+     label1:
+        if i0 >= 65536 goto label2;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r0, 0, r0, i0, i0);
+
+        i0 = i0 + i0;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    final net.sourceforge.plantuml.zopfli.Cookie$Node node(int, int, net.sourceforge.plantuml.zopfli.Cookie$Node)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int $i0, $i1, i2, i3;
+        net.sourceforge.plantuml.zopfli.Cookie$Node[] $r1;
+        net.sourceforge.plantuml.zopfli.Cookie$Node r2, r3;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.Cookie;
+
+        i2 := @parameter0: int;
+
+        i3 := @parameter1: int;
+
+        r3 := @parameter2: net.sourceforge.plantuml.zopfli.Cookie$Node;
+
+        $r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Cookie$Node[] nodes>;
+
+        $i0 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int nextNode>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int nextNode> = $i1;
+
+        r2 = $r1[$i0];
+
+        r2.<net.sourceforge.plantuml.zopfli.Cookie$Node: int weight> = i2;
+
+        r2.<net.sourceforge.plantuml.zopfli.Cookie$Node: int count> = i3;
+
+        r2.<net.sourceforge.plantuml.zopfli.Cookie$Node: net.sourceforge.plantuml.zopfli.Cookie$Node tail> = r3;
+
+        return r2;
+    }
+
+    final void resetPool()
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int nextNode> = 0;
+
+        return;
+    }
+
+    static void fill0(int[], int)
+    {
+        int i0, $i1, i2, i3;
+        int[] r0, $r1;
+
+        r0 := @parameter0: int[];
+
+        i0 := @parameter1: int;
+
+        i2 = 0;
+
+     label1:
+        if i2 >= i0 goto label3;
+
+        i3 = i2 + 65536;
+
+        if i3 <= i0 goto label2;
+
+        i3 = i0;
+
+     label2:
+        $r1 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        $i1 = i3 - i2;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r1, 0, r0, i2, $i1);
+
+        i2 = i3;
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    static void fill0(char[], int)
+    {
+        int i0, $i1, i2, i3;
+        char[] r0, $r1;
+
+        r0 := @parameter0: char[];
+
+        i0 := @parameter1: int;
+
+        i2 = 0;
+
+     label1:
+        if i2 >= i0 goto label3;
+
+        i3 = i2 + 65536;
+
+        if i3 <= i0 goto label2;
+
+        i3 = i0;
+
+     label2:
+        $r1 = <net.sourceforge.plantuml.zopfli.Cookie: char[] charZeroes>;
+
+        $i1 = i3 - i2;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r1, 0, r0, i2, $i1);
+
+        i2 = i3;
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    static void fillCostMax(long[], int)
+    {
+        int i0, $i1, i2, i3;
+        long[] r0, $r1;
+
+        r0 := @parameter0: long[];
+
+        i0 := @parameter1: int;
+
+        i2 = 0;
+
+     label1:
+        if i2 >= i0 goto label3;
+
+        i3 = i2 + 65536;
+
+        if i3 <= i0 goto label2;
+
+        i3 = i0;
+
+     label2:
+        $r1 = <net.sourceforge.plantuml.zopfli.Cookie: long[] costMax>;
+
+        $i1 = i3 - i2;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r1, 0, r0, i2, $i1);
+
+        i2 = i3;
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    void <init>(int)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        net.sourceforge.plantuml.zopfli.Cookie$Node[] $r1, $r2, $r3, $r4, $r5, $r37;
+        int[] $r6, $r7, $r8, $r9, $r10, $r11, $r12, $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r22, $r23, $r28, $r29;
+        char[] $r13, $r30, $r32;
+        net.sourceforge.plantuml.zopfli.SymbolStats $r24, $r25, $r26;
+        net.sourceforge.plantuml.zopfli.Hash $r27;
+        int i0, $i1, $i2, $i3, i4;
+        long[] $r31;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache $r33;
+        net.sourceforge.plantuml.zopfli.LzStore $r34, $r35;
+        net.sourceforge.plantuml.zopfli.Cookie$Node $r36;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.Cookie;
+
+        i0 := @parameter0: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int blockSplittingMax> = 15;
+
+        $r1 = newarray (net.sourceforge.plantuml.zopfli.Cookie$Node)[15];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Cookie$Node[] list0> = $r1;
+
+        $r2 = newarray (net.sourceforge.plantuml.zopfli.Cookie$Node)[15];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Cookie$Node[] list1> = $r2;
+
+        $r3 = newarray (net.sourceforge.plantuml.zopfli.Cookie$Node)[288];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Cookie$Node[] leaves1> = $r3;
+
+        $r4 = newarray (net.sourceforge.plantuml.zopfli.Cookie$Node)[288];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Cookie$Node[] leaves2> = $r4;
+
+        $r5 = newarray (net.sourceforge.plantuml.zopfli.Cookie$Node)[10240];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Cookie$Node[] nodes> = $r5;
+
+        $r6 = newarray (int)[320];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i320a> = $r6;
+
+        $r7 = newarray (int)[320];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i320b> = $r7;
+
+        $r8 = newarray (int)[320];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i320c> = $r8;
+
+        $r9 = newarray (int)[288];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288a> = $r9;
+
+        $r10 = newarray (int)[288];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288b> = $r10;
+
+        $r11 = newarray (int)[288];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288c> = $r11;
+
+        $r12 = newarray (int)[289];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i289a> = $r12;
+
+        $r13 = newarray (char)[259];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] c259a> = $r13;
+
+        $r14 = newarray (int)[32];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32a> = $r14;
+
+        $r15 = newarray (int)[32];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32b> = $r15;
+
+        $r16 = newarray (int)[32];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32c> = $r16;
+
+        $r17 = newarray (int)[19];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i19a> = $r17;
+
+        $r18 = newarray (int)[19];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i19b> = $r18;
+
+        $r19 = newarray (int)[19];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i19c> = $r19;
+
+        $r20 = newarray (int)[16];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i16a> = $r20;
+
+        $r21 = newarray (int)[16];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i16b> = $r21;
+
+        $r22 = newarray (int)[9];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] p> = $r22;
+
+        $r23 = newarray (int)[9];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] vp> = $r23;
+
+        $r24 = new net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        specialinvoke $r24.<net.sourceforge.plantuml.zopfli.SymbolStats: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.SymbolStats stats> = $r24;
+
+        $r25 = new net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        specialinvoke $r25.<net.sourceforge.plantuml.zopfli.SymbolStats: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.SymbolStats bestStats> = $r25;
+
+        $r26 = new net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        specialinvoke $r26.<net.sourceforge.plantuml.zopfli.SymbolStats: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.SymbolStats lastStats> = $r26;
+
+        $r27 = new net.sourceforge.plantuml.zopfli.Hash;
+
+        specialinvoke $r27.<net.sourceforge.plantuml.zopfli.Hash: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Hash h> = $r27;
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int rnd> = 42;
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int blockSplittingMax> = 15;
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int masterBlockSize> = i0;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= 10240 goto label2;
+
+        $r37 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Cookie$Node[] nodes>;
+
+        $r36 = new net.sourceforge.plantuml.zopfli.Cookie$Node;
+
+        specialinvoke $r36.<net.sourceforge.plantuml.zopfli.Cookie$Node: void <init>()>();
+
+        $r37[i4] = $r36;
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        $r28 = newarray (int)[16];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] splitPoints> = $r28;
+
+        $r29 = newarray (int)[16];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] splitSize> = $r29;
+
+        $i1 = i0 + 1;
+
+        $r30 = newarray (char)[$i1];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] lengthArray> = $r30;
+
+        $i2 = i0 + 1;
+
+        $r31 = newarray (long)[$i2];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: long[] costs> = $r31;
+
+        $i3 = i0 + 1;
+
+        $r32 = newarray (char)[$i3];
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] path> = $r32;
+
+        $r33 = new net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        specialinvoke $r33.<net.sourceforge.plantuml.zopfli.LongestMatchCache: void <init>(int)>(i0);
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.LongestMatchCache lmc> = $r33;
+
+        $r34 = new net.sourceforge.plantuml.zopfli.LzStore;
+
+        specialinvoke $r34.<net.sourceforge.plantuml.zopfli.LzStore: void <init>(int)>(i0);
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.LzStore store1> = $r34;
+
+        $r35 = new net.sourceforge.plantuml.zopfli.LzStore;
+
+        specialinvoke $r35.<net.sourceforge.plantuml.zopfli.LzStore: void <init>(int)>(i0);
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.LzStore store2> = $r35;
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        int[] $r0, $r3, $r6, $r9;
+        char[] $r1, $r4, $r7, $r10;
+        byte[] $r2;
+        long[] $r5, $r8, $r11;
+        int i0;
+
+        <net.sourceforge.plantuml.zopfli.Cookie: int POOL_MAX> = 10240;
+
+        <net.sourceforge.plantuml.zopfli.Cookie: int SPLIT_PARTITIONS> = 9;
+
+        $r0 = newarray (int)[65536];
+
+        <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes> = $r0;
+
+        $r1 = newarray (char)[65536];
+
+        <net.sourceforge.plantuml.zopfli.Cookie: char[] charZeroes> = $r1;
+
+        $r2 = newarray (byte)[65536];
+
+        <net.sourceforge.plantuml.zopfli.Cookie: byte[] byteZeroes> = $r2;
+
+        $r3 = newarray (int)[65536];
+
+        <net.sourceforge.plantuml.zopfli.Cookie: int[] intMOnes> = $r3;
+
+        $r4 = newarray (char)[65536];
+
+        <net.sourceforge.plantuml.zopfli.Cookie: char[] charOnes> = $r4;
+
+        $r5 = newarray (long)[65536];
+
+        <net.sourceforge.plantuml.zopfli.Cookie: long[] costMax> = $r5;
+
+        i0 = 0;
+
+     label1:
+        if i0 >= 64 goto label2;
+
+        $r9 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intMOnes>;
+
+        $r9[i0] = -1;
+
+        $r10 = <net.sourceforge.plantuml.zopfli.Cookie: char[] charOnes>;
+
+        $r10[i0] = 1;
+
+        $r11 = <net.sourceforge.plantuml.zopfli.Cookie: long[] costMax>;
+
+        $r11[i0] = 9223372036854775807L;
+
+        i0 = i0 + 1;
+
+        goto label1;
+
+     label2:
+        $r6 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intMOnes>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Cookie: void expand(java.lang.Object)>($r6);
+
+        $r7 = <net.sourceforge.plantuml.zopfli.Cookie: char[] charOnes>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Cookie: void expand(java.lang.Object)>($r7);
+
+        $r8 = <net.sourceforge.plantuml.zopfli.Cookie: long[] costMax>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Cookie: void expand(java.lang.Object)>($r8);
+
+        return;
+    }
+}

@@ -1,0 +1,2860 @@
+class net.sourceforge.plantuml.zopfli.Deflate extends java.lang.Object
+{
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.zopfli.Deflate r0;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.Deflate;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static void getFixedTree(int[], int[])
+    {
+        int[] r0, r1;
+        int i0, i1, i2, i3, i4;
+
+        r1 := @parameter0: int[];
+
+        r0 := @parameter1: int[];
+
+        i0 = 0;
+
+     label01:
+        if i0 >= 144 goto label02;
+
+        r1[i0] = 8;
+
+        i0 = i0 + 1;
+
+        goto label01;
+
+     label02:
+        i1 = 144;
+
+     label03:
+        if i1 >= 256 goto label04;
+
+        r1[i1] = 9;
+
+        i1 = i1 + 1;
+
+        goto label03;
+
+     label04:
+        i2 = 256;
+
+     label05:
+        if i2 >= 280 goto label06;
+
+        r1[i2] = 7;
+
+        i2 = i2 + 1;
+
+        goto label05;
+
+     label06:
+        i3 = 280;
+
+     label07:
+        if i3 >= 288 goto label08;
+
+        r1[i3] = 8;
+
+        i3 = i3 + 1;
+
+        goto label07;
+
+     label08:
+        i4 = 0;
+
+     label09:
+        if i4 >= 32 goto label10;
+
+        r0[i4] = 5;
+
+        i4 = i4 + 1;
+
+        goto label09;
+
+     label10:
+        return;
+    }
+
+    public static void greedy(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.LongestMatchCache, byte[], int, int, net.sourceforge.plantuml.zopfli.LzStore)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        net.sourceforge.plantuml.zopfli.Hash r1;
+        byte[] r2;
+        int i0, $i1, $i2, i3, i4, i5, $i8, $i12, $i15, $i17, i19, i20, i21, i22, $i23, $i24, i25, i26;
+        char[] r3;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r4;
+        net.sourceforge.plantuml.zopfli.LzStore r5;
+        byte $b7, $b16;
+        char $c9, $c10, $c11, $c13, $c14, $c18;
+        boolean z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r4 := @parameter1: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        r2 := @parameter2: byte[];
+
+        i0 := @parameter3: int;
+
+        i3 := @parameter4: int;
+
+        r5 := @parameter5: net.sourceforge.plantuml.zopfli.LzStore;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Hash h>;
+
+        $i1 = i0 - 32768;
+
+        $i2 = staticinvoke <java.lang.Math: int max(int,int)>($i1, 0);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void init(byte[],int,int,int)>(r2, $i2, i0, i3);
+
+        i19 = 0;
+
+        i20 = 0;
+
+        r3 = r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] c259a>;
+
+        z0 = 0;
+
+        i21 = i0;
+
+     label01:
+        if i21 >= i3 goto label15;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r2, i21, i3);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void findLongestMatch(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,int,net.sourceforge.plantuml.zopfli.Hash,byte[],int,int,int,char[])>(r0, r4, i0, r1, r2, i21, i3, 258, r3);
+
+        i22 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal>;
+
+        i4 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int distVal>;
+
+        if i4 <= 1024 goto label02;
+
+        $i23 = i22 - 1;
+
+        goto label03;
+
+     label02:
+        $i23 = i22;
+
+     label03:
+        i5 = $i23;
+
+        if i20 <= 1024 goto label04;
+
+        $i24 = i19 - 1;
+
+        goto label05;
+
+     label04:
+        $i24 = i19;
+
+     label05:
+        if z0 == 0 goto label09;
+
+        z0 = 0;
+
+        $i12 = $i24 + 1;
+
+        if i5 <= $i12 goto label06;
+
+        $i15 = i21 - 1;
+
+        $b16 = r2[$i15];
+
+        $i17 = $b16 & 255;
+
+        $c18 = (char) $i17;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.LzStore: void append(char,char)>($c18, 0);
+
+        if i5 < 3 goto label10;
+
+        if i22 >= 258 goto label10;
+
+        z0 = 1;
+
+        i19 = i22;
+
+        i20 = i4;
+
+        goto label14;
+
+     label06:
+        $c14 = (char) i19;
+
+        $c13 = (char) i20;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.LzStore: void append(char,char)>($c14, $c13);
+
+        i25 = 2;
+
+     label07:
+        if i25 >= i19 goto label08;
+
+        i21 = i21 + 1;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r2, i21, i3);
+
+        i25 = i25 + 1;
+
+        goto label07;
+
+     label08:
+        goto label14;
+
+     label09:
+        if i5 < 3 goto label10;
+
+        if i22 >= 258 goto label10;
+
+        z0 = 1;
+
+        i19 = i22;
+
+        i20 = i4;
+
+        goto label14;
+
+     label10:
+        if i5 < 3 goto label11;
+
+        $c11 = (char) i22;
+
+        $c10 = (char) i4;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.LzStore: void append(char,char)>($c11, $c10);
+
+        goto label12;
+
+     label11:
+        i22 = 1;
+
+        $b7 = r2[i21];
+
+        $i8 = $b7 & 255;
+
+        $c9 = (char) $i8;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.LzStore: void append(char,char)>($c9, 0);
+
+     label12:
+        i26 = 1;
+
+     label13:
+        if i26 >= i22 goto label14;
+
+        i21 = i21 + 1;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r2, i21, i3);
+
+        i26 = i26 + 1;
+
+        goto label13;
+
+     label14:
+        i21 = i21 + 1;
+
+        goto label01;
+
+     label15:
+        return;
+    }
+
+    static void findLongestMatch(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.LongestMatchCache, int, net.sourceforge.plantuml.zopfli.Hash, byte[], int, int, int, char[])
+    {
+        int i0, i1, i2, i3, $i4, i5, $i6, i7, i8, $i13, $i14, $i17, $i18, $i19, i20, $i26, $i29, $i31, $i32, $i35, $i37, i39, $i40, i41, i42, i43, i44, i45, i46, $i47, i48, i49, i50, i51, $i52, i53, i54, i55, i56, i57, $i58;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r0;
+        char[] r1, r8, $r9, $r10, $r11, $r15, $r16, $r17;
+        net.sourceforge.plantuml.zopfli.Hash r2;
+        int[] r3, $r4, $r5, r6, $r13, $r14, r18;
+        net.sourceforge.plantuml.zopfli.Cookie r7;
+        char $c9, $c10, $c11, $c12, $c21, $c27, $c28, $c30, $c33, $c34, $c36, $c38;
+        byte[] r12;
+        byte $b15, $b16, $b22, $b23, $b24, $b25;
+
+        r7 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r0 := @parameter1: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        i1 := @parameter2: int;
+
+        r2 := @parameter3: net.sourceforge.plantuml.zopfli.Hash;
+
+        r12 := @parameter4: byte[];
+
+        i0 := @parameter5: int;
+
+        i3 := @parameter6: int;
+
+        i39 := @parameter7: int;
+
+        r8 := @parameter8: char[];
+
+        i2 = i0 - i1;
+
+        if r0 == null goto label01;
+
+        $r17 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] length>;
+
+        goto label02;
+
+     label01:
+        $r17 = null;
+
+     label02:
+        r1 = $r17;
+
+        if r0 == null goto label10;
+
+        $c27 = $r17[i2];
+
+        if $c27 == 0 goto label03;
+
+        $r16 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] dist>;
+
+        $c38 = $r16[i2];
+
+        if $c38 == 0 goto label10;
+
+     label03:
+        if i39 == 258 goto label04;
+
+        $c36 = r1[i2];
+
+        if $c36 <= i39 goto label04;
+
+        if r8 == null goto label10;
+
+        $i37 = virtualinvoke r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: int maxCachedSubLen(int)>(i2);
+
+        if $i37 < i39 goto label10;
+
+     label04:
+        if r8 == null goto label05;
+
+        $c34 = r1[i2];
+
+        $i35 = virtualinvoke r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: int maxCachedSubLen(int)>(i2);
+
+        if $c34 > $i35 goto label09;
+
+     label05:
+        $c28 = r1[i2];
+
+        r7.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal> = $c28;
+
+        $i29 = r7.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal>;
+
+        if $i29 <= i39 goto label06;
+
+        r7.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal> = i39;
+
+     label06:
+        if r8 == null goto label07;
+
+        $i31 = r7.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: void cacheToSubLen(int,int,char[])>(i2, $i31, r8);
+
+        $i32 = r7.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal>;
+
+        $c33 = r8[$i32];
+
+        r7.<net.sourceforge.plantuml.zopfli.Cookie: int distVal> = $c33;
+
+        goto label08;
+
+     label07:
+        $r15 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] dist>;
+
+        $c30 = $r15[i2];
+
+        r7.<net.sourceforge.plantuml.zopfli.Cookie: int distVal> = $c30;
+
+     label08:
+        return;
+
+     label09:
+        i39 = r1[i2];
+
+     label10:
+        $i40 = i3 - i0;
+
+        if $i40 >= 3 goto label11;
+
+        r7.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal> = 0;
+
+        r7.<net.sourceforge.plantuml.zopfli.Cookie: int distVal> = 0;
+
+        return;
+
+     label11:
+        $i4 = i0 + i39;
+
+        if $i4 <= i3 goto label12;
+
+        i39 = i3 - i0;
+
+     label12:
+        i41 = 0;
+
+        i42 = 1;
+
+        i5 = i0 + i39;
+
+        i43 = 8192;
+
+        r18 = r2.<net.sourceforge.plantuml.zopfli.Hash: int[] prev>;
+
+        r3 = r2.<net.sourceforge.plantuml.zopfli.Hash: int[] prev2>;
+
+        $r4 = r2.<net.sourceforge.plantuml.zopfli.Hash: int[] head>;
+
+        $i6 = r2.<net.sourceforge.plantuml.zopfli.Hash: int val>;
+
+        i44 = $r4[$i6];
+
+        $r5 = r2.<net.sourceforge.plantuml.zopfli.Hash: int[] same>;
+
+        i7 = $r5[i44];
+
+        r6 = r2.<net.sourceforge.plantuml.zopfli.Hash: int[] hashVal2>;
+
+        i8 = r6[i44];
+
+        i45 = r18[i44];
+
+        i46 = i44 - i45;
+
+        if i46 <= 0 goto label13;
+
+        $i47 = i46;
+
+        goto label14;
+
+     label13:
+        $i47 = i46 + 32768;
+
+     label14:
+        i48 = $i47;
+
+     label15:
+        if i48 >= 32768 goto label28;
+
+        if i43 <= 0 goto label28;
+
+        i49 = i0;
+
+        i50 = i0 - i48;
+
+        $i13 = i0 + i42;
+
+        $b16 = r12[$i13];
+
+        $i14 = i50 + i42;
+
+        $b15 = r12[$i14];
+
+        if $b16 != $b15 goto label23;
+
+        $r13 = r2.<net.sourceforge.plantuml.zopfli.Hash: int[] same>;
+
+        $i19 = i0 & 32767;
+
+        i20 = $r13[$i19];
+
+        if i20 <= 2 goto label19;
+
+        $b25 = r12[i0];
+
+        $b24 = r12[i50];
+
+        if $b25 != $b24 goto label19;
+
+        $r14 = r2.<net.sourceforge.plantuml.zopfli.Hash: int[] same>;
+
+        $i26 = i50 & 32767;
+
+        i51 = $r14[$i26];
+
+        if i20 >= i51 goto label16;
+
+        $i52 = i20;
+
+        goto label17;
+
+     label16:
+        $i52 = i51;
+
+     label17:
+        i53 = $i52;
+
+        if $i52 <= i39 goto label18;
+
+        i53 = i39;
+
+     label18:
+        i49 = i0 + i53;
+
+        i50 = i50 + i53;
+
+     label19:
+        if i49 == i5 goto label20;
+
+        $b23 = r12[i49];
+
+        $b22 = r12[i50];
+
+        if $b23 != $b22 goto label20;
+
+        i49 = i49 + 1;
+
+        i50 = i50 + 1;
+
+        goto label19;
+
+     label20:
+        i54 = i49 - i0;
+
+        if i54 <= i42 goto label23;
+
+        if r8 == null goto label22;
+
+        i55 = i42 + 1;
+
+     label21:
+        if i55 > i54 goto label22;
+
+        $c21 = (char) i48;
+
+        r8[i55] = $c21;
+
+        i55 = i55 + 1;
+
+        goto label21;
+
+     label22:
+        i41 = i48;
+
+        i42 = i54;
+
+        if i54 < i39 goto label23;
+
+        goto label28;
+
+     label23:
+        if r18 == r3 goto label24;
+
+        if i42 < i7 goto label24;
+
+        $i18 = r6[i45];
+
+        if i8 != $i18 goto label24;
+
+        r18 = r3;
+
+     label24:
+        i56 = i45;
+
+        i45 = r18[i45];
+
+        if i45 != i56 goto label25;
+
+        goto label28;
+
+     label25:
+        i57 = i56 - i45;
+
+        $i17 = i48;
+
+        if i57 <= 0 goto label26;
+
+        $i58 = i57;
+
+        goto label27;
+
+     label26:
+        $i58 = 32768 + i57;
+
+     label27:
+        i48 = $i17 + $i58;
+
+        i43 = i43 + -1;
+
+        goto label15;
+
+     label28:
+        if r0 == null goto label31;
+
+        if i39 != 258 goto label31;
+
+        if r8 == null goto label31;
+
+        $c9 = r1[i2];
+
+        if $c9 == 0 goto label31;
+
+        $r9 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] dist>;
+
+        $c10 = $r9[i2];
+
+        if $c10 != 0 goto label31;
+
+        if i42 >= 3 goto label29;
+
+        $r11 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] dist>;
+
+        $r11[i2] = 0;
+
+        r1[i2] = 0;
+
+        goto label30;
+
+     label29:
+        $r10 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] dist>;
+
+        $c11 = (char) i41;
+
+        $r10[i2] = $c11;
+
+        $c12 = (char) i42;
+
+        r1[i2] = $c12;
+
+     label30:
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: void subLenToCache(char[],int,int)>(r8, i2, i42);
+
+     label31:
+        r7.<net.sourceforge.plantuml.zopfli.Cookie: int distVal> = i41;
+
+        r7.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal> = i42;
+
+        return;
+    }
+
+    private static void deflatePart(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.Options, byte[], int, int, boolean, net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        net.sourceforge.plantuml.zopfli.Options r0;
+        net.sourceforge.plantuml.zopfli.Options$BlockSplitting $r1;
+        int[] $r2;
+        int $i0, $i1, i2, i3;
+        net.sourceforge.plantuml.zopfli.Cookie r3;
+        boolean z0;
+        byte[] r4;
+        net.sourceforge.plantuml.zopfli.Buffer r5;
+
+        r3 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r0 := @parameter1: net.sourceforge.plantuml.zopfli.Options;
+
+        r4 := @parameter2: byte[];
+
+        i2 := @parameter3: int;
+
+        i3 := @parameter4: int;
+
+        z0 := @parameter5: boolean;
+
+        r5 := @parameter6: net.sourceforge.plantuml.zopfli.Buffer;
+
+        $r2 = <net.sourceforge.plantuml.zopfli.Deflate$1: int[] $SwitchMap$net$sourceforge$plantuml$zopfli$Options$BlockSplitting>;
+
+        $r1 = r0.<net.sourceforge.plantuml.zopfli.Options: net.sourceforge.plantuml.zopfli.Options$BlockSplitting blockSplitting>;
+
+        $i0 = virtualinvoke $r1.<net.sourceforge.plantuml.zopfli.Options$BlockSplitting: int ordinal()>();
+
+        $i1 = $r2[$i0];
+
+        tableswitch($i1)
+        {
+            case 1: goto label1;
+            case 2: goto label2;
+            case 3: goto label3;
+            default: goto label4;
+        };
+
+     label1:
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void deflateSplittingFirst(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Options,boolean,byte[],int,int,net.sourceforge.plantuml.zopfli.Buffer)>(r3, r0, z0, r4, i2, i3, r5);
+
+        goto label4;
+
+     label2:
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void deflateSplittingLast(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Options,boolean,byte[],int,int,net.sourceforge.plantuml.zopfli.Buffer)>(r3, r0, z0, r4, i2, i3, r5);
+
+        goto label4;
+
+     label3:
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void deflateDynamicBlock(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Options,boolean,byte[],int,int,net.sourceforge.plantuml.zopfli.Buffer)>(r3, r0, z0, r4, i2, i3, r5);
+
+     label4:
+        return;
+    }
+
+    private static void deflateDynamicBlock(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.Options, boolean, byte[], int, int, net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r1;
+        int i0, i1, $i2, $i3, $i4, $i5, i6, $i7, i8, $i9;
+        net.sourceforge.plantuml.zopfli.Options r2;
+        byte[] r3;
+        boolean z0;
+        net.sourceforge.plantuml.zopfli.Buffer r4;
+        net.sourceforge.plantuml.zopfli.LzStore r5, r14;
+        long[] $r6;
+        char[] $r7, $r8, $r9, $r10, $r11, $r12, $r15, $r16;
+        net.sourceforge.plantuml.zopfli.Deflate$BlockType r13;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r2 := @parameter1: net.sourceforge.plantuml.zopfli.Options;
+
+        z0 := @parameter2: boolean;
+
+        r3 := @parameter3: byte[];
+
+        i1 := @parameter4: int;
+
+        i0 := @parameter5: int;
+
+        r4 := @parameter6: net.sourceforge.plantuml.zopfli.Buffer;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.LongestMatchCache lmc>;
+
+        $i2 = i0 - i1;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.LongestMatchCache: void init(int)>($i2);
+
+        r13 = <net.sourceforge.plantuml.zopfli.Deflate$BlockType: net.sourceforge.plantuml.zopfli.Deflate$BlockType DYNAMIC>;
+
+        $i3 = r2.<net.sourceforge.plantuml.zopfli.Options: int numIterations>;
+
+        r14 = staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: net.sourceforge.plantuml.zopfli.LzStore optimal(net.sourceforge.plantuml.zopfli.Cookie,int,net.sourceforge.plantuml.zopfli.LongestMatchCache,byte[],int,int)>(r0, $i3, r1, r3, i1, i0);
+
+        $i4 = r14.<net.sourceforge.plantuml.zopfli.LzStore: int size>;
+
+        if $i4 >= 1000 goto label1;
+
+        r5 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.LzStore store1>;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.LzStore: void reset()>();
+
+        $r7 = r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] lengthArray>;
+
+        $r6 = r0.<net.sourceforge.plantuml.zopfli.Cookie: long[] costs>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: void bestFixedLengths(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,byte[],int,int,char[],long[])>(r0, r1, r3, i1, i0, $r7, $r6);
+
+        $r8 = r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] lengthArray>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: void optimalRun(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,byte[],int,int,char[],net.sourceforge.plantuml.zopfli.LzStore)>(r0, r1, r3, i1, i0, $r8, r5);
+
+        $r10 = r14.<net.sourceforge.plantuml.zopfli.LzStore: char[] litLens>;
+
+        $r9 = r14.<net.sourceforge.plantuml.zopfli.LzStore: char[] dists>;
+
+        $i5 = r14.<net.sourceforge.plantuml.zopfli.LzStore: int size>;
+
+        i6 = staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: int calculateBlockSize(net.sourceforge.plantuml.zopfli.Cookie,char[],char[],int,int)>(r0, $r10, $r9, 0, $i5);
+
+        $r12 = r5.<net.sourceforge.plantuml.zopfli.LzStore: char[] litLens>;
+
+        $r11 = r5.<net.sourceforge.plantuml.zopfli.LzStore: char[] dists>;
+
+        $i7 = r5.<net.sourceforge.plantuml.zopfli.LzStore: int size>;
+
+        i8 = staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: int calculateFixedBlockSize(net.sourceforge.plantuml.zopfli.Cookie,char[],char[],int)>(r0, $r12, $r11, $i7);
+
+        if i8 >= i6 goto label1;
+
+        r13 = <net.sourceforge.plantuml.zopfli.Deflate$BlockType: net.sourceforge.plantuml.zopfli.Deflate$BlockType FIXED>;
+
+        r14 = r5;
+
+     label1:
+        $r15 = r14.<net.sourceforge.plantuml.zopfli.LzStore: char[] litLens>;
+
+        $r16 = r14.<net.sourceforge.plantuml.zopfli.LzStore: char[] dists>;
+
+        $i9 = r14.<net.sourceforge.plantuml.zopfli.LzStore: int size>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void addLzBlock(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Deflate$BlockType,boolean,char[],char[],int,int,net.sourceforge.plantuml.zopfli.Buffer)>(r0, r13, z0, $r15, $r16, 0, $i9, r4);
+
+        return;
+    }
+
+    private static void deflateSplittingLast(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.Options, boolean, byte[], int, int, net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r1;
+        int i0, i1, $i2, $i3, $i4, i5, $i6, i7, i8, i9;
+        net.sourceforge.plantuml.zopfli.Options r2;
+        byte[] r3;
+        net.sourceforge.plantuml.zopfli.LzStore r4;
+        char[] $r5, $r6, $r11, $r12;
+        int[] r7;
+        net.sourceforge.plantuml.zopfli.Buffer r8;
+        boolean z0, $z1;
+        net.sourceforge.plantuml.zopfli.Deflate$BlockType $r10;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r2 := @parameter1: net.sourceforge.plantuml.zopfli.Options;
+
+        z0 := @parameter2: boolean;
+
+        r3 := @parameter3: byte[];
+
+        i1 := @parameter4: int;
+
+        i0 := @parameter5: int;
+
+        r8 := @parameter6: net.sourceforge.plantuml.zopfli.Buffer;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.LongestMatchCache lmc>;
+
+        $i2 = i0 - i1;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.LongestMatchCache: void init(int)>($i2);
+
+        $i3 = r2.<net.sourceforge.plantuml.zopfli.Options: int numIterations>;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: net.sourceforge.plantuml.zopfli.LzStore optimal(net.sourceforge.plantuml.zopfli.Cookie,int,net.sourceforge.plantuml.zopfli.LongestMatchCache,byte[],int,int)>(r0, $i3, r1, r3, i1, i0);
+
+        $r6 = r4.<net.sourceforge.plantuml.zopfli.LzStore: char[] litLens>;
+
+        $r5 = r4.<net.sourceforge.plantuml.zopfli.LzStore: char[] dists>;
+
+        $i4 = r4.<net.sourceforge.plantuml.zopfli.LzStore: int size>;
+
+        i5 = staticinvoke <net.sourceforge.plantuml.zopfli.BlockSplitter: int splitLz(net.sourceforge.plantuml.zopfli.Cookie,char[],char[],int)>(r0, $r6, $r5, $i4);
+
+        r7 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] splitPoints>;
+
+        i9 = 1;
+
+     label1:
+        if i9 > i5 goto label4;
+
+        $i6 = i9 - 1;
+
+        i7 = r7[$i6];
+
+        i8 = r7[i9];
+
+        $r10 = <net.sourceforge.plantuml.zopfli.Deflate$BlockType: net.sourceforge.plantuml.zopfli.Deflate$BlockType DYNAMIC>;
+
+        if i9 != i5 goto label2;
+
+        if z0 == 0 goto label2;
+
+        $z1 = 1;
+
+        goto label3;
+
+     label2:
+        $z1 = 0;
+
+     label3:
+        $r11 = r4.<net.sourceforge.plantuml.zopfli.LzStore: char[] litLens>;
+
+        $r12 = r4.<net.sourceforge.plantuml.zopfli.LzStore: char[] dists>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void addLzBlock(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Deflate$BlockType,boolean,char[],char[],int,int,net.sourceforge.plantuml.zopfli.Buffer)>(r0, $r10, $z1, $r11, $r12, i7, i8, r8);
+
+        i9 = i9 + 1;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    private static void deflateSplittingFirst(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.Options, boolean, byte[], int, int, net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        byte[] r1;
+        int i0, i1, i2, i3, $i4, $i5, $i6;
+        int[] r2;
+        net.sourceforge.plantuml.zopfli.Options r3;
+        net.sourceforge.plantuml.zopfli.Buffer r4;
+        boolean z0, $z1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r3 := @parameter1: net.sourceforge.plantuml.zopfli.Options;
+
+        z0 := @parameter2: boolean;
+
+        r1 := @parameter3: byte[];
+
+        i0 := @parameter4: int;
+
+        i1 := @parameter5: int;
+
+        r4 := @parameter6: net.sourceforge.plantuml.zopfli.Buffer;
+
+        i2 = staticinvoke <net.sourceforge.plantuml.zopfli.BlockSplitter: int split(net.sourceforge.plantuml.zopfli.Cookie,byte[],int,int)>(r0, r1, i0, i1);
+
+        r2 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] splitPoints>;
+
+        i3 = 1;
+
+     label1:
+        if i3 > i2 goto label4;
+
+        if i3 != i2 goto label2;
+
+        if z0 == 0 goto label2;
+
+        $z1 = 1;
+
+        goto label3;
+
+     label2:
+        $z1 = 0;
+
+     label3:
+        $i4 = i3 - 1;
+
+        $i5 = r2[$i4];
+
+        $i6 = r2[i3];
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void deflateDynamicBlock(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Options,boolean,byte[],int,int,net.sourceforge.plantuml.zopfli.Buffer)>(r0, r3, $z1, r1, $i5, $i6, r4);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    static int calculateBlockSize(net.sourceforge.plantuml.zopfli.Cookie, char[], char[], int, int)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int[] r1, $r2, r3, $r4, r5, $r6, r7, $r8, r9, r10, r11, r14, r15;
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, i20, i21, i24, i25, i26;
+        char[] r12, r13;
+        char c22, c23;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r13 := @parameter1: char[];
+
+        r12 := @parameter2: char[];
+
+        i0 := @parameter3: int;
+
+        i1 := @parameter4: int;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288a>;
+
+        $r2 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r2, 0, r1, 0, 288);
+
+        r3 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32a>;
+
+        $r4 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r4, 0, r3, 0, 32);
+
+        i20 = 3;
+
+        r5 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288b>;
+
+        $r6 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r6, 0, r5, 0, 288);
+
+        r7 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32b>;
+
+        $r8 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r8, 0, r7, 0, 32);
+
+        r9 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_SYMBOL>;
+
+        r10 = <net.sourceforge.plantuml.zopfli.Util: int[] CACHED_DIST_SYMBOL>;
+
+        r11 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_EXTRA_BITS>;
+
+        i21 = i0;
+
+     label1:
+        if i21 >= i1 goto label4;
+
+        c22 = r12[i21];
+
+        c23 = r13[i21];
+
+        if c22 != 0 goto label2;
+
+        $i18 = r5[c23];
+
+        $i19 = $i18 + 1;
+
+        r5[c23] = $i19;
+
+        goto label3;
+
+     label2:
+        $i9 = r9[c23];
+
+        $i10 = r5[$i9];
+
+        $i11 = $i10 + 1;
+
+        r5[$i9] = $i11;
+
+        i12 = r10[c22];
+
+        $i13 = r7[i12];
+
+        $i14 = $i13 + 1;
+
+        r7[i12] = $i14;
+
+        $i15 = r11[c23];
+
+        i20 = i20 + $i15;
+
+        if i12 <= 3 goto label3;
+
+        $i16 = i12 / 2;
+
+        $i17 = $i16 - 1;
+
+        i20 = i20 + $i17;
+
+     label3:
+        i21 = i21 + 1;
+
+        goto label1;
+
+     label4:
+        r5[256] = 1;
+
+        r14 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288c>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r5, 0, r14, 0, 288);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void optimizeHuffmanForRle(net.sourceforge.plantuml.zopfli.Cookie,int[])>(r0, r14);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Katajainen: void lengthLimitedCodeLengths(net.sourceforge.plantuml.zopfli.Cookie,int[],int,int[])>(r0, r14, 15, r1);
+
+        r15 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32c>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r7, 0, r15, 0, 32);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void optimizeHuffmanForRle(net.sourceforge.plantuml.zopfli.Cookie,int[])>(r0, r15);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Katajainen: void lengthLimitedCodeLengths(net.sourceforge.plantuml.zopfli.Cookie,int[],int,int[])>(r0, r15, 15, r3);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void patchDistanceCodesForBuggyDecoders(int[])>(r3);
+
+        $i2 = staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: int simulateAddDynamicTree(net.sourceforge.plantuml.zopfli.Cookie,int[],int[])>(r0, r1, r3);
+
+        i24 = i20 + $i2;
+
+        i25 = 0;
+
+     label5:
+        if i25 >= 288 goto label6;
+
+        $i7 = r5[i25];
+
+        $i6 = r1[i25];
+
+        $i8 = $i7 * $i6;
+
+        i24 = i24 + $i8;
+
+        i25 = i25 + 1;
+
+        goto label5;
+
+     label6:
+        i26 = 0;
+
+     label7:
+        if i26 >= 32 goto label8;
+
+        $i4 = r7[i26];
+
+        $i3 = r3[i26];
+
+        $i5 = $i4 * $i3;
+
+        i24 = i24 + $i5;
+
+        i26 = i26 + 1;
+
+        goto label7;
+
+     label8:
+        return i24;
+    }
+
+    private static int calculateFixedBlockSize(net.sourceforge.plantuml.zopfli.Cookie, char[], char[], int)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int[] r1, r2, r3, r4, r5;
+        int i0, $i1, $i4, $i5, $i6, $i7, i8, i9, i10, i11, i12, $i14, i15;
+        char[] r6, r7;
+        char c2, c3;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r7 := @parameter1: char[];
+
+        r6 := @parameter2: char[];
+
+        i0 := @parameter3: int;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288a>;
+
+        r2 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32a>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void getFixedTree(int[],int[])>(r1, r2);
+
+        i8 = 3;
+
+        r3 = <net.sourceforge.plantuml.zopfli.Util: int[] CACHED_DIST_EXTRA_BITS>;
+
+        r4 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_EXTRA_BITS>;
+
+        r5 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_SYMBOL>;
+
+        i9 = 0;
+
+     label1:
+        if i9 >= i0 goto label8;
+
+        c2 = r6[i9];
+
+        c3 = r7[i9];
+
+        if c2 != 0 goto label2;
+
+        $i7 = r1[c3];
+
+        i8 = i8 + $i7;
+
+        goto label7;
+
+     label2:
+        $i4 = r5[c3];
+
+        $i5 = r1[$i4];
+
+        i10 = i8 + $i5;
+
+        $i6 = r4[c3];
+
+        i11 = i10 + $i6;
+
+        i12 = i11 + 5;
+
+        if c2 >= 4097 goto label3;
+
+        $i14 = r3[c2];
+
+        goto label6;
+
+     label3:
+        if c2 >= 16385 goto label5;
+
+        if c2 >= 8193 goto label4;
+
+        $i14 = 11;
+
+        goto label6;
+
+     label4:
+        $i14 = 12;
+
+        goto label6;
+
+     label5:
+        $i14 = 13;
+
+     label6:
+        i8 = i12 + $i14;
+
+     label7:
+        i9 = i9 + 1;
+
+        goto label1;
+
+     label8:
+        $i1 = r1[256];
+
+        i15 = i8 + $i1;
+
+        return i15;
+    }
+
+    private static void lzCounts(char[], char[], int, int, int[], int[])
+    {
+        int[] r0, r1, r2, r5;
+        int i0, i1, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, i12;
+        char[] r3, r4;
+        char c2, c3;
+
+        r4 := @parameter0: char[];
+
+        r3 := @parameter1: char[];
+
+        i0 := @parameter2: int;
+
+        i1 := @parameter3: int;
+
+        r2 := @parameter4: int[];
+
+        r5 := @parameter5: int[];
+
+        r0 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_SYMBOL>;
+
+        r1 = <net.sourceforge.plantuml.zopfli.Util: int[] CACHED_DIST_SYMBOL>;
+
+        i12 = i0;
+
+     label1:
+        if i12 >= i1 goto label4;
+
+        c2 = r3[i12];
+
+        c3 = r4[i12];
+
+        if c2 != 0 goto label2;
+
+        $i10 = r2[c3];
+
+        $i11 = $i10 + 1;
+
+        r2[c3] = $i11;
+
+        goto label3;
+
+     label2:
+        $i4 = r0[c3];
+
+        $i5 = r2[$i4];
+
+        $i6 = $i5 + 1;
+
+        r2[$i4] = $i6;
+
+        $i7 = r1[c2];
+
+        $i8 = r5[$i7];
+
+        $i9 = $i8 + 1;
+
+        r5[$i7] = $i9;
+
+     label3:
+        i12 = i12 + 1;
+
+        goto label1;
+
+     label4:
+        r2[256] = 1;
+
+        return;
+    }
+
+    static void compress(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.Options, byte[], net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        byte[] r0;
+        int $i0, $i1, $i2, $i3, i4, $i5, $i6, i8;
+        net.sourceforge.plantuml.zopfli.Cookie r1;
+        net.sourceforge.plantuml.zopfli.Options r2;
+        net.sourceforge.plantuml.zopfli.Buffer r3;
+        boolean $z0;
+
+        r1 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r2 := @parameter1: net.sourceforge.plantuml.zopfli.Options;
+
+        r0 := @parameter2: byte[];
+
+        r3 := @parameter3: net.sourceforge.plantuml.zopfli.Buffer;
+
+        i8 = 0;
+
+     label1:
+        $i0 = lengthof r0;
+
+        if i8 >= $i0 goto label4;
+
+        $i1 = r1.<net.sourceforge.plantuml.zopfli.Cookie: int masterBlockSize>;
+
+        $i3 = i8 + $i1;
+
+        $i2 = lengthof r0;
+
+        i4 = staticinvoke <java.lang.Math: int min(int,int)>($i3, $i2);
+
+        $i6 = i8;
+
+        $i5 = lengthof r0;
+
+        if i4 != $i5 goto label2;
+
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void deflatePart(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Options,byte[],int,int,boolean,net.sourceforge.plantuml.zopfli.Buffer)>(r1, r2, r0, $i6, i4, $z0, r3);
+
+        i8 = i4;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    private static void patchDistanceCodesForBuggyDecoders(int[])
+    {
+        int[] r0;
+        int $i0, $i1, i2, i3;
+        byte $b4;
+
+        r0 := @parameter0: int[];
+
+        i2 = 0;
+
+        i3 = 0;
+
+     label1:
+        if i3 >= 30 goto label3;
+
+        $i1 = r0[i3];
+
+        if $i1 == 0 goto label2;
+
+        i2 = i2 + 1;
+
+        if i2 != 2 goto label2;
+
+        return;
+
+     label2:
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label3:
+        if i2 != 0 goto label4;
+
+        r0[0] = 1;
+
+        r0[1] = 1;
+
+        goto label7;
+
+     label4:
+        if i2 != 1 goto label7;
+
+        $i0 = r0[0];
+
+        if $i0 == 0 goto label5;
+
+        $b4 = 1;
+
+        goto label6;
+
+     label5:
+        $b4 = 0;
+
+     label6:
+        r0[$b4] = 1;
+
+     label7:
+        return;
+    }
+
+    private static void addDynamicTree(net.sourceforge.plantuml.zopfli.Cookie, int[], int[], net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int[] r1, r2;
+        int $i0, $i1, $i2, $i3, i4, i5, i6, i7, $i8, $i9;
+        net.sourceforge.plantuml.zopfli.Buffer r3;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r1 := @parameter1: int[];
+
+        r2 := @parameter2: int[];
+
+        r3 := @parameter3: net.sourceforge.plantuml.zopfli.Buffer;
+
+        i5 = 0;
+
+        i6 = 2147483647;
+
+        i7 = 0;
+
+     label01:
+        if i7 >= 8 goto label09;
+
+        $i2 = i7 & 1;
+
+        if $i2 == 0 goto label02;
+
+        $z0 = 1;
+
+        goto label03;
+
+     label02:
+        $z0 = 0;
+
+     label03:
+        $i3 = i7 & 2;
+
+        if $i3 == 0 goto label04;
+
+        $z1 = 1;
+
+        goto label05;
+
+     label04:
+        $z1 = 0;
+
+     label05:
+        $i8 = i7 & 4;
+
+        if $i8 == 0 goto label06;
+
+        $z2 = 1;
+
+        goto label07;
+
+     label06:
+        $z2 = 0;
+
+     label07:
+        i4 = staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: int simulateEncodeTree(net.sourceforge.plantuml.zopfli.Cookie,int[],int[],boolean,boolean,boolean)>(r0, r1, r2, $z0, $z1, $z2);
+
+        if i4 >= i6 goto label08;
+
+        i6 = i4;
+
+        i5 = i7;
+
+     label08:
+        i7 = i7 + 1;
+
+        goto label01;
+
+     label09:
+        $i0 = i5 & 1;
+
+        if $i0 == 0 goto label10;
+
+        $z3 = 1;
+
+        goto label11;
+
+     label10:
+        $z3 = 0;
+
+     label11:
+        $i1 = i5 & 2;
+
+        if $i1 == 0 goto label12;
+
+        $z4 = 1;
+
+        goto label13;
+
+     label12:
+        $z4 = 0;
+
+     label13:
+        $i9 = i5 & 4;
+
+        if $i9 == 0 goto label14;
+
+        $z5 = 1;
+
+        goto label15;
+
+     label14:
+        $z5 = 0;
+
+     label15:
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void encodeTree(net.sourceforge.plantuml.zopfli.Cookie,int[],int[],boolean,boolean,boolean,net.sourceforge.plantuml.zopfli.Buffer)>(r0, r1, r2, $z3, $z4, $z5, r3);
+
+        return;
+    }
+
+    private static void encodeTree(net.sourceforge.plantuml.zopfli.Cookie, int[], int[], boolean, boolean, boolean, net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        int $i0, i1, $i2, $i3, $i4, $i5, i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, i35, i36, i37, i38, i39, i40, i41, $i42, i43, $i44, $i46, $i48, i50, i51, i52, $i53, i54;
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int[] r1, r2, r3, r4, r5, $r6, $r7, $r8, $r9, r11, r12, r13, r14;
+        net.sourceforge.plantuml.zopfli.Buffer r10;
+        boolean z0, z1, z2;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r2 := @parameter1: int[];
+
+        r3 := @parameter2: int[];
+
+        z0 := @parameter3: boolean;
+
+        z2 := @parameter4: boolean;
+
+        z1 := @parameter5: boolean;
+
+        r10 := @parameter6: net.sourceforge.plantuml.zopfli.Buffer;
+
+        i35 = 29;
+
+        i36 = 29;
+
+     label01:
+        if i35 <= 0 goto label02;
+
+        $i33 = 256 + i35;
+
+        $i34 = r2[$i33];
+
+        if $i34 != 0 goto label02;
+
+        i35 = i35 + -1;
+
+        goto label01;
+
+     label02:
+        if i36 <= 0 goto label03;
+
+        $i32 = r3[i36];
+
+        if $i32 != 0 goto label03;
+
+        i36 = i36 + -1;
+
+        goto label02;
+
+     label03:
+        $i0 = i35 + 258;
+
+        i1 = $i0 + i36;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i320b>;
+
+        $i2 = 257 + i35;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r2, 0, r1, 0, $i2);
+
+        $i4 = 257 + i35;
+
+        $i3 = i36 + 1;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r3, 0, r1, $i4, $i3);
+
+        i37 = 0;
+
+        r4 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i320a>;
+
+        r5 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i320c>;
+
+        i38 = 0;
+
+     label04:
+        if i38 >= i1 goto label21;
+
+        i39 = 1;
+
+        i40 = r1[i38];
+
+        if z0 != 0 goto label05;
+
+        if i40 != 0 goto label07;
+
+        if z2 != 0 goto label05;
+
+        if z1 == 0 goto label07;
+
+     label05:
+        i41 = i38 + 1;
+
+     label06:
+        if i41 >= i1 goto label07;
+
+        $i31 = r1[i41];
+
+        if i40 != $i31 goto label07;
+
+        i39 = i39 + 1;
+
+        i41 = i41 + 1;
+
+        goto label06;
+
+     label07:
+        $i42 = i39 - 1;
+
+        i43 = i38 + $i42;
+
+        if i40 != 0 goto label15;
+
+        if i39 <= 2 goto label15;
+
+        if z1 == 0 goto label11;
+
+     label08:
+        if i39 <= 10 goto label11;
+
+        if i39 <= 138 goto label09;
+
+        $i44 = 138;
+
+        goto label10;
+
+     label09:
+        $i44 = i39;
+
+     label10:
+        r4[i37] = 18;
+
+        $i29 = i37;
+
+        i37 = i37 + 1;
+
+        $i30 = $i44 - 11;
+
+        r5[$i29] = $i30;
+
+        i39 = i39 - $i44;
+
+        goto label08;
+
+     label11:
+        if z2 == 0 goto label15;
+
+     label12:
+        if i39 <= 2 goto label15;
+
+        if i39 <= 10 goto label13;
+
+        $i46 = 10;
+
+        goto label14;
+
+     label13:
+        $i46 = i39;
+
+     label14:
+        r4[i37] = 17;
+
+        $i27 = i37;
+
+        i37 = i37 + 1;
+
+        $i28 = $i46 - 3;
+
+        r5[$i27] = $i28;
+
+        i39 = i39 - $i46;
+
+        goto label12;
+
+     label15:
+        if z0 == 0 goto label19;
+
+        if i39 <= 3 goto label19;
+
+        i39 = i39 + -1;
+
+        r4[i37] = i40;
+
+        $i24 = i37;
+
+        i37 = i37 + 1;
+
+        r5[$i24] = 0;
+
+     label16:
+        if i39 <= 2 goto label19;
+
+        if i39 <= 6 goto label17;
+
+        $i48 = 6;
+
+        goto label18;
+
+     label17:
+        $i48 = i39;
+
+     label18:
+        r4[i37] = 16;
+
+        $i25 = i37;
+
+        i37 = i37 + 1;
+
+        $i26 = $i48 - 3;
+
+        r5[$i25] = $i26;
+
+        i39 = i39 - $i48;
+
+        goto label16;
+
+     label19:
+        if i39 == 0 goto label20;
+
+        r4[i37] = i40;
+
+        $i23 = i37;
+
+        i37 = i37 + 1;
+
+        r5[$i23] = 0;
+
+        i39 = i39 + -1;
+
+        goto label19;
+
+     label20:
+        i38 = i43 + 1;
+
+        goto label04;
+
+     label21:
+        r11 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i19a>;
+
+        $r6 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r6, 0, r11, 0, 19);
+
+        i50 = 0;
+
+     label22:
+        if i50 >= i37 goto label23;
+
+        $i20 = r4[i50];
+
+        $i21 = r11[$i20];
+
+        $i22 = $i21 + 1;
+
+        r11[$i20] = $i22;
+
+        i50 = i50 + 1;
+
+        goto label22;
+
+     label23:
+        r12 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i19b>;
+
+        $r7 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r7, 0, r12, 0, 19);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Katajainen: void lengthLimitedCodeLengths(net.sourceforge.plantuml.zopfli.Cookie,int[],int,int[])>(r0, r11, 7, r12);
+
+        r13 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i19c>;
+
+        $r9 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i16a>;
+
+        $r8 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i16b>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void lengthsToSymbols(int[],int,int,int[],int[],int[])>(r12, 19, 7, r13, $r9, $r8);
+
+        r14 = <net.sourceforge.plantuml.zopfli.Util: int[] ORDER>;
+
+        i51 = 15;
+
+     label24:
+        if i51 <= 0 goto label25;
+
+        $i17 = i51 + 3;
+
+        $i18 = r14[$i17];
+
+        $i19 = r11[$i18];
+
+        if $i19 != 0 goto label25;
+
+        i51 = i51 + -1;
+
+        goto label24;
+
+     label25:
+        virtualinvoke r10.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>(i35, 5);
+
+        virtualinvoke r10.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>(i36, 5);
+
+        virtualinvoke r10.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>(i51, 4);
+
+        i52 = 0;
+
+     label26:
+        $i53 = i51 + 4;
+
+        if i52 >= $i53 goto label27;
+
+        $i15 = r14[i52];
+
+        $i16 = r12[$i15];
+
+        virtualinvoke r10.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>($i16, 3);
+
+        i52 = i52 + 1;
+
+        goto label26;
+
+     label27:
+        i54 = 0;
+
+     label28:
+        if i54 >= i37 goto label32;
+
+        $i5 = r4[i54];
+
+        i6 = r13[$i5];
+
+        $i7 = r4[i54];
+
+        $i8 = r12[$i7];
+
+        virtualinvoke r10.<net.sourceforge.plantuml.zopfli.Buffer: void addHuffmanBits(int,int)>(i6, $i8);
+
+        $i9 = r4[i54];
+
+        if $i9 != 16 goto label29;
+
+        $i14 = r5[i54];
+
+        virtualinvoke r10.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>($i14, 2);
+
+        goto label31;
+
+     label29:
+        $i10 = r4[i54];
+
+        if $i10 != 17 goto label30;
+
+        $i13 = r5[i54];
+
+        virtualinvoke r10.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>($i13, 3);
+
+        goto label31;
+
+     label30:
+        $i11 = r4[i54];
+
+        if $i11 != 18 goto label31;
+
+        $i12 = r5[i54];
+
+        virtualinvoke r10.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>($i12, 7);
+
+     label31:
+        i54 = i54 + 1;
+
+        goto label28;
+
+     label32:
+        return;
+    }
+
+    private static int simulateAddDynamicTree(net.sourceforge.plantuml.zopfli.Cookie, int[], int[])
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int[] r1, r2;
+        int $i0, $i1, i2, i3, i4, $i5;
+        boolean $z0, $z1, $z2;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r1 := @parameter1: int[];
+
+        r2 := @parameter2: int[];
+
+        i3 = 2147483647;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= 8 goto label9;
+
+        $i0 = i4 & 1;
+
+        if $i0 == 0 goto label2;
+
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        $i1 = i4 & 2;
+
+        if $i1 == 0 goto label4;
+
+        $z1 = 1;
+
+        goto label5;
+
+     label4:
+        $z1 = 0;
+
+     label5:
+        $i5 = i4 & 4;
+
+        if $i5 == 0 goto label6;
+
+        $z2 = 1;
+
+        goto label7;
+
+     label6:
+        $z2 = 0;
+
+     label7:
+        i2 = staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: int simulateEncodeTree(net.sourceforge.plantuml.zopfli.Cookie,int[],int[],boolean,boolean,boolean)>(r0, r1, r2, $z0, $z1, $z2);
+
+        if i2 >= i3 goto label8;
+
+        i3 = i2;
+
+     label8:
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label9:
+        return i3;
+    }
+
+    private static int simulateEncodeTree(net.sourceforge.plantuml.zopfli.Cookie, int[], int[], boolean, boolean, boolean)
+    {
+        int $i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, i34, i35, i36, i37, i38, i39, i40, $i41, i42, $i43, $i44, $i45, i46, i47, i48, i49;
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int[] r1, r2, r3, r4, $r5, $r6, r7, r8, r9;
+        boolean z0, z1, z2;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r2 := @parameter1: int[];
+
+        r3 := @parameter2: int[];
+
+        z0 := @parameter3: boolean;
+
+        z2 := @parameter4: boolean;
+
+        z1 := @parameter5: boolean;
+
+        i34 = 29;
+
+        i35 = 29;
+
+     label01:
+        if i34 <= 0 goto label02;
+
+        $i32 = 256 + i34;
+
+        $i33 = r2[$i32];
+
+        if $i33 != 0 goto label02;
+
+        i34 = i34 + -1;
+
+        goto label01;
+
+     label02:
+        if i35 <= 0 goto label03;
+
+        $i31 = r3[i35];
+
+        if $i31 != 0 goto label03;
+
+        i35 = i35 + -1;
+
+        goto label02;
+
+     label03:
+        $i0 = i34 + 258;
+
+        i1 = $i0 + i35;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i320b>;
+
+        $i2 = 257 + i34;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r2, 0, r1, 0, $i2);
+
+        $i4 = 257 + i34;
+
+        $i3 = i35 + 1;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r3, 0, r1, $i4, $i3);
+
+        r4 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i320a>;
+
+        i36 = 0;
+
+        i37 = 0;
+
+     label04:
+        if i37 >= i1 goto label21;
+
+        i38 = 1;
+
+        i39 = r1[i37];
+
+        if z0 != 0 goto label05;
+
+        if i39 != 0 goto label07;
+
+        if z2 != 0 goto label05;
+
+        if z1 == 0 goto label07;
+
+     label05:
+        i40 = i37 + 1;
+
+     label06:
+        if i40 >= i1 goto label07;
+
+        $i30 = r1[i40];
+
+        if i39 != $i30 goto label07;
+
+        i38 = i38 + 1;
+
+        i40 = i40 + 1;
+
+        goto label06;
+
+     label07:
+        $i41 = i38 - 1;
+
+        i42 = i37 + $i41;
+
+        if i39 != 0 goto label15;
+
+        if i38 <= 2 goto label15;
+
+        if z1 == 0 goto label11;
+
+     label08:
+        if i38 <= 10 goto label11;
+
+        $i28 = i36;
+
+        i36 = i36 + 1;
+
+        r4[$i28] = 18;
+
+        $i29 = i38;
+
+        if i38 <= 138 goto label09;
+
+        $i43 = 138;
+
+        goto label10;
+
+     label09:
+        $i43 = i38;
+
+     label10:
+        i38 = $i29 - $i43;
+
+        goto label08;
+
+     label11:
+        if z2 == 0 goto label15;
+
+     label12:
+        if i38 <= 2 goto label15;
+
+        $i26 = i36;
+
+        i36 = i36 + 1;
+
+        r4[$i26] = 17;
+
+        $i27 = i38;
+
+        if i38 <= 10 goto label13;
+
+        $i44 = 10;
+
+        goto label14;
+
+     label13:
+        $i44 = i38;
+
+     label14:
+        i38 = $i27 - $i44;
+
+        goto label12;
+
+     label15:
+        if z0 == 0 goto label19;
+
+        if i38 <= 3 goto label19;
+
+        i38 = i38 + -1;
+
+        $i23 = i36;
+
+        i36 = i36 + 1;
+
+        r4[$i23] = i39;
+
+     label16:
+        if i38 <= 2 goto label19;
+
+        $i24 = i36;
+
+        i36 = i36 + 1;
+
+        r4[$i24] = 16;
+
+        $i25 = i38;
+
+        if i38 <= 6 goto label17;
+
+        $i45 = 6;
+
+        goto label18;
+
+     label17:
+        $i45 = i38;
+
+     label18:
+        i38 = $i25 - $i45;
+
+        goto label16;
+
+     label19:
+        if i38 == 0 goto label20;
+
+        $i22 = i36;
+
+        i36 = i36 + 1;
+
+        r4[$i22] = i39;
+
+        i38 = i38 + -1;
+
+        goto label19;
+
+     label20:
+        i37 = i42 + 1;
+
+        goto label04;
+
+     label21:
+        r7 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i19a>;
+
+        $r5 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r5, 0, r7, 0, 19);
+
+        i46 = 0;
+
+     label22:
+        if i46 >= i36 goto label23;
+
+        $i19 = r4[i46];
+
+        $i20 = r7[$i19];
+
+        $i21 = $i20 + 1;
+
+        r7[$i19] = $i21;
+
+        i46 = i46 + 1;
+
+        goto label22;
+
+     label23:
+        r8 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i19b>;
+
+        $r6 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r6, 0, r8, 0, 19);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Katajainen: void lengthLimitedCodeLengths(net.sourceforge.plantuml.zopfli.Cookie,int[],int,int[])>(r0, r7, 7, r8);
+
+        $i5 = r8[16];
+
+        $i6 = $i5 + 2;
+
+        r8[16] = $i6;
+
+        $i7 = r8[17];
+
+        $i8 = $i7 + 3;
+
+        r8[17] = $i8;
+
+        $i9 = r8[18];
+
+        $i10 = $i9 + 7;
+
+        r8[18] = $i10;
+
+        r9 = <net.sourceforge.plantuml.zopfli.Util: int[] ORDER>;
+
+        i47 = 15;
+
+     label24:
+        if i47 <= 0 goto label25;
+
+        $i16 = i47 + 3;
+
+        $i17 = r9[$i16];
+
+        $i18 = r7[$i17];
+
+        if $i18 != 0 goto label25;
+
+        i47 = i47 + -1;
+
+        goto label24;
+
+     label25:
+        $i11 = i47 + 4;
+
+        $i12 = $i11 * 3;
+
+        i48 = 14 + $i12;
+
+        i49 = 0;
+
+     label26:
+        if i49 >= 19 goto label27;
+
+        $i14 = r8[i49];
+
+        $i13 = r7[i49];
+
+        $i15 = $i14 * $i13;
+
+        i48 = i48 + $i15;
+
+        i49 = i49 + 1;
+
+        goto label26;
+
+     label27:
+        return i48;
+    }
+
+    private static void addLzBlock(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.Deflate$BlockType, boolean, char[], char[], int, int, net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int[] r1, $r2, r3, $r4, r5, $r6, r7, $r8, r15, $r16, $r17, $r18, r19, $r20, $r21, $r22;
+        net.sourceforge.plantuml.zopfli.Buffer r9;
+        boolean z0;
+        net.sourceforge.plantuml.zopfli.Deflate$BlockType r10, $r11, $r12;
+        char[] r13, r14;
+        int i0, i1, $i2, $i3;
+        byte $b4;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r10 := @parameter1: net.sourceforge.plantuml.zopfli.Deflate$BlockType;
+
+        z0 := @parameter2: boolean;
+
+        r13 := @parameter3: char[];
+
+        r14 := @parameter4: char[];
+
+        i0 := @parameter5: int;
+
+        i1 := @parameter6: int;
+
+        r9 := @parameter7: net.sourceforge.plantuml.zopfli.Buffer;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288a>;
+
+        $r2 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r2, 0, r1, 0, 288);
+
+        r3 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32a>;
+
+        $r4 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r4, 0, r3, 0, 32);
+
+        r5 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288b>;
+
+        $r6 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r6, 0, r5, 0, 288);
+
+        r7 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32b>;
+
+        $r8 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r8, 0, r7, 0, 32);
+
+        if z0 == 0 goto label1;
+
+        $b4 = 1;
+
+        goto label2;
+
+     label1:
+        $b4 = 0;
+
+     label2:
+        virtualinvoke r9.<net.sourceforge.plantuml.zopfli.Buffer: void addHuffmanBits(int,int)>($b4, 1);
+
+        $r11 = <net.sourceforge.plantuml.zopfli.Deflate$BlockType: net.sourceforge.plantuml.zopfli.Deflate$BlockType FIXED>;
+
+        if r10 != $r11 goto label3;
+
+        virtualinvoke r9.<net.sourceforge.plantuml.zopfli.Buffer: void addHuffmanBits(int,int)>(2, 2);
+
+        goto label4;
+
+     label3:
+        virtualinvoke r9.<net.sourceforge.plantuml.zopfli.Buffer: void addHuffmanBits(int,int)>(1, 2);
+
+     label4:
+        $r12 = <net.sourceforge.plantuml.zopfli.Deflate$BlockType: net.sourceforge.plantuml.zopfli.Deflate$BlockType FIXED>;
+
+        if r10 != $r12 goto label5;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void getFixedTree(int[],int[])>(r1, r3);
+
+        goto label6;
+
+     label5:
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void lzCounts(char[],char[],int,int,int[],int[])>(r13, r14, i0, i1, r5, r7);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void optimizeHuffmanForRle(net.sourceforge.plantuml.zopfli.Cookie,int[])>(r0, r5);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Katajainen: void lengthLimitedCodeLengths(net.sourceforge.plantuml.zopfli.Cookie,int[],int,int[])>(r0, r5, 15, r1);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void optimizeHuffmanForRle(net.sourceforge.plantuml.zopfli.Cookie,int[])>(r0, r7);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Katajainen: void lengthLimitedCodeLengths(net.sourceforge.plantuml.zopfli.Cookie,int[],int,int[])>(r0, r7, 15, r3);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void patchDistanceCodesForBuggyDecoders(int[])>(r3);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void addDynamicTree(net.sourceforge.plantuml.zopfli.Cookie,int[],int[],net.sourceforge.plantuml.zopfli.Buffer)>(r0, r1, r3, r9);
+
+     label6:
+        r15 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i288c>;
+
+        $r16 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r16, 0, r15, 0, 288);
+
+        $r18 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i16a>;
+
+        $r17 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i16b>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void lengthsToSymbols(int[],int,int,int[],int[],int[])>(r1, 288, 15, r15, $r18, $r17);
+
+        r19 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i32b>;
+
+        $r20 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r20, 0, r19, 0, 32);
+
+        $r22 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i16a>;
+
+        $r21 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i16b>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void lengthsToSymbols(int[],int,int,int[],int[],int[])>(r3, 32, 15, r19, $r22, $r21);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void addLzData(char[],char[],int,int,int[],int[],int[],int[],net.sourceforge.plantuml.zopfli.Buffer)>(r13, r14, i0, i1, r15, r1, r19, r3, r9);
+
+        $i3 = r15[256];
+
+        $i2 = r1[256];
+
+        virtualinvoke r9.<net.sourceforge.plantuml.zopfli.Buffer: void addHuffmanBits(int,int)>($i3, $i2);
+
+        return;
+    }
+
+    private static void addLzData(char[], char[], int, int, int[], int[], int[], int[], net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        int[] r0, r1, r2, r3, r4, r8, r9, r10, r11;
+        int i0, i1, i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, i14, $i15, $i16;
+        char[] r5, r6;
+        char c2, c3;
+        net.sourceforge.plantuml.zopfli.Buffer r7;
+
+        r6 := @parameter0: char[];
+
+        r5 := @parameter1: char[];
+
+        i0 := @parameter2: int;
+
+        i1 := @parameter3: int;
+
+        r8 := @parameter4: int[];
+
+        r9 := @parameter5: int[];
+
+        r10 := @parameter6: int[];
+
+        r11 := @parameter7: int[];
+
+        r7 := @parameter8: net.sourceforge.plantuml.zopfli.Buffer;
+
+        r0 = <net.sourceforge.plantuml.zopfli.Util: int[] CACHED_DIST_EXTRA_BITS>;
+
+        r1 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_EXTRA_BITS>;
+
+        r2 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_EXTRA_BITS_VALUE>;
+
+        r3 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_SYMBOL>;
+
+        r4 = <net.sourceforge.plantuml.zopfli.Util: int[] CACHED_DIST_SYMBOL>;
+
+        i14 = i0;
+
+     label1:
+        if i14 >= i1 goto label8;
+
+        c2 = r5[i14];
+
+        c3 = r6[i14];
+
+        if c2 != 0 goto label2;
+
+        $i13 = r8[c3];
+
+        $i12 = r9[c3];
+
+        virtualinvoke r7.<net.sourceforge.plantuml.zopfli.Buffer: void addHuffmanBits(int,int)>($i13, $i12);
+
+        goto label7;
+
+     label2:
+        i4 = r3[c3];
+
+        i5 = r4[c2];
+
+        $i7 = r8[i4];
+
+        $i6 = r9[i4];
+
+        virtualinvoke r7.<net.sourceforge.plantuml.zopfli.Buffer: void addHuffmanBits(int,int)>($i7, $i6);
+
+        $i9 = r2[c3];
+
+        $i8 = r1[c3];
+
+        virtualinvoke r7.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>($i9, $i8);
+
+        $i11 = r10[i5];
+
+        $i10 = r11[i5];
+
+        virtualinvoke r7.<net.sourceforge.plantuml.zopfli.Buffer: void addHuffmanBits(int,int)>($i11, $i10);
+
+        $i15 = staticinvoke <net.sourceforge.plantuml.zopfli.Util: int distExtraBitsValue(int)>(c2);
+
+        if c2 >= 4097 goto label3;
+
+        $i16 = r0[c2];
+
+        goto label6;
+
+     label3:
+        if c2 >= 16385 goto label5;
+
+        if c2 >= 8193 goto label4;
+
+        $i16 = 11;
+
+        goto label6;
+
+     label4:
+        $i16 = 12;
+
+        goto label6;
+
+     label5:
+        $i16 = 13;
+
+     label6:
+        virtualinvoke r7.<net.sourceforge.plantuml.zopfli.Buffer: void addBits(int,int)>($i15, $i16);
+
+     label7:
+        i14 = i14 + 1;
+
+        goto label1;
+
+     label8:
+        return;
+    }
+
+    private static void lengthsToSymbols(int[], int, int, int[], int[], int[])
+    {
+        int[] r0, $r1, r2, $r3, r4, r5;
+        int i0, $i1, $i2, i3, i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, i14, i15, i16, i17;
+
+        r4 := @parameter0: int[];
+
+        i3 := @parameter1: int;
+
+        i0 := @parameter2: int;
+
+        r5 := @parameter3: int[];
+
+        r0 := @parameter4: int[];
+
+        r2 := @parameter5: int[];
+
+        $r1 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        $i1 = i0 + 1;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r1, 0, r0, 0, $i1);
+
+        $r3 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        $i2 = i0 + 1;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r3, 0, r2, 0, $i2);
+
+        i14 = 0;
+
+     label1:
+        if i14 >= i3 goto label2;
+
+        $i11 = r4[i14];
+
+        $i12 = r0[$i11];
+
+        $i13 = $i12 + 1;
+
+        r0[$i11] = $i13;
+
+        i14 = i14 + 1;
+
+        goto label1;
+
+     label2:
+        i15 = 0;
+
+        r0[0] = 0;
+
+        i16 = 1;
+
+     label3:
+        if i16 > i0 goto label4;
+
+        $i8 = i16 - 1;
+
+        $i9 = r0[$i8];
+
+        $i10 = i15 + $i9;
+
+        i15 = $i10 << 1;
+
+        r2[i16] = i15;
+
+        i16 = i16 + 1;
+
+        goto label3;
+
+     label4:
+        i17 = 0;
+
+     label5:
+        if i17 >= i3 goto label7;
+
+        i4 = r4[i17];
+
+        if i4 == 0 goto label6;
+
+        $i5 = r2[i4];
+
+        r5[i17] = $i5;
+
+        $i6 = r2[i4];
+
+        $i7 = $i6 + 1;
+
+        r2[i4] = $i7;
+
+     label6:
+        i17 = i17 + 1;
+
+        goto label5;
+
+     label7:
+        return;
+    }
+
+    private static void optimizeHuffmanForRle(net.sourceforge.plantuml.zopfli.Cookie, int[])
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        int[] r1, r2, $r3;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, i28, i29, i30, i31, $i32, i33, i34, i35, i36, i37, i38, i39, $i40;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r2 := @parameter1: int[];
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int[] i289a>;
+
+        i28 = lengthof r2;
+
+     label01:
+        if i28 < 0 goto label04;
+
+        if i28 != 0 goto label02;
+
+        return;
+
+     label02:
+        $i26 = i28 - 1;
+
+        $i27 = r2[$i26];
+
+        if $i27 == 0 goto label03;
+
+        goto label04;
+
+     label03:
+        i28 = i28 + -1;
+
+        goto label01;
+
+     label04:
+        $r3 = <net.sourceforge.plantuml.zopfli.Cookie: int[] intZeroes>;
+
+        $i0 = i28 + 1;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r3, 0, r1, 0, $i0);
+
+        i29 = r2[0];
+
+        i30 = 0;
+
+        i31 = 0;
+
+     label05:
+        $i32 = i28 + 1;
+
+        if i31 >= $i32 goto label13;
+
+        if i31 == i28 goto label06;
+
+        $i25 = r2[i31];
+
+        if $i25 == i29 goto label11;
+
+     label06:
+        if i29 != 0 goto label07;
+
+        if i30 >= 5 goto label08;
+
+     label07:
+        if i29 == 0 goto label10;
+
+        if i30 < 7 goto label10;
+
+     label08:
+        i33 = 0;
+
+     label09:
+        if i33 >= i30 goto label10;
+
+        $i23 = i31 - i33;
+
+        $i24 = $i23 - 1;
+
+        r1[$i24] = 1;
+
+        i33 = i33 + 1;
+
+        goto label09;
+
+     label10:
+        i30 = 1;
+
+        if i31 == i28 goto label12;
+
+        i29 = r2[i31];
+
+        goto label12;
+
+     label11:
+        i30 = i30 + 1;
+
+     label12:
+        i31 = i31 + 1;
+
+        goto label05;
+
+     label13:
+        i34 = 0;
+
+        i35 = r2[0];
+
+        i36 = 0;
+
+        i37 = 0;
+
+     label14:
+        $i1 = i28 + 1;
+
+        if i37 >= $i1 goto label25;
+
+        if i37 == i28 goto label15;
+
+        $i18 = r1[i37];
+
+        if $i18 != 0 goto label15;
+
+        $i19 = r2[i37];
+
+        $i20 = $i19 - i35;
+
+        if $i20 >= 4 goto label15;
+
+        $i21 = r2[i37];
+
+        $i22 = i35 - $i21;
+
+        if $i22 < 4 goto label23;
+
+     label15:
+        if i34 >= 4 goto label16;
+
+        if i34 < 3 goto label20;
+
+        if i36 != 0 goto label20;
+
+     label16:
+        $i2 = i34 / 2;
+
+        $i3 = i36 + $i2;
+
+        i38 = $i3 / i34;
+
+        if i38 >= 1 goto label17;
+
+        i38 = 1;
+
+     label17:
+        if i36 != 0 goto label18;
+
+        i38 = 0;
+
+     label18:
+        i39 = 0;
+
+     label19:
+        if i39 >= i34 goto label20;
+
+        $i16 = i37 - i39;
+
+        $i17 = $i16 - 1;
+
+        r2[$i17] = i38;
+
+        i39 = i39 + 1;
+
+        goto label19;
+
+     label20:
+        i34 = 0;
+
+        i36 = 0;
+
+        $i40 = i28 - 3;
+
+        if i37 >= $i40 goto label21;
+
+        $i7 = r2[i37];
+
+        $i5 = i37 + 1;
+
+        $i6 = r2[$i5];
+
+        $i10 = $i7 + $i6;
+
+        $i8 = i37 + 2;
+
+        $i9 = r2[$i8];
+
+        $i13 = $i10 + $i9;
+
+        $i11 = i37 + 3;
+
+        $i12 = r2[$i11];
+
+        $i14 = $i13 + $i12;
+
+        $i15 = $i14 + 2;
+
+        i35 = $i15 / 4;
+
+        goto label23;
+
+     label21:
+        if i37 >= i28 goto label22;
+
+        i35 = r2[i37];
+
+        goto label23;
+
+     label22:
+        i35 = 0;
+
+     label23:
+        i34 = i34 + 1;
+
+        if i37 == i28 goto label24;
+
+        $i4 = r2[i37];
+
+        i36 = i36 + $i4;
+
+     label24:
+        i37 = i37 + 1;
+
+        goto label14;
+
+     label25:
+        return;
+    }
+}

@@ -1,0 +1,410 @@
+public class net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.tim.expression.TValue result;
+    private boolean trace;
+
+    public void <init>(net.sourceforge.plantuml.tim.expression.TokenStack, net.sourceforge.plantuml.tim.expression.Knowledge, net.sourceforge.plantuml.tim.TMemory, net.sourceforge.plantuml.tim.TContext) throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor r0;
+        net.sourceforge.plantuml.tim.expression.TokenStack r1;
+        net.sourceforge.plantuml.tim.expression.Knowledge r2;
+        net.sourceforge.plantuml.tim.TMemory r3;
+        net.sourceforge.plantuml.tim.TContext r4;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor;
+
+        r1 := @parameter0: net.sourceforge.plantuml.tim.expression.TokenStack;
+
+        r2 := @parameter1: net.sourceforge.plantuml.tim.expression.Knowledge;
+
+        r3 := @parameter2: net.sourceforge.plantuml.tim.TMemory;
+
+        r4 := @parameter3: net.sourceforge.plantuml.tim.TContext;
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: void <init>(net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.tim.expression.TokenStack,net.sourceforge.plantuml.tim.expression.Knowledge,net.sourceforge.plantuml.tim.TMemory,net.sourceforge.plantuml.tim.TContext)>(null, r1, r2, r3, r4);
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.tim.expression.TokenStack, net.sourceforge.plantuml.tim.expression.Knowledge, net.sourceforge.plantuml.tim.TMemory, net.sourceforge.plantuml.tim.TContext) throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor r0;
+        java.util.ArrayDeque $r1;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7;
+        net.sourceforge.plantuml.tim.expression.TokenStack r3;
+        net.sourceforge.plantuml.tim.expression.TokenIterator r4;
+        java.lang.Object $r5, $r42, $r68, $r69;
+        net.sourceforge.plantuml.tim.expression.TValue $r6, $r43, $r72, $r73, $r74, r85, r86, r88, r92;
+        net.sourceforge.plantuml.tim.expression.Token r7, r89;
+        net.sourceforge.plantuml.tim.expression.TokenType $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r20, $r21;
+        net.sourceforge.plantuml.tim.EaterException $r18, $r36, $r50, $r56, $r67, $r70;
+        java.lang.String $r19, $r24, $r35, $r41, $r47, $r49, $r53, $r55, $r61, $r66, $r79, $r84;
+        net.sourceforge.plantuml.tim.expression.Knowledge r22;
+        net.sourceforge.plantuml.tim.TFunctionSignature $r23, $r46;
+        java.util.Set $r25;
+        java.util.ArrayList $r26;
+        net.sourceforge.plantuml.LineLocation r27;
+        net.sourceforge.plantuml.tim.TContext r28;
+        net.sourceforge.plantuml.tim.TMemory r29;
+        java.util.Map $r30;
+        java.lang.StringBuilder $r31, $r33, $r34, $r37, $r39, $r40, $r44, $r45, $r48, $r51, $r52, $r54, $r57, $r59, $r60, $r62, $r64, $r65, $r75, $r77, $r78, $r80, $r82, $r83;
+        java.io.PrintStream $r32, $r38, $r58, $r63, $r76, $r81;
+        net.sourceforge.plantuml.json.JsonValue $r71;
+        net.sourceforge.plantuml.tim.expression.TokenOperator r87;
+        int i0, i1;
+        net.sourceforge.plantuml.tim.TFunction r90;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor;
+
+        r27 := @parameter0: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter1: net.sourceforge.plantuml.tim.expression.TokenStack;
+
+        r22 := @parameter2: net.sourceforge.plantuml.tim.expression.Knowledge;
+
+        r29 := @parameter3: net.sourceforge.plantuml.tim.TMemory;
+
+        r28 := @parameter4: net.sourceforge.plantuml.tim.TContext;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: boolean trace> = 0;
+
+        $r1 = new java.util.ArrayDeque;
+
+        specialinvoke $r1.<java.util.ArrayDeque: void <init>()>();
+
+        $z0 = r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: boolean trace>;
+
+        if $z0 == 0 goto label01;
+
+        $r81 = <java.lang.System: java.io.PrintStream err>;
+
+        $r80 = new java.lang.StringBuilder;
+
+        specialinvoke $r80.<java.lang.StringBuilder: void <init>()>();
+
+        $r82 = virtualinvoke $r80.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("ReversePolishInterpretor::queue=");
+
+        $r83 = virtualinvoke $r82.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r3);
+
+        $r84 = virtualinvoke $r83.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r81.<java.io.PrintStream: void println(java.lang.String)>($r84);
+
+     label01:
+        r4 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.TokenStack: net.sourceforge.plantuml.tim.expression.TokenIterator tokenIterator()>();
+
+     label02:
+        $z7 = interfaceinvoke r4.<net.sourceforge.plantuml.tim.expression.TokenIterator: boolean hasMoreTokens()>();
+
+        if $z7 == 0 goto label21;
+
+        r7 = interfaceinvoke r4.<net.sourceforge.plantuml.tim.expression.TokenIterator: net.sourceforge.plantuml.tim.expression.Token nextToken()>();
+
+        $z1 = r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: boolean trace>;
+
+        if $z1 == 0 goto label03;
+
+        $r76 = <java.lang.System: java.io.PrintStream err>;
+
+        $r75 = new java.lang.StringBuilder;
+
+        specialinvoke $r75.<java.lang.StringBuilder: void <init>()>();
+
+        $r77 = virtualinvoke $r75.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("rpn ");
+
+        $r78 = virtualinvoke $r77.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r7);
+
+        $r79 = virtualinvoke $r78.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r76.<java.io.PrintStream: void println(java.lang.String)>($r79);
+
+     label03:
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r9 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType NUMBER>;
+
+        if $r8 != $r9 goto label04;
+
+        $r74 = staticinvoke <net.sourceforge.plantuml.tim.expression.TValue: net.sourceforge.plantuml.tim.expression.TValue fromNumber(net.sourceforge.plantuml.tim.expression.Token)>(r7);
+
+        interfaceinvoke $r1.<java.util.Deque: void addFirst(java.lang.Object)>($r74);
+
+        goto label20;
+
+     label04:
+        $r10 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r11 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType QUOTED_STRING>;
+
+        if $r10 != $r11 goto label05;
+
+        $r73 = staticinvoke <net.sourceforge.plantuml.tim.expression.TValue: net.sourceforge.plantuml.tim.expression.TValue fromString(net.sourceforge.plantuml.tim.expression.Token)>(r7);
+
+        interfaceinvoke $r1.<java.util.Deque: void addFirst(java.lang.Object)>($r73);
+
+        goto label20;
+
+     label05:
+        $r12 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r13 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType JSON_DATA>;
+
+        if $r12 != $r13 goto label06;
+
+        $r71 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.json.JsonValue getJson()>();
+
+        $r72 = staticinvoke <net.sourceforge.plantuml.tim.expression.TValue: net.sourceforge.plantuml.tim.expression.TValue fromJson(net.sourceforge.plantuml.json.JsonValue)>($r71);
+
+        interfaceinvoke $r1.<java.util.Deque: void addFirst(java.lang.Object)>($r72);
+
+        goto label20;
+
+     label06:
+        $r14 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r15 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPERATOR>;
+
+        if $r14 != $r15 goto label08;
+
+        $r68 = interfaceinvoke $r1.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        r85 = (net.sourceforge.plantuml.tim.expression.TValue) $r68;
+
+        $r69 = interfaceinvoke $r1.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        r86 = (net.sourceforge.plantuml.tim.expression.TValue) $r69;
+
+        r87 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenOperator getTokenOperator()>();
+
+        if r87 != null goto label07;
+
+        $r70 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException unlocated(java.lang.String)>("bad op");
+
+        throw $r70;
+
+     label07:
+        r88 = virtualinvoke r87.<net.sourceforge.plantuml.tim.expression.TokenOperator: net.sourceforge.plantuml.tim.expression.TValue operate(net.sourceforge.plantuml.tim.expression.TValue,net.sourceforge.plantuml.tim.expression.TValue)>(r86, r85);
+
+        interfaceinvoke $r1.<java.util.Deque: void addFirst(java.lang.Object)>(r88);
+
+        goto label20;
+
+     label08:
+        $r16 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r17 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType OPEN_PAREN_FUNC>;
+
+        if $r16 != $r17 goto label19;
+
+        $r19 = virtualinvoke r7.<net.sourceforge.plantuml.tim.expression.Token: java.lang.String getSurface()>();
+
+        i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r19);
+
+        r89 = interfaceinvoke r4.<net.sourceforge.plantuml.tim.expression.TokenIterator: net.sourceforge.plantuml.tim.expression.Token nextToken()>();
+
+        $r20 = virtualinvoke r89.<net.sourceforge.plantuml.tim.expression.Token: net.sourceforge.plantuml.tim.expression.TokenType getTokenType()>();
+
+        $r21 = <net.sourceforge.plantuml.tim.expression.TokenType: net.sourceforge.plantuml.tim.expression.TokenType FUNCTION_NAME>;
+
+        if $r20 == $r21 goto label09;
+
+        $r67 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException unlocated(java.lang.String)>("rpn43");
+
+        throw $r67;
+
+     label09:
+        $z2 = r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: boolean trace>;
+
+        if $z2 == 0 goto label10;
+
+        $r63 = <java.lang.System: java.io.PrintStream err>;
+
+        $r62 = new java.lang.StringBuilder;
+
+        specialinvoke $r62.<java.lang.StringBuilder: void <init>()>();
+
+        $r64 = virtualinvoke $r62.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("token2=");
+
+        $r65 = virtualinvoke $r64.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r89);
+
+        $r66 = virtualinvoke $r65.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r63.<java.io.PrintStream: void println(java.lang.String)>($r66);
+
+     label10:
+        $r23 = new net.sourceforge.plantuml.tim.TFunctionSignature;
+
+        $r24 = virtualinvoke r89.<net.sourceforge.plantuml.tim.expression.Token: java.lang.String getSurface()>();
+
+        specialinvoke $r23.<net.sourceforge.plantuml.tim.TFunctionSignature: void <init>(java.lang.String,int)>($r24, i0);
+
+        r90 = interfaceinvoke r22.<net.sourceforge.plantuml.tim.expression.Knowledge: net.sourceforge.plantuml.tim.TFunction getFunction(net.sourceforge.plantuml.tim.TFunctionSignature)>($r23);
+
+        $z3 = r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: boolean trace>;
+
+        if $z3 == 0 goto label11;
+
+        $r58 = <java.lang.System: java.io.PrintStream err>;
+
+        $r57 = new java.lang.StringBuilder;
+
+        specialinvoke $r57.<java.lang.StringBuilder: void <init>()>();
+
+        $r59 = virtualinvoke $r57.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("function=");
+
+        $r60 = virtualinvoke $r59.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r90);
+
+        $r61 = virtualinvoke $r60.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r58.<java.io.PrintStream: void println(java.lang.String)>($r61);
+
+     label11:
+        if r90 != null goto label12;
+
+        $r51 = new java.lang.StringBuilder;
+
+        specialinvoke $r51.<java.lang.StringBuilder: void <init>()>();
+
+        $r52 = virtualinvoke $r51.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Unknown built-in function ");
+
+        $r53 = virtualinvoke r89.<net.sourceforge.plantuml.tim.expression.Token: java.lang.String getSurface()>();
+
+        $r54 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r53);
+
+        $r55 = virtualinvoke $r54.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r56 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException unlocated(java.lang.String)>($r55);
+
+        throw $r56;
+
+     label12:
+        $r25 = staticinvoke <java.util.Collections: java.util.Set emptySet()>();
+
+        $z4 = interfaceinvoke r90.<net.sourceforge.plantuml.tim.TFunction: boolean canCover(int,java.util.Set)>(i0, $r25);
+
+        if $z4 != 0 goto label13;
+
+        $r44 = new java.lang.StringBuilder;
+
+        specialinvoke $r44.<java.lang.StringBuilder: void <init>()>();
+
+        $r45 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Bad number of arguments for ");
+
+        $r46 = interfaceinvoke r90.<net.sourceforge.plantuml.tim.TFunction: net.sourceforge.plantuml.tim.TFunctionSignature getSignature()>();
+
+        $r47 = virtualinvoke $r46.<net.sourceforge.plantuml.tim.TFunctionSignature: java.lang.String getFunctionName()>();
+
+        $r48 = virtualinvoke $r45.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r47);
+
+        $r49 = virtualinvoke $r48.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r50 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException unlocated(java.lang.String)>($r49);
+
+        throw $r50;
+
+     label13:
+        $r26 = new java.util.ArrayList;
+
+        specialinvoke $r26.<java.util.ArrayList: void <init>()>();
+
+        i1 = 0;
+
+     label14:
+        if i1 >= i0 goto label15;
+
+        $r42 = interfaceinvoke $r1.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        $r43 = (net.sourceforge.plantuml.tim.expression.TValue) $r42;
+
+        interfaceinvoke $r26.<java.util.List: void add(int,java.lang.Object)>(0, $r43);
+
+        i1 = i1 + 1;
+
+        goto label14;
+
+     label15:
+        $z5 = r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: boolean trace>;
+
+        if $z5 == 0 goto label16;
+
+        $r38 = <java.lang.System: java.io.PrintStream err>;
+
+        $r37 = new java.lang.StringBuilder;
+
+        specialinvoke $r37.<java.lang.StringBuilder: void <init>()>();
+
+        $r39 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("args=");
+
+        $r40 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r26);
+
+        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r38.<java.io.PrintStream: void println(java.lang.String)>($r41);
+
+     label16:
+        if r27 != null goto label17;
+
+        $r36 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException unlocated(java.lang.String)>("rpn44");
+
+        throw $r36;
+
+     label17:
+        $r30 = staticinvoke <java.util.Collections: java.util.Map emptyMap()>();
+
+        r92 = interfaceinvoke r90.<net.sourceforge.plantuml.tim.TFunction: net.sourceforge.plantuml.tim.expression.TValue executeReturnFunction(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory,net.sourceforge.plantuml.LineLocation,java.util.List,java.util.Map)>(r28, r29, r27, $r26, $r30);
+
+        $z6 = r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: boolean trace>;
+
+        if $z6 == 0 goto label18;
+
+        $r32 = <java.lang.System: java.io.PrintStream err>;
+
+        $r31 = new java.lang.StringBuilder;
+
+        specialinvoke $r31.<java.lang.StringBuilder: void <init>()>();
+
+        $r33 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("r=");
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r92);
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r32.<java.io.PrintStream: void println(java.lang.String)>($r35);
+
+     label18:
+        interfaceinvoke $r1.<java.util.Deque: void addFirst(java.lang.Object)>(r92);
+
+        goto label20;
+
+     label19:
+        $r18 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException unlocated(java.lang.String)>("rpn41");
+
+        throw $r18;
+
+     label20:
+        goto label02;
+
+     label21:
+        $r5 = interfaceinvoke $r1.<java.util.Deque: java.lang.Object removeFirst()>();
+
+        $r6 = (net.sourceforge.plantuml.tim.expression.TValue) $r5;
+
+        r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: net.sourceforge.plantuml.tim.expression.TValue result> = $r6;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.tim.expression.TValue getResult()
+    {
+        net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor r0;
+        net.sourceforge.plantuml.tim.expression.TValue $r1;
+
+        r0 := @this: net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.expression.ReversePolishInterpretor: net.sourceforge.plantuml.tim.expression.TValue result>;
+
+        return $r1;
+    }
+}

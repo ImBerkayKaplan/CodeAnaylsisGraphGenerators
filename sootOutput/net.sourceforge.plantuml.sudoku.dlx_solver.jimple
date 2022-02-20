@@ -1,0 +1,3668 @@
+class net.sourceforge.plantuml.sudoku.dlx_solver extends java.lang.Object
+{
+    static final int M;
+    static final int M2;
+    static final int M4;
+    int[][] A0;
+    int[][] A;
+    int[] Rows;
+    int[] Cols;
+    int[][] Row;
+    int[][] Col;
+    int[] Ur;
+    int[] Uc;
+    int[] V;
+    int[] C;
+    int[] I;
+    int[] T;
+    int[] P;
+    int[] Mr;
+    int[] Mc;
+    int[] Mw;
+    int nocheck;
+    int max;
+    int _try_;
+    final int rnd;
+    int min;
+    int clues;
+    int gu;
+    int tries;
+    long[] Node;
+    long nodes;
+    long tnodes;
+    long solutions;
+    long vmax;
+    long smax;
+    long time0;
+    long time1;
+    long t1;
+    long x1;
+    double xx;
+    double yy;
+    int q;
+    int a;
+    int p;
+    int i;
+    int i1;
+    int j;
+    int k;
+    int l;
+    int r;
+    int r1;
+    int c;
+    int c1;
+    int c2;
+    int n;
+    int N;
+    int N2;
+    int N4;
+    int m;
+    int m0;
+    int m1;
+    int x;
+    int y;
+    int s;
+    char[] L;
+    static final int M6;
+    static final int M7;
+    static final int RESTART;
+    static final int M22;
+    static final int M3;
+    static final int M44;
+    static final int NEXT_TRY;
+    static final int END;
+    private final java.util.Random random;
+
+    long MWC()
+    {
+        net.sourceforge.plantuml.sudoku.dlx_solver r0;
+        java.util.Random $r1;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.dlx_solver;
+
+        $r1 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: java.util.Random random>;
+
+        $l0 = virtualinvoke $r1.<java.util.Random: long nextLong()>();
+
+        return $l0;
+    }
+
+    java.lang.String solve(java.lang.String)
+    {
+        java.lang.String $r0, r2, $r11, $r26, $r31, $r39, $r48, $r58, $r116, r176;
+        net.sourceforge.plantuml.sudoku.dlx_solver r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i19, $i20, $i23, $i24, $i29, $i30, $i31, $i32, $i33, $i37, $i38, $i40, $i41, $i42, $i43, $i44, $i70, $i71, $i72, $i74, $i75, $i77, $i78, $i79, $i80, $i81, $i82, $i83, $i84, $i85, $i86, $i87, $i88, $i89, $i90, $i91, $i92, $i93, $i94, $i95, $i96, $i97, $i98, $i99, $i100, $i101, $i102, $i103, $i104, $i105, $i106, $i107, $i108, $i109, $i110, $i111, $i112, $i113, $i114, $i115, $i116, $i117, $i118, $i119, $i120, $i121, $i122, $i123, $i124, $i125, $i126, $i127, $i128, $i129, $i130, $i131, $i132, $i133, $i134, $i135, $i136, $i137, $i138, $i139, $i140, $i141, $i142, $i143, $i144, $i145, $i146, $i147, $i148, $i149, $i150, $i151, $i152, $i153, $i154, $i155, $i156, $i157, $i158, $i159, $i160, $i161, $i162, $i163, $i164, $i165, $i166, $i167, $i168, $i169, $i176, $i177, $i184, $i185, $i188, $i189, $i190, $i191, $i192, $i193, $i194, $i195, $i196, $i197, $i198, $i199, $i200, $i201, $i202, $i203, $i204, $i205, $i206, $i207, $i208, $i209, $i210, $i211, $i212, $i213, $i214, $i215, $i216, $i217, $i218, $i219, $i220, $i221, $i222, $i223, $i224, $i225, $i226, $i227, $i228, $i229, $i230, $i231, $i232, $i233, $i234, $i235, $i236, $i237, $i238, $i239, $i240, $i241, $i242, $i243, $i244, $i245, $i246, $i247, $i248, $i249, $i250, $i251, $i252, $i253, $i254, $i255, $i256, $i257, $i258, $i259, $i260, $i261, $i262, $i263, $i264, $i265, $i266, $i267, $i268, $i270, $i271, $i272, $i273, $i275, $i279, $i280, $i281, $i282, $i283, $i284, $i285, $i286, $i287, $i288, $i289, $i290, $i291, $i292, $i293, $i294, $i295, $i296, $i297, $i298, $i299, $i300, $i301, $i302, $i303, $i304, $i305, $i306, $i307, $i308, $i309, $i310, $i311, $i312, $i313, $i314, $i315, $i316, $i317, $i318, $i319, $i320, $i321, $i322, $i323, $i324, $i325, $i326, $i327, $i328, $i329, $i330, $i331, $i332, $i333, $i334, $i335, $i336, $i337, $i338, $i339, $i340, $i341, $i342, $i343, $i344, $i345, $i346, $i347, $i348, $i349, $i350, $i351, $i352, $i353, $i354, $i355, $i356, $i357, $i358, $i359, $i360, $i361, $i362, $i363, $i364, $i365, $i366, $i367, $i368, $i369, $i370, $i371, $i372, $i373, $i374, $i375, $i376, $i377, $i378, $i379, $i380, $i381, $i382, $i383, $i384, $i385, $i386, $i387, $i388, $i389, $i390, $i391, $i392, $i393, $i394, $i395, $i396, $i397, $i398, $i399, $i400, $i401, $i402, $i403, $i404, $i405, $i406, $i407, $i408, $i409, $i410, $i411, $i412, $i413, $i414, $i415, $i416, $i417, $i418, $i419, $i420, $i421, $i422, $i423, $i424, $i425, $i426, $i427, $i428, $i429, $i430, $i431, $i432, $i433, $i434, $i435, $i436, $i437, $i438, $i439, $i440, $i441, $i442, $i443, $i444, $i445, $i446, $i447, $i448, $i449, $i450, $i451, $i452, $i453, $i454, $i455, $i456, $i457, $i458, $i459, $i460, $i461, $i462, $i463, $i464, $i465, $i466, $i467, $i468, $i469, $i470, $i471, $i472, $i473, $i474, $i475, $i476, $i477, $i478, $i479, $i480, $i481, $i482, $i483, $i484, $i485, $i486, $i487, $i488, $i489, $i490, $i491, $i492, $i493, $i494, $i495, $i496, $i497, $i498, $i499, $i500, $i501, $i502, $i503, $i504, $i505, $i506, $i507, $i509, $i510, $i511, $i512, $i513, $i514, $i516, $i517, $i518, $i519, $i520, $i521, $i522, $i523, $i524, $i525, $i526, $i527, $i528, $i529, $i531, $i532, $i533, $i534, $i535, $i536, $i537, $i538, $i539, $i540, $i541, $i542, $i543, $i544, $i545, $i546, $i547, $i548, $i549, $i550, $i551, $i552, $i553, $i554, $i555, $i556, $i557, $i558, $i559, $i560, $i561, $i562, $i563, $i564, $i565, $i566, $i567, $i568, $i569, $i570;
+        long $l14, $l15, $l16, $l17, $l18, $l21, $l25, $l26, $l27, $l28, $l34, $l35, $l36, $l39, $l45, $l46, $l47, $l49, $l51, $l53, $l54, $l55, $l56, $l57, $l58, $l59, $l60, $l61, $l62, $l63, $l64, $l65, $l66, $l67, $l68, $l69, $l73, $l76, $l170, $l171, $l172, $l173, $l174, $l175, $l178, $l179, $l181, $l182, $l186, $l187, $l274, $l276, $l277;
+        byte $b22, $b48, $b50, $b52, $b180, $b183, $b278, b530;
+        java.lang.StringBuilder $r3, $r5, $r6, $r7, $r8, $r9, $r10, $r19, $r20, $r21, $r22, $r23, $r24, $r25, $r27, $r28, $r29, $r30, $r32, $r33, $r34, $r35, $r36, $r37, $r38, $r40, $r41, $r42, $r43, $r44, $r45, $r46, $r47, $r49, $r51, $r52, $r53, $r54, $r55, $r56, $r57;
+        java.io.PrintStream $r4, $r12, $r15, $r16, $r18, $r50, $r89, $r90, $r91;
+        long[] $r13, $r14, $r88, $r169;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8;
+        int[] $r59, $r61, $r62, $r63, $r65, $r67, $r68, $r69, $r71, $r72, $r73, $r74, $r77, $r78, $r79, $r80, $r81, $r82, $r84, $r85, $r86, $r87, $r93, $r94, $r96, $r97, $r98, $r99, $r102, $r103, $r104, $r105, $r106, $r107, $r109, $r110, $r112, $r114, $r117, $r118, $r119, $r120, $r121, $r122, $r123, $r125, $r126, $r128, $r129, $r130, $r133, $r135, $r136, $r140, $r141, $r142, $r144, $r145, $r146, $r147, $r150, $r151, $r152, $r154, $r155, $r157, $r158, $r159, $r160, $r162, $r164, $r166, $r168, $r171, $r174, $r178, $r181, $r183;
+        int[][] $r60, $r64, $r66, $r70, $r76, $r83, $r92, $r95, $r101, $r108, $r111, $r113, $r127, $r132, $r134, $r139, $r143, $r148, $r149, $r153, $r156, $r161, $r163, $r165, $r167, $r170, $r173, $r177;
+        char[] $r115, $r172;
+        char $c269, $c508, $c515;
+
+        r1 := @this: net.sourceforge.plantuml.sudoku.dlx_solver;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.String;
+
+        specialinvoke $r0.<java.lang.String: void <init>()>();
+
+        r176 = $r0;
+
+        b530 = 10;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long vmax> = 4000000L;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long smax> = 25L;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p> = 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int q> = 0;
+
+        $i0 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int q>;
+
+        if $i0 <= 0 goto label001;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long vmax> = 99999999L;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long smax> = 99999999L;
+
+     label001:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N> = 3;
+
+        $i2 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i1 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i3 = $i2 * $i1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2> = $i3;
+
+        $i5 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i4 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i6 = $i5 * $i4;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4> = $i6;
+
+        $i7 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        $i8 = 4 * $i7;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m> = $i8;
+
+        $i10 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i9 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        $i11 = $i10 * $i9;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int n> = $i11;
+
+        $i12 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        $i13 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        if $i12 >= $i13 goto label002;
+
+        return "Error, puzzle incomplete";
+
+     label002:
+        if b530 == 30 goto label113;
+
+        tableswitch(b530)
+        {
+            case 10: goto label003;
+            case 11: goto label112;
+            case 12: goto label016;
+            case 13: goto label053;
+            case 14: goto label062;
+            case 15: goto label086;
+            case 16: goto label095;
+            default: goto label112;
+        };
+
+     label003:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues> = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = 0;
+
+     label004:
+        $i488 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i487 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i488 >= $i487 goto label012;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = 0;
+
+     label005:
+        $i500 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i499 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i500 >= $i499 goto label011;
+
+        $i504 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i503 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i506 = $i504 * $i503;
+
+        $i505 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i507 = $i506 + $i505;
+
+        $c508 = virtualinvoke r2.<java.lang.String: char charAt(int)>($i507);
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $c508;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = 0;
+
+        $i509 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        if $i509 == 45 goto label006;
+
+        $i510 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        if $i510 == 46 goto label006;
+
+        $i511 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        if $i511 == 48 goto label006;
+
+        $i512 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        if $i512 != 42 goto label007;
+
+     label006:
+        $r177 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A0>;
+
+        $i531 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $r178 = $r177[$i531];
+
+        $i532 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i533 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $r178[$i532] = $i533;
+
+        $i534 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i535 = $i534 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i535;
+
+        goto label010;
+
+     label007:
+        $r172 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: char[] L>;
+
+        $i513 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $c515 = $r172[$i513];
+
+        $i514 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        if $c515 == $i514 goto label008;
+
+        $i527 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i526 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i527 > $i526 goto label008;
+
+        $i528 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i529 = $i528 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = $i529;
+
+        goto label007;
+
+     label008:
+        $i517 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i516 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i517 > $i516 goto label010;
+
+        $r173 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A0>;
+
+        $i518 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $r174 = $r173[$i518];
+
+        $i520 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i519 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $r174[$i520] = $i519;
+
+        $i521 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        if $i521 <= 0 goto label009;
+
+        $i524 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues>;
+
+        $i525 = $i524 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues> = $i525;
+
+     label009:
+        $i522 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i523 = $i522 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i523;
+
+     label010:
+        $i536 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i537 = $i536 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = $i537;
+
+        goto label005;
+
+     label011:
+        $i501 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i502 = $i501 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i502;
+
+        goto label004;
+
+     label012:
+        $i490 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues>;
+
+        $i489 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        if $i490 != $i489 goto label013;
+
+        $i497 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues>;
+
+        $i498 = $i497 - 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues> = $i498;
+
+        $r170 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A0>;
+
+        $r171 = $r170[1];
+
+        $r171[1] = 0;
+
+     label013:
+        $i491 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        if $i491 >= 8 goto label015;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 0;
+
+     label014:
+        $i493 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i492 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        if $i493 > $i492 goto label015;
+
+        $r169 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long[] Node>;
+
+        $i494 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r169[$i494] = 0L;
+
+        $i495 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i496 = $i495 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i496;
+
+        goto label014;
+
+     label015:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes> = 0L;
+
+     label016:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = 1;
+
+     label017:
+        $i538 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i539 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i538 > $i539 goto label022;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = 1;
+
+     label018:
+        $i427 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i426 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i427 > $i426 goto label021;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s> = 1;
+
+     label019:
+        $i431 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s>;
+
+        $i430 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i431 > $i430 goto label020;
+
+        $i434 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i435 = $i434 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i435;
+
+        $r160 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i436 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r160[$i436] = 4;
+
+        $r161 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i437 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r162 = $r161[$i437];
+
+        $i439 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i438 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i441 = $i439 * $i438;
+
+        $i440 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i443 = $i441 - $i440;
+
+        $i442 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i444 = $i443 + $i442;
+
+        $r162[1] = $i444;
+
+        $r163 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i445 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r164 = $r163[$i445];
+
+        $i450 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i446 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i448 = $i446 - 1;
+
+        $i447 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i449 = $i448 / $i447;
+
+        $i455 = $i450 * $i449;
+
+        $i451 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i453 = $i451 - 1;
+
+        $i452 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i454 = $i453 / $i452;
+
+        $i457 = $i455 + $i454;
+
+        $i456 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i459 = $i457 * $i456;
+
+        $i458 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s>;
+
+        $i461 = $i459 + $i458;
+
+        $i460 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        $i462 = $i461 + $i460;
+
+        $r164[4] = $i462;
+
+        $r165 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i463 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r166 = $r165[$i463];
+
+        $i465 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i464 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i467 = $i465 * $i464;
+
+        $i466 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i469 = $i467 - $i466;
+
+        $i468 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s>;
+
+        $i472 = $i469 + $i468;
+
+        $i470 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        $i471 = $i470 * 2;
+
+        $i473 = $i472 + $i471;
+
+        $r166[3] = $i473;
+
+        $r167 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i474 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r168 = $r167[$i474];
+
+        $i476 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i475 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i478 = $i476 * $i475;
+
+        $i477 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i480 = $i478 - $i477;
+
+        $i479 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s>;
+
+        $i483 = $i480 + $i479;
+
+        $i481 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        $i482 = $i481 * 3;
+
+        $i484 = $i483 + $i482;
+
+        $r168[2] = $i484;
+
+        $i485 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s>;
+
+        $i486 = $i485 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s> = $i486;
+
+        goto label019;
+
+     label020:
+        $i432 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i433 = $i432 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = $i433;
+
+        goto label018;
+
+     label021:
+        $i428 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i429 = $i428 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i429;
+
+        goto label017;
+
+     label022:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = 1;
+
+     label023:
+        $i310 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i309 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i310 > $i309 goto label024;
+
+        $r159 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i423 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r159[$i423] = 0;
+
+        $i424 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i425 = $i424 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i425;
+
+        goto label023;
+
+     label024:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = 1;
+
+     label025:
+        $i312 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i311 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int n>;
+
+        if $i312 > $i311 goto label028;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = 1;
+
+     label026:
+        $i408 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r152 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i406 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i407 = $r152[$i406];
+
+        if $i408 > $i407 goto label027;
+
+        $r153 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i411 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r154 = $r153[$i411];
+
+        $i412 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i413 = $r154[$i412];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i413;
+
+        $r155 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i414 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i415 = $r155[$i414];
+
+        $i416 = $i415 + 1;
+
+        $r155[$i414] = $i416;
+
+        $r156 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i417 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $r158 = $r156[$i417];
+
+        $r157 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i418 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i420 = $r157[$i418];
+
+        $i419 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r158[$i420] = $i419;
+
+        $i421 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i422 = $i421 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i422;
+
+        goto label026;
+
+     label027:
+        $i409 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i410 = $i409 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i410;
+
+        goto label025;
+
+     label028:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = 0;
+
+     label029:
+        $i314 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i313 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i314 >= $i313 goto label032;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = 0;
+
+     label030:
+        $i396 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i395 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i396 >= $i395 goto label031;
+
+        $r148 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A>;
+
+        $i399 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $r151 = $r148[$i399];
+
+        $i403 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $r149 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A0>;
+
+        $i400 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $r150 = $r149[$i400];
+
+        $i401 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i402 = $r150[$i401];
+
+        $r151[$i403] = $i402;
+
+        $i404 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i405 = $i404 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = $i405;
+
+        goto label030;
+
+     label031:
+        $i397 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i398 = $i397 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i398;
+
+        goto label029;
+
+     label032:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 0;
+
+     label033:
+        $i316 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i315 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int n>;
+
+        if $i316 > $i315 goto label034;
+
+        $r147 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $i392 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r147[$i392] = 0;
+
+        $i393 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i394 = $i393 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i394;
+
+        goto label033;
+
+     label034:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 0;
+
+     label035:
+        $i318 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i317 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i318 > $i317 goto label036;
+
+        $r146 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i389 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r146[$i389] = 0;
+
+        $i390 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i391 = $i390 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i391;
+
+        goto label035;
+
+     label036:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions> = 0L;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = 1;
+
+     label037:
+        $i320 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i319 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i320 > $i319 goto label046;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = 1;
+
+     label038:
+        $i340 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i339 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        if $i340 > $i339 goto label045;
+
+        $r132 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A>;
+
+        $i343 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i344 = $i343 - 1;
+
+        $r133 = $r132[$i344];
+
+        $i345 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i346 = $i345 - 1;
+
+        $i347 = $r133[$i346];
+
+        if $i347 <= 0 goto label044;
+
+        $i351 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i350 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        $i353 = $i351 * $i350;
+
+        $i352 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        $i357 = $i353 - $i352;
+
+        $i355 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i354 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i356 = $i355 * $i354;
+
+        $i359 = $i357 + $i356;
+
+        $i358 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        $i365 = $i359 - $i358;
+
+        $r134 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A>;
+
+        $i360 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i361 = $i360 - 1;
+
+        $r135 = $r134[$i361];
+
+        $i362 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i363 = $i362 - 1;
+
+        $i364 = $r135[$i363];
+
+        $i366 = $i365 + $i364;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i366;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = 1;
+
+     label039:
+        $i369 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $r136 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i367 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i368 = $r136[$i367];
+
+        if $i369 > $i368 goto label043;
+
+        $r139 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i370 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r140 = $r139[$i370];
+
+        $i371 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i372 = $r140[$i371];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1> = $i372;
+
+        $r141 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i373 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $i374 = $r141[$i373];
+
+        if $i374 <= 0 goto label040;
+
+        $i388 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int nocheck>;
+
+        if $i388 != 0 goto label040;
+
+        b530 = 16;
+
+        goto label043;
+
+     label040:
+        $r142 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i375 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $i376 = $r142[$i375];
+
+        $i377 = $i376 + 1;
+
+        $r142[$i375] = $i377;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = 1;
+
+     label041:
+        $i540 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $r181 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i541 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $i542 = $r181[$i541];
+
+        if $i540 > $i542 goto label042;
+
+        $r143 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i380 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $r144 = $r143[$i380];
+
+        $i381 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i382 = $r144[$i381];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1> = $i382;
+
+        $r145 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $i383 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $i384 = $r145[$i383];
+
+        $i385 = $i384 + 1;
+
+        $r145[$i383] = $i385;
+
+        $i386 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i387 = $i386 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = $i387;
+
+        goto label041;
+
+     label042:
+        $i378 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i379 = $i378 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = $i379;
+
+        goto label039;
+
+     label043:
+        if b530 != 16 goto label044;
+
+        goto label045;
+
+     label044:
+        $i348 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i349 = $i348 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = $i349;
+
+        goto label038;
+
+     label045:
+        $i341 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i342 = $i341 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i342;
+
+        goto label037;
+
+     label046:
+        if b530 != 16 goto label047;
+
+        goto label112;
+
+     label047:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = 1;
+
+     label048:
+        $i322 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i321 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i322 > $i321 goto label052;
+
+        $r125 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i324 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r125[$i324] = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = 1;
+
+     label049:
+        $i327 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r126 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i325 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i326 = $r126[$i325];
+
+        if $i327 > $i326 goto label051;
+
+        $r129 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $r127 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i330 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r128 = $r127[$i330];
+
+        $i331 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i332 = $r128[$i331];
+
+        $i333 = $r129[$i332];
+
+        if $i333 != 0 goto label050;
+
+        $r130 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i336 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i337 = $r130[$i336];
+
+        $i338 = $i337 + 1;
+
+        $r130[$i336] = $i338;
+
+     label050:
+        $i334 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i335 = $i334 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i335;
+
+        goto label049;
+
+     label051:
+        $i328 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i329 = $i328 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i329;
+
+        goto label048;
+
+     label052:
+        $i323 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i323;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long nodes> = 0L;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m0> = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m1> = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int gu> = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions> = 0L;
+
+     label053:
+        $i279 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i280 = $i279 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i280;
+
+        $r117 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] I>;
+
+        $i281 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r117[$i281] = 0;
+
+        $i282 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int n>;
+
+        $i283 = $i282 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int min> = $i283;
+
+        $i285 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i284 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        if $i285 > $i284 goto label054;
+
+        $i286 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m0>;
+
+        if $i286 <= 0 goto label055;
+
+     label054:
+        b530 = 15;
+
+        goto label112;
+
+     label055:
+        $i287 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m1>;
+
+        if $i287 <= 0 goto label056;
+
+        $r123 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] C>;
+
+        $i308 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i307 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m1>;
+
+        $r123[$i308] = $i307;
+
+        b530 = 14;
+
+        goto label112;
+
+     label056:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = 1;
+
+     label057:
+        $i289 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i288 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i289 > $i288 goto label060;
+
+        $r118 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i293 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i294 = $r118[$i293];
+
+        if $i294 != 0 goto label059;
+
+        $r119 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i295 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i297 = $r119[$i295];
+
+        $i296 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int min>;
+
+        if $i297 > $i296 goto label058;
+
+        $i306 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1> = $i306;
+
+     label058:
+        $r120 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i298 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i300 = $r120[$i298];
+
+        $i299 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int min>;
+
+        if $i300 >= $i299 goto label059;
+
+        $r121 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i301 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i302 = $r121[$i301];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int min> = $i302;
+
+        $r122 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] C>;
+
+        $i304 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i303 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r122[$i304] = $i303;
+
+        $i305 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int min>;
+
+        if $i305 >= 2 goto label059;
+
+        b530 = 14;
+
+        goto label060;
+
+     label059:
+        $i543 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i544 = $i543 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i544;
+
+        goto label057;
+
+     label060:
+        if b530 != 14 goto label061;
+
+        goto label112;
+
+     label061:
+        $i290 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int gu>;
+
+        $i291 = $i290 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int gu> = $i291;
+
+        $i292 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int min>;
+
+        if $i292 <= 2 goto label062;
+
+        b530 = 14;
+
+        goto label112;
+
+     label062:
+        $r79 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] C>;
+
+        $i150 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i151 = $r79[$i150];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i151;
+
+        $r80 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] I>;
+
+        $i152 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i153 = $r80[$i152];
+
+        $i154 = $i153 + 1;
+
+        $r80[$i152] = $i154;
+
+        $r81 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] I>;
+
+        $i155 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i158 = $r81[$i155];
+
+        $r82 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i156 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i157 = $r82[$i156];
+
+        if $i158 <= $i157 goto label063;
+
+        b530 = 15;
+
+        goto label112;
+
+     label063:
+        $r83 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i159 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r85 = $r83[$i159];
+
+        $r84 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] I>;
+
+        $i160 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i161 = $r84[$i160];
+
+        $i162 = $r85[$i161];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i162;
+
+        $r86 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $i163 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i164 = $r86[$i163];
+
+        if $i164 <= 0 goto label064;
+
+        b530 = 14;
+
+        goto label112;
+
+     label064:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m0> = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m1> = 0;
+
+        $i165 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int q>;
+
+        if $i165 <= 0 goto label065;
+
+        $i272 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        if $i272 <= 32 goto label065;
+
+        $i273 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        if $i273 >= 65 goto label065;
+
+        $l274 = virtualinvoke r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l277 = $l274 & 127L;
+
+        $i275 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int q>;
+
+        $l276 = (long) $i275;
+
+        $b278 = $l277 cmp $l276;
+
+        if $b278 >= 0 goto label065;
+
+        b530 = 14;
+
+        goto label112;
+
+     label065:
+        $i545 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = $i545;
+
+        $i546 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i547 = $i546 - 1;
+
+        $i548 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i549 = $i547 / $i548;
+
+        $i550 = $i549 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i550;
+
+        $i551 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i552 = $i551 - 1;
+
+        $i553 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i554 = $i552 % $i553;
+
+        $i555 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i556 = $i554 / $i555;
+
+        $i557 = $i556 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = $i557;
+
+        $i558 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i559 = $i558 - 1;
+
+        $i560 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i561 = $i559 % $i560;
+
+        $i562 = $i561 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s> = $i562;
+
+        $i563 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        $i564 = $i563 & 1;
+
+        if $i564 <= 0 goto label070;
+
+        $i234 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = $i234;
+
+        $i235 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = $i235;
+
+        $i236 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i238 = $i236 - 1;
+
+        $i237 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i239 = $i238 / $i237;
+
+        $i240 = $i239 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i240;
+
+        $i241 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i243 = $i241 - 1;
+
+        $i242 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i245 = $i243 % $i242;
+
+        $i244 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i246 = $i245 / $i244;
+
+        $i247 = $i246 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = $i247;
+
+        $i248 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i250 = $i248 - 1;
+
+        $i249 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i251 = $i250 % $i249;
+
+        $i252 = $i251 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s> = $i252;
+
+        $r111 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A>;
+
+        $i253 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i254 = $i253 - 1;
+
+        $r112 = $r111[$i254];
+
+        $i255 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i257 = $i255 - 1;
+
+        $i256 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s>;
+
+        $r112[$i257] = $i256;
+
+        $i259 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i258 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        if $i259 != $i258 goto label070;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = 0;
+
+     label066:
+        $i261 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i260 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        if $i261 >= $i260 goto label069;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = 0;
+
+     label067:
+        $i263 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i262 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        if $i263 >= $i262 goto label068;
+
+        $r115 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: char[] L>;
+
+        $r113 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A>;
+
+        $i266 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $r114 = $r113[$i266];
+
+        $i267 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i268 = $r114[$i267];
+
+        $c269 = $r115[$i268];
+
+        $r116 = staticinvoke <java.lang.String: java.lang.String valueOf(char)>($c269);
+
+        r176 = virtualinvoke r176.<java.lang.String: java.lang.String concat(java.lang.String)>($r116);
+
+        $i270 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i271 = $i270 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = $i271;
+
+        goto label067;
+
+     label068:
+        $i264 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i265 = $i264 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i265;
+
+        goto label066;
+
+     label069:
+        r176 = virtualinvoke r176.<java.lang.String: java.lang.String concat(java.lang.String)>(" #\n");
+
+     label070:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = 1;
+
+     label071:
+        $i565 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $r183 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i566 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i567 = $r183[$i566];
+
+        if $i565 > $i567 goto label072;
+
+        $r108 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i226 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r109 = $r108[$i226];
+
+        $i227 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i228 = $r109[$i227];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1> = $i228;
+
+        $r110 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i229 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $i230 = $r110[$i229];
+
+        $i231 = $i230 + 1;
+
+        $r110[$i229] = $i231;
+
+        $i232 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i233 = $i232 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = $i233;
+
+        goto label071;
+
+     label072:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = 1;
+
+     label073:
+        $i168 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $r87 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i166 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i167 = $r87[$i166];
+
+        if $i168 > $i167 goto label080;
+
+        $r92 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i188 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r93 = $r92[$i188];
+
+        $i189 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i190 = $r93[$i189];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1> = $i190;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = 1;
+
+     label074:
+        $i193 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $r94 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i191 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $i192 = $r94[$i191];
+
+        if $i193 > $i192 goto label079;
+
+        $r95 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i196 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $r96 = $r95[$i196];
+
+        $i197 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i198 = $r96[$i197];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1> = $i198;
+
+        $r97 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $i199 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $i200 = $r97[$i199];
+
+        $i201 = $i200 + 1;
+
+        $r97[$i199] = $i201;
+
+        $r98 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $i202 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $i203 = $r98[$i202];
+
+        if $i203 != 1 goto label078;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l> = 1;
+
+     label075:
+        $i208 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l>;
+
+        $r99 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i206 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $i207 = $r99[$i206];
+
+        if $i208 > $i207 goto label078;
+
+        $r101 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i209 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $r102 = $r101[$i209];
+
+        $i210 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l>;
+
+        $i211 = $r102[$i210];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2> = $i211;
+
+        $r103 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i212 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2>;
+
+        $i213 = $r103[$i212];
+
+        $i214 = $i213 - 1;
+
+        $r103[$i212] = $i214;
+
+        $r104 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i215 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2>;
+
+        $i218 = $r104[$i215];
+
+        $r105 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i216 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2>;
+
+        $i217 = $r105[$i216];
+
+        $i219 = $i218 + $i217;
+
+        if $i219 >= 1 goto label076;
+
+        $i225 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m0> = $i225;
+
+     label076:
+        $r106 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i220 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2>;
+
+        $i221 = $r106[$i220];
+
+        if $i221 != 0 goto label077;
+
+        $r107 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i222 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2>;
+
+        $i223 = $r107[$i222];
+
+        if $i223 >= 2 goto label077;
+
+        $i224 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int m1> = $i224;
+
+     label077:
+        $i568 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l>;
+
+        $i569 = $i568 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l> = $i569;
+
+        goto label075;
+
+     label078:
+        $i204 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i205 = $i204 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = $i205;
+
+        goto label074;
+
+     label079:
+        $i194 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i195 = $i194 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = $i195;
+
+        goto label073;
+
+     label080:
+        $r88 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long[] Node>;
+
+        $i169 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $l170 = $r88[$i169];
+
+        $l171 = $l170 + 1L;
+
+        $r88[$i169] = $l171;
+
+        $l172 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes>;
+
+        $l173 = $l172 + 1L;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes> = $l173;
+
+        $l174 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long nodes>;
+
+        $l175 = $l174 + 1L;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long nodes> = $l175;
+
+        $i177 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i176 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        if $i177 != $i176 goto label081;
+
+        $l186 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $l187 = $l186 + 1L;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions> = $l187;
+
+     label081:
+        $l179 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $l178 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long smax>;
+
+        $b180 = $l179 cmp $l178;
+
+        if $b180 < 0 goto label083;
+
+        $r90 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r90.<java.io.PrintStream: void println(java.lang.String)>("smax xolutions found");
+
+        $i185 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int _try_>;
+
+        if $i185 != 1 goto label082;
+
+        $r91 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r91.<java.io.PrintStream: void print(java.lang.String)>("+");
+
+     label082:
+        b530 = 16;
+
+        goto label112;
+
+     label083:
+        $l182 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes>;
+
+        $l181 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long vmax>;
+
+        $b183 = $l182 cmp $l181;
+
+        if $b183 <= 0 goto label085;
+
+        $i184 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int _try_>;
+
+        if $i184 != 1 goto label084;
+
+        $r89 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r89.<java.io.PrintStream: void print(java.lang.String)>("-");
+
+     label084:
+        b530 = 16;
+
+        goto label112;
+
+     label085:
+        b530 = 13;
+
+        goto label112;
+
+     label086:
+        $i79 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i80 = $i79 - 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i80;
+
+        $r59 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] C>;
+
+        $i81 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i82 = $r59[$i81];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i82;
+
+        $r60 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i83 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r62 = $r60[$i83];
+
+        $r61 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] I>;
+
+        $i84 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i85 = $r61[$i84];
+
+        $i86 = $r62[$i85];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i86;
+
+        $i88 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i87 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues>;
+
+        if $i88 != $i87 goto label087;
+
+        b530 = 16;
+
+        goto label112;
+
+     label087:
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = 1;
+
+     label088:
+        $i91 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $r63 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i89 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i90 = $r63[$i89];
+
+        if $i91 > $i90 goto label093;
+
+        $r66 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i118 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r67 = $r66[$i118];
+
+        $i119 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i120 = $r67[$i119];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1> = $i120;
+
+        $r68 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i121 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $i122 = $r68[$i121];
+
+        $i123 = $i122 - 1;
+
+        $r68[$i121] = $i123;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = 1;
+
+     label089:
+        $i126 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $r69 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i124 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $i125 = $r69[$i124];
+
+        if $i126 > $i125 goto label092;
+
+        $r70 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i129 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c1>;
+
+        $r71 = $r70[$i129];
+
+        $i130 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i131 = $r71[$i130];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1> = $i131;
+
+        $r72 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $i132 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $i133 = $r72[$i132];
+
+        $i134 = $i133 - 1;
+
+        $r72[$i132] = $i134;
+
+        $r73 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $i135 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $i136 = $r73[$i135];
+
+        if $i136 != 0 goto label091;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l> = 1;
+
+     label090:
+        $i141 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l>;
+
+        $r74 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i139 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $i140 = $r74[$i139];
+
+        if $i141 > $i140 goto label091;
+
+        $r76 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i142 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r1>;
+
+        $r77 = $r76[$i142];
+
+        $i143 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l>;
+
+        $i144 = $r77[$i143];
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2> = $i144;
+
+        $r78 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V>;
+
+        $i145 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int c2>;
+
+        $i146 = $r78[$i145];
+
+        $i147 = $i146 + 1;
+
+        $r78[$i145] = $i147;
+
+        $i148 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l>;
+
+        $i149 = $i148 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int l> = $i149;
+
+        goto label090;
+
+     label091:
+        $i137 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i138 = $i137 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = $i138;
+
+        goto label089;
+
+     label092:
+        $i127 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i128 = $i127 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = $i128;
+
+        goto label088;
+
+     label093:
+        $i92 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        if $i92 <= 0 goto label094;
+
+        $i95 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N2>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j> = $i95;
+
+        $i96 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k> = $i96;
+
+        $i97 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i99 = $i97 - 1;
+
+        $i98 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i100 = $i99 / $i98;
+
+        $i101 = $i100 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i101;
+
+        $i102 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i104 = $i102 - 1;
+
+        $i103 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int k>;
+
+        $i106 = $i104 % $i103;
+
+        $i105 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i107 = $i106 / $i105;
+
+        $i108 = $i107 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y> = $i108;
+
+        $i109 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i111 = $i109 - 1;
+
+        $i110 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int j>;
+
+        $i112 = $i111 % $i110;
+
+        $i113 = $i112 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int s> = $i113;
+
+        $r64 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A>;
+
+        $i114 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $i115 = $i114 - 1;
+
+        $r65 = $r64[$i115];
+
+        $i116 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int y>;
+
+        $i117 = $i116 - 1;
+
+        $r65[$i117] = 0;
+
+     label094:
+        $i94 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i93 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues>;
+
+        if $i94 <= $i93 goto label095;
+
+        b530 = 14;
+
+        goto label112;
+
+     label095:
+        $l14 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long time1> = $l14;
+
+        $l16 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long time1>;
+
+        $l15 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long time0>;
+
+        $l17 = $l16 - $l15;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long x1> = $l17;
+
+        $l18 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long time1>;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long time0> = $l18;
+
+        $i19 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int q>;
+
+        if $i19 <= 0 goto label098;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double xx> = 128.0;
+
+        $i71 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int q>;
+
+        $i72 = 128 - $i71;
+
+        $d0 = (double) $i72;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double yy> = $d0;
+
+        $d2 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double xx>;
+
+        $d1 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double yy>;
+
+        $d3 = $d2 / $d1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double xx> = $d3;
+
+        $l73 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $d4 = (double) $l73;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double yy> = $d4;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label096:
+        $i74 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        if $i74 >= 33 goto label097;
+
+        $d7 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double yy>;
+
+        $d6 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double xx>;
+
+        $d8 = $d7 * $d6;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double yy> = $d8;
+
+        $i77 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i78 = $i77 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i78;
+
+        goto label096;
+
+     label097:
+        $r50 = <java.lang.System: java.io.PrintStream out>;
+
+        $r49 = new java.lang.StringBuilder;
+
+        specialinvoke $r49.<java.lang.StringBuilder: void <init>()>();
+
+        $r51 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("clues: ");
+
+        $i75 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int clues>;
+
+        $r52 = virtualinvoke $r51.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i75);
+
+        $r53 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" estimated solutions:");
+
+        $d5 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: double yy>;
+
+        $r54 = virtualinvoke $r53.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d5);
+
+        $r55 = virtualinvoke $r54.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" time ");
+
+        $l76 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long x1>;
+
+        $r56 = virtualinvoke $r55.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l76);
+
+        $r57 = virtualinvoke $r56.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("ms");
+
+        $r58 = virtualinvoke $r57.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r50.<java.io.PrintStream: void println(java.lang.String)>($r58);
+
+        b530 = 30;
+
+        goto label112;
+
+     label098:
+        $i20 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        if $i20 == 0 goto label099;
+
+        $i70 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        if $i70 != 1 goto label104;
+
+     label099:
+        $l21 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes>;
+
+        $b22 = $l21 cmp 999999L;
+
+        if $b22 > 0 goto label104;
+
+        $l47 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $l46 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long smax>;
+
+        $b48 = $l47 cmp $l46;
+
+        if $b48 < 0 goto label100;
+
+        $r40 = new java.lang.StringBuilder;
+
+        specialinvoke $r40.<java.lang.StringBuilder: void <init>()>();
+
+        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("More than ");
+
+        $l64 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l64);
+
+        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" solutions ( bad sudoku!! ), rating ");
+
+        $l65 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes>;
+
+        $l67 = 100L * $l65;
+
+        $l66 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $l68 = $l67 / $l66;
+
+        $r44 = virtualinvoke $r43.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l68);
+
+        $r45 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", time ");
+
+        $l69 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long x1>;
+
+        $r46 = virtualinvoke $r45.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l69);
+
+        $r47 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ms");
+
+        $r48 = virtualinvoke $r47.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r176 = virtualinvoke r176.<java.lang.String: java.lang.String concat(java.lang.String)>($r48);
+
+        goto label103;
+
+     label100:
+        $l49 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $b50 = $l49 cmp 1L;
+
+        if $b50 != 0 goto label101;
+
+        $r32 = new java.lang.StringBuilder;
+
+        specialinvoke $r32.<java.lang.StringBuilder: void <init>()>();
+
+        $l60 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l60);
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" solution, rating ");
+
+        $l61 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes>;
+
+        $l62 = 100L * $l61;
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l62);
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", time ");
+
+        $l63 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long x1>;
+
+        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l63);
+
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ms");
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r176 = virtualinvoke r176.<java.lang.String: java.lang.String concat(java.lang.String)>($r39);
+
+        goto label103;
+
+     label101:
+        $l51 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $b52 = $l51 cmp 0L;
+
+        if $b52 != 0 goto label102;
+
+        $r27 = new java.lang.StringBuilder;
+
+        specialinvoke $r27.<java.lang.StringBuilder: void <init>()>();
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("0 solutions, no rating possible, time ");
+
+        $l59 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long x1>;
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l59);
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ms");
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r176 = virtualinvoke r176.<java.lang.String: java.lang.String concat(java.lang.String)>($r31);
+
+        goto label103;
+
+     label102:
+        $r19 = new java.lang.StringBuilder;
+
+        specialinvoke $r19.<java.lang.StringBuilder: void <init>()>();
+
+        $l53 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l53);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" solutions ( bad sudoku!! ), rating ");
+
+        $l54 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes>;
+
+        $l56 = 100L * $l54;
+
+        $l55 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $l57 = $l56 / $l55;
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l57);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", time ");
+
+        $l58 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long x1>;
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l58);
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ms");
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r176 = virtualinvoke r176.<java.lang.String: java.lang.String concat(java.lang.String)>($r26);
+
+     label103:
+        b530 = 30;
+
+        goto label112;
+
+     label104:
+        $i23 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        if $i23 != 6 goto label105;
+
+        $r18 = <java.lang.System: java.io.PrintStream out>;
+
+        $l45 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        virtualinvoke $r18.<java.io.PrintStream: void println(long)>($l45);
+
+        b530 = 30;
+
+        goto label112;
+
+     label105:
+        $i24 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        if $i24 == 0 goto label106;
+
+        $i44 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        if $i44 != 1 goto label107;
+
+     label106:
+        $r4 = <java.lang.System: java.io.PrintStream out>;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $l25 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long solutions>;
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l25);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" solution(s), rating ");
+
+        $l26 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long tnodes>;
+
+        $l27 = 100L * $l26;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l27);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", time ");
+
+        $l28 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long x1>;
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l28);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("ms");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r4.<java.io.PrintStream: void println(java.lang.String)>($r11);
+
+     label107:
+        $i570 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int p>;
+
+        if $i570 <= 5 goto label111;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = 0;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label108:
+        $i30 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i29 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int N4>;
+
+        if $i30 > $i29 goto label110;
+
+        $i32 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        $l35 = (long) $i32;
+
+        $r13 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long[] Node>;
+
+        $i33 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $l34 = $r13[$i33];
+
+        $l36 = $l35 + $l34;
+
+        $i37 = (int) $l36;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x> = $i37;
+
+        $r15 = <java.lang.System: java.io.PrintStream out>;
+
+        $r14 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: long[] Node>;
+
+        $i38 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $l39 = $r14[$i38];
+
+        virtualinvoke $r15.<java.io.PrintStream: void print(long)>($l39);
+
+        $i40 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i41 = $i40 % 9;
+
+        if $i41 != 0 goto label109;
+
+        $r16 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r16.<java.io.PrintStream: void println()>();
+
+     label109:
+        $i42 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i43 = $i42 + 1;
+
+        r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i43;
+
+        goto label108;
+
+     label110:
+        $r12 = <java.lang.System: java.io.PrintStream out>;
+
+        $i31 = r1.<net.sourceforge.plantuml.sudoku.dlx_solver: int x>;
+
+        virtualinvoke $r12.<java.io.PrintStream: void println(int)>($i31);
+
+     label111:
+        b530 = 30;
+
+     label112:
+        goto label002;
+
+     label113:
+        return r176;
+    }
+
+    int shuffle()
+    {
+        net.sourceforge.plantuml.sudoku.dlx_solver r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, $i39, $i40, $i41, $i42, $i43, $i45, $i46, $i50, $i51, $i52, $i53, $i54, $i55, $i56, $i57, $i58, $i59, $i60, $i61, $i63, $i64, $i68, $i69, $i70, $i71, $i72, $i73, $i74, $i75, $i76, $i77, $i78, $i79, $i80, $i81, $i82, $i83, $i84, $i85, $i86, $i87, $i88, $i89, $i90, $i91, $i92, $i96, $i97, $i98, $i99, $i100, $i101, $i102, $i103, $i104, $i105, $i106, $i107, $i111, $i112, $i113, $i114, $i115, $i116, $i117, $i118, $i119, $i120, $i121, $i122, $i123, $i124, $i125, $i126, $i127, $i128, $i129, $i130, $i131, $i132, $i133, $i134, $i135, $i136, $i137, $i138, $i139, $i140, $i141, $i142, $i143, $i144, $i146, $i147, $i151, $i152, $i153, $i154, $i155, $i156, $i157, $i158, $i159, $i160, $i161, $i162, $i164, $i165, $i169, $i170, $i171, $i172, $i173, $i174, $i175, $i176, $i177, $i178, $i179, $i180, $i181, $i182, $i183, $i184, $i185, $i186, $i187, $i188, $i189, $i190, $i191, $i192, $i193, $i194, $i195, $i196, $i197, $i198, $i199, $i200, $i201, $i202, $i204, $i205, $i209, $i210, $i211, $i212, $i213, $i214, $i215, $i216, $i217, $i218, $i219, $i220, $i222, $i223, $i227;
+        int[] $r1, $r2, $r3, $r5, $r6, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r20, $r21, $r23, $r24, $r25, $r26, $r27, $r28, $r29, $r31, $r32, $r34, $r35, $r37, $r38, $r39, $r40, $r41, $r42, $r43, $r44, $r45, $r46, $r47, $r48, $r49, $r50, $r52, $r53, $r55, $r56, $r58, $r59, $r60, $r61, $r62, $r63, $r64, $r65, $r66, $r67, $r68, $r69, $r70;
+        int[][] $r4, $r7, $r19, $r22, $r30, $r33, $r36, $r51, $r54, $r57;
+        long $l44, $l47, $l48, $l49, $l62, $l65, $l66, $l67, $l93, $l94, $l95, $l108, $l109, $l110, $l145, $l148, $l149, $l150, $l163, $l166, $l167, $l168, $l203, $l206, $l207, $l208, $l221, $l224, $l225, $l226;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.dlx_solver;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label01:
+        $i1 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i0 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i1 > $i0 goto label04;
+
+        $l203 = virtualinvoke r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l207 = $l203 >> 8;
+
+        $r66 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mc>;
+
+        $i204 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i205 = $r66[$i204];
+
+        $l206 = (long) $i205;
+
+        $l208 = $l207 & $l206;
+
+        $i209 = (int) $l208;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i209;
+
+     label02:
+        $i211 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i210 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        if $i211 < $i210 goto label03;
+
+        $l221 = virtualinvoke r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l225 = $l221 >> 8;
+
+        $r70 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mc>;
+
+        $i222 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i223 = $r70[$i222];
+
+        $l224 = (long) $i223;
+
+        $l226 = $l225 & $l224;
+
+        $i227 = (int) $l226;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i227;
+
+        goto label02;
+
+     label03:
+        $i212 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i213 = $i212 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i213;
+
+        $r68 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i216 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r67 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i214 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i215 = $r67[$i214];
+
+        $r68[$i216] = $i215;
+
+        $r69 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i218 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i217 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r69[$i218] = $i217;
+
+        $i219 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i220 = $i219 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i220;
+
+        goto label01;
+
+     label04:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = 1;
+
+     label05:
+        $i3 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i2 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i3 > $i2 goto label06;
+
+        $r63 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i197 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r63[$i197] = 0;
+
+        $r65 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T>;
+
+        $i200 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r64 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $i198 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i199 = $r64[$i198];
+
+        $r65[$i200] = $i199;
+
+        $i201 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i202 = $i201 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i202;
+
+        goto label05;
+
+     label06:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = 1;
+
+     label07:
+        $i5 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i4 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i5 > $i4 goto label08;
+
+        $r62 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc>;
+
+        $r60 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i191 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i194 = $r60[$i191];
+
+        $r61 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T>;
+
+        $i192 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i193 = $r61[$i192];
+
+        $r62[$i194] = $i193;
+
+        $i195 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i196 = $i195 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i196;
+
+        goto label07;
+
+     label08:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = 1;
+
+     label09:
+        $i7 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i6 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int n>;
+
+        if $i7 > $i6 goto label12;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label10:
+        $i172 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r50 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i170 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i171 = $r50[$i170];
+
+        if $i172 > $i171 goto label11;
+
+        $r53 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $r51 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i175 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r52 = $r51[$i175];
+
+        $i176 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i177 = $r52[$i176];
+
+        $i178 = $r53[$i177];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i178;
+
+        $r54 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i179 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r55 = $r54[$i179];
+
+        $i181 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i180 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r55[$i181] = $i180;
+
+        $r56 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i182 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i183 = $r56[$i182];
+
+        $i184 = $i183 + 1;
+
+        $r56[$i182] = $i184;
+
+        $r57 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i185 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r59 = $r57[$i185];
+
+        $r58 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i186 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i188 = $r58[$i186];
+
+        $i187 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r59[$i188] = $i187;
+
+        $i189 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i190 = $i189 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i190;
+
+        goto label10;
+
+     label11:
+        $i173 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i174 = $i173 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i174;
+
+        goto label09;
+
+     label12:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label13:
+        $i9 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i8 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int n>;
+
+        if $i9 > $i8 goto label16;
+
+        $l145 = virtualinvoke r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l149 = $l145 >> 8;
+
+        $r45 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mr>;
+
+        $i146 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i147 = $r45[$i146];
+
+        $l148 = (long) $i147;
+
+        $l150 = $l149 & $l148;
+
+        $i151 = (int) $l150;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i151;
+
+     label14:
+        $i153 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i152 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        if $i153 < $i152 goto label15;
+
+        $l163 = virtualinvoke r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l167 = $l163 >> 8;
+
+        $r49 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mr>;
+
+        $i164 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i165 = $r49[$i164];
+
+        $l166 = (long) $i165;
+
+        $l168 = $l167 & $l166;
+
+        $i169 = (int) $l168;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i169;
+
+        goto label14;
+
+     label15:
+        $i154 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i155 = $i154 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i155;
+
+        $r47 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i158 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r46 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i156 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i157 = $r46[$i156];
+
+        $r47[$i158] = $i157;
+
+        $r48 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i160 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i159 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r48[$i160] = $i159;
+
+        $i161 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i162 = $i161 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i162;
+
+        goto label13;
+
+     label16:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = 1;
+
+     label17:
+        $i11 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i10 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int n>;
+
+        if $i11 > $i10 goto label18;
+
+        $r42 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i139 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r42[$i139] = 0;
+
+        $r44 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T>;
+
+        $i142 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r43 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $i140 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i141 = $r43[$i140];
+
+        $r44[$i142] = $i141;
+
+        $i143 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i144 = $i143 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i144;
+
+        goto label17;
+
+     label18:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = 1;
+
+     label19:
+        $i13 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i12 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int n>;
+
+        if $i13 > $i12 goto label20;
+
+        $r41 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur>;
+
+        $r39 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i133 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i136 = $r39[$i133];
+
+        $r40 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T>;
+
+        $i134 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i135 = $r40[$i134];
+
+        $r41[$i136] = $i135;
+
+        $i137 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i138 = $i137 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i138;
+
+        goto label19;
+
+     label20:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = 1;
+
+     label21:
+        $i15 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i14 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i15 > $i14 goto label24;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label22:
+        $i114 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r29 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i112 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i113 = $r29[$i112];
+
+        if $i114 > $i113 goto label23;
+
+        $r32 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $r30 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i117 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r31 = $r30[$i117];
+
+        $i118 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i119 = $r31[$i118];
+
+        $i120 = $r32[$i119];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i120;
+
+        $r33 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i121 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r34 = $r33[$i121];
+
+        $i123 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i122 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r34[$i123] = $i122;
+
+        $r35 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i124 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i125 = $r35[$i124];
+
+        $i126 = $i125 + 1;
+
+        $r35[$i124] = $i126;
+
+        $r36 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i127 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r38 = $r36[$i127];
+
+        $r37 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i128 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i130 = $r37[$i128];
+
+        $i129 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r38[$i130] = $i129;
+
+        $i131 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i132 = $i131 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i132;
+
+        goto label22;
+
+     label23:
+        $i115 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i116 = $i115 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i116;
+
+        goto label21;
+
+     label24:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = 1;
+
+     label25:
+        $i17 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i16 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int n>;
+
+        if $i17 > $i16 goto label34;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label26:
+        $i71 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r16 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i69 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i70 = $r16[$i69];
+
+        if $i71 > $i70 goto label29;
+
+        $l93 = virtualinvoke r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l94 = $l93 >> 8;
+
+        $l95 = $l94 & 7L;
+
+        $i96 = (int) $l95;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i96;
+
+     label27:
+        $i98 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i97 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        if $i98 < $i97 goto label28;
+
+        $l108 = virtualinvoke r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l109 = $l108 >> 8;
+
+        $l110 = $l109 & 7L;
+
+        $i111 = (int) $l110;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i111;
+
+        goto label27;
+
+     label28:
+        $i99 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i100 = $i99 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i100;
+
+        $r27 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i103 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r26 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i101 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i102 = $r26[$i101];
+
+        $r27[$i103] = $i102;
+
+        $r28 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i105 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i104 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r28[$i105] = $i104;
+
+        $i106 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i107 = $i106 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i107;
+
+        goto label26;
+
+     label29:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label30:
+        $i74 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r17 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i72 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i73 = $r17[$i72];
+
+        if $i74 > $i73 goto label31;
+
+        $r25 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T>;
+
+        $i90 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r22 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i86 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r24 = $r22[$i86];
+
+        $r23 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i87 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i88 = $r23[$i87];
+
+        $i89 = $r24[$i88];
+
+        $r25[$i90] = $i89;
+
+        $i91 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i92 = $i91 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i92;
+
+        goto label30;
+
+     label31:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label32:
+        $i77 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r18 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols>;
+
+        $i75 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i76 = $r18[$i75];
+
+        if $i77 > $i76 goto label33;
+
+        $r19 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col>;
+
+        $i80 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $r21 = $r19[$i80];
+
+        $i83 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r20 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T>;
+
+        $i81 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i82 = $r20[$i81];
+
+        $r21[$i83] = $i82;
+
+        $i84 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i85 = $i84 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i85;
+
+        goto label32;
+
+     label33:
+        $i78 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r>;
+
+        $i79 = $i78 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int r> = $i79;
+
+        goto label25;
+
+     label34:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = 1;
+
+     label35:
+        $i19 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i18 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int m>;
+
+        if $i19 > $i18 goto label44;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label36:
+        $i22 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r1 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i20 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i21 = $r1[$i20];
+
+        if $i22 > $i21 goto label39;
+
+        $l44 = virtualinvoke r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l48 = $l44 >> 8;
+
+        $r11 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mw>;
+
+        $i45 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i46 = $r11[$i45];
+
+        $l47 = (long) $i46;
+
+        $l49 = $l48 & $l47;
+
+        $i50 = (int) $l49;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i50;
+
+     label37:
+        $i52 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i51 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        if $i52 < $i51 goto label38;
+
+        $l62 = virtualinvoke r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long MWC()>();
+
+        $l66 = $l62 >> 8;
+
+        $r15 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mw>;
+
+        $i63 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int N>;
+
+        $i64 = $r15[$i63];
+
+        $l65 = (long) $i64;
+
+        $l67 = $l66 & $l65;
+
+        $i68 = (int) $l67;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i68;
+
+        goto label37;
+
+     label38:
+        $i53 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i54 = $i53 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a> = $i54;
+
+        $r13 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i57 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r12 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i55 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i56 = $r12[$i55];
+
+        $r13[$i57] = $i56;
+
+        $r14 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i59 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int a>;
+
+        $i58 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r14[$i59] = $i58;
+
+        $i60 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i61 = $i60 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i61;
+
+        goto label36;
+
+     label39:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label40:
+        $i25 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r2 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i23 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i24 = $r2[$i23];
+
+        if $i25 > $i24 goto label41;
+
+        $r10 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T>;
+
+        $i41 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r7 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i37 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r9 = $r7[$i37];
+
+        $r8 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P>;
+
+        $i38 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i39 = $r8[$i38];
+
+        $i40 = $r9[$i39];
+
+        $r10[$i41] = $i40;
+
+        $i42 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i43 = $i42 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i43;
+
+        goto label40;
+
+     label41:
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = 1;
+
+     label42:
+        $i28 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r3 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows>;
+
+        $i26 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i27 = $r3[$i26];
+
+        if $i28 > $i27 goto label43;
+
+        $r4 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row>;
+
+        $i31 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $r6 = $r4[$i31];
+
+        $i34 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $r5 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T>;
+
+        $i32 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i33 = $r5[$i32];
+
+        $r6[$i34] = $i33;
+
+        $i35 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i>;
+
+        $i36 = $i35 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int i> = $i36;
+
+        goto label42;
+
+     label43:
+        $i29 = r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c>;
+
+        $i30 = $i29 + 1;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int c> = $i30;
+
+        goto label35;
+
+     label44:
+        return 0;
+    }
+
+    public void <init>(java.util.Random)
+    {
+        net.sourceforge.plantuml.sudoku.dlx_solver r0;
+        int[][] $r1, $r2, $r5, $r6;
+        int[] $r3, $r4, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16;
+        long[] $r17;
+        char[] $r18;
+        java.util.Random r19;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.dlx_solver;
+
+        r19 := @parameter0: java.util.Random;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int rnd> = 0;
+
+        $r1 = newmultiarray (int)[73][73];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A0> = $r1;
+
+        $r2 = newmultiarray (int)[73][73];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] A> = $r2;
+
+        $r3 = newarray (int)[16393];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Rows> = $r3;
+
+        $r4 = newarray (int)[262153];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Cols> = $r4;
+
+        $r5 = newmultiarray (int)[16393][73];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Row> = $r5;
+
+        $r6 = newmultiarray (int)[262153][5];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[][] Col> = $r6;
+
+        $r7 = newarray (int)[262153];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Ur> = $r7;
+
+        $r8 = newarray (int)[16393];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Uc> = $r8;
+
+        $r9 = newarray (int)[262153];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] V> = $r9;
+
+        $r10 = newarray (int)[4105];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] C> = $r10;
+
+        $r11 = newarray (int)[4105];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] I> = $r11;
+
+        $r12 = newarray (int)[262153];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] T> = $r12;
+
+        $r13 = newarray (int)[262153];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] P> = $r13;
+
+        $r14 = newarray (int)[9];
+
+        $r14[0] = 0;
+
+        $r14[1] = 1;
+
+        $r14[2] = 63;
+
+        $r14[3] = 1023;
+
+        $r14[4] = 4095;
+
+        $r14[5] = 16383;
+
+        $r14[6] = 46655;
+
+        $r14[7] = 131071;
+
+        $r14[8] = 262143;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mr> = $r14;
+
+        $r15 = newarray (int)[9];
+
+        $r15[0] = 0;
+
+        $r15[1] = 1;
+
+        $r15[2] = 63;
+
+        $r15[3] = 511;
+
+        $r15[4] = 1023;
+
+        $r15[5] = 4095;
+
+        $r15[6] = 8191;
+
+        $r15[7] = 16383;
+
+        $r15[8] = 16383;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mc> = $r15;
+
+        $r16 = newarray (int)[9];
+
+        $r16[0] = 0;
+
+        $r16[1] = 1;
+
+        $r16[2] = 3;
+
+        $r16[3] = 15;
+
+        $r16[4] = 15;
+
+        $r16[5] = 31;
+
+        $r16[6] = 63;
+
+        $r16[7] = 63;
+
+        $r16[8] = 63;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int[] Mw> = $r16;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int nocheck> = 0;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int rnd> = 0;
+
+        $r17 = newarray (long)[4105];
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: long[] Node> = $r17;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: int N> = 0;
+
+        $r18 = newarray (char)[65];
+
+        $r18[0] = 46;
+
+        $r18[1] = 49;
+
+        $r18[2] = 50;
+
+        $r18[3] = 51;
+
+        $r18[4] = 52;
+
+        $r18[5] = 53;
+
+        $r18[6] = 54;
+
+        $r18[7] = 55;
+
+        $r18[8] = 56;
+
+        $r18[9] = 57;
+
+        $r18[10] = 65;
+
+        $r18[11] = 66;
+
+        $r18[12] = 67;
+
+        $r18[13] = 68;
+
+        $r18[14] = 69;
+
+        $r18[15] = 70;
+
+        $r18[16] = 71;
+
+        $r18[17] = 72;
+
+        $r18[18] = 73;
+
+        $r18[19] = 74;
+
+        $r18[20] = 75;
+
+        $r18[21] = 76;
+
+        $r18[22] = 77;
+
+        $r18[23] = 78;
+
+        $r18[24] = 79;
+
+        $r18[25] = 80;
+
+        $r18[26] = 81;
+
+        $r18[27] = 82;
+
+        $r18[28] = 83;
+
+        $r18[29] = 84;
+
+        $r18[30] = 85;
+
+        $r18[31] = 86;
+
+        $r18[32] = 87;
+
+        $r18[33] = 88;
+
+        $r18[34] = 89;
+
+        $r18[35] = 90;
+
+        $r18[36] = 97;
+
+        $r18[37] = 98;
+
+        $r18[38] = 99;
+
+        $r18[39] = 100;
+
+        $r18[40] = 101;
+
+        $r18[41] = 102;
+
+        $r18[42] = 103;
+
+        $r18[43] = 104;
+
+        $r18[44] = 105;
+
+        $r18[45] = 106;
+
+        $r18[46] = 107;
+
+        $r18[47] = 108;
+
+        $r18[48] = 109;
+
+        $r18[49] = 110;
+
+        $r18[50] = 111;
+
+        $r18[51] = 112;
+
+        $r18[52] = 113;
+
+        $r18[53] = 114;
+
+        $r18[54] = 115;
+
+        $r18[55] = 116;
+
+        $r18[56] = 117;
+
+        $r18[57] = 118;
+
+        $r18[58] = 119;
+
+        $r18[59] = 120;
+
+        $r18[60] = 121;
+
+        $r18[61] = 122;
+
+        $r18[62] = 35;
+
+        $r18[63] = 42;
+
+        $r18[64] = 126;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: char[] L> = $r18;
+
+        r0.<net.sourceforge.plantuml.sudoku.dlx_solver: java.util.Random random> = r19;
+
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int END> = 30;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int NEXT_TRY> = 16;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int M44> = 15;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int M3> = 14;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int M22> = 13;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int RESTART> = 12;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int M7> = 11;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int M6> = 10;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int M4> = 4096;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int M2> = 64;
+
+        <net.sourceforge.plantuml.sudoku.dlx_solver: int M> = 8;
+
+        return;
+    }
+}

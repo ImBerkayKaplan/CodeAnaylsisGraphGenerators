@@ -1,0 +1,277 @@
+public class net.sourceforge.plantuml.code.ArobaseStringCompressor extends java.lang.Object implements net.sourceforge.plantuml.code.StringCompressor
+{
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 p;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.code.ArobaseStringCompressor r0;
+
+        r0 := @this: net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.String compress(java.lang.String) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.preproc.UncommentReadLine $r0;
+        java.io.StringReader $r1;
+        java.lang.String r2, $r9, $r11, $r12, $r13, $r14, $r15;
+        net.sourceforge.plantuml.preproc.ReadLine $r3;
+        java.lang.StringBuilder $r5, $r7;
+        net.sourceforge.plantuml.code.ArobaseStringCompressor r10;
+        boolean $z0, $z1, z2;
+        net.sourceforge.plantuml.StringLocated $r16;
+
+        r10 := @this: net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new net.sourceforge.plantuml.preproc.UncommentReadLine;
+
+        $r1 = new java.io.StringReader;
+
+        specialinvoke $r1.<java.io.StringReader: void <init>(java.lang.String)>(r2);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.preproc.ReadLineReader: net.sourceforge.plantuml.preproc.ReadLine create(java.io.Reader,java.lang.String)>($r1, "COMPRESS");
+
+        specialinvoke $r0.<net.sourceforge.plantuml.preproc.UncommentReadLine: void <init>(net.sourceforge.plantuml.preproc.ReadLine)>($r3);
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        z2 = 0;
+
+     label1:
+        $r16 = interfaceinvoke $r0.<net.sourceforge.plantuml.preproc.ReadLine: net.sourceforge.plantuml.StringLocated readLine()>();
+
+        if $r16 == null goto label4;
+
+        specialinvoke r10.<net.sourceforge.plantuml.code.ArobaseStringCompressor: void append(java.lang.StringBuilder,net.sourceforge.plantuml.StringLocated)>($r7, $r16);
+
+        $r13 = virtualinvoke $r16.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = virtualinvoke $r13.<java.lang.String: boolean startsWith(java.lang.String)>("@startuml");
+
+        if $z0 == 0 goto label2;
+
+        z2 = 1;
+
+        goto label1;
+
+     label2:
+        $r14 = virtualinvoke $r16.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z1 = virtualinvoke $r14.<java.lang.String: boolean startsWith(java.lang.String)>("@enduml");
+
+        if $z1 == 0 goto label3;
+
+        $r15 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r15;
+
+     label3:
+        if z2 == 0 goto label1;
+
+        specialinvoke r10.<net.sourceforge.plantuml.code.ArobaseStringCompressor: void append(java.lang.StringBuilder,net.sourceforge.plantuml.StringLocated)>($r5, $r16);
+
+        goto label1;
+
+     label4:
+        if z2 != 0 goto label5;
+
+        $r11 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r12 = specialinvoke r10.<net.sourceforge.plantuml.code.ArobaseStringCompressor: java.lang.String compressOld(java.lang.String)>($r11);
+
+        return $r12;
+
+     label5:
+        $r9 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r9;
+    }
+
+    private void append(java.lang.StringBuilder, net.sourceforge.plantuml.StringLocated)
+    {
+        java.lang.StringBuilder r0;
+        int $i0;
+        net.sourceforge.plantuml.StringLocated r1;
+        java.lang.String $r2;
+        net.sourceforge.plantuml.code.ArobaseStringCompressor r5;
+
+        r5 := @this: net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        r1 := @parameter1: net.sourceforge.plantuml.StringLocated;
+
+        $i0 = virtualinvoke r0.<java.lang.StringBuilder: int length()>();
+
+        if $i0 <= 0 goto label1;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+     label1:
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r2);
+
+        return;
+    }
+
+    private java.lang.String compressOld(java.lang.String) throws java.io.IOException
+    {
+        java.lang.String r0, $r4, $r5;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        net.sourceforge.plantuml.command.regex.Matcher2 r2;
+        boolean $z0;
+        net.sourceforge.plantuml.code.ArobaseStringCompressor r3;
+
+        r3 := @this: net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.code.ArobaseStringCompressor: net.sourceforge.plantuml.command.regex.Pattern2 p>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r0);
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 == 0 goto label1;
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(2);
+
+        $r5 = specialinvoke r3.<net.sourceforge.plantuml.code.ArobaseStringCompressor: java.lang.String clean(java.lang.String)>($r4);
+
+        return $r5;
+
+     label1:
+        return "";
+    }
+
+    public java.lang.String decompress(java.lang.String)
+    {
+        net.sourceforge.plantuml.code.ArobaseStringCompressor r0;
+        java.lang.String r1, r11, r12, r13;
+        boolean $z0, $z1;
+        java.lang.StringBuilder $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10;
+
+        r0 := @this: net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        r1 := @parameter0: java.lang.String;
+
+        r11 = specialinvoke r0.<net.sourceforge.plantuml.code.ArobaseStringCompressor: java.lang.String clean(java.lang.String)>(r1);
+
+        $z0 = virtualinvoke r11.<java.lang.String: boolean startsWith(java.lang.String)>("@start");
+
+        if $z0 == 0 goto label1;
+
+        return r11;
+
+     label1:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("@startuml\n");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r11);
+
+        r12 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $z1 = virtualinvoke r12.<java.lang.String: boolean endsWith(java.lang.String)>("\n");
+
+        if $z1 != 0 goto label2;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r12);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n");
+
+        r12 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label2:
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r12);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("@enduml");
+
+        r13 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return r13;
+    }
+
+    private java.lang.String clean(java.lang.String)
+    {
+        net.sourceforge.plantuml.code.ArobaseStringCompressor r0;
+        java.lang.String r1, r2, r3, r4, r5, r6;
+
+        r0 := @this: net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trin(java.lang.String)>(r1);
+
+        r3 = specialinvoke r0.<net.sourceforge.plantuml.code.ArobaseStringCompressor: java.lang.String clean1(java.lang.String)>(r2);
+
+        r4 = virtualinvoke r3.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("@enduml[^\\n\\r]*", "");
+
+        r5 = virtualinvoke r4.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("@startuml[^\\n\\r]*", "");
+
+        r6 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trin(java.lang.String)>(r5);
+
+        return r6;
+    }
+
+    private java.lang.String clean1(java.lang.String)
+    {
+        java.lang.String r0, $r3;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        net.sourceforge.plantuml.command.regex.Matcher2 r2;
+        boolean $z0;
+        net.sourceforge.plantuml.code.ArobaseStringCompressor r4;
+
+        r4 := @this: net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.code.ArobaseStringCompressor: net.sourceforge.plantuml.command.regex.Pattern2 p>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r0);
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        if $z0 == 0 goto label1;
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(2);
+
+        return $r3;
+
+     label1:
+        return r0;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.command.regex.Pattern2 $r0;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("(?s)^[%s]*(@startuml[^\\n\\r]*)?[%s]*(.*?)[%s]*(@enduml)?[%s]*$");
+
+        <net.sourceforge.plantuml.code.ArobaseStringCompressor: net.sourceforge.plantuml.command.regex.Pattern2 p> = $r0;
+
+        return;
+    }
+}

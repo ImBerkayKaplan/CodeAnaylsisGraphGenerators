@@ -1,0 +1,810 @@
+public class net.sourceforge.plantuml.flowdiagram.FlowDiagram extends net.sourceforge.plantuml.UmlDiagram implements net.sourceforge.plantuml.graphic.TextBlock
+{
+    private static double SINGLE_SIZE_X;
+    private static double SINGLE_SIZE_Y;
+    private net.sourceforge.plantuml.golem.TilesField field;
+    private final java.util.Map tilesBoxes;
+    private net.sourceforge.plantuml.golem.Tile lastTile;
+
+    public java.awt.geom.Rectangle2D getInnerPosition(java.lang.String, net.sourceforge.plantuml.graphic.StringBounder, net.sourceforge.plantuml.graphic.InnerStrategy)
+    {
+        java.lang.UnsupportedOperationException $r0;
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r1;
+        java.lang.String r2;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+        net.sourceforge.plantuml.graphic.InnerStrategy r4;
+
+        r1 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r2 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: net.sourceforge.plantuml.graphic.StringBounder;
+
+        r4 := @parameter2: net.sourceforge.plantuml.graphic.InnerStrategy;
+
+        $r0 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r0.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r0;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("Flow Diagram");
+
+        return $r0;
+    }
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource)
+    {
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType $r3;
+        java.util.HashMap $r4;
+
+        r0 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        $r3 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType FLOW>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.UmlDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType)>(r1, r2, $r3);
+
+        $r4 = new java.util.HashMap;
+
+        specialinvoke $r4.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.util.Map tilesBoxes> = $r4;
+
+        return;
+    }
+
+    public void lineSimple(net.sourceforge.plantuml.golem.TileGeometry, java.lang.String, java.lang.String)
+    {
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r0;
+        net.sourceforge.plantuml.golem.TilesField $r1, $r4, $r11, $r13;
+        net.sourceforge.plantuml.golem.TileGeometry r2;
+        net.sourceforge.plantuml.golem.Tile $r3, r14;
+        net.sourceforge.plantuml.flowdiagram.ActivityBox $r5;
+        java.lang.String r6, r7;
+        java.util.Map $r9, $r12;
+
+        r0 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.golem.TileGeometry;
+
+        r6 := @parameter1: java.lang.String;
+
+        r7 := @parameter2: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field>;
+
+        if $r1 != null goto label1;
+
+        $r11 = new net.sourceforge.plantuml.golem.TilesField;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.golem.TilesField: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field> = $r11;
+
+        $r12 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.util.Map tilesBoxes>;
+
+        interfaceinvoke $r12.<java.util.Map: void clear()>();
+
+        $r13 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field>;
+
+        r14 = virtualinvoke $r13.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Tile getRoot()>();
+
+        goto label2;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field>;
+
+        $r3 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.Tile lastTile>;
+
+        r14 = virtualinvoke $r4.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Tile createTile(net.sourceforge.plantuml.golem.Tile,net.sourceforge.plantuml.golem.TileGeometry)>($r3, r2);
+
+     label2:
+        $r5 = new net.sourceforge.plantuml.flowdiagram.ActivityBox;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.flowdiagram.ActivityBox: void <init>(net.sourceforge.plantuml.golem.Tile,java.lang.String,java.lang.String)>(r14, r6, r7);
+
+        $r9 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.util.Map tilesBoxes>;
+
+        interfaceinvoke $r9.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r14, $r5);
+
+        r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.Tile lastTile> = r14;
+
+        return;
+    }
+
+    public void linkSimple(net.sourceforge.plantuml.golem.TileGeometry, java.lang.String)
+    {
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.golem.Tile r2, $r4;
+        net.sourceforge.plantuml.golem.TileGeometry r3;
+        net.sourceforge.plantuml.golem.TilesField $r5;
+
+        r0 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r3 := @parameter0: net.sourceforge.plantuml.golem.TileGeometry;
+
+        r1 := @parameter1: java.lang.String;
+
+        r2 = specialinvoke r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.Tile getTileById(java.lang.String)>(r1);
+
+        $r5 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field>;
+
+        $r4 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.Tile lastTile>;
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.golem.TilesField: void addPath(net.sourceforge.plantuml.golem.Tile,net.sourceforge.plantuml.golem.Tile,net.sourceforge.plantuml.golem.TileGeometry)>($r4, r2, r3);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.golem.Tile getTileById(java.lang.String)
+    {
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r0;
+        java.util.Map $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0, $z1;
+        java.lang.IllegalArgumentException $r4;
+        java.lang.String r5, $r10;
+        java.lang.Object $r6, $r8, $r11;
+        java.util.Map$Entry r7;
+        net.sourceforge.plantuml.flowdiagram.ActivityBox $r9;
+        net.sourceforge.plantuml.golem.Tile $r12;
+
+        r0 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r5 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.util.Map tilesBoxes>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set entrySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (java.util.Map$Entry) $r6;
+
+        $r8 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r9 = (net.sourceforge.plantuml.flowdiagram.ActivityBox) $r8;
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.flowdiagram.ActivityBox: java.lang.String getId()>();
+
+        $z1 = virtualinvoke $r10.<java.lang.String: boolean equals(java.lang.Object)>(r5);
+
+        if $z1 == 0 goto label2;
+
+        $r11 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r12 = (net.sourceforge.plantuml.golem.Tile) $r11;
+
+        return $r12;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r4 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r4.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>(r5);
+
+        throw $r4;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.FileFormatOption r0;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r1, $r6, $r8, $r9, $r10;
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r2;
+        net.sourceforge.plantuml.ISkinParam $r3;
+        net.sourceforge.plantuml.graphic.StringBounder $r4;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r5;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r7;
+        boolean $z0;
+        long $l0;
+        java.lang.String $r11;
+
+        r2 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder imageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r0);
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.graphic.StringBounder getDefaultStringBounder(net.sourceforge.plantuml.SvgCharSizeHack)>($r3);
+
+        $r5 = virtualinvoke r2.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r4);
+
+        $r6 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder dimension(net.sourceforge.plantuml.awt.geom.Dimension2D)>($r5);
+
+        $r7 = virtualinvoke r2.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getDefaultMargins()>();
+
+        $r8 = virtualinvoke $r6.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder margin(net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft)>($r7);
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: boolean isWithMetadata()>();
+
+        if $z0 == 0 goto label1;
+
+        $r11 = virtualinvoke r2.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.lang.String getMetadata()>();
+
+        goto label2;
+
+     label1:
+        $r11 = null;
+
+     label2:
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder metadata(java.lang.String)>($r11);
+
+        $l0 = virtualinvoke r2.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: long seed()>();
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder seed(long)>($l0);
+
+        return $r10;
+    }
+
+    protected net.sourceforge.plantuml.core.ImageData exportDiagramInternal(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r3;
+        java.io.OutputStream r4;
+        net.sourceforge.plantuml.core.ImageData $r5;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r4 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>(r0);
+
+        $r5 = virtualinvoke $r3.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r4);
+
+        return $r5;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r0;
+        net.sourceforge.plantuml.golem.MinMaxGolem r1;
+        int $i0, $i1, i2, i3;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, $d24, d25, $d26, $d27, $d28, d29, $d30, $d31, $d32, $d33, $d34, $d35, $d36, $d37, $d38, $d39, $d40, $d41, d44, d45;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        java.util.Map $r3;
+        java.util.Set $r4;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r5, $r6;
+        net.sourceforge.plantuml.ugraphic.UBackground $r7;
+        net.sourceforge.plantuml.ugraphic.UEllipse $r8;
+        net.sourceforge.plantuml.golem.TilesField $r9, $r25;
+        java.util.List $r10;
+        java.lang.Object $r11, $r23, $r24, $r26;
+        java.awt.geom.Point2D $r12, $r15, r43, r44;
+        net.sourceforge.plantuml.golem.Tile $r13, $r16, r32;
+        net.sourceforge.plantuml.golem.TileGeometry $r14, $r17;
+        net.sourceforge.plantuml.ugraphic.ULine $r18;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r19, $r21, $r27;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r20, $r22, $r28, r29, r36, r37;
+        java.util.Iterator r30, r39;
+        java.util.Map$Entry r31;
+        net.sourceforge.plantuml.golem.Position r33;
+        net.sourceforge.plantuml.flowdiagram.ActivityBox r34;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r35;
+        net.sourceforge.plantuml.golem.Path r40;
+        net.sourceforge.plantuml.golem.TileArea r41, r42;
+
+        r0 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r29 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.MinMaxGolem getMinMax()>();
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.golem.MinMaxGolem: int getMinX()>();
+
+        $d1 = (double) $i0;
+
+        $d0 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_X>;
+
+        $d2 = $d1 * $d0;
+
+        d44 = 0.0 - $d2;
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.golem.MinMaxGolem: int getMinY()>();
+
+        $d4 = (double) $i1;
+
+        $d3 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_Y>;
+
+        $d5 = $d4 * $d3;
+
+        d45 = 0.0 - $d5;
+
+        r2 = interfaceinvoke r29.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.util.Map tilesBoxes>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Set entrySet()>();
+
+        r30 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r30.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r23 = interfaceinvoke r30.<java.util.Iterator: java.lang.Object next()>();
+
+        r31 = (java.util.Map$Entry) $r23;
+
+        $r24 = interfaceinvoke r31.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r32 = (net.sourceforge.plantuml.golem.Tile) $r24;
+
+        $r25 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field>;
+
+        r33 = virtualinvoke $r25.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>(r32);
+
+        i2 = virtualinvoke r33.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        i3 = virtualinvoke r33.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        $r26 = interfaceinvoke r31.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r34 = (net.sourceforge.plantuml.flowdiagram.ActivityBox) $r26;
+
+        r35 = virtualinvoke r34.<net.sourceforge.plantuml.flowdiagram.ActivityBox: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r2);
+
+        $d22 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_X>;
+
+        $d23 = $d22 * 2.0;
+
+        $d24 = virtualinvoke r35.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        d25 = $d23 - $d24;
+
+        $d26 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_Y>;
+
+        $d27 = $d26 * 2.0;
+
+        $d28 = virtualinvoke r35.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d29 = $d27 - $d28;
+
+        $r27 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d31 = (double) i2;
+
+        $d30 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_X>;
+
+        $d32 = $d31 * $d30;
+
+        $d34 = d44 + $d32;
+
+        $d33 = d25 / 2.0;
+
+        $d41 = $d34 + $d33;
+
+        $d36 = (double) i3;
+
+        $d35 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_Y>;
+
+        $d37 = $d36 * $d35;
+
+        $d39 = d45 + $d37;
+
+        $d38 = d29 / 2.0;
+
+        $d40 = $d39 + $d38;
+
+        specialinvoke $r27.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d41, $d40);
+
+        $r28 = interfaceinvoke r29.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r27);
+
+        virtualinvoke r34.<net.sourceforge.plantuml.flowdiagram.ActivityBox: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r28);
+
+        goto label1;
+
+     label2:
+        $r5 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor MY_RED>;
+
+        r36 = interfaceinvoke r29.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r5);
+
+        $r6 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor MY_RED>;
+
+        $r7 = interfaceinvoke $r6.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        r37 = interfaceinvoke r36.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r7);
+
+        $r8 = new net.sourceforge.plantuml.ugraphic.UEllipse;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.ugraphic.UEllipse: void <init>(double,double)>(7.0, 7.0);
+
+        $r9 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field>;
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.golem.TilesField: java.util.List getPaths()>();
+
+        r39 = interfaceinvoke $r10.<java.util.List: java.util.Iterator iterator()>();
+
+     label3:
+        $z1 = interfaceinvoke r39.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r11 = interfaceinvoke r39.<java.util.Iterator: java.lang.Object next()>();
+
+        r40 = (net.sourceforge.plantuml.golem.Path) $r11;
+
+        r41 = virtualinvoke r40.<net.sourceforge.plantuml.golem.Path: net.sourceforge.plantuml.golem.TileArea getStart()>();
+
+        r42 = virtualinvoke r40.<net.sourceforge.plantuml.golem.Path: net.sourceforge.plantuml.golem.TileArea getDest()>();
+
+        $r12 = specialinvoke r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.awt.geom.Point2D getCenter(net.sourceforge.plantuml.golem.TileArea)>(r41);
+
+        $r13 = virtualinvoke r41.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.Tile getTile()>();
+
+        $r14 = virtualinvoke r41.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.TileGeometry getGeometry()>();
+
+        r43 = specialinvoke r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.awt.geom.Point2D movePoint(java.awt.geom.Point2D,net.sourceforge.plantuml.golem.Tile,net.sourceforge.plantuml.golem.TileGeometry,net.sourceforge.plantuml.graphic.StringBounder)>($r12, $r13, $r14, r2);
+
+        $r15 = specialinvoke r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.awt.geom.Point2D getCenter(net.sourceforge.plantuml.golem.TileArea)>(r42);
+
+        $r16 = virtualinvoke r42.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.Tile getTile()>();
+
+        $r17 = virtualinvoke r42.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.TileGeometry getGeometry()>();
+
+        r44 = specialinvoke r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.awt.geom.Point2D movePoint(java.awt.geom.Point2D,net.sourceforge.plantuml.golem.Tile,net.sourceforge.plantuml.golem.TileGeometry,net.sourceforge.plantuml.graphic.StringBounder)>($r15, $r16, $r17, r2);
+
+        $r18 = new net.sourceforge.plantuml.ugraphic.ULine;
+
+        $d6 = virtualinvoke r44.<java.awt.geom.Point2D: double getX()>();
+
+        $d7 = virtualinvoke r43.<java.awt.geom.Point2D: double getX()>();
+
+        $d8 = $d6 - $d7;
+
+        $d9 = virtualinvoke r44.<java.awt.geom.Point2D: double getY()>();
+
+        $d10 = virtualinvoke r43.<java.awt.geom.Point2D: double getY()>();
+
+        $d11 = $d9 - $d10;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.ugraphic.ULine: void <init>(double,double)>($d8, $d11);
+
+        $r19 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d12 = virtualinvoke r43.<java.awt.geom.Point2D: double getX()>();
+
+        $d13 = d44 + $d12;
+
+        $d14 = virtualinvoke r43.<java.awt.geom.Point2D: double getY()>();
+
+        $d15 = d45 + $d14;
+
+        specialinvoke $r19.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d13, $d15);
+
+        $r20 = interfaceinvoke r37.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r19);
+
+        interfaceinvoke $r20.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r18);
+
+        $r21 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d16 = virtualinvoke r44.<java.awt.geom.Point2D: double getX()>();
+
+        $d17 = d44 + $d16;
+
+        $d18 = $d17 - 3.0;
+
+        $d19 = virtualinvoke r44.<java.awt.geom.Point2D: double getY()>();
+
+        $d20 = d45 + $d19;
+
+        $d21 = $d20 - 3.0;
+
+        specialinvoke $r21.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d18, $d21);
+
+        $r22 = interfaceinvoke r37.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r21);
+
+        interfaceinvoke $r22.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r8);
+
+        goto label3;
+
+     label4:
+        return;
+    }
+
+    private java.awt.geom.Point2D getCenter(net.sourceforge.plantuml.golem.TileArea)
+    {
+        net.sourceforge.plantuml.golem.TileArea r0;
+        net.sourceforge.plantuml.golem.Tile r1;
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r2;
+        net.sourceforge.plantuml.golem.TilesField $r3;
+        net.sourceforge.plantuml.golem.Position r4;
+        int $i0, $i1;
+        double d0, d1, $d2, $d3, $d4, $d5;
+        java.awt.geom.Point2D$Double $r5;
+
+        r2 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.golem.TileArea;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.Tile getTile()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field>;
+
+        r4 = virtualinvoke $r3.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>(r1);
+
+        $i0 = virtualinvoke r4.<net.sourceforge.plantuml.golem.Position: int getCenterX()>();
+
+        d0 = (double) $i0;
+
+        $i1 = virtualinvoke r4.<net.sourceforge.plantuml.golem.Position: int getCenterY()>();
+
+        d1 = (double) $i1;
+
+        $r5 = new java.awt.geom.Point2D$Double;
+
+        $d2 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_X>;
+
+        $d5 = d0 * $d2;
+
+        $d3 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_Y>;
+
+        $d4 = d1 * $d3;
+
+        specialinvoke $r5.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d5, $d4);
+
+        return $r5;
+    }
+
+    private java.awt.geom.Point2D movePoint(java.awt.geom.Point2D, net.sourceforge.plantuml.golem.Tile, net.sourceforge.plantuml.golem.TileGeometry, net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r0;
+        net.sourceforge.plantuml.golem.Tile r1;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.graphic.StringBounder r4;
+        net.sourceforge.plantuml.flowdiagram.ActivityBox $r5;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r6;
+        double d0, d1, $d2, $d3, $d4, $d5, d6, d7;
+        java.awt.geom.Point2D r7;
+        net.sourceforge.plantuml.golem.TileGeometry r8;
+        int[] $r9;
+        int $i0, $i1;
+        java.lang.IllegalStateException $r10;
+        java.awt.geom.Point2D$Double $r11;
+
+        r0 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r7 := @parameter0: java.awt.geom.Point2D;
+
+        r1 := @parameter1: net.sourceforge.plantuml.golem.Tile;
+
+        r8 := @parameter2: net.sourceforge.plantuml.golem.TileGeometry;
+
+        r4 := @parameter3: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r2 = r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.util.Map tilesBoxes>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r5 = (net.sourceforge.plantuml.flowdiagram.ActivityBox) $r3;
+
+        r6 = virtualinvoke $r5.<net.sourceforge.plantuml.flowdiagram.ActivityBox: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r4);
+
+        d0 = virtualinvoke r6.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        d1 = virtualinvoke r6.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d6 = virtualinvoke r7.<java.awt.geom.Point2D: double getX()>();
+
+        d7 = virtualinvoke r7.<java.awt.geom.Point2D: double getY()>();
+
+        $r9 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram$1: int[] $SwitchMap$net$sourceforge$plantuml$golem$TileGeometry>;
+
+        $i0 = virtualinvoke r8.<net.sourceforge.plantuml.golem.TileGeometry: int ordinal()>();
+
+        $i1 = $r9[$i0];
+
+        tableswitch($i1)
+        {
+            case 1: goto label1;
+            case 2: goto label2;
+            case 3: goto label3;
+            case 4: goto label4;
+            default: goto label5;
+        };
+
+     label1:
+        $d5 = d1 / 2.0;
+
+        d7 = d7 + $d5;
+
+        goto label6;
+
+     label2:
+        $d4 = d1 / 2.0;
+
+        d7 = d7 - $d4;
+
+        goto label6;
+
+     label3:
+        $d3 = d0 / 2.0;
+
+        d6 = d6 + $d3;
+
+        goto label6;
+
+     label4:
+        $d2 = d0 / 2.0;
+
+        d6 = d6 - $d2;
+
+        goto label6;
+
+     label5:
+        $r10 = new java.lang.IllegalStateException;
+
+        specialinvoke $r10.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r10;
+
+     label6:
+        $r11 = new java.awt.geom.Point2D$Double;
+
+        specialinvoke $r11.<java.awt.geom.Point2D$Double: void <init>(double,double)>(d6, d7);
+
+        return $r11;
+    }
+
+    private net.sourceforge.plantuml.golem.MinMaxGolem getMinMax()
+    {
+        net.sourceforge.plantuml.golem.MinMaxGolem $r0;
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r2;
+        java.util.Map $r3;
+        java.util.Set $r4;
+        java.util.Iterator r5;
+        boolean $z0;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.golem.Tile r7;
+        net.sourceforge.plantuml.golem.TilesField $r8;
+        net.sourceforge.plantuml.golem.Position $r9;
+
+        r2 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        $r0 = new net.sourceforge.plantuml.golem.MinMaxGolem;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.golem.MinMaxGolem: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: java.util.Map tilesBoxes>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Set keySet()>();
+
+        r5 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.golem.Tile) $r6;
+
+        $r8 = r2.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.TilesField field>;
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>(r7);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.golem.MinMaxGolem: void manage(net.sourceforge.plantuml.golem.Position)>($r9);
+
+        goto label1;
+
+     label2:
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r0;
+        net.sourceforge.plantuml.golem.MinMaxGolem r1;
+        net.sourceforge.plantuml.Dimension2DDouble $r2;
+        int $i0, $i1;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+
+        r0 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.flowdiagram.FlowDiagram: net.sourceforge.plantuml.golem.MinMaxGolem getMinMax()>();
+
+        $r2 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.golem.MinMaxGolem: int getWidth()>();
+
+        $d1 = (double) $i0;
+
+        $d0 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_X>;
+
+        $d2 = $d1 * $d0;
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.golem.MinMaxGolem: int getHeight()>();
+
+        $d4 = (double) $i1;
+
+        $d3 = <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_Y>;
+
+        $d5 = $d4 * $d3;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>($d2, $d5);
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.MinMax getMinMax(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        java.lang.UnsupportedOperationException $r0;
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+
+        r1 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r0 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r0.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r0;
+    }
+
+    public net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getDefaultMargins()
+    {
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r0;
+        net.sourceforge.plantuml.flowdiagram.FlowDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.flowdiagram.FlowDiagram;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft same(double)>(0.0);
+
+        return $r0;
+    }
+
+    static void <clinit>()
+    {
+        <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_X> = 100.0;
+
+        <net.sourceforge.plantuml.flowdiagram.FlowDiagram: double SINGLE_SIZE_Y> = 35.0;
+
+        return;
+    }
+}

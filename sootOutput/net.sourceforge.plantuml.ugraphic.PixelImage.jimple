@@ -1,0 +1,492 @@
+public class net.sourceforge.plantuml.ugraphic.PixelImage extends java.lang.Object implements net.sourceforge.plantuml.ugraphic.MutableImage
+{
+    private final java.awt.image.BufferedImage bufferedImageScale1;
+    private final double scale;
+    private final net.sourceforge.plantuml.ugraphic.AffineTransformType type;
+    private java.awt.image.BufferedImage cache;
+    private static final int mask_a__;
+    private static final int mask_rgb;
+
+    public void <init>(java.awt.image.BufferedImage, net.sourceforge.plantuml.ugraphic.AffineTransformType)
+    {
+        net.sourceforge.plantuml.ugraphic.PixelImage r0;
+        java.awt.image.BufferedImage r1;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType r2;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        r1 := @parameter0: java.awt.image.BufferedImage;
+
+        r2 := @parameter1: net.sourceforge.plantuml.ugraphic.AffineTransformType;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType,double)>(r1, r2, 1.0);
+
+        return;
+    }
+
+    private void <init>(java.awt.image.BufferedImage, net.sourceforge.plantuml.ugraphic.AffineTransformType, double)
+    {
+        net.sourceforge.plantuml.ugraphic.PixelImage r0;
+        java.awt.image.BufferedImage r1;
+        double d0;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType r2, $r4;
+        java.lang.Object $r3;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        r1 := @parameter0: java.awt.image.BufferedImage;
+
+        r2 := @parameter1: net.sourceforge.plantuml.ugraphic.AffineTransformType;
+
+        d0 := @parameter2: double;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage cache> = null;
+
+        r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1> = r1;
+
+        r0.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale> = d0;
+
+        $r3 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r2);
+
+        $r4 = (net.sourceforge.plantuml.ugraphic.AffineTransformType) $r3;
+
+        r0.<net.sourceforge.plantuml.ugraphic.PixelImage: net.sourceforge.plantuml.ugraphic.AffineTransformType type> = $r4;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.MutableImage withScale(double)
+    {
+        net.sourceforge.plantuml.ugraphic.PixelImage $r0, r1;
+        double d0, $d1, $d2;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r2;
+        java.awt.image.BufferedImage $r3;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        d0 := @parameter0: double;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r3 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: net.sourceforge.plantuml.ugraphic.AffineTransformType type>;
+
+        $d1 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale>;
+
+        $d2 = $d1 * d0;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType,double)>($r3, $r2, $d2);
+
+        return $r0;
+    }
+
+    public final java.awt.image.BufferedImage getImage()
+    {
+        net.sourceforge.plantuml.ugraphic.PixelImage r0;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8;
+        byte $b0;
+        java.awt.image.BufferedImage $r1, $r2, $r3, $r4, $r5, $r6, $r13, $r14, $r15;
+        int $i1, i3, $i4, i6, $i7, $i8;
+        long $l2, $l5;
+        java.awt.geom.AffineTransform $r8;
+        java.awt.image.AffineTransformOp $r10;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r11;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $d0 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale>;
+
+        $b0 = $d0 cmpl 1.0;
+
+        if $b0 != 0 goto label1;
+
+        $r15 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        return $r15;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage cache>;
+
+        if $r1 != null goto label2;
+
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i1 = virtualinvoke $r3.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $d2 = (double) $i1;
+
+        $d1 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale>;
+
+        $d3 = $d2 * $d1;
+
+        $l2 = staticinvoke <java.lang.Math: long round(double)>($d3);
+
+        i3 = (int) $l2;
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i4 = virtualinvoke $r4.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $d5 = (double) $i4;
+
+        $d4 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale>;
+
+        $d6 = $d5 * $d4;
+
+        $l5 = staticinvoke <java.lang.Math: long round(double)>($d6);
+
+        i6 = (int) $l5;
+
+        $r5 = new java.awt.image.BufferedImage;
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i7 = virtualinvoke $r6.<java.awt.image.BufferedImage: int getType()>();
+
+        specialinvoke $r5.<java.awt.image.BufferedImage: void <init>(int,int,int)>(i3, i6, $i7);
+
+        $r8 = new java.awt.geom.AffineTransform;
+
+        specialinvoke $r8.<java.awt.geom.AffineTransform: void <init>()>();
+
+        $d8 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale>;
+
+        $d7 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale>;
+
+        virtualinvoke $r8.<java.awt.geom.AffineTransform: void scale(double,double)>($d8, $d7);
+
+        $r10 = new java.awt.image.AffineTransformOp;
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: net.sourceforge.plantuml.ugraphic.AffineTransformType type>;
+
+        $i8 = virtualinvoke $r11.<net.sourceforge.plantuml.ugraphic.AffineTransformType: int toLegacyInt()>();
+
+        specialinvoke $r10.<java.awt.image.AffineTransformOp: void <init>(java.awt.geom.AffineTransform,int)>($r8, $i8);
+
+        $r13 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $r14 = virtualinvoke $r10.<java.awt.image.AffineTransformOp: java.awt.image.BufferedImage filter(java.awt.image.BufferedImage,java.awt.image.BufferedImage)>($r13, $r5);
+
+        r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage cache> = $r14;
+
+     label2:
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage cache>;
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.MutableImage muteColor(java.awt.Color)
+    {
+        java.awt.Color r0;
+        net.sourceforge.plantuml.ugraphic.PixelImage r1, $r4;
+        int i0, $i1, $i2, i3, i4, i5, $i6, $i7, i8, i9;
+        java.awt.image.BufferedImage r2, $r3, $r6, $r7;
+        double $d0;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r5;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        r0 := @parameter0: java.awt.Color;
+
+        if r0 != null goto label1;
+
+        return r1;
+
+     label1:
+        i0 = specialinvoke r1.<net.sourceforge.plantuml.ugraphic.PixelImage: int getDarkerRgb()>();
+
+        r2 = specialinvoke r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage deepCopy()>();
+
+        i8 = 0;
+
+     label2:
+        $r3 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i1 = virtualinvoke $r3.<java.awt.image.BufferedImage: int getWidth()>();
+
+        if i8 >= $i1 goto label6;
+
+        i9 = 0;
+
+     label3:
+        $r6 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i2 = virtualinvoke $r6.<java.awt.image.BufferedImage: int getHeight()>();
+
+        if i9 >= $i2 goto label5;
+
+        $r7 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        i3 = virtualinvoke $r7.<java.awt.image.BufferedImage: int getRGB(int,int)>(i8, i9);
+
+        i4 = specialinvoke r1.<net.sourceforge.plantuml.ugraphic.PixelImage: int getRgb(int)>(i3);
+
+        i5 = specialinvoke r1.<net.sourceforge.plantuml.ugraphic.PixelImage: int getA(int)>(i3);
+
+        if i5 == 0 goto label4;
+
+        if i4 != i0 goto label4;
+
+        $i6 = virtualinvoke r0.<java.awt.Color: int getRGB()>();
+
+        $i7 = $i6 + i5;
+
+        virtualinvoke r2.<java.awt.image.BufferedImage: void setRGB(int,int,int)>(i8, i9, $i7);
+
+     label4:
+        i9 = i9 + 1;
+
+        goto label3;
+
+     label5:
+        i8 = i8 + 1;
+
+        goto label2;
+
+     label6:
+        $r4 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r5 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: net.sourceforge.plantuml.ugraphic.AffineTransformType type>;
+
+        $d0 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale>;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType,double)>(r2, $r5, $d0);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.MutableImage muteTransparentColor(java.awt.Color)
+    {
+        net.sourceforge.plantuml.ugraphic.PixelImage r0, $r2;
+        java.awt.image.BufferedImage r1, $r4, $r5, $r7;
+        double $d0;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r3;
+        int $i0, i1, i2, $i3, i4, $i5, i6;
+        java.awt.Color r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        r6 := @parameter0: java.awt.Color;
+
+        if r6 != null goto label1;
+
+        r6 = <java.awt.Color: java.awt.Color WHITE>;
+
+     label1:
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage deepCopy()>();
+
+        i4 = 0;
+
+     label2:
+        $r7 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i5 = virtualinvoke $r7.<java.awt.image.BufferedImage: int getWidth()>();
+
+        if i4 >= $i5 goto label6;
+
+        i6 = 0;
+
+     label3:
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i0 = virtualinvoke $r4.<java.awt.image.BufferedImage: int getHeight()>();
+
+        if i6 >= $i0 goto label5;
+
+        $r5 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        i1 = virtualinvoke $r5.<java.awt.image.BufferedImage: int getRGB(int,int)>(i4, i6);
+
+        i2 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.PixelImage: int getA(int)>(i1);
+
+        if i2 != 0 goto label4;
+
+        $i3 = virtualinvoke r6.<java.awt.Color: int getRGB()>();
+
+        virtualinvoke r1.<java.awt.image.BufferedImage: void setRGB(int,int,int)>(i4, i6, $i3);
+
+     label4:
+        i6 = i6 + 1;
+
+        goto label3;
+
+     label5:
+        i4 = i4 + 1;
+
+        goto label2;
+
+     label6:
+        $r2 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: net.sourceforge.plantuml.ugraphic.AffineTransformType type>;
+
+        $d0 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: double scale>;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType,double)>(r1, $r3, $d0);
+
+        return $r2;
+    }
+
+    private int getDarkerRgb()
+    {
+        net.sourceforge.plantuml.ugraphic.PixelImage r0;
+        java.awt.image.BufferedImage $r1, $r2, $r3;
+        int $i0, $i1, i2, i3, i4, i5, $i6, i7, i8, i9;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        i7 = -1;
+
+        i8 = 0;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i0 = virtualinvoke $r1.<java.awt.image.BufferedImage: int getWidth()>();
+
+        if i8 >= $i0 goto label7;
+
+        i9 = 0;
+
+     label2:
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i1 = virtualinvoke $r2.<java.awt.image.BufferedImage: int getHeight()>();
+
+        if i9 >= $i1 goto label6;
+
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        i2 = virtualinvoke $r3.<java.awt.image.BufferedImage: int getRGB(int,int)>(i8, i9);
+
+        i3 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.PixelImage: int getRgb(int)>(i2);
+
+        i4 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.PixelImage: int getA(int)>(i2);
+
+        if i4 == -16777216 goto label3;
+
+        goto label5;
+
+     label3:
+        i5 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.ColorUtils: int getGrayScale(int)>(i3);
+
+        if i7 == -1 goto label4;
+
+        $i6 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.ColorUtils: int getGrayScale(int)>(i7);
+
+        if i5 >= $i6 goto label5;
+
+     label4:
+        i7 = i3;
+
+     label5:
+        i9 = i9 + 1;
+
+        goto label2;
+
+     label6:
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label7:
+        return i7;
+    }
+
+    private int getRgb(int)
+    {
+        int i0, $i1;
+        net.sourceforge.plantuml.ugraphic.PixelImage r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 & 16777215;
+
+        return $i1;
+    }
+
+    private int getA(int)
+    {
+        int i0, $i1;
+        net.sourceforge.plantuml.ugraphic.PixelImage r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        i0 := @parameter0: int;
+
+        $i1 = i0 & -16777216;
+
+        return $i1;
+    }
+
+    private java.awt.image.BufferedImage deepCopy()
+    {
+        java.awt.image.BufferedImage $r0, $r2, $r3, $r5, $r6, $r7;
+        net.sourceforge.plantuml.ugraphic.PixelImage r1;
+        int $i0, $i1, $i2, $i3, $i4, i5, i6;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i0 = virtualinvoke $r2.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $r3 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i1 = virtualinvoke $r3.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 2);
+
+        i5 = 0;
+
+     label1:
+        $r5 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i2 = virtualinvoke $r5.<java.awt.image.BufferedImage: int getWidth()>();
+
+        if i5 >= $i2 goto label4;
+
+        i6 = 0;
+
+     label2:
+        $r6 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i3 = virtualinvoke $r6.<java.awt.image.BufferedImage: int getHeight()>();
+
+        if i6 >= $i3 goto label3;
+
+        $r7 = r1.<net.sourceforge.plantuml.ugraphic.PixelImage: java.awt.image.BufferedImage bufferedImageScale1>;
+
+        $i4 = virtualinvoke $r7.<java.awt.image.BufferedImage: int getRGB(int,int)>(i5, i6);
+
+        virtualinvoke $r0.<java.awt.image.BufferedImage: void setRGB(int,int,int)>(i5, i6, $i4);
+
+        i6 = i6 + 1;
+
+        goto label2;
+
+     label3:
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label4:
+        return $r0;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.ugraphic.PixelImage: int mask_rgb> = 16777215;
+
+        <net.sourceforge.plantuml.ugraphic.PixelImage: int mask_a__> = -16777216;
+
+        return;
+    }
+}

@@ -1,0 +1,312 @@
+public class net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker extends java.lang.Object implements net.sourceforge.plantuml.sequencediagram.graphic.FileMaker
+{
+    private final net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram;
+    private final net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet drawableSet;
+    private final net.sourceforge.plantuml.awt.geom.Dimension2D fullDimension;
+    private final net.sourceforge.plantuml.graphic.StringBounder dummyStringBounder;
+    private final net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt ug;
+    private final net.sourceforge.plantuml.FileFormat fileFormat;
+    private final net.sourceforge.plantuml.asciiart.TextSkin skin;
+
+    public void <init>(net.sourceforge.plantuml.sequencediagram.SequenceDiagram, net.sourceforge.plantuml.FileFormat)
+    {
+        net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker r0;
+        net.sourceforge.plantuml.asciiart.TextStringBounder $r1;
+        net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt $r2, $r28, $r35, r45;
+        net.sourceforge.plantuml.FileFormat r3;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram r4, $r18, $r22, $r25, $r34;
+        net.sourceforge.plantuml.asciiart.TextSkin $r5, $r7;
+        net.sourceforge.plantuml.sequencediagram.graphic.DrawableSetInitializer $r6;
+        net.sourceforge.plantuml.ISkinParam $r8;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7;
+        int $i0, $i1, $i2, i3, $i4;
+        double $d0, d1, $d2, $d3, d4, $d5, $d6, $d7, $d8, $d9, $d10, d11, $d12;
+        java.util.Collection $r10;
+        java.util.List $r11, $r29, $r37;
+        net.sourceforge.plantuml.graphic.StringBounder $r12, $r16, $r20;
+        net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet $r13, $r14, $r17, $r19, $r33;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r15, $r21, $r32, $r38;
+        net.sourceforge.plantuml.sequencediagram.graphic.Page $r23;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositionned $r26;
+        net.sourceforge.plantuml.cucadiagram.Display r27;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r30;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r31;
+        net.sourceforge.plantuml.asciiart.UmlCharArea r36;
+        java.lang.Object $r39, $r40;
+        java.util.Iterator r41, r43;
+        net.sourceforge.plantuml.sequencediagram.Participant r42;
+        net.sourceforge.plantuml.sequencediagram.Event r44;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
+
+        r4 := @parameter0: net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+
+        r3 := @parameter1: net.sourceforge.plantuml.FileFormat;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.asciiart.TextStringBounder;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.asciiart.TextStringBounder: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.graphic.StringBounder dummyStringBounder> = $r1;
+
+        $r2 = new net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt ug> = $r2;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.FileFormat fileFormat> = r3;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram> = r4;
+
+        $r5 = new net.sourceforge.plantuml.asciiart.TextSkin;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.asciiart.TextSkin: void <init>(net.sourceforge.plantuml.FileFormat)>(r3);
+
+        r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.asciiart.TextSkin skin> = $r5;
+
+        $r6 = new net.sourceforge.plantuml.sequencediagram.graphic.DrawableSetInitializer;
+
+        $r7 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.asciiart.TextSkin skin>;
+
+        $r8 = virtualinvoke r4.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $z0 = virtualinvoke r4.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: boolean isShowFootbox()>();
+
+        $i0 = virtualinvoke r4.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: int getAutonewpage()>();
+
+        $d0 = (double) $i0;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.sequencediagram.graphic.DrawableSetInitializer: void <init>(net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.ISkinParam,boolean,double)>($r7, $r8, $z0, $d0);
+
+        $r10 = virtualinvoke r4.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: java.util.Collection participants()>();
+
+        r41 = interfaceinvoke $r10.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r41.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label2;
+
+        $r40 = interfaceinvoke r41.<java.util.Iterator: java.lang.Object next()>();
+
+        r42 = (net.sourceforge.plantuml.sequencediagram.Participant) $r40;
+
+        virtualinvoke $r6.<net.sourceforge.plantuml.sequencediagram.graphic.DrawableSetInitializer: void addParticipant(net.sourceforge.plantuml.sequencediagram.Participant,net.sourceforge.plantuml.sequencediagram.ParticipantEnglober)>(r42, null);
+
+        goto label1;
+
+     label2:
+        $r11 = virtualinvoke r4.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: java.util.List events()>();
+
+        r43 = interfaceinvoke $r11.<java.util.List: java.util.Iterator iterator()>();
+
+     label3:
+        $z2 = interfaceinvoke r43.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label4;
+
+        $r39 = interfaceinvoke r43.<java.util.Iterator: java.lang.Object next()>();
+
+        r44 = (net.sourceforge.plantuml.sequencediagram.Event) $r39;
+
+        virtualinvoke $r6.<net.sourceforge.plantuml.sequencediagram.graphic.DrawableSetInitializer: void addEvent(net.sourceforge.plantuml.sequencediagram.Event)>(r44);
+
+        goto label3;
+
+     label4:
+        $r12 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.graphic.StringBounder dummyStringBounder>;
+
+        $r13 = virtualinvoke $r6.<net.sourceforge.plantuml.sequencediagram.graphic.DrawableSetInitializer: net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet createDrawableSet(net.sourceforge.plantuml.graphic.StringBounder)>($r12);
+
+        r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet drawableSet> = $r13;
+
+        $r14 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet drawableSet>;
+
+        $r15 = virtualinvoke $r14.<net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet: net.sourceforge.plantuml.awt.geom.Dimension2D getDimension()>();
+
+        r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.awt.geom.Dimension2D fullDimension> = $r15;
+
+        $r17 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet drawableSet>;
+
+        $r16 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.graphic.StringBounder dummyStringBounder>;
+
+        d11 = virtualinvoke $r17.<net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet: double getHeadHeight(net.sourceforge.plantuml.graphic.StringBounder)>($r16);
+
+        $r19 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet drawableSet>;
+
+        $r20 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.graphic.StringBounder dummyStringBounder>;
+
+        $r18 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram>;
+
+        $z3 = virtualinvoke $r18.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: boolean isShowFootbox()>();
+
+        d1 = virtualinvoke $r19.<net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet: double getTailHeight(net.sourceforge.plantuml.graphic.StringBounder,boolean)>($r20, $z3);
+
+        $r21 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.awt.geom.Dimension2D fullDimension>;
+
+        $d2 = virtualinvoke $r21.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $r22 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram>;
+
+        $z4 = virtualinvoke $r22.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: boolean isShowFootbox()>();
+
+        if $z4 == 0 goto label5;
+
+        $d12 = d1;
+
+        goto label6;
+
+     label5:
+        $d12 = 0.0;
+
+     label6:
+        $d3 = $d2 - $d12;
+
+        d4 = $d3 - d11;
+
+        $r23 = new net.sourceforge.plantuml.sequencediagram.graphic.Page;
+
+        specialinvoke $r23.<net.sourceforge.plantuml.sequencediagram.graphic.Page: void <init>(double,double,double,double,double,net.sourceforge.plantuml.cucadiagram.Display)>(d11, 0.0, d4, d1, 0.0, null);
+
+        $r25 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram>;
+
+        $r26 = virtualinvoke $r25.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.cucadiagram.DisplayPositionned getTitle()>();
+
+        r27 = virtualinvoke $r26.<net.sourceforge.plantuml.cucadiagram.DisplayPositionned: net.sourceforge.plantuml.cucadiagram.Display getDisplay()>();
+
+        $z5 = virtualinvoke r27.<net.sourceforge.plantuml.cucadiagram.Display: boolean isWhite()>();
+
+        if $z5 == 0 goto label7;
+
+        r45 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt ug>;
+
+        goto label8;
+
+     label7:
+        $r28 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt ug>;
+
+        $r29 = virtualinvoke r27.<net.sourceforge.plantuml.cucadiagram.Display: java.util.List asList()>();
+
+        $i1 = interfaceinvoke $r29.<java.util.List: int size()>();
+
+        $i2 = $i1 + 1;
+
+        $d5 = (double) $i2;
+
+        $r30 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d5);
+
+        $r31 = virtualinvoke $r28.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r30);
+
+        r45 = (net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt) $r31;
+
+     label8:
+        $r33 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet drawableSet>;
+
+        $r32 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.awt.geom.Dimension2D fullDimension>;
+
+        $d6 = virtualinvoke $r32.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $r34 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.sequencediagram.SequenceDiagram diagram>;
+
+        $z6 = virtualinvoke $r34.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: boolean isShowFootbox()>();
+
+        virtualinvoke $r33.<net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet: void drawU22(net.sourceforge.plantuml.ugraphic.UGraphic,double,double,net.sourceforge.plantuml.sequencediagram.graphic.Page,boolean)>(r45, 0.0, $d6, $r23, $z6);
+
+        $z7 = virtualinvoke r27.<net.sourceforge.plantuml.cucadiagram.Display: boolean isWhite()>();
+
+        if $z7 != 0 goto label9;
+
+        i3 = staticinvoke <net.sourceforge.plantuml.StringUtils: int getWcWidth(net.sourceforge.plantuml.cucadiagram.Display)>(r27);
+
+        $r35 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt ug>;
+
+        r36 = virtualinvoke $r35.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: net.sourceforge.plantuml.asciiart.UmlCharArea getCharArea()>();
+
+        $r37 = virtualinvoke r27.<net.sourceforge.plantuml.cucadiagram.Display: java.util.List asList()>();
+
+        $r38 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.awt.geom.Dimension2D fullDimension>;
+
+        $d7 = virtualinvoke $r38.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d8 = (double) i3;
+
+        $d9 = $d7 - $d8;
+
+        $d10 = $d9 / 2.0;
+
+        $i4 = (int) $d10;
+
+        interfaceinvoke r36.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawStringsLRSimple(java.util.Collection,int,int)>($r37, $i4, 0);
+
+     label9:
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.ImageData createOne(java.io.OutputStream, int, boolean) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker r0;
+        net.sourceforge.plantuml.FileFormat $r1, $r2;
+        java.io.OutputStream r3;
+        net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt $r4, $r8;
+        net.sourceforge.plantuml.asciiart.UmlCharArea $r5, $r9;
+        net.sourceforge.plantuml.api.ImageDataSimple $r6;
+        java.nio.charset.Charset $r7;
+        int i0;
+        boolean z0;
+        java.io.PrintStream r10, r11;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
+
+        r3 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        z0 := @parameter2: boolean;
+
+        $r2 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.FileFormat fileFormat>;
+
+        $r1 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat UTXT>;
+
+        if $r2 != $r1 goto label1;
+
+        $r7 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        r10 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.io.PrintStream createPrintStream(java.io.OutputStream,boolean,java.nio.charset.Charset)>(r3, 1, $r7);
+
+        $r8 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt ug>;
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: net.sourceforge.plantuml.asciiart.UmlCharArea getCharArea()>();
+
+        interfaceinvoke $r9.<net.sourceforge.plantuml.asciiart.UmlCharArea: void print(java.io.PrintStream)>(r10);
+
+        goto label2;
+
+     label1:
+        r11 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.io.PrintStream createPrintStream(java.io.OutputStream)>(r3);
+
+        $r4 = r0.<net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker: net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt ug>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: net.sourceforge.plantuml.asciiart.UmlCharArea getCharArea()>();
+
+        interfaceinvoke $r5.<net.sourceforge.plantuml.asciiart.UmlCharArea: void print(java.io.PrintStream)>(r11);
+
+     label2:
+        $r6 = new net.sourceforge.plantuml.api.ImageDataSimple;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.api.ImageDataSimple: void <init>(int,int)>(1, 1);
+
+        return $r6;
+    }
+
+    public int getNbPages()
+    {
+        net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker r0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
+
+        return 1;
+    }
+}

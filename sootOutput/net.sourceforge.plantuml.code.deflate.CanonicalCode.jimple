@@ -1,0 +1,254 @@
+final class net.sourceforge.plantuml.code.deflate.CanonicalCode extends java.lang.Object
+{
+    private int[] symbolCodeBits;
+    private int[] symbolValues;
+    private static final int MAX_CODE_LENGTH;
+
+    public void <init>(int[])
+    {
+        net.sourceforge.plantuml.code.deflate.CanonicalCode r0;
+        int[] r1, $r3, $r4, $r5, $r6, $r7, $r8, $r10, $r11;
+        int $i0, $i1, $i2, $i3, $i4, i5, i6, i7, i8, i9, i10, i11, i12;
+        java.lang.IllegalArgumentException $r9, $r12, $r13, $r14;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        r1 := @parameter0: int[];
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        i5 = lengthof r1;
+
+        i6 = 0;
+
+     label01:
+        if i6 >= i5 goto label04;
+
+        i7 = r1[i6];
+
+        if i7 >= 0 goto label02;
+
+        $r14 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r14.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("Negative code length");
+
+        throw $r14;
+
+     label02:
+        if i7 <= 15 goto label03;
+
+        $r13 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r13.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("Maximum code length exceeded");
+
+        throw $r13;
+
+     label03:
+        i6 = i6 + 1;
+
+        goto label01;
+
+     label04:
+        $i0 = lengthof r1;
+
+        $r3 = newarray (int)[$i0];
+
+        r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolCodeBits> = $r3;
+
+        $i1 = lengthof r1;
+
+        $r4 = newarray (int)[$i1];
+
+        r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolValues> = $r4;
+
+        i8 = 0;
+
+        i9 = 0;
+
+        i10 = 1;
+
+     label05:
+        if i10 > 15 goto label11;
+
+        i9 = i9 << 1;
+
+        i11 = 1 << i10;
+
+        i12 = 0;
+
+     label06:
+        $i2 = lengthof r1;
+
+        if i12 >= $i2 goto label10;
+
+        $i3 = r1[i12];
+
+        if $i3 == i10 goto label07;
+
+        goto label09;
+
+     label07:
+        if i9 < i11 goto label08;
+
+        $r12 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r12.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("This canonical code produces an over-full Huffman code tree");
+
+        throw $r12;
+
+     label08:
+        $r10 = r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolCodeBits>;
+
+        $i4 = i11 | i9;
+
+        $r10[i8] = $i4;
+
+        $r11 = r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolValues>;
+
+        $r11[i8] = i12;
+
+        i8 = i8 + 1;
+
+        i9 = i9 + 1;
+
+     label09:
+        i12 = i12 + 1;
+
+        goto label06;
+
+     label10:
+        i10 = i10 + 1;
+
+        goto label05;
+
+     label11:
+        if i9 == 32768 goto label12;
+
+        $r9 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r9.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("This canonical code produces an under-full Huffman code tree");
+
+        throw $r9;
+
+     label12:
+        $r5 = r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolCodeBits>;
+
+        $r6 = staticinvoke <java.util.Arrays: int[] copyOf(int[],int)>($r5, i8);
+
+        r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolCodeBits> = $r6;
+
+        $r7 = r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolValues>;
+
+        $r8 = staticinvoke <java.util.Arrays: int[] copyOf(int[],int)>($r7, i8);
+
+        r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolValues> = $r8;
+
+        return;
+    }
+
+    public int decodeNextSymbol(net.sourceforge.plantuml.code.deflate.BitInputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.deflate.BitInputStream r0;
+        int $i0, $i1, i2, $i3, i4;
+        net.sourceforge.plantuml.code.deflate.CanonicalCode r2;
+        int[] $r3, $r4;
+
+        r2 := @this: net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        r0 := @parameter0: net.sourceforge.plantuml.code.deflate.BitInputStream;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        i4 = 1;
+
+     label1:
+        $i0 = i4 << 1;
+
+        $i1 = interfaceinvoke r0.<net.sourceforge.plantuml.code.deflate.BitInputStream: int readNoEof()>();
+
+        i4 = $i0 | $i1;
+
+        $r3 = r2.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolCodeBits>;
+
+        i2 = staticinvoke <java.util.Arrays: int binarySearch(int[],int)>($r3, i4);
+
+        if i2 < 0 goto label2;
+
+        $r4 = r2.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolValues>;
+
+        $i3 = $r4[i2];
+
+        return $i3;
+
+     label2:
+        goto label1;
+    }
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.code.deflate.CanonicalCode r2;
+        int[] $r3, $r6, $r9;
+        int $i0, $i1, $i2, i3;
+        java.lang.String $r4, $r7, $r8, $r11;
+        java.lang.Object[] $r5;
+        java.lang.Integer $r10;
+
+        r2 := @this: net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        i3 = 0;
+
+     label1:
+        $r3 = r2.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolCodeBits>;
+
+        $i0 = lengthof $r3;
+
+        if i3 >= $i0 goto label2;
+
+        $r5 = newarray (java.lang.Object)[2];
+
+        $r6 = r2.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolCodeBits>;
+
+        $i1 = $r6[i3];
+
+        $r7 = staticinvoke <java.lang.Integer: java.lang.String toBinaryString(int)>($i1);
+
+        $r8 = virtualinvoke $r7.<java.lang.String: java.lang.String substring(int)>(1);
+
+        $r5[0] = $r8;
+
+        $r9 = r2.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int[] symbolValues>;
+
+        $i2 = $r9[i3];
+
+        $r10 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i2);
+
+        $r5[1] = $r10;
+
+        $r11 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("Code %s: Symbol %d%n", $r5);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        $r4 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r4;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.code.deflate.CanonicalCode: int MAX_CODE_LENGTH> = 15;
+
+        return;
+    }
+}

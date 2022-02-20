@@ -1,0 +1,1482 @@
+public class net.sourceforge.plantuml.project.draw.TaskDrawRegular extends net.sourceforge.plantuml.project.draw.AbstractTaskDraw
+{
+    private final net.sourceforge.plantuml.project.time.Day end;
+    private final boolean oddStart;
+    private final boolean oddEnd;
+    private final java.util.Collection paused;
+    private final java.util.Collection constraints;
+    private final net.sourceforge.plantuml.ISkinParam skinParam;
+
+    public void <init>(net.sourceforge.plantuml.project.timescale.TimeScale, net.sourceforge.plantuml.real.Real, java.lang.String, net.sourceforge.plantuml.project.time.Day, net.sourceforge.plantuml.project.time.Day, boolean, boolean, net.sourceforge.plantuml.ISkinParam, net.sourceforge.plantuml.project.core.Task, net.sourceforge.plantuml.project.ToTaskDraw, java.util.Collection, net.sourceforge.plantuml.style.StyleBuilder, net.sourceforge.plantuml.ugraphic.color.HColorSet)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.project.timescale.TimeScale r1;
+        net.sourceforge.plantuml.real.Real r2;
+        java.lang.String r3;
+        net.sourceforge.plantuml.project.time.Day r4, r11, r17;
+        net.sourceforge.plantuml.ISkinParam r5;
+        net.sourceforge.plantuml.project.core.Task r6;
+        net.sourceforge.plantuml.project.ToTaskDraw r7;
+        net.sourceforge.plantuml.style.StyleBuilder r8;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet r9;
+        java.util.Collection r10, $r14, $r16;
+        boolean z0, z1;
+        java.util.TreeSet $r12;
+        net.sourceforge.plantuml.project.core.TaskImpl $r13;
+        int $i0, i1;
+        net.sourceforge.plantuml.project.LoadPlanable $r15;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.timescale.TimeScale;
+
+        r2 := @parameter1: net.sourceforge.plantuml.real.Real;
+
+        r3 := @parameter2: java.lang.String;
+
+        r4 := @parameter3: net.sourceforge.plantuml.project.time.Day;
+
+        r11 := @parameter4: net.sourceforge.plantuml.project.time.Day;
+
+        z0 := @parameter5: boolean;
+
+        z1 := @parameter6: boolean;
+
+        r5 := @parameter7: net.sourceforge.plantuml.ISkinParam;
+
+        r6 := @parameter8: net.sourceforge.plantuml.project.core.Task;
+
+        r7 := @parameter9: net.sourceforge.plantuml.project.ToTaskDraw;
+
+        r10 := @parameter10: java.util.Collection;
+
+        r8 := @parameter11: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r9 := @parameter12: net.sourceforge.plantuml.ugraphic.color.HColorSet;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.draw.AbstractTaskDraw: void <init>(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.ugraphic.color.HColorSet)>(r1, r2, r3, r4, r5, r6, r7, r8, r9);
+
+        r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ISkinParam skinParam> = r5;
+
+        r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: java.util.Collection constraints> = r10;
+
+        r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day end> = r11;
+
+        r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean oddStart> = z0;
+
+        r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean oddEnd> = z1;
+
+        $r12 = new java.util.TreeSet;
+
+        $r13 = (net.sourceforge.plantuml.project.core.TaskImpl) r6;
+
+        $r14 = virtualinvoke $r13.<net.sourceforge.plantuml.project.core.TaskImpl: java.util.Collection getAllPaused()>();
+
+        specialinvoke $r12.<java.util.TreeSet: void <init>(java.util.Collection)>($r14);
+
+        r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: java.util.Collection paused> = $r12;
+
+        r17 = r4;
+
+     label1:
+        $i0 = virtualinvoke r17.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r11);
+
+        if $i0 > 0 goto label3;
+
+        $r15 = interfaceinvoke r7.<net.sourceforge.plantuml.project.ToTaskDraw: net.sourceforge.plantuml.project.LoadPlanable getDefaultPlan()>();
+
+        i1 = interfaceinvoke $r15.<net.sourceforge.plantuml.project.LoadPlanable: int getLoadAt(net.sourceforge.plantuml.project.time.Day)>(r17);
+
+        if i1 != 0 goto label2;
+
+        $r16 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: java.util.Collection paused>;
+
+        interfaceinvoke $r16.<java.util.Collection: boolean add(java.lang.Object)>(r17);
+
+     label2:
+        r17 = virtualinvoke r17.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day increment()>();
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    protected double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.style.Style r1;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft r2;
+        double $d0, $d1, $d2, $d3, $d4;
+        net.sourceforge.plantuml.graphic.TextBlock $r3;
+        net.sourceforge.plantuml.graphic.StringBounder r4;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r5;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r4 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.Style getStyle()>();
+
+        r2 = virtualinvoke r1.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getPadding()>();
+
+        $d0 = virtualinvoke r2.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getTop()>();
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.graphic.TextBlock getTitle()>();
+
+        $r5 = interfaceinvoke $r3.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r4);
+
+        $d1 = virtualinvoke $r5.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d2 = $d0 + $d1;
+
+        $d3 = virtualinvoke r2.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getBottom()>();
+
+        $d4 = $d2 + $d3;
+
+        return $d4;
+    }
+
+    public void drawTitle(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.project.LabelStrategy, double, double)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.graphic.TextBlock r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r3;
+        net.sourceforge.plantuml.style.StyleSignature $r4;
+        net.sourceforge.plantuml.style.StyleBuilder $r5;
+        net.sourceforge.plantuml.style.Style r6;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft r7, r8;
+        double $d0, $d1, $d2, $d3, d4, $d5, d6, $d7, $d8, d9, $d10, $d11, $d12, d13, $d14, $d15, $d16, $d17, d18;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r9, $r15, $r17, $r19, $r21;
+        net.sourceforge.plantuml.project.LabelStrategy r10;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.project.time.Day $r11, $r13;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r12, $r14;
+        byte $b0;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r16, $r18, $r20, $r22, r23, r24;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r23 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r10 := @parameter1: net.sourceforge.plantuml.project.LabelStrategy;
+
+        d13 := @parameter2: double;
+
+        d9 := @parameter3: double;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.graphic.TextBlock getTitle()>();
+
+        r2 = interfaceinvoke r23.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        r3 = interfaceinvoke r1.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r2);
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        r6 = virtualinvoke $r4.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r5);
+
+        r7 = virtualinvoke r6.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getMargin()>();
+
+        r8 = virtualinvoke r6.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getPadding()>();
+
+        $d0 = virtualinvoke r7.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getTop()>();
+
+        $d1 = virtualinvoke r8.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getTop()>();
+
+        $d2 = $d0 + $d1;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d2);
+
+        r24 = interfaceinvoke r23.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r9);
+
+        $z0 = virtualinvoke r10.<net.sourceforge.plantuml.project.LabelStrategy: boolean titleInFirstColumn()>();
+
+        if $z0 == 0 goto label3;
+
+        $z2 = virtualinvoke r10.<net.sourceforge.plantuml.project.LabelStrategy: boolean rightAligned()>();
+
+        if $z2 == 0 goto label1;
+
+        $d14 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d15 = d13 - $d14;
+
+        $d16 = virtualinvoke r7.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getRight()>();
+
+        $d17 = $d15 - $d16;
+
+        $r21 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d17);
+
+        $r22 = interfaceinvoke r24.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r21);
+
+        interfaceinvoke r1.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r22);
+
+        goto label2;
+
+     label1:
+        $d12 = virtualinvoke r7.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getLeft()>();
+
+        $r19 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d12);
+
+        $r20 = interfaceinvoke r24.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r19);
+
+        interfaceinvoke r1.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r20);
+
+     label2:
+        return;
+
+     label3:
+        $z1 = virtualinvoke r10.<net.sourceforge.plantuml.project.LabelStrategy: boolean titleInLastColumn()>();
+
+        if $z1 == 0 goto label4;
+
+        $d10 = virtualinvoke r7.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getLeft()>();
+
+        $d11 = d9 + $d10;
+
+        $r17 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d11);
+
+        $r18 = interfaceinvoke r24.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r17);
+
+        interfaceinvoke r1.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r18);
+
+        return;
+
+     label4:
+        $r12 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r11 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day start>;
+
+        $d3 = interfaceinvoke $r12.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>($r11);
+
+        d4 = $d3 + 6.0;
+
+        $r14 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r13 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day end>;
+
+        $d5 = interfaceinvoke $r14.<net.sourceforge.plantuml.project.timescale.TimeScale: double getEndingPosition(net.sourceforge.plantuml.project.time.Day)>($r13);
+
+        d6 = $d5 - 6.0;
+
+        $d7 = d6 - d4;
+
+        $d8 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $b0 = $d7 cmpl $d8;
+
+        if $b0 <= 0 goto label5;
+
+        d18 = d4;
+
+        goto label6;
+
+     label5:
+        d18 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getOutPosition(double)>(d6);
+
+     label6:
+        $r15 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d18);
+
+        $r16 = interfaceinvoke r24.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r15);
+
+        interfaceinvoke r1.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r16);
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.graphic.TextBlock getTitle()
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.cucadiagram.Display $r2;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r3;
+        net.sourceforge.plantuml.SpriteContainerEmpty $r4;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r5;
+        net.sourceforge.plantuml.graphic.TextBlock $r6;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: java.lang.String prettyDisplay>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r1);
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.graphic.FontConfiguration getFontConfiguration()>();
+
+        $r5 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        $r4 = new net.sourceforge.plantuml.SpriteContainerEmpty;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.SpriteContainerEmpty: void <init>()>();
+
+        $r6 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>($r3, $r5, $r4);
+
+        return $r6;
+    }
+
+    private double getOutPosition(double)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        boolean $z0;
+        double d0, $d1, $d2;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        d0 := @parameter0: double;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean isThereRightArrow()>();
+
+        if $z0 == 0 goto label1;
+
+        $d2 = d0 + 18.0;
+
+        return $d2;
+
+     label1:
+        $d1 = d0 + 8.0;
+
+        return $d1;
+    }
+
+    private boolean isThereRightArrow()
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        java.util.Collection $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.project.GanttConstraint r4;
+        net.sourceforge.plantuml.project.core.Task $r5;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: java.util.Collection constraints>;
+
+        r2 = interfaceinvoke $r1.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.project.GanttConstraint) $r3;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.core.Task getTask()>();
+
+        $z1 = virtualinvoke r4.<net.sourceforge.plantuml.project.GanttConstraint: boolean isThereRightArrow(net.sourceforge.plantuml.project.core.Task)>($r5);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 0;
+    }
+
+    net.sourceforge.plantuml.style.StyleSignature getStyleSignature()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r6;
+
+        r6 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName ganttDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName task>;
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        return $r5;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.project.time.Day $r1;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r2;
+        double d0, $d1;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r3;
+        net.sourceforge.plantuml.graphic.StringBounder $r4;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r5, r6, r7;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r6 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day start>;
+
+        d0 = interfaceinvoke $r2.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>($r1);
+
+        $r3 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $r4 = interfaceinvoke r6.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $d1 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getYNotePosition(net.sourceforge.plantuml.graphic.StringBounder)>($r4);
+
+        specialinvoke $r3.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>(d0, $d1);
+
+        $r5 = interfaceinvoke r6.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r3);
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: void drawNote(net.sourceforge.plantuml.ugraphic.UGraphic)>($r5);
+
+        r7 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ugraphic.UGraphic applyColors(net.sourceforge.plantuml.ugraphic.UGraphic)>(r6);
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: void drawShape(net.sourceforge.plantuml.ugraphic.UGraphic)>(r7);
+
+        return;
+    }
+
+    private double getYNotePosition(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.style.Style r1;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft r2;
+        double $d0, $d1, $d2, $d3, $d4;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.Style getStyle()>();
+
+        r2 = virtualinvoke r1.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getMargin()>();
+
+        $d0 = virtualinvoke r2.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getTop()>();
+
+        $d1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r3);
+
+        $d2 = $d0 + $d1;
+
+        $d3 = virtualinvoke r2.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getBottom()>();
+
+        $d4 = $d2 + $d3;
+
+        return $d4;
+    }
+
+    private void drawNote(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+        net.sourceforge.plantuml.svek.image.Opale $r2;
+        net.sourceforge.plantuml.ugraphic.UGraphic r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r3 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.cucadiagram.Display note>;
+
+        if $r1 != null goto label1;
+
+        return;
+
+     label1:
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.svek.image.Opale getOpaleNote()>();
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.svek.image.Opale: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r3);
+
+        return;
+    }
+
+    public double getHeightMax(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        double $d0, $d1, $d2, $d3;
+        net.sourceforge.plantuml.svek.image.Opale $r3;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r4;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.cucadiagram.Display note>;
+
+        if $r1 != null goto label1;
+
+        $d3 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getFullHeightTask(net.sourceforge.plantuml.graphic.StringBounder)>(r2);
+
+        return $d3;
+
+     label1:
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getYNotePosition(net.sourceforge.plantuml.graphic.StringBounder)>(r2);
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.svek.image.Opale getOpaleNote()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.svek.image.Opale: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r2);
+
+        $d1 = virtualinvoke $r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d2 = $d0 + $d1;
+
+        return $d2;
+    }
+
+    private net.sourceforge.plantuml.svek.image.Opale getOpaleNote()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r6;
+        net.sourceforge.plantuml.style.StyleBuilder $r7;
+        net.sourceforge.plantuml.style.Style r8;
+        net.sourceforge.plantuml.ISkinParam $r9, $r17, $r28, $r34;
+        net.sourceforge.plantuml.api.ThemeStyle $r10, $r29, $r35;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r11, $r30, $r36;
+        net.sourceforge.plantuml.graphic.FontConfiguration r12;
+        net.sourceforge.plantuml.style.PName $r13, $r21, $r26, $r32, $r38;
+        net.sourceforge.plantuml.style.Value $r14, $r22, $r27, $r33, $r39;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment r15;
+        net.sourceforge.plantuml.creole.CreoleMode $r16;
+        net.sourceforge.plantuml.creole.SheetBuilder $r18;
+        net.sourceforge.plantuml.cucadiagram.Display $r19;
+        net.sourceforge.plantuml.creole.Sheet r20;
+        double d0, d1;
+        net.sourceforge.plantuml.creole.SheetBlock1 $r23;
+        net.sourceforge.plantuml.LineBreakStrategy $r24;
+        net.sourceforge.plantuml.ugraphic.color.HColor r31, r37;
+        net.sourceforge.plantuml.svek.image.Opale $r40;
+        net.sourceforge.plantuml.ugraphic.UStroke $r41;
+
+        r6 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName ganttDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName note>;
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        r8 = virtualinvoke $r5.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r7);
+
+        $r9 = r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r10 = interfaceinvoke $r9.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r11 = virtualinvoke r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ugraphic.color.HColorSet getColorSet()>();
+
+        r12 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.graphic.FontConfiguration getFontConfiguration(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r10, $r11);
+
+        $r13 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName HorizontalAlignment>;
+
+        $r14 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r13);
+
+        r15 = interfaceinvoke $r14.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.graphic.HorizontalAlignment asHorizontalAlignment()>();
+
+        $r17 = r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r16 = <net.sourceforge.plantuml.creole.CreoleMode: net.sourceforge.plantuml.creole.CreoleMode FULL>;
+
+        $r18 = staticinvoke <net.sourceforge.plantuml.creole.Parser: net.sourceforge.plantuml.creole.SheetBuilder build(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple,net.sourceforge.plantuml.creole.CreoleMode)>(r12, r15, $r17, $r16);
+
+        $r19 = r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.cucadiagram.Display note>;
+
+        r20 = interfaceinvoke $r18.<net.sourceforge.plantuml.creole.SheetBuilder: net.sourceforge.plantuml.creole.Sheet createSheet(net.sourceforge.plantuml.cucadiagram.Display)>($r19);
+
+        $r21 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName Padding>;
+
+        $r22 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r21);
+
+        d0 = interfaceinvoke $r22.<net.sourceforge.plantuml.style.Value: double asDouble()>();
+
+        $r23 = new net.sourceforge.plantuml.creole.SheetBlock1;
+
+        $r24 = <net.sourceforge.plantuml.LineBreakStrategy: net.sourceforge.plantuml.LineBreakStrategy NONE>;
+
+        specialinvoke $r23.<net.sourceforge.plantuml.creole.SheetBlock1: void <init>(net.sourceforge.plantuml.creole.Sheet,net.sourceforge.plantuml.LineBreakStrategy,double)>(r20, $r24, d0);
+
+        $r26 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName BackGroundColor>;
+
+        $r27 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r26);
+
+        $r28 = r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r29 = interfaceinvoke $r28.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r30 = virtualinvoke r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ugraphic.color.HColorSet getColorSet()>();
+
+        r31 = interfaceinvoke $r27.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.ugraphic.color.HColor asColor(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r29, $r30);
+
+        $r32 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName LineColor>;
+
+        $r33 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r32);
+
+        $r34 = r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r35 = interfaceinvoke $r34.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r36 = virtualinvoke r6.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ugraphic.color.HColorSet getColorSet()>();
+
+        r37 = interfaceinvoke $r33.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.ugraphic.color.HColor asColor(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r35, $r36);
+
+        $r38 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName Shadowing>;
+
+        $r39 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r38);
+
+        d1 = interfaceinvoke $r39.<net.sourceforge.plantuml.style.Value: double asDouble()>();
+
+        $r40 = new net.sourceforge.plantuml.svek.image.Opale;
+
+        $r41 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.ugraphic.UStroke getStroke()>();
+
+        specialinvoke $r40.<net.sourceforge.plantuml.svek.image.Opale: void <init>(double,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.graphic.TextBlock,boolean,net.sourceforge.plantuml.ugraphic.UStroke)>(d1, r37, r31, $r23, 0, $r41);
+
+        return $r40;
+    }
+
+    public net.sourceforge.plantuml.project.draw.FingerPrint getFingerPrint(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        double d0, d1, d2, $d3, $d4;
+        net.sourceforge.plantuml.project.time.Day $r2, $r4;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r3, $r5;
+        net.sourceforge.plantuml.project.draw.FingerPrint $r6;
+        net.sourceforge.plantuml.real.Real $r7;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        d0 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getFullHeightTask(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $r3 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day start>;
+
+        d1 = interfaceinvoke $r3.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>($r2);
+
+        $r5 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r4 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day end>;
+
+        d2 = interfaceinvoke $r5.<net.sourceforge.plantuml.project.timescale.TimeScale: double getEndingPosition(net.sourceforge.plantuml.project.time.Day)>($r4);
+
+        $r6 = new net.sourceforge.plantuml.project.draw.FingerPrint;
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.real.Real getY(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $d3 = interfaceinvoke $r7.<net.sourceforge.plantuml.real.Real: double getCurrentValue()>();
+
+        $d4 = d2 - d1;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.project.draw.FingerPrint: void <init>(double,double,double,double)>(d1, $d3, $d4, d0);
+
+        return $r6;
+    }
+
+    public net.sourceforge.plantuml.project.draw.FingerPrint getFingerPrintNote(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+        net.sourceforge.plantuml.svek.image.Opale $r2;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r4;
+        net.sourceforge.plantuml.project.time.Day $r5;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r6;
+        double d0, $d1, $d2, $d3, $d4, $d5;
+        net.sourceforge.plantuml.project.draw.FingerPrint $r7;
+        net.sourceforge.plantuml.real.Real $r8;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.cucadiagram.Display note>;
+
+        if $r1 != null goto label1;
+
+        return null;
+
+     label1:
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.svek.image.Opale getOpaleNote()>();
+
+        r4 = virtualinvoke $r2.<net.sourceforge.plantuml.svek.image.Opale: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r3);
+
+        $r6 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r5 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day start>;
+
+        d0 = interfaceinvoke $r6.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>($r5);
+
+        $r7 = new net.sourceforge.plantuml.project.draw.FingerPrint;
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.real.Real getY(net.sourceforge.plantuml.graphic.StringBounder)>(r3);
+
+        $d1 = interfaceinvoke $r8.<net.sourceforge.plantuml.real.Real: double getCurrentValue()>();
+
+        $d2 = specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getYNotePosition(net.sourceforge.plantuml.graphic.StringBounder)>(r3);
+
+        $d3 = $d1 + $d2;
+
+        $d4 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d5 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        specialinvoke $r7.<net.sourceforge.plantuml.project.draw.FingerPrint: void <init>(double,double,double,double)>(d0, $d3, $d4, $d5);
+
+        return $r7;
+    }
+
+    private net.sourceforge.plantuml.ugraphic.UGraphic applyColors(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.project.lang.CenterBorderColor r1;
+        net.sourceforge.plantuml.ugraphic.UGraphic r2, $r4, $r7, $r8;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r3, $r5;
+        net.sourceforge.plantuml.ugraphic.UBackground $r6;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.lang.CenterBorderColor getColors()>();
+
+        if r1 == null goto label1;
+
+        $z0 = virtualinvoke r1.<net.sourceforge.plantuml.project.lang.CenterBorderColor: boolean isOk()>();
+
+        if $z0 == 0 goto label1;
+
+        $r8 = virtualinvoke r1.<net.sourceforge.plantuml.project.lang.CenterBorderColor: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UGraphic)>(r2);
+
+        return $r8;
+
+     label1:
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ugraphic.color.HColor getLineColor()>();
+
+        $r4 = interfaceinvoke r2.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r3);
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ugraphic.color.HColor getBackgroundColor()>();
+
+        $r6 = interfaceinvoke $r5.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r7 = interfaceinvoke $r4.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r6);
+
+        return $r7;
+    }
+
+    public double getX1(net.sourceforge.plantuml.project.core.TaskAttribute)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.style.StyleSignature $r1;
+        net.sourceforge.plantuml.style.StyleBuilder $r2;
+        net.sourceforge.plantuml.style.Style r3;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft r4;
+        net.sourceforge.plantuml.project.core.TaskAttribute r5, $r6;
+        net.sourceforge.plantuml.project.time.Day $r7, $r9;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r8, $r10;
+        double $d0, $d1, $d3;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r5 := @parameter0: net.sourceforge.plantuml.project.core.TaskAttribute;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        r3 = virtualinvoke $r1.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r2);
+
+        r4 = virtualinvoke r3.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getMargin()>();
+
+        $r6 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute START>;
+
+        if r5 != $r6 goto label1;
+
+        $r10 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r9 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day start>;
+
+        $d3 = interfaceinvoke $r10.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>($r9);
+
+        goto label2;
+
+     label1:
+        $r8 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r7 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day end>;
+
+        $d0 = interfaceinvoke $r8.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>($r7);
+
+        $d1 = virtualinvoke r4.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getLeft()>();
+
+        $d3 = $d0 + $d1;
+
+     label2:
+        return $d3;
+    }
+
+    public double getX2(net.sourceforge.plantuml.project.core.TaskAttribute)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.style.StyleSignature $r1;
+        net.sourceforge.plantuml.style.StyleBuilder $r2;
+        net.sourceforge.plantuml.style.Style r3;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft r4;
+        net.sourceforge.plantuml.project.core.TaskAttribute r5, $r6;
+        net.sourceforge.plantuml.project.time.Day $r7, $r9;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r8, $r10;
+        double $d0, $d1, $d3;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r5 := @parameter0: net.sourceforge.plantuml.project.core.TaskAttribute;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        r3 = virtualinvoke $r1.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r2);
+
+        r4 = virtualinvoke r3.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getMargin()>();
+
+        $r6 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute START>;
+
+        if r5 != $r6 goto label1;
+
+        $r10 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r9 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day start>;
+
+        $d3 = interfaceinvoke $r10.<net.sourceforge.plantuml.project.timescale.TimeScale: double getEndingPosition(net.sourceforge.plantuml.project.time.Day)>($r9);
+
+        goto label2;
+
+     label1:
+        $r8 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r7 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day end>;
+
+        $d0 = interfaceinvoke $r8.<net.sourceforge.plantuml.project.timescale.TimeScale: double getEndingPosition(net.sourceforge.plantuml.project.time.Day)>($r7);
+
+        $d1 = virtualinvoke r4.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getLeft()>();
+
+        $d3 = $d0 - $d1;
+
+     label2:
+        return $d3;
+    }
+
+    private void drawShape(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.style.StyleSignature $r1, $r22;
+        net.sourceforge.plantuml.style.StyleBuilder $r2, $r23;
+        net.sourceforge.plantuml.style.Style r3, $r24;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft r4;
+        net.sourceforge.plantuml.project.time.Day $r5, $r7, r40;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r6, $r8, $r33, $r34;
+        double $d0, $d1, d2, $d3, $d4, d5, $d6, d7, $d8, d9, d10;
+        net.sourceforge.plantuml.Url $r9, $r31, $r36;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r10;
+        net.sourceforge.plantuml.graphic.StringBounder r11;
+        net.sourceforge.plantuml.style.PName $r12, $r25;
+        net.sourceforge.plantuml.style.Value $r13, $r26;
+        java.util.ArrayList $r14;
+        java.util.Collection $r16;
+        net.sourceforge.plantuml.style.SName[] $r17;
+        net.sourceforge.plantuml.style.SName $r18, $r19, $r20, $r21;
+        net.sourceforge.plantuml.ISkinParam $r27;
+        net.sourceforge.plantuml.api.ThemeStyle $r28;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r29;
+        net.sourceforge.plantuml.project.draw.RectangleTask $r30;
+        int $i0;
+        boolean $z0, $z1, $z3;
+        java.lang.Object $r32;
+        net.sourceforge.plantuml.sequencediagram.graphic.Segment $r35;
+        net.sourceforge.plantuml.ugraphic.UGraphic r37, r38;
+        java.util.Iterator r39;
+        net.sourceforge.plantuml.ugraphic.color.HColor r41;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r37 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        r3 = virtualinvoke $r1.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r2);
+
+        r4 = virtualinvoke r3.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getMargin()>();
+
+        $r6 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r5 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day start>;
+
+        $d0 = interfaceinvoke $r6.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>($r5);
+
+        $d1 = virtualinvoke r4.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getLeft()>();
+
+        d2 = $d0 + $d1;
+
+        $r8 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r7 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day end>;
+
+        $d3 = interfaceinvoke $r8.<net.sourceforge.plantuml.project.timescale.TimeScale: double getEndingPosition(net.sourceforge.plantuml.project.time.Day)>($r7);
+
+        $d4 = virtualinvoke r4.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getRight()>();
+
+        d5 = $d3 - $d4;
+
+        $r9 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.Url url>;
+
+        if $r9 == null goto label1;
+
+        $r36 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.Url url>;
+
+        interfaceinvoke r37.<net.sourceforge.plantuml.ugraphic.UGraphic: void startUrl(net.sourceforge.plantuml.Url)>($r36);
+
+     label1:
+        $d6 = virtualinvoke r4.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getTop()>();
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d6);
+
+        r38 = interfaceinvoke r37.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r10);
+
+        r11 = interfaceinvoke r38.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r12 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName RoundCorner>;
+
+        $r13 = virtualinvoke r3.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r12);
+
+        d7 = interfaceinvoke $r13.<net.sourceforge.plantuml.style.Value: double asDouble()>();
+
+        $r14 = new java.util.ArrayList;
+
+        specialinvoke $r14.<java.util.ArrayList: void <init>()>();
+
+        $r16 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: java.util.Collection paused>;
+
+        r39 = interfaceinvoke $r16.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label2:
+        $z3 = interfaceinvoke r39.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 == 0 goto label3;
+
+        $r32 = interfaceinvoke r39.<java.util.Iterator: java.lang.Object next()>();
+
+        r40 = (net.sourceforge.plantuml.project.time.Day) $r32;
+
+        $r33 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        d9 = interfaceinvoke $r33.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>(r40);
+
+        $r34 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        d10 = interfaceinvoke $r34.<net.sourceforge.plantuml.project.timescale.TimeScale: double getEndingPosition(net.sourceforge.plantuml.project.time.Day)>(r40);
+
+        $r35 = new net.sourceforge.plantuml.sequencediagram.graphic.Segment;
+
+        specialinvoke $r35.<net.sourceforge.plantuml.sequencediagram.graphic.Segment: void <init>(double,double)>(d9, d10);
+
+        interfaceinvoke $r14.<java.util.Collection: boolean add(java.lang.Object)>($r35);
+
+        goto label2;
+
+     label3:
+        $r17 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r18 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r17[0] = $r18;
+
+        $r19 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r17[1] = $r19;
+
+        $r20 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName ganttDiagram>;
+
+        $r17[2] = $r20;
+
+        $r21 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName undone>;
+
+        $r17[3] = $r21;
+
+        $r22 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r17);
+
+        $r23 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        $r24 = virtualinvoke $r22.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r23);
+
+        $r25 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName BackGroundColor>;
+
+        $r26 = virtualinvoke $r24.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r25);
+
+        $r27 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r28 = interfaceinvoke $r27.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r29 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.ugraphic.color.HColorSet getColorSet()>();
+
+        r41 = interfaceinvoke $r26.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.ugraphic.color.HColor asColor(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r28, $r29);
+
+        $r30 = new net.sourceforge.plantuml.project.draw.RectangleTask;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: int getCompletion()>();
+
+        specialinvoke $r30.<net.sourceforge.plantuml.project.draw.RectangleTask: void <init>(double,double,double,int,java.util.Collection)>(d2, d5, d7, $i0, $r14);
+
+        $d8 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r11);
+
+        $z1 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean oddStart>;
+
+        $z0 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean oddEnd>;
+
+        virtualinvoke $r30.<net.sourceforge.plantuml.project.draw.RectangleTask: void draw(net.sourceforge.plantuml.ugraphic.UGraphic,double,net.sourceforge.plantuml.ugraphic.color.HColor,boolean,boolean)>(r38, $d8, r41, $z1, $z0);
+
+        $r31 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.Url url>;
+
+        if $r31 == null goto label4;
+
+        interfaceinvoke r38.<net.sourceforge.plantuml.ugraphic.UGraphic: void closeUrl()>();
+
+     label4:
+        return;
+    }
+
+    private void drawShapeOld(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.style.StyleSignature $r1;
+        net.sourceforge.plantuml.style.StyleBuilder $r2;
+        net.sourceforge.plantuml.style.Style r3;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft r4;
+        net.sourceforge.plantuml.project.time.Day $r5, $r7, r24, $r26, r59;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r6, $r8;
+        double $d0, $d1, d2, $d3, $d4, d5, $d6, d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, d17, d18;
+        byte $b0, $b3, $b4, $b5;
+        net.sourceforge.plantuml.Url $r9, $r47, $r58;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r10, $r15, $r28, $r32, $r35, $r39, $r41, $r44, $r53;
+        net.sourceforge.plantuml.graphic.StringBounder r11;
+        net.sourceforge.plantuml.style.PName $r12;
+        net.sourceforge.plantuml.style.Value $r13;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5;
+        net.sourceforge.plantuml.ugraphic.URectangle $r14, $r27, $r34, r50, r51;
+        int $i1, $i2;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r16, $r18, $r21, $r29, $r31, $r33, $r36, $r38, $r40, $r42, $r45, r48, r49, $r54, $r57;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r17, $r19;
+        net.sourceforge.plantuml.ugraphic.UBackground $r20, $r56;
+        java.util.Collection $r22, $r25;
+        java.lang.Object $r23;
+        net.sourceforge.plantuml.ugraphic.color.HColorNone $r30, $r37, $r55;
+        net.sourceforge.plantuml.ugraphic.UPath $r43, $r46;
+        java.util.Iterator r60;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r48 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        r3 = virtualinvoke $r1.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r2);
+
+        r4 = virtualinvoke r3.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getMargin()>();
+
+        $r6 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r5 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day start>;
+
+        $d0 = interfaceinvoke $r6.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>($r5);
+
+        $d1 = virtualinvoke r4.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getLeft()>();
+
+        d2 = $d0 + $d1;
+
+        $r8 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        $r7 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.time.Day end>;
+
+        $d3 = interfaceinvoke $r8.<net.sourceforge.plantuml.project.timescale.TimeScale: double getEndingPosition(net.sourceforge.plantuml.project.time.Day)>($r7);
+
+        $d4 = virtualinvoke r4.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getRight()>();
+
+        d5 = $d3 - $d4;
+
+        d17 = d5 - d2;
+
+        $b0 = d17 cmpg 3.0;
+
+        if $b0 >= 0 goto label01;
+
+        d17 = 3.0;
+
+     label01:
+        $r9 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.Url url>;
+
+        if $r9 == null goto label02;
+
+        $r47 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.Url url>;
+
+        interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: void startUrl(net.sourceforge.plantuml.Url)>($r47);
+
+     label02:
+        $d6 = virtualinvoke r4.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getTop()>();
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d6);
+
+        r49 = interfaceinvoke r48.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r10);
+
+        r11 = interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r12 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName RoundCorner>;
+
+        $r13 = virtualinvoke r3.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r12);
+
+        d7 = interfaceinvoke $r13.<net.sourceforge.plantuml.style.Value: double asDouble()>();
+
+        $z0 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean oddStart>;
+
+        if $z0 == 0 goto label03;
+
+        $z4 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean oddEnd>;
+
+        if $z4 != 0 goto label03;
+
+        $r44 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r45 = interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r44);
+
+        $d16 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r11);
+
+        $r46 = staticinvoke <net.sourceforge.plantuml.project.draw.PathUtils: net.sourceforge.plantuml.ugraphic.UPath UtoRight(double,double,double)>(d17, $d16, d7);
+
+        interfaceinvoke $r45.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r46);
+
+        goto label08;
+
+     label03:
+        $z1 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean oddStart>;
+
+        if $z1 != 0 goto label04;
+
+        $z3 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: boolean oddEnd>;
+
+        if $z3 == 0 goto label04;
+
+        $r41 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r42 = interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r41);
+
+        $d15 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r11);
+
+        $r43 = staticinvoke <net.sourceforge.plantuml.project.draw.PathUtils: net.sourceforge.plantuml.ugraphic.UPath UtoLeft(double,double,double)>(d17, $d15, d7);
+
+        interfaceinvoke $r42.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r43);
+
+        goto label08;
+
+     label04:
+        $r14 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        $d8 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r11);
+
+        specialinvoke $r14.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>(d17, $d8);
+
+        r50 = virtualinvoke $r14.<net.sourceforge.plantuml.ugraphic.URectangle: net.sourceforge.plantuml.ugraphic.URectangle rounded(double)>(d7);
+
+        $i1 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: int getCompletion()>();
+
+        if $i1 != 100 goto label05;
+
+        $r39 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r40 = interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r39);
+
+        interfaceinvoke $r40.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r50);
+
+        goto label08;
+
+     label05:
+        $i2 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: int getCompletion()>();
+
+        $d9 = (double) $i2;
+
+        $d10 = d17 * $d9;
+
+        d18 = $d10 / 100.0;
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r16 = interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r15);
+
+        $r17 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple WHITE>;
+
+        $r18 = interfaceinvoke $r16.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r17);
+
+        $r19 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple WHITE>;
+
+        $r20 = virtualinvoke $r19.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r21 = interfaceinvoke $r18.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r20);
+
+        interfaceinvoke $r21.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r50);
+
+        $b3 = d18 cmpl 2.0;
+
+        if $b3 <= 0 goto label06;
+
+        $r34 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        $d14 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r11);
+
+        specialinvoke $r34.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>(d18, $d14);
+
+        r51 = virtualinvoke $r34.<net.sourceforge.plantuml.ugraphic.URectangle: net.sourceforge.plantuml.ugraphic.URectangle rounded(double)>(d7);
+
+        $r35 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r36 = interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r35);
+
+        $r37 = new net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        specialinvoke $r37.<net.sourceforge.plantuml.ugraphic.color.HColorNone: void <init>()>();
+
+        $r38 = interfaceinvoke $r36.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r37);
+
+        interfaceinvoke $r38.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r51);
+
+     label06:
+        $b4 = d18 cmpl 10.0;
+
+        if $b4 <= 0 goto label07;
+
+        $d11 = d17 - 10.0;
+
+        $b5 = d18 cmpg $d11;
+
+        if $b5 >= 0 goto label07;
+
+        $r27 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        $d12 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r11);
+
+        specialinvoke $r27.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>(d7, $d12);
+
+        $r28 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r29 = interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r28);
+
+        $r30 = new net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        specialinvoke $r30.<net.sourceforge.plantuml.ugraphic.color.HColorNone: void <init>()>();
+
+        $r31 = interfaceinvoke $r29.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r30);
+
+        $d13 = d18 - d7;
+
+        $r32 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d13);
+
+        $r33 = interfaceinvoke $r31.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r32);
+
+        interfaceinvoke $r33.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r27);
+
+     label07:
+        $r53 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r54 = interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r53);
+
+        $r55 = new net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        specialinvoke $r55.<net.sourceforge.plantuml.ugraphic.color.HColorNone: void <init>()>();
+
+        $r56 = virtualinvoke $r55.<net.sourceforge.plantuml.ugraphic.color.HColorNone: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r57 = interfaceinvoke $r54.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r56);
+
+        interfaceinvoke $r57.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r50);
+
+     label08:
+        $r58 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.Url url>;
+
+        if $r58 == null goto label09;
+
+        interfaceinvoke r49.<net.sourceforge.plantuml.ugraphic.UGraphic: void closeUrl()>();
+
+     label09:
+        r59 = null;
+
+        $r22 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: java.util.Collection paused>;
+
+        r60 = interfaceinvoke $r22.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label10:
+        $z5 = interfaceinvoke r60.<java.util.Iterator: boolean hasNext()>();
+
+        if $z5 == 0 goto label15;
+
+        $r23 = interfaceinvoke r60.<java.util.Iterator: java.lang.Object next()>();
+
+        r24 = (net.sourceforge.plantuml.project.time.Day) $r23;
+
+        $r25 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: java.util.Collection paused>;
+
+        $r26 = virtualinvoke r24.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day increment()>();
+
+        $z2 = interfaceinvoke $r25.<java.util.Collection: boolean contains(java.lang.Object)>($r26);
+
+        if $z2 == 0 goto label11;
+
+        if r59 != null goto label14;
+
+        r59 = r24;
+
+        goto label14;
+
+     label11:
+        if r59 != null goto label12;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: void drawPause(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>(r49, r24, r24);
+
+        goto label13;
+
+     label12:
+        specialinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: void drawPause(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>(r49, r59, r24);
+
+     label13:
+        r59 = null;
+
+     label14:
+        goto label10;
+
+     label15:
+        return;
+    }
+
+    private void drawPause(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.project.time.Day, net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular r0;
+        net.sourceforge.plantuml.project.time.Day r1, r3;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r2, $r4;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9;
+        net.sourceforge.plantuml.graphic.StringBounder r5;
+        net.sourceforge.plantuml.ugraphic.URectangle $r6;
+        net.sourceforge.plantuml.ugraphic.ULine r8;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r9, $r17;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r10, $r12;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r11, $r14, r16, $r18, r19, r20;
+        net.sourceforge.plantuml.ugraphic.UBackground $r13;
+        net.sourceforge.plantuml.ugraphic.UStroke $r15;
+
+        r0 := @this: net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        r19 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r1 := @parameter1: net.sourceforge.plantuml.project.time.Day;
+
+        r3 := @parameter2: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        d0 = interfaceinvoke $r2.<net.sourceforge.plantuml.project.timescale.TimeScale: double getStartingPosition(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        $r4 = r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: net.sourceforge.plantuml.project.timescale.TimeScale timeScale>;
+
+        d1 = interfaceinvoke $r4.<net.sourceforge.plantuml.project.timescale.TimeScale: double getEndingPosition(net.sourceforge.plantuml.project.time.Day)>(r3);
+
+        r5 = interfaceinvoke r19.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r6 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        $d2 = d1 - d0;
+
+        $d3 = $d2 - 1.0;
+
+        $d4 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r5);
+
+        $d5 = $d4 + 1.0;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>($d3, $d5);
+
+        $d6 = d1 - d0;
+
+        $d7 = $d6 - 1.0;
+
+        r8 = staticinvoke <net.sourceforge.plantuml.ugraphic.ULine: net.sourceforge.plantuml.ugraphic.ULine hline(double)>($d7);
+
+        $d8 = d0 - 1.0;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d8);
+
+        r20 = interfaceinvoke r19.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r9);
+
+        $r10 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple WHITE>;
+
+        $r11 = interfaceinvoke r20.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r10);
+
+        $r12 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple WHITE>;
+
+        $r13 = virtualinvoke $r12.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r14 = interfaceinvoke $r11.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r13);
+
+        interfaceinvoke $r14.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r6);
+
+        $r15 = new net.sourceforge.plantuml.ugraphic.UStroke;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.ugraphic.UStroke: void <init>(double,double,double)>(2.0, 3.0, 1.0);
+
+        r16 = interfaceinvoke r20.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r15);
+
+        interfaceinvoke r16.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r8);
+
+        $d9 = virtualinvoke r0.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: double getShapeHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r5);
+
+        $r17 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d9);
+
+        $r18 = interfaceinvoke r16.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r17);
+
+        interfaceinvoke $r18.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r8);
+
+        return;
+    }
+}

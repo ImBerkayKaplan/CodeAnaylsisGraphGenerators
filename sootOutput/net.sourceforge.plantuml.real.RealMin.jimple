@@ -1,0 +1,206 @@
+class net.sourceforge.plantuml.real.RealMin extends net.sourceforge.plantuml.real.AbstractReal implements net.sourceforge.plantuml.real.Real
+{
+    private final java.util.List all;
+
+    void <init>(java.util.Collection)
+    {
+        net.sourceforge.plantuml.real.RealMin r0;
+        java.util.Collection r1;
+        net.sourceforge.plantuml.real.RealLine $r2;
+        java.util.ArrayList $r3;
+        java.util.List $r4;
+
+        r0 := @this: net.sourceforge.plantuml.real.RealMin;
+
+        r1 := @parameter0: java.util.Collection;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.real.RealMax: net.sourceforge.plantuml.real.RealLine line(java.util.Collection)>(r1);
+
+        specialinvoke r0.<net.sourceforge.plantuml.real.AbstractReal: void <init>(net.sourceforge.plantuml.real.RealLine)>($r2);
+
+        $r3 = new java.util.ArrayList;
+
+        specialinvoke $r3.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.real.RealMin: java.util.List all> = $r3;
+
+        $r4 = r0.<net.sourceforge.plantuml.real.RealMin: java.util.List all>;
+
+        interfaceinvoke $r4.<java.util.List: boolean addAll(java.util.Collection)>(r1);
+
+        return;
+    }
+
+    public java.lang.String getName()
+    {
+        java.lang.StringBuilder $r0, $r1, $r4;
+        net.sourceforge.plantuml.real.RealMin r2;
+        java.util.List $r3;
+        java.lang.String $r5;
+
+        r2 := @this: net.sourceforge.plantuml.real.RealMin;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("min ");
+
+        $r3 = r2.<net.sourceforge.plantuml.real.RealMin: java.util.List all>;
+
+        $r4 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+
+    double getCurrentValueInternal()
+    {
+        net.sourceforge.plantuml.real.RealMin r0;
+        java.util.List $r1, $r4, $r5;
+        java.lang.Object $r2, $r6;
+        net.sourceforge.plantuml.real.Real $r3, $r7;
+        int $i0, i2;
+        double d0, d1;
+        byte $b1;
+
+        r0 := @this: net.sourceforge.plantuml.real.RealMin;
+
+        $r1 = r0.<net.sourceforge.plantuml.real.RealMin: java.util.List all>;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r3 = (net.sourceforge.plantuml.real.Real) $r2;
+
+        d1 = interfaceinvoke $r3.<net.sourceforge.plantuml.real.Real: double getCurrentValue()>();
+
+        i2 = 1;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.real.RealMin: java.util.List all>;
+
+        $i0 = interfaceinvoke $r4.<java.util.List: int size()>();
+
+        if i2 >= $i0 goto label3;
+
+        $r5 = r0.<net.sourceforge.plantuml.real.RealMin: java.util.List all>;
+
+        $r6 = interfaceinvoke $r5.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r7 = (net.sourceforge.plantuml.real.Real) $r6;
+
+        d0 = interfaceinvoke $r7.<net.sourceforge.plantuml.real.Real: double getCurrentValue()>();
+
+        $b1 = d0 cmpg d1;
+
+        if $b1 >= 0 goto label2;
+
+        d1 = d0;
+
+     label2:
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label3:
+        return d1;
+    }
+
+    public net.sourceforge.plantuml.real.Real addFixed(double)
+    {
+        net.sourceforge.plantuml.real.RealDelta $r0;
+        net.sourceforge.plantuml.real.RealMin r1;
+        double d0;
+
+        r1 := @this: net.sourceforge.plantuml.real.RealMin;
+
+        d0 := @parameter0: double;
+
+        $r0 = new net.sourceforge.plantuml.real.RealDelta;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.real.RealDelta: void <init>(net.sourceforge.plantuml.real.Real,double)>(r1, d0);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.real.Real addAtLeast(double)
+    {
+        java.lang.UnsupportedOperationException $r0;
+        net.sourceforge.plantuml.real.RealMin r1;
+        double d0;
+
+        r1 := @this: net.sourceforge.plantuml.real.RealMin;
+
+        d0 := @parameter0: double;
+
+        $r0 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r0.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r0;
+    }
+
+    public void ensureBiggerThan(net.sourceforge.plantuml.real.Real)
+    {
+        net.sourceforge.plantuml.real.RealMin r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.real.Real r4, r5;
+
+        r0 := @this: net.sourceforge.plantuml.real.RealMin;
+
+        r5 := @parameter0: net.sourceforge.plantuml.real.Real;
+
+        $r1 = r0.<net.sourceforge.plantuml.real.RealMin: java.util.List all>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.real.Real) $r3;
+
+        interfaceinvoke r4.<net.sourceforge.plantuml.real.Real: void ensureBiggerThan(net.sourceforge.plantuml.real.Real)>(r5);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public int size()
+    {
+        net.sourceforge.plantuml.real.RealMin r0;
+        java.util.List $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.real.RealMin;
+
+        $r1 = r0.<net.sourceforge.plantuml.real.RealMin: java.util.List all>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        return $i0;
+    }
+
+    public void printCreationStackTrace()
+    {
+        java.lang.UnsupportedOperationException $r0;
+        net.sourceforge.plantuml.real.RealMin r1;
+
+        r1 := @this: net.sourceforge.plantuml.real.RealMin;
+
+        $r0 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r0.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r0;
+    }
+}

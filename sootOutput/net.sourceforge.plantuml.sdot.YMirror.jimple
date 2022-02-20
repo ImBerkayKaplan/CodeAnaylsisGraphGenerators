@@ -1,0 +1,163 @@
+public class net.sourceforge.plantuml.sdot.YMirror extends java.lang.Object
+{
+    private final double max;
+
+    public void <init>(double)
+    {
+        net.sourceforge.plantuml.sdot.YMirror r0;
+        double d0;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.YMirror;
+
+        d0 := @parameter0: double;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sdot.YMirror: double max> = d0;
+
+        return;
+    }
+
+    public double getMirrored(double)
+    {
+        double d0, $d1, $d2, $d3;
+        byte $b0, $b1;
+        java.io.PrintStream $r0;
+        net.sourceforge.plantuml.sdot.YMirror r1;
+
+        r1 := @this: net.sourceforge.plantuml.sdot.YMirror;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpg 0.0;
+
+        if $b0 < 0 goto label1;
+
+        $d1 = r1.<net.sourceforge.plantuml.sdot.YMirror: double max>;
+
+        $b1 = d0 cmpl $d1;
+
+        if $b1 <= 0 goto label2;
+
+     label1:
+        $r0 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>("BAD VALUE IN YMirror");
+
+     label2:
+        $d2 = r1.<net.sourceforge.plantuml.sdot.YMirror: double max>;
+
+        $d3 = $d2 - d0;
+
+        return $d3;
+    }
+
+    public java.awt.geom.Point2D getMirrored(java.awt.geom.Point2D)
+    {
+        java.awt.geom.Point2D$Double $r0;
+        java.awt.geom.Point2D r1;
+        double $d0, $d1, $d2, $d3;
+        net.sourceforge.plantuml.sdot.YMirror r2;
+
+        r2 := @this: net.sourceforge.plantuml.sdot.YMirror;
+
+        r1 := @parameter0: java.awt.geom.Point2D;
+
+        $r0 = new java.awt.geom.Point2D$Double;
+
+        $d0 = virtualinvoke r1.<java.awt.geom.Point2D: double getX()>();
+
+        $d1 = r2.<net.sourceforge.plantuml.sdot.YMirror: double max>;
+
+        $d2 = virtualinvoke r1.<java.awt.geom.Point2D: double getY()>();
+
+        $d3 = $d1 - $d2;
+
+        specialinvoke $r0.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d0, $d3);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.posimo.DotPath getMirrored(net.sourceforge.plantuml.posimo.DotPath)
+    {
+        net.sourceforge.plantuml.posimo.DotPath $r0, r1, r15;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        java.awt.geom.CubicCurve2D$Double r5;
+        net.sourceforge.plantuml.sdot.YMirror r6;
+        java.awt.geom.Point2D $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14;
+
+        r6 := @this: net.sourceforge.plantuml.sdot.YMirror;
+
+        r1 := @parameter0: net.sourceforge.plantuml.posimo.DotPath;
+
+        $r0 = new net.sourceforge.plantuml.posimo.DotPath;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.posimo.DotPath: void <init>()>();
+
+        r15 = $r0;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.posimo.DotPath: java.util.List getBeziers()>();
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.awt.geom.CubicCurve2D$Double) $r4;
+
+        $r7 = virtualinvoke r5.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP1()>();
+
+        $r8 = virtualinvoke r6.<net.sourceforge.plantuml.sdot.YMirror: java.awt.geom.Point2D getMirrored(java.awt.geom.Point2D)>($r7);
+
+        $r9 = virtualinvoke r5.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getCtrlP1()>();
+
+        $r10 = virtualinvoke r6.<net.sourceforge.plantuml.sdot.YMirror: java.awt.geom.Point2D getMirrored(java.awt.geom.Point2D)>($r9);
+
+        $r11 = virtualinvoke r5.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getCtrlP2()>();
+
+        $r12 = virtualinvoke r6.<net.sourceforge.plantuml.sdot.YMirror: java.awt.geom.Point2D getMirrored(java.awt.geom.Point2D)>($r11);
+
+        $r13 = virtualinvoke r5.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP2()>();
+
+        $r14 = virtualinvoke r6.<net.sourceforge.plantuml.sdot.YMirror: java.awt.geom.Point2D getMirrored(java.awt.geom.Point2D)>($r13);
+
+        r15 = virtualinvoke r15.<net.sourceforge.plantuml.posimo.DotPath: net.sourceforge.plantuml.posimo.DotPath addCurve(java.awt.geom.Point2D,java.awt.geom.Point2D,java.awt.geom.Point2D,java.awt.geom.Point2D)>($r8, $r10, $r12, $r14);
+
+        goto label1;
+
+     label2:
+        return r15;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.UTranslate getMirrored(net.sourceforge.plantuml.ugraphic.UTranslate)
+    {
+        net.sourceforge.plantuml.ugraphic.UTranslate $r0, r1;
+        double $d0, $d1, $d2, $d3;
+        net.sourceforge.plantuml.sdot.YMirror r2;
+
+        r2 := @this: net.sourceforge.plantuml.sdot.YMirror;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d0 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDx()>();
+
+        $d1 = r2.<net.sourceforge.plantuml.sdot.YMirror: double max>;
+
+        $d2 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDy()>();
+
+        $d3 = $d1 - $d2;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d0, $d3);
+
+        return $r0;
+    }
+}

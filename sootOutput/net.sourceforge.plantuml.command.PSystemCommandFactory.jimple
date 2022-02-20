@@ -1,0 +1,526 @@
+public abstract class net.sourceforge.plantuml.command.PSystemCommandFactory extends net.sourceforge.plantuml.command.PSystemAbstractFactory
+{
+    private java.util.List cmds;
+    static final boolean $assertionsDisabled;
+
+    protected abstract java.util.List createCommands();
+
+    public abstract net.sourceforge.plantuml.AbstractPSystem createEmptyDiagram(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.ISkinSimple);
+
+    protected void <init>()
+    {
+        net.sourceforge.plantuml.command.PSystemCommandFactory r0;
+        net.sourceforge.plantuml.core.DiagramType $r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.PSystemCommandFactory;
+
+        $r1 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemCommandFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r1);
+
+        return;
+    }
+
+    protected void <init>(net.sourceforge.plantuml.core.DiagramType)
+    {
+        net.sourceforge.plantuml.command.PSystemCommandFactory r0;
+        net.sourceforge.plantuml.core.DiagramType r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.PSystemCommandFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.DiagramType;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemAbstractFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>(r1);
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.core.Diagram createSystem(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.ISkinSimple)
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        net.sourceforge.plantuml.version.IteratorCounter2 r1;
+        java.lang.Object $r2, $r11, $r15;
+        net.sourceforge.plantuml.StringLocated r3, $r8, $r12, $r16;
+        java.lang.String $r4, $r9, r10;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
+        net.sourceforge.plantuml.command.PSystemCommandFactory r5;
+        net.sourceforge.plantuml.api.ThemeStyle r6;
+        net.sourceforge.plantuml.ISkinSimple r7;
+        int $i0;
+        java.util.List $r13, $r17, $r20;
+        net.sourceforge.plantuml.error.PSystemError $r14, $r18, $r21;
+        net.sourceforge.plantuml.LineLocation $r19, r25, r26;
+        java.lang.UnsupportedOperationException $r23;
+        net.sourceforge.plantuml.AbstractPSystem r24;
+
+        r5 := @this: net.sourceforge.plantuml.command.PSystemCommandFactory;
+
+        r6 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r0 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r7 := @parameter2: net.sourceforge.plantuml.ISkinSimple;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.core.UmlSource: net.sourceforge.plantuml.version.IteratorCounter2 iterator2()>();
+
+        $r2 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        r3 = (net.sourceforge.plantuml.StringLocated) $r2;
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseStartDiagram(java.lang.String)>($r4);
+
+        if $z0 != 0 goto label01;
+
+        $r23 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r23.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r23;
+
+     label01:
+        $z1 = virtualinvoke r0.<net.sourceforge.plantuml.core.UmlSource: boolean isEmpty()>();
+
+        if $z1 == 0 goto label03;
+
+        $z6 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: boolean hasNext()>();
+
+        if $z6 == 0 goto label02;
+
+        interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+     label02:
+        $r19 = virtualinvoke r3.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $r20 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        $r21 = virtualinvoke r5.<net.sourceforge.plantuml.command.PSystemCommandFactory: net.sourceforge.plantuml.error.PSystemError buildEmptyError(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.LineLocation,java.util.List)>(r0, $r19, $r20);
+
+        return $r21;
+
+     label03:
+        r24 = virtualinvoke r5.<net.sourceforge.plantuml.command.PSystemCommandFactory: net.sourceforge.plantuml.AbstractPSystem createEmptyDiagram(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ISkinSimple)>(r6, r0, r7);
+
+     label04:
+        $z2 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: boolean hasNext()>();
+
+        if $z2 == 0 goto label10;
+
+        $r8 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: net.sourceforge.plantuml.StringLocated peek()>();
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z3 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseEndDiagram(java.lang.String)>($r9);
+
+        if $z3 == 0 goto label09;
+
+        if r24 != null goto label05;
+
+        return null;
+
+     label05:
+        r10 = virtualinvoke r24.<net.sourceforge.plantuml.AbstractPSystem: java.lang.String checkFinalError()>();
+
+        if r10 == null goto label06;
+
+        $r15 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        $r16 = (net.sourceforge.plantuml.StringLocated) $r15;
+
+        r25 = virtualinvoke $r16.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $r17 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        $r18 = virtualinvoke r5.<net.sourceforge.plantuml.command.PSystemCommandFactory: net.sourceforge.plantuml.error.PSystemError buildExecutionError(net.sourceforge.plantuml.core.UmlSource,java.lang.String,net.sourceforge.plantuml.LineLocation,java.util.List)>(r0, r10, r25, $r17);
+
+        return $r18;
+
+     label06:
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.core.UmlSource: int getTotalLineCount()>();
+
+        if $i0 != 2 goto label07;
+
+        $r11 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        $r12 = (net.sourceforge.plantuml.StringLocated) $r11;
+
+        r26 = virtualinvoke $r12.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $r13 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        $r14 = virtualinvoke r5.<net.sourceforge.plantuml.command.PSystemCommandFactory: net.sourceforge.plantuml.error.PSystemError buildEmptyError(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.LineLocation,java.util.List)>(r0, r26, $r13);
+
+        return $r14;
+
+     label07:
+        virtualinvoke r24.<net.sourceforge.plantuml.AbstractPSystem: void makeDiagramReady()>();
+
+        $z5 = virtualinvoke r24.<net.sourceforge.plantuml.AbstractPSystem: boolean isOk()>();
+
+        if $z5 != 0 goto label08;
+
+        return null;
+
+     label08:
+        return r24;
+
+     label09:
+        r24 = specialinvoke r5.<net.sourceforge.plantuml.command.PSystemCommandFactory: net.sourceforge.plantuml.AbstractPSystem executeFewLines(net.sourceforge.plantuml.AbstractPSystem,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.version.IteratorCounter2)>(r24, r0, r1);
+
+        $z4 = r24 instanceof net.sourceforge.plantuml.error.PSystemError;
+
+        if $z4 == 0 goto label04;
+
+        return r24;
+
+     label10:
+        return r24;
+    }
+
+    private net.sourceforge.plantuml.AbstractPSystem executeFewLines(net.sourceforge.plantuml.AbstractPSystem, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.version.IteratorCounter2)
+    {
+        net.sourceforge.plantuml.command.PSystemCommandFactory r0;
+        net.sourceforge.plantuml.version.IteratorCounter2 r1;
+        net.sourceforge.plantuml.command.PSystemCommandFactory$Step r2;
+        net.sourceforge.plantuml.command.BlocLines $r3, $r6;
+        net.sourceforge.plantuml.command.Command $r4;
+        boolean $z0;
+        net.sourceforge.plantuml.AbstractPSystem $r5, r23;
+        net.sourceforge.plantuml.StringLocated $r7, $r18;
+        net.sourceforge.plantuml.LineLocation r8, $r19;
+        net.sourceforge.plantuml.ErrorUml $r9, $r16;
+        net.sourceforge.plantuml.ErrorUmlType $r10, $r17;
+        java.lang.String $r11;
+        int $i0;
+        net.sourceforge.plantuml.core.UmlSource r13;
+        java.util.List $r14, $r15, $r21;
+        net.sourceforge.plantuml.error.PSystemError $r22;
+        net.sourceforge.plantuml.command.CommandExecutionResult r25;
+
+        r0 := @this: net.sourceforge.plantuml.command.PSystemCommandFactory;
+
+        r23 := @parameter0: net.sourceforge.plantuml.AbstractPSystem;
+
+        r13 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r1 := @parameter2: net.sourceforge.plantuml.version.IteratorCounter2;
+
+        r2 = specialinvoke r0.<net.sourceforge.plantuml.command.PSystemCommandFactory: net.sourceforge.plantuml.command.PSystemCommandFactory$Step getCandidate(net.sourceforge.plantuml.version.IteratorCounter2)>(r1);
+
+        if r2 != null goto label1;
+
+        $r16 = new net.sourceforge.plantuml.ErrorUml;
+
+        $r17 = <net.sourceforge.plantuml.ErrorUmlType: net.sourceforge.plantuml.ErrorUmlType SYNTAX_ERROR>;
+
+        $r18 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: net.sourceforge.plantuml.StringLocated peek()>();
+
+        $r19 = virtualinvoke $r18.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        specialinvoke $r16.<net.sourceforge.plantuml.ErrorUml: void <init>(net.sourceforge.plantuml.ErrorUmlType,java.lang.String,int,net.sourceforge.plantuml.LineLocation)>($r17, "Syntax Error?", 0, $r19);
+
+        interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        $r21 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        $r22 = staticinvoke <net.sourceforge.plantuml.error.PSystemErrorUtils: net.sourceforge.plantuml.error.PSystemError buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List)>(r13, $r16, null, $r21);
+
+        return $r22;
+
+     label1:
+        $r4 = r2.<net.sourceforge.plantuml.command.PSystemCommandFactory$Step: net.sourceforge.plantuml.command.Command command>;
+
+        $r3 = r2.<net.sourceforge.plantuml.command.PSystemCommandFactory$Step: net.sourceforge.plantuml.command.BlocLines blocLines>;
+
+        r25 = virtualinvoke r23.<net.sourceforge.plantuml.AbstractPSystem: net.sourceforge.plantuml.command.CommandExecutionResult executeCommand(net.sourceforge.plantuml.command.Command,net.sourceforge.plantuml.command.BlocLines)>($r4, $r3);
+
+        $z0 = virtualinvoke r25.<net.sourceforge.plantuml.command.CommandExecutionResult: boolean isOk()>();
+
+        if $z0 != 0 goto label2;
+
+        $r6 = r2.<net.sourceforge.plantuml.command.PSystemCommandFactory$Step: net.sourceforge.plantuml.command.BlocLines blocLines>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        r8 = virtualinvoke $r7.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $r9 = new net.sourceforge.plantuml.ErrorUml;
+
+        $r10 = <net.sourceforge.plantuml.ErrorUmlType: net.sourceforge.plantuml.ErrorUmlType EXECUTION_ERROR>;
+
+        $r11 = virtualinvoke r25.<net.sourceforge.plantuml.command.CommandExecutionResult: java.lang.String getError()>();
+
+        $i0 = virtualinvoke r25.<net.sourceforge.plantuml.command.CommandExecutionResult: int getScore()>();
+
+        specialinvoke $r9.<net.sourceforge.plantuml.ErrorUml: void <init>(net.sourceforge.plantuml.ErrorUmlType,java.lang.String,int,net.sourceforge.plantuml.LineLocation)>($r10, $r11, $i0, r8);
+
+        $r14 = virtualinvoke r25.<net.sourceforge.plantuml.command.CommandExecutionResult: java.util.List getDebugLines()>();
+
+        $r15 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: java.util.List getTrace()>();
+
+        r23 = staticinvoke <net.sourceforge.plantuml.error.PSystemErrorUtils: net.sourceforge.plantuml.error.PSystemError buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List)>(r13, $r9, $r14, $r15);
+
+     label2:
+        $r5 = virtualinvoke r25.<net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.AbstractPSystem getNewDiagram()>();
+
+        if $r5 == null goto label3;
+
+        r23 = virtualinvoke r25.<net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.AbstractPSystem getNewDiagram()>();
+
+     label3:
+        return r23;
+    }
+
+    private net.sourceforge.plantuml.command.PSystemCommandFactory$Step getCandidate(net.sourceforge.plantuml.version.IteratorCounter2)
+    {
+        net.sourceforge.plantuml.version.IteratorCounter2 r0, r12;
+        net.sourceforge.plantuml.StringLocated $r1;
+        net.sourceforge.plantuml.command.BlocLines r2, r13;
+        net.sourceforge.plantuml.command.PSystemCommandFactory r3;
+        java.util.List $r4, $r5, $r18;
+        java.util.Iterator r6;
+        java.lang.Object $r7;
+        net.sourceforge.plantuml.command.Command r8;
+        net.sourceforge.plantuml.command.CommandControl r9, $r10, $r11;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.command.PSystemCommandFactory$Step $r14, $r17;
+        java.lang.AssertionError $r15;
+
+        r3 := @this: net.sourceforge.plantuml.command.PSystemCommandFactory;
+
+        r0 := @parameter0: net.sourceforge.plantuml.version.IteratorCounter2;
+
+        $r1 = interfaceinvoke r0.<net.sourceforge.plantuml.version.IteratorCounter2: net.sourceforge.plantuml.StringLocated peek()>();
+
+        r2 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines single(net.sourceforge.plantuml.StringLocated)>($r1);
+
+        $r4 = r3.<net.sourceforge.plantuml.command.PSystemCommandFactory: java.util.List cmds>;
+
+        if $r4 != null goto label1;
+
+        $r18 = virtualinvoke r3.<net.sourceforge.plantuml.command.PSystemCommandFactory: java.util.List createCommands()>();
+
+        r3.<net.sourceforge.plantuml.command.PSystemCommandFactory: java.util.List cmds> = $r18;
+
+     label1:
+        $r5 = r3.<net.sourceforge.plantuml.command.PSystemCommandFactory: java.util.List cmds>;
+
+        r6 = interfaceinvoke $r5.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z1 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label7;
+
+        $r7 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (net.sourceforge.plantuml.command.Command) $r7;
+
+        r9 = interfaceinvoke r8.<net.sourceforge.plantuml.command.Command: net.sourceforge.plantuml.command.CommandControl isValid(net.sourceforge.plantuml.command.BlocLines)>(r2);
+
+        $r10 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK>;
+
+        if r9 != $r10 goto label3;
+
+        interfaceinvoke r0.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        $r17 = new net.sourceforge.plantuml.command.PSystemCommandFactory$Step;
+
+        specialinvoke $r17.<net.sourceforge.plantuml.command.PSystemCommandFactory$Step: void <init>(net.sourceforge.plantuml.command.Command,net.sourceforge.plantuml.command.BlocLines)>(r8, r2);
+
+        return $r17;
+
+     label3:
+        $r11 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK_PARTIAL>;
+
+        if r9 != $r11 goto label6;
+
+        r12 = interfaceinvoke r0.<net.sourceforge.plantuml.version.IteratorCounter2: net.sourceforge.plantuml.version.IteratorCounter2 cloneMe()>();
+
+        r13 = specialinvoke r3.<net.sourceforge.plantuml.command.PSystemCommandFactory: net.sourceforge.plantuml.command.BlocLines isMultilineCommandOk(net.sourceforge.plantuml.version.IteratorCounter2,net.sourceforge.plantuml.command.Command)>(r12, r8);
+
+        if r13 != null goto label4;
+
+        goto label2;
+
+     label4:
+        interfaceinvoke r0.<net.sourceforge.plantuml.version.IteratorCounter2: void copyStateFrom(net.sourceforge.plantuml.version.IteratorCounter2)>(r12);
+
+        $z0 = <net.sourceforge.plantuml.command.PSystemCommandFactory: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label5;
+
+        if r13 != null goto label5;
+
+        $r15 = new java.lang.AssertionError;
+
+        specialinvoke $r15.<java.lang.AssertionError: void <init>()>();
+
+        throw $r15;
+
+     label5:
+        $r14 = new net.sourceforge.plantuml.command.PSystemCommandFactory$Step;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.command.PSystemCommandFactory$Step: void <init>(net.sourceforge.plantuml.command.Command,net.sourceforge.plantuml.command.BlocLines)>(r8, r13);
+
+        return $r14;
+
+     label6:
+        goto label2;
+
+     label7:
+        return null;
+    }
+
+    private net.sourceforge.plantuml.command.BlocLines isMultilineCommandOk(net.sourceforge.plantuml.version.IteratorCounter2, net.sourceforge.plantuml.command.Command)
+    {
+        net.sourceforge.plantuml.command.BlocLines $r0, r8;
+        net.sourceforge.plantuml.version.IteratorCounter2 r1;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.command.PSystemCommandFactory r2;
+        net.sourceforge.plantuml.command.Command r3;
+        net.sourceforge.plantuml.command.CommandControl r4, $r5, $r6;
+        net.sourceforge.plantuml.command.CommandDecoratorMultine $r7;
+        int $i0, i1;
+
+        r2 := @this: net.sourceforge.plantuml.command.PSystemCommandFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.version.IteratorCounter2;
+
+        r3 := @parameter1: net.sourceforge.plantuml.command.Command;
+
+        $r0 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.BlocLines: void <init>()>();
+
+        r8 = $r0;
+
+        i1 = 0;
+
+     label1:
+        $z0 = interfaceinvoke r1.<net.sourceforge.plantuml.version.IteratorCounter2: boolean hasNext()>();
+
+        if $z0 == 0 goto label5;
+
+        r8 = specialinvoke r2.<net.sourceforge.plantuml.command.PSystemCommandFactory: net.sourceforge.plantuml.command.BlocLines addOneSingleLineManageEmbedded2(net.sourceforge.plantuml.version.IteratorCounter2,net.sourceforge.plantuml.command.BlocLines)>(r1, r8);
+
+        r4 = interfaceinvoke r3.<net.sourceforge.plantuml.command.Command: net.sourceforge.plantuml.command.CommandControl isValid(net.sourceforge.plantuml.command.BlocLines)>(r8);
+
+        $r5 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl NOT_OK>;
+
+        if r4 != $r5 goto label2;
+
+        return null;
+
+     label2:
+        $r6 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK>;
+
+        if r4 != $r6 goto label3;
+
+        return r8;
+
+     label3:
+        i1 = i1 + 1;
+
+        $z1 = r3 instanceof net.sourceforge.plantuml.command.CommandDecoratorMultine;
+
+        if $z1 == 0 goto label4;
+
+        $r7 = (net.sourceforge.plantuml.command.CommandDecoratorMultine) r3;
+
+        $i0 = virtualinvoke $r7.<net.sourceforge.plantuml.command.CommandDecoratorMultine: int getNbMaxLines()>();
+
+        if i1 <= $i0 goto label4;
+
+        return null;
+
+     label4:
+        goto label1;
+
+     label5:
+        return null;
+    }
+
+    private net.sourceforge.plantuml.command.BlocLines addOneSingleLineManageEmbedded2(net.sourceforge.plantuml.version.IteratorCounter2, net.sourceforge.plantuml.command.BlocLines)
+    {
+        net.sourceforge.plantuml.version.IteratorCounter2 r0;
+        java.lang.Object $r1, $r5;
+        net.sourceforge.plantuml.StringLocated r2, $r3, r6, $r7;
+        java.lang.String $r4, $r8;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.command.PSystemCommandFactory r9;
+        net.sourceforge.plantuml.command.BlocLines r10, r11;
+
+        r9 := @this: net.sourceforge.plantuml.command.PSystemCommandFactory;
+
+        r0 := @parameter0: net.sourceforge.plantuml.version.IteratorCounter2;
+
+        r10 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = interfaceinvoke r0.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        r2 = (net.sourceforge.plantuml.StringLocated) $r1;
+
+        r11 = virtualinvoke r10.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines add(net.sourceforge.plantuml.StringLocated)>(r2);
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = virtualinvoke $r4.<java.lang.String: boolean equals(java.lang.Object)>("{{");
+
+        if $z0 == 0 goto label3;
+
+     label1:
+        $z1 = interfaceinvoke r0.<net.sourceforge.plantuml.version.IteratorCounter2: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r5 = interfaceinvoke r0.<net.sourceforge.plantuml.version.IteratorCounter2: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.StringLocated) $r5;
+
+        r11 = virtualinvoke r11.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines add(net.sourceforge.plantuml.StringLocated)>(r6);
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z2 = virtualinvoke $r8.<java.lang.String: boolean equals(java.lang.Object)>("}}");
+
+        if $z2 == 0 goto label2;
+
+        return r11;
+
+     label2:
+        goto label1;
+
+     label3:
+        return r11;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/command/PSystemCommandFactory;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.command.PSystemCommandFactory: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

@@ -1,0 +1,281 @@
+public class net.sourceforge.plantuml.dedication.QBlock extends java.lang.Object
+{
+    private final java.math.BigInteger big;
+
+    public static net.sourceforge.plantuml.dedication.QBlock read(java.io.InputStream, int) throws java.io.IOException
+    {
+        int i0, $i1, i2, $i4, i5;
+        byte[] r0;
+        net.sourceforge.plantuml.dedication.QBlock $r1;
+        java.math.BigInteger $r2;
+        java.io.InputStream r3;
+        byte $b3;
+
+        r3 := @parameter0: java.io.InputStream;
+
+        i0 := @parameter1: int;
+
+        $i1 = i0 + 1;
+
+        r0 = newarray (byte)[$i1];
+
+        i5 = 0;
+
+     label1:
+        if i5 >= i0 goto label3;
+
+        i2 = virtualinvoke r3.<java.io.InputStream: int read()>();
+
+        if i2 != -1 goto label2;
+
+        if i5 != 0 goto label3;
+
+        return null;
+
+     label2:
+        $i4 = i5 + 1;
+
+        $b3 = (byte) i2;
+
+        r0[$i4] = $b3;
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label3:
+        $r1 = new net.sourceforge.plantuml.dedication.QBlock;
+
+        $r2 = new java.math.BigInteger;
+
+        specialinvoke $r2.<java.math.BigInteger: void <init>(byte[])>(r0);
+
+        specialinvoke $r1.<net.sourceforge.plantuml.dedication.QBlock: void <init>(java.math.BigInteger)>($r2);
+
+        return $r1;
+    }
+
+    public static net.sourceforge.plantuml.dedication.QBlock fromBuffer(byte[])
+    {
+        byte[] r0, r1;
+        int $i0, $i1, $i2;
+        java.math.BigInteger $r2;
+        net.sourceforge.plantuml.dedication.QBlock $r4;
+
+        r0 := @parameter0: byte[];
+
+        $i0 = lengthof r0;
+
+        $i1 = $i0 + 1;
+
+        r1 = newarray (byte)[$i1];
+
+        $i2 = lengthof r0;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r0, 0, r1, 1, $i2);
+
+        $r2 = new java.math.BigInteger;
+
+        specialinvoke $r2.<java.math.BigInteger: void <init>(byte[])>(r1);
+
+        $r4 = new net.sourceforge.plantuml.dedication.QBlock;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.dedication.QBlock: void <init>(java.math.BigInteger)>($r2);
+
+        return $r4;
+    }
+
+    public void <init>(java.math.BigInteger)
+    {
+        net.sourceforge.plantuml.dedication.QBlock r0;
+        java.math.BigInteger r1;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.QBlock;
+
+        r1 := @parameter0: java.math.BigInteger;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.dedication.QBlock: java.math.BigInteger big> = r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.dedication.QBlock change(java.math.BigInteger, java.math.BigInteger)
+    {
+        net.sourceforge.plantuml.dedication.QBlock r0, $r5;
+        java.math.BigInteger r1, r2, $r3, r4;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.QBlock;
+
+        r1 := @parameter0: java.math.BigInteger;
+
+        r2 := @parameter1: java.math.BigInteger;
+
+        $r3 = r0.<net.sourceforge.plantuml.dedication.QBlock: java.math.BigInteger big>;
+
+        r4 = virtualinvoke $r3.<java.math.BigInteger: java.math.BigInteger modPow(java.math.BigInteger,java.math.BigInteger)>(r1, r2);
+
+        $r5 = new net.sourceforge.plantuml.dedication.QBlock;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.dedication.QBlock: void <init>(java.math.BigInteger)>(r4);
+
+        return $r5;
+    }
+
+    public byte[] getData512()
+    {
+        net.sourceforge.plantuml.dedication.QBlock r0;
+        java.math.BigInteger $r1;
+        byte[] r2, r3;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.QBlock;
+
+        $r1 = r0.<net.sourceforge.plantuml.dedication.QBlock: java.math.BigInteger big>;
+
+        r2 = virtualinvoke $r1.<java.math.BigInteger: byte[] toByteArray()>();
+
+        $i0 = lengthof r2;
+
+        if $i0 != 512 goto label1;
+
+        return r2;
+
+     label1:
+        r3 = newarray (byte)[512];
+
+        $i1 = lengthof r2;
+
+        if $i1 >= 512 goto label2;
+
+        $i4 = lengthof r2;
+
+        $i6 = 512 - $i4;
+
+        $i5 = lengthof r2;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r2, 0, r3, $i6, $i5);
+
+        goto label3;
+
+     label2:
+        $i2 = lengthof r2;
+
+        $i3 = $i2 - 512;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r2, $i3, r3, 0, 512);
+
+     label3:
+        return r3;
+    }
+
+    public byte[] getDataRaw()
+    {
+        net.sourceforge.plantuml.dedication.QBlock r0;
+        java.math.BigInteger $r1;
+        byte[] $r2;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.QBlock;
+
+        $r1 = r0.<net.sourceforge.plantuml.dedication.QBlock: java.math.BigInteger big>;
+
+        $r2 = virtualinvoke $r1.<java.math.BigInteger: byte[] toByteArray()>();
+
+        return $r2;
+    }
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r4, $r5, $r8;
+        net.sourceforge.plantuml.dedication.QBlock r1;
+        java.math.BigInteger $r2, $r6;
+        byte[] $r3;
+        int $i0;
+        java.lang.String $r7, $r9;
+
+        r1 := @this: net.sourceforge.plantuml.dedication.QBlock;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = r1.<net.sourceforge.plantuml.dedication.QBlock: java.math.BigInteger big>;
+
+        $r3 = virtualinvoke $r2.<java.math.BigInteger: byte[] toByteArray()>();
+
+        $i0 = lengthof $r3;
+
+        $r4 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r6 = r1.<net.sourceforge.plantuml.dedication.QBlock: java.math.BigInteger big>;
+
+        $r7 = virtualinvoke $r6.<java.math.BigInteger: java.lang.String toString(int)>(36);
+
+        $r8 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r9;
+    }
+
+    public void write(java.io.OutputStream, int) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.dedication.QBlock r0;
+        java.math.BigInteger $r1;
+        byte[] r2;
+        int i0, $i1, i2, $i4, i5, i6, $i7;
+        byte b3;
+        java.io.OutputStream r3;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.QBlock;
+
+        r3 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.dedication.QBlock: java.math.BigInteger big>;
+
+        r2 = virtualinvoke $r1.<java.math.BigInteger: byte[] toByteArray()>();
+
+        $i1 = lengthof r2;
+
+        i2 = $i1 - i0;
+
+        if i2 >= 0 goto label2;
+
+        i5 = 0;
+
+     label1:
+        $i4 = neg i2;
+
+        if i5 >= $i4 goto label2;
+
+        virtualinvoke r3.<java.io.OutputStream: void write(int)>(0);
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label2:
+        i6 = staticinvoke <java.lang.Math: int max(int,int)>(i2, 0);
+
+     label3:
+        $i7 = lengthof r2;
+
+        if i6 >= $i7 goto label4;
+
+        b3 = r2[i6];
+
+        virtualinvoke r3.<java.io.OutputStream: void write(int)>(b3);
+
+        i6 = i6 + 1;
+
+        goto label3;
+
+     label4:
+        return;
+    }
+}

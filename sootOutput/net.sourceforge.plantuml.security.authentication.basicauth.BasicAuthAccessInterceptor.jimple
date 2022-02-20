@@ -1,0 +1,101 @@
+public class net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor extends java.lang.Object implements net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor r0;
+
+        r0 := @this: net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void apply(net.sourceforge.plantuml.security.authentication.SecurityAuthentication, java.net.URLConnection)
+    {
+        net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor r0;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r1;
+        java.lang.String r2, r3, r7;
+        java.lang.StringBuilder $r4, $r5, $r6;
+        java.net.URLConnection r8;
+
+        r0 := @this: net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor;
+
+        r1 := @parameter0: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        r8 := @parameter1: java.net.URLConnection;
+
+        r2 = specialinvoke r0.<net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor: java.lang.String getAuth(net.sourceforge.plantuml.security.authentication.SecurityAuthentication)>(r1);
+
+        r3 = staticinvoke <net.sourceforge.plantuml.code.Base64Coder: java.lang.String encodeString(java.lang.String)>(r2);
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Basic ");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r8.<java.net.URLConnection: void setRequestProperty(java.lang.String,java.lang.String)>("Authorization", r7);
+
+        return;
+    }
+
+    private java.lang.String getAuth(net.sourceforge.plantuml.security.authentication.SecurityAuthentication)
+    {
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r0;
+        java.util.Map $r1, $r4;
+        java.lang.Object $r2, $r5;
+        java.lang.String r3, $r13;
+        char[] r6;
+        java.lang.StringBuilder $r7, $r10;
+        boolean $z0;
+        int $i0;
+        net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor r12;
+
+        r12 := @this: net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAccessInterceptor;
+
+        r0 := @parameter0: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: java.util.Map getTokens()>();
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.lang.Object get(java.lang.Object)>("identifier");
+
+        r3 = (java.lang.String) $r2;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: java.util.Map getTokens()>();
+
+        $r5 = interfaceinvoke $r4.<java.util.Map: java.lang.Object get(java.lang.Object)>("secret");
+
+        r6 = (char[]) $r5;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>(r3);
+
+        if $z0 == 0 goto label1;
+
+        virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        if r6 == null goto label1;
+
+        $i0 = lengthof r6;
+
+        if $i0 <= 0 goto label1;
+
+        $r10 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(58);
+
+        virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(char[])>(r6);
+
+     label1:
+        $r13 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r13;
+    }
+}

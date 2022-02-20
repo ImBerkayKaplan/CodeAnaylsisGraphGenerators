@@ -1,0 +1,273 @@
+public class net.sourceforge.plantuml.fun.IconLoader extends java.lang.Object
+{
+    private static final int NUMBER_OF_ICONS;
+    private static final java.util.Map all;
+    private static final java.util.List tmp;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.fun.IconLoader r0;
+
+        r0 := @this: net.sourceforge.plantuml.fun.IconLoader;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static java.awt.image.BufferedImage getRandom()
+    {
+        java.lang.String $r0;
+        java.awt.image.BufferedImage $r1, $r2;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.fun.IconLoader: java.lang.String getSomeQuote()>();
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.fun.IconLoader: java.awt.image.BufferedImage getIcon(java.lang.String)>($r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.fun.IconLoader: java.awt.image.BufferedImage addTransparent(java.awt.image.BufferedImage)>($r1);
+
+        return $r2;
+    }
+
+    private static java.lang.String getSomeQuote()
+    {
+        java.util.List $r0, $r2, $r3, $r4, $r7, $r9, $r12;
+        int $i0, $i1, $i2, i3, i4;
+        java.lang.Object $r5;
+        java.lang.String r6, $r16, $r19;
+        java.lang.StringBuilder $r11, $r13, $r17, $r18;
+        java.lang.Object[] $r14;
+        java.lang.Integer $r15;
+        java.lang.Throwable $r20;
+
+        $r0 = <net.sourceforge.plantuml.fun.IconLoader: java.util.List tmp>;
+
+        entermonitor $r0;
+
+     label1:
+        $r2 = <net.sourceforge.plantuml.fun.IconLoader: java.util.List tmp>;
+
+        $i0 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label4;
+
+        i3 = 0;
+
+     label2:
+        if i3 >= 30 goto label3;
+
+        $r12 = <net.sourceforge.plantuml.fun.IconLoader: java.util.List tmp>;
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("sprite");
+
+        $r14 = newarray (java.lang.Object)[1];
+
+        $r15 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(i3);
+
+        $r14[0] = $r15;
+
+        $r16 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("%03d", $r14);
+
+        $r17 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r16);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".png");
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r12.<java.util.List: boolean add(java.lang.Object)>($r19);
+
+        i3 = i3 + 1;
+
+        goto label2;
+
+     label3:
+        $r9 = <net.sourceforge.plantuml.fun.IconLoader: java.util.List tmp>;
+
+        staticinvoke <java.util.Collections: void shuffle(java.util.List)>($r9);
+
+     label4:
+        $r3 = <net.sourceforge.plantuml.fun.IconLoader: java.util.List tmp>;
+
+        i4 = interfaceinvoke $r3.<java.util.List: int size()>();
+
+        $r4 = <net.sourceforge.plantuml.fun.IconLoader: java.util.List tmp>;
+
+        $i1 = i4 - 1;
+
+        $r5 = interfaceinvoke $r4.<java.util.List: java.lang.Object get(int)>($i1);
+
+        r6 = (java.lang.String) $r5;
+
+        $r7 = <net.sourceforge.plantuml.fun.IconLoader: java.util.List tmp>;
+
+        $i2 = i4 - 1;
+
+        interfaceinvoke $r7.<java.util.List: java.lang.Object remove(int)>($i2);
+
+        exitmonitor $r0;
+
+     label5:
+        return r6;
+
+     label6:
+        $r20 := @caughtexception;
+
+        exitmonitor $r0;
+
+     label7:
+        throw $r20;
+
+        catch java.lang.Throwable from label1 to label5 with label6;
+        catch java.lang.Throwable from label6 to label7 with label6;
+    }
+
+    private static java.awt.image.BufferedImage getIcon(java.lang.String)
+    {
+        java.lang.String r0;
+        java.util.Map $r1, $r3;
+        java.lang.Object $r2;
+        java.awt.image.BufferedImage r5;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.fun.IconLoader: java.util.Map all>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r5 = (java.awt.image.BufferedImage) $r2;
+
+        if r5 != null goto label1;
+
+        r5 = staticinvoke <net.sourceforge.plantuml.fun.IconLoader: java.awt.image.BufferedImage getIconSlow(java.lang.String)>(r0);
+
+        if r5 == null goto label1;
+
+        $r3 = <net.sourceforge.plantuml.fun.IconLoader: java.util.Map all>;
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r0, r5);
+
+     label1:
+        return r5;
+    }
+
+    private static java.awt.image.BufferedImage getIconSlow(java.lang.String)
+    {
+        java.lang.String r0;
+        java.lang.Class $r1;
+        java.awt.image.BufferedImage r2;
+        java.io.IOException $r3;
+        java.io.InputStream r4;
+
+        r0 := @parameter0: java.lang.String;
+
+     label1:
+        $r1 = class "Lnet/sourceforge/plantuml/fun/IconLoader;";
+
+        r4 = virtualinvoke $r1.<java.lang.Class: java.io.InputStream getResourceAsStream(java.lang.String)>(r0);
+
+        if r4 != null goto label3;
+
+     label2:
+        return null;
+
+     label3:
+        r2 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(java.io.InputStream)>(r4);
+
+        virtualinvoke r4.<java.io.InputStream: void close()>();
+
+     label4:
+        return r2;
+
+     label5:
+        $r3 := @caughtexception;
+
+        virtualinvoke $r3.<java.io.IOException: void printStackTrace()>();
+
+        return null;
+
+        catch java.io.IOException from label1 to label2 with label5;
+        catch java.io.IOException from label3 to label4 with label5;
+    }
+
+    private static java.awt.image.BufferedImage addTransparent(java.awt.image.BufferedImage)
+    {
+        java.awt.image.BufferedImage r0, $r1;
+        int $i0, $i1, $i2, $i3, i4, $i5, i6, i7;
+
+        r0 := @parameter0: java.awt.image.BufferedImage;
+
+        if r0 != null goto label1;
+
+        return null;
+
+     label1:
+        $r1 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r0.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i1 = virtualinvoke r0.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r1.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 3);
+
+        i6 = 0;
+
+     label2:
+        $i2 = virtualinvoke r0.<java.awt.image.BufferedImage: int getWidth()>();
+
+        if i6 >= $i2 goto label6;
+
+        i7 = 0;
+
+     label3:
+        $i3 = virtualinvoke r0.<java.awt.image.BufferedImage: int getHeight()>();
+
+        if i7 >= $i3 goto label5;
+
+        i4 = virtualinvoke r0.<java.awt.image.BufferedImage: int getRGB(int,int)>(i6, i7);
+
+        $i5 = virtualinvoke r0.<java.awt.image.BufferedImage: int getRGB(int,int)>(0, 0);
+
+        if i4 == $i5 goto label4;
+
+        virtualinvoke $r1.<java.awt.image.BufferedImage: void setRGB(int,int,int)>(i6, i7, i4);
+
+     label4:
+        i7 = i7 + 1;
+
+        goto label3;
+
+     label5:
+        i6 = i6 + 1;
+
+        goto label2;
+
+     label6:
+        return $r1;
+    }
+
+    static void <clinit>()
+    {
+        java.util.concurrent.ConcurrentHashMap $r0;
+        java.util.ArrayList $r1;
+
+        <net.sourceforge.plantuml.fun.IconLoader: int NUMBER_OF_ICONS> = 30;
+
+        $r0 = new java.util.concurrent.ConcurrentHashMap;
+
+        specialinvoke $r0.<java.util.concurrent.ConcurrentHashMap: void <init>()>();
+
+        <net.sourceforge.plantuml.fun.IconLoader: java.util.Map all> = $r0;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        <net.sourceforge.plantuml.fun.IconLoader: java.util.List tmp> = $r1;
+
+        return;
+    }
+}

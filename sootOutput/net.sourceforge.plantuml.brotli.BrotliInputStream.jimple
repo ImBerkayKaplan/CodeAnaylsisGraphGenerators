@@ -1,0 +1,357 @@
+public class net.sourceforge.plantuml.brotli.BrotliInputStream extends java.io.InputStream
+{
+    public static final int DEFAULT_INTERNAL_BUFFER_SIZE;
+    private byte[] buffer;
+    private int remainingBufferBytes;
+    private int bufferOffset;
+    private final net.sourceforge.plantuml.brotli.State state;
+
+    public void <init>(java.io.InputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.brotli.BrotliInputStream r0;
+        java.io.InputStream r1;
+
+        r0 := @this: net.sourceforge.plantuml.brotli.BrotliInputStream;
+
+        r1 := @parameter0: java.io.InputStream;
+
+        specialinvoke r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: void <init>(java.io.InputStream,int)>(r1, 16384);
+
+        return;
+    }
+
+    public void <init>(java.io.InputStream, int) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.brotli.BrotliInputStream r0;
+        net.sourceforge.plantuml.brotli.State $r1, $r4;
+        int i0;
+        java.io.InputStream r2;
+        byte[] $r3;
+        java.lang.IllegalArgumentException $r5, $r6;
+        java.lang.StringBuilder $r7, $r8, $r9;
+        java.lang.String $r10;
+        net.sourceforge.plantuml.brotli.BrotliRuntimeException $r11;
+        java.io.IOException $r13;
+
+        r0 := @this: net.sourceforge.plantuml.brotli.BrotliInputStream;
+
+        r2 := @parameter0: java.io.InputStream;
+
+        i0 := @parameter1: int;
+
+        specialinvoke r0.<java.io.InputStream: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.brotli.State;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.brotli.State: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state> = $r1;
+
+        if i0 > 0 goto label1;
+
+        $r6 = new java.lang.IllegalArgumentException;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Bad buffer size:");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r6.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r10);
+
+        throw $r6;
+
+     label1:
+        if r2 != null goto label2;
+
+        $r5 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r5.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("source is null");
+
+        throw $r5;
+
+     label2:
+        $r3 = newarray (byte)[i0];
+
+        r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: byte[] buffer> = $r3;
+
+        r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int remainingBufferBytes> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset> = 0;
+
+     label3:
+        $r4 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void initState(net.sourceforge.plantuml.brotli.State,java.io.InputStream)>($r4, r2);
+
+     label4:
+        goto label6;
+
+     label5:
+        $r11 := @caughtexception;
+
+        $r13 = new java.io.IOException;
+
+        specialinvoke $r13.<java.io.IOException: void <init>(java.lang.String,java.lang.Throwable)>("Brotli decoder initialization failed", $r11);
+
+        throw $r13;
+
+     label6:
+        return;
+
+        catch net.sourceforge.plantuml.brotli.BrotliRuntimeException from label3 to label4 with label5;
+    }
+
+    public void close() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.brotli.BrotliInputStream r0;
+        net.sourceforge.plantuml.brotli.State $r1;
+
+        r0 := @this: net.sourceforge.plantuml.brotli.BrotliInputStream;
+
+        $r1 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void close(net.sourceforge.plantuml.brotli.State)>($r1);
+
+        return;
+    }
+
+    public int read() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.brotli.BrotliInputStream r0;
+        int $i0, $i1, $i2, $i3, $i5, $i6, $i7, $i8;
+        byte[] $r1, $r2, $r3;
+        byte $b4;
+
+        r0 := @this: net.sourceforge.plantuml.brotli.BrotliInputStream;
+
+        $i1 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset>;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int remainingBufferBytes>;
+
+        if $i1 < $i0 goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: byte[] buffer>;
+
+        $r2 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: byte[] buffer>;
+
+        $i6 = lengthof $r2;
+
+        $i7 = virtualinvoke r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int read(byte[],int,int)>($r3, 0, $i6);
+
+        r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int remainingBufferBytes> = $i7;
+
+        r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset> = 0;
+
+        $i8 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int remainingBufferBytes>;
+
+        if $i8 != -1 goto label1;
+
+        return -1;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: byte[] buffer>;
+
+        $i2 = r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset>;
+
+        $i3 = $i2 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset> = $i3;
+
+        $b4 = $r1[$i2];
+
+        $i5 = $b4 & 255;
+
+        return $i5;
+    }
+
+    public int read(byte[], int, int) throws java.io.IOException
+    {
+        byte[] r0, $r9;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, i13, i14, i15;
+        net.sourceforge.plantuml.brotli.BrotliInputStream r1;
+        net.sourceforge.plantuml.brotli.State $r2, $r3, $r4, $r5, $r6, $r7, $r8;
+        java.lang.IllegalArgumentException $r10, $r17, $r22;
+        java.lang.StringBuilder $r11, $r12, $r13, $r14, $r15, $r18, $r19, $r20, $r23, $r24, $r25;
+        java.lang.String $r16, $r21, $r26;
+        net.sourceforge.plantuml.brotli.BrotliRuntimeException $r27;
+        java.io.IOException $r29;
+
+        r1 := @this: net.sourceforge.plantuml.brotli.BrotliInputStream;
+
+        r0 := @parameter0: byte[];
+
+        i13 := @parameter1: int;
+
+        i14 := @parameter2: int;
+
+        if i13 >= 0 goto label1;
+
+        $r22 = new java.lang.IllegalArgumentException;
+
+        $r23 = new java.lang.StringBuilder;
+
+        specialinvoke $r23.<java.lang.StringBuilder: void <init>()>();
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Bad offset: ");
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i13);
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r22.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r26);
+
+        throw $r22;
+
+     label1:
+        if i14 >= 0 goto label2;
+
+        $r17 = new java.lang.IllegalArgumentException;
+
+        $r18 = new java.lang.StringBuilder;
+
+        specialinvoke $r18.<java.lang.StringBuilder: void <init>()>();
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Bad length: ");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i14);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r17.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r21);
+
+        throw $r17;
+
+     label2:
+        $i1 = i13 + i14;
+
+        $i0 = lengthof r0;
+
+        if $i1 <= $i0 goto label3;
+
+        $r10 = new java.lang.IllegalArgumentException;
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Buffer overflow: ");
+
+        $i11 = i13 + i14;
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i11);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" > ");
+
+        $i12 = lengthof r0;
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i12);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r10.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r16);
+
+        throw $r10;
+
+     label3:
+        if i14 != 0 goto label4;
+
+        return 0;
+
+     label4:
+        $i3 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: int remainingBufferBytes>;
+
+        $i2 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset>;
+
+        $i4 = $i3 - $i2;
+
+        i15 = staticinvoke <java.lang.Math: int max(int,int)>($i4, 0);
+
+        if i15 == 0 goto label5;
+
+        i15 = staticinvoke <java.lang.Math: int min(int,int)>(i15, i14);
+
+        $r9 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: byte[] buffer>;
+
+        $i8 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r9, $i8, r0, i13, i15);
+
+        $i9 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset>;
+
+        $i10 = $i9 + i15;
+
+        r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: int bufferOffset> = $i10;
+
+        i13 = i13 + i15;
+
+        i14 = i14 - i15;
+
+        if i14 != 0 goto label5;
+
+        return i15;
+
+     label5:
+        $r2 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        $r2.<net.sourceforge.plantuml.brotli.State: byte[] output> = r0;
+
+        $r3 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        $r3.<net.sourceforge.plantuml.brotli.State: int outputOffset> = i13;
+
+        $r4 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        $r4.<net.sourceforge.plantuml.brotli.State: int outputLength> = i14;
+
+        $r5 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        $r5.<net.sourceforge.plantuml.brotli.State: int outputUsed> = 0;
+
+        $r6 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void decompress(net.sourceforge.plantuml.brotli.State)>($r6);
+
+        $r7 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        $i5 = $r7.<net.sourceforge.plantuml.brotli.State: int outputUsed>;
+
+        if $i5 != 0 goto label7;
+
+     label6:
+        return -1;
+
+     label7:
+        $r8 = r1.<net.sourceforge.plantuml.brotli.BrotliInputStream: net.sourceforge.plantuml.brotli.State state>;
+
+        $i6 = $r8.<net.sourceforge.plantuml.brotli.State: int outputUsed>;
+
+        $i7 = $i6 + i15;
+
+     label8:
+        return $i7;
+
+     label9:
+        $r27 := @caughtexception;
+
+        $r29 = new java.io.IOException;
+
+        specialinvoke $r29.<java.io.IOException: void <init>(java.lang.String,java.lang.Throwable)>("Brotli stream decoding failed", $r27);
+
+        throw $r29;
+
+        catch net.sourceforge.plantuml.brotli.BrotliRuntimeException from label5 to label6 with label9;
+        catch net.sourceforge.plantuml.brotli.BrotliRuntimeException from label7 to label8 with label9;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.brotli.BrotliInputStream: int DEFAULT_INTERNAL_BUFFER_SIZE> = 16384;
+
+        return;
+    }
+}

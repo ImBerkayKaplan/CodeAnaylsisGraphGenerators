@@ -1,0 +1,2058 @@
+public final class net.sourceforge.plantuml.cucadiagram.entity.EntityFactory extends java.lang.Object
+{
+    private final java.util.Map leafsByCode;
+    private final java.util.Map groupsByCode;
+    final java.util.Map leafs2;
+    final java.util.Map groups2;
+    private final java.util.List links;
+    private int rawLayout;
+    private final net.sourceforge.plantuml.cucadiagram.IGroup rootGroup;
+    private final net.sourceforge.plantuml.cucadiagram.SuperGroup rootSuperGroup;
+    private final java.util.List hides2;
+    private final java.util.List removed;
+    public final net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator;
+    private java.util.Map emptyGroupsAsNode;
+    private java.util.Set superGroups;
+    final java.util.Map groupToSuper;
+    private final java.util.Collection hiddenBecauseOfIntrication;
+
+    public net.sourceforge.plantuml.cucadiagram.ILeaf getLeafForEmptyGroup(net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.IGroup r1;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.cucadiagram.ILeaf $r4;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map emptyGroupsAsNode>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r4 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r3;
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.SuperGroup getRootSuperGroup()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.SuperGroup $r1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.SuperGroup rootSuperGroup>;
+
+        return $r1;
+    }
+
+    public java.util.Set getAllSuperGroups()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.Set $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Set superGroups>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.Set unmodifiableSet(java.util.Set)>($r1);
+
+        return $r2;
+    }
+
+    public void buildSuperGroups()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.HashSet $r1;
+        java.util.Map $r2, $r10;
+        java.util.Collection $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.cucadiagram.IGroup r6;
+        net.sourceforge.plantuml.cucadiagram.SuperGroup $r7;
+        java.util.Set $r9;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = new java.util.HashSet;
+
+        specialinvoke $r1.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Set superGroups> = $r1;
+
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Collection values()>();
+
+        r4 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r5;
+
+        $r7 = new net.sourceforge.plantuml.cucadiagram.SuperGroup;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.cucadiagram.SuperGroup: void <init>(net.sourceforge.plantuml.cucadiagram.IGroup)>(r6);
+
+        $r9 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Set superGroups>;
+
+        interfaceinvoke $r9.<java.util.Set: boolean add(java.lang.Object)>($r7);
+
+        $r10 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groupToSuper>;
+
+        interfaceinvoke $r10.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r6, $r7);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.ILeaf createLeafForEmptyGroup(net.sourceforge.plantuml.cucadiagram.IGroup, net.sourceforge.plantuml.ISkinParam)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.IGroup r1, $r6;
+        net.sourceforge.plantuml.cucadiagram.Ident $r2;
+        net.sourceforge.plantuml.cucadiagram.Code $r3;
+        net.sourceforge.plantuml.cucadiagram.Display $r4;
+        net.sourceforge.plantuml.cucadiagram.LeafType $r5;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r7;
+        java.lang.String $r8;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r9;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityImpl $r10;
+        net.sourceforge.plantuml.graphic.USymbol r11;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r12, $r25;
+        net.sourceforge.plantuml.graphic.color.Colors $r13, $r15, $r19;
+        net.sourceforge.plantuml.Url $r14, $r29;
+        boolean $z0;
+        net.sourceforge.plantuml.graphic.color.ColorType $r16, $r18, $r20, $r27;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r17, $r21, r26, $r31;
+        net.sourceforge.plantuml.ISkinParam r24;
+        net.sourceforge.plantuml.ColorParam $r30;
+        java.util.Map $r32;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        r24 := @parameter1: net.sourceforge.plantuml.ISkinParam;
+
+        $r2 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        $r3 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Code getCode()>();
+
+        $r4 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Display getDisplay()>();
+
+        $r5 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType EMPTY_PACKAGE>;
+
+        $r6 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.IGroup getParentContainer()>();
+
+        $r7 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.lang.String getNamespaceSeparator()>();
+
+        r9 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.ILeaf createLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.cucadiagram.IGroup,java.util.Set,java.lang.String)>($r2, $r3, $r4, $r5, $r6, null, $r8);
+
+        $r10 = (net.sourceforge.plantuml.cucadiagram.entity.EntityImpl) r9;
+
+        virtualinvoke $r10.<net.sourceforge.plantuml.cucadiagram.entity.EntityImpl: void setOriginalGroup(net.sourceforge.plantuml.cucadiagram.IGroup)>(r1);
+
+        r11 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.graphic.USymbol getUSymbol()>();
+
+        interfaceinvoke r9.<net.sourceforge.plantuml.cucadiagram.ILeaf: void setUSymbol(net.sourceforge.plantuml.graphic.USymbol)>(r11);
+
+        $r12 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Stereotype getStereotype()>();
+
+        interfaceinvoke r9.<net.sourceforge.plantuml.cucadiagram.ILeaf: void setStereotype(net.sourceforge.plantuml.cucadiagram.Stereotype)>($r12);
+
+        $r13 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        interfaceinvoke r9.<net.sourceforge.plantuml.cucadiagram.ILeaf: void setColors(net.sourceforge.plantuml.graphic.color.Colors)>($r13);
+
+        $r14 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.Url getUrl99()>();
+
+        if $r14 == null goto label1;
+
+        $r29 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.Url getUrl99()>();
+
+        interfaceinvoke r9.<net.sourceforge.plantuml.cucadiagram.ILeaf: void addUrl(net.sourceforge.plantuml.Url)>($r29);
+
+     label1:
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 == 0 goto label2;
+
+        goto label8;
+
+     label2:
+        $r15 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        $r16 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        $r17 = virtualinvoke $r15.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.graphic.color.ColorType)>($r16);
+
+        if $r17 != null goto label7;
+
+        if r11 != null goto label3;
+
+        $r30 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam packageBackground>;
+
+        goto label4;
+
+     label3:
+        $r30 = virtualinvoke r11.<net.sourceforge.plantuml.graphic.USymbol: net.sourceforge.plantuml.ColorParam getColorParamBack()>();
+
+     label4:
+        $r25 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Stereotype getStereotype()>();
+
+        r26 = interfaceinvoke r24.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor getHtmlColor(net.sourceforge.plantuml.ColorParam,net.sourceforge.plantuml.cucadiagram.Stereotype,boolean)>($r30, $r25, 0);
+
+        $r27 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        if r26 != null goto label5;
+
+        $r31 = interfaceinvoke r24.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor getBackgroundColor()>();
+
+        goto label6;
+
+     label5:
+        $r31 = r26;
+
+     label6:
+        interfaceinvoke r9.<net.sourceforge.plantuml.cucadiagram.ILeaf: void setSpecificColorTOBEREMOVED(net.sourceforge.plantuml.graphic.color.ColorType,net.sourceforge.plantuml.ugraphic.color.HColor)>($r27, $r31);
+
+        goto label8;
+
+     label7:
+        $r18 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        $r19 = interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        $r20 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        $r21 = virtualinvoke $r19.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.graphic.color.ColorType)>($r20);
+
+        interfaceinvoke r9.<net.sourceforge.plantuml.cucadiagram.ILeaf: void setSpecificColorTOBEREMOVED(net.sourceforge.plantuml.graphic.color.ColorType,net.sourceforge.plantuml.ugraphic.color.HColor)>($r18, $r21);
+
+     label8:
+        $r32 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map emptyGroupsAsNode>;
+
+        interfaceinvoke $r32.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, r9);
+
+        return r9;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.Display getIntricatedDisplay(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        java.util.HashSet $r0;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r1;
+        java.util.Map $r2;
+        java.util.Set $r3;
+        java.util.Collection $r5;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r6;
+        net.sourceforge.plantuml.cucadiagram.Ident r7, $r12, $r13;
+        int $i0, i1;
+        java.lang.String $r8, $r14, r18;
+        net.sourceforge.plantuml.cucadiagram.Display $r9, $r11, $r15, $r17;
+        net.sourceforge.plantuml.creole.CreoleMode $r10, $r16;
+        boolean $z1;
+
+        r1 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r7 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r0 = new java.util.HashSet;
+
+        $r2 = r1.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Set keySet()>();
+
+        specialinvoke $r0.<java.util.HashSet: void <init>(java.util.Collection)>($r3);
+
+        $r5 = r1.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Collection hiddenBecauseOfIntrication>;
+
+        interfaceinvoke $r0.<java.util.Set: boolean removeAll(java.util.Collection)>($r5);
+
+        $r6 = r1.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        r18 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.lang.String getNamespaceSeparator()>();
+
+        if r18 != null goto label1;
+
+        r18 = ".";
+
+     label1:
+        $i0 = virtualinvoke r7.<net.sourceforge.plantuml.cucadiagram.Ident: int size()>();
+
+        i1 = $i0 - 1;
+
+     label2:
+        if i1 <= 0 goto label4;
+
+        $r12 = virtualinvoke r7.<net.sourceforge.plantuml.cucadiagram.Ident: net.sourceforge.plantuml.cucadiagram.Ident getPrefix(int)>(i1);
+
+        $z1 = interfaceinvoke $r0.<java.util.Set: boolean contains(java.lang.Object)>($r12);
+
+        if $z1 == 0 goto label3;
+
+        $r13 = virtualinvoke r7.<net.sourceforge.plantuml.cucadiagram.Ident: net.sourceforge.plantuml.cucadiagram.Ident getSuffix(int)>(i1);
+
+        $r14 = virtualinvoke $r13.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String toString(java.lang.String)>(r18);
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r14);
+
+        $r16 = <net.sourceforge.plantuml.creole.CreoleMode: net.sourceforge.plantuml.creole.CreoleMode SIMPLE_LINE>;
+
+        $r17 = virtualinvoke $r15.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display withCreoleMode(net.sourceforge.plantuml.creole.CreoleMode)>($r16);
+
+        return $r17;
+
+     label3:
+        i1 = i1 + -1;
+
+        goto label2;
+
+     label4:
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String toString(java.lang.String)>(r18);
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r8);
+
+        $r10 = <net.sourceforge.plantuml.creole.CreoleMode: net.sourceforge.plantuml.creole.CreoleMode SIMPLE_LINE>;
+
+        $r11 = virtualinvoke $r9.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display withCreoleMode(net.sourceforge.plantuml.creole.CreoleMode)>($r10);
+
+        return $r11;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.IGroup isIntricated(net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.IGroup r0, r5;
+        java.util.Collection $r1, r2, $r6, $r10, $r14;
+        int i0, $i1, $i2, $i3;
+        java.util.Iterator $r3, r8;
+        java.lang.Object $r4, $r12;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r7;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityImpl $r9;
+        net.sourceforge.plantuml.cucadiagram.Ident $r11;
+        net.sourceforge.plantuml.cucadiagram.Link r13;
+        boolean $z1, $z2;
+        net.sourceforge.plantuml.cucadiagram.GroupType $r15, $r16;
+        java.util.List $r17;
+
+        r7 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r1 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: java.util.Collection getLeafsDirect()>();
+
+        i0 = interfaceinvoke $r1.<java.util.Collection: int size()>();
+
+        r2 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: java.util.Collection getChildren()>();
+
+        if i0 != 0 goto label5;
+
+        $i1 = interfaceinvoke r2.<java.util.Collection: int size()>();
+
+        if $i1 != 1 goto label5;
+
+        $r3 = interfaceinvoke r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+        $r4 = interfaceinvoke $r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r4;
+
+        $r6 = interfaceinvoke r5.<net.sourceforge.plantuml.cucadiagram.IGroup: java.util.Collection getLeafsDirect()>();
+
+        $i2 = interfaceinvoke $r6.<java.util.Collection: int size()>();
+
+        if $i2 != 0 goto label1;
+
+        $r14 = interfaceinvoke r5.<net.sourceforge.plantuml.cucadiagram.IGroup: java.util.Collection getChildren()>();
+
+        $i3 = interfaceinvoke $r14.<java.util.Collection: int size()>();
+
+        if $i3 != 0 goto label1;
+
+        $r15 = interfaceinvoke r5.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.GroupType getGroupType()>();
+
+        $r16 = <net.sourceforge.plantuml.cucadiagram.GroupType: net.sourceforge.plantuml.cucadiagram.GroupType PACKAGE>;
+
+        if $r15 != $r16 goto label1;
+
+        return null;
+
+     label1:
+        $r17 = virtualinvoke r7.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List getLinks()>();
+
+        r8 = interfaceinvoke $r17.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z2 = interfaceinvoke r8.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label4;
+
+        $r12 = interfaceinvoke r8.<java.util.Iterator: java.lang.Object next()>();
+
+        r13 = (net.sourceforge.plantuml.cucadiagram.Link) $r12;
+
+        $z1 = virtualinvoke r13.<net.sourceforge.plantuml.cucadiagram.Link: boolean contains(net.sourceforge.plantuml.cucadiagram.IEntity)>(r0);
+
+        if $z1 == 0 goto label3;
+
+        return null;
+
+     label3:
+        goto label2;
+
+     label4:
+        $r9 = (net.sourceforge.plantuml.cucadiagram.entity.EntityImpl) r5;
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.cucadiagram.entity.EntityImpl: void setIntricated(boolean)>(1);
+
+        $r10 = r7.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Collection hiddenBecauseOfIntrication>;
+
+        $r11 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        interfaceinvoke $r10.<java.util.Collection: boolean add(java.lang.Object)>($r11);
+
+        return r5;
+
+     label5:
+        return null;
+    }
+
+    public void <init>(java.util.List, java.util.List, net.sourceforge.plantuml.cucadiagram.CucaDiagram)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.LinkedHashMap $r1, $r2, $r8, $r13, $r14;
+        java.util.ArrayList $r3, $r9;
+        net.sourceforge.plantuml.cucadiagram.GroupRoot $r4;
+        net.sourceforge.plantuml.cucadiagram.SuperGroup $r5;
+        net.sourceforge.plantuml.cucadiagram.IGroup $r6;
+        java.util.HashMap $r7;
+        java.util.List r10, r11;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram r12;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r10 := @parameter0: java.util.List;
+
+        r11 := @parameter1: java.util.List;
+
+        r12 := @parameter2: net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.LinkedHashMap;
+
+        specialinvoke $r1.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2> = $r1;
+
+        $r2 = new java.util.LinkedHashMap;
+
+        specialinvoke $r2.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2> = $r2;
+
+        $r3 = new java.util.ArrayList;
+
+        specialinvoke $r3.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List links> = $r3;
+
+        $r4 = new net.sourceforge.plantuml.cucadiagram.GroupRoot;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.cucadiagram.GroupRoot: void <init>(net.sourceforge.plantuml.cucadiagram.entity.EntityFactory)>(r0);
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup rootGroup> = $r4;
+
+        $r5 = new net.sourceforge.plantuml.cucadiagram.SuperGroup;
+
+        $r6 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup rootGroup>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.cucadiagram.SuperGroup: void <init>(net.sourceforge.plantuml.cucadiagram.IGroup)>($r6);
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.SuperGroup rootSuperGroup> = $r5;
+
+        $r7 = new java.util.HashMap;
+
+        specialinvoke $r7.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map emptyGroupsAsNode> = $r7;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Set superGroups> = null;
+
+        $r8 = new java.util.LinkedHashMap;
+
+        specialinvoke $r8.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groupToSuper> = $r8;
+
+        $r9 = new java.util.ArrayList;
+
+        specialinvoke $r9.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Collection hiddenBecauseOfIntrication> = $r9;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List hides2> = r10;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List removed> = r11;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator> = r12;
+
+        $r13 = new java.util.LinkedHashMap;
+
+        specialinvoke $r13.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafsByCode> = $r13;
+
+        $r14 = new java.util.LinkedHashMap;
+
+        specialinvoke $r14.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groupsByCode> = $r14;
+
+        return;
+    }
+
+    public boolean isHidden(net.sourceforge.plantuml.cucadiagram.ILeaf)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0, z1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.cucadiagram.HideOrShow2 r4;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r5;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r5 := @parameter0: net.sourceforge.plantuml.cucadiagram.ILeaf;
+
+        z1 = 0;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List hides2>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.cucadiagram.HideOrShow2) $r3;
+
+        z1 = virtualinvoke r4.<net.sourceforge.plantuml.cucadiagram.HideOrShow2: boolean apply(boolean,net.sourceforge.plantuml.cucadiagram.ILeaf)>(z1, r5);
+
+        goto label1;
+
+     label2:
+        return z1;
+    }
+
+    public boolean isRemoved(net.sourceforge.plantuml.cucadiagram.ILeaf)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0, z1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.cucadiagram.HideOrShow2 r4;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r5;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r5 := @parameter0: net.sourceforge.plantuml.cucadiagram.ILeaf;
+
+        z1 = 0;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List removed>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.cucadiagram.HideOrShow2) $r3;
+
+        z1 = virtualinvoke r4.<net.sourceforge.plantuml.cucadiagram.HideOrShow2: boolean apply(boolean,net.sourceforge.plantuml.cucadiagram.ILeaf)>(z1, r5);
+
+        goto label1;
+
+     label2:
+        return z1;
+    }
+
+    public void thisIsGoingToBeALeaf(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.Ident r1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        return;
+    }
+
+    public void thisIsNotArealGroup(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.Ident r1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.ILeaf createLeaf(net.sourceforge.plantuml.cucadiagram.Ident, net.sourceforge.plantuml.cucadiagram.Code, net.sourceforge.plantuml.cucadiagram.Display, net.sourceforge.plantuml.cucadiagram.LeafType, net.sourceforge.plantuml.cucadiagram.IGroup, java.util.Set, java.lang.String)
+    {
+        net.sourceforge.plantuml.cucadiagram.LeafType r0, $r2;
+        java.lang.Object $r1;
+        java.util.Set r3;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityImpl $r4;
+        net.sourceforge.plantuml.cucadiagram.Ident r5;
+        net.sourceforge.plantuml.cucadiagram.Code r6;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r7;
+        net.sourceforge.plantuml.cucadiagram.IGroup r8;
+        java.lang.String r9;
+        int $i0;
+        net.sourceforge.plantuml.cucadiagram.Display r11;
+        net.sourceforge.plantuml.cucadiagram.BodierMap $r12;
+        net.sourceforge.plantuml.cucadiagram.Bodier r13;
+
+        r7 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r5 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        r6 := @parameter1: net.sourceforge.plantuml.cucadiagram.Code;
+
+        r11 := @parameter2: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r0 := @parameter3: net.sourceforge.plantuml.cucadiagram.LeafType;
+
+        r8 := @parameter4: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        r3 := @parameter5: java.util.Set;
+
+        r9 := @parameter6: java.lang.String;
+
+        $r1 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        $r2 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType MAP>;
+
+        if $r1 != $r2 goto label1;
+
+        $r12 = new net.sourceforge.plantuml.cucadiagram.BodierMap;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.cucadiagram.BodierMap: void <init>()>();
+
+        r13 = $r12;
+
+        goto label2;
+
+     label1:
+        r13 = staticinvoke <net.sourceforge.plantuml.cucadiagram.BodyFactory: net.sourceforge.plantuml.cucadiagram.Bodier createLeaf(net.sourceforge.plantuml.cucadiagram.LeafType,java.util.Set)>(r0, r3);
+
+     label2:
+        $r4 = new net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
+
+        $i0 = r7.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: int rawLayout>;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.cucadiagram.entity.EntityImpl: void <init>(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.entity.EntityFactory,net.sourceforge.plantuml.cucadiagram.Bodier,net.sourceforge.plantuml.cucadiagram.IGroup,net.sourceforge.plantuml.cucadiagram.LeafType,java.lang.String,int)>(r5, r6, r7, r13, r8, r0, r9, $i0);
+
+        interfaceinvoke r13.<net.sourceforge.plantuml.cucadiagram.Bodier: void setLeaf(net.sourceforge.plantuml.cucadiagram.ILeaf)>($r4);
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.entity.EntityImpl: void setDisplay(net.sourceforge.plantuml.cucadiagram.Display)>(r11);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.IGroup createGroup(net.sourceforge.plantuml.cucadiagram.Ident, net.sourceforge.plantuml.cucadiagram.Code, net.sourceforge.plantuml.cucadiagram.Display, net.sourceforge.plantuml.cucadiagram.Code, net.sourceforge.plantuml.cucadiagram.GroupType, net.sourceforge.plantuml.cucadiagram.IGroup, java.util.Set, java.lang.String)
+    {
+        net.sourceforge.plantuml.cucadiagram.GroupType r0;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r2;
+        java.util.Map $r3;
+        java.util.Set $r4, r5;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityImpl $r6;
+        net.sourceforge.plantuml.cucadiagram.Ident r7, $r15;
+        net.sourceforge.plantuml.cucadiagram.Code r8, r10;
+        net.sourceforge.plantuml.cucadiagram.IGroup r9, $r17;
+        java.lang.String r11;
+        int $i0;
+        net.sourceforge.plantuml.cucadiagram.Display r12;
+        java.lang.Object $r13, $r14, $r16;
+        java.util.Iterator r18;
+        java.util.Map$Entry r19;
+        net.sourceforge.plantuml.cucadiagram.Bodier r20;
+
+        r2 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r7 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        r8 := @parameter1: net.sourceforge.plantuml.cucadiagram.Code;
+
+        r12 := @parameter2: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r10 := @parameter3: net.sourceforge.plantuml.cucadiagram.Code;
+
+        r0 := @parameter4: net.sourceforge.plantuml.cucadiagram.GroupType;
+
+        r9 := @parameter5: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        r5 := @parameter6: java.util.Set;
+
+        r11 := @parameter7: java.lang.String;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        $r3 = r2.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Set entrySet()>();
+
+        r18 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r18.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r13 = interfaceinvoke r18.<java.util.Iterator: java.lang.Object next()>();
+
+        r19 = (java.util.Map$Entry) $r13;
+
+        $r14 = interfaceinvoke r19.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r15 = (net.sourceforge.plantuml.cucadiagram.Ident) $r14;
+
+        $z2 = virtualinvoke $r15.<net.sourceforge.plantuml.cucadiagram.Ident: boolean equals(java.lang.Object)>(r7);
+
+        if $z2 == 0 goto label2;
+
+        $r16 = interfaceinvoke r19.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r17 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r16;
+
+        return $r17;
+
+     label2:
+        goto label1;
+
+     label3:
+        r20 = staticinvoke <net.sourceforge.plantuml.cucadiagram.BodyFactory: net.sourceforge.plantuml.cucadiagram.Bodier createGroup(java.util.Set)>(r5);
+
+        $r6 = new net.sourceforge.plantuml.cucadiagram.entity.EntityImpl;
+
+        $i0 = r2.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: int rawLayout>;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.cucadiagram.entity.EntityImpl: void <init>(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.entity.EntityFactory,net.sourceforge.plantuml.cucadiagram.Bodier,net.sourceforge.plantuml.cucadiagram.IGroup,net.sourceforge.plantuml.cucadiagram.GroupType,net.sourceforge.plantuml.cucadiagram.Code,java.lang.String,int)>(r7, r8, r2, r20, r9, r0, r10, r11, $i0);
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: boolean isNull(net.sourceforge.plantuml.cucadiagram.Display)>(r12);
+
+        if $z1 != 0 goto label4;
+
+        virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.entity.EntityImpl: void setDisplay(net.sourceforge.plantuml.cucadiagram.Display)>(r12);
+
+     label4:
+        return $r6;
+    }
+
+    public void addLeaf(net.sourceforge.plantuml.cucadiagram.ILeaf)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1, $r6;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r2;
+        java.util.Map $r3, $r8;
+        net.sourceforge.plantuml.cucadiagram.Ident $r4, $r7;
+        java.lang.String $r9;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.ILeaf;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 != 0 goto label1;
+
+        $r8 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafsByCode>;
+
+        $r9 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.ILeaf: java.lang.String getCodeGetName()>();
+
+        interfaceinvoke $r8.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r9, r2);
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r4 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.ILeaf: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r4, r2);
+
+        $r6 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z1 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z1 == 0 goto label2;
+
+        $r7 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.ILeaf: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void ensureParentIsCreated(net.sourceforge.plantuml.cucadiagram.Ident)>($r7);
+
+     label2:
+        return;
+    }
+
+    public void addGroup(net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1, $r6;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.cucadiagram.IGroup r2;
+        java.util.Map $r3, $r8;
+        net.sourceforge.plantuml.cucadiagram.Ident $r4, $r7;
+        java.lang.String $r9;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 != 0 goto label1;
+
+        $r8 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groupsByCode>;
+
+        $r9 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.IGroup: java.lang.String getCodeGetName()>();
+
+        interfaceinvoke $r8.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r9, r2);
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r4 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r4, r2);
+
+        $r6 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z1 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z1 == 0 goto label2;
+
+        $r7 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void ensureParentIsCreated(net.sourceforge.plantuml.cucadiagram.Ident)>($r7);
+
+     label2:
+        return;
+    }
+
+    private void ensureParentIsCreated(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.Ident r1, $r3;
+        java.util.Map $r2;
+        java.lang.Object $r4;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r3 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Ident: net.sourceforge.plantuml.cucadiagram.Ident parent()>();
+
+        $r4 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>($r3);
+
+        if $r4 == null goto label1;
+
+        return;
+
+     label1:
+        virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup getParentContainer(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.IGroup)>(r1, null);
+
+        return;
+    }
+
+    void removeGroup(java.lang.String)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0;
+        java.lang.String r2;
+        java.util.Map $r3, $r8;
+        java.lang.Object $r4, $r6, $r10;
+        net.sourceforge.plantuml.cucadiagram.IGroup $r5;
+        net.sourceforge.plantuml.cucadiagram.IEntity r7, r11;
+        net.sourceforge.plantuml.cucadiagram.Ident $r9;
+        java.lang.UnsupportedOperationException $r12;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r12 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r12.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r12;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groupsByCode>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r2);
+
+        $r5 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r4;
+
+        $r6 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>($r5);
+
+        r7 = (net.sourceforge.plantuml.cucadiagram.IEntity) $r6;
+
+        $r8 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r9 = interfaceinvoke r7.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        $r10 = interfaceinvoke $r8.<java.util.Map: java.lang.Object remove(java.lang.Object)>($r9);
+
+        r11 = (net.sourceforge.plantuml.cucadiagram.IEntity) $r10;
+
+        if r7 == r11 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void bigError()>();
+
+     label2:
+        return;
+    }
+
+    void removeGroup(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.Ident r1;
+        java.util.Map $r2;
+        java.lang.Object $r3, $r4;
+        net.sourceforge.plantuml.cucadiagram.IGroup $r5;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r3 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r4 = interfaceinvoke $r2.<java.util.Map: java.lang.Object remove(java.lang.Object)>($r3);
+
+        $r5 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r4;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>($r5);
+
+        return;
+    }
+
+    public static void bigError()
+    {
+        return;
+    }
+
+    void removeLeaf(java.lang.String)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0;
+        java.lang.String r2;
+        java.util.Map $r3, $r9;
+        java.lang.Object $r4, $r5, $r7, $r11;
+        net.sourceforge.plantuml.cucadiagram.ILeaf $r6;
+        net.sourceforge.plantuml.cucadiagram.IEntity r8, r12;
+        net.sourceforge.plantuml.cucadiagram.Ident $r10;
+        java.lang.UnsupportedOperationException $r13;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r13 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r13.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r13;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafsByCode>;
+
+        $r4 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r2);
+
+        $r5 = interfaceinvoke $r3.<java.util.Map: java.lang.Object remove(java.lang.Object)>($r4);
+
+        $r6 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r5;
+
+        $r7 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>($r6);
+
+        r8 = (net.sourceforge.plantuml.cucadiagram.IEntity) $r7;
+
+        $r9 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r10 = interfaceinvoke r8.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        $r11 = interfaceinvoke $r9.<java.util.Map: java.lang.Object remove(java.lang.Object)>($r10);
+
+        r12 = (net.sourceforge.plantuml.cucadiagram.IEntity) $r11;
+
+        if r8 == r12 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void bigError()>();
+
+     label2:
+        return;
+    }
+
+    void removeLeaf(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.Ident r1;
+        java.util.Map $r2, $r9;
+        java.lang.Object $r3, $r4;
+        net.sourceforge.plantuml.cucadiagram.IEntity r5;
+        java.lang.StringBuilder $r6, $r8, $r11;
+        java.io.PrintStream $r7;
+        java.util.Set $r10;
+        java.lang.String $r12, $r14;
+        java.lang.IllegalArgumentException $r13;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r3 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r4 = interfaceinvoke $r2.<java.util.Map: java.lang.Object remove(java.lang.Object)>($r3);
+
+        r5 = (net.sourceforge.plantuml.cucadiagram.IEntity) $r4;
+
+        if r5 != null goto label1;
+
+        $r7 = <java.lang.System: java.io.PrintStream err>;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("leafs2=");
+
+        $r9 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r10 = interfaceinvoke $r9.<java.util.Map: java.util.Set keySet()>();
+
+        $r11 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r7.<java.io.PrintStream: void println(java.lang.String)>($r12);
+
+        $r13 = new java.lang.IllegalArgumentException;
+
+        $r14 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String toString()>();
+
+        specialinvoke $r13.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r14);
+
+        throw $r13;
+
+     label1:
+        return;
+    }
+
+    private void removeLeaf1972(net.sourceforge.plantuml.cucadiagram.ILeaf)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.Map $r1, $r7;
+        java.util.Collection $r2;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r3;
+        boolean z0;
+        java.lang.StringBuilder $r4, $r6, $r9;
+        java.io.PrintStream $r5;
+        java.util.Set $r8;
+        java.lang.String $r10, $r12;
+        java.lang.IllegalArgumentException $r11;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r3 := @parameter0: net.sourceforge.plantuml.cucadiagram.ILeaf;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        z0 = interfaceinvoke $r2.<java.util.Collection: boolean remove(java.lang.Object)>(r3);
+
+        if z0 != 0 goto label1;
+
+        $r5 = <java.lang.System: java.io.PrintStream err>;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("leafs2=");
+
+        $r7 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r8 = interfaceinvoke $r7.<java.util.Map: java.util.Set keySet()>();
+
+        $r9 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r5.<java.io.PrintStream: void println(java.lang.String)>($r10);
+
+        $r11 = new java.lang.IllegalArgumentException;
+
+        $r12 = virtualinvoke r3.<java.lang.Object: java.lang.String toString()>();
+
+        specialinvoke $r11.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r12);
+
+        throw $r11;
+
+     label1:
+        return;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.IGroup muteToGroup(java.lang.String, net.sourceforge.plantuml.cucadiagram.Code, net.sourceforge.plantuml.cucadiagram.GroupType, net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0;
+        java.lang.String r2;
+        java.util.Map $r3;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r5;
+        net.sourceforge.plantuml.cucadiagram.Code r6;
+        net.sourceforge.plantuml.cucadiagram.GroupType r7;
+        net.sourceforge.plantuml.cucadiagram.IGroup r8, r10;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityImpl $r9;
+        java.lang.UnsupportedOperationException $r11;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: java.lang.String;
+
+        r6 := @parameter1: net.sourceforge.plantuml.cucadiagram.Code;
+
+        r7 := @parameter2: net.sourceforge.plantuml.cucadiagram.GroupType;
+
+        r8 := @parameter3: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r11 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r11.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r11;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafsByCode>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.lang.Object get(java.lang.Object)>(r2);
+
+        r5 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r4;
+
+        $r9 = (net.sourceforge.plantuml.cucadiagram.entity.EntityImpl) r5;
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.cucadiagram.entity.EntityImpl: void muteToGroup(net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.GroupType,net.sourceforge.plantuml.cucadiagram.IGroup)>(r6, r7, r8);
+
+        r10 = (net.sourceforge.plantuml.cucadiagram.IGroup) r5;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void removeLeaf(java.lang.String)>(r2);
+
+        return r10;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.IGroup muteToGroup1972(net.sourceforge.plantuml.cucadiagram.Ident, net.sourceforge.plantuml.cucadiagram.Code, net.sourceforge.plantuml.cucadiagram.GroupType, net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1, $r2;
+        boolean $z0;
+        java.lang.String $r3;
+        net.sourceforge.plantuml.cucadiagram.Ident r4;
+        java.util.Map $r5;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.cucadiagram.Code r7;
+        net.sourceforge.plantuml.cucadiagram.GroupType r8;
+        net.sourceforge.plantuml.cucadiagram.IGroup r9, r11;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityImpl $r10;
+        java.lang.UnsupportedOperationException $r12;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r13;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r4 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        r7 := @parameter1: net.sourceforge.plantuml.cucadiagram.Code;
+
+        r8 := @parameter2: net.sourceforge.plantuml.cucadiagram.GroupType;
+
+        r9 := @parameter3: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 != 0 goto label1;
+
+        $r12 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r12.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r12;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.lang.String getNamespaceSeparator()>();
+
+        if $r3 != null goto label2;
+
+        r13 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.ILeaf getLeafVerySmart(net.sourceforge.plantuml.cucadiagram.Ident)>(r4);
+
+        goto label3;
+
+     label2:
+        $r5 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        r13 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r6;
+
+     label3:
+        $r10 = (net.sourceforge.plantuml.cucadiagram.entity.EntityImpl) r13;
+
+        virtualinvoke $r10.<net.sourceforge.plantuml.cucadiagram.entity.EntityImpl: void muteToGroup(net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.GroupType,net.sourceforge.plantuml.cucadiagram.IGroup)>(r7, r8, r9);
+
+        r11 = (net.sourceforge.plantuml.cucadiagram.IGroup) r13;
+
+        specialinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void removeLeaf1972(net.sourceforge.plantuml.cucadiagram.ILeaf)>(r13);
+
+        return r11;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.IGroup getRootGroup()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.IGroup $r1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup rootGroup>;
+
+        return $r1;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.ILeaf getLeafStrict(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.Ident r1;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.cucadiagram.ILeaf $r4;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r4 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r3;
+
+        return $r4;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.ILeaf getLeafSmart(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.cucadiagram.Ident r2, $r12;
+        java.util.Map $r3, $r6;
+        java.lang.Object $r4, $r9, $r11, $r15;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r5, $r16;
+        int $i0;
+        java.util.Set $r7;
+        java.util.Iterator r8;
+        java.util.Map$Entry r10;
+        java.lang.String $r13, $r14;
+        java.lang.UnsupportedOperationException $r17;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 != 0 goto label1;
+
+        $r17 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r17.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r17;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.lang.Object get(java.lang.Object)>(r2);
+
+        r5 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r4;
+
+        if r5 != null goto label4;
+
+        $i0 = virtualinvoke r2.<net.sourceforge.plantuml.cucadiagram.Ident: int size()>();
+
+        if $i0 != 1 goto label4;
+
+        $r6 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.util.Set entrySet()>();
+
+        r8 = interfaceinvoke $r7.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z1 = interfaceinvoke r8.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r9 = interfaceinvoke r8.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (java.util.Map$Entry) $r9;
+
+        $r11 = interfaceinvoke r10.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r12 = (net.sourceforge.plantuml.cucadiagram.Ident) $r11;
+
+        $r13 = virtualinvoke $r12.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getLast()>();
+
+        $r14 = virtualinvoke r2.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getLast()>();
+
+        $z2 = virtualinvoke $r13.<java.lang.String: boolean equals(java.lang.Object)>($r14);
+
+        if $z2 == 0 goto label3;
+
+        $r15 = interfaceinvoke r10.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r16 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r15;
+
+        return $r16;
+
+     label3:
+        goto label2;
+
+     label4:
+        return r5;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.ILeaf getLeafVerySmart(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.cucadiagram.Ident r2, $r12;
+        java.util.Map $r3, $r6;
+        java.lang.Object $r4, $r9, $r11, $r15;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r5, $r16;
+        java.util.Set $r7;
+        java.util.Iterator r8;
+        java.util.Map$Entry r10;
+        java.lang.String $r13, $r14;
+        java.lang.UnsupportedOperationException $r17;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 != 0 goto label1;
+
+        $r17 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r17.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r17;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.lang.Object get(java.lang.Object)>(r2);
+
+        r5 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r4;
+
+        if r5 != null goto label4;
+
+        $r6 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.util.Set entrySet()>();
+
+        r8 = interfaceinvoke $r7.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z1 = interfaceinvoke r8.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r9 = interfaceinvoke r8.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (java.util.Map$Entry) $r9;
+
+        $r11 = interfaceinvoke r10.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r12 = (net.sourceforge.plantuml.cucadiagram.Ident) $r11;
+
+        $r13 = virtualinvoke $r12.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getLast()>();
+
+        $r14 = virtualinvoke r2.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getLast()>();
+
+        $z2 = virtualinvoke $r13.<java.lang.String: boolean equals(java.lang.Object)>($r14);
+
+        if $z2 == 0 goto label3;
+
+        $r15 = interfaceinvoke r10.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r16 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r15;
+
+        return $r16;
+
+     label3:
+        goto label2;
+
+     label4:
+        return r5;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.Ident buildFullyQualified(net.sourceforge.plantuml.cucadiagram.Ident, net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.Ident r0, r1, $r2;
+        boolean $z0, $z1, $z2;
+        int $i0;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r3;
+        java.util.Map $r4, $r5;
+
+        r3 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Ident: boolean equals(java.lang.Object)>(r1);
+
+        if $z0 != 0 goto label2;
+
+        $r4 = r3.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $z1 = interfaceinvoke $r4.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+
+        if $z1 != 0 goto label1;
+
+        $r5 = r3.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $z2 = interfaceinvoke $r5.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+
+        if $z2 == 0 goto label2;
+
+     label1:
+        return r1;
+
+     label2:
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Ident: int size()>();
+
+        if $i0 <= 1 goto label3;
+
+        return r1;
+
+     label3:
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Ident: net.sourceforge.plantuml.cucadiagram.Ident add(net.sourceforge.plantuml.cucadiagram.Ident)>(r1);
+
+        return $r2;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.IGroup getGroupStrict(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        java.lang.String $r2;
+        net.sourceforge.plantuml.cucadiagram.Ident r3;
+        java.util.Map $r4;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.cucadiagram.IGroup r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r3 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.lang.String getNamespaceSeparator()>();
+
+        if $r2 != null goto label1;
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup getGroupVerySmart(net.sourceforge.plantuml.cucadiagram.Ident)>(r3);
+
+        return $r7;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r5 = interfaceinvoke $r4.<java.util.Map: java.lang.Object get(java.lang.Object)>(r3);
+
+        r6 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r5;
+
+        return r6;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.IGroup getGroupVerySmart(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.Ident r1, $r11;
+        java.util.Map $r2, $r5;
+        java.lang.Object $r3, $r8, $r10, $r14;
+        net.sourceforge.plantuml.cucadiagram.IGroup r4, $r15;
+        java.util.Set $r6;
+        java.util.Iterator r7;
+        boolean $z0, $z1;
+        java.util.Map$Entry r9;
+        java.lang.String $r12, $r13;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        r4 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r3;
+
+        if r4 != null goto label3;
+
+        $r5 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Map: java.util.Set entrySet()>();
+
+        r7 = interfaceinvoke $r6.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r8 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r9 = (java.util.Map$Entry) $r8;
+
+        $r10 = interfaceinvoke r9.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r11 = (net.sourceforge.plantuml.cucadiagram.Ident) $r10;
+
+        $r12 = virtualinvoke $r11.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getLast()>();
+
+        $r13 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getLast()>();
+
+        $z1 = virtualinvoke $r12.<java.lang.String: boolean equals(java.lang.Object)>($r13);
+
+        if $z1 == 0 goto label2;
+
+        $r14 = interfaceinvoke r9.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r15 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r14;
+
+        return $r15;
+
+     label2:
+        goto label1;
+
+     label3:
+        return r4;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.ILeaf getLeaf(net.sourceforge.plantuml.cucadiagram.Code)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.Code r2;
+        java.util.Map $r3, $r7;
+        java.lang.String $r4;
+        java.lang.Object $r5, $r9;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r6;
+        net.sourceforge.plantuml.cucadiagram.Ident $r8;
+        java.lang.UnsupportedOperationException $r10;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.Code;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r10 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r10.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r10;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafsByCode>;
+
+        $r4 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.Code: java.lang.String getName()>();
+
+        $r5 = interfaceinvoke $r3.<java.util.Map: java.lang.Object get(java.lang.Object)>($r4);
+
+        r6 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r5;
+
+        if r6 == null goto label2;
+
+        $r7 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r8 = interfaceinvoke r6.<net.sourceforge.plantuml.cucadiagram.ILeaf: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        $r9 = interfaceinvoke $r7.<java.util.Map: java.lang.Object get(java.lang.Object)>($r8);
+
+        if r6 == $r9 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void bigError()>();
+
+     label2:
+        return r6;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.IGroup getGroup(net.sourceforge.plantuml.cucadiagram.Code)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.Code r2;
+        java.util.Map $r3, $r7;
+        java.lang.String $r4;
+        java.lang.Object $r5, $r9;
+        net.sourceforge.plantuml.cucadiagram.IGroup r6;
+        net.sourceforge.plantuml.cucadiagram.Ident $r8;
+        java.lang.UnsupportedOperationException $r10;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.Code;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r10 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r10.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r10;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groupsByCode>;
+
+        $r4 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.Code: java.lang.String getName()>();
+
+        $r5 = interfaceinvoke $r3.<java.util.Map: java.lang.Object get(java.lang.Object)>($r4);
+
+        r6 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r5;
+
+        if r6 == null goto label2;
+
+        $r7 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r8 = interfaceinvoke r6.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Ident getIdent()>();
+
+        $r9 = interfaceinvoke $r7.<java.util.Map: java.lang.Object get(java.lang.Object)>($r8);
+
+        if r6 == $r9 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void bigError()>();
+
+     label2:
+        return r6;
+    }
+
+    public final java.util.Collection leafs()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0, $z1;
+        java.util.Map $r2;
+        java.util.Collection $r3, r4, $r7, $r8;
+        java.util.ArrayList $r5, $r6;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Collection leafs2()>();
+
+        return $r8;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafsByCode>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Collection values()>();
+
+        r4 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>($r3);
+
+        $r5 = new java.util.ArrayList;
+
+        specialinvoke $r5.<java.util.ArrayList: void <init>(java.util.Collection)>(r4);
+
+        $r6 = new java.util.ArrayList;
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Collection leafs2()>();
+
+        specialinvoke $r6.<java.util.ArrayList: void <init>(java.util.Collection)>($r7);
+
+        $z1 = virtualinvoke $r5.<java.util.ArrayList: boolean equals(java.lang.Object)>($r6);
+
+        if $z1 != 0 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void bigError()>();
+
+     label2:
+        return r4;
+    }
+
+    public final java.util.Collection groups()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        boolean $z0, $z1;
+        java.util.Map $r2;
+        java.util.Collection $r3, r4, $r7, $r8;
+        java.util.ArrayList $r5, $r6;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Collection groups2()>();
+
+        return $r8;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groupsByCode>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Collection values()>();
+
+        r4 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>($r3);
+
+        $r5 = new java.util.ArrayList;
+
+        specialinvoke $r5.<java.util.ArrayList: void <init>(java.util.Collection)>(r4);
+
+        $r6 = new java.util.ArrayList;
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Collection groups2()>();
+
+        specialinvoke $r6.<java.util.ArrayList: void <init>(java.util.Collection)>($r7);
+
+        $z1 = virtualinvoke $r5.<java.util.ArrayList: boolean equals(java.lang.Object)>($r6);
+
+        if $z1 != 0 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void bigError()>();
+
+     label2:
+        return r4;
+    }
+
+    public final java.util.Collection groups2()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.Map $r1;
+        java.util.Collection $r2, r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map groups2>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>($r2);
+
+        $r4 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>(r3);
+
+        return $r4;
+    }
+
+    public final java.util.Collection leafs2()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.Map $r1;
+        java.util.Collection $r2, r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.Map leafs2>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>($r2);
+
+        $r4 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>(r3);
+
+        return $r4;
+    }
+
+    public void incRawLayout()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $i0 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: int rawLayout>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: int rawLayout> = $i1;
+
+        return;
+    }
+
+    public final java.util.List getLinks()
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.List $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List links>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    public void addLink(net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.cucadiagram.Link r0;
+        boolean $z0, $z2;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r1;
+        java.util.List $r2;
+
+        r1 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.Link;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Link: boolean isSingle()>();
+
+        if $z0 == 0 goto label1;
+
+        $z2 = specialinvoke r1.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: boolean containsSimilarLink(net.sourceforge.plantuml.cucadiagram.Link)>(r0);
+
+        if $z2 == 0 goto label1;
+
+        return;
+
+     label1:
+        $r2 = r1.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List links>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r0);
+
+        return;
+    }
+
+    private boolean containsSimilarLink(net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.cucadiagram.Link r4, r5;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r5 := @parameter0: net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List links>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.cucadiagram.Link) $r3;
+
+        $z1 = virtualinvoke r5.<net.sourceforge.plantuml.cucadiagram.Link: boolean sameConnections(net.sourceforge.plantuml.cucadiagram.Link)>(r4);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 0;
+    }
+
+    public void removeLink(net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1;
+        java.util.List $r2;
+        boolean z0;
+        java.lang.IllegalArgumentException $r3;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r2 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: java.util.List links>;
+
+        z0 = interfaceinvoke $r2.<java.util.List: boolean remove(java.lang.Object)>(r1);
+
+        if z0 != 0 goto label1;
+
+        $r3 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r3.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r3;
+
+     label1:
+        return;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.IGroup getParentContainer(net.sourceforge.plantuml.cucadiagram.Ident, net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1, $r11;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.cucadiagram.IGroup r2, $r4, $r13, r14, r15;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.cucadiagram.Ident r5, r6;
+        java.lang.String $r7, $r12;
+        net.sourceforge.plantuml.cucadiagram.Display r8;
+        net.sourceforge.plantuml.cucadiagram.GroupType $r9;
+        java.util.Set $r10;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory;
+
+        r5 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        r2 := @parameter1: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label3;
+
+        r6 = virtualinvoke r5.<net.sourceforge.plantuml.cucadiagram.Ident: net.sourceforge.plantuml.cucadiagram.Ident parent()>();
+
+        $z1 = virtualinvoke r6.<net.sourceforge.plantuml.cucadiagram.Ident: boolean isRoot()>();
+
+        if $z1 == 0 goto label1;
+
+        $r13 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup rootGroup>;
+
+        return $r13;
+
+     label1:
+        r14 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup getGroupStrict(net.sourceforge.plantuml.cucadiagram.Ident)>(r6);
+
+        if r14 == null goto label2;
+
+        return r14;
+
+     label2:
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getName()>();
+
+        r8 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r7);
+
+        $r9 = <net.sourceforge.plantuml.cucadiagram.GroupType: net.sourceforge.plantuml.cucadiagram.GroupType PACKAGE>;
+
+        $r10 = staticinvoke <java.util.Collections: java.util.Set emptySet()>();
+
+        $r11 = r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.CucaDiagram namespaceSeparator>;
+
+        $r12 = virtualinvoke $r11.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.lang.String getNamespaceSeparator()>();
+
+        r15 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup createGroup(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.GroupType,net.sourceforge.plantuml.cucadiagram.IGroup,java.util.Set,java.lang.String)>(r6, r6, r8, null, $r9, null, $r10, $r12);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: void addGroup(net.sourceforge.plantuml.cucadiagram.IGroup)>(r15);
+
+        return r15;
+
+     label3:
+        $r3 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r2);
+
+        $r4 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r3;
+
+        return $r4;
+    }
+}

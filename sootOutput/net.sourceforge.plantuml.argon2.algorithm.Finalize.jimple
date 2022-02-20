@@ -1,0 +1,84 @@
+public class net.sourceforge.plantuml.argon2.algorithm.Finalize extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.argon2.algorithm.Finalize r0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.algorithm.Finalize;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void finalize(net.sourceforge.plantuml.argon2.model.Instance, net.sourceforge.plantuml.argon2.Argon2)
+    {
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+        net.sourceforge.plantuml.argon2.model.Block[] $r1, $r4;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9;
+        net.sourceforge.plantuml.argon2.model.Block r2, $r5;
+        net.sourceforge.plantuml.argon2.Argon2 r3;
+        boolean $z0;
+        byte[] r6, r7;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r3 := @parameter1: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Block[] memory>;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i1 = $i0 - 1;
+
+        r2 = $r1[$i1];
+
+        i8 = 1;
+
+     label1:
+        $i2 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLanes()>();
+
+        if i8 >= $i2 goto label2;
+
+        $i4 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i5 = i8 * $i4;
+
+        $i6 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i7 = $i6 - 1;
+
+        i9 = $i5 + $i7;
+
+        $r4 = r0.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Block[] memory>;
+
+        $r5 = $r4[i9];
+
+        virtualinvoke r2.<net.sourceforge.plantuml.argon2.model.Block: void xorWith(net.sourceforge.plantuml.argon2.model.Block)>($r5);
+
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label2:
+        r6 = virtualinvoke r2.<net.sourceforge.plantuml.argon2.model.Block: byte[] toBytes()>();
+
+        $i3 = virtualinvoke r3.<net.sourceforge.plantuml.argon2.Argon2: int getOutputLength()>();
+
+        r7 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.Functions: byte[] blake2bLong(byte[],int)>(r6, $i3);
+
+        virtualinvoke r3.<net.sourceforge.plantuml.argon2.Argon2: void setOutput(byte[])>(r7);
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.argon2.Argon2: boolean isClearMemory()>();
+
+        if $z0 == 0 goto label3;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: void clear()>();
+
+        virtualinvoke r3.<net.sourceforge.plantuml.argon2.Argon2: void clear()>();
+
+     label3:
+        return;
+    }
+}

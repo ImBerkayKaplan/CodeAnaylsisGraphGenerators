@@ -1,0 +1,114 @@
+public class net.sourceforge.plantuml.sudoku.PSystemSudoku extends net.sourceforge.plantuml.AbstractPSystem
+{
+    private final net.sourceforge.plantuml.sudoku.ISudoku sudoku;
+
+    protected final net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.sudoku.GraphicsSudoku $r0;
+        net.sourceforge.plantuml.sudoku.PSystemSudoku r1;
+        net.sourceforge.plantuml.sudoku.ISudoku $r2;
+        net.sourceforge.plantuml.FileFormatOption r4;
+        net.sourceforge.plantuml.FileFormat $r5, $r6, $r7, $r8, $r9, $r10, $r12, $r14, $r15;
+        java.io.OutputStream r11;
+        net.sourceforge.plantuml.core.ImageData $r13, $r16, $r17, $r18;
+        int i0;
+
+        r1 := @this: net.sourceforge.plantuml.sudoku.PSystemSudoku;
+
+        r11 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r4 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r0 = new net.sourceforge.plantuml.sudoku.GraphicsSudoku;
+
+        $r2 = r1.<net.sourceforge.plantuml.sudoku.PSystemSudoku: net.sourceforge.plantuml.sudoku.ISudoku sudoku>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.sudoku.GraphicsSudoku: void <init>(net.sourceforge.plantuml.sudoku.ISudoku)>($r2);
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r6 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat EPS>;
+
+        if $r5 != $r6 goto label1;
+
+        $r18 = virtualinvoke $r0.<net.sourceforge.plantuml.sudoku.GraphicsSudoku: net.sourceforge.plantuml.core.ImageData writeImageEps(java.io.OutputStream)>(r11);
+
+        return $r18;
+
+     label1:
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r8 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat SVG>;
+
+        if $r7 != $r8 goto label2;
+
+        $r17 = virtualinvoke $r0.<net.sourceforge.plantuml.sudoku.GraphicsSudoku: net.sourceforge.plantuml.core.ImageData writeImageSvg(java.io.OutputStream)>(r11);
+
+        return $r17;
+
+     label2:
+        $r9 = virtualinvoke r4.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r10 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat LATEX>;
+
+        if $r9 == $r10 goto label3;
+
+        $r14 = virtualinvoke r4.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r15 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat LATEX_NO_PREAMBLE>;
+
+        if $r14 != $r15 goto label4;
+
+     label3:
+        $r12 = virtualinvoke r4.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r13 = virtualinvoke $r0.<net.sourceforge.plantuml.sudoku.GraphicsSudoku: net.sourceforge.plantuml.core.ImageData writeImageLatex(java.io.OutputStream,net.sourceforge.plantuml.FileFormat)>(r11, $r12);
+
+        return $r13;
+
+     label4:
+        $r16 = virtualinvoke $r0.<net.sourceforge.plantuml.sudoku.GraphicsSudoku: net.sourceforge.plantuml.core.ImageData writeImagePng(java.io.OutputStream)>(r11);
+
+        return $r16;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.sudoku.PSystemSudoku r1;
+
+        r1 := @this: net.sourceforge.plantuml.sudoku.PSystemSudoku;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Sudoku)");
+
+        return $r0;
+    }
+
+    public void <init>(net.sourceforge.plantuml.core.UmlSource, java.lang.Long)
+    {
+        net.sourceforge.plantuml.sudoku.PSystemSudoku r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        net.sourceforge.plantuml.sudoku.SudokuDLX $r2;
+        java.lang.Long r3;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.PSystemSudoku;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        r3 := @parameter1: java.lang.Long;
+
+        specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        $r2 = new net.sourceforge.plantuml.sudoku.SudokuDLX;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.sudoku.SudokuDLX: void <init>(java.lang.Long)>(r3);
+
+        r0.<net.sourceforge.plantuml.sudoku.PSystemSudoku: net.sourceforge.plantuml.sudoku.ISudoku sudoku> = $r2;
+
+        return;
+    }
+}

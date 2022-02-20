@@ -1,0 +1,1717 @@
+public final class ext.plantuml.com.google.zxing.qrcode.encoder.Encoder extends java.lang.Object
+{
+    private static final int[] ALPHANUMERIC_TABLE;
+    static final java.lang.String DEFAULT_BYTE_MODE_ENCODING;
+
+    private void <init>()
+    {
+        ext.plantuml.com.google.zxing.qrcode.encoder.Encoder r0;
+
+        r0 := @this: ext.plantuml.com.google.zxing.qrcode.encoder.Encoder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static int calculateMaskPenalty(ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)
+    {
+        ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix r0;
+        int $i0, $i1, $i2, $i3, i5, i6, i7, i8;
+
+        r0 := @parameter0: ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix;
+
+        $i0 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.MaskUtil: int applyMaskPenaltyRule1(ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>(r0);
+
+        i5 = 0 + $i0;
+
+        $i1 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.MaskUtil: int applyMaskPenaltyRule2(ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>(r0);
+
+        i6 = i5 + $i1;
+
+        $i2 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.MaskUtil: int applyMaskPenaltyRule3(ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>(r0);
+
+        i7 = i6 + $i2;
+
+        $i3 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.MaskUtil: int applyMaskPenaltyRule4(ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>(r0);
+
+        i8 = i7 + $i3;
+
+        return i8;
+    }
+
+    public static void encode(java.lang.String, ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel, ext.plantuml.com.google.zxing.qrcode.encoder.QRCode) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        java.lang.String r0;
+        ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel r1;
+        ext.plantuml.com.google.zxing.qrcode.encoder.QRCode r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+        r2 := @parameter2: ext.plantuml.com.google.zxing.qrcode.encoder.QRCode;
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void encode(java.lang.String,ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel,java.util.Hashtable,ext.plantuml.com.google.zxing.qrcode.encoder.QRCode)>(r0, r1, null, r2);
+
+        return;
+    }
+
+    public static void encode(java.lang.String, ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel, java.util.Hashtable, ext.plantuml.com.google.zxing.qrcode.encoder.QRCode) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        java.util.Hashtable r0;
+        ext.plantuml.com.google.zxing.EncodeHintType $r1;
+        java.lang.Object $r2;
+        java.lang.String r3, $r21, $r23, $r24, $r25, r26;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Mode r4, $r11, $r28;
+        ext.plantuml.com.google.zxing.common.BitArray $r5, $r9, $r12;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12;
+        ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel r7, $r16, $r17;
+        ext.plantuml.com.google.zxing.qrcode.encoder.QRCode r8;
+        ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix $r14;
+        boolean $z0, $z1, $z2;
+        ext.plantuml.com.google.zxing.WriterException $r18;
+        java.lang.StringBuilder $r19, $r20, $r22;
+        ext.plantuml.com.google.zxing.common.CharacterSetECI r27;
+
+        r3 := @parameter0: java.lang.String;
+
+        r7 := @parameter1: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+        r0 := @parameter2: java.util.Hashtable;
+
+        r8 := @parameter3: ext.plantuml.com.google.zxing.qrcode.encoder.QRCode;
+
+        if r0 != null goto label1;
+
+        $r25 = null;
+
+        goto label2;
+
+     label1:
+        $r1 = <ext.plantuml.com.google.zxing.EncodeHintType: ext.plantuml.com.google.zxing.EncodeHintType CHARACTER_SET>;
+
+        $r2 = virtualinvoke r0.<java.util.Hashtable: java.lang.Object get(java.lang.Object)>($r1);
+
+        $r25 = (java.lang.String) $r2;
+
+     label2:
+        r26 = $r25;
+
+        if $r25 != null goto label3;
+
+        r26 = "ISO-8859-1";
+
+     label3:
+        r4 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: ext.plantuml.com.google.zxing.qrcode.decoder.Mode chooseMode(java.lang.String,java.lang.String)>(r3, r26);
+
+        $r5 = new ext.plantuml.com.google.zxing.common.BitArray;
+
+        specialinvoke $r5.<ext.plantuml.com.google.zxing.common.BitArray: void <init>()>();
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void appendBytes(java.lang.String,ext.plantuml.com.google.zxing.qrcode.decoder.Mode,ext.plantuml.com.google.zxing.common.BitArray,java.lang.String)>(r3, r4, $r5, r26);
+
+        i0 = virtualinvoke $r5.<ext.plantuml.com.google.zxing.common.BitArray: int getSizeInBytes()>();
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void initQRCode(int,ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel,ext.plantuml.com.google.zxing.qrcode.decoder.Mode,ext.plantuml.com.google.zxing.qrcode.encoder.QRCode)>(i0, r7, r4, r8);
+
+        $r9 = new ext.plantuml.com.google.zxing.common.BitArray;
+
+        specialinvoke $r9.<ext.plantuml.com.google.zxing.common.BitArray: void <init>()>();
+
+        $r11 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode BYTE>;
+
+        if r4 != $r11 goto label4;
+
+        $r24 = "ISO-8859-1";
+
+        $z1 = virtualinvoke $r24.<java.lang.String: boolean equals(java.lang.Object)>(r26);
+
+        if $z1 != 0 goto label4;
+
+        r27 = staticinvoke <ext.plantuml.com.google.zxing.common.CharacterSetECI: ext.plantuml.com.google.zxing.common.CharacterSetECI getCharacterSetECIByName(java.lang.String)>(r26);
+
+        if r27 == null goto label4;
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void appendECI(ext.plantuml.com.google.zxing.common.ECI,ext.plantuml.com.google.zxing.common.BitArray)>(r27, $r9);
+
+     label4:
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void appendModeInfo(ext.plantuml.com.google.zxing.qrcode.decoder.Mode,ext.plantuml.com.google.zxing.common.BitArray)>(r4, $r9);
+
+        $r28 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode BYTE>;
+
+        $z2 = virtualinvoke r4.<java.lang.Object: boolean equals(java.lang.Object)>($r28);
+
+        if $z2 == 0 goto label5;
+
+        $i12 = virtualinvoke $r5.<ext.plantuml.com.google.zxing.common.BitArray: int getSizeInBytes()>();
+
+        goto label6;
+
+     label5:
+        $i12 = virtualinvoke r3.<java.lang.String: int length()>();
+
+     label6:
+        $i1 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getVersion()>();
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void appendLengthInfo(int,int,ext.plantuml.com.google.zxing.qrcode.decoder.Mode,ext.plantuml.com.google.zxing.common.BitArray)>($i12, $i1, r4, $r9);
+
+        virtualinvoke $r9.<ext.plantuml.com.google.zxing.common.BitArray: void appendBitArray(ext.plantuml.com.google.zxing.common.BitArray)>($r5);
+
+        $i2 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getNumDataBytes()>();
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void terminateBits(int,ext.plantuml.com.google.zxing.common.BitArray)>($i2, $r9);
+
+        $r12 = new ext.plantuml.com.google.zxing.common.BitArray;
+
+        specialinvoke $r12.<ext.plantuml.com.google.zxing.common.BitArray: void <init>()>();
+
+        $i3 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getNumTotalBytes()>();
+
+        $i4 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getNumDataBytes()>();
+
+        $i5 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getNumRSBlocks()>();
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void interleaveWithECBytes(ext.plantuml.com.google.zxing.common.BitArray,int,int,int,ext.plantuml.com.google.zxing.common.BitArray)>($r9, $i3, $i4, $i5, $r12);
+
+        $r14 = new ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix;
+
+        $i6 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getMatrixWidth()>();
+
+        $i7 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getMatrixWidth()>();
+
+        specialinvoke $r14.<ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix: void <init>(int,int)>($i6, $i7);
+
+        $r16 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel getECLevel()>();
+
+        $i8 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getVersion()>();
+
+        $i9 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: int chooseMaskPattern(ext.plantuml.com.google.zxing.common.BitArray,ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel,int,ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>($r12, $r16, $i8, $r14);
+
+        virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setMaskPattern(int)>($i9);
+
+        $r17 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel getECLevel()>();
+
+        $i10 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getVersion()>();
+
+        $i11 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: int getMaskPattern()>();
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.MatrixUtil: void buildMatrix(ext.plantuml.com.google.zxing.common.BitArray,ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel,int,int,ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>($r12, $r17, $i10, $i11, $r14);
+
+        virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setMatrix(ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>($r14);
+
+        $z0 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: boolean isValid()>();
+
+        if $z0 != 0 goto label7;
+
+        $r18 = new ext.plantuml.com.google.zxing.WriterException;
+
+        $r19 = new java.lang.StringBuilder;
+
+        specialinvoke $r19.<java.lang.StringBuilder: void <init>()>();
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Invalid QR code: ");
+
+        $r21 = virtualinvoke r8.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: java.lang.String toString()>();
+
+        $r22 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r21);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r18.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>($r23);
+
+        throw $r18;
+
+     label7:
+        return;
+    }
+
+    static int getAlphanumericCode(int)
+    {
+        int i0, $i1, $i2;
+        int[] $r0, $r1;
+
+        i0 := @parameter0: int;
+
+        $r0 = <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: int[] ALPHANUMERIC_TABLE>;
+
+        $i1 = lengthof $r0;
+
+        if i0 >= $i1 goto label1;
+
+        $r1 = <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: int[] ALPHANUMERIC_TABLE>;
+
+        $i2 = $r1[i0];
+
+        return $i2;
+
+     label1:
+        return -1;
+    }
+
+    public static ext.plantuml.com.google.zxing.qrcode.decoder.Mode chooseMode(java.lang.String)
+    {
+        java.lang.String r0;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Mode $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: ext.plantuml.com.google.zxing.qrcode.decoder.Mode chooseMode(java.lang.String,java.lang.String)>(r0, null);
+
+        return $r1;
+    }
+
+    public static ext.plantuml.com.google.zxing.qrcode.decoder.Mode chooseMode(java.lang.String, java.lang.String)
+    {
+        java.lang.String r0, $r1, r2;
+        boolean $z0, $z1, z2, z3;
+        int $i0, $i2, i3;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Mode $r3, $r4, $r5, $r6, $r7;
+        char c1;
+
+        r2 := @parameter0: java.lang.String;
+
+        r0 := @parameter1: java.lang.String;
+
+        $r1 = "Shift_JIS";
+
+        $z0 = virtualinvoke $r1.<java.lang.String: boolean equals(java.lang.Object)>(r0);
+
+        if $z0 == 0 goto label03;
+
+        $z1 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: boolean isOnlyDoubleByteKanji(java.lang.String)>(r2);
+
+        if $z1 == 0 goto label01;
+
+        $r7 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode KANJI>;
+
+        goto label02;
+
+     label01:
+        $r7 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode BYTE>;
+
+     label02:
+        return $r7;
+
+     label03:
+        z2 = 0;
+
+        z3 = 0;
+
+        i3 = 0;
+
+     label04:
+        $i0 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        if i3 >= $i0 goto label08;
+
+        c1 = virtualinvoke r2.<java.lang.String: char charAt(int)>(i3);
+
+        if c1 < 48 goto label05;
+
+        if c1 > 57 goto label05;
+
+        z2 = 1;
+
+        goto label07;
+
+     label05:
+        $i2 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: int getAlphanumericCode(int)>(c1);
+
+        if $i2 == -1 goto label06;
+
+        z3 = 1;
+
+        goto label07;
+
+     label06:
+        $r6 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode BYTE>;
+
+        return $r6;
+
+     label07:
+        i3 = i3 + 1;
+
+        goto label04;
+
+     label08:
+        if z3 == 0 goto label09;
+
+        $r5 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode ALPHANUMERIC>;
+
+        return $r5;
+
+     label09:
+        if z2 == 0 goto label10;
+
+        $r4 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode NUMERIC>;
+
+        return $r4;
+
+     label10:
+        $r3 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode BYTE>;
+
+        return $r3;
+    }
+
+    private static boolean isOnlyDoubleByteKanji(java.lang.String)
+    {
+        java.lang.String r0;
+        byte[] r1;
+        int $i0, i2, i3, i4;
+        byte $b1;
+        java.io.UnsupportedEncodingException $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+     label01:
+        r1 = virtualinvoke r0.<java.lang.String: byte[] getBytes(java.lang.String)>("Shift_JIS");
+
+     label02:
+        goto label04;
+
+     label03:
+        $r2 := @caughtexception;
+
+        return 0;
+
+     label04:
+        i3 = lengthof r1;
+
+        $i0 = i3 % 2;
+
+        if $i0 == 0 goto label05;
+
+        return 0;
+
+     label05:
+        i4 = 0;
+
+     label06:
+        if i4 >= i3 goto label10;
+
+        $b1 = r1[i4];
+
+        i2 = $b1 & 255;
+
+        if i2 < 129 goto label07;
+
+        if i2 <= 159 goto label09;
+
+     label07:
+        if i2 < 224 goto label08;
+
+        if i2 <= 235 goto label09;
+
+     label08:
+        return 0;
+
+     label09:
+        i4 = i4 + 2;
+
+        goto label06;
+
+     label10:
+        return 1;
+
+        catch java.io.UnsupportedEncodingException from label01 to label02 with label03;
+    }
+
+    private static int chooseMaskPattern(ext.plantuml.com.google.zxing.common.BitArray, ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel, int, ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        ext.plantuml.com.google.zxing.common.BitArray r0;
+        ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel r1;
+        int i0, i1, i2, i3, i4;
+        ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix r2;
+
+        r0 := @parameter0: ext.plantuml.com.google.zxing.common.BitArray;
+
+        r1 := @parameter1: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+        i0 := @parameter2: int;
+
+        r2 := @parameter3: ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix;
+
+        i2 = 2147483647;
+
+        i3 = -1;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= 8 goto label3;
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.MatrixUtil: void buildMatrix(ext.plantuml.com.google.zxing.common.BitArray,ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel,int,int,ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>(r0, r1, i0, i4, r2);
+
+        i1 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: int calculateMaskPenalty(ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix)>(r2);
+
+        if i1 >= i2 goto label2;
+
+        i2 = i1;
+
+        i3 = i4;
+
+     label2:
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label3:
+        return i3;
+    }
+
+    private static void initQRCode(int, ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel, ext.plantuml.com.google.zxing.qrcode.decoder.Mode, ext.plantuml.com.google.zxing.qrcode.encoder.QRCode) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        ext.plantuml.com.google.zxing.qrcode.encoder.QRCode r0;
+        ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel r1;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Mode r2;
+        ext.plantuml.com.google.zxing.WriterException $r3;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Version r4;
+        int i0, i1, i2, i3, i4, $i5, $i6, i7;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks r5;
+
+        i4 := @parameter0: int;
+
+        r1 := @parameter1: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+        r2 := @parameter2: ext.plantuml.com.google.zxing.qrcode.decoder.Mode;
+
+        r0 := @parameter3: ext.plantuml.com.google.zxing.qrcode.encoder.QRCode;
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setECLevel(ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel)>(r1);
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setMode(ext.plantuml.com.google.zxing.qrcode.decoder.Mode)>(r2);
+
+        i7 = 1;
+
+     label1:
+        if i7 > 40 goto label3;
+
+        r4 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.decoder.Version: ext.plantuml.com.google.zxing.qrcode.decoder.Version getVersionForNumber(int)>(i7);
+
+        i0 = virtualinvoke r4.<ext.plantuml.com.google.zxing.qrcode.decoder.Version: int getTotalCodewords()>();
+
+        r5 = virtualinvoke r4.<ext.plantuml.com.google.zxing.qrcode.decoder.Version: ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks getECBlocksForLevel(ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel)>(r1);
+
+        i1 = virtualinvoke r5.<ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks: int getTotalECCodewords()>();
+
+        i2 = virtualinvoke r5.<ext.plantuml.com.google.zxing.qrcode.decoder.Version$ECBlocks: int getNumBlocks()>();
+
+        i3 = i0 - i1;
+
+        $i5 = i4 + 3;
+
+        if i3 < $i5 goto label2;
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setVersion(int)>(i7);
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setNumTotalBytes(int)>(i0);
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setNumDataBytes(int)>(i3);
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setNumRSBlocks(int)>(i2);
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setNumECBytes(int)>(i1);
+
+        $i6 = virtualinvoke r4.<ext.plantuml.com.google.zxing.qrcode.decoder.Version: int getDimensionForVersion()>();
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void setMatrixWidth(int)>($i6);
+
+        return;
+
+     label2:
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label3:
+        $r3 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r3.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("Cannot find proper rs block info (input data too big?)");
+
+        throw $r3;
+    }
+
+    static void terminateBits(int, ext.plantuml.com.google.zxing.common.BitArray) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, i9, i10, i11, i12, i13;
+        ext.plantuml.com.google.zxing.common.BitArray r0;
+        ext.plantuml.com.google.zxing.WriterException $r1, $r3;
+        java.lang.StringBuilder $r4, $r5, $r6, $r7, $r8;
+        java.lang.String $r9;
+        short $s14;
+
+        i0 := @parameter0: int;
+
+        r0 := @parameter1: ext.plantuml.com.google.zxing.common.BitArray;
+
+        i1 = i0 << 3;
+
+        $i2 = virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: int getSize()>();
+
+        if $i2 <= i1 goto label01;
+
+        $r3 = new ext.plantuml.com.google.zxing.WriterException;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("data bits cannot fit in the QR Code");
+
+        $i8 = virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: int getSize()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i8);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" > ");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r3.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>($r9);
+
+        throw $r3;
+
+     label01:
+        i9 = 0;
+
+     label02:
+        if i9 >= 4 goto label03;
+
+        $i7 = virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: int getSize()>();
+
+        if $i7 >= i1 goto label03;
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: void appendBit(boolean)>(0);
+
+        i9 = i9 + 1;
+
+        goto label02;
+
+     label03:
+        $i3 = virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: int getSize()>();
+
+        i10 = $i3 & 7;
+
+        if i10 <= 0 goto label05;
+
+        i11 = i10;
+
+     label04:
+        if i11 >= 8 goto label05;
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: void appendBit(boolean)>(0);
+
+        i11 = i11 + 1;
+
+        goto label04;
+
+     label05:
+        $i4 = virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: int getSizeInBytes()>();
+
+        i12 = i0 - $i4;
+
+        i13 = 0;
+
+     label06:
+        if i13 >= i12 goto label09;
+
+        $i6 = i13 & 1;
+
+        if $i6 != 0 goto label07;
+
+        $s14 = 236;
+
+        goto label08;
+
+     label07:
+        $s14 = 17;
+
+     label08:
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($s14, 8);
+
+        i13 = i13 + 1;
+
+        goto label06;
+
+     label09:
+        $i5 = virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: int getSize()>();
+
+        if $i5 == i1 goto label10;
+
+        $r1 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r1.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("Bits size does not equal capacity");
+
+        throw $r1;
+
+     label10:
+        return;
+    }
+
+    static void getNumDataBytesAndNumECBytesForBlockID(int, int, int, int, int[], int[]) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        int i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, $i12, $i13, $i14, $i15, $i16, $i17;
+        int[] r0, r1;
+        ext.plantuml.com.google.zxing.WriterException $r2, $r3, $r4, $r5;
+
+        i2 := @parameter0: int;
+
+        i7 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        i0 := @parameter3: int;
+
+        r0 := @parameter4: int[];
+
+        r1 := @parameter5: int[];
+
+        if i0 < i1 goto label1;
+
+        $r5 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r5.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("Block ID too large");
+
+        throw $r5;
+
+     label1:
+        i3 = i2 % i1;
+
+        i4 = i1 - i3;
+
+        i5 = i2 / i1;
+
+        i6 = i5 + 1;
+
+        i8 = i7 / i1;
+
+        i9 = i8 + 1;
+
+        i10 = i5 - i8;
+
+        i11 = i6 - i9;
+
+        if i10 == i11 goto label2;
+
+        $r4 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r4.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("EC bytes mismatch");
+
+        throw $r4;
+
+     label2:
+        $i12 = i4 + i3;
+
+        if i1 == $i12 goto label3;
+
+        $r3 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r3.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("RS blocks mismatch");
+
+        throw $r3;
+
+     label3:
+        $i13 = i8 + i10;
+
+        $i16 = $i13 * i4;
+
+        $i14 = i9 + i11;
+
+        $i15 = $i14 * i3;
+
+        $i17 = $i16 + $i15;
+
+        if i2 == $i17 goto label4;
+
+        $r2 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r2.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("Total bytes mismatch");
+
+        throw $r2;
+
+     label4:
+        if i0 >= i4 goto label5;
+
+        r0[0] = i8;
+
+        r1[0] = i10;
+
+        goto label6;
+
+     label5:
+        r0[0] = i9;
+
+        r1[0] = i11;
+
+     label6:
+        return;
+    }
+
+    static void interleaveWithECBytes(ext.plantuml.com.google.zxing.common.BitArray, int, int, int, ext.plantuml.com.google.zxing.common.BitArray) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        ext.plantuml.com.google.zxing.common.BitArray r0, r3;
+        int $i0, i1, i2, i3, $i4, $i5, $i6, $i7, $i9, $i10, i12, $i13, $i14, $i15, $i16, i17, i18, i19, i20, i21, i22, i23, i24;
+        java.util.Vector $r1;
+        ext.plantuml.com.google.zxing.WriterException $r4, $r16, $r20;
+        java.lang.StringBuilder $r5, $r6, $r7, $r8, $r9, $r10;
+        java.lang.String $r11;
+        java.lang.Object $r12, $r14;
+        ext.plantuml.com.google.zxing.qrcode.encoder.BlockPair $r13, $r15, $r19;
+        byte $b8, $b11;
+        byte[] r17, r18, r23, r24;
+        int[] r21, r22;
+
+        r0 := @parameter0: ext.plantuml.com.google.zxing.common.BitArray;
+
+        i3 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        i2 := @parameter3: int;
+
+        r3 := @parameter4: ext.plantuml.com.google.zxing.common.BitArray;
+
+        $i0 = virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: int getSizeInBytes()>();
+
+        if $i0 == i1 goto label01;
+
+        $r20 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r20.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("Number of bits and data bytes does not match");
+
+        throw $r20;
+
+     label01:
+        i17 = 0;
+
+        i18 = 0;
+
+        i19 = 0;
+
+        $r1 = new java.util.Vector;
+
+        specialinvoke $r1.<java.util.Vector: void <init>(int)>(i2);
+
+        i20 = 0;
+
+     label02:
+        if i20 >= i2 goto label03;
+
+        r21 = newarray (int)[1];
+
+        r22 = newarray (int)[1];
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void getNumDataBytesAndNumECBytesForBlockID(int,int,int,int,int[],int[])>(i3, i1, i2, i20, r21, r22);
+
+        i12 = r21[0];
+
+        r17 = newarray (byte)[i12];
+
+        $i13 = 8 * i17;
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: void toBytes(int,byte[],int,int)>($i13, r17, 0, i12);
+
+        $i14 = r22[0];
+
+        r18 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: byte[] generateECBytes(byte[],int)>(r17, $i14);
+
+        $r19 = new ext.plantuml.com.google.zxing.qrcode.encoder.BlockPair;
+
+        specialinvoke $r19.<ext.plantuml.com.google.zxing.qrcode.encoder.BlockPair: void <init>(byte[],byte[])>(r17, r18);
+
+        virtualinvoke $r1.<java.util.Vector: void addElement(java.lang.Object)>($r19);
+
+        i18 = staticinvoke <java.lang.Math: int max(int,int)>(i18, i12);
+
+        $i15 = lengthof r18;
+
+        i19 = staticinvoke <java.lang.Math: int max(int,int)>(i19, $i15);
+
+        $i16 = r21[0];
+
+        i17 = i17 + $i16;
+
+        i20 = i20 + 1;
+
+        goto label02;
+
+     label03:
+        if i1 == i17 goto label04;
+
+        $r16 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r16.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("Data bytes does not match offset");
+
+        throw $r16;
+
+     label04:
+        i21 = 0;
+
+     label05:
+        if i21 >= i18 goto label09;
+
+        i22 = 0;
+
+     label06:
+        $i9 = virtualinvoke $r1.<java.util.Vector: int size()>();
+
+        if i22 >= $i9 goto label08;
+
+        $r14 = virtualinvoke $r1.<java.util.Vector: java.lang.Object elementAt(int)>(i22);
+
+        $r15 = (ext.plantuml.com.google.zxing.qrcode.encoder.BlockPair) $r14;
+
+        r23 = virtualinvoke $r15.<ext.plantuml.com.google.zxing.qrcode.encoder.BlockPair: byte[] getDataBytes()>();
+
+        $i10 = lengthof r23;
+
+        if i21 >= $i10 goto label07;
+
+        $b11 = r23[i21];
+
+        virtualinvoke r3.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($b11, 8);
+
+     label07:
+        i22 = i22 + 1;
+
+        goto label06;
+
+     label08:
+        i21 = i21 + 1;
+
+        goto label05;
+
+     label09:
+        i23 = 0;
+
+     label10:
+        if i23 >= i19 goto label14;
+
+        i24 = 0;
+
+     label11:
+        $i6 = virtualinvoke $r1.<java.util.Vector: int size()>();
+
+        if i24 >= $i6 goto label13;
+
+        $r12 = virtualinvoke $r1.<java.util.Vector: java.lang.Object elementAt(int)>(i24);
+
+        $r13 = (ext.plantuml.com.google.zxing.qrcode.encoder.BlockPair) $r12;
+
+        r24 = virtualinvoke $r13.<ext.plantuml.com.google.zxing.qrcode.encoder.BlockPair: byte[] getErrorCorrectionBytes()>();
+
+        $i7 = lengthof r24;
+
+        if i23 >= $i7 goto label12;
+
+        $b8 = r24[i23];
+
+        virtualinvoke r3.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($b8, 8);
+
+     label12:
+        i24 = i24 + 1;
+
+        goto label11;
+
+     label13:
+        i23 = i23 + 1;
+
+        goto label10;
+
+     label14:
+        $i4 = virtualinvoke r3.<ext.plantuml.com.google.zxing.common.BitArray: int getSizeInBytes()>();
+
+        if i3 == $i4 goto label15;
+
+        $r4 = new ext.plantuml.com.google.zxing.WriterException;
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Interleaving error: ");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" and ");
+
+        $i5 = virtualinvoke r3.<ext.plantuml.com.google.zxing.common.BitArray: int getSizeInBytes()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i5);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" differ.");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r4.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>($r11);
+
+        throw $r4;
+
+     label15:
+        return;
+    }
+
+    static byte[] generateECBytes(byte[], int)
+    {
+        byte[] r0, r4;
+        int i0, i1, $i2, $i3, $i4, $i7, i8, i9;
+        int[] r1;
+        ext.plantuml.com.google.zxing.common.reedsolomon.ReedSolomonEncoder $r2;
+        ext.plantuml.com.google.zxing.common.reedsolomon.GF256 $r3;
+        byte $b5, $b6;
+
+        r0 := @parameter0: byte[];
+
+        i1 := @parameter1: int;
+
+        i0 = lengthof r0;
+
+        $i2 = i0 + i1;
+
+        r1 = newarray (int)[$i2];
+
+        i8 = 0;
+
+     label1:
+        if i8 >= i0 goto label2;
+
+        $b6 = r0[i8];
+
+        $i7 = $b6 & 255;
+
+        r1[i8] = $i7;
+
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label2:
+        $r2 = new ext.plantuml.com.google.zxing.common.reedsolomon.ReedSolomonEncoder;
+
+        $r3 = <ext.plantuml.com.google.zxing.common.reedsolomon.GF256: ext.plantuml.com.google.zxing.common.reedsolomon.GF256 QR_CODE_FIELD>;
+
+        specialinvoke $r2.<ext.plantuml.com.google.zxing.common.reedsolomon.ReedSolomonEncoder: void <init>(ext.plantuml.com.google.zxing.common.reedsolomon.GF256)>($r3);
+
+        virtualinvoke $r2.<ext.plantuml.com.google.zxing.common.reedsolomon.ReedSolomonEncoder: void encode(int[],int)>(r1, i1);
+
+        r4 = newarray (byte)[i1];
+
+        i9 = 0;
+
+     label3:
+        if i9 >= i1 goto label4;
+
+        $i3 = i0 + i9;
+
+        $i4 = r1[$i3];
+
+        $b5 = (byte) $i4;
+
+        r4[i9] = $b5;
+
+        i9 = i9 + 1;
+
+        goto label3;
+
+     label4:
+        return r4;
+    }
+
+    static void appendModeInfo(ext.plantuml.com.google.zxing.qrcode.decoder.Mode, ext.plantuml.com.google.zxing.common.BitArray)
+    {
+        ext.plantuml.com.google.zxing.common.BitArray r0;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Mode r1;
+        int $i0;
+
+        r1 := @parameter0: ext.plantuml.com.google.zxing.qrcode.decoder.Mode;
+
+        r0 := @parameter1: ext.plantuml.com.google.zxing.common.BitArray;
+
+        $i0 = virtualinvoke r1.<ext.plantuml.com.google.zxing.qrcode.decoder.Mode: int getBits()>();
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($i0, 4);
+
+        return;
+    }
+
+    static void appendLengthInfo(int, int, ext.plantuml.com.google.zxing.qrcode.decoder.Mode, ext.plantuml.com.google.zxing.common.BitArray) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        ext.plantuml.com.google.zxing.qrcode.decoder.Mode r0;
+        int i0, i1, i2, $i3, $i4, $i5, $i6;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Version $r1;
+        ext.plantuml.com.google.zxing.common.BitArray r2;
+        ext.plantuml.com.google.zxing.WriterException $r3;
+        java.lang.StringBuilder $r4, $r5, $r6, $r7;
+        java.lang.String $r8;
+
+        i2 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        r0 := @parameter2: ext.plantuml.com.google.zxing.qrcode.decoder.Mode;
+
+        r2 := @parameter3: ext.plantuml.com.google.zxing.common.BitArray;
+
+        $r1 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.decoder.Version: ext.plantuml.com.google.zxing.qrcode.decoder.Version getVersionForNumber(int)>(i0);
+
+        i1 = virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.decoder.Mode: int getCharacterCountBits(ext.plantuml.com.google.zxing.qrcode.decoder.Version)>($r1);
+
+        $i3 = 1 << i1;
+
+        $i4 = $i3 - 1;
+
+        if i2 <= $i4 goto label1;
+
+        $r3 = new ext.plantuml.com.google.zxing.WriterException;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i2);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("is bigger than");
+
+        $i5 = 1 << i1;
+
+        $i6 = $i5 - 1;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r3.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>($r8);
+
+        throw $r3;
+
+     label1:
+        virtualinvoke r2.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>(i2, i1);
+
+        return;
+    }
+
+    static void appendBytes(java.lang.String, ext.plantuml.com.google.zxing.qrcode.decoder.Mode, ext.plantuml.com.google.zxing.common.BitArray, java.lang.String) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        ext.plantuml.com.google.zxing.qrcode.decoder.Mode r0, $r1, $r2, $r3, $r4;
+        boolean $z0, $z1, $z2, $z3;
+        ext.plantuml.com.google.zxing.WriterException $r5;
+        java.lang.StringBuilder $r6, $r7, $r8;
+        java.lang.String $r9, r10, r12;
+        ext.plantuml.com.google.zxing.common.BitArray r11;
+
+        r10 := @parameter0: java.lang.String;
+
+        r0 := @parameter1: ext.plantuml.com.google.zxing.qrcode.decoder.Mode;
+
+        r11 := @parameter2: ext.plantuml.com.google.zxing.common.BitArray;
+
+        r12 := @parameter3: java.lang.String;
+
+        $r1 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode NUMERIC>;
+
+        $z0 = virtualinvoke r0.<java.lang.Object: boolean equals(java.lang.Object)>($r1);
+
+        if $z0 == 0 goto label1;
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void appendNumericBytes(java.lang.String,ext.plantuml.com.google.zxing.common.BitArray)>(r10, r11);
+
+        goto label5;
+
+     label1:
+        $r2 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode ALPHANUMERIC>;
+
+        $z1 = virtualinvoke r0.<java.lang.Object: boolean equals(java.lang.Object)>($r2);
+
+        if $z1 == 0 goto label2;
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void appendAlphanumericBytes(java.lang.String,ext.plantuml.com.google.zxing.common.BitArray)>(r10, r11);
+
+        goto label5;
+
+     label2:
+        $r3 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode BYTE>;
+
+        $z2 = virtualinvoke r0.<java.lang.Object: boolean equals(java.lang.Object)>($r3);
+
+        if $z2 == 0 goto label3;
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void append8BitBytes(java.lang.String,ext.plantuml.com.google.zxing.common.BitArray,java.lang.String)>(r10, r11, r12);
+
+        goto label5;
+
+     label3:
+        $r4 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode KANJI>;
+
+        $z3 = virtualinvoke r0.<java.lang.Object: boolean equals(java.lang.Object)>($r4);
+
+        if $z3 == 0 goto label4;
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void appendKanjiBytes(java.lang.String,ext.plantuml.com.google.zxing.common.BitArray)>(r10, r11);
+
+        goto label5;
+
+     label4:
+        $r5 = new ext.plantuml.com.google.zxing.WriterException;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Invalid mode: ");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r5.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>($r9);
+
+        throw $r5;
+
+     label5:
+        return;
+    }
+
+    static void appendNumericBytes(java.lang.String, ext.plantuml.com.google.zxing.common.BitArray)
+    {
+        java.lang.String r0;
+        int i0, i2, $i3, $i4, $i5, $i7, $i8, $i9, $i11, i13, $i14, $i15, $i16, $i17, i18, i19, i20;
+        char $c1, $c6, $c10, $c12;
+        ext.plantuml.com.google.zxing.common.BitArray r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: ext.plantuml.com.google.zxing.common.BitArray;
+
+        i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        i18 = 0;
+
+     label1:
+        if i18 >= i0 goto label5;
+
+        $c1 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i18);
+
+        i2 = $c1 - 48;
+
+        $i3 = i18 + 2;
+
+        if $i3 >= i0 goto label2;
+
+        $i9 = i18 + 1;
+
+        $c10 = virtualinvoke r0.<java.lang.String: char charAt(int)>($i9);
+
+        i19 = $c10 - 48;
+
+        $i11 = i18 + 2;
+
+        $c12 = virtualinvoke r0.<java.lang.String: char charAt(int)>($i11);
+
+        i13 = $c12 - 48;
+
+        $i15 = i2 * 100;
+
+        $i14 = i19 * 10;
+
+        $i16 = $i15 + $i14;
+
+        $i17 = $i16 + i13;
+
+        virtualinvoke r1.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($i17, 10);
+
+        i18 = i18 + 3;
+
+        goto label4;
+
+     label2:
+        $i4 = i18 + 1;
+
+        if $i4 >= i0 goto label3;
+
+        $i5 = i18 + 1;
+
+        $c6 = virtualinvoke r0.<java.lang.String: char charAt(int)>($i5);
+
+        i20 = $c6 - 48;
+
+        $i7 = i2 * 10;
+
+        $i8 = $i7 + i20;
+
+        virtualinvoke r1.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($i8, 7);
+
+        i18 = i18 + 2;
+
+        goto label4;
+
+     label3:
+        virtualinvoke r1.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>(i2, 4);
+
+        i18 = i18 + 1;
+
+     label4:
+        goto label1;
+
+     label5:
+        return;
+    }
+
+    static void appendAlphanumericBytes(java.lang.String, ext.plantuml.com.google.zxing.common.BitArray) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        java.lang.String r0;
+        int i0, i2, $i3, $i4, i6, $i7, $i8, i9;
+        char $c1, $c5;
+        ext.plantuml.com.google.zxing.common.BitArray r1;
+        ext.plantuml.com.google.zxing.WriterException $r2, $r3;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: ext.plantuml.com.google.zxing.common.BitArray;
+
+        i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        i9 = 0;
+
+     label1:
+        if i9 >= i0 goto label6;
+
+        $c1 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i9);
+
+        i2 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: int getAlphanumericCode(int)>($c1);
+
+        if i2 != -1 goto label2;
+
+        $r3 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r3.<ext.plantuml.com.google.zxing.WriterException: void <init>()>();
+
+        throw $r3;
+
+     label2:
+        $i3 = i9 + 1;
+
+        if $i3 >= i0 goto label4;
+
+        $i4 = i9 + 1;
+
+        $c5 = virtualinvoke r0.<java.lang.String: char charAt(int)>($i4);
+
+        i6 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: int getAlphanumericCode(int)>($c5);
+
+        if i6 != -1 goto label3;
+
+        $r2 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r2.<ext.plantuml.com.google.zxing.WriterException: void <init>()>();
+
+        throw $r2;
+
+     label3:
+        $i7 = i2 * 45;
+
+        $i8 = $i7 + i6;
+
+        virtualinvoke r1.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($i8, 11);
+
+        i9 = i9 + 2;
+
+        goto label5;
+
+     label4:
+        virtualinvoke r1.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>(i2, 6);
+
+        i9 = i9 + 1;
+
+     label5:
+        goto label1;
+
+     label6:
+        return;
+    }
+
+    static void append8BitBytes(java.lang.String, ext.plantuml.com.google.zxing.common.BitArray, java.lang.String) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        java.lang.String r0, r1, $r6;
+        byte[] r2;
+        int $i0, i2;
+        ext.plantuml.com.google.zxing.common.BitArray r3;
+        byte $b1;
+        java.io.UnsupportedEncodingException $r4;
+        ext.plantuml.com.google.zxing.WriterException $r5;
+
+        r0 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: ext.plantuml.com.google.zxing.common.BitArray;
+
+        r1 := @parameter2: java.lang.String;
+
+     label1:
+        r2 = virtualinvoke r0.<java.lang.String: byte[] getBytes(java.lang.String)>(r1);
+
+     label2:
+        goto label4;
+
+     label3:
+        $r4 := @caughtexception;
+
+        $r5 = new ext.plantuml.com.google.zxing.WriterException;
+
+        $r6 = virtualinvoke $r4.<java.io.UnsupportedEncodingException: java.lang.String toString()>();
+
+        specialinvoke $r5.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>($r6);
+
+        throw $r5;
+
+     label4:
+        i2 = 0;
+
+     label5:
+        $i0 = lengthof r2;
+
+        if i2 >= $i0 goto label6;
+
+        $b1 = r2[i2];
+
+        virtualinvoke r3.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($b1, 8);
+
+        i2 = i2 + 1;
+
+        goto label5;
+
+     label6:
+        return;
+
+        catch java.io.UnsupportedEncodingException from label1 to label2 with label3;
+    }
+
+    static void appendKanjiBytes(java.lang.String, ext.plantuml.com.google.zxing.common.BitArray) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        java.lang.String r0, $r6;
+        byte[] r1;
+        byte $b0, $b3;
+        int i1, $i2, i4, $i5, i6, $i7, $i8, $i9, i10, i11, i12, i13;
+        ext.plantuml.com.google.zxing.common.BitArray r2;
+        ext.plantuml.com.google.zxing.WriterException $r3, $r5;
+        java.io.UnsupportedEncodingException $r4;
+
+        r0 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: ext.plantuml.com.google.zxing.common.BitArray;
+
+     label1:
+        r1 = virtualinvoke r0.<java.lang.String: byte[] getBytes(java.lang.String)>("Shift_JIS");
+
+     label2:
+        goto label4;
+
+     label3:
+        $r4 := @caughtexception;
+
+        $r5 = new ext.plantuml.com.google.zxing.WriterException;
+
+        $r6 = virtualinvoke $r4.<java.io.UnsupportedEncodingException: java.lang.String toString()>();
+
+        specialinvoke $r5.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>($r6);
+
+        throw $r5;
+
+     label4:
+        i11 = lengthof r1;
+
+        i12 = 0;
+
+     label5:
+        if i12 >= i11 goto label9;
+
+        $b0 = r1[i12];
+
+        i1 = $b0 & 255;
+
+        $i2 = i12 + 1;
+
+        $b3 = r1[$i2];
+
+        i4 = $b3 & 255;
+
+        $i5 = i1 << 8;
+
+        i6 = $i5 | i4;
+
+        i13 = -1;
+
+        if i6 < 33088 goto label6;
+
+        if i6 > 40956 goto label6;
+
+        i13 = i6 - 33088;
+
+        goto label7;
+
+     label6:
+        if i6 < 57408 goto label7;
+
+        if i6 > 60351 goto label7;
+
+        i13 = i6 - 49472;
+
+     label7:
+        if i13 != -1 goto label8;
+
+        $r3 = new ext.plantuml.com.google.zxing.WriterException;
+
+        specialinvoke $r3.<ext.plantuml.com.google.zxing.WriterException: void <init>(java.lang.String)>("Invalid byte sequence");
+
+        throw $r3;
+
+     label8:
+        $i7 = i13 >> 8;
+
+        $i9 = $i7 * 192;
+
+        $i8 = i13 & 255;
+
+        i10 = $i9 + $i8;
+
+        virtualinvoke r2.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>(i10, 13);
+
+        i12 = i12 + 2;
+
+        goto label5;
+
+     label9:
+        return;
+
+        catch java.io.UnsupportedEncodingException from label1 to label2 with label3;
+    }
+
+    private static void appendECI(ext.plantuml.com.google.zxing.common.ECI, ext.plantuml.com.google.zxing.common.BitArray)
+    {
+        ext.plantuml.com.google.zxing.common.BitArray r0;
+        ext.plantuml.com.google.zxing.qrcode.decoder.Mode $r1;
+        int $i0, $i1;
+        ext.plantuml.com.google.zxing.common.ECI r2;
+
+        r2 := @parameter0: ext.plantuml.com.google.zxing.common.ECI;
+
+        r0 := @parameter1: ext.plantuml.com.google.zxing.common.BitArray;
+
+        $r1 = <ext.plantuml.com.google.zxing.qrcode.decoder.Mode: ext.plantuml.com.google.zxing.qrcode.decoder.Mode ECI>;
+
+        $i0 = virtualinvoke $r1.<ext.plantuml.com.google.zxing.qrcode.decoder.Mode: int getBits()>();
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($i0, 4);
+
+        $i1 = virtualinvoke r2.<ext.plantuml.com.google.zxing.common.ECI: int getValue()>();
+
+        virtualinvoke r0.<ext.plantuml.com.google.zxing.common.BitArray: void appendBits(int,int)>($i1, 8);
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        int[] $r0;
+
+        <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: java.lang.String DEFAULT_BYTE_MODE_ENCODING> = "ISO-8859-1";
+
+        $r0 = newarray (int)[96];
+
+        $r0[0] = -1;
+
+        $r0[1] = -1;
+
+        $r0[2] = -1;
+
+        $r0[3] = -1;
+
+        $r0[4] = -1;
+
+        $r0[5] = -1;
+
+        $r0[6] = -1;
+
+        $r0[7] = -1;
+
+        $r0[8] = -1;
+
+        $r0[9] = -1;
+
+        $r0[10] = -1;
+
+        $r0[11] = -1;
+
+        $r0[12] = -1;
+
+        $r0[13] = -1;
+
+        $r0[14] = -1;
+
+        $r0[15] = -1;
+
+        $r0[16] = -1;
+
+        $r0[17] = -1;
+
+        $r0[18] = -1;
+
+        $r0[19] = -1;
+
+        $r0[20] = -1;
+
+        $r0[21] = -1;
+
+        $r0[22] = -1;
+
+        $r0[23] = -1;
+
+        $r0[24] = -1;
+
+        $r0[25] = -1;
+
+        $r0[26] = -1;
+
+        $r0[27] = -1;
+
+        $r0[28] = -1;
+
+        $r0[29] = -1;
+
+        $r0[30] = -1;
+
+        $r0[31] = -1;
+
+        $r0[32] = 36;
+
+        $r0[33] = -1;
+
+        $r0[34] = -1;
+
+        $r0[35] = -1;
+
+        $r0[36] = 37;
+
+        $r0[37] = 38;
+
+        $r0[38] = -1;
+
+        $r0[39] = -1;
+
+        $r0[40] = -1;
+
+        $r0[41] = -1;
+
+        $r0[42] = 39;
+
+        $r0[43] = 40;
+
+        $r0[44] = -1;
+
+        $r0[45] = 41;
+
+        $r0[46] = 42;
+
+        $r0[47] = 43;
+
+        $r0[48] = 0;
+
+        $r0[49] = 1;
+
+        $r0[50] = 2;
+
+        $r0[51] = 3;
+
+        $r0[52] = 4;
+
+        $r0[53] = 5;
+
+        $r0[54] = 6;
+
+        $r0[55] = 7;
+
+        $r0[56] = 8;
+
+        $r0[57] = 9;
+
+        $r0[58] = 44;
+
+        $r0[59] = -1;
+
+        $r0[60] = -1;
+
+        $r0[61] = -1;
+
+        $r0[62] = -1;
+
+        $r0[63] = -1;
+
+        $r0[64] = -1;
+
+        $r0[65] = 10;
+
+        $r0[66] = 11;
+
+        $r0[67] = 12;
+
+        $r0[68] = 13;
+
+        $r0[69] = 14;
+
+        $r0[70] = 15;
+
+        $r0[71] = 16;
+
+        $r0[72] = 17;
+
+        $r0[73] = 18;
+
+        $r0[74] = 19;
+
+        $r0[75] = 20;
+
+        $r0[76] = 21;
+
+        $r0[77] = 22;
+
+        $r0[78] = 23;
+
+        $r0[79] = 24;
+
+        $r0[80] = 25;
+
+        $r0[81] = 26;
+
+        $r0[82] = 27;
+
+        $r0[83] = 28;
+
+        $r0[84] = 29;
+
+        $r0[85] = 30;
+
+        $r0[86] = 31;
+
+        $r0[87] = 32;
+
+        $r0[88] = 33;
+
+        $r0[89] = 34;
+
+        $r0[90] = 35;
+
+        $r0[91] = -1;
+
+        $r0[92] = -1;
+
+        $r0[93] = -1;
+
+        $r0[94] = -1;
+
+        $r0[95] = -1;
+
+        <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: int[] ALPHANUMERIC_TABLE> = $r0;
+
+        return;
+    }
+}

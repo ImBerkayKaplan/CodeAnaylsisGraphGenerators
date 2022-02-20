@@ -1,0 +1,120 @@
+class net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1 extends java.lang.Object implements net.sourceforge.plantuml.preproc.ReadLine
+{
+    final net.sourceforge.plantuml.preproc.ReadLine val$source;
+    final net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment this$0;
+
+    void <init>(net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment, net.sourceforge.plantuml.preproc.ReadLine)
+    {
+        net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1 r0;
+        net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment r1;
+        net.sourceforge.plantuml.preproc.ReadLine r2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1;
+
+        r1 := @parameter0: net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment;
+
+        r2 := @parameter1: net.sourceforge.plantuml.preproc.ReadLine;
+
+        r0.<net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1: net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment this$0> = r1;
+
+        r0.<net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1: net.sourceforge.plantuml.preproc.ReadLine val$source> = r2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void close() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1 r0;
+        net.sourceforge.plantuml.preproc.ReadLine $r1;
+
+        r0 := @this: net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1: net.sourceforge.plantuml.preproc.ReadLine val$source>;
+
+        interfaceinvoke $r1.<net.sourceforge.plantuml.preproc.ReadLine: void close()>();
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.StringLocated readLine() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1 r0;
+        net.sourceforge.plantuml.StringLocated r1, $r5;
+        java.lang.String $r2, $r3, r4;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, z6;
+        net.sourceforge.plantuml.preproc.ReadLine $r6;
+
+        r0 := @this: net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1;
+
+        z6 = 0;
+
+     label1:
+        $r6 = r0.<net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment$1: net.sourceforge.plantuml.preproc.ReadLine val$source>;
+
+        r1 = interfaceinvoke $r6.<net.sourceforge.plantuml.preproc.ReadLine: net.sourceforge.plantuml.StringLocated readLine()>();
+
+        if r1 != null goto label2;
+
+        return null;
+
+     label2:
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.String: java.lang.String replace(char,char)>(9, 32);
+
+        r4 = virtualinvoke $r3.<java.lang.String: java.lang.String trim()>();
+
+        if z6 == 0 goto label3;
+
+        $z5 = virtualinvoke r4.<java.lang.String: boolean endsWith(java.lang.String)>("\'/");
+
+        if $z5 == 0 goto label3;
+
+        z6 = 0;
+
+        goto label1;
+
+     label3:
+        if z6 == 0 goto label4;
+
+        goto label1;
+
+     label4:
+        $z0 = virtualinvoke r4.<java.lang.String: boolean startsWith(java.lang.String)>("\'");
+
+        if $z0 == 0 goto label5;
+
+        goto label1;
+
+     label5:
+        $z1 = virtualinvoke r4.<java.lang.String: boolean startsWith(java.lang.String)>("/\'");
+
+        if $z1 == 0 goto label6;
+
+        $z4 = virtualinvoke r4.<java.lang.String: boolean endsWith(java.lang.String)>("\'/");
+
+        if $z4 == 0 goto label6;
+
+        goto label1;
+
+     label6:
+        $z2 = virtualinvoke r4.<java.lang.String: boolean startsWith(java.lang.String)>("/\'");
+
+        if $z2 == 0 goto label7;
+
+        $z3 = virtualinvoke r4.<java.lang.String: boolean contains(java.lang.CharSequence)>("\'/");
+
+        if $z3 != 0 goto label7;
+
+        z6 = 1;
+
+        goto label1;
+
+     label7:
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated removeInnerComment()>();
+
+        return $r5;
+    }
+}

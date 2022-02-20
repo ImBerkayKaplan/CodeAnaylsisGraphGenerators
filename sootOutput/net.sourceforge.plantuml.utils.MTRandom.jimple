@@ -1,0 +1,716 @@
+public class net.sourceforge.plantuml.utils.MTRandom extends java.util.Random
+{
+    private static final long serialVersionUID;
+    private static final int UPPER_MASK;
+    private static final int LOWER_MASK;
+    private static final int N;
+    private static final int M;
+    private static final int[] MAGIC;
+    private static final int MAGIC_FACTOR1;
+    private static final int MAGIC_FACTOR2;
+    private static final int MAGIC_FACTOR3;
+    private static final int MAGIC_MASK1;
+    private static final int MAGIC_MASK2;
+    private static final int MAGIC_SEED;
+    private static final long DEFAULT_SEED;
+    private transient int[] mt;
+    private transient int mti;
+    private transient boolean compat;
+    private transient int[] ibuf;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        specialinvoke r0.<java.util.Random: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: boolean compat> = 0;
+
+        return;
+    }
+
+    public void <init>(boolean)
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+        boolean z0, $z1;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        z0 := @parameter0: boolean;
+
+        specialinvoke r0.<java.util.Random: void <init>(long)>(0L);
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: boolean compat> = 0;
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: boolean compat> = z0;
+
+        $z1 = r0.<net.sourceforge.plantuml.utils.MTRandom: boolean compat>;
+
+        if $z1 == 0 goto label1;
+
+        $l0 = 5489L;
+
+        goto label2;
+
+     label1:
+        $l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+     label2:
+        virtualinvoke r0.<net.sourceforge.plantuml.utils.MTRandom: void setSeed(long)>($l0);
+
+        return;
+    }
+
+    public void <init>(long)
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+        long l0;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        l0 := @parameter0: long;
+
+        specialinvoke r0.<java.util.Random: void <init>(long)>(l0);
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: boolean compat> = 0;
+
+        return;
+    }
+
+    public void <init>(byte[])
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+        byte[] r1;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        r1 := @parameter0: byte[];
+
+        specialinvoke r0.<java.util.Random: void <init>(long)>(0L);
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: boolean compat> = 0;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.utils.MTRandom: void setSeed(byte[])>(r1);
+
+        return;
+    }
+
+    public void <init>(int[])
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+        int[] r1;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        r1 := @parameter0: int[];
+
+        specialinvoke r0.<java.util.Random: void <init>(long)>(0L);
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: boolean compat> = 0;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.utils.MTRandom: void setSeed(int[])>(r1);
+
+        return;
+    }
+
+    private final void setSeed(int)
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+        int[] $r1, $r2, $r3, $r4, $r5, $r6;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        if $r1 != null goto label1;
+
+        $r6 = newarray (int)[624];
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt> = $r6;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r2[0] = i0;
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: int mti> = 1;
+
+     label2:
+        $i15 = r0.<net.sourceforge.plantuml.utils.MTRandom: int mti>;
+
+        if $i15 >= 624 goto label3;
+
+        $r5 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i12 = r0.<net.sourceforge.plantuml.utils.MTRandom: int mti>;
+
+        $r3 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i1 = r0.<net.sourceforge.plantuml.utils.MTRandom: int mti>;
+
+        $i2 = $i1 - 1;
+
+        $i7 = $r3[$i2];
+
+        $r4 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i3 = r0.<net.sourceforge.plantuml.utils.MTRandom: int mti>;
+
+        $i4 = $i3 - 1;
+
+        $i5 = $r4[$i4];
+
+        $i6 = $i5 >>> 30;
+
+        $i8 = $i7 ^ $i6;
+
+        $i10 = 1812433253 * $i8;
+
+        $i9 = r0.<net.sourceforge.plantuml.utils.MTRandom: int mti>;
+
+        $i11 = $i10 + $i9;
+
+        $r5[$i12] = $i11;
+
+        $i13 = r0.<net.sourceforge.plantuml.utils.MTRandom: int mti>;
+
+        $i14 = $i13 + 1;
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: int mti> = $i14;
+
+        goto label2;
+
+     label3:
+        return;
+    }
+
+    public final synchronized void setSeed(long)
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+        boolean $z0;
+        int[] $r1, $r2, $r3, $r4, $r5;
+        long l0, $l2;
+        int $i1, $i3, $i4;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        l0 := @parameter0: long;
+
+        $z0 = r0.<net.sourceforge.plantuml.utils.MTRandom: boolean compat>;
+
+        if $z0 == 0 goto label1;
+
+        $i4 = (int) l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.utils.MTRandom: void setSeed(int)>($i4);
+
+        goto label3;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] ibuf>;
+
+        if $r1 != null goto label2;
+
+        $r5 = newarray (int)[2];
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: int[] ibuf> = $r5;
+
+     label2:
+        $r2 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] ibuf>;
+
+        $i1 = (int) l0;
+
+        $r2[0] = $i1;
+
+        $r3 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] ibuf>;
+
+        $l2 = l0 >>> 32;
+
+        $i3 = (int) $l2;
+
+        $r3[1] = $i3;
+
+        $r4 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] ibuf>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.utils.MTRandom: void setSeed(int[])>($r4);
+
+     label3:
+        return;
+    }
+
+    public final void setSeed(byte[])
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+        byte[] r1;
+        int[] $r2;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        r1 := @parameter0: byte[];
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.utils.MTRandom: int[] pack(byte[])>(r1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.utils.MTRandom: void setSeed(int[])>($r2);
+
+        return;
+    }
+
+    public final synchronized void setSeed(int[])
+    {
+        int[] r0, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, i25, i26, $i27, i28, i29;
+        net.sourceforge.plantuml.utils.MTRandom r1;
+        java.lang.IllegalArgumentException $r15;
+
+        r1 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        r0 := @parameter0: int[];
+
+        i0 = lengthof r0;
+
+        if i0 != 0 goto label01;
+
+        $r15 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r15.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("Seed buffer may not be empty");
+
+        throw $r15;
+
+     label01:
+        i25 = 1;
+
+        i26 = 0;
+
+        if 624 <= i0 goto label02;
+
+        $i27 = 624;
+
+        goto label03;
+
+     label02:
+        $i27 = i0;
+
+     label03:
+        i28 = $i27;
+
+        specialinvoke r1.<net.sourceforge.plantuml.utils.MTRandom: void setSeed(int)>(19650218);
+
+     label04:
+        if i28 <= 0 goto label07;
+
+        $r12 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r9 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i19 = $r9[i25];
+
+        $r10 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i12 = i25 - 1;
+
+        $i16 = $r10[$i12];
+
+        $r11 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i13 = i25 - 1;
+
+        $i14 = $r11[$i13];
+
+        $i15 = $i14 >>> 30;
+
+        $i17 = $i16 ^ $i15;
+
+        $i18 = $i17 * 1664525;
+
+        $i21 = $i19 ^ $i18;
+
+        $i20 = r0[i26];
+
+        $i22 = $i21 + $i20;
+
+        $i23 = $i22 + i26;
+
+        $r12[i25] = $i23;
+
+        i25 = i25 + 1;
+
+        i26 = i26 + 1;
+
+        if i25 < 624 goto label05;
+
+        $r14 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r13 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i24 = $r13[623];
+
+        $r14[0] = $i24;
+
+        i25 = 1;
+
+     label05:
+        if i26 < i0 goto label06;
+
+        i26 = 0;
+
+     label06:
+        i28 = i28 + -1;
+
+        goto label04;
+
+     label07:
+        i29 = 623;
+
+     label08:
+        if i29 <= 0 goto label10;
+
+        $r6 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r3 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i8 = $r3[i25];
+
+        $r4 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i1 = i25 - 1;
+
+        $i5 = $r4[$i1];
+
+        $r5 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i2 = i25 - 1;
+
+        $i3 = $r5[$i2];
+
+        $i4 = $i3 >>> 30;
+
+        $i6 = $i5 ^ $i4;
+
+        $i7 = $i6 * 1566083941;
+
+        $i9 = $i8 ^ $i7;
+
+        $i10 = $i9 - i25;
+
+        $r6[i25] = $i10;
+
+        i25 = i25 + 1;
+
+        if i25 < 624 goto label09;
+
+        $r8 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r7 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i11 = $r7[623];
+
+        $r8[0] = $i11;
+
+        i25 = 1;
+
+     label09:
+        i29 = i29 + -1;
+
+        goto label08;
+
+     label10:
+        $r2 = r1.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r2[0] = -2147483648;
+
+        return;
+    }
+
+    protected final synchronized int next(int)
+    {
+        net.sourceforge.plantuml.utils.MTRandom r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, $i39, $i40, $i41, $i42, $i43, $i44, $i45, i46, i47, i48, i49, i50, i51, i52, i53, i54;
+        int[] $r1, $r2, $r3, $r4, $r5, $r6, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17;
+
+        r0 := @this: net.sourceforge.plantuml.utils.MTRandom;
+
+        i9 := @parameter0: int;
+
+        $i0 = r0.<net.sourceforge.plantuml.utils.MTRandom: int mti>;
+
+        if $i0 < 624 goto label4;
+
+        i46 = 0;
+
+     label1:
+        if i46 >= 227 goto label2;
+
+        $r13 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i34 = $r13[i46];
+
+        $i38 = $i34 & -2147483648;
+
+        $r14 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i35 = i46 + 1;
+
+        $i36 = $r14[$i35];
+
+        $i37 = $i36 & 2147483647;
+
+        i47 = $i38 | $i37;
+
+        $r17 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r15 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i39 = i46 + 397;
+
+        $i41 = $r15[$i39];
+
+        $i40 = i47 >>> 1;
+
+        $i44 = $i41 ^ $i40;
+
+        $r16 = <net.sourceforge.plantuml.utils.MTRandom: int[] MAGIC>;
+
+        $i42 = i47 & 1;
+
+        $i43 = $r16[$i42];
+
+        $i45 = $i44 ^ $i43;
+
+        $r17[i46] = $i45;
+
+        i46 = i46 + 1;
+
+        goto label1;
+
+     label2:
+        if i46 >= 623 goto label3;
+
+        $r8 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i22 = $r8[i46];
+
+        $i26 = $i22 & -2147483648;
+
+        $r9 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i23 = i46 + 1;
+
+        $i24 = $r9[$i23];
+
+        $i25 = $i24 & 2147483647;
+
+        i48 = $i26 | $i25;
+
+        $r12 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r10 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i27 = i46 + -227;
+
+        $i29 = $r10[$i27];
+
+        $i28 = i48 >>> 1;
+
+        $i32 = $i29 ^ $i28;
+
+        $r11 = <net.sourceforge.plantuml.utils.MTRandom: int[] MAGIC>;
+
+        $i30 = i48 & 1;
+
+        $i31 = $r11[$i30];
+
+        $i33 = $i32 ^ $i31;
+
+        $r12[i46] = $i33;
+
+        i46 = i46 + 1;
+
+        goto label2;
+
+     label3:
+        $r2 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i12 = $r2[623];
+
+        $i15 = $i12 & -2147483648;
+
+        $r3 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i13 = $r3[0];
+
+        $i14 = $i13 & 2147483647;
+
+        i49 = $i15 | $i14;
+
+        $r6 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $r4 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i17 = $r4[396];
+
+        $i16 = i49 >>> 1;
+
+        $i20 = $i17 ^ $i16;
+
+        $r5 = <net.sourceforge.plantuml.utils.MTRandom: int[] MAGIC>;
+
+        $i18 = i49 & 1;
+
+        $i19 = $r5[$i18];
+
+        $i21 = $i20 ^ $i19;
+
+        $r6[623] = $i21;
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: int mti> = 0;
+
+     label4:
+        $r1 = r0.<net.sourceforge.plantuml.utils.MTRandom: int[] mt>;
+
+        $i1 = r0.<net.sourceforge.plantuml.utils.MTRandom: int mti>;
+
+        $i2 = $i1 + 1;
+
+        r0.<net.sourceforge.plantuml.utils.MTRandom: int mti> = $i2;
+
+        i50 = $r1[$i1];
+
+        $i3 = i50 >>> 11;
+
+        i51 = i50 ^ $i3;
+
+        $i4 = i51 << 7;
+
+        $i5 = $i4 & -1658038656;
+
+        i52 = i51 ^ $i5;
+
+        $i6 = i52 << 15;
+
+        $i7 = $i6 & -272236544;
+
+        i53 = i52 ^ $i7;
+
+        $i8 = i53 >>> 18;
+
+        i54 = i53 ^ $i8;
+
+        $i10 = 32 - i9;
+
+        $i11 = i54 >>> $i10;
+
+        return $i11;
+    }
+
+    public static int[] pack(byte[])
+    {
+        byte[] r0;
+        int i0, $i1, $i2, i3, $i4, $i7, $i8, i9, i10, i11, i12, $i13;
+        int[] r1;
+        byte $b5, $b6;
+
+        r0 := @parameter0: byte[];
+
+        i0 = lengthof r0;
+
+        $i1 = lengthof r0;
+
+        $i2 = $i1 + 3;
+
+        i3 = $i2 >>> 2;
+
+        r1 = newarray (int)[i3];
+
+        i9 = 0;
+
+     label1:
+        if i9 >= i3 goto label5;
+
+        $i4 = i9 + 1;
+
+        i10 = $i4 << 2;
+
+        if i10 <= i0 goto label2;
+
+        i10 = i0;
+
+     label2:
+        i11 = i10 + -1;
+
+        $b5 = r0[i11];
+
+        i12 = $b5 & 255;
+
+     label3:
+        $i13 = i11 & 3;
+
+        if $i13 == 0 goto label4;
+
+        $i8 = i12 << 8;
+
+        i11 = i11 + -1;
+
+        $b6 = r0[i11];
+
+        $i7 = $b6 & 255;
+
+        i12 = $i8 | $i7;
+
+        goto label3;
+
+     label4:
+        r1[i9] = i12;
+
+        i9 = i9 + 1;
+
+        goto label1;
+
+     label5:
+        return r1;
+    }
+
+    static void <clinit>()
+    {
+        int[] $r0;
+
+        <net.sourceforge.plantuml.utils.MTRandom: long DEFAULT_SEED> = 5489L;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int MAGIC_SEED> = 19650218;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int MAGIC_MASK2> = -272236544;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int MAGIC_MASK1> = -1658038656;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int MAGIC_FACTOR3> = 1566083941;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int MAGIC_FACTOR2> = 1664525;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int MAGIC_FACTOR1> = 1812433253;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int M> = 397;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int N> = 624;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int LOWER_MASK> = 2147483647;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int UPPER_MASK> = -2147483648;
+
+        <net.sourceforge.plantuml.utils.MTRandom: long serialVersionUID> = -515082678588212038L;
+
+        $r0 = newarray (int)[2];
+
+        $r0[0] = 0;
+
+        $r0[1] = -1727483681;
+
+        <net.sourceforge.plantuml.utils.MTRandom: int[] MAGIC> = $r0;
+
+        return;
+    }
+}

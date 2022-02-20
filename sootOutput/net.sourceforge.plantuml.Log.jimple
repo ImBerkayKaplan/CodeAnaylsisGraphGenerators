@@ -1,0 +1,176 @@
+public abstract class net.sourceforge.plantuml.Log extends java.lang.Object
+{
+    private static final long start;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.Log r0;
+
+        r0 := @this: net.sourceforge.plantuml.Log;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static synchronized void debug(java.lang.String)
+    {
+        java.lang.String r0;
+
+        r0 := @parameter0: java.lang.String;
+
+        return;
+    }
+
+    public static synchronized void info(java.lang.String)
+    {
+        net.sourceforge.plantuml.OptionFlags $r0;
+        boolean $z0;
+        java.lang.String r1, $r3;
+        java.io.PrintStream $r2;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z0 = virtualinvoke $r0.<net.sourceforge.plantuml.OptionFlags: boolean isVerbose()>();
+
+        if $z0 == 0 goto label1;
+
+        staticinvoke <net.sourceforge.plantuml.ProgressBar: void clear()>();
+
+        $r2 = <java.lang.System: java.io.PrintStream err>;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.Log: java.lang.String format(java.lang.String)>(r1);
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>($r3);
+
+     label1:
+        return;
+    }
+
+    public static synchronized void error(java.lang.String)
+    {
+        java.lang.String r0;
+        java.io.PrintStream $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        staticinvoke <net.sourceforge.plantuml.ProgressBar: void clear()>();
+
+        $r1 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>(r0);
+
+        return;
+    }
+
+    private static java.lang.String format(java.lang.String)
+    {
+        long $l0, $l1, l2, l3, l5, $l8, $l9, $l10, l11, $l12, l13;
+        java.lang.Runtime $r0, $r1, $r2;
+        java.lang.StringBuilder $r3;
+        java.lang.Object[] $r8;
+        java.lang.Long $r9;
+        java.lang.String $r10, r17, $r19;
+
+        r17 := @parameter0: java.lang.String;
+
+        $l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l1 = <net.sourceforge.plantuml.Log: long start>;
+
+        l2 = $l0 - $l1;
+
+        $r0 = staticinvoke <java.lang.Runtime: java.lang.Runtime getRuntime()>();
+
+        l3 = virtualinvoke $r0.<java.lang.Runtime: long freeMemory()>();
+
+        $r1 = staticinvoke <java.lang.Runtime: java.lang.Runtime getRuntime()>();
+
+        virtualinvoke $r1.<java.lang.Runtime: long maxMemory()>();
+
+        $r2 = staticinvoke <java.lang.Runtime: java.lang.Runtime getRuntime()>();
+
+        l5 = virtualinvoke $r2.<java.lang.Runtime: long totalMemory()>();
+
+        staticinvoke <java.lang.Thread: int activeCount()>();
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(");
+
+        $l8 = l2 / 1000L;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l8);
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".");
+
+        $r8 = newarray (java.lang.Object)[1];
+
+        $l9 = l2 % 1000L;
+
+        $r9 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l9);
+
+        $r8[0] = $r9;
+
+        $r10 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("%03d", $r8);
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" - ");
+
+        $l10 = l5 / 1024L;
+
+        l11 = $l10 / 1024L;
+
+        $l12 = l3 / 1024L;
+
+        l13 = $l12 / 1024L;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>(l11);
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" Mo) ");
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>(l13);
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" Mo - ");
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r17);
+
+        $r19 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r19;
+    }
+
+    public static void println(java.lang.Object)
+    {
+        java.lang.Object r0;
+
+        r0 := @parameter0: java.lang.Object;
+
+        return;
+    }
+
+    public static void header(java.lang.String)
+    {
+        java.lang.String r0;
+
+        r0 := @parameter0: java.lang.String;
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        long $l0;
+
+        $l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        <net.sourceforge.plantuml.Log: long start> = $l0;
+
+        return;
+    }
+}

@@ -1,0 +1,4918 @@
+public class net.sourceforge.plantuml.webp.VP8Frame extends java.lang.Object
+{
+    private static int BLOCK_TYPES;
+    private static int COEF_BANDS;
+    private static int MAX_ENTROPY_TOKENS;
+    private static int MAX_MODE_LF_DELTAS;
+    private static int MAX_REF_LF_DELTAS;
+    private static int PREV_COEF_CONTEXTS;
+    private java.util.ArrayList _listeners;
+    private int bufferCount;
+    private int buffersToCreate;
+    private int[][][][] coefProbs;
+    private boolean debug;
+    private int filterLevel;
+    private int filterType;
+    private javax.imageio.stream.ImageInputStream frame;
+    private int frameType;
+    private int height;
+    private int macroBlockCols;
+    private int macroBlockNoCoeffSkip;
+    private int macroBlockRows;
+    private net.sourceforge.plantuml.webp.MacroBlock[][] macroBlocks;
+    private int macroBlockSegementAbsoluteDelta;
+    private int[] macroBlockSegmentTreeProbs;
+    private int[] modeLoopFilterDeltas;
+    private int modeRefLoopFilterDeltaEnabled;
+    private int modeRefLoopFilterDeltaUpdate;
+    private int multiTokenPartition;
+    private long offset;
+    private int[] refLoopFilterDeltas;
+    private int refreshEntropyProbs;
+    private int refreshLastFrame;
+    private int segmentationIsEnabled;
+    private net.sourceforge.plantuml.webp.SegmentQuants segmentQuants;
+    private int sharpnessLevel;
+    private int simpleFilter;
+    private net.sourceforge.plantuml.webp.BoolDecoder tokenBoolDecoder;
+    private java.util.Vector tokenBoolDecoders;
+    private int updateMacroBlockSegmentationMap;
+    private int updateMacroBlockSegmentatonData;
+    private int width;
+
+    public void <init>(javax.imageio.stream.ImageInputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        java.util.ArrayList $r1;
+        int $i0, $i1;
+        int[] $r2, $r3;
+        javax.imageio.stream.ImageInputStream r4, $r5;
+        long $l2;
+        int[][][][] $r6;
+        java.util.Vector $r7;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r4 := @parameter0: javax.imageio.stream.ImageInputStream;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.ArrayList _listeners> = $r1;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int buffersToCreate> = 1;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: boolean debug> = 0;
+
+        $i0 = <net.sourceforge.plantuml.webp.VP8Frame: int MAX_MODE_LF_DELTAS>;
+
+        $r2 = newarray (int)[$i0];
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] modeLoopFilterDeltas> = $r2;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int multiTokenPartition> = 0;
+
+        $i1 = <net.sourceforge.plantuml.webp.VP8Frame: int MAX_REF_LF_DELTAS>;
+
+        $r3 = newarray (int)[$i1];
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] refLoopFilterDeltas> = $r3;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame> = r4;
+
+        $r5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l2 = interfaceinvoke $r5.<javax.imageio.stream.ImageInputStream: long getStreamPosition()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l2;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.webp.Globals: int[][][][] getDefaultCoefProbs()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int[][][][] coefProbs> = $r6;
+
+        $r7 = new java.util.Vector;
+
+        specialinvoke $r7.<java.util.Vector: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.Vector tokenBoolDecoders> = $r7;
+
+        return;
+    }
+
+    public void <init>(javax.imageio.stream.ImageInputStream, int[][][][]) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        java.util.ArrayList $r1;
+        int $i0, $i1;
+        int[] $r2, $r3;
+        javax.imageio.stream.ImageInputStream r4, $r5;
+        long $l2;
+        int[][][][] r6;
+        java.util.Vector $r7;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r4 := @parameter0: javax.imageio.stream.ImageInputStream;
+
+        r6 := @parameter1: int[][][][];
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.ArrayList _listeners> = $r1;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int buffersToCreate> = 1;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: boolean debug> = 0;
+
+        $i0 = <net.sourceforge.plantuml.webp.VP8Frame: int MAX_MODE_LF_DELTAS>;
+
+        $r2 = newarray (int)[$i0];
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] modeLoopFilterDeltas> = $r2;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int multiTokenPartition> = 0;
+
+        $i1 = <net.sourceforge.plantuml.webp.VP8Frame: int MAX_REF_LF_DELTAS>;
+
+        $r3 = newarray (int)[$i1];
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] refLoopFilterDeltas> = $r3;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame> = r4;
+
+        $r5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l2 = interfaceinvoke $r5.<javax.imageio.stream.ImageInputStream: long getStreamPosition()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l2;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int[][][][] coefProbs> = r6;
+
+        $r7 = new java.util.Vector;
+
+        specialinvoke $r7.<java.util.Vector: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.Vector tokenBoolDecoders> = $r7;
+
+        return;
+    }
+
+    public void addIIOReadProgressListener(javax.imageio.event.IIOReadProgressListener)
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        javax.imageio.event.IIOReadProgressListener r1;
+        java.util.ArrayList $r2;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r1 := @parameter0: javax.imageio.event.IIOReadProgressListener;
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.ArrayList _listeners>;
+
+        virtualinvoke $r2.<java.util.ArrayList: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    private void createMacroBlocks()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, i9;
+        net.sourceforge.plantuml.webp.MacroBlock[][] $r1, $r2;
+        net.sourceforge.plantuml.webp.MacroBlock $r3;
+        boolean $z0;
+        net.sourceforge.plantuml.webp.MacroBlock[] $r4;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        $i3 = $i0 + 2;
+
+        $i1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        $i2 = $i1 + 2;
+
+        $r1 = newmultiarray (net.sourceforge.plantuml.webp.MacroBlock)[$i3][$i2];
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock[][] macroBlocks> = $r1;
+
+        i8 = 0;
+
+     label1:
+        $i4 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        $i5 = $i4 + 2;
+
+        if i8 >= $i5 goto label4;
+
+        i9 = 0;
+
+     label2:
+        $i6 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        $i7 = $i6 + 2;
+
+        if i9 >= $i7 goto label3;
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock[][] macroBlocks>;
+
+        $r4 = $r2[i8];
+
+        $r3 = new net.sourceforge.plantuml.webp.MacroBlock;
+
+        $z0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: boolean debug>;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.webp.MacroBlock: void <init>(int,int,boolean)>(i8, i9, $z0);
+
+        $r4[i9] = $r3;
+
+        i9 = i9 + 1;
+
+        goto label2;
+
+     label3:
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    public boolean decodeFrame(boolean) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        boolean z0, $z1, $z2;
+        net.sourceforge.plantuml.webp.SegmentQuants $r1, $r49, $r52, $r56;
+        long $l0, $l1, $l13, $l14, $l16, $l17, $l19, $l20, $l21, $l22, $l23, $l24, $l25, $l26, $l27, $l28, $l31, $l32, $l33, $l34, $l41, $l136;
+        javax.imageio.stream.ImageInputStream $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r23;
+        int $i2, $i3, $i8, $i9, $i10, $i11, $i12, $i15, $i18, $i29, $i30, $i35, $i36, $i37, $i38, $i39, $i40, $i42, $i43, $i44, $i45, $i46, $i47, $i48, $i49, $i50, $i51, $i52, $i53, $i54, $i55, $i56, $i57, $i58, $i59, $i60, $i61, $i62, i63, $i64, $i65, $i66, $i67, $i68, $i69, $i70, $i71, $i72, $i73, $i74, $i75, $i76, $i77, $i78, $i79, $i80, $i81, $i82, $i83, $i84, $i85, $i86, $i87, $i88, $i89, $i90, $i91, $i92, $i93, i94, i98, i99, i100, i101, i102, i103, i104, i108, i110, i111, i112, i114, i115, i116, i117, i120, i121, i122, i123, i124, i126, $i127, $i128, $i129, $i130, $i131, i132, i133, $i134, $i137, $i138, i139, $i140, i141, i142, i143, i144, i145, i146;
+        net.sourceforge.plantuml.webp.BoolDecoder $r22, $r28, $r29;
+        java.lang.IllegalArgumentException $r25, $r38;
+        java.util.Vector $r26;
+        java.lang.Object $r27;
+        int[][][][] $r30, $r34;
+        int[][][] $r31, $r35;
+        int[][] $r32, $r36;
+        int[] $r33, $r37, $r39, $r40, $r41, $r42, $r43, $r44, $r45, $r46, $r47, $r48;
+        net.sourceforge.plantuml.webp.SegmentQuant[] $r50, $r53;
+        net.sourceforge.plantuml.webp.SegmentQuant $r51, $r54;
+        byte $b135;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: boolean debug> = z0;
+
+        $r1 = new net.sourceforge.plantuml.webp.SegmentQuants;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.webp.SegmentQuants: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SegmentQuants segmentQuants> = $r1;
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l1 = $l0 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l1;
+
+        interfaceinvoke $r2.<javax.imageio.stream.ImageInputStream: void seek(long)>($l0);
+
+        $r3 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        i94 = interfaceinvoke $r3.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i2 = specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getBitAsInt(int,int)>(i94, 0);
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int frameType> = $i2;
+
+        $i3 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int frameType>;
+
+        if $i3 == 0 goto label01;
+
+        return 0;
+
+     label01:
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getBitAsInt(int,int)>(i94, 1);
+
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getBitAsInt(int,int)>(i94, 2);
+
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getBitAsInt(int,int)>(i94, 3);
+
+        $i8 = specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getBitAsInt(int,int)>(i94, 5);
+
+        i98 = $i8 << 0;
+
+        $i9 = specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getBitAsInt(int,int)>(i94, 6);
+
+        $i10 = $i9 << 1;
+
+        i99 = i98 + $i10;
+
+        $i11 = specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getBitAsInt(int,int)>(i94, 7);
+
+        $i12 = $i11 << 2;
+
+        i100 = i99 + $i12;
+
+        $r4 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l13 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l14 = $l13 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l14;
+
+        interfaceinvoke $r4.<javax.imageio.stream.ImageInputStream: void seek(long)>($l13);
+
+        $r5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        i101 = interfaceinvoke $r5.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i15 = i101 << 3;
+
+        i102 = i100 + $i15;
+
+        $r6 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l16 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l17 = $l16 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l17;
+
+        interfaceinvoke $r6.<javax.imageio.stream.ImageInputStream: void seek(long)>($l16);
+
+        $r7 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        i103 = interfaceinvoke $r7.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i18 = i103 << 11;
+
+        i104 = i102 + $i18;
+
+        $r8 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l19 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l20 = $l19 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l20;
+
+        interfaceinvoke $r8.<javax.imageio.stream.ImageInputStream: void seek(long)>($l19);
+
+        $r9 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        interfaceinvoke $r9.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $r10 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l21 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l22 = $l21 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l22;
+
+        interfaceinvoke $r10.<javax.imageio.stream.ImageInputStream: void seek(long)>($l21);
+
+        $r11 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        interfaceinvoke $r11.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $r12 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l23 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l24 = $l23 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l24;
+
+        interfaceinvoke $r12.<javax.imageio.stream.ImageInputStream: void seek(long)>($l23);
+
+        $r13 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        interfaceinvoke $r13.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $r14 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l25 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l26 = $l25 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l26;
+
+        interfaceinvoke $r14.<javax.imageio.stream.ImageInputStream: void seek(long)>($l25);
+
+        $r15 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        i108 = interfaceinvoke $r15.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $r16 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l27 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l28 = $l27 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l28;
+
+        interfaceinvoke $r16.<javax.imageio.stream.ImageInputStream: void seek(long)>($l27);
+
+        $r17 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        i110 = interfaceinvoke $r17.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i29 = i110 << 8;
+
+        i111 = i108 + $i29;
+
+        $i30 = i111 & 16383;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int width> = $i30;
+
+        $r18 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l31 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l32 = $l31 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l32;
+
+        interfaceinvoke $r18.<javax.imageio.stream.ImageInputStream: void seek(long)>($l31);
+
+        $r19 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        i112 = interfaceinvoke $r19.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $r20 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l33 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        $l34 = $l33 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l34;
+
+        interfaceinvoke $r20.<javax.imageio.stream.ImageInputStream: void seek(long)>($l33);
+
+        $r21 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        i114 = interfaceinvoke $r21.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i35 = i114 << 8;
+
+        i115 = i112 + $i35;
+
+        $i36 = i115 & 16383;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int height> = $i36;
+
+        i116 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int width>;
+
+        i117 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int height>;
+
+        $i37 = i116 & 15;
+
+        if $i37 == 0 goto label02;
+
+        $i92 = i116 & 15;
+
+        $i93 = 16 - $i92;
+
+        i116 = i116 + $i93;
+
+     label02:
+        $i38 = i117 & 15;
+
+        if $i38 == 0 goto label03;
+
+        $i90 = i117 & 15;
+
+        $i91 = 16 - $i90;
+
+        i117 = i117 + $i91;
+
+     label03:
+        $i39 = i117 >> 4;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows> = $i39;
+
+        $i40 = i116 >> 4;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols> = $i40;
+
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: void createMacroBlocks()>();
+
+        $r22 = new net.sourceforge.plantuml.webp.BoolDecoder;
+
+        $r23 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l41 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        specialinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: void <init>(javax.imageio.stream.ImageInputStream,long)>($r23, $l41);
+
+        $i42 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int frameType>;
+
+        if $i42 != 0 goto label04;
+
+        virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+     label04:
+        $i43 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int segmentationIsEnabled> = $i43;
+
+        $i44 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int segmentationIsEnabled>;
+
+        if $i44 <= 0 goto label14;
+
+        $i78 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int updateMacroBlockSegmentationMap> = $i78;
+
+        $i79 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int updateMacroBlockSegmentatonData> = $i79;
+
+        $i80 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int updateMacroBlockSegmentatonData>;
+
+        if $i80 <= 0 goto label14;
+
+        $i81 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockSegementAbsoluteDelta> = $i81;
+
+        i120 = 0;
+
+     label05:
+        if i120 >= 4 goto label07;
+
+        i121 = 0;
+
+        $i87 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i87 <= 0 goto label06;
+
+        $r48 = <net.sourceforge.plantuml.webp.Globals: int[] vp8MacroBlockFeatureDataBits>;
+
+        $i88 = $r48[0];
+
+        i121 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>($i88);
+
+        $i89 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i89 <= 0 goto label06;
+
+        i121 = neg i121;
+
+     label06:
+        $r49 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SegmentQuants segmentQuants>;
+
+        $r50 = virtualinvoke $r49.<net.sourceforge.plantuml.webp.SegmentQuants: net.sourceforge.plantuml.webp.SegmentQuant[] getSegQuants()>();
+
+        $r51 = $r50[i120];
+
+        virtualinvoke $r51.<net.sourceforge.plantuml.webp.SegmentQuant: void setQindex(int)>(i121);
+
+        i120 = i120 + 1;
+
+        goto label05;
+
+     label07:
+        i122 = 0;
+
+     label08:
+        if i122 >= 4 goto label10;
+
+        i123 = 0;
+
+        $i84 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i84 <= 0 goto label09;
+
+        $r47 = <net.sourceforge.plantuml.webp.Globals: int[] vp8MacroBlockFeatureDataBits>;
+
+        $i85 = $r47[1];
+
+        i123 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>($i85);
+
+        $i86 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i86 <= 0 goto label09;
+
+        i123 = neg i123;
+
+     label09:
+        $r52 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SegmentQuants segmentQuants>;
+
+        $r53 = virtualinvoke $r52.<net.sourceforge.plantuml.webp.SegmentQuants: net.sourceforge.plantuml.webp.SegmentQuant[] getSegQuants()>();
+
+        $r54 = $r53[i122];
+
+        virtualinvoke $r54.<net.sourceforge.plantuml.webp.SegmentQuant: void setFilterStrength(int)>(i123);
+
+        i122 = i122 + 1;
+
+        goto label08;
+
+     label10:
+        $i82 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int updateMacroBlockSegmentationMap>;
+
+        if $i82 <= 0 goto label14;
+
+        $r45 = newarray (int)[3];
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] macroBlockSegmentTreeProbs> = $r45;
+
+        i124 = 0;
+
+     label11:
+        if i124 >= 3 goto label14;
+
+        $i83 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i83 <= 0 goto label12;
+
+        i126 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>(8);
+
+        goto label13;
+
+     label12:
+        i126 = 255;
+
+     label13:
+        $r46 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] macroBlockSegmentTreeProbs>;
+
+        $r46[i124] = i126;
+
+        i124 = i124 + 1;
+
+        goto label11;
+
+     label14:
+        $i127 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int simpleFilter> = $i127;
+
+        $i128 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>(6);
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int filterLevel> = $i128;
+
+        $i129 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>(3);
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int sharpnessLevel> = $i129;
+
+        $i130 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int modeRefLoopFilterDeltaEnabled> = $i130;
+
+        $i131 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int modeRefLoopFilterDeltaEnabled>;
+
+        if $i131 <= 0 goto label20;
+
+        $i64 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int modeRefLoopFilterDeltaUpdate> = $i64;
+
+        $i65 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int modeRefLoopFilterDeltaUpdate>;
+
+        if $i65 <= 0 goto label20;
+
+        i132 = 0;
+
+     label15:
+        $i66 = <net.sourceforge.plantuml.webp.VP8Frame: int MAX_REF_LF_DELTAS>;
+
+        if i132 >= $i66 goto label17;
+
+        $i73 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i73 <= 0 goto label16;
+
+        $r42 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] refLoopFilterDeltas>;
+
+        $i74 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>(6);
+
+        $r42[i132] = $i74;
+
+        $i75 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i75 <= 0 goto label16;
+
+        $r44 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] refLoopFilterDeltas>;
+
+        $r43 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] refLoopFilterDeltas>;
+
+        $i76 = $r43[i132];
+
+        $i77 = $i76 * -1;
+
+        $r44[i132] = $i77;
+
+     label16:
+        i132 = i132 + 1;
+
+        goto label15;
+
+     label17:
+        i133 = 0;
+
+     label18:
+        $i67 = <net.sourceforge.plantuml.webp.VP8Frame: int MAX_MODE_LF_DELTAS>;
+
+        if i133 >= $i67 goto label20;
+
+        $i68 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i68 <= 0 goto label19;
+
+        $r39 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] modeLoopFilterDeltas>;
+
+        $i69 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>(6);
+
+        $r39[i133] = $i69;
+
+        $i70 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        if $i70 <= 0 goto label19;
+
+        $r41 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] modeLoopFilterDeltas>;
+
+        $r40 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] modeLoopFilterDeltas>;
+
+        $i71 = $r40[i133];
+
+        $i72 = $i71 * -1;
+
+        $r41[i133] = $i72;
+
+     label19:
+        i133 = i133 + 1;
+
+        goto label18;
+
+     label20:
+        $i134 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int filterLevel>;
+
+        if $i134 != 0 goto label21;
+
+        $b135 = 0;
+
+        goto label23;
+
+     label21:
+        $i45 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int simpleFilter>;
+
+        if $i45 <= 0 goto label22;
+
+        $b135 = 1;
+
+        goto label23;
+
+     label22:
+        $b135 = 2;
+
+     label23:
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int filterType> = $b135;
+
+        $l136 = r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: void setupTokenDecoder(net.sourceforge.plantuml.webp.BoolDecoder,int,long)>($r22, i104, $l136);
+
+        virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: void seek()>();
+
+        $r56 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SegmentQuants segmentQuants>;
+
+        $i137 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int segmentationIsEnabled>;
+
+        if $i137 != 1 goto label24;
+
+        $z1 = 1;
+
+        goto label25;
+
+     label24:
+        $z1 = 0;
+
+     label25:
+        $i46 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockSegementAbsoluteDelta>;
+
+        if $i46 != 1 goto label26;
+
+        $z2 = 1;
+
+        goto label27;
+
+     label26:
+        $z2 = 0;
+
+     label27:
+        virtualinvoke $r56.<net.sourceforge.plantuml.webp.SegmentQuants: void parse(net.sourceforge.plantuml.webp.BoolDecoder,boolean,boolean)>($r22, $z1, $z2);
+
+        $i138 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int frameType>;
+
+        if $i138 == 0 goto label28;
+
+        $r38 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r38.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bad input: not intra");
+
+        throw $r38;
+
+     label28:
+        $i47 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int refreshEntropyProbs> = $i47;
+
+        $i48 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int refreshEntropyProbs>;
+
+        if $i48 <= 0 goto label29;
+
+     label29:
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int refreshLastFrame> = 0;
+
+        $i49 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int frameType>;
+
+        if $i49 != 0 goto label30;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int refreshLastFrame> = 1;
+
+        goto label31;
+
+     label30:
+        $i50 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int refreshLastFrame> = $i50;
+
+     label31:
+        i139 = 0;
+
+     label32:
+        $i140 = <net.sourceforge.plantuml.webp.VP8Frame: int BLOCK_TYPES>;
+
+        if i139 >= $i140 goto label40;
+
+        i141 = 0;
+
+     label33:
+        $i57 = <net.sourceforge.plantuml.webp.VP8Frame: int COEF_BANDS>;
+
+        if i141 >= $i57 goto label39;
+
+        i142 = 0;
+
+     label34:
+        $i58 = <net.sourceforge.plantuml.webp.VP8Frame: int PREV_COEF_CONTEXTS>;
+
+        if i142 >= $i58 goto label38;
+
+        i143 = 0;
+
+     label35:
+        $i59 = <net.sourceforge.plantuml.webp.VP8Frame: int MAX_ENTROPY_TOKENS>;
+
+        $i60 = $i59 - 1;
+
+        if i143 >= $i60 goto label37;
+
+        $r30 = <net.sourceforge.plantuml.webp.Globals: int[][][][] vp8CoefUpdateProbs>;
+
+        $r31 = $r30[i139];
+
+        $r32 = $r31[i141];
+
+        $r33 = $r32[i142];
+
+        $i61 = $r33[i143];
+
+        $i62 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBool(int)>($i61);
+
+        if $i62 <= 0 goto label36;
+
+        i63 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>(8);
+
+        $r34 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[][][][] coefProbs>;
+
+        $r35 = $r34[i139];
+
+        $r36 = $r35[i141];
+
+        $r37 = $r36[i142];
+
+        $r37[i143] = i63;
+
+     label36:
+        i143 = i143 + 1;
+
+        goto label35;
+
+     label37:
+        i142 = i142 + 1;
+
+        goto label34;
+
+     label38:
+        i141 = i141 + 1;
+
+        goto label33;
+
+     label39:
+        i139 = i139 + 1;
+
+        goto label32;
+
+     label40:
+        $i51 = virtualinvoke $r22.<net.sourceforge.plantuml.webp.BoolDecoder: int readBit()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockNoCoeffSkip> = $i51;
+
+        $i52 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int frameType>;
+
+        if $i52 != 0 goto label41;
+
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: void readModes(net.sourceforge.plantuml.webp.BoolDecoder)>($r22);
+
+        goto label42;
+
+     label41:
+        $r25 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r25.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bad input: not intra");
+
+        throw $r25;
+
+     label42:
+        i144 = 0;
+
+        $i53 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int multiTokenPartition>;
+
+        i145 = 1 << $i53;
+
+        i146 = 0;
+
+     label43:
+        $i54 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        if i146 >= $i54 goto label46;
+
+        if i145 <= 1 goto label44;
+
+        $r26 = r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.Vector tokenBoolDecoders>;
+
+        $r27 = virtualinvoke $r26.<java.util.Vector: java.lang.Object elementAt(int)>(i144);
+
+        $r28 = (net.sourceforge.plantuml.webp.BoolDecoder) $r27;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.BoolDecoder tokenBoolDecoder> = $r28;
+
+        $r29 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.BoolDecoder tokenBoolDecoder>;
+
+        virtualinvoke $r29.<net.sourceforge.plantuml.webp.BoolDecoder: void seek()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: void decodeMacroBlockRow(int)>(i146);
+
+        i144 = i144 + 1;
+
+        if i144 != i145 goto label45;
+
+        i144 = 0;
+
+        goto label45;
+
+     label44:
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: void decodeMacroBlockRow(int)>(i146);
+
+     label45:
+        specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: void fireProgressUpdate(int)>(i146);
+
+        i146 = i146 + 1;
+
+        goto label43;
+
+     label46:
+        $i55 = virtualinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getFilterType()>();
+
+        if $i55 <= 0 goto label47;
+
+        $i56 = virtualinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getFilterLevel()>();
+
+        if $i56 == 0 goto label47;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: void loopFilter()>();
+
+     label47:
+        return 1;
+    }
+
+    private void decodeMacroBlockRow(int) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0, i1, i2;
+        net.sourceforge.plantuml.webp.MacroBlock r1;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        i1 := @parameter0: int;
+
+        i2 = 0;
+
+     label1:
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        if i2 >= $i0 goto label2;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>(i2, i1);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void decodeMacroBlock(net.sourceforge.plantuml.webp.VP8Frame)>(r0);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void dequantMacroBlock(net.sourceforge.plantuml.webp.VP8Frame)>(r0);
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void fireLFProgressUpdate(float)
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        java.util.ArrayList $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        int $i0, $i1, $i2;
+        float f0, $f1, $f2, $f3, $f4;
+        javax.imageio.event.IIOReadProgressListener $r4;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        f0 := @parameter0: float;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.ArrayList _listeners>;
+
+        r2 = virtualinvoke $r1.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        $r4 = (javax.imageio.event.IIOReadProgressListener) $r3;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int buffersToCreate>;
+
+        $i1 = 100 / $i0;
+
+        $f3 = (float) $i1;
+
+        $i2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int buffersToCreate>;
+
+        $f1 = (float) $i2;
+
+        $f2 = f0 / $f1;
+
+        $f4 = $f3 + $f2;
+
+        interfaceinvoke $r4.<javax.imageio.event.IIOReadProgressListener: void imageProgress(javax.imageio.ImageReader,float)>(null, $f4);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private void fireProgressUpdate(int)
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        java.util.ArrayList $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        int i0, $i1, $i2, $i3;
+        javax.imageio.event.IIOReadProgressListener $r4;
+        float $f0, $f1, $f2, $f3, $f4, $f5;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.ArrayList _listeners>;
+
+        r2 = virtualinvoke $r1.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        $r4 = (javax.imageio.event.IIOReadProgressListener) $r3;
+
+        $i1 = i0 + 1;
+
+        $f0 = (float) $i1;
+
+        $i2 = virtualinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int getMacroBlockRows()>();
+
+        $f1 = (float) $i2;
+
+        $f2 = $f0 / $f1;
+
+        $f4 = 100.0F * $f2;
+
+        $i3 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int buffersToCreate>;
+
+        $f3 = (float) $i3;
+
+        $f5 = $f4 / $f3;
+
+        interfaceinvoke $r4.<javax.imageio.event.IIOReadProgressListener: void imageProgress(javax.imageio.ImageReader,float)>(null, $f5);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void fireRGBProgressUpdate(float)
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        java.util.ArrayList $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        float f0, $f1, $f2, $f3, $f4;
+        javax.imageio.event.IIOReadProgressListener $r4;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        f0 := @parameter0: float;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.ArrayList _listeners>;
+
+        r2 = virtualinvoke $r1.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        $r4 = (javax.imageio.event.IIOReadProgressListener) $r3;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i3 = $i0 + 4;
+
+        $i1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int buffersToCreate>;
+
+        $i2 = 100 / $i1;
+
+        $i4 = $i3 * $i2;
+
+        $f3 = (float) $i4;
+
+        $i5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int buffersToCreate>;
+
+        $f1 = (float) $i5;
+
+        $f2 = f0 / $f1;
+
+        $f4 = $f3 + $f2;
+
+        interfaceinvoke $r4.<javax.imageio.event.IIOReadProgressListener: void imageProgress(javax.imageio.ImageReader,float)>(null, $f4);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public net.sourceforge.plantuml.webp.SubBlock getAboveRightSubBlock(net.sourceforge.plantuml.webp.SubBlock, net.sourceforge.plantuml.webp.SubBlock$PLANE)
+    {
+        net.sourceforge.plantuml.webp.SubBlock r0, $r7, $r9, $r14, r19, r21, r22, r23;
+        net.sourceforge.plantuml.webp.MacroBlock r1, $r12, r18, r20;
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, i19, i20;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE r2, $r3, $r5, $r10, $r13;
+        java.lang.IllegalArgumentException $r4;
+        net.sourceforge.plantuml.webp.VP8Frame r6;
+        int[][] r8, $r15;
+        int[] $r11, $r16, $r17;
+
+        r6 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r0 := @parameter0: net.sourceforge.plantuml.webp.SubBlock;
+
+        r2 := @parameter1: net.sourceforge.plantuml.webp.SubBlock$PLANE;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.webp.SubBlock: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock()>();
+
+        i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getSubblockX(net.sourceforge.plantuml.webp.SubBlock)>(r0);
+
+        i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getSubblockY(net.sourceforge.plantuml.webp.SubBlock)>(r0);
+
+        $r3 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        if r2 != $r3 goto label11;
+
+        if i1 != 0 goto label01;
+
+        if i0 >= 3 goto label01;
+
+        $i15 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getX()>();
+
+        $i16 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getY()>();
+
+        $i17 = $i16 - 1;
+
+        r18 = virtualinvoke r6.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i15, $i17);
+
+        $i18 = i0 + 1;
+
+        r19 = virtualinvoke r18.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>(r2, $i18, 3);
+
+        return r19;
+
+     label01:
+        if i1 != 0 goto label09;
+
+        if i0 != 3 goto label09;
+
+        $i4 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getX()>();
+
+        $i5 = $i4 + 1;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getY()>();
+
+        $i7 = $i6 - 1;
+
+        r20 = virtualinvoke r6.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i5, $i7);
+
+        r21 = virtualinvoke r20.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>(r2, 0, 3);
+
+        $i8 = virtualinvoke r20.<net.sourceforge.plantuml.webp.MacroBlock: int getX()>();
+
+        $i9 = virtualinvoke r6.<net.sourceforge.plantuml.webp.VP8Frame: int getMacroBlockCols()>();
+
+        if $i8 != $i9 goto label08;
+
+        r8 = newmultiarray (int)[4][4];
+
+        i19 = 0;
+
+     label02:
+        if i19 >= 4 goto label07;
+
+        i20 = 0;
+
+     label03:
+        if i20 >= 4 goto label06;
+
+        $i10 = virtualinvoke r20.<net.sourceforge.plantuml.webp.MacroBlock: int getY()>();
+
+        if $i10 >= 0 goto label04;
+
+        $r17 = r8[i20];
+
+        $r17[i19] = 127;
+
+        goto label05;
+
+     label04:
+        $r11 = r8[i20];
+
+        $i11 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getX()>();
+
+        $i12 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getY()>();
+
+        $i13 = $i12 - 1;
+
+        $r12 = virtualinvoke r6.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i11, $i13);
+
+        $r13 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        $r14 = virtualinvoke $r12.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r13, 3, 3);
+
+        $r15 = virtualinvoke $r14.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $r16 = $r15[3];
+
+        $i14 = $r16[3];
+
+        $r11[i19] = $i14;
+
+     label05:
+        i20 = i20 + 1;
+
+        goto label03;
+
+     label06:
+        i19 = i19 + 1;
+
+        goto label02;
+
+     label07:
+        $r9 = new net.sourceforge.plantuml.webp.SubBlock;
+
+        $r10 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.webp.SubBlock: void <init>(net.sourceforge.plantuml.webp.MacroBlock,net.sourceforge.plantuml.webp.SubBlock,net.sourceforge.plantuml.webp.SubBlock,net.sourceforge.plantuml.webp.SubBlock$PLANE)>(r20, null, null, $r10);
+
+        r21 = $r9;
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.webp.SubBlock: void setDest(int[][])>(r8);
+
+     label08:
+        return r21;
+
+     label09:
+        if i1 <= 0 goto label10;
+
+        if i0 >= 3 goto label10;
+
+        $i3 = i0 + 1;
+
+        $i2 = i1 - 1;
+
+        r22 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>(r2, $i3, $i2);
+
+        return r22;
+
+     label10:
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.webp.SubBlock: net.sourceforge.plantuml.webp.SubBlock$PLANE getPlane()>();
+
+        r23 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r5, 3, 0);
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SubBlock getAboveRightSubBlock(net.sourceforge.plantuml.webp.SubBlock,net.sourceforge.plantuml.webp.SubBlock$PLANE)>(r23, r2);
+
+        return $r7;
+
+     label11:
+        $r4 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r4.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("bad input: getAboveRightSubBlock()");
+
+        throw $r4;
+    }
+
+    public net.sourceforge.plantuml.webp.SubBlock getAboveSubBlock(net.sourceforge.plantuml.webp.SubBlock, net.sourceforge.plantuml.webp.SubBlock$PLANE)
+    {
+        net.sourceforge.plantuml.webp.SubBlock r0, r6;
+        net.sourceforge.plantuml.webp.MacroBlock r1, r7;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7;
+        net.sourceforge.plantuml.webp.VP8Frame r2;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE r3, $r4, $r5;
+
+        r2 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r0 := @parameter0: net.sourceforge.plantuml.webp.SubBlock;
+
+        r3 := @parameter1: net.sourceforge.plantuml.webp.SubBlock$PLANE;
+
+        r6 = virtualinvoke r0.<net.sourceforge.plantuml.webp.SubBlock: net.sourceforge.plantuml.webp.SubBlock getAbove()>();
+
+        if r6 != null goto label3;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.webp.SubBlock: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock()>();
+
+        i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getSubblockX(net.sourceforge.plantuml.webp.SubBlock)>(r0);
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getX()>();
+
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getY()>();
+
+        $i3 = $i2 - 1;
+
+        r7 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i1, $i3);
+
+     label1:
+        $r4 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y2>;
+
+        if r3 != $r4 goto label2;
+
+        $i4 = virtualinvoke r7.<net.sourceforge.plantuml.webp.MacroBlock: int getYMode()>();
+
+        if $i4 != 4 goto label2;
+
+        $i5 = virtualinvoke r7.<net.sourceforge.plantuml.webp.MacroBlock: int getX()>();
+
+        $i6 = virtualinvoke r7.<net.sourceforge.plantuml.webp.MacroBlock: int getY()>();
+
+        $i7 = $i6 - 1;
+
+        r7 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i5, $i7);
+
+        goto label1;
+
+     label2:
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.webp.SubBlock: net.sourceforge.plantuml.webp.SubBlock$PLANE getPlane()>();
+
+        r6 = virtualinvoke r7.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getBottomSubBlock(int,net.sourceforge.plantuml.webp.SubBlock$PLANE)>(i0, $r5);
+
+     label3:
+        return r6;
+    }
+
+    private boolean getBit(int, int)
+    {
+        int i0, i1, $i2, i3;
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        $i2 = 1 << i1;
+
+        i3 = i0 & $i2;
+
+        if i3 <= 0 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    private int getBitAsInt(int, int)
+    {
+        int i0, i1, $i2, i3;
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        $i2 = 1 << i1;
+
+        i3 = i0 & $i2;
+
+        if i3 <= 0 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    public java.awt.image.BufferedImage getBufferedImage()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void useBufferedImage(java.awt.image.BufferedImage)>($r0);
+
+        $i2 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i3 = $i2 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i3;
+
+        return $r0;
+    }
+
+    public int[][][][] getCoefProbs()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int[][][][] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[][][][] coefProbs>;
+
+        return $r1;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageDiff()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, $i39, $i40, $i41, $i42, $i43, i44, $i45, $i46, $i47, $i48, $i49, $i50, $i51, $i52, $i53, $i54, $i55, $i56, i57, i58, i59;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9, $r14, $r19;
+        net.sourceforge.plantuml.webp.MacroBlock $r5, $r10, $r15;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6, $r11, $r16;
+        net.sourceforge.plantuml.webp.SubBlock $r7, $r12, $r17;
+        int[][] $r8, $r13, $r18;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i57 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i57 >= $i2 goto label8;
+
+        i58 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i58 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i57 / 16;
+
+        $i7 = i58 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        $i9 = i57 % 16;
+
+        $i12 = $i9 / 4;
+
+        $i10 = i58 % 16;
+
+        $i11 = $i10 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i12, $i11);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDiff()>();
+
+        $i13 = i57 % 4;
+
+        $r9 = $r8[$i13];
+
+        $i14 = i58 % 4;
+
+        $i15 = $r9[$i14];
+
+        i16 = 127 + $i15;
+
+        $i18 = i57 / 16;
+
+        $i17 = i58 / 16;
+
+        $r10 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i18, $i17);
+
+        $r11 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE U>;
+
+        $i19 = i57 / 2;
+
+        $i20 = $i19 % 8;
+
+        $i24 = $i20 / 4;
+
+        $i21 = i58 / 2;
+
+        $i22 = $i21 % 8;
+
+        $i23 = $i22 / 4;
+
+        $r12 = virtualinvoke $r10.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r11, $i24, $i23);
+
+        $r13 = virtualinvoke $r12.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDiff()>();
+
+        $i25 = i57 / 2;
+
+        $i26 = $i25 % 4;
+
+        $r14 = $r13[$i26];
+
+        $i27 = i58 / 2;
+
+        $i28 = $i27 % 4;
+
+        $i29 = $r14[$i28];
+
+        i30 = 127 + $i29;
+
+        $i32 = i57 / 16;
+
+        $i31 = i58 / 16;
+
+        $r15 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i32, $i31);
+
+        $r16 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE V>;
+
+        $i33 = i57 / 2;
+
+        $i34 = $i33 % 8;
+
+        $i38 = $i34 / 4;
+
+        $i35 = i58 / 2;
+
+        $i36 = $i35 % 8;
+
+        $i37 = $i36 / 4;
+
+        $r17 = virtualinvoke $r15.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r16, $i38, $i37);
+
+        $r18 = virtualinvoke $r17.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDiff()>();
+
+        $i39 = i57 / 2;
+
+        $i40 = $i39 % 4;
+
+        $r19 = $r18[$i40];
+
+        $i41 = i58 / 2;
+
+        $i42 = $i41 % 4;
+
+        $i43 = $r19[$i42];
+
+        i44 = 127 + $i43;
+
+        $i45 = i16 - 16;
+
+        $d0 = (double) $i45;
+
+        $d3 = 1.164 * $d0;
+
+        $i46 = i44 - 128;
+
+        $d1 = (double) $i46;
+
+        $d2 = 1.596 * $d1;
+
+        $d4 = $d3 + $d2;
+
+        $i47 = (int) $d4;
+
+        r4[0] = $i47;
+
+        $i48 = i16 - 16;
+
+        $d5 = (double) $i48;
+
+        $d8 = 1.164 * $d5;
+
+        $i49 = i44 - 128;
+
+        $d6 = (double) $i49;
+
+        $d7 = 0.813 * $d6;
+
+        $d11 = $d8 - $d7;
+
+        $i50 = i30 - 128;
+
+        $d9 = (double) $i50;
+
+        $d10 = 0.391 * $d9;
+
+        $d12 = $d11 - $d10;
+
+        $i51 = (int) $d12;
+
+        r4[1] = $i51;
+
+        $i52 = i16 - 16;
+
+        $d13 = (double) $i52;
+
+        $d16 = 1.164 * $d13;
+
+        $i53 = i30 - 128;
+
+        $d14 = (double) $i53;
+
+        $d15 = 2.018 * $d14;
+
+        $d17 = $d16 + $d15;
+
+        $i54 = (int) $d17;
+
+        r4[2] = $i54;
+
+        i59 = 0;
+
+     label3:
+        if i59 >= 3 goto label6;
+
+        $i55 = r4[i59];
+
+        if $i55 >= 0 goto label4;
+
+        r4[i59] = 0;
+
+     label4:
+        $i56 = r4[i59];
+
+        if $i56 <= 255 goto label5;
+
+        r4[i59] = 255;
+
+     label5:
+        i59 = i59 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i57, i58, r4);
+
+        i58 = i58 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i57;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i57 = i57 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImagePredict()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, $i39, $i40, i41, $i42, $i43, $i44, $i45, $i46, $i47, $i48, $i49, $i50, $i51, $i52, $i53, i54, i55, i56;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9, $r14, $r19;
+        net.sourceforge.plantuml.webp.MacroBlock $r5, $r10, $r15;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6, $r11, $r16;
+        net.sourceforge.plantuml.webp.SubBlock $r7, $r12, $r17;
+        int[][] $r8, $r13, $r18;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i54 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i54 >= $i2 goto label8;
+
+        i55 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i55 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i54 / 16;
+
+        $i7 = i55 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        $i9 = i54 % 16;
+
+        $i12 = $i9 / 4;
+
+        $i10 = i55 % 16;
+
+        $i11 = $i10 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i12, $i11);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getPredict()>();
+
+        $i13 = i54 % 4;
+
+        $r9 = $r8[$i13];
+
+        $i14 = i55 % 4;
+
+        i15 = $r9[$i14];
+
+        $i17 = i54 / 16;
+
+        $i16 = i55 / 16;
+
+        $r10 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i17, $i16);
+
+        $r11 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE U>;
+
+        $i18 = i54 / 2;
+
+        $i19 = $i18 % 8;
+
+        $i23 = $i19 / 4;
+
+        $i20 = i55 / 2;
+
+        $i21 = $i20 % 8;
+
+        $i22 = $i21 / 4;
+
+        $r12 = virtualinvoke $r10.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r11, $i23, $i22);
+
+        $r13 = virtualinvoke $r12.<net.sourceforge.plantuml.webp.SubBlock: int[][] getPredict()>();
+
+        $i24 = i54 / 2;
+
+        $i25 = $i24 % 4;
+
+        $r14 = $r13[$i25];
+
+        $i26 = i55 / 2;
+
+        $i27 = $i26 % 4;
+
+        i28 = $r14[$i27];
+
+        $i30 = i54 / 16;
+
+        $i29 = i55 / 16;
+
+        $r15 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i30, $i29);
+
+        $r16 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE V>;
+
+        $i31 = i54 / 2;
+
+        $i32 = $i31 % 8;
+
+        $i36 = $i32 / 4;
+
+        $i33 = i55 / 2;
+
+        $i34 = $i33 % 8;
+
+        $i35 = $i34 / 4;
+
+        $r17 = virtualinvoke $r15.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r16, $i36, $i35);
+
+        $r18 = virtualinvoke $r17.<net.sourceforge.plantuml.webp.SubBlock: int[][] getPredict()>();
+
+        $i37 = i54 / 2;
+
+        $i38 = $i37 % 4;
+
+        $r19 = $r18[$i38];
+
+        $i39 = i55 / 2;
+
+        $i40 = $i39 % 4;
+
+        i41 = $r19[$i40];
+
+        $i42 = i15 - 16;
+
+        $d0 = (double) $i42;
+
+        $d3 = 1.164 * $d0;
+
+        $i43 = i41 - 128;
+
+        $d1 = (double) $i43;
+
+        $d2 = 1.596 * $d1;
+
+        $d4 = $d3 + $d2;
+
+        $i44 = (int) $d4;
+
+        r4[0] = $i44;
+
+        $i45 = i15 - 16;
+
+        $d5 = (double) $i45;
+
+        $d8 = 1.164 * $d5;
+
+        $i46 = i41 - 128;
+
+        $d6 = (double) $i46;
+
+        $d7 = 0.813 * $d6;
+
+        $d11 = $d8 - $d7;
+
+        $i47 = i28 - 128;
+
+        $d9 = (double) $i47;
+
+        $d10 = 0.391 * $d9;
+
+        $d12 = $d11 - $d10;
+
+        $i48 = (int) $d12;
+
+        r4[1] = $i48;
+
+        $i49 = i15 - 16;
+
+        $d13 = (double) $i49;
+
+        $d16 = 1.164 * $d13;
+
+        $i50 = i28 - 128;
+
+        $d14 = (double) $i50;
+
+        $d15 = 2.018 * $d14;
+
+        $d17 = $d16 + $d15;
+
+        $i51 = (int) $d17;
+
+        r4[2] = $i51;
+
+        i56 = 0;
+
+     label3:
+        if i56 >= 3 goto label6;
+
+        $i52 = r4[i56];
+
+        if $i52 >= 0 goto label4;
+
+        r4[i56] = 0;
+
+     label4:
+        $i53 = r4[i56];
+
+        if $i53 <= 255 goto label5;
+
+        r4[i56] = 255;
+
+     label5:
+        i56 = i56 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i54, i55, r4);
+
+        i55 = i55 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i54;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i54 = i54 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageUBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, i19, $i20, $i21, i22, i23, i24;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i22 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i22 >= $i2 goto label8;
+
+        i23 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i23 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i22 / 16;
+
+        $i7 = i23 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE U>;
+
+        $i9 = i22 / 2;
+
+        $i10 = $i9 % 8;
+
+        $i14 = $i10 / 4;
+
+        $i11 = i23 / 2;
+
+        $i12 = $i11 % 8;
+
+        $i13 = $i12 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i14, $i13);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $i15 = i22 / 2;
+
+        $i16 = $i15 % 4;
+
+        $r9 = $r8[$i16];
+
+        $i17 = i23 / 2;
+
+        $i18 = $i17 % 4;
+
+        i19 = $r9[$i18];
+
+        r4[0] = i19;
+
+        r4[1] = i19;
+
+        r4[2] = i19;
+
+        i24 = 0;
+
+     label3:
+        if i24 >= 3 goto label6;
+
+        $i20 = r4[i24];
+
+        if $i20 >= 0 goto label4;
+
+        r4[i24] = 0;
+
+     label4:
+        $i21 = r4[i24];
+
+        if $i21 <= 255 goto label5;
+
+        r4[i24] = 255;
+
+     label5:
+        i24 = i24 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i22, i23, r4);
+
+        i23 = i23 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i22;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i22 = i22 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageUDiffBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, i20, $i21, $i22, i23, i24, i25;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i23 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i23 >= $i2 goto label8;
+
+        i24 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i24 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i23 / 16;
+
+        $i7 = i24 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE U>;
+
+        $i9 = i23 / 2;
+
+        $i10 = $i9 % 8;
+
+        $i14 = $i10 / 4;
+
+        $i11 = i24 / 2;
+
+        $i12 = $i11 % 8;
+
+        $i13 = $i12 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i14, $i13);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDiff()>();
+
+        $i15 = i23 / 2;
+
+        $i16 = $i15 % 4;
+
+        $r9 = $r8[$i16];
+
+        $i17 = i24 / 2;
+
+        $i18 = $i17 % 4;
+
+        $i19 = $r9[$i18];
+
+        i20 = 127 + $i19;
+
+        r4[0] = i20;
+
+        r4[1] = i20;
+
+        r4[2] = i20;
+
+        i25 = 0;
+
+     label3:
+        if i25 >= 3 goto label6;
+
+        $i21 = r4[i25];
+
+        if $i21 >= 0 goto label4;
+
+        r4[i25] = 0;
+
+     label4:
+        $i22 = r4[i25];
+
+        if $i22 <= 255 goto label5;
+
+        r4[i25] = 255;
+
+     label5:
+        i25 = i25 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i23, i24, r4);
+
+        i24 = i24 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i23;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i23 = i23 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageUPredBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, i19, $i20, $i21, i22, i23, i24;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i22 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i22 >= $i2 goto label8;
+
+        i23 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i23 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i22 / 16;
+
+        $i7 = i23 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE U>;
+
+        $i9 = i22 / 2;
+
+        $i10 = $i9 % 8;
+
+        $i14 = $i10 / 4;
+
+        $i11 = i23 / 2;
+
+        $i12 = $i11 % 8;
+
+        $i13 = $i12 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i14, $i13);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getPredict()>();
+
+        $i15 = i22 / 2;
+
+        $i16 = $i15 % 4;
+
+        $r9 = $r8[$i16];
+
+        $i17 = i23 / 2;
+
+        $i18 = $i17 % 4;
+
+        i19 = $r9[$i18];
+
+        r4[0] = i19;
+
+        r4[1] = i19;
+
+        r4[2] = i19;
+
+        i24 = 0;
+
+     label3:
+        if i24 >= 3 goto label6;
+
+        $i20 = r4[i24];
+
+        if $i20 >= 0 goto label4;
+
+        r4[i24] = 0;
+
+     label4:
+        $i21 = r4[i24];
+
+        if $i21 <= 255 goto label5;
+
+        r4[i24] = 255;
+
+     label5:
+        i24 = i24 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i22, i23, r4);
+
+        i23 = i23 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i22;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i22 = i22 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageVBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, i19, $i20, $i21, i22, i23, i24;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i22 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i22 >= $i2 goto label8;
+
+        i23 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i23 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i22 / 16;
+
+        $i7 = i23 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE V>;
+
+        $i9 = i22 / 2;
+
+        $i10 = $i9 % 8;
+
+        $i14 = $i10 / 4;
+
+        $i11 = i23 / 2;
+
+        $i12 = $i11 % 8;
+
+        $i13 = $i12 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i14, $i13);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $i15 = i22 / 2;
+
+        $i16 = $i15 % 4;
+
+        $r9 = $r8[$i16];
+
+        $i17 = i23 / 2;
+
+        $i18 = $i17 % 4;
+
+        i19 = $r9[$i18];
+
+        r4[0] = i19;
+
+        r4[1] = i19;
+
+        r4[2] = i19;
+
+        i24 = 0;
+
+     label3:
+        if i24 >= 3 goto label6;
+
+        $i20 = r4[i24];
+
+        if $i20 >= 0 goto label4;
+
+        r4[i24] = 0;
+
+     label4:
+        $i21 = r4[i24];
+
+        if $i21 <= 255 goto label5;
+
+        r4[i24] = 255;
+
+     label5:
+        i24 = i24 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i22, i23, r4);
+
+        i23 = i23 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i22;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i22 = i22 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageVDiffBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, i20, $i21, $i22, i23, i24, i25;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i23 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i23 >= $i2 goto label8;
+
+        i24 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i24 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i23 / 16;
+
+        $i7 = i24 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE V>;
+
+        $i9 = i23 / 2;
+
+        $i10 = $i9 % 8;
+
+        $i14 = $i10 / 4;
+
+        $i11 = i24 / 2;
+
+        $i12 = $i11 % 8;
+
+        $i13 = $i12 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i14, $i13);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDiff()>();
+
+        $i15 = i23 / 2;
+
+        $i16 = $i15 % 4;
+
+        $r9 = $r8[$i16];
+
+        $i17 = i24 / 2;
+
+        $i18 = $i17 % 4;
+
+        $i19 = $r9[$i18];
+
+        i20 = 127 + $i19;
+
+        r4[0] = i20;
+
+        r4[1] = i20;
+
+        r4[2] = i20;
+
+        i25 = 0;
+
+     label3:
+        if i25 >= 3 goto label6;
+
+        $i21 = r4[i25];
+
+        if $i21 >= 0 goto label4;
+
+        r4[i25] = 0;
+
+     label4:
+        $i22 = r4[i25];
+
+        if $i22 <= 255 goto label5;
+
+        r4[i25] = 255;
+
+     label5:
+        i25 = i25 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i23, i24, r4);
+
+        i24 = i24 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i23;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i23 = i23 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageVPredBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, i19, $i20, $i21, i22, i23, i24;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i22 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i22 >= $i2 goto label8;
+
+        i23 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i23 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i22 / 16;
+
+        $i7 = i23 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE V>;
+
+        $i9 = i22 / 2;
+
+        $i10 = $i9 % 8;
+
+        $i14 = $i10 / 4;
+
+        $i11 = i23 / 2;
+
+        $i12 = $i11 % 8;
+
+        $i13 = $i12 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i14, $i13);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getPredict()>();
+
+        $i15 = i22 / 2;
+
+        $i16 = $i15 % 4;
+
+        $r9 = $r8[$i16];
+
+        $i17 = i23 / 2;
+
+        $i18 = $i17 % 4;
+
+        i19 = $r9[$i18];
+
+        r4[0] = i19;
+
+        r4[1] = i19;
+
+        r4[2] = i19;
+
+        i24 = 0;
+
+     label3:
+        if i24 >= 3 goto label6;
+
+        $i20 = r4[i24];
+
+        if $i20 >= 0 goto label4;
+
+        r4[i24] = 0;
+
+     label4:
+        $i21 = r4[i24];
+
+        if $i21 <= 255 goto label5;
+
+        r4[i24] = 255;
+
+     label5:
+        i24 = i24 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i22, i23, r4);
+
+        i23 = i23 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i22;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i22 = i22 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageYBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, i15, $i16, $i17, i18, i19, i20;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i18 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i18 >= $i2 goto label8;
+
+        i19 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i19 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i18 / 16;
+
+        $i7 = i19 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        $i9 = i18 % 16;
+
+        $i12 = $i9 / 4;
+
+        $i10 = i19 % 16;
+
+        $i11 = $i10 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i12, $i11);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $i13 = i18 % 4;
+
+        $r9 = $r8[$i13];
+
+        $i14 = i19 % 4;
+
+        i15 = $r9[$i14];
+
+        r4[0] = i15;
+
+        r4[1] = i15;
+
+        r4[2] = i15;
+
+        i20 = 0;
+
+     label3:
+        if i20 >= 3 goto label6;
+
+        $i16 = r4[i20];
+
+        if $i16 >= 0 goto label4;
+
+        r4[i20] = 0;
+
+     label4:
+        $i17 = r4[i20];
+
+        if $i17 <= 255 goto label5;
+
+        r4[i20] = 255;
+
+     label5:
+        i20 = i20 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i18, i19, r4);
+
+        i19 = i19 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i18;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i18 = i18 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageYDiffBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, i16, $i17, $i18, i19, i20, i21;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i19 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i19 >= $i2 goto label8;
+
+        i20 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i20 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i19 / 16;
+
+        $i7 = i20 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        $i9 = i19 % 16;
+
+        $i12 = $i9 / 4;
+
+        $i10 = i20 % 16;
+
+        $i11 = $i10 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i12, $i11);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDiff()>();
+
+        $i13 = i19 % 4;
+
+        $r9 = $r8[$i13];
+
+        $i14 = i20 % 4;
+
+        $i15 = $r9[$i14];
+
+        i16 = 127 + $i15;
+
+        r4[0] = i16;
+
+        r4[1] = i16;
+
+        r4[2] = i16;
+
+        i21 = 0;
+
+     label3:
+        if i21 >= 3 goto label6;
+
+        $i17 = r4[i21];
+
+        if $i17 >= 0 goto label4;
+
+        r4[i21] = 0;
+
+     label4:
+        $i18 = r4[i21];
+
+        if $i18 <= 255 goto label5;
+
+        r4[i21] = 255;
+
+     label5:
+        i21 = i21 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i19, i20, r4);
+
+        i20 = i20 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i19;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i19 = i19 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public java.awt.image.BufferedImage getDebugImageYPredBuffer()
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, i15, $i16, $i17, i18, i19, i20;
+        java.awt.image.WritableRaster r3;
+        float $f0, $f1, $f2, $f3;
+        int[] r4, $r9;
+        net.sourceforge.plantuml.webp.MacroBlock $r5;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r6;
+        net.sourceforge.plantuml.webp.SubBlock $r7;
+        int[][] $r8;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i0, $i1, 1);
+
+        r3 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i18 = 0;
+
+     label1:
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i18 >= $i2 goto label8;
+
+        i19 = 0;
+
+     label2:
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i19 >= $i5 goto label7;
+
+        r4 = newarray (int)[3];
+
+        $i8 = i18 / 16;
+
+        $i7 = i19 / 16;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i8, $i7);
+
+        $r6 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        $i9 = i18 % 16;
+
+        $i12 = $i9 / 4;
+
+        $i10 = i19 % 16;
+
+        $i11 = $i10 / 4;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r6, $i12, $i11);
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.webp.SubBlock: int[][] getPredict()>();
+
+        $i13 = i18 % 4;
+
+        $r9 = $r8[$i13];
+
+        $i14 = i19 % 4;
+
+        i15 = $r9[$i14];
+
+        r4[0] = i15;
+
+        r4[1] = i15;
+
+        r4[2] = i15;
+
+        i20 = 0;
+
+     label3:
+        if i20 >= 3 goto label6;
+
+        $i16 = r4[i20];
+
+        if $i16 >= 0 goto label4;
+
+        r4[i20] = 0;
+
+     label4:
+        $i17 = r4[i20];
+
+        if $i17 <= 255 goto label5;
+
+        r4[i20] = 255;
+
+     label5:
+        i20 = i20 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r3.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i18, i19, r4);
+
+        i19 = i19 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i18;
+
+        $f1 = 100.0F * $f0;
+
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i6;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i18 = i18 + 1;
+
+        goto label1;
+
+     label8:
+        $i3 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount>;
+
+        $i4 = $i3 + 1;
+
+        r1.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = $i4;
+
+        return $r0;
+    }
+
+    public int getFilterLevel()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int filterLevel>;
+
+        return $i0;
+    }
+
+    public int getFilterType()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int filterType>;
+
+        return $i0;
+    }
+
+    public int getFrameType()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int frameType>;
+
+        return $i0;
+    }
+
+    public int getHeight()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int height>;
+
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.webp.SubBlock getLeftSubBlock(net.sourceforge.plantuml.webp.SubBlock, net.sourceforge.plantuml.webp.SubBlock$PLANE)
+    {
+        net.sourceforge.plantuml.webp.SubBlock r0, r6;
+        net.sourceforge.plantuml.webp.MacroBlock r1, r7;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7;
+        net.sourceforge.plantuml.webp.VP8Frame r2;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE r3, $r4, $r5;
+
+        r2 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r0 := @parameter0: net.sourceforge.plantuml.webp.SubBlock;
+
+        r3 := @parameter1: net.sourceforge.plantuml.webp.SubBlock$PLANE;
+
+        r6 = virtualinvoke r0.<net.sourceforge.plantuml.webp.SubBlock: net.sourceforge.plantuml.webp.SubBlock getLeft()>();
+
+        if r6 != null goto label3;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.webp.SubBlock: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock()>();
+
+        i0 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getSubblockY(net.sourceforge.plantuml.webp.SubBlock)>(r0);
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getX()>();
+
+        $i2 = $i1 - 1;
+
+        $i3 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getY()>();
+
+        r7 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i2, $i3);
+
+     label1:
+        $r4 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y2>;
+
+        if r3 != $r4 goto label2;
+
+        $i4 = virtualinvoke r7.<net.sourceforge.plantuml.webp.MacroBlock: int getYMode()>();
+
+        if $i4 != 4 goto label2;
+
+        $i5 = virtualinvoke r7.<net.sourceforge.plantuml.webp.MacroBlock: int getX()>();
+
+        $i6 = $i5 - 1;
+
+        $i7 = virtualinvoke r7.<net.sourceforge.plantuml.webp.MacroBlock: int getY()>();
+
+        r7 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i6, $i7);
+
+        goto label1;
+
+     label2:
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.webp.SubBlock: net.sourceforge.plantuml.webp.SubBlock$PLANE getPlane()>();
+
+        r6 = virtualinvoke r7.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getRightSubBlock(int,net.sourceforge.plantuml.webp.SubBlock$PLANE)>(i0, $r5);
+
+     label3:
+        return r6;
+    }
+
+    public net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int, int)
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int i0, $i1, i2, $i3;
+        net.sourceforge.plantuml.webp.MacroBlock[][] $r1;
+        net.sourceforge.plantuml.webp.MacroBlock[] $r2;
+        net.sourceforge.plantuml.webp.MacroBlock $r3;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        i0 := @parameter0: int;
+
+        i2 := @parameter1: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock[][] macroBlocks>;
+
+        $i1 = i0 + 1;
+
+        $r2 = $r1[$i1];
+
+        $i3 = i2 + 1;
+
+        $r3 = $r2[$i3];
+
+        return $r3;
+    }
+
+    public int getMacroBlockCols()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        return $i0;
+    }
+
+    public java.lang.String getMacroBlockDebugString(int, int, int, int)
+    {
+        java.lang.String $r0, $r5, $r15, $r25, $r35, $r45, r47, r49, r51, r53;
+        int i0, $i1, i2, $i3, i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13;
+        net.sourceforge.plantuml.webp.VP8Frame r1;
+        net.sourceforge.plantuml.webp.MacroBlock r2;
+        java.lang.StringBuilder $r3, $r4, $r6, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r16, $r18, $r19, $r20, $r21, $r22, $r23, $r24, $r26, $r28, $r29, $r30, $r31, $r32, $r33, $r34, $r36, $r38, $r39, $r40, $r41, $r42, $r43, $r44, $r46;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r7, $r17, $r27, $r37;
+        net.sourceforge.plantuml.webp.SubBlock r48, r50, r52, r54;
+
+        r1 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        i0 := @parameter0: int;
+
+        i2 := @parameter1: int;
+
+        i4 := @parameter2: int;
+
+        i5 := @parameter3: int;
+
+        $r0 = new java.lang.String;
+
+        specialinvoke $r0.<java.lang.String: void <init>()>();
+
+        r47 = $r0;
+
+        $i1 = r1.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        if i0 >= $i1 goto label1;
+
+        $i3 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: int getMacroBlockRows()>();
+
+        if i2 >= $i3 goto label1;
+
+        r2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>(i0, i2);
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r0);
+
+        $r5 = virtualinvoke r2.<net.sourceforge.plantuml.webp.MacroBlock: java.lang.String getDebugString()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        r47 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        if i4 >= 4 goto label1;
+
+        if i5 >= 4 goto label1;
+
+        $r7 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        r48 = virtualinvoke r2.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r7, i4, i5);
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r47);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n SubBlock ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i4);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", ");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i5);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n  ");
+
+        $r15 = virtualinvoke r48.<net.sourceforge.plantuml.webp.SubBlock: java.lang.String getDebugString()>();
+
+        $r16 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r15);
+
+        r49 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r17 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y2>;
+
+        r50 = virtualinvoke r2.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r17, i4, i5);
+
+        $r18 = new java.lang.StringBuilder;
+
+        specialinvoke $r18.<java.lang.StringBuilder: void <init>()>();
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r49);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n SubBlock ");
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i4);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", ");
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i5);
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n  ");
+
+        $r25 = virtualinvoke r50.<net.sourceforge.plantuml.webp.SubBlock: java.lang.String getDebugString()>();
+
+        $r26 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r25);
+
+        r51 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r27 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE U>;
+
+        $i7 = i4 / 2;
+
+        $i6 = i5 / 2;
+
+        r52 = virtualinvoke r2.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r27, $i7, $i6);
+
+        $r28 = new java.lang.StringBuilder;
+
+        specialinvoke $r28.<java.lang.StringBuilder: void <init>()>();
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r51);
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n SubBlock ");
+
+        $i8 = i4 / 2;
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i8);
+
+        $r32 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", ");
+
+        $i9 = i5 / 2;
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i9);
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n  ");
+
+        $r35 = virtualinvoke r52.<net.sourceforge.plantuml.webp.SubBlock: java.lang.String getDebugString()>();
+
+        $r36 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r35);
+
+        r53 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r37 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE V>;
+
+        $i11 = i4 / 2;
+
+        $i10 = i5 / 2;
+
+        r54 = virtualinvoke r2.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r37, $i11, $i10);
+
+        $r38 = new java.lang.StringBuilder;
+
+        specialinvoke $r38.<java.lang.StringBuilder: void <init>()>();
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r53);
+
+        $r40 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n SubBlock ");
+
+        $i12 = i4 / 2;
+
+        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i12);
+
+        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", ");
+
+        $i13 = i5 / 2;
+
+        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i13);
+
+        $r44 = virtualinvoke $r43.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n  ");
+
+        $r45 = virtualinvoke r54.<net.sourceforge.plantuml.webp.SubBlock: java.lang.String getDebugString()>();
+
+        $r46 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r45);
+
+        r47 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label1:
+        return r47;
+    }
+
+    public int getMacroBlockRows()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        return $i0;
+    }
+
+    public int getQIndex()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        net.sourceforge.plantuml.webp.SegmentQuants $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SegmentQuants segmentQuants>;
+
+        $i0 = virtualinvoke $r1.<net.sourceforge.plantuml.webp.SegmentQuants: int getqIndex()>();
+
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.webp.SegmentQuants getSegmentQuants()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        net.sourceforge.plantuml.webp.SegmentQuants $r1;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SegmentQuants segmentQuants>;
+
+        return $r1;
+    }
+
+    public int getSharpnessLevel()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int sharpnessLevel>;
+
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.webp.BoolDecoder getTokenBoolDecoder() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        net.sourceforge.plantuml.webp.BoolDecoder $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.BoolDecoder tokenBoolDecoder>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.webp.BoolDecoder: void seek()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.BoolDecoder tokenBoolDecoder>;
+
+        return $r2;
+    }
+
+    public int[][] getUBuffer()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, i17, i18, i19, i20, i21, i22;
+        int[][] r1, $r7;
+        net.sourceforge.plantuml.webp.MacroBlock[][] $r2;
+        net.sourceforge.plantuml.webp.MacroBlock[] $r3;
+        net.sourceforge.plantuml.webp.MacroBlock r4;
+        net.sourceforge.plantuml.webp.SubBlock r5;
+        int[] $r6, $r8;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        $i3 = $i0 * 8;
+
+        $i1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        $i2 = $i1 * 8;
+
+        r1 = newmultiarray (int)[$i3][$i2];
+
+        i17 = 0;
+
+     label01:
+        $i4 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        if i17 >= $i4 goto label12;
+
+        i18 = 0;
+
+     label02:
+        $i5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        if i18 >= $i5 goto label11;
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock[][] macroBlocks>;
+
+        $i6 = i18 + 1;
+
+        $r3 = $r2[$i6];
+
+        $i7 = i17 + 1;
+
+        r4 = $r3[$i7];
+
+        i19 = 0;
+
+     label03:
+        if i19 >= 2 goto label10;
+
+        i20 = 0;
+
+     label04:
+        if i20 >= 2 goto label09;
+
+        r5 = virtualinvoke r4.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getUSubBlock(int,int)>(i20, i19);
+
+        i21 = 0;
+
+     label05:
+        if i21 >= 4 goto label08;
+
+        i22 = 0;
+
+     label06:
+        if i22 >= 4 goto label07;
+
+        $i9 = i18 * 8;
+
+        $i8 = i20 * 4;
+
+        $i10 = $i9 + $i8;
+
+        $i11 = $i10 + i22;
+
+        $r6 = r1[$i11];
+
+        $i13 = i17 * 8;
+
+        $i12 = i19 * 4;
+
+        $i14 = $i13 + $i12;
+
+        $i15 = $i14 + i21;
+
+        $r7 = virtualinvoke r5.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $r8 = $r7[i22];
+
+        $i16 = $r8[i21];
+
+        $r6[$i15] = $i16;
+
+        i22 = i22 + 1;
+
+        goto label06;
+
+     label07:
+        i21 = i21 + 1;
+
+        goto label05;
+
+     label08:
+        i20 = i20 + 1;
+
+        goto label04;
+
+     label09:
+        i19 = i19 + 1;
+
+        goto label03;
+
+     label10:
+        i18 = i18 + 1;
+
+        goto label02;
+
+     label11:
+        i17 = i17 + 1;
+
+        goto label01;
+
+     label12:
+        return r1;
+    }
+
+    public int[][] getVBuffer()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, i17, i18, i19, i20, i21, i22;
+        int[][] r1, $r7;
+        net.sourceforge.plantuml.webp.MacroBlock[][] $r2;
+        net.sourceforge.plantuml.webp.MacroBlock[] $r3;
+        net.sourceforge.plantuml.webp.MacroBlock r4;
+        net.sourceforge.plantuml.webp.SubBlock r5;
+        int[] $r6, $r8;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        $i3 = $i0 * 8;
+
+        $i1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        $i2 = $i1 * 8;
+
+        r1 = newmultiarray (int)[$i3][$i2];
+
+        i17 = 0;
+
+     label01:
+        $i4 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        if i17 >= $i4 goto label12;
+
+        i18 = 0;
+
+     label02:
+        $i5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        if i18 >= $i5 goto label11;
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock[][] macroBlocks>;
+
+        $i6 = i18 + 1;
+
+        $r3 = $r2[$i6];
+
+        $i7 = i17 + 1;
+
+        r4 = $r3[$i7];
+
+        i19 = 0;
+
+     label03:
+        if i19 >= 2 goto label10;
+
+        i20 = 0;
+
+     label04:
+        if i20 >= 2 goto label09;
+
+        r5 = virtualinvoke r4.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getVSubBlock(int,int)>(i20, i19);
+
+        i21 = 0;
+
+     label05:
+        if i21 >= 4 goto label08;
+
+        i22 = 0;
+
+     label06:
+        if i22 >= 4 goto label07;
+
+        $i9 = i18 * 8;
+
+        $i8 = i20 * 4;
+
+        $i10 = $i9 + $i8;
+
+        $i11 = $i10 + i22;
+
+        $r6 = r1[$i11];
+
+        $i13 = i17 * 8;
+
+        $i12 = i19 * 4;
+
+        $i14 = $i13 + $i12;
+
+        $i15 = $i14 + i21;
+
+        $r7 = virtualinvoke r5.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $r8 = $r7[i22];
+
+        $i16 = $r8[i21];
+
+        $r6[$i15] = $i16;
+
+        i22 = i22 + 1;
+
+        goto label06;
+
+     label07:
+        i21 = i21 + 1;
+
+        goto label05;
+
+     label08:
+        i20 = i20 + 1;
+
+        goto label04;
+
+     label09:
+        i19 = i19 + 1;
+
+        goto label03;
+
+     label10:
+        i18 = i18 + 1;
+
+        goto label02;
+
+     label11:
+        i17 = i17 + 1;
+
+        goto label01;
+
+     label12:
+        return r1;
+    }
+
+    public int getWidth()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int width>;
+
+        return $i0;
+    }
+
+    public int[][] getYBuffer()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, i17, i18, i19, i20, i21, i22;
+        int[][] r1, $r7;
+        net.sourceforge.plantuml.webp.MacroBlock[][] $r2;
+        net.sourceforge.plantuml.webp.MacroBlock[] $r3;
+        net.sourceforge.plantuml.webp.MacroBlock r4;
+        net.sourceforge.plantuml.webp.SubBlock r5;
+        int[] $r6, $r8;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        $i3 = $i0 * 16;
+
+        $i1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        $i2 = $i1 * 16;
+
+        r1 = newmultiarray (int)[$i3][$i2];
+
+        i17 = 0;
+
+     label01:
+        $i4 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        if i17 >= $i4 goto label12;
+
+        i18 = 0;
+
+     label02:
+        $i5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        if i18 >= $i5 goto label11;
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock[][] macroBlocks>;
+
+        $i6 = i18 + 1;
+
+        $r3 = $r2[$i6];
+
+        $i7 = i17 + 1;
+
+        r4 = $r3[$i7];
+
+        i19 = 0;
+
+     label03:
+        if i19 >= 4 goto label10;
+
+        i20 = 0;
+
+     label04:
+        if i20 >= 4 goto label09;
+
+        r5 = virtualinvoke r4.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getYSubBlock(int,int)>(i20, i19);
+
+        i21 = 0;
+
+     label05:
+        if i21 >= 4 goto label08;
+
+        i22 = 0;
+
+     label06:
+        if i22 >= 4 goto label07;
+
+        $i9 = i18 * 16;
+
+        $i8 = i20 * 4;
+
+        $i10 = $i9 + $i8;
+
+        $i11 = $i10 + i22;
+
+        $r6 = r1[$i11];
+
+        $i13 = i17 * 16;
+
+        $i12 = i19 * 4;
+
+        $i14 = $i13 + $i12;
+
+        $i15 = $i14 + i21;
+
+        $r7 = virtualinvoke r5.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $r8 = $r7[i22];
+
+        $i16 = $r8[i21];
+
+        $r6[$i15] = $i16;
+
+        i22 = i22 + 1;
+
+        goto label06;
+
+     label07:
+        i21 = i21 + 1;
+
+        goto label05;
+
+     label08:
+        i20 = i20 + 1;
+
+        goto label04;
+
+     label09:
+        i19 = i19 + 1;
+
+        goto label03;
+
+     label10:
+        i18 = i18 + 1;
+
+        goto label02;
+
+     label11:
+        i17 = i17 + 1;
+
+        goto label01;
+
+     label12:
+        return r1;
+    }
+
+    public void loopFilter()
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        staticinvoke <net.sourceforge.plantuml.webp.LoopFilter: void loopFilter(net.sourceforge.plantuml.webp.VP8Frame)>(r0);
+
+        return;
+    }
+
+    private void readModes(net.sourceforge.plantuml.webp.BoolDecoder) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6, $i7, $i8, $i9, $i10, i11, $i12, $i13, i14, i15, $i16, i17, i18, $i19, i20, i21, $i22, i24, i25, i26, i27, i28, $i29, i32, i33, i34;
+        net.sourceforge.plantuml.webp.MacroBlock r1;
+        net.sourceforge.plantuml.webp.SegmentQuants $r2;
+        net.sourceforge.plantuml.webp.SegmentQuant[] $r3;
+        net.sourceforge.plantuml.webp.SegmentQuant $r4;
+        net.sourceforge.plantuml.webp.BoolDecoder r5;
+        int[] $r6, $r10, $r11, $r12;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r7, $r8;
+        net.sourceforge.plantuml.webp.SubBlock r9, r13, r14, r15;
+        byte b31;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r5 := @parameter0: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        i14 = -1;
+
+        i15 = 0;
+
+        $i0 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockNoCoeffSkip>;
+
+        if $i0 <= 0 goto label01;
+
+        i15 = virtualinvoke r5.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>(8);
+
+     label01:
+        i14 = i14 + 1;
+
+        $i16 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockRows>;
+
+        if i14 >= $i16 goto label30;
+
+        i17 = -1;
+
+     label02:
+        i17 = i17 + 1;
+
+        $i1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockCols>;
+
+        if i17 >= $i1 goto label29;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>(i17, i14);
+
+        $i2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int segmentationIsEnabled>;
+
+        if $i2 <= 0 goto label03;
+
+        $i13 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int updateMacroBlockSegmentationMap>;
+
+        if $i13 <= 0 goto label03;
+
+        $r12 = <net.sourceforge.plantuml.webp.Globals: int[] macroBlockSegmentTree>;
+
+        $r11 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] macroBlockSegmentTreeProbs>;
+
+        i18 = virtualinvoke r5.<net.sourceforge.plantuml.webp.BoolDecoder: int readTree(int[],int[])>($r12, $r11);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void setSegmentId(int)>(i18);
+
+     label03:
+        $i19 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int modeRefLoopFilterDeltaEnabled>;
+
+        if $i19 <= 0 goto label07;
+
+        i20 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int filterLevel>;
+
+        $r10 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] refLoopFilterDeltas>;
+
+        $i12 = $r10[0];
+
+        i21 = i20 + $i12;
+
+        if i21 >= 0 goto label04;
+
+        $i22 = 0;
+
+        goto label06;
+
+     label04:
+        if i21 <= 63 goto label05;
+
+        $i22 = 63;
+
+        goto label06;
+
+     label05:
+        $i22 = i21;
+
+     label06:
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void setFilterLevel(int)>($i22);
+
+        goto label08;
+
+     label07:
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SegmentQuants segmentQuants>;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.webp.SegmentQuants: net.sourceforge.plantuml.webp.SegmentQuant[] getSegQuants()>();
+
+        $i3 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getSegmentId()>();
+
+        $r4 = $r3[$i3];
+
+        $i4 = virtualinvoke $r4.<net.sourceforge.plantuml.webp.SegmentQuant: int getFilterStrength()>();
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void setFilterLevel(int)>($i4);
+
+     label08:
+        $i5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int macroBlockNoCoeffSkip>;
+
+        if $i5 <= 0 goto label09;
+
+        i24 = virtualinvoke r5.<net.sourceforge.plantuml.webp.BoolDecoder: int readBool(int)>(i15);
+
+        goto label10;
+
+     label09:
+        i24 = 0;
+
+     label10:
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void setSkipCoeff(int)>(i24);
+
+        i6 = specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int readYMode(net.sourceforge.plantuml.webp.BoolDecoder)>(r5);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void setYMode(int)>(i6);
+
+        if i6 != 4 goto label18;
+
+        i25 = 0;
+
+     label11:
+        if i25 >= 4 goto label14;
+
+        i26 = 0;
+
+     label12:
+        if i26 >= 4 goto label13;
+
+        r13 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getYSubBlock(int,int)>(i26, i25);
+
+        $r7 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        r14 = virtualinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SubBlock getAboveSubBlock(net.sourceforge.plantuml.webp.SubBlock,net.sourceforge.plantuml.webp.SubBlock$PLANE)>(r13, $r7);
+
+        $r8 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        r9 = virtualinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.SubBlock getLeftSubBlock(net.sourceforge.plantuml.webp.SubBlock,net.sourceforge.plantuml.webp.SubBlock$PLANE)>(r13, $r8);
+
+        $i9 = virtualinvoke r14.<net.sourceforge.plantuml.webp.SubBlock: int getMode()>();
+
+        $i10 = virtualinvoke r9.<net.sourceforge.plantuml.webp.SubBlock: int getMode()>();
+
+        i11 = specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int readSubBlockMode(net.sourceforge.plantuml.webp.BoolDecoder,int,int)>(r5, $i9, $i10);
+
+        virtualinvoke r13.<net.sourceforge.plantuml.webp.SubBlock: void setMode(int)>(i11);
+
+        i26 = i26 + 1;
+
+        goto label12;
+
+     label13:
+        i25 = i25 + 1;
+
+        goto label11;
+
+     label14:
+        $i7 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int modeRefLoopFilterDeltaEnabled>;
+
+        if $i7 <= 0 goto label28;
+
+        i27 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: int getFilterLevel()>();
+
+        $r6 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int[] modeLoopFilterDeltas>;
+
+        $i8 = $r6[0];
+
+        i28 = i27 + $i8;
+
+        if i28 >= 0 goto label15;
+
+        $i29 = 0;
+
+        goto label17;
+
+     label15:
+        if i28 <= 63 goto label16;
+
+        $i29 = 63;
+
+        goto label17;
+
+     label16:
+        $i29 = i28;
+
+     label17:
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void setFilterLevel(int)>($i29);
+
+        goto label28;
+
+     label18:
+        tableswitch(i6)
+        {
+            case 0: goto label19;
+            case 1: goto label20;
+            case 2: goto label21;
+            case 3: goto label22;
+            default: goto label23;
+        };
+
+     label19:
+        b31 = 0;
+
+        goto label24;
+
+     label20:
+        b31 = 2;
+
+        goto label24;
+
+     label21:
+        b31 = 3;
+
+        goto label24;
+
+     label22:
+        b31 = 1;
+
+        goto label24;
+
+     label23:
+        b31 = 0;
+
+     label24:
+        i32 = 0;
+
+     label25:
+        if i32 >= 4 goto label28;
+
+        i33 = 0;
+
+     label26:
+        if i33 >= 4 goto label27;
+
+        r15 = virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getYSubBlock(int,int)>(i32, i33);
+
+        virtualinvoke r15.<net.sourceforge.plantuml.webp.SubBlock: void setMode(int)>(b31);
+
+        i33 = i33 + 1;
+
+        goto label26;
+
+     label27:
+        i32 = i32 + 1;
+
+        goto label25;
+
+     label28:
+        i34 = specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int readUvMode(net.sourceforge.plantuml.webp.BoolDecoder)>(r5);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.MacroBlock: void setUvMode(int)>(i34);
+
+        goto label02;
+
+     label29:
+        goto label01;
+
+     label30:
+        return;
+    }
+
+    private int readPartitionSize(long) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        long l0;
+        javax.imageio.stream.ImageInputStream $r1, $r2, $r3, $r4;
+        int $i1, $i2, $i3, $i4, $i5, $i6, i7;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        l0 := @parameter0: long;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        interfaceinvoke $r1.<javax.imageio.stream.ImageInputStream: void seek(long)>(l0);
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $i1 = interfaceinvoke $r2.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $i2 = interfaceinvoke $r3.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i3 = $i2 << 8;
+
+        $i4 = $i1 + $i3;
+
+        $r4 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $i5 = interfaceinvoke $r4.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i6 = $i5 << 16;
+
+        i7 = $i4 + $i6;
+
+        return i7;
+    }
+
+    private int readSubBlockMode(net.sourceforge.plantuml.webp.BoolDecoder, int, int) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+        int i0, i1, i2;
+        int[][][] $r1;
+        int[][] $r2;
+        int[] $r3, $r4;
+        net.sourceforge.plantuml.webp.VP8Frame r5;
+
+        r5 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r0 := @parameter0: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        $r4 = <net.sourceforge.plantuml.webp.Globals: int[] vp8SubBlockModeTree>;
+
+        $r1 = <net.sourceforge.plantuml.webp.Globals: int[][][] vp8KeyFrameSubBlockModeProb>;
+
+        $r2 = $r1[i0];
+
+        $r3 = $r2[i1];
+
+        i2 = virtualinvoke r0.<net.sourceforge.plantuml.webp.BoolDecoder: int readTree(int[],int[])>($r4, $r3);
+
+        return i2;
+    }
+
+    private int readUvMode(net.sourceforge.plantuml.webp.BoolDecoder) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+        int[] $r1, $r2;
+        int i0;
+        net.sourceforge.plantuml.webp.VP8Frame r3;
+
+        r3 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r0 := @parameter0: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        $r2 = <net.sourceforge.plantuml.webp.Globals: int[] vp8UVModeTree>;
+
+        $r1 = <net.sourceforge.plantuml.webp.Globals: int[] vp8KeyFrameUVModeProb>;
+
+        i0 = virtualinvoke r0.<net.sourceforge.plantuml.webp.BoolDecoder: int readTree(int[],int[])>($r2, $r1);
+
+        return i0;
+    }
+
+    private int readYMode(net.sourceforge.plantuml.webp.BoolDecoder) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+        int[] $r1, $r2;
+        int i0;
+        net.sourceforge.plantuml.webp.VP8Frame r3;
+
+        r3 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r0 := @parameter0: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        $r2 = <net.sourceforge.plantuml.webp.Globals: int[] vp8KeyFrameYModeTree>;
+
+        $r1 = <net.sourceforge.plantuml.webp.Globals: int[] vp8KeyFrameYModeProb>;
+
+        i0 = virtualinvoke r0.<net.sourceforge.plantuml.webp.BoolDecoder: int readTree(int[],int[])>($r2, $r1);
+
+        return i0;
+    }
+
+    public void removeIIOReadProgressListener(javax.imageio.event.IIOReadProgressListener)
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        javax.imageio.event.IIOReadProgressListener r1;
+        java.util.ArrayList $r2;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r1 := @parameter0: javax.imageio.event.IIOReadProgressListener;
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.ArrayList _listeners>;
+
+        virtualinvoke $r2.<java.util.ArrayList: boolean remove(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public void setBuffersToCreate(int)
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        int i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        i0 := @parameter0: int;
+
+        $i1 = 3 + i0;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int buffersToCreate> = $i1;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int bufferCount> = 0;
+
+        return;
+    }
+
+    private void setupTokenDecoder(net.sourceforge.plantuml.webp.BoolDecoder, int, long) throws java.io.IOException
+    {
+        long l0, $l2, l3, $l8, $l10, $l11, $l15, l17, l19;
+        int i1, $i4, $i5, i6, $i7, $i9, $i12, $i13, $i14, i18;
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        net.sourceforge.plantuml.webp.BoolDecoder r1, $r4, $r6;
+        java.util.Vector $r2, $r8;
+        java.lang.Object $r3;
+        javax.imageio.stream.ImageInputStream $r5, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r1 := @parameter0: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        i1 := @parameter1: int;
+
+        l0 := @parameter2: long;
+
+        $l2 = (long) i1;
+
+        l3 = l0 + $l2;
+
+        l17 = l3;
+
+        $i4 = virtualinvoke r1.<net.sourceforge.plantuml.webp.BoolDecoder: int readLiteral(int)>(2);
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int multiTokenPartition> = $i4;
+
+        $i5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: int multiTokenPartition>;
+
+        i6 = 1 << $i5;
+
+        if i6 <= 1 goto label1;
+
+        $i13 = i6 - 1;
+
+        $i14 = 3 * $i13;
+
+        $l15 = (long) $i14;
+
+        l17 = l3 + $l15;
+
+     label1:
+        i18 = 0;
+
+     label2:
+        if i18 >= i6 goto label5;
+
+        $i7 = i6 - 1;
+
+        if i18 >= $i7 goto label3;
+
+        $i9 = i18 * 3;
+
+        $l10 = (long) $i9;
+
+        $l11 = l3 + $l10;
+
+        $i12 = specialinvoke r0.<net.sourceforge.plantuml.webp.VP8Frame: int readPartitionSize(long)>($l11);
+
+        l19 = (long) $i12;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.webp.BoolDecoder: void seek()>();
+
+        goto label4;
+
+     label3:
+        $r5 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        $l8 = interfaceinvoke $r5.<javax.imageio.stream.ImageInputStream: long length()>();
+
+        l19 = $l8 - l17;
+
+     label4:
+        $r8 = r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.Vector tokenBoolDecoders>;
+
+        $r6 = new net.sourceforge.plantuml.webp.BoolDecoder;
+
+        $r7 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.webp.BoolDecoder: void <init>(javax.imageio.stream.ImageInputStream,long)>($r7, l17);
+
+        virtualinvoke $r8.<java.util.Vector: boolean add(java.lang.Object)>($r6);
+
+        l17 = l17 + l19;
+
+        i18 = i18 + 1;
+
+        goto label2;
+
+     label5:
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.Vector tokenBoolDecoders>;
+
+        $r3 = virtualinvoke $r2.<java.util.Vector: java.lang.Object elementAt(int)>(0);
+
+        $r4 = (net.sourceforge.plantuml.webp.BoolDecoder) $r3;
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.BoolDecoder tokenBoolDecoder> = $r4;
+
+        return;
+    }
+
+    public void useBufferedImage(java.awt.image.BufferedImage)
+    {
+        java.awt.image.BufferedImage r0;
+        java.awt.image.WritableRaster r1;
+        net.sourceforge.plantuml.webp.VP8Frame r2;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, i37, $i38, $i39, $i40, $i41, $i42, $i43, $i44, $i45, $i46, $i47, $i48, $i49, i50, i51, i52;
+        float $f0, $f1, $f2, $f3;
+        int[] r3, $r8, $r13, $r18;
+        net.sourceforge.plantuml.webp.MacroBlock $r4, $r9, $r14;
+        net.sourceforge.plantuml.webp.SubBlock$PLANE $r5, $r10, $r15;
+        net.sourceforge.plantuml.webp.SubBlock $r6, $r11, $r16;
+        int[][] $r7, $r12, $r17;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17;
+
+        r2 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r0 := @parameter0: java.awt.image.BufferedImage;
+
+        r1 = virtualinvoke r0.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getWritableTile(int,int)>(0, 0);
+
+        i50 = 0;
+
+     label1:
+        $i0 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        if i50 >= $i0 goto label8;
+
+        i51 = 0;
+
+     label2:
+        $i1 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: int getHeight()>();
+
+        if i51 >= $i1 goto label7;
+
+        r3 = newarray (int)[3];
+
+        $i4 = i50 / 16;
+
+        $i3 = i51 / 16;
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i4, $i3);
+
+        $r5 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE Y1>;
+
+        $i5 = i50 % 16;
+
+        $i8 = $i5 / 4;
+
+        $i6 = i51 % 16;
+
+        $i7 = $i6 / 4;
+
+        $r6 = virtualinvoke $r4.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r5, $i8, $i7);
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $i9 = i50 % 4;
+
+        $r8 = $r7[$i9];
+
+        $i10 = i51 % 4;
+
+        i11 = $r8[$i10];
+
+        $i13 = i50 / 16;
+
+        $i12 = i51 / 16;
+
+        $r9 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i13, $i12);
+
+        $r10 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE U>;
+
+        $i14 = i50 / 2;
+
+        $i15 = $i14 % 8;
+
+        $i19 = $i15 / 4;
+
+        $i16 = i51 / 2;
+
+        $i17 = $i16 % 8;
+
+        $i18 = $i17 / 4;
+
+        $r11 = virtualinvoke $r9.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r10, $i19, $i18);
+
+        $r12 = virtualinvoke $r11.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $i20 = i50 / 2;
+
+        $i21 = $i20 % 4;
+
+        $r13 = $r12[$i21];
+
+        $i22 = i51 / 2;
+
+        $i23 = $i22 % 4;
+
+        i24 = $r13[$i23];
+
+        $i26 = i50 / 16;
+
+        $i25 = i51 / 16;
+
+        $r14 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: net.sourceforge.plantuml.webp.MacroBlock getMacroBlock(int,int)>($i26, $i25);
+
+        $r15 = <net.sourceforge.plantuml.webp.SubBlock$PLANE: net.sourceforge.plantuml.webp.SubBlock$PLANE V>;
+
+        $i27 = i50 / 2;
+
+        $i28 = $i27 % 8;
+
+        $i32 = $i28 / 4;
+
+        $i29 = i51 / 2;
+
+        $i30 = $i29 % 8;
+
+        $i31 = $i30 / 4;
+
+        $r16 = virtualinvoke $r14.<net.sourceforge.plantuml.webp.MacroBlock: net.sourceforge.plantuml.webp.SubBlock getSubBlock(net.sourceforge.plantuml.webp.SubBlock$PLANE,int,int)>($r15, $i32, $i31);
+
+        $r17 = virtualinvoke $r16.<net.sourceforge.plantuml.webp.SubBlock: int[][] getDest()>();
+
+        $i33 = i50 / 2;
+
+        $i34 = $i33 % 4;
+
+        $r18 = $r17[$i34];
+
+        $i35 = i51 / 2;
+
+        $i36 = $i35 % 4;
+
+        i37 = $r18[$i36];
+
+        $i38 = i11 - 16;
+
+        $d0 = (double) $i38;
+
+        $d3 = 1.164 * $d0;
+
+        $i39 = i37 - 128;
+
+        $d1 = (double) $i39;
+
+        $d2 = 1.596 * $d1;
+
+        $d4 = $d3 + $d2;
+
+        $i40 = (int) $d4;
+
+        r3[0] = $i40;
+
+        $i41 = i11 - 16;
+
+        $d5 = (double) $i41;
+
+        $d8 = 1.164 * $d5;
+
+        $i42 = i37 - 128;
+
+        $d6 = (double) $i42;
+
+        $d7 = 0.813 * $d6;
+
+        $d11 = $d8 - $d7;
+
+        $i43 = i24 - 128;
+
+        $d9 = (double) $i43;
+
+        $d10 = 0.391 * $d9;
+
+        $d12 = $d11 - $d10;
+
+        $i44 = (int) $d12;
+
+        r3[1] = $i44;
+
+        $i45 = i11 - 16;
+
+        $d13 = (double) $i45;
+
+        $d16 = 1.164 * $d13;
+
+        $i46 = i24 - 128;
+
+        $d14 = (double) $i46;
+
+        $d15 = 2.018 * $d14;
+
+        $d17 = $d16 + $d15;
+
+        $i47 = (int) $d17;
+
+        r3[2] = $i47;
+
+        i52 = 0;
+
+     label3:
+        if i52 >= 3 goto label6;
+
+        $i48 = r3[i52];
+
+        if $i48 >= 0 goto label4;
+
+        r3[i52] = 0;
+
+     label4:
+        $i49 = r3[i52];
+
+        if $i49 <= 255 goto label5;
+
+        r3[i52] = 255;
+
+     label5:
+        i52 = i52 + 1;
+
+        goto label3;
+
+     label6:
+        virtualinvoke r1.<java.awt.image.WritableRaster: void setPixel(int,int,int[])>(i50, i51, r3);
+
+        i51 = i51 + 1;
+
+        goto label2;
+
+     label7:
+        $f0 = (float) i50;
+
+        $f1 = 100.0F * $f0;
+
+        $i2 = virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: int getWidth()>();
+
+        $f2 = (float) $i2;
+
+        $f3 = $f1 / $f2;
+
+        virtualinvoke r2.<net.sourceforge.plantuml.webp.VP8Frame: void fireRGBProgressUpdate(float)>($f3);
+
+        i50 = i50 + 1;
+
+        goto label1;
+
+     label8:
+        return;
+    }
+
+    public void setFrame(javax.imageio.stream.ImageInputStream)
+    {
+        net.sourceforge.plantuml.webp.VP8Frame r0;
+        javax.imageio.stream.ImageInputStream $r1, $r2, r3;
+        long $l0;
+        int[][][][] $r4;
+        java.util.Vector $r5;
+        java.io.IOException $r6;
+
+        r0 := @this: net.sourceforge.plantuml.webp.VP8Frame;
+
+        r3 := @parameter0: javax.imageio.stream.ImageInputStream;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        interfaceinvoke $r1.<javax.imageio.stream.ImageInputStream: void flush()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame>;
+
+        interfaceinvoke $r2.<javax.imageio.stream.ImageInputStream: void close()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: javax.imageio.stream.ImageInputStream frame> = r3;
+
+        $l0 = interfaceinvoke r3.<javax.imageio.stream.ImageInputStream: long getStreamPosition()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: long offset> = $l0;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.webp.Globals: int[][][][] getDefaultCoefProbs()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: int[][][][] coefProbs> = $r4;
+
+        $r5 = new java.util.Vector;
+
+        specialinvoke $r5.<java.util.Vector: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.webp.VP8Frame: java.util.Vector tokenBoolDecoders> = $r5;
+
+     label2:
+        goto label4;
+
+     label3:
+        $r6 := @caughtexception;
+
+        virtualinvoke $r6.<java.io.IOException: void printStackTrace()>();
+
+     label4:
+        return;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+
+    static void <clinit>()
+    {
+        <net.sourceforge.plantuml.webp.VP8Frame: int BLOCK_TYPES> = 4;
+
+        <net.sourceforge.plantuml.webp.VP8Frame: int COEF_BANDS> = 8;
+
+        <net.sourceforge.plantuml.webp.VP8Frame: int MAX_ENTROPY_TOKENS> = 12;
+
+        <net.sourceforge.plantuml.webp.VP8Frame: int MAX_MODE_LF_DELTAS> = 4;
+
+        <net.sourceforge.plantuml.webp.VP8Frame: int MAX_REF_LF_DELTAS> = 4;
+
+        <net.sourceforge.plantuml.webp.VP8Frame: int PREV_COEF_CONTEXTS> = 3;
+
+        return;
+    }
+}

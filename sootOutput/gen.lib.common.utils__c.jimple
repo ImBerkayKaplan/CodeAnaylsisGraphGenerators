@@ -1,0 +1,3187 @@
+public class gen.lib.common.utils__c extends java.lang.Object
+{
+    private static final int W_DEGREE;
+    static final boolean $assertionsDisabled;
+
+    public void <init>()
+    {
+        gen.lib.common.utils__c r0;
+
+        r0 := @this: gen.lib.common.utils__c;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static h.ST_nodequeue new_queue(int)
+    {
+        h.ST_nodequeue $r0;
+        smetana.core.CArrayOfStar $r2, $r3, $r4;
+        java.lang.Throwable $r6;
+        int i0;
+
+        i0 := @parameter0: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("c7cptalfn8k75wyfirbnptnav", "new_queue");
+
+     label1:
+        $r0 = new h.ST_nodequeue;
+
+        specialinvoke $r0.<h.ST_nodequeue: void <init>()>();
+
+        if i0 > 1 goto label2;
+
+        i0 = 2;
+
+     label2:
+        $r2 = staticinvoke <smetana.core.CArrayOfStar: smetana.core.CArrayOfStar ALLOC(int,java.lang.Class)>(i0, class "Lh/ST_Agnode_s;");
+
+        $r0.<h.ST_nodequeue: smetana.core.CArrayOfStar store> = $r2;
+
+        $r0.<h.ST_nodequeue: smetana.core.CArrayOfStar tail> = $r2;
+
+        $r0.<h.ST_nodequeue: smetana.core.CArrayOfStar head> = $r2;
+
+        $r3 = $r0.<h.ST_nodequeue: smetana.core.CArrayOfStar store>;
+
+        $r4 = virtualinvoke $r3.<smetana.core.CArrayOfStar: smetana.core.CArrayOfStar plus_(int)>(i0);
+
+        $r0.<h.ST_nodequeue: smetana.core.CArrayOfStar limit> = $r4;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("c7cptalfn8k75wyfirbnptnav", "new_queue");
+
+        return $r0;
+
+     label4:
+        $r6 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("c7cptalfn8k75wyfirbnptnav", "new_queue");
+
+        throw $r6;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static void free_queue(h.ST_nodequeue)
+    {
+        h.ST_nodequeue r0;
+        smetana.core.CArrayOfStar $r1;
+        java.lang.Throwable $r2;
+
+        r0 := @parameter0: h.ST_nodequeue;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("1uj5nmdvwmuklnpd3v5py547f", "free_queue");
+
+     label1:
+        $r1 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar store>;
+
+        staticinvoke <smetana.core.Memory: void free(java.lang.Object)>($r1);
+
+        staticinvoke <smetana.core.Memory: void free(java.lang.Object)>(r0);
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("1uj5nmdvwmuklnpd3v5py547f", "free_queue");
+
+        goto label4;
+
+     label3:
+        $r2 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("1uj5nmdvwmuklnpd3v5py547f", "free_queue");
+
+        throw $r2;
+
+     label4:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    public static void enqueue(h.ST_nodequeue, h.ST_Agnode_s)
+    {
+        h.ST_nodequeue r0;
+        h.ST_Agnode_s r1;
+        smetana.core.CArrayOfStar $r2, $r3, $r4, $r5, $r6, $r7;
+        int $i0;
+        java.lang.Throwable $r8;
+
+        r0 := @parameter0: h.ST_nodequeue;
+
+        r1 := @parameter1: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("20pwd6i141q3o25lfvrdqytot", "enqueue");
+
+     label1:
+        $r2 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar tail>;
+
+        virtualinvoke $r2.<smetana.core.CArrayOfStar: void set_(int,java.lang.Object)>(0, r1);
+
+        $r3 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar tail>;
+
+        $r4 = virtualinvoke $r3.<smetana.core.CArrayOfStar: smetana.core.CArrayOfStar plus_(int)>(1);
+
+        r0.<h.ST_nodequeue: smetana.core.CArrayOfStar tail> = $r4;
+
+        $r6 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar tail>;
+
+        $r5 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar limit>;
+
+        $i0 = virtualinvoke $r6.<smetana.core.CArrayOfStar: int comparePointer_(smetana.core.CArrayOfStar)>($r5);
+
+        if $i0 < 0 goto label2;
+
+        $r7 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar store>;
+
+        r0.<h.ST_nodequeue: smetana.core.CArrayOfStar tail> = $r7;
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("20pwd6i141q3o25lfvrdqytot", "enqueue");
+
+        goto label4;
+
+     label3:
+        $r8 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("20pwd6i141q3o25lfvrdqytot", "enqueue");
+
+        throw $r8;
+
+     label4:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    public static h.ST_Agnode_s dequeue(h.ST_nodequeue)
+    {
+        h.ST_nodequeue r0;
+        smetana.core.CArrayOfStar $r1, $r2, $r3, $r5, $r6, $r7, $r8, $r10;
+        boolean $z0;
+        java.lang.Object $r4;
+        int $i0;
+        java.lang.Throwable $r11;
+        h.ST_Agnode_s r13;
+
+        r0 := @parameter0: h.ST_nodequeue;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("b612nmtf16au96ztbs8pike9r", "dequeue");
+
+     label1:
+        $r2 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar head>;
+
+        $r1 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar tail>;
+
+        $z0 = staticinvoke <smetana.core.JUtils: boolean EQ(java.lang.Object,java.lang.Object)>($r2, $r1);
+
+        if $z0 == 0 goto label2;
+
+        r13 = null;
+
+        goto label3;
+
+     label2:
+        $r3 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar head>;
+
+        $r4 = virtualinvoke $r3.<smetana.core.CArrayOfStar: java.lang.Object get_(int)>(0);
+
+        r13 = (h.ST_Agnode_s) $r4;
+
+        $r5 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar head>;
+
+        $r6 = virtualinvoke $r5.<smetana.core.CArrayOfStar: smetana.core.CArrayOfStar plus_(int)>(1);
+
+        r0.<h.ST_nodequeue: smetana.core.CArrayOfStar head> = $r6;
+
+        $r8 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar head>;
+
+        $r7 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar limit>;
+
+        $i0 = virtualinvoke $r8.<smetana.core.CArrayOfStar: int comparePointer_(smetana.core.CArrayOfStar)>($r7);
+
+        if $i0 < 0 goto label3;
+
+        $r10 = r0.<h.ST_nodequeue: smetana.core.CArrayOfStar store>;
+
+        r0.<h.ST_nodequeue: smetana.core.CArrayOfStar head> = $r10;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("b612nmtf16au96ztbs8pike9r", "dequeue");
+
+        return r13;
+
+     label4:
+        $r11 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("b612nmtf16au96ztbs8pike9r", "dequeue");
+
+        throw $r11;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static int late_int(smetana.core.__ptr__, h.ST_Agsym_s, int, int)
+    {
+        smetana.core.CString[] r0;
+        h.ST_Agsym_s r1;
+        smetana.core.__ptr__ r2;
+        smetana.core.CString r3, $r4;
+        boolean $z0, $z1;
+        int i0, $i1, i2, i3;
+        java.lang.Throwable $r5;
+
+        r2 := @parameter0: smetana.core.__ptr__;
+
+        r1 := @parameter1: h.ST_Agsym_s;
+
+        i0 := @parameter2: int;
+
+        i3 := @parameter3: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("6nydxv4f2m7jcfh8ljs0neu0x", "late_int");
+
+     label01:
+        r0 = newarray (smetana.core.CString)[1];
+
+        if r1 != null goto label03;
+
+     label02:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6nydxv4f2m7jcfh8ljs0neu0x", "late_int");
+
+        return i0;
+
+     label03:
+        r3 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r2, r1);
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r3);
+
+        if $z0 != 0 goto label04;
+
+        $i1 = virtualinvoke r3.<smetana.core.CString: int length()>();
+
+        if $i1 != 0 goto label05;
+
+     label04:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6nydxv4f2m7jcfh8ljs0neu0x", "late_int");
+
+        return i0;
+
+     label05:
+        i2 = staticinvoke <smetana.core.JUtils: int strtol(smetana.core.CString,smetana.core.CString[],int)>(r3, r0, 10);
+
+        $r4 = r0[0];
+
+        $z1 = staticinvoke <smetana.core.JUtils: boolean EQ(java.lang.Object,java.lang.Object)>(r3, $r4);
+
+        if $z1 == 0 goto label07;
+
+     label06:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6nydxv4f2m7jcfh8ljs0neu0x", "late_int");
+
+        return i0;
+
+     label07:
+        if i2 >= i3 goto label09;
+
+     label08:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6nydxv4f2m7jcfh8ljs0neu0x", "late_int");
+
+        return i3;
+
+     label09:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6nydxv4f2m7jcfh8ljs0neu0x", "late_int");
+
+        return i2;
+
+     label10:
+        $r5 := @caughtexception;
+
+     label11:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6nydxv4f2m7jcfh8ljs0neu0x", "late_int");
+
+        throw $r5;
+
+        catch java.lang.Throwable from label01 to label02 with label10;
+        catch java.lang.Throwable from label03 to label04 with label10;
+        catch java.lang.Throwable from label05 to label06 with label10;
+        catch java.lang.Throwable from label07 to label08 with label10;
+        catch java.lang.Throwable from label09 to label09 with label10;
+        catch java.lang.Throwable from label10 to label11 with label10;
+    }
+
+    public static double late_double(smetana.core.__ptr__, h.ST_Agsym_s, double, double)
+    {
+        smetana.core.CString[] r0;
+        h.ST_Agsym_s r1;
+        boolean $z0, $z1, $z2;
+        double d0, d1, d2;
+        smetana.core.__ptr__ r2;
+        smetana.core.CString r3, $r4;
+        char $c0;
+        byte $b1;
+        java.lang.Throwable $r5;
+
+        r2 := @parameter0: smetana.core.__ptr__;
+
+        r1 := @parameter1: h.ST_Agsym_s;
+
+        d0 := @parameter2: double;
+
+        d2 := @parameter3: double;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("d68314e4f20r79tt0cnmxugme", "late_double");
+
+     label01:
+        r0 = newarray (smetana.core.CString)[1];
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r1);
+
+        if $z0 != 0 goto label02;
+
+        $z1 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r2);
+
+        if $z1 == 0 goto label03;
+
+     label02:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d68314e4f20r79tt0cnmxugme", "late_double");
+
+        return d0;
+
+     label03:
+        r3 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r2, r1);
+
+        $z2 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r3);
+
+        if $z2 != 0 goto label04;
+
+        $c0 = virtualinvoke r3.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c0 != 0 goto label05;
+
+     label04:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d68314e4f20r79tt0cnmxugme", "late_double");
+
+        return d0;
+
+     label05:
+        d1 = staticinvoke <smetana.core.JUtils: double strtod(smetana.core.CString,smetana.core.CString[])>(r3, r0);
+
+        $r4 = r0[0];
+
+        if r3 != $r4 goto label07;
+
+     label06:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d68314e4f20r79tt0cnmxugme", "late_double");
+
+        return d0;
+
+     label07:
+        $b1 = d1 cmpg d2;
+
+        if $b1 >= 0 goto label09;
+
+     label08:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d68314e4f20r79tt0cnmxugme", "late_double");
+
+        return d2;
+
+     label09:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d68314e4f20r79tt0cnmxugme", "late_double");
+
+        return d1;
+
+     label10:
+        $r5 := @caughtexception;
+
+     label11:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d68314e4f20r79tt0cnmxugme", "late_double");
+
+        throw $r5;
+
+        catch java.lang.Throwable from label01 to label02 with label10;
+        catch java.lang.Throwable from label03 to label04 with label10;
+        catch java.lang.Throwable from label05 to label06 with label10;
+        catch java.lang.Throwable from label07 to label08 with label10;
+        catch java.lang.Throwable from label09 to label09 with label10;
+        catch java.lang.Throwable from label10 to label11 with label10;
+    }
+
+    public static smetana.core.CString late_string(smetana.core.__ptr__, h.ST_Agsym_s, smetana.core.CString)
+    {
+        h.ST_Agsym_s r0;
+        boolean $z0, $z1;
+        smetana.core.CString r1, r6;
+        smetana.core.__ptr__ r2;
+        java.lang.Throwable $r3;
+
+        r2 := @parameter0: smetana.core.__ptr__;
+
+        r0 := @parameter1: h.ST_Agsym_s;
+
+        r1 := @parameter2: smetana.core.CString;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("83xm6yc9q5h1bzufhsnv0v2up", "late_string");
+
+     label1:
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r0);
+
+        if $z0 != 0 goto label2;
+
+        $z1 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r2);
+
+        if $z1 == 0 goto label3;
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("83xm6yc9q5h1bzufhsnv0v2up", "late_string");
+
+        return r1;
+
+     label3:
+        r6 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r2, r0);
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("83xm6yc9q5h1bzufhsnv0v2up", "late_string");
+
+        return r6;
+
+     label5:
+        $r3 := @caughtexception;
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("83xm6yc9q5h1bzufhsnv0v2up", "late_string");
+
+        throw $r3;
+
+        catch java.lang.Throwable from label1 to label2 with label5;
+        catch java.lang.Throwable from label3 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    public static smetana.core.CString late_nnstring(smetana.core.__ptr__, h.ST_Agsym_s, smetana.core.CString)
+    {
+        smetana.core.__ptr__ r0;
+        h.ST_Agsym_s r1;
+        smetana.core.CString r2, r6;
+        boolean $z0;
+        char $c0;
+        java.lang.Throwable $r4;
+
+        r0 := @parameter0: smetana.core.__ptr__;
+
+        r1 := @parameter1: h.ST_Agsym_s;
+
+        r2 := @parameter2: smetana.core.CString;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("8oon4q1mrublaru177xfntqgd", "late_nnstring");
+
+     label1:
+        r6 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_string(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r0, r1, r2);
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r6);
+
+        if $z0 != 0 goto label2;
+
+        $c0 = virtualinvoke r6.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c0 != 0 goto label3;
+
+     label2:
+        r6 = r2;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("8oon4q1mrublaru177xfntqgd", "late_nnstring");
+
+        return r6;
+
+     label4:
+        $r4 := @caughtexception;
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("8oon4q1mrublaru177xfntqgd", "late_nnstring");
+
+        throw $r4;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+        catch java.lang.Throwable from label4 to label5 with label4;
+    }
+
+    public static boolean late_bool(smetana.core.__ptr__, h.ST_Agsym_s, int)
+    {
+        h.ST_Agsym_s r0;
+        java.lang.UnsupportedOperationException $r3;
+        int i0;
+        java.lang.Throwable $r4;
+        smetana.core.__ptr__ r6;
+        boolean $z1;
+
+        r6 := @parameter0: smetana.core.__ptr__;
+
+        r0 := @parameter1: h.ST_Agsym_s;
+
+        i0 := @parameter2: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("87ifze04q7qzigjj1fb9y9by2", "late_bool");
+
+     label1:
+        if r0 != null goto label4;
+
+        if i0 == 0 goto label2;
+
+        $z1 = 1;
+
+        goto label3;
+
+     label2:
+        $z1 = 0;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("87ifze04q7qzigjj1fb9y9by2", "late_bool");
+
+        return $z1;
+
+     label4:
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("a0kh1y5n8u59z0xo7mag3zmt6");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("c24nfmv9i7o5eoqaymbibp7m7");
+
+        $r3 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r3.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r3;
+
+     label5:
+        $r4 := @caughtexception;
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("87ifze04q7qzigjj1fb9y9by2", "late_bool");
+
+        throw $r4;
+
+        catch java.lang.Throwable from label1 to label3 with label5;
+        catch java.lang.Throwable from label4 to label6 with label5;
+    }
+
+    public static h.ST_Agnode_s UF_find(h.ST_Agnode_s)
+    {
+        h.ST_Agnode_s $r0, $r2, $r3, $r4, $r5, $r6, r9;
+        boolean $z0;
+        java.lang.Throwable $r7;
+
+        r9 := @parameter0: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("aeq0acpkhfv3gd5jx8op4jf18", "UF_find");
+
+     label1:
+        $r0 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>(r9);
+
+        if $r0 == null goto label3;
+
+        $r2 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>(r9);
+
+        $z0 = staticinvoke <smetana.core.JUtils: boolean NEQ(java.lang.Object,java.lang.Object)>($r2, r9);
+
+        if $z0 == 0 goto label3;
+
+        $r3 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>(r9);
+
+        $r4 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>($r3);
+
+        if $r4 == null goto label2;
+
+        $r5 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>(r9);
+
+        $r6 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>($r5);
+
+        staticinvoke <smetana.core.Macro: void ND_UF_parent(h.ST_Agobj_s,h.ST_Agnode_s)>(r9, $r6);
+
+     label2:
+        r9 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>(r9);
+
+        goto label1;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("aeq0acpkhfv3gd5jx8op4jf18", "UF_find");
+
+        return r9;
+
+     label4:
+        $r7 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("aeq0acpkhfv3gd5jx8op4jf18", "UF_find");
+
+        throw $r7;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static h.ST_Agnode_s UF_union(h.ST_Agnode_s, h.ST_Agnode_s)
+    {
+        h.ST_Agnode_s r0, $r1, $r3, r8;
+        boolean $z0;
+        int $i0, $i1, $i2, $i3, $i4;
+        java.lang.Throwable $r6;
+
+        r0 := @parameter0: h.ST_Agnode_s;
+
+        r8 := @parameter1: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("9ldxwfr4vvijrvfcvs1hvdzrt", "UF_union");
+
+     label01:
+        $z0 = staticinvoke <smetana.core.JUtils: boolean EQ(java.lang.Object,java.lang.Object)>(r0, r8);
+
+        if $z0 == 0 goto label03;
+
+     label02:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9ldxwfr4vvijrvfcvs1hvdzrt", "UF_union");
+
+        return r0;
+
+     label03:
+        $r1 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>(r0);
+
+        if $r1 != null goto label04;
+
+        staticinvoke <smetana.core.Macro: void ND_UF_parent(h.ST_Agobj_s,h.ST_Agnode_s)>(r0, r0);
+
+        staticinvoke <smetana.core.Macro: void ND_UF_size(h.ST_Agnode_s,int)>(r0, 1);
+
+        goto label05;
+
+     label04:
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("35c97tyk6tzw1g527j6rp6xoo");
+
+     label05:
+        $r3 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_UF_parent(h.ST_Agobj_s)>(r8);
+
+        if $r3 != null goto label06;
+
+        staticinvoke <smetana.core.Macro: void ND_UF_parent(h.ST_Agobj_s,h.ST_Agnode_s)>(r8, r8);
+
+        staticinvoke <smetana.core.Macro: void ND_UF_size(h.ST_Agnode_s,int)>(r8, 1);
+
+        goto label07;
+
+     label06:
+        r8 = staticinvoke <gen.lib.common.utils__c: h.ST_Agnode_s UF_find(h.ST_Agnode_s)>(r8);
+
+     label07:
+        $i0 = staticinvoke <smetana.core.Macro: int ND_id(h.ST_Agnode_s)>(r0);
+
+        $i1 = staticinvoke <smetana.core.Macro: int ND_id(h.ST_Agnode_s)>(r8);
+
+        if $i0 <= $i1 goto label08;
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("2igr3ntnkm6svji4pbnjlp54e");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3lht90i6tvxbr10meir8nvcic");
+
+        goto label09;
+
+     label08:
+        staticinvoke <smetana.core.Macro: void ND_UF_parent(h.ST_Agobj_s,h.ST_Agnode_s)>(r8, r0);
+
+        $i2 = staticinvoke <smetana.core.Macro: int ND_UF_size(h.ST_Agnode_s)>(r0);
+
+        $i3 = staticinvoke <smetana.core.Macro: int ND_UF_size(h.ST_Agnode_s)>(r8);
+
+        $i4 = $i2 + $i3;
+
+        staticinvoke <smetana.core.Macro: void ND_UF_size(h.ST_Agnode_s,int)>(r0, $i4);
+
+        r8 = r0;
+
+     label09:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9ldxwfr4vvijrvfcvs1hvdzrt", "UF_union");
+
+        return r8;
+
+     label10:
+        $r6 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9ldxwfr4vvijrvfcvs1hvdzrt", "UF_union");
+
+        throw $r6;
+
+        catch java.lang.Throwable from label01 to label02 with label10;
+        catch java.lang.Throwable from label03 to label09 with label10;
+    }
+
+    public static void UF_singleton(h.ST_Agnode_s)
+    {
+        h.ST_Agnode_s r0;
+        java.lang.Throwable $r1;
+
+        r0 := @parameter0: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("22k0u1imxyw06k9rizqlfz153", "UF_singleton");
+
+     label1:
+        staticinvoke <smetana.core.Macro: void ND_UF_size(h.ST_Agnode_s,int)>(r0, 1);
+
+        staticinvoke <smetana.core.Macro: void ND_UF_parent(h.ST_Agobj_s,h.ST_Agnode_s)>(r0, null);
+
+        staticinvoke <smetana.core.Macro: void ND_ranktype(h.ST_Agnode_s,int)>(r0, 0);
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("22k0u1imxyw06k9rizqlfz153", "UF_singleton");
+
+        goto label4;
+
+     label3:
+        $r1 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("22k0u1imxyw06k9rizqlfz153", "UF_singleton");
+
+        throw $r1;
+
+     label4:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    public static void UF_setname(h.ST_Agnode_s, h.ST_Agnode_s)
+    {
+        boolean $z0, $z1;
+        h.ST_Agnode_s r0, r1, $r2;
+        int $i0, $i1, $i2;
+        java.lang.AssertionError $r3;
+        java.lang.Throwable $r4;
+
+        r0 := @parameter0: h.ST_Agnode_s;
+
+        r1 := @parameter1: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("e0fn8xuzkdt0q8xoofl6j1txb", "UF_setname");
+
+     label1:
+        $z0 = <gen.lib.common.utils__c: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label2;
+
+        $r2 = staticinvoke <gen.lib.common.utils__c: h.ST_Agnode_s UF_find(h.ST_Agnode_s)>(r0);
+
+        $z1 = staticinvoke <smetana.core.JUtils: boolean EQ(java.lang.Object,java.lang.Object)>(r0, $r2);
+
+        if $z1 != 0 goto label2;
+
+        $r3 = new java.lang.AssertionError;
+
+        specialinvoke $r3.<java.lang.AssertionError: void <init>()>();
+
+        throw $r3;
+
+     label2:
+        staticinvoke <smetana.core.Macro: void ND_UF_parent(h.ST_Agobj_s,h.ST_Agnode_s)>(r0, r1);
+
+        $i0 = staticinvoke <smetana.core.Macro: int ND_UF_size(h.ST_Agnode_s)>(r1);
+
+        $i1 = staticinvoke <smetana.core.Macro: int ND_UF_size(h.ST_Agnode_s)>(r0);
+
+        $i2 = $i0 + $i1;
+
+        staticinvoke <smetana.core.Macro: void ND_UF_size(h.ST_Agnode_s,int)>(r1, $i2);
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("e0fn8xuzkdt0q8xoofl6j1txb", "UF_setname");
+
+        goto label5;
+
+     label4:
+        $r4 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("e0fn8xuzkdt0q8xoofl6j1txb", "UF_setname");
+
+        throw $r4;
+
+     label5:
+        return;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static h.ST_pointf Bezier(smetana.core.CArray, int, double, smetana.core.CArray, smetana.core.CArray)
+    {
+        smetana.core.CArray r0, r1, r2;
+        int i0;
+        double d0;
+        h.ST_pointf $r3, $r4;
+
+        r0 := @parameter0: smetana.core.CArray;
+
+        i0 := @parameter1: int;
+
+        d0 := @parameter2: double;
+
+        r1 := @parameter3: smetana.core.CArray;
+
+        r2 := @parameter4: smetana.core.CArray;
+
+        $r3 = staticinvoke <gen.lib.common.utils__c: h.ST_pointf Bezier_w_(smetana.core.CArray,int,double,smetana.core.CArray,smetana.core.CArray)>(r0, i0, d0, r1, r2);
+
+        $r4 = virtualinvoke $r3.<h.ST_pointf: h.ST_pointf copy()>();
+
+        return $r4;
+    }
+
+    private static h.ST_pointf Bezier_w_(smetana.core.CArray, int, double, smetana.core.CArray, smetana.core.CArray)
+    {
+        smetana.core.CArray[] $r0;
+        smetana.core.CArray $r1, $r2, $r3, $r4, $r5, $r6, r8, r9, $r10, $r14, $r19, $r23, $r25, $r29, $r32, $r34, $r38, $r41, r43;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, i9, i10, i11, i12, i13;
+        java.lang.Object $r11, $r13, $r16, $r18, $r21, $r24, $r27, $r30, $r33, $r36, $r39, $r42, $r45;
+        h.ST_pointf r12, $r15, $r20, $r26, $r28, $r31, $r35, $r37, $r40, $r44;
+        smetana.core.__struct__ $r17, $r22, $r46;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12;
+        java.lang.Throwable $r47;
+
+        r43 := @parameter0: smetana.core.CArray;
+
+        i0 := @parameter1: int;
+
+        d0 := @parameter2: double;
+
+        r8 := @parameter3: smetana.core.CArray;
+
+        r9 := @parameter4: smetana.core.CArray;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("6p0ey2c2ujk2o7h221p0b4xon", "Bezier");
+
+     label01:
+        $r0 = newarray (smetana.core.CArray)[6];
+
+        $r1 = staticinvoke <smetana.core.CArray: smetana.core.CArray ALLOC__(int,java.lang.Class)>(6, class "Lh/ST_pointf;");
+
+        $r0[0] = $r1;
+
+        $r2 = staticinvoke <smetana.core.CArray: smetana.core.CArray ALLOC__(int,java.lang.Class)>(6, class "Lh/ST_pointf;");
+
+        $r0[1] = $r2;
+
+        $r3 = staticinvoke <smetana.core.CArray: smetana.core.CArray ALLOC__(int,java.lang.Class)>(6, class "Lh/ST_pointf;");
+
+        $r0[2] = $r3;
+
+        $r4 = staticinvoke <smetana.core.CArray: smetana.core.CArray ALLOC__(int,java.lang.Class)>(6, class "Lh/ST_pointf;");
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <smetana.core.CArray: smetana.core.CArray ALLOC__(int,java.lang.Class)>(6, class "Lh/ST_pointf;");
+
+        $r0[4] = $r5;
+
+        $r6 = staticinvoke <smetana.core.CArray: smetana.core.CArray ALLOC__(int,java.lang.Class)>(6, class "Lh/ST_pointf;");
+
+        $r0[5] = $r6;
+
+        i9 = 0;
+
+     label02:
+        if i9 > i0 goto label03;
+
+        $r41 = $r0[0];
+
+        $r42 = virtualinvoke $r41.<smetana.core.CArray: java.lang.Object get__(int)>(i9);
+
+        $r44 = (h.ST_pointf) $r42;
+
+        $r45 = virtualinvoke r43.<smetana.core.CArray: java.lang.Object get__(int)>(i9);
+
+        $r46 = (smetana.core.__struct__) $r45;
+
+        virtualinvoke $r44.<h.ST_pointf: void ___(smetana.core.__struct__)>($r46);
+
+        i9 = i9 + 1;
+
+        goto label02;
+
+     label03:
+        i10 = 1;
+
+     label04:
+        if i10 > i0 goto label07;
+
+        i11 = 0;
+
+     label05:
+        $i2 = i0 - i10;
+
+        if i11 > $i2 goto label06;
+
+        $r23 = $r0[i10];
+
+        $r24 = virtualinvoke $r23.<smetana.core.CArray: java.lang.Object get__(int)>(i11);
+
+        $r26 = (h.ST_pointf) $r24;
+
+        $d1 = 1.0 - d0;
+
+        $i3 = i10 - 1;
+
+        $r25 = $r0[$i3];
+
+        $r27 = virtualinvoke $r25.<smetana.core.CArray: java.lang.Object get__(int)>(i11);
+
+        $r28 = (h.ST_pointf) $r27;
+
+        $d2 = $r28.<h.ST_pointf: double x>;
+
+        $d3 = $d1 * $d2;
+
+        $i4 = i10 - 1;
+
+        $r29 = $r0[$i4];
+
+        $i5 = i11 + 1;
+
+        $r30 = virtualinvoke $r29.<smetana.core.CArray: java.lang.Object get__(int)>($i5);
+
+        $r31 = (h.ST_pointf) $r30;
+
+        $d4 = $r31.<h.ST_pointf: double x>;
+
+        $d5 = d0 * $d4;
+
+        $d6 = $d3 + $d5;
+
+        $r26.<h.ST_pointf: double x> = $d6;
+
+        $r32 = $r0[i10];
+
+        $r33 = virtualinvoke $r32.<smetana.core.CArray: java.lang.Object get__(int)>(i11);
+
+        $r35 = (h.ST_pointf) $r33;
+
+        $d7 = 1.0 - d0;
+
+        $i6 = i10 - 1;
+
+        $r34 = $r0[$i6];
+
+        $r36 = virtualinvoke $r34.<smetana.core.CArray: java.lang.Object get__(int)>(i11);
+
+        $r37 = (h.ST_pointf) $r36;
+
+        $d8 = $r37.<h.ST_pointf: double y>;
+
+        $d9 = $d7 * $d8;
+
+        $i7 = i10 - 1;
+
+        $r38 = $r0[$i7];
+
+        $i8 = i11 + 1;
+
+        $r39 = virtualinvoke $r38.<smetana.core.CArray: java.lang.Object get__(int)>($i8);
+
+        $r40 = (h.ST_pointf) $r39;
+
+        $d10 = $r40.<h.ST_pointf: double y>;
+
+        $d11 = d0 * $d10;
+
+        $d12 = $d9 + $d11;
+
+        $r35.<h.ST_pointf: double y> = $d12;
+
+        i11 = i11 + 1;
+
+        goto label05;
+
+     label06:
+        i10 = i10 + 1;
+
+        goto label04;
+
+     label07:
+        if r8 == null goto label09;
+
+        i12 = 0;
+
+     label08:
+        if i12 > i0 goto label09;
+
+        $r18 = virtualinvoke r8.<smetana.core.CArray: java.lang.Object get__(int)>(i12);
+
+        $r20 = (h.ST_pointf) $r18;
+
+        $r19 = $r0[i12];
+
+        $r21 = virtualinvoke $r19.<smetana.core.CArray: java.lang.Object get__(int)>(0);
+
+        $r22 = (smetana.core.__struct__) $r21;
+
+        virtualinvoke $r20.<h.ST_pointf: void ___(smetana.core.__struct__)>($r22);
+
+        i12 = i12 + 1;
+
+        goto label08;
+
+     label09:
+        if r9 == null goto label11;
+
+        i13 = 0;
+
+     label10:
+        if i13 > i0 goto label11;
+
+        $r13 = virtualinvoke r9.<smetana.core.CArray: java.lang.Object get__(int)>(i13);
+
+        $r15 = (h.ST_pointf) $r13;
+
+        $i1 = i0 - i13;
+
+        $r14 = $r0[$i1];
+
+        $r16 = virtualinvoke $r14.<smetana.core.CArray: java.lang.Object get__(int)>(i13);
+
+        $r17 = (smetana.core.__struct__) $r16;
+
+        virtualinvoke $r15.<h.ST_pointf: void ___(smetana.core.__struct__)>($r17);
+
+        i13 = i13 + 1;
+
+        goto label10;
+
+     label11:
+        $r10 = $r0[i0];
+
+        $r11 = virtualinvoke $r10.<smetana.core.CArray: java.lang.Object get__(int)>(0);
+
+        r12 = (h.ST_pointf) $r11;
+
+     label12:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6p0ey2c2ujk2o7h221p0b4xon", "Bezier");
+
+        return r12;
+
+     label13:
+        $r47 := @caughtexception;
+
+     label14:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6p0ey2c2ujk2o7h221p0b4xon", "Bezier");
+
+        throw $r47;
+
+        catch java.lang.Throwable from label01 to label12 with label13;
+        catch java.lang.Throwable from label13 to label14 with label13;
+    }
+
+    public static smetana.core.CString safefile(smetana.core.CString)
+    {
+        smetana.core.CString r2;
+
+        r2 := @parameter0: smetana.core.CString;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("3xll2b0v9nthwvx9dafq49t8s", "safefile");
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("3xll2b0v9nthwvx9dafq49t8s", "safefile");
+
+        return null;
+    }
+
+    public static int maptoken(smetana.core.CString, smetana.core.CString[], int[])
+    {
+        smetana.core.CString[] r0;
+        smetana.core.CString $r1, r4;
+        int[] r3;
+        int i0, $i1, i2;
+        boolean $z0;
+        java.lang.Throwable $r5;
+
+        r4 := @parameter0: smetana.core.CString;
+
+        r0 := @parameter1: smetana.core.CString[];
+
+        r3 := @parameter2: int[];
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("2ihv17oajyaaaycirwsbgz1m7", "maptoken");
+
+     label1:
+        i2 = 0;
+
+     label2:
+        $r1 = r0[i2];
+
+        if $r1 == null goto label4;
+
+        if r4 == null goto label3;
+
+        $i1 = staticinvoke <smetana.core.JUtils: int strcmp(smetana.core.CString,smetana.core.CString)>(r4, $r1);
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(int)>($i1);
+
+        if $z0 == 0 goto label3;
+
+        goto label4;
+
+     label3:
+        i2 = i2 + 1;
+
+        goto label2;
+
+     label4:
+        i0 = r3[i2];
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("2ihv17oajyaaaycirwsbgz1m7", "maptoken");
+
+        return i0;
+
+     label6:
+        $r5 := @caughtexception;
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("2ihv17oajyaaaycirwsbgz1m7", "maptoken");
+
+        throw $r5;
+
+        catch java.lang.Throwable from label1 to label5 with label6;
+        catch java.lang.Throwable from label6 to label7 with label6;
+    }
+
+    public static boolean mapBool(smetana.core.CString, boolean)
+    {
+        smetana.core.CString r0, $r1, $r2, $r3, $r4;
+        boolean $z0, z1, $z2, $z3, $z4, $z5, $z6, z10, z11, $z12;
+        char $c0, $c5;
+        int $i1, $i2, $i3, $i4, $i6;
+        java.lang.Throwable $r5;
+
+        r0 := @parameter0: smetana.core.CString;
+
+        z1 := @parameter1: boolean;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+     label01:
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r0);
+
+        if $z0 != 0 goto label02;
+
+        $c0 = virtualinvoke r0.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c0 != 0 goto label03;
+
+     label02:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+        return z1;
+
+     label03:
+        $r1 = new smetana.core.CString;
+
+        specialinvoke $r1.<smetana.core.CString: void <init>(java.lang.String)>("false");
+
+        $i1 = staticinvoke <gen.lib.common.strcasecmp__c: int strcasecmp(smetana.core.CString,smetana.core.CString)>(r0, $r1);
+
+        $z2 = staticinvoke <smetana.core.Macro: boolean N(int)>($i1);
+
+        if $z2 == 0 goto label05;
+
+     label04:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+        return 0;
+
+     label05:
+        $r2 = new smetana.core.CString;
+
+        specialinvoke $r2.<smetana.core.CString: void <init>(java.lang.String)>("no");
+
+        $i2 = staticinvoke <gen.lib.common.strcasecmp__c: int strcasecmp(smetana.core.CString,smetana.core.CString)>(r0, $r2);
+
+        $z3 = staticinvoke <smetana.core.Macro: boolean N(int)>($i2);
+
+        if $z3 == 0 goto label07;
+
+     label06:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+        return 0;
+
+     label07:
+        $r3 = new smetana.core.CString;
+
+        specialinvoke $r3.<smetana.core.CString: void <init>(java.lang.String)>("true");
+
+        $i3 = staticinvoke <gen.lib.common.strcasecmp__c: int strcasecmp(smetana.core.CString,smetana.core.CString)>(r0, $r3);
+
+        $z4 = staticinvoke <smetana.core.Macro: boolean N(int)>($i3);
+
+        if $z4 == 0 goto label09;
+
+        z10 = staticinvoke <smetana.core.Macro: boolean N(int)>(0);
+
+     label08:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+        return z10;
+
+     label09:
+        $r4 = new smetana.core.CString;
+
+        specialinvoke $r4.<smetana.core.CString: void <init>(java.lang.String)>("yes");
+
+        $i4 = staticinvoke <gen.lib.common.strcasecmp__c: int strcasecmp(smetana.core.CString,smetana.core.CString)>(r0, $r4);
+
+        $z5 = staticinvoke <smetana.core.Macro: boolean N(int)>($i4);
+
+        if $z5 == 0 goto label11;
+
+        z11 = staticinvoke <smetana.core.Macro: boolean N(int)>(0);
+
+     label10:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+        return z11;
+
+     label11:
+        $c5 = virtualinvoke r0.<smetana.core.CString: char charAt(int)>(0);
+
+        $z6 = staticinvoke <smetana.core.JUtils: boolean isdigit(char)>($c5);
+
+        if $z6 == 0 goto label14;
+
+        $i6 = staticinvoke <smetana.core.JUtils: int atoi(smetana.core.CString)>(r0);
+
+        if $i6 == 0 goto label12;
+
+        $z12 = 1;
+
+        goto label13;
+
+     label12:
+        $z12 = 0;
+
+     label13:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+        return $z12;
+
+     label14:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+        return z1;
+
+     label15:
+        $r5 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4esyuq2yqdaqoddgfqs24m5m3", "mapBool");
+
+        throw $r5;
+
+        catch java.lang.Throwable from label01 to label02 with label15;
+        catch java.lang.Throwable from label03 to label04 with label15;
+        catch java.lang.Throwable from label05 to label06 with label15;
+        catch java.lang.Throwable from label07 to label08 with label15;
+        catch java.lang.Throwable from label09 to label10 with label15;
+        catch java.lang.Throwable from label11 to label13 with label15;
+        catch java.lang.Throwable from label14 to label14 with label15;
+    }
+
+    public static boolean mapbool(smetana.core.CString)
+    {
+        smetana.core.CString r0;
+        boolean z0;
+        java.lang.Throwable $r1;
+
+        r0 := @parameter0: smetana.core.CString;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("ehkvqh6bwf4jw3mj1w5p7a8m8", "mapbool");
+
+     label1:
+        z0 = staticinvoke <gen.lib.common.utils__c: boolean mapBool(smetana.core.CString,boolean)>(r0, 0);
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("ehkvqh6bwf4jw3mj1w5p7a8m8", "mapbool");
+
+        return z0;
+
+     label3:
+        $r1 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("ehkvqh6bwf4jw3mj1w5p7a8m8", "mapbool");
+
+        throw $r1;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    public static h.ST_pointf dotneato_closest(h.ST_splines, h.ST_pointf)
+    {
+        h.ST_splines r0;
+        h.ST_pointf r1, $r2, $r3, r4;
+        java.lang.Throwable $r5;
+
+        r0 := @parameter0: h.ST_splines;
+
+        r1 := @parameter1: h.ST_pointf;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("37hgj44s94wf9bmz16he85pgq", "dotneato_closest");
+
+     label1:
+        $r2 = virtualinvoke r1.<h.ST_pointf: h.ST_pointf copy()>();
+
+        $r3 = staticinvoke <gen.lib.common.utils__c: h.ST_pointf dotneato_closest_(h.ST_splines,h.ST_pointf)>(r0, $r2);
+
+        r4 = virtualinvoke $r3.<h.ST_pointf: h.ST_pointf copy()>();
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("37hgj44s94wf9bmz16he85pgq", "dotneato_closest");
+
+        return r4;
+
+     label3:
+        $r5 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("37hgj44s94wf9bmz16he85pgq", "dotneato_closest");
+
+        throw $r5;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    private static h.ST_pointf dotneato_closest_(h.ST_splines, h.ST_pointf)
+    {
+        smetana.core.CArray r0, $r6, $r23, $r28, $r32, $r37, $r40;
+        h.ST_pointf $r1, r10, $r11, $r13, $r14, $r24, $r26, $r29, $r31, $r35, $r39, $r42;
+        h.ST_bezier $r3;
+        h.ST_splines r5;
+        int $i0, $i1, $i2, $i3, $i6, $i7, $i8, i10, i11, i12, i13, i14, i15;
+        java.lang.Object $r7, $r9, $r12, $r22, $r25, $r27, $r30, $r33, $r38, $r41;
+        smetana.core.__struct__ $r8, $r34;
+        double d2, d3, $d4, d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, d14, d15;
+        byte $b4, $b5, $b9;
+
+        r5 := @parameter0: h.ST_splines;
+
+        r10 := @parameter1: h.ST_pointf;
+
+        r0 = staticinvoke <smetana.core.CArray: smetana.core.CArray ALLOC__(int,java.lang.Class)>(4, class "Lh/ST_pointf;");
+
+        $r1 = new h.ST_pointf;
+
+        specialinvoke $r1.<h.ST_pointf: void <init>()>();
+
+        $r3 = new h.ST_bezier;
+
+        specialinvoke $r3.<h.ST_bezier: void <init>()>();
+
+        i10 = -1;
+
+        i11 = -1;
+
+        d15 = 1.0E38;
+
+        i12 = 0;
+
+     label01:
+        $i0 = r5.<h.ST_splines: int size>;
+
+        if i12 >= $i0 goto label06;
+
+        $r32 = r5.<h.ST_splines: smetana.core.CArray list>;
+
+        $r33 = virtualinvoke $r32.<smetana.core.CArray: java.lang.Object get__(int)>(i12);
+
+        $r34 = (smetana.core.__struct__) $r33;
+
+        virtualinvoke $r3.<h.ST_bezier: void ___(smetana.core.__struct__)>($r34);
+
+        i13 = 0;
+
+     label02:
+        $i8 = $r3.<h.ST_bezier: int size>;
+
+        if i13 >= $i8 goto label05;
+
+        $r35 = new h.ST_pointf;
+
+        specialinvoke $r35.<h.ST_pointf: void <init>()>();
+
+        $r37 = $r3.<h.ST_bezier: smetana.core.CArray list>;
+
+        $r38 = virtualinvoke $r37.<smetana.core.CArray: java.lang.Object get__(int)>(i13);
+
+        $r39 = (h.ST_pointf) $r38;
+
+        $d12 = $r39.<h.ST_pointf: double x>;
+
+        $r35.<h.ST_pointf: double x> = $d12;
+
+        $r40 = $r3.<h.ST_bezier: smetana.core.CArray list>;
+
+        $r41 = virtualinvoke $r40.<smetana.core.CArray: java.lang.Object get__(int)>(i13);
+
+        $r42 = (h.ST_pointf) $r41;
+
+        $d13 = $r42.<h.ST_pointf: double y>;
+
+        $r35.<h.ST_pointf: double y> = $d13;
+
+        d14 = staticinvoke <smetana.core.Macro: double DIST2(h.ST_pointf,h.ST_pointf)>($r35, r10);
+
+        if i10 == -1 goto label03;
+
+        $b9 = d14 cmpg d15;
+
+        if $b9 >= 0 goto label04;
+
+     label03:
+        i11 = i12;
+
+        i10 = i13;
+
+        d15 = d14;
+
+     label04:
+        i13 = i13 + 1;
+
+        goto label02;
+
+     label05:
+        i12 = i12 + 1;
+
+        goto label01;
+
+     label06:
+        $r6 = r5.<h.ST_splines: smetana.core.CArray list>;
+
+        $r7 = virtualinvoke $r6.<smetana.core.CArray: java.lang.Object get__(int)>(i11);
+
+        $r8 = (smetana.core.__struct__) $r7;
+
+        virtualinvoke $r3.<h.ST_bezier: void ___(smetana.core.__struct__)>($r8);
+
+        $i1 = $r3.<h.ST_bezier: int size>;
+
+        $i2 = $i1 - 1;
+
+        if i10 != $i2 goto label07;
+
+        i10 = i10 + -1;
+
+     label07:
+        $i3 = i10 / 3;
+
+        i14 = 3 * $i3;
+
+        i15 = 0;
+
+     label08:
+        if i15 >= 4 goto label09;
+
+        $r22 = virtualinvoke r0.<smetana.core.CArray: java.lang.Object get__(int)>(i15);
+
+        $r24 = (h.ST_pointf) $r22;
+
+        $r23 = $r3.<h.ST_bezier: smetana.core.CArray list>;
+
+        $i6 = i14 + i15;
+
+        $r25 = virtualinvoke $r23.<smetana.core.CArray: java.lang.Object get__(int)>($i6);
+
+        $r26 = (h.ST_pointf) $r25;
+
+        $d10 = $r26.<h.ST_pointf: double x>;
+
+        $r24.<h.ST_pointf: double x> = $d10;
+
+        $r27 = virtualinvoke r0.<smetana.core.CArray: java.lang.Object get__(int)>(i15);
+
+        $r29 = (h.ST_pointf) $r27;
+
+        $r28 = $r3.<h.ST_bezier: smetana.core.CArray list>;
+
+        $i7 = i14 + i15;
+
+        $r30 = virtualinvoke $r28.<smetana.core.CArray: java.lang.Object get__(int)>($i7);
+
+        $r31 = (h.ST_pointf) $r30;
+
+        $d11 = $r31.<h.ST_pointf: double y>;
+
+        $r29.<h.ST_pointf: double y> = $d11;
+
+        i15 = i15 + 1;
+
+        goto label08;
+
+     label09:
+        $r9 = virtualinvoke r0.<smetana.core.CArray: java.lang.Object get__(int)>(0);
+
+        $r11 = (h.ST_pointf) $r9;
+
+        d2 = staticinvoke <smetana.core.Macro: double DIST2(h.ST_pointf,h.ST_pointf)>($r11, r10);
+
+        $r12 = virtualinvoke r0.<smetana.core.CArray: java.lang.Object get__(int)>(3);
+
+        $r13 = (h.ST_pointf) $r12;
+
+        d3 = staticinvoke <smetana.core.Macro: double DIST2(h.ST_pointf,h.ST_pointf)>($r13, r10);
+
+     label10:
+        $d4 = 0.0 + 1.0;
+
+        d5 = $d4 / 2.0;
+
+        $r14 = staticinvoke <gen.lib.common.utils__c: h.ST_pointf Bezier(smetana.core.CArray,int,double,smetana.core.CArray,smetana.core.CArray)>(r0, 3, d5, null, null);
+
+        virtualinvoke $r1.<h.ST_pointf: void ___(smetana.core.__struct__)>($r14);
+
+        $d6 = d2 - d3;
+
+        $d7 = staticinvoke <smetana.core.Macro: double fabs(double)>($d6);
+
+        $b4 = $d7 cmpg 1.0;
+
+        if $b4 >= 0 goto label11;
+
+        goto label13;
+
+     label11:
+        $d8 = 1.0 - 0.0;
+
+        $d9 = staticinvoke <smetana.core.Macro: double fabs(double)>($d8);
+
+        $b5 = $d9 cmpg 1.0E-5;
+
+        if $b5 >= 0 goto label12;
+
+        goto label13;
+
+     label12:
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6apa9aoby9j8a0eanbfhy5mn2");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6jttyuryfaxa193mme86dqf58");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6avwplrum9i9qi3g9wl6yvz04");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7yhr8hn3r6wohafwxrt85b2j2");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("556vs5i22602clhs1p3htz7vk");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("507tgq81szei2ge3miiak4b1v");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("flupwh3kosf3fkhkxllllt1");
+
+        goto label10;
+
+     label13:
+        return $r1;
+    }
+
+    public static void common_init_node(h.ST_Agnode_s)
+    {
+        h.ST_fontinfo $r0;
+        h.ST_Agnode_s r2;
+        smetana.core.Z $r3, $r5, $r7, $r12, $r14, $r16, $r20, $r27, $r42, $r45;
+        h.ST_Agsym_s $r4, $r6, $r9, $r13, $r15, $r18, $r22, $r28, $r43, $r46;
+        double $d0, $d1, $d2, $d3;
+        smetana.core.CString $r8, $r10, $r17, $r19, $r21, $r23, $r29, r35, $r39, $r40;
+        h.ST_shape_desc $r11, $r47;
+        int $i0, $i6, $i7;
+        h.EN_shape_kind $r24, $r25;
+        char $c1;
+        java.lang.Throwable $r33;
+        byte $b4, $b5;
+        h.ST_textlabel_t $r41;
+        h.ST_shape_functions $r48;
+        smetana.core.CFunction $r49;
+        java.lang.Object[] $r50;
+
+        r2 := @parameter0: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("cr81drt18h5feqzxyh3jb0u49", "common_init_node");
+
+     label1:
+        $r0 = new h.ST_fontinfo;
+
+        specialinvoke $r0.<h.ST_fontinfo: void <init>()>();
+
+        $r3 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r4 = $r3.<smetana.core.Z: h.ST_Agsym_s N_width>;
+
+        $d0 = staticinvoke <gen.lib.common.utils__c: double late_double(smetana.core.__ptr__,h.ST_Agsym_s,double,double)>(r2, $r4, 0.75, 0.01);
+
+        staticinvoke <smetana.core.Macro: void ND_width(h.ST_Agnode_s,double)>(r2, $d0);
+
+        $r5 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r6 = $r5.<smetana.core.Z: h.ST_Agsym_s N_height>;
+
+        $d1 = staticinvoke <gen.lib.common.utils__c: double late_double(smetana.core.__ptr__,h.ST_Agsym_s,double,double)>(r2, $r6, 0.5, 0.02);
+
+        staticinvoke <smetana.core.Macro: void ND_height(h.ST_Agnode_s,double)>(r2, $d1);
+
+        $r7 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r9 = $r7.<smetana.core.Z: h.ST_Agsym_s N_shape>;
+
+        $r8 = new smetana.core.CString;
+
+        specialinvoke $r8.<smetana.core.CString: void <init>(java.lang.String)>("ellipse");
+
+        $r10 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_nnstring(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r2, $r9, $r8);
+
+        $r11 = staticinvoke <gen.lib.common.shapes__c: h.ST_shape_desc bind_shape(smetana.core.CString,h.ST_Agnode_s)>($r10, r2);
+
+        staticinvoke <smetana.core.Macro: void ND_shape(h.ST_Agnode_s,h.ST_shape_desc)>(r2, $r11);
+
+        $r12 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r13 = $r12.<smetana.core.Z: h.ST_Agsym_s N_label>;
+
+        r35 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r2, $r13);
+
+        $r14 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r15 = $r14.<smetana.core.Z: h.ST_Agsym_s N_fontsize>;
+
+        $d2 = staticinvoke <gen.lib.common.utils__c: double late_double(smetana.core.__ptr__,h.ST_Agsym_s,double,double)>(r2, $r15, 14.0, 1.0);
+
+        $r0.<h.ST_fontinfo: double fontsize> = $d2;
+
+        $r16 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r18 = $r16.<smetana.core.Z: h.ST_Agsym_s N_fontname>;
+
+        $r17 = new smetana.core.CString;
+
+        specialinvoke $r17.<smetana.core.CString: void <init>(java.lang.String)>("Times-Roman");
+
+        $r19 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_nnstring(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r2, $r18, $r17);
+
+        $r0.<h.ST_fontinfo: smetana.core.CString fontname> = $r19;
+
+        $r20 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r22 = $r20.<smetana.core.Z: h.ST_Agsym_s N_fontcolor>;
+
+        $r21 = new smetana.core.CString;
+
+        specialinvoke $r21.<smetana.core.CString: void <init>(java.lang.String)>("black");
+
+        $r23 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_nnstring(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r2, $r22, $r21);
+
+        $r0.<h.ST_fontinfo: smetana.core.CString fontcolor> = $r23;
+
+        $i0 = staticinvoke <gen.lib.cgraph.refstr__c: int aghtmlstr(smetana.core.CString)>(r35);
+
+        if $i0 == 0 goto label2;
+
+        $b4 = 2;
+
+        goto label3;
+
+     label2:
+        $b4 = 0;
+
+     label3:
+        $r24 = staticinvoke <gen.lib.common.shapes__c: h.EN_shape_kind shapeOf(h.ST_Agnode_s)>(r2);
+
+        $r25 = <h.EN_shape_kind: h.EN_shape_kind SH_RECORD>;
+
+        if $r24 != $r25 goto label4;
+
+        $b5 = 4;
+
+        goto label5;
+
+     label4:
+        $b5 = 0;
+
+     label5:
+        $i6 = $b4 | $b5;
+
+        $d3 = $r0.<h.ST_fontinfo: double fontsize>;
+
+        $r39 = $r0.<h.ST_fontinfo: smetana.core.CString fontname>;
+
+        $r40 = $r0.<h.ST_fontinfo: smetana.core.CString fontcolor>;
+
+        $r41 = staticinvoke <gen.lib.common.labels__c: h.ST_textlabel_t make_label(h.ST_Agobj_s,smetana.core.CString,int,double,smetana.core.CString,smetana.core.CString)>(r2, r35, $i6, $d3, $r39, $r40);
+
+        staticinvoke <smetana.core.Macro: void ND_label(h.ST_Agnode_s,h.ST_textlabel_t)>(r2, $r41);
+
+        $r42 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r43 = $r42.<smetana.core.Z: h.ST_Agsym_s N_xlabel>;
+
+        if $r43 == null goto label6;
+
+        $r27 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r28 = $r27.<smetana.core.Z: h.ST_Agsym_s N_xlabel>;
+
+        $r29 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r2, $r28);
+
+        if $r29 == null goto label6;
+
+        $c1 = virtualinvoke $r29.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c1 == 0 goto label6;
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4ua9vld76wpovsm1celv2ff6e");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("b0zm6fkpjlt9jacykbgugjodg");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ail0d4qmxj2aqh2q721inwgqu");
+
+     label6:
+        $r45 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r46 = $r45.<smetana.core.Z: h.ST_Agsym_s N_showboxes>;
+
+        $i7 = staticinvoke <gen.lib.common.utils__c: int late_int(smetana.core.__ptr__,h.ST_Agsym_s,int,int)>(r2, $r46, 0, 0);
+
+        staticinvoke <smetana.core.Macro: void ND_showboxes(h.ST_Agnode_s,int)>(r2, $i7);
+
+        $r47 = staticinvoke <smetana.core.Macro: h.ST_shape_desc ND_shape(h.ST_Agnode_s)>(r2);
+
+        $r48 = $r47.<h.ST_shape_desc: h.ST_shape_functions fns>;
+
+        $r49 = $r48.<h.ST_shape_functions: smetana.core.CFunction initfn>;
+
+        $r50 = newarray (java.lang.Object)[1];
+
+        $r50[0] = r2;
+
+        interfaceinvoke $r49.<smetana.core.CFunction: java.lang.Object exe(java.lang.Object[])>($r50);
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("cr81drt18h5feqzxyh3jb0u49", "common_init_node");
+
+        goto label9;
+
+     label8:
+        $r33 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("cr81drt18h5feqzxyh3jb0u49", "common_init_node");
+
+        throw $r33;
+
+     label9:
+        return;
+
+        catch java.lang.Throwable from label1 to label7 with label8;
+    }
+
+    public static void initFontEdgeAttr(h.ST_Agedge_s, h.ST_fontinfo)
+    {
+        h.ST_fontinfo r0;
+        h.ST_Agedge_s r1;
+        smetana.core.Z $r2, $r4, $r8;
+        h.ST_Agsym_s $r3, $r6, $r10;
+        double $d0;
+        smetana.core.CString $r5, $r7, $r9, $r11;
+        java.lang.Throwable $r12;
+
+        r1 := @parameter0: h.ST_Agedge_s;
+
+        r0 := @parameter1: h.ST_fontinfo;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("d2v8l80y27ue2fag5c0qplah8", "initFontEdgeAttr");
+
+     label1:
+        $r2 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r3 = $r2.<smetana.core.Z: h.ST_Agsym_s E_fontsize>;
+
+        $d0 = staticinvoke <gen.lib.common.utils__c: double late_double(smetana.core.__ptr__,h.ST_Agsym_s,double,double)>(r1, $r3, 14.0, 1.0);
+
+        r0.<h.ST_fontinfo: double fontsize> = $d0;
+
+        $r4 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r6 = $r4.<smetana.core.Z: h.ST_Agsym_s E_fontname>;
+
+        $r5 = new smetana.core.CString;
+
+        specialinvoke $r5.<smetana.core.CString: void <init>(java.lang.String)>("Times-Roman");
+
+        $r7 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_nnstring(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r1, $r6, $r5);
+
+        r0.<h.ST_fontinfo: smetana.core.CString fontname> = $r7;
+
+        $r8 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r10 = $r8.<smetana.core.Z: h.ST_Agsym_s E_fontcolor>;
+
+        $r9 = new smetana.core.CString;
+
+        specialinvoke $r9.<smetana.core.CString: void <init>(java.lang.String)>("black");
+
+        $r11 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_nnstring(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r1, $r10, $r9);
+
+        r0.<h.ST_fontinfo: smetana.core.CString fontcolor> = $r11;
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d2v8l80y27ue2fag5c0qplah8", "initFontEdgeAttr");
+
+        goto label4;
+
+     label3:
+        $r12 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d2v8l80y27ue2fag5c0qplah8", "initFontEdgeAttr");
+
+        throw $r12;
+
+     label4:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    public static void initFontLabelEdgeAttr(h.ST_Agedge_s, h.ST_fontinfo, h.ST_fontinfo)
+    {
+        h.ST_fontinfo r0, r2;
+        smetana.core.CString $r1, $r7, $r9, $r11, $r13;
+        boolean $z0;
+        h.ST_Agedge_s r3;
+        smetana.core.Z $r4, $r6, $r10;
+        double $d0, $d1;
+        h.ST_Agsym_s $r5, $r8, $r12;
+        java.lang.Throwable $r14;
+
+        r3 := @parameter0: h.ST_Agedge_s;
+
+        r0 := @parameter1: h.ST_fontinfo;
+
+        r2 := @parameter2: h.ST_fontinfo;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("ak3pxrdrq900wymudwnjmbito", "initFontLabelEdgeAttr");
+
+     label1:
+        $r1 = r0.<h.ST_fontinfo: smetana.core.CString fontname>;
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>($r1);
+
+        if $z0 == 0 goto label2;
+
+        staticinvoke <gen.lib.common.utils__c: void initFontEdgeAttr(h.ST_Agedge_s,h.ST_fontinfo)>(r3, r0);
+
+     label2:
+        $r4 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r5 = $r4.<smetana.core.Z: h.ST_Agsym_s E_labelfontsize>;
+
+        $d0 = r0.<h.ST_fontinfo: double fontsize>;
+
+        $d1 = staticinvoke <gen.lib.common.utils__c: double late_double(smetana.core.__ptr__,h.ST_Agsym_s,double,double)>(r3, $r5, $d0, 1.0);
+
+        r2.<h.ST_fontinfo: double fontsize> = $d1;
+
+        $r6 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r8 = $r6.<smetana.core.Z: h.ST_Agsym_s E_labelfontname>;
+
+        $r7 = r0.<h.ST_fontinfo: smetana.core.CString fontname>;
+
+        $r9 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_nnstring(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r3, $r8, $r7);
+
+        r2.<h.ST_fontinfo: smetana.core.CString fontname> = $r9;
+
+        $r10 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r12 = $r10.<smetana.core.Z: h.ST_Agsym_s E_labelfontcolor>;
+
+        $r11 = r0.<h.ST_fontinfo: smetana.core.CString fontcolor>;
+
+        $r13 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_nnstring(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r3, $r12, $r11);
+
+        r2.<h.ST_fontinfo: smetana.core.CString fontcolor> = $r13;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("ak3pxrdrq900wymudwnjmbito", "initFontLabelEdgeAttr");
+
+        goto label5;
+
+     label4:
+        $r14 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("ak3pxrdrq900wymudwnjmbito", "initFontLabelEdgeAttr");
+
+        throw $r14;
+
+     label5:
+        return;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static boolean noClip(h.ST_Agedge_s, h.ST_Agsym_s)
+    {
+        h.ST_Agsym_s r0;
+        h.ST_Agedge_s r1;
+        smetana.core.CString r2;
+        char $c0;
+        boolean $z1, z2, $z3;
+        java.lang.Throwable $r3;
+
+        r1 := @parameter0: h.ST_Agedge_s;
+
+        r0 := @parameter1: h.ST_Agsym_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("bgnk1zwht9rwx6thmly98iofb", "noClip");
+
+     label1:
+        z2 = 0;
+
+        if r0 == null goto label5;
+
+        r2 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r1, r0);
+
+        if r2 == null goto label4;
+
+        $c0 = virtualinvoke r2.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c0 == 0 goto label4;
+
+        $z1 = staticinvoke <gen.lib.common.utils__c: boolean mapbool(smetana.core.CString)>(r2);
+
+        if $z1 != 0 goto label2;
+
+        $z3 = 1;
+
+        goto label3;
+
+     label2:
+        $z3 = 0;
+
+     label3:
+        z2 = $z3;
+
+        goto label5;
+
+     label4:
+        z2 = 0;
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("bgnk1zwht9rwx6thmly98iofb", "noClip");
+
+        return z2;
+
+     label6:
+        $r3 := @caughtexception;
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("bgnk1zwht9rwx6thmly98iofb", "noClip");
+
+        throw $r3;
+
+        catch java.lang.Throwable from label1 to label5 with label6;
+        catch java.lang.Throwable from label6 to label7 with label6;
+    }
+
+    public static h.ST_port chkPort(smetana.core.CFunction, h.ST_Agnode_s, smetana.core.CString)
+    {
+        smetana.core.CFunction r0;
+        h.ST_Agnode_s r1;
+        smetana.core.CString r2;
+        h.ST_port $r3, $r4;
+
+        r0 := @parameter0: smetana.core.CFunction;
+
+        r1 := @parameter1: h.ST_Agnode_s;
+
+        r2 := @parameter2: smetana.core.CString;
+
+        $r3 = staticinvoke <gen.lib.common.utils__c: h.ST_port chkPort_w_(smetana.core.CFunction,h.ST_Agnode_s,smetana.core.CString)>(r0, r1, r2);
+
+        $r4 = virtualinvoke $r3.<h.ST_port: h.ST_port copy()>();
+
+        return $r4;
+    }
+
+    private static h.ST_port chkPort_w_(smetana.core.CFunction, h.ST_Agnode_s, smetana.core.CString)
+    {
+        h.ST_port $r0, $r7;
+        smetana.core.CString r2, r15;
+        smetana.core.CFunction r3;
+        java.lang.Object[] $r4;
+        h.ST_Agnode_s r5;
+        java.lang.Object $r6;
+        java.lang.Throwable $r13;
+
+        r3 := @parameter0: smetana.core.CFunction;
+
+        r5 := @parameter1: h.ST_Agnode_s;
+
+        r2 := @parameter2: smetana.core.CString;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("9vnr1bc7p533acazoxbhbfmx3", "chkPort");
+
+     label1:
+        $r0 = new h.ST_port;
+
+        specialinvoke $r0.<h.ST_port: void <init>()>();
+
+        r15 = null;
+
+        if r2 == null goto label2;
+
+        r15 = staticinvoke <smetana.core.JUtils: smetana.core.CString strchr(smetana.core.CString,char)>(r2, 58);
+
+     label2:
+        if r15 == null goto label3;
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("cbuf05ko7kaxq2n9zw35l5v2h");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7ofc3q8txvlvus6qwefbnbaxu");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("971i954brvgqb35cftazlqhon");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("2o9oidtrr5gspl1dh6vnz7mlz");
+
+        goto label4;
+
+     label3:
+        $r4 = newarray (java.lang.Object)[3];
+
+        $r4[0] = r5;
+
+        $r4[1] = r2;
+
+        $r4[2] = null;
+
+        $r6 = interfaceinvoke r3.<smetana.core.CFunction: java.lang.Object exe(java.lang.Object[])>($r4);
+
+        $r7 = (h.ST_port) $r6;
+
+        virtualinvoke $r0.<h.ST_port: void ___(smetana.core.__struct__)>($r7);
+
+     label4:
+        $r0.<h.ST_port: smetana.core.CString name> = r2;
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9vnr1bc7p533acazoxbhbfmx3", "chkPort");
+
+        return $r0;
+
+     label6:
+        $r13 := @caughtexception;
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9vnr1bc7p533acazoxbhbfmx3", "chkPort");
+
+        throw $r13;
+
+        catch java.lang.Throwable from label1 to label5 with label6;
+        catch java.lang.Throwable from label6 to label7 with label6;
+    }
+
+    public static int common_init_edge(h.ST_Agedge_s)
+    {
+        h.ST_fontinfo $r0, $r2;
+        h.ST_Agedge_s r4;
+        h.ST_Agnode_s $r5, $r11, $r14, $r69, $r73, $r78, $r82;
+        h.ST_Agraph_s r6;
+        smetana.core.Z $r7, $r16, $r25, $r34, $r42, $r48, $r58, $r61, $r64, $r75, $r84;
+        h.ST_Agsym_s $r8, $r17, $r26, $r35, $r43, $r50, $r59, $r62, $r65, $r76, $r85;
+        smetana.core.CString $r9, $r12, $r15, $r18, $r19, $r20, $r27, $r28, $r29, $r36, $r44, $r45, $r46, $r49, $r51, $r67, r68, r77;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        char $c1, $c2, $c3, $c7, $c11, $c12;
+        int $i4, $i5, $i6, $i8, $i9, $i10, $i13, $i14, $i15;
+        double $d0, $d1, $d2;
+        h.ST_textlabel_t $r21, $r30, $r47;
+        java.lang.Throwable $r55;
+        byte b16, $b17, $b18, $b19;
+        h.ST_shape_desc $r70, $r79;
+        h.ST_shape_functions $r71, $r80;
+        smetana.core.CFunction $r72, $r81;
+        h.ST_port $r74, $r83;
+
+        r4 := @parameter0: h.ST_Agedge_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("3aqh64lxwv4da2snfe7fvr45b", "common_init_edge");
+
+     label01:
+        b16 = 0;
+
+        $r0 = new h.ST_fontinfo;
+
+        specialinvoke $r0.<h.ST_fontinfo: void <init>()>();
+
+        $r2 = new h.ST_fontinfo;
+
+        specialinvoke $r2.<h.ST_fontinfo: void <init>()>();
+
+        $r5 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s agtail(h.ST_Agedge_s)>(r4);
+
+        r6 = staticinvoke <gen.lib.cgraph.obj__c: h.ST_Agraph_s agraphof(h.ST_Agobj_s)>($r5);
+
+        $r0.<h.ST_fontinfo: smetana.core.CString fontname> = null;
+
+        $r2.<h.ST_fontinfo: smetana.core.CString fontname> = null;
+
+        $r7 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r8 = $r7.<smetana.core.Z: h.ST_Agsym_s E_label>;
+
+        if $r8 == null goto label04;
+
+        $r42 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r43 = $r42.<smetana.core.Z: h.ST_Agsym_s E_label>;
+
+        $r44 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r4, $r43);
+
+        if $r44 == null goto label04;
+
+        $c12 = virtualinvoke $r44.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c12 == 0 goto label04;
+
+        b16 = 1;
+
+        staticinvoke <gen.lib.common.utils__c: void initFontEdgeAttr(h.ST_Agedge_s,h.ST_fontinfo)>(r4, $r0);
+
+        $i13 = staticinvoke <gen.lib.cgraph.refstr__c: int aghtmlstr(smetana.core.CString)>($r44);
+
+        if $i13 == 0 goto label02;
+
+        $b17 = 2;
+
+        goto label03;
+
+     label02:
+        $b17 = 0;
+
+     label03:
+        $d2 = $r0.<h.ST_fontinfo: double fontsize>;
+
+        $r46 = $r0.<h.ST_fontinfo: smetana.core.CString fontname>;
+
+        $r45 = $r0.<h.ST_fontinfo: smetana.core.CString fontcolor>;
+
+        $r47 = staticinvoke <gen.lib.common.labels__c: h.ST_textlabel_t make_label(h.ST_Agobj_s,smetana.core.CString,int,double,smetana.core.CString,smetana.core.CString)>(r4, $r44, $b17, $d2, $r46, $r45);
+
+        staticinvoke <smetana.core.Macro: void ED_label(h.ST_Agedge_s,h.ST_textlabel_t)>(r4, $r47);
+
+        $i14 = staticinvoke <smetana.core.Macro: int GD_has_labels(h.ST_Agraph_s)>(r6);
+
+        $i15 = $i14 | 1;
+
+        staticinvoke <smetana.core.Macro: void GD_has_labels(h.ST_Agraph_s,int)>(r6, $i15);
+
+        $r48 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r50 = $r48.<smetana.core.Z: h.ST_Agsym_s E_label_float>;
+
+        $r49 = new smetana.core.CString;
+
+        specialinvoke $r49.<smetana.core.CString: void <init>(java.lang.String)>("false");
+
+        $r51 = staticinvoke <gen.lib.common.utils__c: smetana.core.CString late_string(smetana.core.__ptr__,h.ST_Agsym_s,smetana.core.CString)>(r4, $r50, $r49);
+
+        $z1 = staticinvoke <gen.lib.common.utils__c: boolean mapbool(smetana.core.CString)>($r51);
+
+        staticinvoke <smetana.core.Macro: void ED_label_ontop(h.ST_Agedge_s,boolean)>(r4, $z1);
+
+     label04:
+        $r58 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r59 = $r58.<smetana.core.Z: h.ST_Agsym_s E_xlabel>;
+
+        if $r59 == null goto label05;
+
+        $r34 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r35 = $r34.<smetana.core.Z: h.ST_Agsym_s E_xlabel>;
+
+        $r36 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r4, $r35);
+
+        if $r36 == null goto label05;
+
+        $c11 = virtualinvoke $r36.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c11 == 0 goto label05;
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1j3mhgq7abuh3n19q2jtjddbc");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("bmqo2g5g107quod3h31r8iudr");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3s7kg9x748riuy3tm697s6e8t");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("b0zm6fkpjlt9jacykbgugjodg");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("c078bypfszv0nsvp1nc0x28wx");
+
+     label05:
+        $r61 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r62 = $r61.<smetana.core.Z: h.ST_Agsym_s E_headlabel>;
+
+        if $r62 == null goto label08;
+
+        $r25 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r26 = $r25.<smetana.core.Z: h.ST_Agsym_s E_headlabel>;
+
+        $r27 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r4, $r26);
+
+        if $r27 == null goto label08;
+
+        $c7 = virtualinvoke $r27.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c7 == 0 goto label08;
+
+        staticinvoke <gen.lib.common.utils__c: void initFontLabelEdgeAttr(h.ST_Agedge_s,h.ST_fontinfo,h.ST_fontinfo)>(r4, $r0, $r2);
+
+        $i8 = staticinvoke <gen.lib.cgraph.refstr__c: int aghtmlstr(smetana.core.CString)>($r27);
+
+        if $i8 == 0 goto label06;
+
+        $b18 = 2;
+
+        goto label07;
+
+     label06:
+        $b18 = 0;
+
+     label07:
+        $d1 = $r2.<h.ST_fontinfo: double fontsize>;
+
+        $r29 = $r2.<h.ST_fontinfo: smetana.core.CString fontname>;
+
+        $r28 = $r2.<h.ST_fontinfo: smetana.core.CString fontcolor>;
+
+        $r30 = staticinvoke <gen.lib.common.labels__c: h.ST_textlabel_t make_label(h.ST_Agobj_s,smetana.core.CString,int,double,smetana.core.CString,smetana.core.CString)>(r4, $r27, $b18, $d1, $r29, $r28);
+
+        staticinvoke <smetana.core.Macro: void ED_head_label(h.ST_Agedge_s,h.ST_textlabel_t)>(r4, $r30);
+
+        $i9 = staticinvoke <smetana.core.Macro: int GD_has_labels(h.ST_Agraph_s)>(r6);
+
+        $i10 = $i9 | 2;
+
+        staticinvoke <smetana.core.Macro: void GD_has_labels(h.ST_Agraph_s,int)>(r6, $i10);
+
+     label08:
+        $r64 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r65 = $r64.<smetana.core.Z: h.ST_Agsym_s E_taillabel>;
+
+        if $r65 == null goto label11;
+
+        $r16 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r17 = $r16.<smetana.core.Z: h.ST_Agsym_s E_taillabel>;
+
+        $r18 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agxget(smetana.core.__ptr__,h.ST_Agsym_s)>(r4, $r17);
+
+        if $r18 == null goto label11;
+
+        $c3 = virtualinvoke $r18.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c3 == 0 goto label11;
+
+        staticinvoke <gen.lib.common.utils__c: void initFontLabelEdgeAttr(h.ST_Agedge_s,h.ST_fontinfo,h.ST_fontinfo)>(r4, $r0, $r2);
+
+        $i4 = staticinvoke <gen.lib.cgraph.refstr__c: int aghtmlstr(smetana.core.CString)>($r18);
+
+        if $i4 == 0 goto label09;
+
+        $b19 = 2;
+
+        goto label10;
+
+     label09:
+        $b19 = 0;
+
+     label10:
+        $d0 = $r2.<h.ST_fontinfo: double fontsize>;
+
+        $r20 = $r2.<h.ST_fontinfo: smetana.core.CString fontname>;
+
+        $r19 = $r2.<h.ST_fontinfo: smetana.core.CString fontcolor>;
+
+        $r21 = staticinvoke <gen.lib.common.labels__c: h.ST_textlabel_t make_label(h.ST_Agobj_s,smetana.core.CString,int,double,smetana.core.CString,smetana.core.CString)>(r4, $r18, $b19, $d0, $r20, $r19);
+
+        staticinvoke <smetana.core.Macro: void ED_tail_label(h.ST_Agedge_s,h.ST_textlabel_t)>(r4, $r21);
+
+        $i5 = staticinvoke <smetana.core.Macro: int GD_has_labels(h.ST_Agraph_s)>(r6);
+
+        $i6 = $i5 | 4;
+
+        staticinvoke <smetana.core.Macro: void GD_has_labels(h.ST_Agraph_s,int)>(r6, $i6);
+
+     label11:
+        $r67 = <smetana.core.Macro: smetana.core.CString TAIL_ID>;
+
+        r68 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agget(smetana.core.__ptr__,smetana.core.CString)>(r4, $r67);
+
+        $z2 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r68);
+
+        if $z2 == 0 goto label12;
+
+        $r15 = new smetana.core.CString;
+
+        specialinvoke $r15.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        r68 = $r15;
+
+     label12:
+        if r68 == null goto label13;
+
+        $c2 = virtualinvoke r68.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c2 == 0 goto label13;
+
+        $r14 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s agtail(h.ST_Agedge_s)>(r4);
+
+        staticinvoke <smetana.core.Macro: void ND_has_port(h.ST_Agnode_s,boolean)>($r14, 1);
+
+     label13:
+        $r69 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s agtail(h.ST_Agedge_s)>(r4);
+
+        $r70 = staticinvoke <smetana.core.Macro: h.ST_shape_desc ND_shape(h.ST_Agnode_s)>($r69);
+
+        $r71 = $r70.<h.ST_shape_desc: h.ST_shape_functions fns>;
+
+        $r72 = $r71.<h.ST_shape_functions: smetana.core.CFunction portfn>;
+
+        $r73 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s agtail(h.ST_Agedge_s)>(r4);
+
+        $r74 = staticinvoke <gen.lib.common.utils__c: h.ST_port chkPort(smetana.core.CFunction,h.ST_Agnode_s,smetana.core.CString)>($r72, $r73, r68);
+
+        staticinvoke <smetana.core.Macro: void ED_tail_port(h.ST_Agedge_s,h.ST_port)>(r4, $r74);
+
+        $r75 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r76 = $r75.<smetana.core.Z: h.ST_Agsym_s E_tailclip>;
+
+        $z3 = staticinvoke <gen.lib.common.utils__c: boolean noClip(h.ST_Agedge_s,h.ST_Agsym_s)>(r4, $r76);
+
+        if $z3 == 0 goto label14;
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("cg4z67u0dm6h9nrcx8kkalnlt");
+
+     label14:
+        $r9 = <smetana.core.Macro: smetana.core.CString HEAD_ID>;
+
+        r77 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agget(smetana.core.__ptr__,smetana.core.CString)>(r4, $r9);
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r77);
+
+        if $z0 == 0 goto label15;
+
+        $r12 = new smetana.core.CString;
+
+        specialinvoke $r12.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        r77 = $r12;
+
+     label15:
+        if r77 == null goto label16;
+
+        $c1 = virtualinvoke r77.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c1 == 0 goto label16;
+
+        $r11 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s aghead(smetana.core.__ptr__)>(r4);
+
+        staticinvoke <smetana.core.Macro: void ND_has_port(h.ST_Agnode_s,boolean)>($r11, 1);
+
+     label16:
+        $r78 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s aghead(smetana.core.__ptr__)>(r4);
+
+        $r79 = staticinvoke <smetana.core.Macro: h.ST_shape_desc ND_shape(h.ST_Agnode_s)>($r78);
+
+        $r80 = $r79.<h.ST_shape_desc: h.ST_shape_functions fns>;
+
+        $r81 = $r80.<h.ST_shape_functions: smetana.core.CFunction portfn>;
+
+        $r82 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s aghead(smetana.core.__ptr__)>(r4);
+
+        $r83 = staticinvoke <gen.lib.common.utils__c: h.ST_port chkPort(smetana.core.CFunction,h.ST_Agnode_s,smetana.core.CString)>($r81, $r82, r77);
+
+        staticinvoke <smetana.core.Macro: void ED_head_port(h.ST_Agedge_s,h.ST_port)>(r4, $r83);
+
+        $r84 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r85 = $r84.<smetana.core.Z: h.ST_Agsym_s E_headclip>;
+
+        $z4 = staticinvoke <gen.lib.common.utils__c: boolean noClip(h.ST_Agedge_s,h.ST_Agsym_s)>(r4, $r85);
+
+        if $z4 == 0 goto label17;
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ayqscz30ekhcje94wh4ib1hcu");
+
+     label17:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("3aqh64lxwv4da2snfe7fvr45b", "common_init_edge");
+
+        return b16;
+
+     label18:
+        $r55 := @caughtexception;
+
+     label19:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("3aqh64lxwv4da2snfe7fvr45b", "common_init_edge");
+
+        throw $r55;
+
+        catch java.lang.Throwable from label01 to label17 with label18;
+        catch java.lang.Throwable from label18 to label19 with label18;
+    }
+
+    public static h.ST_boxf addLabelBB(h.ST_boxf, h.ST_textlabel_t, boolean)
+    {
+        h.ST_boxf r0, $r1, $r3, $r4;
+        h.ST_textlabel_t r2;
+        boolean z0;
+
+        r0 := @parameter0: h.ST_boxf;
+
+        r2 := @parameter1: h.ST_textlabel_t;
+
+        z0 := @parameter2: boolean;
+
+        $r1 = virtualinvoke r0.<h.ST_boxf: h.ST_boxf copy()>();
+
+        $r3 = staticinvoke <gen.lib.common.utils__c: h.ST_boxf addLabelBB_w_(h.ST_boxf,h.ST_textlabel_t,boolean)>($r1, r2, z0);
+
+        $r4 = virtualinvoke $r3.<h.ST_boxf: h.ST_boxf copy()>();
+
+        return $r4;
+    }
+
+    private static h.ST_boxf addLabelBB_w_(h.ST_boxf, h.ST_textlabel_t, boolean)
+    {
+        h.ST_pointf $r0, $r3, $r4, $r5, $r7, $r8, $r9, $r10, $r12, $r13, $r14, $r15, $r16, $r17;
+        h.ST_textlabel_t r2;
+        boolean z0;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, d12, d13, d14, d15, d16, d17;
+        h.ST_boxf r6;
+        byte $b0, $b1, $b2, $b3;
+        java.lang.Throwable $r18;
+
+        r6 := @parameter0: h.ST_boxf;
+
+        r2 := @parameter1: h.ST_textlabel_t;
+
+        z0 := @parameter2: boolean;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("3mkqvtbyq9j8ktzil6t7vakg5", "addLabelBB");
+
+     label1:
+        $r0 = new h.ST_pointf;
+
+        specialinvoke $r0.<h.ST_pointf: void <init>()>();
+
+        $r3 = r2.<h.ST_textlabel_t: h.ST_pointf pos>;
+
+        virtualinvoke $r0.<h.ST_pointf: void ___(smetana.core.__struct__)>($r3);
+
+        if z0 == 0 goto label2;
+
+        $r16 = r2.<h.ST_textlabel_t: h.ST_pointf dimen>;
+
+        d12 = $r16.<h.ST_pointf: double x>;
+
+        $r17 = r2.<h.ST_textlabel_t: h.ST_pointf dimen>;
+
+        d13 = $r17.<h.ST_pointf: double y>;
+
+        goto label3;
+
+     label2:
+        $r4 = r2.<h.ST_textlabel_t: h.ST_pointf dimen>;
+
+        d13 = $r4.<h.ST_pointf: double x>;
+
+        $r5 = r2.<h.ST_textlabel_t: h.ST_pointf dimen>;
+
+        d12 = $r5.<h.ST_pointf: double y>;
+
+     label3:
+        $d1 = $r0.<h.ST_pointf: double x>;
+
+        $d0 = d13 / 2.0;
+
+        d14 = $d1 - $d0;
+
+        $d3 = $r0.<h.ST_pointf: double x>;
+
+        $d2 = d13 / 2.0;
+
+        d15 = $d3 + $d2;
+
+        $r7 = r6.<h.ST_boxf: h.ST_pointf LL>;
+
+        $d4 = $r7.<h.ST_pointf: double x>;
+
+        $b0 = d14 cmpg $d4;
+
+        if $b0 >= 0 goto label4;
+
+        $r15 = r6.<h.ST_boxf: h.ST_pointf LL>;
+
+        $r15.<h.ST_pointf: double x> = d14;
+
+     label4:
+        $r8 = r6.<h.ST_boxf: h.ST_pointf UR>;
+
+        $d5 = $r8.<h.ST_pointf: double x>;
+
+        $b1 = d15 cmpl $d5;
+
+        if $b1 <= 0 goto label5;
+
+        $r14 = r6.<h.ST_boxf: h.ST_pointf UR>;
+
+        $r14.<h.ST_pointf: double x> = d15;
+
+     label5:
+        $d7 = $r0.<h.ST_pointf: double y>;
+
+        $d6 = d12 / 2.0;
+
+        d16 = $d7 - $d6;
+
+        $d9 = $r0.<h.ST_pointf: double y>;
+
+        $d8 = d12 / 2.0;
+
+        d17 = $d9 + $d8;
+
+        $r9 = r6.<h.ST_boxf: h.ST_pointf LL>;
+
+        $d10 = $r9.<h.ST_pointf: double y>;
+
+        $b2 = d16 cmpg $d10;
+
+        if $b2 >= 0 goto label6;
+
+        $r13 = r6.<h.ST_boxf: h.ST_pointf LL>;
+
+        $r13.<h.ST_pointf: double y> = d16;
+
+     label6:
+        $r10 = r6.<h.ST_boxf: h.ST_pointf UR>;
+
+        $d11 = $r10.<h.ST_pointf: double y>;
+
+        $b3 = d17 cmpl $d11;
+
+        if $b3 <= 0 goto label7;
+
+        $r12 = r6.<h.ST_boxf: h.ST_pointf UR>;
+
+        $r12.<h.ST_pointf: double y> = d17;
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("3mkqvtbyq9j8ktzil6t7vakg5", "addLabelBB");
+
+        return r6;
+
+     label8:
+        $r18 := @caughtexception;
+
+     label9:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("3mkqvtbyq9j8ktzil6t7vakg5", "addLabelBB");
+
+        throw $r18;
+
+        catch java.lang.Throwable from label1 to label7 with label8;
+        catch java.lang.Throwable from label8 to label9 with label8;
+    }
+
+    public static void updateBB(h.ST_Agraph_s, h.ST_textlabel_t)
+    {
+        h.ST_Agraph_s r0;
+        h.ST_boxf $r1, $r2, $r4;
+        h.ST_textlabel_t r3;
+        boolean $z0;
+        java.lang.Throwable $r5;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        r3 := @parameter1: h.ST_textlabel_t;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("bz7kjecium6a7xa39qfobwwnc", "updateBB");
+
+     label1:
+        $r1 = staticinvoke <smetana.core.Macro: h.ST_boxf GD_bb(h.ST_Agraph_s)>(r0);
+
+        $r2 = staticinvoke <smetana.core.Macro: h.ST_boxf GD_bb(h.ST_Agraph_s)>(r0);
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean GD_flip(h.ST_Agraph_s)>(r0);
+
+        $r4 = staticinvoke <gen.lib.common.utils__c: h.ST_boxf addLabelBB(h.ST_boxf,h.ST_textlabel_t,boolean)>($r2, r3, $z0);
+
+        virtualinvoke $r1.<h.ST_boxf: void ___(smetana.core.__struct__)>($r4);
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("bz7kjecium6a7xa39qfobwwnc", "updateBB");
+
+        goto label4;
+
+     label3:
+        $r5 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("bz7kjecium6a7xa39qfobwwnc", "updateBB");
+
+        throw $r5;
+
+     label4:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    public static smetana.core.CString htmlEntityUTF8(smetana.core.CString, h.ST_Agraph_s)
+    {
+        smetana.core.CString r0, r81;
+        java.lang.UnsupportedOperationException $r80;
+        java.lang.Throwable $r82;
+        h.ST_Agraph_s r84;
+
+        r0 := @parameter0: smetana.core.CString;
+
+        r84 := @parameter1: h.ST_Agraph_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("9yungx7uxqkmzfh2ub6gs9l48", "htmlEntityUTF8");
+
+     label1:
+        if r0 == null goto label3;
+
+        r81 = virtualinvoke r0.<smetana.core.CString: smetana.core.CString duplicate()>();
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9yungx7uxqkmzfh2ub6gs9l48", "htmlEntityUTF8");
+
+        return r81;
+
+     label3:
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1xtgr84lklglr4gz1i1m3t30");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("erg9i1970wdri39osu8hx2a6e");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("a86rc8dlb4bgtjxjhv43cnmup");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1gn88eczuyt54egtiulqe7y7h");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3rzf3h52xn02xrxie111286a0");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("9gou5otj6s39l2cbyc8i5i5lq");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("esg3s800dx899v69pkng2kavv");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("10sir32iwi5l2jyfgp65pihto");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4urrp9tny84a3cm8ycya896x3");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("d5druw9z4e87khtgyeivjngvc");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4fymyfhfc3ddededhxw7cs671");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("d6z43cxggqxq7iq4puyluzkfn");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4pgl4pn1cad2whf242bntmjre");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("t65eqheg8dxzi237a648t66j");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("emyoumradju26mhebq2bewtva");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("9ys85d2ctjb1a9ra0n11o2a2r");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dvgyxsnyeqqnyzq696k3vskib");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3jwm77zyv02ukrvjv9jppejf7");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("11zj3p308ttro04hrzowx0vrh");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3xqp191v0egfea0z3ds5p1mjt");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4j200801m87vnfrkblygi6ucj");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1egwnjpl995mff91kquf9ikvl");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8rfd02x8qlye0oo8ro9u9g8ya");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("49xkviec8w4s3zvlq13991yqh");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("bg2026u05g8jo9nm9pr39cknl");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("20m1lc1moer8x00tx9ceto0iw");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6g3zbtp7zrl9i7jz1if5yi7rj");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5ks80mtyizjvlnrh1bwebqrx7");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("2gr59wt9ibszrzwii40dqyd5b");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("2su1o4swg92stlgi53k4ydm5u");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("c0zrulbhqoupyvbwpwapfpc70");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dveaae8p8nhz8gosmtiftudrz");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("a4c1bzq46y652vgwpxsruptth");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3jir07ymknf0hmb9pv9x4dr3o");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ar52jlyh4qqazbcbvntg2wet6");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ame11lb7ylv3rp1nhtuq383du");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7acv020k6kt3q8tholp3ex0qa");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("qr4o1w9xvn1ayc52y0f4c8bh");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7g94ubxa48a1yi3mf9v521b7c");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ejqmh8ox9uoy02anzqhcxcrro");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4mhlpjofolwivhm0tl8cxznly");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8n9ts84r09bm29qdb7v2og087");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3cziqu94ggcy3m9kpbpdefqgk");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1c1fqb40szvpdlekj4as5qcqq");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("buyl72klnvh12cf4m578joukc");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1fj0k3ba7vy9tjmjnc4d4mujb");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("aso1t4v0cars70ngqafalmoeq");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("777bke4pyf77uol5s5d6qk0i6");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4wqu3fuzmckazc7eb1vvoxspn");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("2b9x6g0k8a00ty06llcyp6cqu");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("el4sow483b296l5o1hy6oqkzp");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dkxvw03k2gg9anv4dbze06axd");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("163d4s8voz31qrt0e4c8ysn9e");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4tpuwv4i0wslspyymoqhdxsvd");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8unuta6ydloexb267kdf96wi");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("el4sow483b296l5o1hy6oqkzp");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dkxvw03k2gg9anv4dbze06axd");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dkxvw03k2gg9anv4dbze06axd");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4mhlpjofolwivhm0tl8cxznly");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("atwq5cvh75c4mpqr6f8bepwkd");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("75h3d3pcb66cff2xszmbwxny0");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("75m8b2zfuuay6o25xl08y168m");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("2bav6kbg19gemwcsyepjeg52u");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5kkh713qn8pc4dhd3omuop8qk");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7nxu74undh30brb8laojud3f9");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("69mmu86j5iw8x34fdfo0k59ff");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("cjh6htddtrrxjuyqzavdlw01o");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8ljhi9erpokpqsnveckujskly");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8sgutsruuu83a337z05bvytk0");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3d2mow5zy6q4vrtc38f78ucgh");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8jh5xw3y1bjy4poswq4h2wk4n");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ctqmerohp1f69mb1v1t20jx33");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("g2y6e9pld3899aejuqyr2x25");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("28mab50dtpxfjz5h216ox1q6w");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dvgyxsnyeqqnyzq696k3vskib");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3g7d9dp3ny3ggno64pwi7nmkg");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1at5m9ctjn3ukv5gqtfswik02");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("98aa6ybsfiu5u7r3j6fsv3snz");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("c24nfmv9i7o5eoqaymbibp7m7");
+
+        $r80 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r80.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r80;
+
+     label4:
+        $r82 := @caughtexception;
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9yungx7uxqkmzfh2ub6gs9l48", "htmlEntityUTF8");
+
+        throw $r82;
+
+        catch java.lang.Throwable from label1 to label2 with label4;
+        catch java.lang.Throwable from label3 to label5 with label4;
+    }
+
+    public static int edgeType(smetana.core.CString, int)
+    {
+        java.lang.UnsupportedOperationException $r74;
+        java.lang.Throwable $r75;
+        smetana.core.CString r77;
+        int i0;
+
+        r77 := @parameter0: smetana.core.CString;
+
+        i0 := @parameter1: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("ckavkcnz5rcrqs17lleds1uxu", "edgeType");
+
+     label1:
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("h9kzapvoxea4esxgom157wc0");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("erg9i1970wdri39osu8hx2a6e");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("26e08yupzx95a4pzp1af0t6og");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("73z43mn6ha09hbnvzynnbkvqg");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("527zd48lq0ay6p16b2whyuafo");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1ctayzw7ya308i4wpppul6b9o");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("acwxya6p4cjrbqeuf7gymcmx2");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("18fcibo027r3vczxrvtju3nah");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("no8amccag0mew2zmsprfyekp");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8to0pat5o6zmyuqjfl01xs9xc");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("c7icptpasun232whn2nn5gydx");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("44xov6gwt91mlesh02z3zvxx");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4dwlps5sjcl550fvks2ibv2fi");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("cr0jhqsceb5y1hcmvtjd1ttgu");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8jq47j7ezu18niwotmuj92cz3");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ami8xk8243o5ku0cyeqxoeiut");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3onv8t8a6v1tmfaz8y7hk9lvv");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8m599inlx0lbuns9r3iiokwxw");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("vwxe2prs0tywhf20ycwdwa8o");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("e2ux7lqsbmsyyrououuijooiy");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8zxim9f3q8qdl919cv1v3jf8e");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("azc7d85av8k7f1to3mr59m3mz");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("b7i0q9ysed6zrjftn8ilgtn0a");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("aihlhslp3nd26f10vuyjlnb3q");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("2ix1d2vw6unhjetclv9vkaw1p");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("2chzjgs8kmwelk00c6469lpx2");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("42jngi39nkk27q16s1sa7sftl");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7xut5zuu25vrpn9gt0f3kc5hz");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7ozigs1hjxmhvwgapx2in25cy");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("c2gttjqnkmx1rnuyjknw7segb");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("96lnofxeiqa1g3g7s02b86h6z");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7xut5zuu25vrpn9gt0f3kc5hz");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5o5i90c7m363f5yyxamxuzok6");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3ttrfea54jmrshv2796w3a9h2");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6qibxt06dimtp2r5spwgriorn");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("bqi51jfycttyx733ls9qw2c18");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("18t59gw7hrgsezibz7bbm0ng3");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("4q6jdsek20d4i9sc5ftmm3mdl");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8scb0vjws7o3davin33k87o2p");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("48rqxx6odtdnqf676ffe1ll7g");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5cc40qlotkkym6enwcv916835");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("al1clonjqyw2bo1z0li974ijp");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("68l1a5153ouil03qaammm1zty");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5ytop08aei3hhllfd12904hh7");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("20wayzvdomwexzhjzj4wojf4d");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("boxft69fzv6rof5elda0zs33z");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3qs8m2esm62d50tk701b8m0xz");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5l4kd6c21h4bjm98grnqqwra6");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ce41quxcxpj3oi50zybc75b9r");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8drchetff3h6zpsu3m08rqi0q");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7ln0pymv14hb45h3ypy5955nk");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5l4kd6c21h4bjm98grnqqwra6");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("3d55ucqxr8xg0otty2j39hkgz");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7oihco3xpq1kek2q2dnrfxmcx");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("679wmbnx0dakltwkxx2svg5ex");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5l4kd6c21h4bjm98grnqqwra6");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6aw91xzjmqvmtdvt1di23af8y");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dvgyxsnyeqqnyzq696k3vskib");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("ckjgbybnvrshn8g32qqpy0ppd");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("79f40sxqwmzmgk4ktfha59mxf");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("mjiefsvltip3uasxic0uipa9");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dvgyxsnyeqqnyzq696k3vskib");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("68yadra75shcc0tia9wr9acr4");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("c24nfmv9i7o5eoqaymbibp7m7");
+
+        $r74 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r74.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r74;
+
+     label2:
+        $r75 := @caughtexception;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("ckavkcnz5rcrqs17lleds1uxu", "edgeType");
+
+        throw $r75;
+
+        catch java.lang.Throwable from label1 to label3 with label2;
+    }
+
+    public static void setEdgeType(h.ST_Agraph_s, int)
+    {
+        h.ST_Agraph_s r0;
+        smetana.core.CString $r1, r2;
+        boolean $z0;
+        char $c0;
+        int i1, i2, $i3, $i4;
+        java.lang.Throwable $r3;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        i1 := @parameter1: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("13cpqbf2ztcjdfz4a6v7nv00u", "setEdgeType");
+
+     label1:
+        $r1 = new smetana.core.CString;
+
+        specialinvoke $r1.<smetana.core.CString: void <init>(java.lang.String)>("splines");
+
+        r2 = staticinvoke <gen.lib.cgraph.attr__c: smetana.core.CString agget(smetana.core.__ptr__,smetana.core.CString)>(r0, $r1);
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean N(java.lang.Object)>(r2);
+
+        if $z0 == 0 goto label2;
+
+        i2 = i1;
+
+        goto label4;
+
+     label2:
+        $c0 = virtualinvoke r2.<smetana.core.CString: char charAt(int)>(0);
+
+        if $c0 != 0 goto label3;
+
+        i2 = 0;
+
+        goto label4;
+
+     label3:
+        i2 = staticinvoke <gen.lib.common.utils__c: int edgeType(smetana.core.CString,int)>(r2, i1);
+
+     label4:
+        $i3 = staticinvoke <smetana.core.Macro: int GD_flags(h.ST_Agraph_s)>(r0);
+
+        $i4 = $i3 | i2;
+
+        staticinvoke <smetana.core.Macro: void GD_flags(h.ST_Agraph_s,int)>(r0, $i4);
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("13cpqbf2ztcjdfz4a6v7nv00u", "setEdgeType");
+
+        goto label8;
+
+     label6:
+        $r3 := @caughtexception;
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("13cpqbf2ztcjdfz4a6v7nv00u", "setEdgeType");
+
+        throw $r3;
+
+     label8:
+        return;
+
+        catch java.lang.Throwable from label1 to label5 with label6;
+        catch java.lang.Throwable from label6 to label7 with label6;
+    }
+
+    public static void gv_nodesize(h.ST_Agnode_s, boolean)
+    {
+        boolean z0;
+        h.ST_Agnode_s r0;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, d10, d11;
+        java.lang.Throwable $r1;
+
+        r0 := @parameter0: h.ST_Agnode_s;
+
+        z0 := @parameter1: boolean;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("80q488y0eqojtsm7osnfydmo5", "gv_nodesize");
+
+     label1:
+        if z0 == 0 goto label2;
+
+        $d5 = staticinvoke <smetana.core.Macro: double ND_height(h.ST_Agnode_s)>(r0);
+
+        d10 = staticinvoke <smetana.core.Macro: double INCH2PS(double)>($d5);
+
+        $d6 = d10 / 2.0;
+
+        staticinvoke <smetana.core.Macro: void ND_rw(h.ST_Agnode_s,double)>(r0, $d6);
+
+        $d7 = d10 / 2.0;
+
+        staticinvoke <smetana.core.Macro: void ND_lw(h.ST_Agnode_s,double)>(r0, $d7);
+
+        $d8 = staticinvoke <smetana.core.Macro: double ND_width(h.ST_Agnode_s)>(r0);
+
+        $d9 = staticinvoke <smetana.core.Macro: double INCH2PS(double)>($d8);
+
+        staticinvoke <smetana.core.Macro: void ND_ht(h.ST_Agnode_s,double)>(r0, $d9);
+
+        goto label3;
+
+     label2:
+        $d0 = staticinvoke <smetana.core.Macro: double ND_width(h.ST_Agnode_s)>(r0);
+
+        d11 = staticinvoke <smetana.core.Macro: double INCH2PS(double)>($d0);
+
+        $d1 = d11 / 2.0;
+
+        staticinvoke <smetana.core.Macro: void ND_rw(h.ST_Agnode_s,double)>(r0, $d1);
+
+        $d2 = d11 / 2.0;
+
+        staticinvoke <smetana.core.Macro: void ND_lw(h.ST_Agnode_s,double)>(r0, $d2);
+
+        $d3 = staticinvoke <smetana.core.Macro: double ND_height(h.ST_Agnode_s)>(r0);
+
+        $d4 = staticinvoke <smetana.core.Macro: double INCH2PS(double)>($d3);
+
+        staticinvoke <smetana.core.Macro: void ND_ht(h.ST_Agnode_s,double)>(r0, $d4);
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("80q488y0eqojtsm7osnfydmo5", "gv_nodesize");
+
+        goto label6;
+
+     label4:
+        $r1 := @caughtexception;
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("80q488y0eqojtsm7osnfydmo5", "gv_nodesize");
+
+        throw $r1;
+
+     label6:
+        return;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+        catch java.lang.Throwable from label4 to label5 with label4;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        <gen.lib.common.utils__c: int W_DEGREE> = 5;
+
+        $r0 = class "Lgen/lib/common/utils__c;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <gen.lib.common.utils__c: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

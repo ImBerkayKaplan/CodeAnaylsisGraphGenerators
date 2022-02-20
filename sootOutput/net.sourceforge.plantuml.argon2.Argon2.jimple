@@ -1,0 +1,917 @@
+public class net.sourceforge.plantuml.argon2.Argon2 extends java.lang.Object
+{
+    private byte[] output;
+    private int outputLength;
+    private double duration;
+    private byte[] password;
+    private byte[] salt;
+    private byte[] secret;
+    private byte[] additional;
+    private int iterations;
+    private int memory;
+    private int lanes;
+    private int version;
+    private net.sourceforge.plantuml.argon2.model.Argon2Type type;
+    private boolean clearMemory;
+    private boolean encodedOnly;
+    private boolean rawOnly;
+    static final boolean $assertionsDisabled;
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        net.sourceforge.plantuml.argon2.model.Argon2Type $r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: boolean clearMemory> = 1;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: boolean encodedOnly> = 0;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: boolean rawOnly> = 0;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int lanes> = 1;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int outputLength> = 32;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int memory> = 4096;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int iterations> = 3;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int version> = 19;
+
+        $r1 = <net.sourceforge.plantuml.argon2.Constants$Defaults: net.sourceforge.plantuml.argon2.model.Argon2Type TYPE_DEF>;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.model.Argon2Type type> = $r1;
+
+        return;
+    }
+
+    private static byte[] toByteArray(char[], java.nio.charset.Charset)
+    {
+        boolean $z0;
+        char[] r0;
+        java.nio.CharBuffer r1;
+        java.nio.charset.Charset r2;
+        java.nio.ByteBuffer r3;
+        byte[] $r4, r5, $r6;
+        int $i0, $i1;
+        java.lang.AssertionError $r7;
+
+        r0 := @parameter0: char[];
+
+        r2 := @parameter1: java.nio.charset.Charset;
+
+        $z0 = <net.sourceforge.plantuml.argon2.Argon2: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        if r0 != null goto label1;
+
+        $r7 = new java.lang.AssertionError;
+
+        specialinvoke $r7.<java.lang.AssertionError: void <init>()>();
+
+        throw $r7;
+
+     label1:
+        r1 = staticinvoke <java.nio.CharBuffer: java.nio.CharBuffer wrap(char[])>(r0);
+
+        r3 = virtualinvoke r2.<java.nio.charset.Charset: java.nio.ByteBuffer encode(java.nio.CharBuffer)>(r1);
+
+        $r4 = virtualinvoke r3.<java.nio.ByteBuffer: byte[] array()>();
+
+        $i0 = virtualinvoke r3.<java.nio.ByteBuffer: int position()>();
+
+        $i1 = virtualinvoke r3.<java.nio.ByteBuffer: int limit()>();
+
+        r5 = staticinvoke <java.util.Arrays: byte[] copyOfRange(byte[],int,int)>($r4, $i0, $i1);
+
+        $r6 = virtualinvoke r3.<java.nio.ByteBuffer: byte[] array()>();
+
+        staticinvoke <java.util.Arrays: void fill(byte[],byte)>($r6, 0);
+
+        return r5;
+    }
+
+    public void hashNow()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        long l0, $l1, $l2;
+        net.sourceforge.plantuml.argon2.model.Instance $r1;
+        double $d0, $d1;
+        java.lang.Throwable $r3;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+     label1:
+        staticinvoke <net.sourceforge.plantuml.argon2.Validation: void validateInput(net.sourceforge.plantuml.argon2.Argon2)>(r0);
+
+        l0 = staticinvoke <java.lang.System: long nanoTime()>();
+
+        $r1 = new net.sourceforge.plantuml.argon2.model.Instance;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.argon2.model.Instance: void <init>(net.sourceforge.plantuml.argon2.Argon2)>(r0);
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.Initialize: void initialize(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.Argon2)>($r1, r0);
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillMemory: void fillMemoryBlocks(net.sourceforge.plantuml.argon2.model.Instance)>($r1);
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.Finalize: void finalize(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.Argon2)>($r1, r0);
+
+        $l1 = staticinvoke <java.lang.System: long nanoTime()>();
+
+        $l2 = $l1 - l0;
+
+        $d0 = (double) $l2;
+
+        $d1 = $d0 / 1.0E9;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: double duration> = $d1;
+
+     label2:
+        virtualinvoke r0.<net.sourceforge.plantuml.argon2.Argon2: void clear()>();
+
+        goto label5;
+
+     label3:
+        $r3 := @caughtexception;
+
+     label4:
+        virtualinvoke r0.<net.sourceforge.plantuml.argon2.Argon2: void clear()>();
+
+        throw $r3;
+
+     label5:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public void clear()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r12;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] password>;
+
+        if $r1 == null goto label1;
+
+        $r12 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] password>;
+
+        $r11 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] password>;
+
+        $i6 = lengthof $r11;
+
+        $i7 = $i6 - 1;
+
+        staticinvoke <java.util.Arrays: void fill(byte[],int,int,byte)>($r12, 0, $i7, 0);
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] salt>;
+
+        if $r2 == null goto label2;
+
+        $r10 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] salt>;
+
+        $r9 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] salt>;
+
+        $i4 = lengthof $r9;
+
+        $i5 = $i4 - 1;
+
+        staticinvoke <java.util.Arrays: void fill(byte[],int,int,byte)>($r10, 0, $i5, 0);
+
+     label2:
+        $r3 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] secret>;
+
+        if $r3 == null goto label3;
+
+        $r8 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] secret>;
+
+        $r7 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] secret>;
+
+        $i2 = lengthof $r7;
+
+        $i3 = $i2 - 1;
+
+        staticinvoke <java.util.Arrays: void fill(byte[],int,int,byte)>($r8, 0, $i3, 0);
+
+     label3:
+        $r4 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] additional>;
+
+        if $r4 == null goto label4;
+
+        $r6 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] additional>;
+
+        $r5 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] additional>;
+
+        $i0 = lengthof $r5;
+
+        $i1 = $i0 - 1;
+
+        staticinvoke <java.util.Arrays: void fill(byte[],int,int,byte)>($r6, 0, $i1, 0);
+
+     label4:
+        return;
+    }
+
+    void printSummary()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        boolean $z0, $z1;
+        java.lang.StringBuilder $r1, $r3, $r5, $r7, $r9, $r10, $r12, $r14, $r15, $r16, $r18, $r20, $r21, $r23, $r25, $r27, $r29, $r31, $r33, $r35, $r37, $r38;
+        java.io.PrintStream $r2, $r8, $r13, $r19, $r24, $r30, $r36, $r40, $r42;
+        net.sourceforge.plantuml.argon2.model.Argon2Type $r4;
+        java.lang.String $r6, $r11, $r17, $r22, $r26, $r28, $r32, $r34, $r39, $r41, $r43;
+        int $i0, $i1, $i2;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $z0 = r0.<net.sourceforge.plantuml.argon2.Argon2: boolean encodedOnly>;
+
+        if $z0 == 0 goto label1;
+
+        $r42 = <java.lang.System: java.io.PrintStream out>;
+
+        $r43 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.Argon2: java.lang.String getEncoded()>();
+
+        virtualinvoke $r42.<java.io.PrintStream: void println(java.lang.String)>($r43);
+
+        goto label3;
+
+     label1:
+        $z1 = r0.<net.sourceforge.plantuml.argon2.Argon2: boolean rawOnly>;
+
+        if $z1 == 0 goto label2;
+
+        $r40 = <java.lang.System: java.io.PrintStream out>;
+
+        $r41 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.Argon2: java.lang.String getOutputString()>();
+
+        virtualinvoke $r40.<java.io.PrintStream: void println(java.lang.String)>($r41);
+
+        goto label3;
+
+     label2:
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Type:\t\t");
+
+        $r4 = r0.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.model.Argon2Type type>;
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>($r6);
+
+        $r8 = <java.lang.System: java.io.PrintStream out>;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Iterations:\t");
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.Argon2: int iterations>;
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r8.<java.io.PrintStream: void println(java.lang.String)>($r11);
+
+        $r13 = <java.lang.System: java.io.PrintStream out>;
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Memory:\t\t");
+
+        $i1 = r0.<net.sourceforge.plantuml.argon2.Argon2: int memory>;
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" KiB");
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r13.<java.io.PrintStream: void println(java.lang.String)>($r17);
+
+        $r19 = <java.lang.System: java.io.PrintStream out>;
+
+        $r18 = new java.lang.StringBuilder;
+
+        specialinvoke $r18.<java.lang.StringBuilder: void <init>()>();
+
+        $r20 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Parallelism:\t");
+
+        $i2 = r0.<net.sourceforge.plantuml.argon2.Argon2: int lanes>;
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i2);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r19.<java.io.PrintStream: void println(java.lang.String)>($r22);
+
+        $r24 = <java.lang.System: java.io.PrintStream out>;
+
+        $r23 = new java.lang.StringBuilder;
+
+        specialinvoke $r23.<java.lang.StringBuilder: void <init>()>();
+
+        $r25 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Hash:\t\t");
+
+        $r26 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.Argon2: java.lang.String getOutputString()>();
+
+        $r27 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r26);
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r24.<java.io.PrintStream: void println(java.lang.String)>($r28);
+
+        $r30 = <java.lang.System: java.io.PrintStream out>;
+
+        $r29 = new java.lang.StringBuilder;
+
+        specialinvoke $r29.<java.lang.StringBuilder: void <init>()>();
+
+        $r31 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Encoded:\t ");
+
+        $r32 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.Argon2: java.lang.String getEncoded()>();
+
+        $r33 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r32);
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r30.<java.io.PrintStream: void println(java.lang.String)>($r34);
+
+        $r36 = <java.lang.System: java.io.PrintStream out>;
+
+        $r35 = new java.lang.StringBuilder;
+
+        specialinvoke $r35.<java.lang.StringBuilder: void <init>()>();
+
+        $d0 = r0.<net.sourceforge.plantuml.argon2.Argon2: double duration>;
+
+        $r37 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d0);
+
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" seconds");
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r36.<java.io.PrintStream: void println(java.lang.String)>($r39);
+
+     label3:
+        return;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setMemoryInKiB(int)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int memory> = i0;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setParallelism(int)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int lanes> = i0;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setPassword(char[])
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0, $r4;
+        char[] r1;
+        java.nio.charset.Charset $r2;
+        byte[] $r3;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        r1 := @parameter0: char[];
+
+        $r2 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.argon2.Argon2: byte[] toByteArray(char[],java.nio.charset.Charset)>(r1, $r2);
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.Argon2 setPassword(byte[])>($r3);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setSalt(java.lang.String)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0, $r4;
+        java.lang.String r1;
+        java.nio.charset.Charset $r2;
+        byte[] $r3;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r3 = virtualinvoke r1.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r2);
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.Argon2 setSalt(byte[])>($r3);
+
+        return $r4;
+    }
+
+    public byte[] getOutput()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] output>;
+
+        return $r1;
+    }
+
+    public void setOutput(byte[])
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        r1 := @parameter0: byte[];
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] output> = r1;
+
+        return;
+    }
+
+    public java.lang.String getOutputString()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] output>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.argon2.Util: java.lang.String bytesToHexString(byte[])>($r1);
+
+        return $r2;
+    }
+
+    public int getOutputLength()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.Argon2: int outputLength>;
+
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setOutputLength(int)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int outputLength> = i0;
+
+        return r0;
+    }
+
+    public byte[] getPassword()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] password>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setPassword(byte[])
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        r1 := @parameter0: byte[];
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] password> = r1;
+
+        return r0;
+    }
+
+    public int getPasswordLength()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] password>;
+
+        $i0 = lengthof $r1;
+
+        return $i0;
+    }
+
+    public byte[] getSalt()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] salt>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setSalt(byte[])
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        r1 := @parameter0: byte[];
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] salt> = r1;
+
+        return r0;
+    }
+
+    public int getSaltLength()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] salt>;
+
+        $i0 = lengthof $r1;
+
+        return $i0;
+    }
+
+    public byte[] getSecret()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] secret>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setSecret(byte[])
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        r1 := @parameter0: byte[];
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] secret> = r1;
+
+        return r0;
+    }
+
+    public int getSecretLength()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1, $r2;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] secret>;
+
+        if $r1 == null goto label1;
+
+        $r2 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] secret>;
+
+        $i0 = lengthof $r2;
+
+        goto label2;
+
+     label1:
+        $i0 = 0;
+
+     label2:
+        return $i0;
+    }
+
+    public byte[] getAdditional()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] additional>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setAdditional(byte[])
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        r1 := @parameter0: byte[];
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] additional> = r1;
+
+        return r0;
+    }
+
+    public int getAdditionalLength()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        byte[] $r1, $r2;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] additional>;
+
+        if $r1 == null goto label1;
+
+        $r2 = r0.<net.sourceforge.plantuml.argon2.Argon2: byte[] additional>;
+
+        $i0 = lengthof $r2;
+
+        goto label2;
+
+     label1:
+        $i0 = 0;
+
+     label2:
+        return $i0;
+    }
+
+    public int getIterations()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.Argon2: int iterations>;
+
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setIterations(int)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int iterations> = i0;
+
+        return r0;
+    }
+
+    public int getMemory()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.Argon2: int memory>;
+
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setMemory(int)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        i0 := @parameter0: int;
+
+        $i1 = 1 << i0;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int memory> = $i1;
+
+        return r0;
+    }
+
+    public int getLanes()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.Argon2: int lanes>;
+
+        return $i0;
+    }
+
+    public int getVersion()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.Argon2: int version>;
+
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setVersion(int)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: int version> = i0;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.argon2.model.Argon2Type getType()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        net.sourceforge.plantuml.argon2.model.Argon2Type $r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.model.Argon2Type type>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.argon2.Argon2 setType(net.sourceforge.plantuml.argon2.model.Argon2Type)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        net.sourceforge.plantuml.argon2.model.Argon2Type r1;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        r1 := @parameter0: net.sourceforge.plantuml.argon2.model.Argon2Type;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: net.sourceforge.plantuml.argon2.model.Argon2Type type> = r1;
+
+        return r0;
+    }
+
+    public boolean isClearMemory()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $z0 = r0.<net.sourceforge.plantuml.argon2.Argon2: boolean clearMemory>;
+
+        return $z0;
+    }
+
+    public void setClearMemory(boolean)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: boolean clearMemory> = z0;
+
+        return;
+    }
+
+    public java.nio.charset.Charset getCharset()
+    {
+        java.nio.charset.Charset $r0;
+        net.sourceforge.plantuml.argon2.Argon2 r1;
+
+        r1 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        $r0 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        return $r0;
+    }
+
+    public void setEncodedOnly(boolean)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: boolean encodedOnly> = z0;
+
+        return;
+    }
+
+    public void setRawOnly(boolean)
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.argon2.Argon2: boolean rawOnly> = z0;
+
+        return;
+    }
+
+    public java.lang.String getEncoded()
+    {
+        net.sourceforge.plantuml.argon2.Argon2 r0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.Argon2;
+
+        return "";
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/argon2/Argon2;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.argon2.Argon2: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

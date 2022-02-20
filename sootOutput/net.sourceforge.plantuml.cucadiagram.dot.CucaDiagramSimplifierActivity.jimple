@@ -1,0 +1,101 @@
+public final class net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram;
+    private final net.sourceforge.plantuml.graphic.StringBounder stringBounder;
+
+    public void <init>(net.sourceforge.plantuml.cucadiagram.CucaDiagram, java.util.List, net.sourceforge.plantuml.graphic.StringBounder) throws java.io.IOException, java.lang.InterruptedException
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        java.util.ArrayList $r3;
+        java.util.Collection $r4;
+        java.util.Iterator r6;
+        java.lang.Object $r7;
+        net.sourceforge.plantuml.cucadiagram.IGroup r8;
+        boolean $z0, z1, $z2;
+        net.sourceforge.plantuml.svek.IEntityImage r9;
+        net.sourceforge.plantuml.cucadiagram.LeafType $r10;
+        java.util.List r11;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+
+        r11 := @parameter1: java.util.List;
+
+        r2 := @parameter2: net.sourceforge.plantuml.graphic.StringBounder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram> = r1;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = r2;
+
+     label1:
+        z1 = 0;
+
+        $r3 = new java.util.ArrayList;
+
+        $r4 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.util.Collection getGroups(boolean)>(0);
+
+        specialinvoke $r3.<java.util.ArrayList: void <init>(java.util.Collection)>($r4);
+
+        r6 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label2:
+        $z2 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label4;
+
+        $r7 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r7;
+
+        $z0 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean isAutarkic(net.sourceforge.plantuml.cucadiagram.IGroup)>(r8);
+
+        if $z0 == 0 goto label3;
+
+        r9 = specialinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity: net.sourceforge.plantuml.svek.IEntityImage computeImage(net.sourceforge.plantuml.cucadiagram.IGroup)>(r8);
+
+        $r10 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType ACTIVITY>;
+
+        interfaceinvoke r8.<net.sourceforge.plantuml.cucadiagram.IGroup: void overrideImage(net.sourceforge.plantuml.svek.IEntityImage,net.sourceforge.plantuml.cucadiagram.LeafType)>(r9, $r10);
+
+        z1 = 1;
+
+     label3:
+        goto label2;
+
+     label4:
+        if z1 != 0 goto label1;
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.svek.IEntityImage computeImage(net.sourceforge.plantuml.cucadiagram.IGroup) throws java.io.IOException, java.lang.InterruptedException
+    {
+        net.sourceforge.plantuml.svek.GroupPngMakerActivity $r0;
+        net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity r1;
+        net.sourceforge.plantuml.cucadiagram.IGroup r2;
+        net.sourceforge.plantuml.graphic.StringBounder $r3;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r4;
+        net.sourceforge.plantuml.svek.IEntityImage $r6;
+
+        r1 := @this: net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r0 = new net.sourceforge.plantuml.svek.GroupPngMakerActivity;
+
+        $r4 = r1.<net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r3 = r1.<net.sourceforge.plantuml.cucadiagram.dot.CucaDiagramSimplifierActivity: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.svek.GroupPngMakerActivity: void <init>(net.sourceforge.plantuml.cucadiagram.CucaDiagram,net.sourceforge.plantuml.cucadiagram.IGroup,net.sourceforge.plantuml.graphic.StringBounder)>($r4, r2, $r3);
+
+        $r6 = virtualinvoke $r0.<net.sourceforge.plantuml.svek.GroupPngMakerActivity: net.sourceforge.plantuml.svek.IEntityImage getImage()>();
+
+        return $r6;
+    }
+}

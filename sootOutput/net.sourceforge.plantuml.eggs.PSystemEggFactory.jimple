@@ -1,0 +1,107 @@
+public class net.sourceforge.plantuml.eggs.PSystemEggFactory extends net.sourceforge.plantuml.command.PSystemSingleLineFactory
+{
+    private static final java.util.List all;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.eggs.PSystemEggFactory r0;
+
+        r0 := @this: net.sourceforge.plantuml.eggs.PSystemEggFactory;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemSingleLineFactory: void <init>()>();
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.AbstractPSystem executeLine(net.sourceforge.plantuml.core.UmlSource, java.lang.String)
+    {
+        java.util.List $r0;
+        boolean $z0, $z1;
+        java.lang.Object $r1;
+        byte[] r2;
+        net.sourceforge.plantuml.eggs.SentenceDecoder $r3;
+        java.lang.String r4, $r8;
+        net.sourceforge.plantuml.eggs.PSystemEgg $r6;
+        net.sourceforge.plantuml.core.UmlSource r7;
+        java.io.UnsupportedEncodingException $r9;
+        net.sourceforge.plantuml.eggs.PSystemEggFactory r10;
+        java.util.Iterator r11;
+
+        r10 := @this: net.sourceforge.plantuml.eggs.PSystemEggFactory;
+
+        r7 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        r4 := @parameter1: java.lang.String;
+
+     label1:
+        $r0 = <net.sourceforge.plantuml.eggs.PSystemEggFactory: java.util.List all>;
+
+        r11 = interfaceinvoke $r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r11.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label5;
+
+        $r1 = interfaceinvoke r11.<java.util.Iterator: java.lang.Object next()>();
+
+        r2 = (byte[]) $r1;
+
+        $r3 = new net.sourceforge.plantuml.eggs.SentenceDecoder;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.eggs.SentenceDecoder: void <init>(java.lang.String,byte[])>(r4, r2);
+
+        $z1 = virtualinvoke $r3.<net.sourceforge.plantuml.eggs.SentenceDecoder: boolean isOk()>();
+
+        if $z1 == 0 goto label4;
+
+        $r6 = new net.sourceforge.plantuml.eggs.PSystemEgg;
+
+        $r8 = virtualinvoke $r3.<net.sourceforge.plantuml.eggs.SentenceDecoder: java.lang.String getSecret()>();
+
+        specialinvoke $r6.<net.sourceforge.plantuml.eggs.PSystemEgg: void <init>(net.sourceforge.plantuml.core.UmlSource,java.lang.String)>(r7, $r8);
+
+     label3:
+        return $r6;
+
+     label4:
+        goto label2;
+
+     label5:
+        goto label7;
+
+     label6:
+        $r9 := @caughtexception;
+
+        return null;
+
+     label7:
+        return null;
+
+        catch java.io.UnsupportedEncodingException from label1 to label3 with label6;
+        catch java.io.UnsupportedEncodingException from label4 to label5 with label6;
+    }
+
+    static void <clinit>()
+    {
+        byte[][] $r0;
+        byte[] $r1, $r2;
+        java.util.List $r3;
+
+        $r0 = newarray (byte[])[2];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.eggs.EggUtils: byte[] toByteArrays(java.lang.String)>("56092d35fce86a0dd88047a766c1d6541a7c5fd5ba212fa02db9a32a463422febd71a75a934eb135dec7d6c6325ddd17fd2fa437eba863462b28e3e92514998306a72790d93501335ed6b1262ea46ab79573142c28f8e92508978255a533d9cf7903394f9ab73a33b230a2b273033633adf16044888243b92f9bd8351f3d4f9aa2302fb264afa37546368424fa6a07919152bd2990d935092e49d9a02038b437aeb528");
+
+        $r0[0] = $r1;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.eggs.EggUtils: byte[] toByteArrays(java.lang.String)>("421e5b773c5df733a1194f716f18e8842155196b3b");
+
+        $r0[1] = $r2;
+
+        $r3 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r0);
+
+        <net.sourceforge.plantuml.eggs.PSystemEggFactory: java.util.List all> = $r3;
+
+        return;
+    }
+}

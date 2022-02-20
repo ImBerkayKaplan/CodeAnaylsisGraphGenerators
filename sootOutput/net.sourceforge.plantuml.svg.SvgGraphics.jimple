@@ -1,0 +1,4429 @@
+public class net.sourceforge.plantuml.svg.SvgGraphics extends java.lang.Object
+{
+    private static final java.lang.String XLINK_TITLE1;
+    private static final java.lang.String XLINK_TITLE2;
+    private static final java.lang.String XLINK_HREF1;
+    private static final java.lang.String XLINK_HREF2;
+    private final org.w3c.dom.Document document;
+    private final org.w3c.dom.Element root;
+    private final org.w3c.dom.Element defs;
+    private final org.w3c.dom.Element gRoot;
+    private java.lang.String fill;
+    private java.lang.String stroke;
+    private java.lang.String strokeWidth;
+    private java.lang.String strokeDasharray;
+    private final java.lang.String backcolor;
+    private int maxX;
+    private int maxY;
+    private final java.lang.String preserveAspectRatio;
+    private final double scale;
+    private final java.lang.String filterUid;
+    private final java.lang.String shadowId;
+    private final java.lang.String gradientId;
+    private final boolean svgDimensionStyle;
+    private final net.sourceforge.plantuml.svg.LengthAdjust lengthAdjust;
+    private final boolean interactive;
+    private org.w3c.dom.Element pendingBackground;
+    private java.util.Map gradients;
+    private final java.util.List pendingAction;
+    private final java.util.Map filterBackColor;
+    private java.lang.StringBuilder currentPath;
+    private final java.util.Map images;
+    private boolean withShadow;
+    private boolean hidden;
+    public static final java.lang.String MD5_HEADER;
+    static final boolean $assertionsDisabled;
+
+    protected final void ensureVisible(double, double)
+    {
+        double d0, $d1, d2, $d3, $d4, $d5;
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        int $i0, $i2, $i4, $i5;
+        byte $b1, $b3;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        d2 := @parameter1: double;
+
+        $i0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: int maxX>;
+
+        $d1 = (double) $i0;
+
+        $b1 = d0 cmpl $d1;
+
+        if $b1 <= 0 goto label1;
+
+        $d5 = d0 + 1.0;
+
+        $i5 = (int) $d5;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: int maxX> = $i5;
+
+     label1:
+        $i2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: int maxY>;
+
+        $d3 = (double) $i2;
+
+        $b3 = d2 cmpl $d3;
+
+        if $b3 <= 0 goto label2;
+
+        $d4 = d2 + 1.0;
+
+        $i4 = (int) $d4;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: int maxY> = $i4;
+
+     label2:
+        return;
+    }
+
+    public void <init>(java.lang.String, boolean, net.sourceforge.plantuml.awt.geom.Dimension2D, double, java.lang.String, long, java.lang.String, net.sourceforge.plantuml.svg.LengthAdjust, net.sourceforge.plantuml.svg.DarkStrategy, boolean)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.util.HashMap $r1, $r3, $r4;
+        java.util.ArrayList $r2;
+        net.sourceforge.plantuml.svg.LengthAdjust r5;
+        boolean z0, z1;
+        double d0, $d1, $d2;
+        org.w3c.dom.Document $r6;
+        java.lang.String r7, r8, $r16, $r19, $r21, $r24, $r26, $r29, $r31, r32;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r9;
+        org.w3c.dom.Element $r10, $r11, $r12, r33, $r34, $r36, $r38, $r39, r44;
+        java.lang.StringBuilder $r13, $r14, $r15, $r17, $r18, $r20, $r22, $r23, $r25, $r27, $r28, $r30;
+        long l0;
+        javax.xml.parsers.ParserConfigurationException $r41;
+        java.lang.IllegalStateException $r42;
+        net.sourceforge.plantuml.svg.DarkStrategy r43;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r7 := @parameter0: java.lang.String;
+
+        z0 := @parameter1: boolean;
+
+        r9 := @parameter2: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        d0 := @parameter3: double;
+
+        r32 := @parameter4: java.lang.String;
+
+        l0 := @parameter5: long;
+
+        r8 := @parameter6: java.lang.String;
+
+        r5 := @parameter7: net.sourceforge.plantuml.svg.LengthAdjust;
+
+        r43 := @parameter8: net.sourceforge.plantuml.svg.DarkStrategy;
+
+        z1 := @parameter9: boolean;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill> = "black";
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String stroke> = "black";
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeDasharray> = null;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: int maxX> = 10;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: int maxY> = 10;
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map gradients> = $r1;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction> = $r2;
+
+        $r3 = new java.util.HashMap;
+
+        specialinvoke $r3.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map filterBackColor> = $r3;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath> = null;
+
+        $r4 = new java.util.HashMap;
+
+        specialinvoke $r4.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map images> = $r4;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean withShadow> = 0;
+
+     label1:
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: net.sourceforge.plantuml.svg.LengthAdjust lengthAdjust> = r5;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean svgDimensionStyle> = z0;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: double scale> = d0;
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document getDocument()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document> = $r6;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String backcolor> = r7;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String preserveAspectRatio> = r8;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean interactive> = z1;
+
+        $d1 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d2 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d1, $d2);
+
+        $r10 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getRootNode()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root> = $r10;
+
+        $r11 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element simpleElement(java.lang.String)>("defs");
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element defs> = $r11;
+
+        $r12 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element simpleElement(java.lang.String)>("g");
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element gRoot> = $r12;
+
+        $r13 = new java.lang.StringBuilder;
+
+        specialinvoke $r13.<java.lang.StringBuilder: void <init>()>();
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>(d0);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeWidth> = $r16;
+
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>()>();
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("b");
+
+        $r19 = staticinvoke <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getSeed(long)>(l0);
+
+        $r20 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r19);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String filterUid> = $r21;
+
+        $r22 = new java.lang.StringBuilder;
+
+        specialinvoke $r22.<java.lang.StringBuilder: void <init>()>();
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("f");
+
+        $r24 = staticinvoke <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getSeed(long)>(l0);
+
+        $r25 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r24);
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String shadowId> = $r26;
+
+        $r27 = new java.lang.StringBuilder;
+
+        specialinvoke $r27.<java.lang.StringBuilder: void <init>()>();
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("g");
+
+        $r29 = staticinvoke <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getSeed(long)>(l0);
+
+        $r30 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r29);
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String gradientId> = $r31;
+
+        if r32 == null goto label2;
+
+        $r38 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element defs>;
+
+        $r39 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getPathHover(java.lang.String)>(r32);
+
+        interfaceinvoke $r38.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>($r39);
+
+     label2:
+        if z1 == 0 goto label4;
+
+        r44 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getStylesForInteractiveMode()>();
+
+        if r44 == null goto label3;
+
+        $r36 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element defs>;
+
+        interfaceinvoke $r36.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r44);
+
+     label3:
+        r33 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getScriptForInteractiveMode()>();
+
+        if r33 == null goto label4;
+
+        $r34 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element defs>;
+
+        interfaceinvoke $r34.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r33);
+
+     label4:
+        goto label6;
+
+     label5:
+        $r41 := @caughtexception;
+
+        virtualinvoke $r41.<javax.xml.parsers.ParserConfigurationException: void printStackTrace()>();
+
+        $r42 = new java.lang.IllegalStateException;
+
+        specialinvoke $r42.<java.lang.IllegalStateException: void <init>(java.lang.Throwable)>($r41);
+
+        throw $r42;
+
+     label6:
+        return;
+
+        catch javax.xml.parsers.ParserConfigurationException from label1 to label4 with label5;
+    }
+
+    private org.w3c.dom.Element getStylesForInteractiveMode()
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Element r1;
+        java.lang.String r2;
+        org.w3c.dom.Document $r3;
+        org.w3c.dom.CDATASection r4;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element simpleElement(java.lang.String)>("style");
+
+        r2 = staticinvoke <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getData(java.lang.String)>("default.css");
+
+        if r2 != null goto label1;
+
+        return null;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r4 = interfaceinvoke $r3.<org.w3c.dom.Document: org.w3c.dom.CDATASection createCDATASection(java.lang.String)>(r2);
+
+        interfaceinvoke r1.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("type", "text/css");
+
+        interfaceinvoke r1.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r4);
+
+        return r1;
+    }
+
+    private org.w3c.dom.Element getScriptForInteractiveMode()
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Document $r1;
+        org.w3c.dom.Element r2;
+        java.lang.String r3;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("script");
+
+        r3 = staticinvoke <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getData(java.lang.String)>("default.js");
+
+        if r3 != null goto label1;
+
+        return null;
+
+     label1:
+        interfaceinvoke r2.<org.w3c.dom.Element: void setTextContent(java.lang.String)>(r3);
+
+        return r2;
+    }
+
+    private static java.lang.String getData(java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r2, $r4;
+        java.lang.Class $r1;
+        java.lang.String r3, $r5, $r6;
+        java.io.IOException $r7;
+        java.io.InputStream r8;
+
+        r3 := @parameter0: java.lang.String;
+
+     label1:
+        $r1 = class "Lnet/sourceforge/plantuml/svg/SvgGraphics;";
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/svg/");
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r8 = virtualinvoke $r1.<java.lang.Class: java.io.InputStream getResourceAsStream(java.lang.String)>($r5);
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.FileUtils: java.lang.String readText(java.io.InputStream)>(r8);
+
+     label2:
+        return $r6;
+
+     label3:
+        $r7 := @caughtexception;
+
+        virtualinvoke $r7.<java.io.IOException: void printStackTrace()>();
+
+        return null;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+
+    private org.w3c.dom.Element getPathHover(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Element r1;
+        java.lang.StringBuilder $r2, $r4, $r6, $r7;
+        org.w3c.dom.Document $r3;
+        java.lang.String r5, $r8;
+        org.w3c.dom.CDATASection r9;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r5 := @parameter0: java.lang.String;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element simpleElement(java.lang.String)>("style");
+
+        $r3 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("path:hover { stroke: ");
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" !important;}");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r9 = interfaceinvoke $r3.<org.w3c.dom.Document: org.w3c.dom.CDATASection createCDATASection(java.lang.String)>($r8);
+
+        interfaceinvoke r1.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("type", "text/css");
+
+        interfaceinvoke r1.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r9);
+
+        return r1;
+    }
+
+    private static java.lang.String getSeed(long)
+    {
+        long l0, $l1;
+        java.lang.String $r0;
+
+        l0 := @parameter0: long;
+
+        $l1 = staticinvoke <java.lang.Math: long abs(long)>(l0);
+
+        $r0 = staticinvoke <java.lang.Long: java.lang.String toString(long,int)>($l1, 36);
+
+        return $r0;
+    }
+
+    public void paintBackcolorGradient(net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.color.HColorGradient)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r1;
+        net.sourceforge.plantuml.ugraphic.color.HColorGradient r2;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r3, $r5;
+        java.lang.String $r4, $r6, r7, $r12;
+        char $c0;
+        java.lang.StringBuilder $r8, $r9, $r10, $r11;
+        org.w3c.dom.Element $r13, $r14, $r15;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r2 := @parameter1: net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.color.HColorGradient: net.sourceforge.plantuml.ugraphic.color.HColor getColor1()>();
+
+        $r4 = interfaceinvoke r1.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.lang.String toRGB(net.sourceforge.plantuml.ugraphic.color.HColor)>($r3);
+
+        $r5 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.color.HColorGradient: net.sourceforge.plantuml.ugraphic.color.HColor getColor2()>();
+
+        $r6 = interfaceinvoke r1.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.lang.String toRGB(net.sourceforge.plantuml.ugraphic.color.HColor)>($r5);
+
+        $c0 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.color.HColorGradient: char getPolicy()>();
+
+        r7 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String createSvgGradient(java.lang.String,java.lang.String,char)>($r4, $r6, $c0);
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("url(#");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r7);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void setFillColor(java.lang.String)>($r12);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void setStrokeColor(java.lang.String)>(null);
+
+        $r13 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element createRectangleInternal(double,double,double,double)>(0.0, 0.0, 0.0, 0.0);
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element pendingBackground> = $r13;
+
+        $r14 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        $r15 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element pendingBackground>;
+
+        interfaceinvoke $r14.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>($r15);
+
+        return;
+    }
+
+    private org.w3c.dom.Element simpleElement(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1;
+        org.w3c.dom.Document $r2;
+        org.w3c.dom.Element r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r3 = interfaceinvoke $r2.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(r1);
+
+        $r4 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        interfaceinvoke $r4.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r3);
+
+        return r3;
+    }
+
+    private org.w3c.dom.Document getDocument() throws javax.xml.parsers.ParserConfigurationException
+    {
+        javax.xml.parsers.DocumentBuilder r0;
+        org.w3c.dom.Document r1;
+        net.sourceforge.plantuml.svg.SvgGraphics r2;
+
+        r2 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.xml.XmlFactories: javax.xml.parsers.DocumentBuilder newDocumentBuilder()>();
+
+        r1 = virtualinvoke r0.<javax.xml.parsers.DocumentBuilder: org.w3c.dom.Document newDocument()>();
+
+        interfaceinvoke r1.<org.w3c.dom.Document: void setXmlStandalone(boolean)>(1);
+
+        return r1;
+    }
+
+    private org.w3c.dom.Element getRootNode()
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Document $r1, $r3;
+        org.w3c.dom.Element r2;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("svg");
+
+        $r3 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        interfaceinvoke $r3.<org.w3c.dom.Document: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r2);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xmlns", "http://www.w3.org/2000/svg");
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xmlns:xlink", "http://www.w3.org/1999/xlink");
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("version", "1.1");
+
+        return r2;
+    }
+
+    public void svgEllipse(double, double, double, double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        double d0, d1, d2, $d3, $d4, d5, d6, $d7, $d8, $d9, $d10;
+        boolean $z0;
+        org.w3c.dom.Document $r1;
+        org.w3c.dom.Element r2, $r8;
+        java.lang.String $r3, $r4, $r5, $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d1 := @parameter0: double;
+
+        d5 := @parameter1: double;
+
+        d2 := @parameter2: double;
+
+        d6 := @parameter3: double;
+
+        d0 := @parameter4: double;
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageShadow(double)>(d0);
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z0 != 0 goto label1;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("ellipse");
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("cx", $r3);
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d5);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("cy", $r4);
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d2);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("rx", $r5);
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d6);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("ry", $r6);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void fillMe(org.w3c.dom.Element)>(r2);
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getStyle()>();
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("style", $r7);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageDarkStroke(org.w3c.dom.Element)>(r2);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilterShadowId(org.w3c.dom.Element,double)>(r2, d0);
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r8.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r2);
+
+     label1:
+        $d4 = d1 + d2;
+
+        $d3 = d0 * 2.0;
+
+        $d10 = $d4 + $d3;
+
+        $d8 = d5 + d6;
+
+        $d7 = d0 * 2.0;
+
+        $d9 = $d8 + $d7;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d10, $d9);
+
+        return;
+    }
+
+    public void svgArcEllipse(double, double, double, double, double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        boolean $z0;
+        double d0, d1, d2, d3, d4, d5;
+        java.lang.StringBuilder $r1, $r2, $r4, $r5, $r7, $r8, $r10, $r11, $r13, $r14, $r16, $r17, $r19;
+        java.lang.String $r3, $r6, $r9, $r12, $r15, $r18, r20, $r23;
+        org.w3c.dom.Document $r21;
+        org.w3c.dom.Element r22, $r24;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d4 := @parameter0: double;
+
+        d5 := @parameter1: double;
+
+        d0 := @parameter2: double;
+
+        d1 := @parameter3: double;
+
+        d2 := @parameter4: double;
+
+        d3 := @parameter5: double;
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z0 != 0 goto label1;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("M");
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" A");
+
+        $r9 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d4);
+
+        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r9);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r12 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d5);
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r12);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" 0 0 0 ");
+
+        $r15 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d2);
+
+        $r16 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r15);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r18 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d3);
+
+        $r19 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r18);
+
+        r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r21 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r22 = interfaceinvoke $r21.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("path");
+
+        interfaceinvoke r22.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("d", r20);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void fillMe(org.w3c.dom.Element)>(r22);
+
+        $r23 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getStyle()>();
+
+        interfaceinvoke r22.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("style", $r23);
+
+        $r24 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r24.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r22);
+
+     label1:
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d0, d1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d2, d3);
+
+        return;
+    }
+
+    public java.lang.String createSvgGradient(java.lang.String, java.lang.String, char)
+    {
+        java.lang.Object[] $r0;
+        java.lang.String r1, r2, r16, $r18;
+        char c0;
+        java.lang.Character $r3;
+        java.util.List r4;
+        net.sourceforge.plantuml.svg.SvgGraphics r5;
+        java.util.Map $r6, $r20, $r22;
+        java.lang.Object $r7;
+        org.w3c.dom.Document $r8, $r23, $r24;
+        org.w3c.dom.Element r9, r11, r12, $r25;
+        java.lang.StringBuilder $r17, $r19, $r21;
+        int $i1;
+
+        r5 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.lang.String;
+
+        c0 := @parameter2: char;
+
+        $r0 = newarray (java.lang.Object)[3];
+
+        $r0[0] = r1;
+
+        $r0[1] = r2;
+
+        $r3 = staticinvoke <java.lang.Character: java.lang.Character valueOf(char)>(c0);
+
+        $r0[2] = $r3;
+
+        r4 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r0);
+
+        $r6 = r5.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map gradients>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        r16 = (java.lang.String) $r7;
+
+        if r16 != null goto label5;
+
+        $r8 = r5.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r9 = interfaceinvoke $r8.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("linearGradient");
+
+        if c0 != 124 goto label1;
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x1", "0%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y1", "50%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x2", "100%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y2", "50%");
+
+        goto label4;
+
+     label1:
+        if c0 != 92 goto label2;
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x1", "0%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y1", "100%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x2", "100%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y2", "0%");
+
+        goto label4;
+
+     label2:
+        if c0 != 45 goto label3;
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x1", "50%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y1", "0%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x2", "50%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y2", "100%");
+
+        goto label4;
+
+     label3:
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x1", "0%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y1", "0%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x2", "100%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y2", "100%");
+
+     label4:
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>()>();
+
+        $r18 = r5.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String gradientId>;
+
+        $r19 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r18);
+
+        $r20 = r5.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map gradients>;
+
+        $i1 = interfaceinvoke $r20.<java.util.Map: int size()>();
+
+        $r21 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        r16 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r22 = r5.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map gradients>;
+
+        interfaceinvoke $r22.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r4, r16);
+
+        interfaceinvoke r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("id", r16);
+
+        $r23 = r5.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r11 = interfaceinvoke $r23.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("stop");
+
+        interfaceinvoke r11.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("stop-color", r1);
+
+        interfaceinvoke r11.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("offset", "0%");
+
+        $r24 = r5.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r12 = interfaceinvoke $r24.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("stop");
+
+        interfaceinvoke r12.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("stop-color", r2);
+
+        interfaceinvoke r12.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("offset", "100%");
+
+        interfaceinvoke r9.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r11);
+
+        interfaceinvoke r9.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r12);
+
+        $r25 = r5.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element defs>;
+
+        interfaceinvoke $r25.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r9);
+
+     label5:
+        return r16;
+    }
+
+    public final void setFillColor(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        if r1 != null goto label1;
+
+        $r3 = "none";
+
+        goto label2;
+
+     label1:
+        $r3 = r1;
+
+     label2:
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill> = $r3;
+
+        return;
+    }
+
+    public final void setFillColor(java.lang.String, java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1, r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: java.lang.String;
+
+        if r1 != null goto label1;
+
+        $r4 = "none";
+
+        goto label2;
+
+     label1:
+        $r4 = r1;
+
+     label2:
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill> = $r4;
+
+        return;
+    }
+
+    public final void setStrokeColor(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        if r1 != null goto label1;
+
+        $r3 = "none";
+
+        goto label2;
+
+     label1:
+        $r3 = r1;
+
+     label2:
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String stroke> = $r3;
+
+        return;
+    }
+
+    public final void setStrokeColor(java.lang.String, java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1, r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: java.lang.String;
+
+        if r1 != null goto label1;
+
+        $r4 = "none";
+
+        goto label2;
+
+     label1:
+        $r4 = r1;
+
+     label2:
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String stroke> = $r4;
+
+        return;
+    }
+
+    public final void setStrokeWidth(double, java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.StringBuilder $r1, $r2, $r3;
+        double d0, $d1, $d2;
+        java.lang.String $r4, r5;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        r5 := @parameter1: java.lang.String;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: double scale>;
+
+        $d2 = $d1 * d0;
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeWidth> = $r4;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeDasharray> = r5;
+
+        return;
+    }
+
+    public final org.w3c.dom.Element getG()
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.util.List $r1, $r2;
+        int $i0;
+        java.lang.Object $r3;
+        org.w3c.dom.Element $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $r5 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element gRoot>;
+
+        return $r5;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r4 = (org.w3c.dom.Element) $r3;
+
+        return $r4;
+    }
+
+    public void svgRectangle(double, double, double, double, double, double, double, java.lang.String, java.lang.String)
+    {
+        double d0, d1, d2, d3, d4, d5, d6, $d7, $d8, $d9, $d10, $d11, $d12;
+        byte $b0, $b1, $b2, $b3;
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        boolean $z0;
+        org.w3c.dom.Element r1, $r4;
+        java.lang.String r2, r3, $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d3 := @parameter0: double;
+
+        d4 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        d0 := @parameter3: double;
+
+        d5 := @parameter4: double;
+
+        d6 := @parameter5: double;
+
+        d2 := @parameter6: double;
+
+        r2 := @parameter7: java.lang.String;
+
+        r3 := @parameter8: java.lang.String;
+
+        $b0 = d0 cmpg 0.0;
+
+        if $b0 <= 0 goto label1;
+
+        $b1 = d1 cmpg 0.0;
+
+        if $b1 > 0 goto label2;
+
+     label1:
+        return;
+
+     label2:
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageShadow(double)>(d2);
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z0 != 0 goto label6;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element createRectangleInternal(double,double,double,double)>(d3, d4, d1, d0);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilterShadowId(org.w3c.dom.Element,double)>(r1, d2);
+
+        $b2 = d5 cmpl 0.0;
+
+        if $b2 <= 0 goto label3;
+
+        $b3 = d6 cmpl 0.0;
+
+        if $b3 <= 0 goto label3;
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d5);
+
+        interfaceinvoke r1.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("rx", $r6);
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d6);
+
+        interfaceinvoke r1.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("ry", $r7);
+
+     label3:
+        if r2 == null goto label4;
+
+        interfaceinvoke r1.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("id", r2);
+
+     label4:
+        if r3 == null goto label5;
+
+        interfaceinvoke r1.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("codeLine", r3);
+
+     label5:
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r4.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r1);
+
+     label6:
+        $d7 = d3 + d1;
+
+        $d8 = 2.0 * d2;
+
+        $d9 = $d7 + $d8;
+
+        $d10 = d4 + d0;
+
+        $d11 = 2.0 * d2;
+
+        $d12 = $d10 + $d11;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d9, $d12);
+
+        return;
+    }
+
+    private org.w3c.dom.Element createRectangleInternal(double, double, double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Document $r1;
+        org.w3c.dom.Element r2;
+        double d0, d1, d2, d3;
+        java.lang.String $r3, $r4, $r5, $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        d2 := @parameter2: double;
+
+        d3 := @parameter3: double;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("rect");
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x", $r3);
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y", $r4);
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d2);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("width", $r5);
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d3);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("height", $r6);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void fillMe(org.w3c.dom.Element)>(r2);
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getStyleSpecial()>();
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("style", $r7);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageDarkStroke(org.w3c.dom.Element)>(r2);
+
+        return r2;
+    }
+
+    private void manageDarkStroke(org.w3c.dom.Element)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Element r1;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: org.w3c.dom.Element;
+
+        return;
+    }
+
+    public void svgLine(double, double, double, double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        double d0, d1, $d2, d3, $d4, $d5, $d6, d7, $d8, d9, $d10, $d11, $d12;
+        boolean $z0;
+        org.w3c.dom.Document $r1;
+        org.w3c.dom.Element r2, $r8;
+        java.lang.String $r3, $r4, $r5, $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d1 := @parameter0: double;
+
+        d3 := @parameter1: double;
+
+        d7 := @parameter2: double;
+
+        d9 := @parameter3: double;
+
+        d0 := @parameter4: double;
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageShadow(double)>(d0);
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z0 != 0 goto label1;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("line");
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x1", $r3);
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d3);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y1", $r4);
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d7);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x2", $r5);
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d9);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y2", $r6);
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getStyle()>();
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("style", $r7);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageDarkStroke(org.w3c.dom.Element)>(r2);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilterShadowId(org.w3c.dom.Element,double)>(r2, d0);
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r8.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r2);
+
+     label1:
+        $d2 = 2.0 * d0;
+
+        $d6 = d1 + $d2;
+
+        $d4 = 2.0 * d0;
+
+        $d5 = d3 + $d4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d6, $d5);
+
+        $d8 = 2.0 * d0;
+
+        $d12 = d7 + $d8;
+
+        $d10 = 2.0 * d0;
+
+        $d11 = d9 + $d10;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d12, $d11);
+
+        return;
+    }
+
+    private java.lang.String getStyle()
+    {
+        java.lang.StringBuilder $r0, $r2, $r3, $r6, $r7, $r10, $r11, $r13, $r14, $r20, $r21, $r23, $r24;
+        net.sourceforge.plantuml.svg.SvgGraphics r4;
+        java.lang.String $r5, $r8, $r12, $r15, $r17, $r18, $r19, $r22, $r25;
+        boolean $z0;
+
+        r4 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("stroke:");
+
+        $r5 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String stroke>;
+
+        $r6 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>()>();
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("stroke-width:");
+
+        $r12 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeWidth>;
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r12);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r15);
+
+        $r17 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill>;
+
+        $z0 = virtualinvoke $r17.<java.lang.String: boolean equals(java.lang.Object)>("#00000000");
+
+        if $z0 == 0 goto label1;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("fill:none;");
+
+     label1:
+        $r18 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeDasharray>;
+
+        if $r18 == null goto label2;
+
+        $r20 = new java.lang.StringBuilder;
+
+        specialinvoke $r20.<java.lang.StringBuilder: void <init>()>();
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("stroke-dasharray:");
+
+        $r22 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeDasharray>;
+
+        $r23 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r22);
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r25);
+
+     label2:
+        $r19 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r19;
+    }
+
+    private java.lang.String getStyleSpecial()
+    {
+        java.lang.StringBuilder $r0, $r2, $r3, $r6, $r7, $r10, $r11, $r13, $r14, $r20, $r21, $r23, $r24;
+        net.sourceforge.plantuml.svg.SvgGraphics r4;
+        java.lang.String $r5, $r8, $r12, $r15, $r17, $r18, $r19, $r22, $r25;
+        boolean $z0;
+
+        r4 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("stroke:");
+
+        $r5 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String stroke>;
+
+        $r6 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>()>();
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("stroke-width:");
+
+        $r12 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeWidth>;
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r12);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r15);
+
+        $r17 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill>;
+
+        $z0 = virtualinvoke $r17.<java.lang.String: boolean equals(java.lang.Object)>("#00000000");
+
+        if $z0 == 0 goto label1;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("fill:none;");
+
+     label1:
+        $r18 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeDasharray>;
+
+        if $r18 == null goto label2;
+
+        $r20 = new java.lang.StringBuilder;
+
+        specialinvoke $r20.<java.lang.StringBuilder: void <init>()>();
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("stroke-dasharray:");
+
+        $r22 = r4.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String strokeDasharray>;
+
+        $r23 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r22);
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r25);
+
+     label2:
+        $r19 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r19;
+    }
+
+    public transient void svgPolygon(double, double[])
+    {
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, d7;
+        double[] r1;
+        int $i0, i1, $i2, $i3, $i4, i5, i6, $i7;
+        org.w3c.dom.Document $r2;
+        java.lang.StringBuilder $r3;
+        java.lang.String $r6, $r7, $r10;
+        org.w3c.dom.Element $r8, r14;
+        java.lang.AssertionError $r13;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        r1 := @parameter1: double[];
+
+        $z0 = <net.sourceforge.plantuml.svg.SvgGraphics: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        $i3 = lengthof r1;
+
+        $i4 = $i3 % 2;
+
+        if $i4 == 0 goto label1;
+
+        $r13 = new java.lang.AssertionError;
+
+        specialinvoke $r13.<java.lang.AssertionError: void <init>()>();
+
+        throw $r13;
+
+     label1:
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageShadow(double)>(d0);
+
+        $z1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z1 != 0 goto label5;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r14 = interfaceinvoke $r2.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("polygon");
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        i1 = lengthof r1;
+
+        i5 = 0;
+
+     label2:
+        if i5 >= i1 goto label4;
+
+        d7 = r1[i5];
+
+        $i2 = virtualinvoke $r3.<java.lang.StringBuilder: int length()>();
+
+        if $i2 <= 0 goto label3;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+     label3:
+        $r10 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d7);
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        i5 = i5 + 1;
+
+        goto label2;
+
+     label4:
+        $r6 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r14.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("points", $r6);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void fillMe(org.w3c.dom.Element)>(r14);
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getStyleSpecial()>();
+
+        interfaceinvoke r14.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("style", $r7);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageDarkStroke(org.w3c.dom.Element)>(r14);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilterShadowId(org.w3c.dom.Element,double)>(r14, d0);
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r8.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r14);
+
+     label5:
+        i6 = 0;
+
+     label6:
+        $i7 = lengthof r1;
+
+        if i6 >= $i7 goto label7;
+
+        $d2 = r1[i6];
+
+        $d1 = 2.0 * d0;
+
+        $d6 = $d2 + $d1;
+
+        $i0 = i6 + 1;
+
+        $d4 = r1[$i0];
+
+        $d3 = 2.0 * d0;
+
+        $d5 = $d4 + $d3;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d6, $d5);
+
+        i6 = i6 + 2;
+
+        goto label6;
+
+     label7:
+        return;
+    }
+
+    public void text(java.lang.String, double, double, java.lang.String, int, java.lang.String, java.lang.String, java.lang.String, double, java.util.Map, java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        double d0, d1, d2, $d3, $d4;
+        org.w3c.dom.Document $r1;
+        org.w3c.dom.Element r2, $r16;
+        java.lang.String $r3, $r4, $r5, r10, r11, r12, r13, $r21, $r23, $r28, $r29, $r30, $r31, r32, r33, r34;
+        int i0;
+        net.sourceforge.plantuml.svg.LengthAdjust $r6, $r7, $r8, $r9;
+        java.util.Map r14;
+        java.util.Set $r15;
+        java.lang.Object $r18, $r20, $r22;
+        java.util.Map$Entry r19;
+        java.lang.StringBuilder $r24, $r25, $r26, $r27;
+        java.util.Iterator r35;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r32 := @parameter0: java.lang.String;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        r33 := @parameter3: java.lang.String;
+
+        i0 := @parameter4: int;
+
+        r10 := @parameter5: java.lang.String;
+
+        r11 := @parameter6: java.lang.String;
+
+        r12 := @parameter7: java.lang.String;
+
+        d2 := @parameter8: double;
+
+        r14 := @parameter9: java.util.Map;
+
+        r13 := @parameter10: java.lang.String;
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z0 != 0 goto label12;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("text");
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x", $r3);
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y", $r4);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void fillMe(org.w3c.dom.Element)>(r2);
+
+        $d4 = (double) i0;
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d4);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("font-size", $r5);
+
+        $r7 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: net.sourceforge.plantuml.svg.LengthAdjust lengthAdjust>;
+
+        $r6 = <net.sourceforge.plantuml.svg.LengthAdjust: net.sourceforge.plantuml.svg.LengthAdjust SPACING>;
+
+        if $r7 != $r6 goto label01;
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("lengthAdjust", "spacing");
+
+        $r31 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d2);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("textLength", $r31);
+
+        goto label02;
+
+     label01:
+        $r9 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: net.sourceforge.plantuml.svg.LengthAdjust lengthAdjust>;
+
+        $r8 = <net.sourceforge.plantuml.svg.LengthAdjust: net.sourceforge.plantuml.svg.LengthAdjust SPACING_AND_GLYPHS>;
+
+        if $r9 != $r8 goto label02;
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("lengthAdjust", "spacingAndGlyphs");
+
+        $r30 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d2);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("textLength", $r30);
+
+     label02:
+        if r10 == null goto label03;
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("font-weight", r10);
+
+     label03:
+        if r11 == null goto label04;
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("font-style", r11);
+
+     label04:
+        if r12 == null goto label05;
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("text-decoration", r12);
+
+     label05:
+        if r33 == null goto label08;
+
+        $r29 = "monospaced";
+
+        $z1 = virtualinvoke $r29.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>(r33);
+
+        if $z1 == 0 goto label06;
+
+        r33 = "monospace";
+
+     label06:
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("font-family", r33);
+
+        $z2 = virtualinvoke r33.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("monospace");
+
+        if $z2 != 0 goto label07;
+
+        $z3 = virtualinvoke r33.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("courier");
+
+        if $z3 == 0 goto label08;
+
+     label07:
+        r32 = virtualinvoke r32.<java.lang.String: java.lang.String replace(char,char)>(32, 160);
+
+     label08:
+        if r13 == null goto label09;
+
+        r34 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getFilterBackColor(java.lang.String)>(r13);
+
+        $r24 = new java.lang.StringBuilder;
+
+        specialinvoke $r24.<java.lang.StringBuilder: void <init>()>();
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("url(#");
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r34);
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("filter", $r28);
+
+     label09:
+        $r15 = interfaceinvoke r14.<java.util.Map: java.util.Set entrySet()>();
+
+        r35 = interfaceinvoke $r15.<java.util.Set: java.util.Iterator iterator()>();
+
+     label10:
+        $z4 = interfaceinvoke r35.<java.util.Iterator: boolean hasNext()>();
+
+        if $z4 == 0 goto label11;
+
+        $r18 = interfaceinvoke r35.<java.util.Iterator: java.lang.Object next()>();
+
+        r19 = (java.util.Map$Entry) $r18;
+
+        $r20 = interfaceinvoke r19.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r21 = (java.lang.String) $r20;
+
+        $r22 = interfaceinvoke r19.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r23 = (java.lang.String) $r22;
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>($r21, $r23);
+
+        goto label10;
+
+     label11:
+        interfaceinvoke r2.<org.w3c.dom.Element: void setTextContent(java.lang.String)>(r32);
+
+        $r16 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r16.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r2);
+
+     label12:
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d0, d1);
+
+        $d3 = d0 + d2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d3, d1);
+
+        return;
+    }
+
+    private java.lang.String getIdFilterBackColor(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1, $r5, r11;
+        java.util.Map $r2, $r7, $r9;
+        java.lang.Object $r3;
+        java.lang.StringBuilder $r4, $r6, $r8;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map filterBackColor>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        r11 = (java.lang.String) $r3;
+
+        if r11 != null goto label1;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String filterUid>;
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map filterBackColor>;
+
+        $i0 = interfaceinvoke $r7.<java.util.Map: int size()>();
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        r11 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r9 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map filterBackColor>;
+
+        interfaceinvoke $r9.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, r11);
+
+     label1:
+        return r11;
+    }
+
+    private java.lang.String getFilterBackColor(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1, r10, r11;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        org.w3c.dom.Document $r4;
+        org.w3c.dom.Element r5, $r8;
+        java.lang.String[] $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map filterBackColor>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        r10 = (java.lang.String) $r3;
+
+        if r10 == null goto label1;
+
+        return r10;
+
+     label1:
+        r11 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getIdFilterBackColor(java.lang.String)>(r1);
+
+        $r4 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r5 = interfaceinvoke $r4.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("filter");
+
+        interfaceinvoke r5.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("id", r11);
+
+        interfaceinvoke r5.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x", "0");
+
+        interfaceinvoke r5.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y", "0");
+
+        interfaceinvoke r5.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("width", "1");
+
+        interfaceinvoke r5.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("height", "1");
+
+        $r6 = newarray (java.lang.String)[4];
+
+        $r6[0] = "flood-color";
+
+        $r6[1] = r1;
+
+        $r6[2] = "result";
+
+        $r6[3] = "flood";
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilter(org.w3c.dom.Element,java.lang.String,java.lang.String[])>(r5, "feFlood", $r6);
+
+        $r7 = newarray (java.lang.String)[6];
+
+        $r7[0] = "in";
+
+        $r7[1] = "SourceGraphic";
+
+        $r7[2] = "in2";
+
+        $r7[3] = "flood";
+
+        $r7[4] = "operator";
+
+        $r7[5] = "over";
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilter(org.w3c.dom.Element,java.lang.String,java.lang.String[])>(r5, "feComposite", $r7);
+
+        $r8 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element defs>;
+
+        interfaceinvoke $r8.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r5);
+
+        return r11;
+    }
+
+    private javax.xml.transform.Transformer getTransformer() throws javax.xml.transform.TransformerException
+    {
+        javax.xml.transform.Transformer r0;
+        java.lang.StringBuilder $r1, $r2, $r4;
+        java.lang.Class $r3;
+        java.lang.String $r5;
+        net.sourceforge.plantuml.svg.SvgGraphics r6;
+
+        r6 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.xml.XmlFactories: javax.xml.transform.Transformer newTransformer()>();
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Transformer=");
+
+        $r3 = virtualinvoke r0.<java.lang.Object: java.lang.Class getClass()>();
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r5);
+
+        virtualinvoke r0.<javax.xml.transform.Transformer: void setOutputProperty(java.lang.String,java.lang.String)>("standalone", "no");
+
+        return r0;
+    }
+
+    public void createXml(java.io.OutputStream) throws javax.xml.transform.TransformerException, java.io.IOException
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.util.Map $r1, $r6;
+        int $i0;
+        java.io.ByteArrayOutputStream $r2;
+        java.lang.String $r4, $r16, r19, r22, r23;
+        byte[] $r5, $r10;
+        java.util.Set $r7;
+        java.util.Iterator r8;
+        boolean $z0;
+        java.io.OutputStream r9;
+        java.lang.Object $r11, $r15, $r20;
+        java.util.Map$Entry r12;
+        java.lang.StringBuilder $r13, $r14, $r17, $r18;
+        java.lang.CharSequence $r21;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r9 := @parameter0: java.io.OutputStream;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map images>;
+
+        $i0 = interfaceinvoke $r1.<java.util.Map: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void createXmlInternal(java.io.OutputStream)>(r9);
+
+        return;
+
+     label1:
+        $r2 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r2.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void createXmlInternal(java.io.OutputStream)>($r2);
+
+        $r4 = new java.lang.String;
+
+        $r5 = virtualinvoke $r2.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        specialinvoke $r4.<java.lang.String: void <init>(byte[])>($r5);
+
+        r22 = $r4;
+
+        $r6 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map images>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.util.Set entrySet()>();
+
+        r8 = interfaceinvoke $r7.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r8.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r11 = interfaceinvoke r8.<java.util.Iterator: java.lang.Object next()>();
+
+        r12 = (java.util.Map$Entry) $r11;
+
+        $r13 = new java.lang.StringBuilder;
+
+        specialinvoke $r13.<java.lang.StringBuilder: void <init>()>();
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<");
+
+        $r15 = interfaceinvoke r12.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r16 = (java.lang.String) $r15;
+
+        $r17 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r16);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/>");
+
+        r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r20 = interfaceinvoke r12.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r21 = (java.lang.CharSequence) $r20;
+
+        r22 = virtualinvoke r22.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>(r19, $r21);
+
+        goto label2;
+
+     label3:
+        r23 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String removeXmlHeader(java.lang.String)>(r22);
+
+        $r10 = virtualinvoke r23.<java.lang.String: byte[] getBytes()>();
+
+        virtualinvoke r9.<java.io.OutputStream: void write(byte[])>($r10);
+
+        return;
+    }
+
+    private java.lang.String removeXmlHeader(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1, r2;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 = virtualinvoke r1.<java.lang.String: java.lang.String replaceFirst(java.lang.String,java.lang.String)>("^<\\?xml [^<>]+?\\>", "");
+
+        return r2;
+    }
+
+    private void createXmlInternal(java.io.OutputStream) throws javax.xml.transform.TransformerException
+    {
+        javax.xml.transform.dom.DOMSource $r0;
+        net.sourceforge.plantuml.svg.SvgGraphics r1;
+        org.w3c.dom.Document $r2;
+        int $i0, i1, $i2, i3, $i4, $i5, $i6, $i7;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9;
+        java.lang.StringBuilder $r4, $r5, $r6, $r7, $r8, $r9, $r11, $r13, $r14, $r15, $r16, $r32, $r35, $r36, $r38, $r41, $r42, $r44, $r45, $r46, $r48, $r49;
+        java.lang.String $r10, $r17, $r19, $r28, $r30, $r34, $r37, $r40, $r43, $r47, r50;
+        boolean $z0;
+        org.w3c.dom.Element $r12, $r18, $r20, $r21, $r22, $r27, $r29, $r31, $r33, $r39;
+        javax.xml.transform.stream.StreamResult $r23;
+        java.io.OutputStream r24;
+        javax.xml.transform.Transformer $r26;
+
+        r1 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r24 := @parameter0: java.io.OutputStream;
+
+        $r0 = new javax.xml.transform.dom.DOMSource;
+
+        $r2 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        specialinvoke $r0.<javax.xml.transform.dom.DOMSource: void <init>(org.w3c.dom.Node)>($r2);
+
+        $i0 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: int maxX>;
+
+        $d1 = (double) $i0;
+
+        $d0 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: double scale>;
+
+        $d2 = $d1 * $d0;
+
+        i1 = (int) $d2;
+
+        $i2 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: int maxY>;
+
+        $d4 = (double) $i2;
+
+        $d3 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: double scale>;
+
+        $d5 = $d4 * $d3;
+
+        i3 = (int) $d5;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("width:");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("px;height:");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("px;");
+
+        r50 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r10 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String backcolor>;
+
+        if $r10 == null goto label1;
+
+        $r44 = new java.lang.StringBuilder;
+
+        specialinvoke $r44.<java.lang.StringBuilder: void <init>()>();
+
+        $r45 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r50);
+
+        $r46 = virtualinvoke $r45.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("background:");
+
+        $r47 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String backcolor>;
+
+        $r48 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r47);
+
+        $r49 = virtualinvoke $r48.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        r50 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label1:
+        $z0 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: boolean svgDimensionStyle>;
+
+        if $z0 == 0 goto label2;
+
+        $r31 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        interfaceinvoke $r31.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("style", r50);
+
+        $r33 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        $r32 = new java.lang.StringBuilder;
+
+        specialinvoke $r32.<java.lang.StringBuilder: void <init>()>();
+
+        $i6 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: int maxX>;
+
+        $d8 = (double) $i6;
+
+        $r34 = specialinvoke r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d8);
+
+        $r35 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r34);
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("px");
+
+        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r33.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("width", $r37);
+
+        $r39 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        $r38 = new java.lang.StringBuilder;
+
+        specialinvoke $r38.<java.lang.StringBuilder: void <init>()>();
+
+        $i7 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: int maxY>;
+
+        $d9 = (double) $i7;
+
+        $r40 = specialinvoke r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d9);
+
+        $r41 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r40);
+
+        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("px");
+
+        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r39.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("height", $r43);
+
+     label2:
+        $r12 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("0 0 ");
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r12.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("viewBox", $r17);
+
+        $r18 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        interfaceinvoke $r18.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("zoomAndPan", "magnify");
+
+        $r20 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        $r19 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String preserveAspectRatio>;
+
+        interfaceinvoke $r20.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("preserveAspectRatio", $r19);
+
+        $r21 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        interfaceinvoke $r21.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("contentStyleType", "text/css");
+
+        $r22 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element pendingBackground>;
+
+        if $r22 == null goto label3;
+
+        $r27 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element pendingBackground>;
+
+        $i4 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: int maxX>;
+
+        $d6 = (double) $i4;
+
+        $r28 = specialinvoke r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d6);
+
+        interfaceinvoke $r27.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("width", $r28);
+
+        $r29 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element pendingBackground>;
+
+        $i5 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: int maxY>;
+
+        $d7 = (double) $i5;
+
+        $r30 = specialinvoke r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d7);
+
+        interfaceinvoke $r29.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("height", $r30);
+
+     label3:
+        $r23 = new javax.xml.transform.stream.StreamResult;
+
+        specialinvoke $r23.<javax.xml.transform.stream.StreamResult: void <init>(java.io.OutputStream)>(r24);
+
+        $r26 = specialinvoke r1.<net.sourceforge.plantuml.svg.SvgGraphics: javax.xml.transform.Transformer getTransformer()>();
+
+        virtualinvoke $r26.<javax.xml.transform.Transformer: void transform(javax.xml.transform.Source,javax.xml.transform.Result)>($r0, $r23);
+
+        return;
+    }
+
+    public void svgPath(double, double, net.sourceforge.plantuml.ugraphic.UPath, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        double d0, d1, d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, $d24, $d25, $d26, $d27, $d28, $d29, $d30, $d31, $d32, $d33, $d34, $d35, $d36, $d37, $d38, $d39, $d40, $d41, $d42, $d43, $d44, $d45, $d46, $d47, $d48, $d49, $d50, $d51, $d52, $d53, $d54, $d55, $d56, $d57, $d58, $d59, $d60, $d61, $d62, $d63, $d64, $d65, $d66, $d67, $d68, $d69, $d70, $d71, $d72, $d73, $d74, $d75, $d76, $d77, $d78, $d79, $d80, $d81, $d82, $d83, $d84, $d85, $d86, $d87, $d88, $d89, $d90, $d91, $d92, $d93, $d94, $d95, $d96, $d97, $d98, $d99, $d100, $d101, $d102, $d103, $d104, $d105, $d106, $d107;
+        java.lang.StringBuilder $r1, $r17, $r18, $r19, $r21, $r22, $r24, $r25, $r27, $r28, $r30, $r31, $r33, $r34, $r36, $r37, $r39, $r40, $r42, $r43, $r46, $r47, $r49, $r50, $r52, $r53, $r55, $r56, $r58, $r59, $r61, $r62, $r64, $r65, $r68, $r69, $r71, $r72, $r74, $r75, $r77, $r78, $r80, $r81, $r84, $r85, $r87, $r88, $r90, $r91, $r94, $r95, $r97, $r98, $r100, $r101;
+        net.sourceforge.plantuml.ugraphic.UPath r3;
+        boolean $z0, $z1;
+        org.w3c.dom.Document $r4;
+        java.lang.String $r5, $r6, $r20, $r23, $r26, $r29, $r32, $r35, $r38, $r41, $r44, $r48, $r51, $r54, $r57, $r60, $r63, $r66, $r70, $r73, $r76, $r79, $r82, $r86, $r89, $r92, $r96, $r99, $r102, r108, r109;
+        org.w3c.dom.Element $r7, r107;
+        java.lang.Object $r9;
+        double[] r10;
+        net.sourceforge.plantuml.ugraphic.USegmentType $r11, $r12, $r13, $r14, $r15, $r16, r106;
+        java.util.Iterator r104;
+        net.sourceforge.plantuml.ugraphic.USegment r105;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d1 := @parameter0: double;
+
+        d2 := @parameter1: double;
+
+        r3 := @parameter2: net.sourceforge.plantuml.ugraphic.UPath;
+
+        d0 := @parameter3: double;
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageShadow(double)>(d0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d1, d2);
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        r104 = virtualinvoke r3.<net.sourceforge.plantuml.ugraphic.UPath: java.util.Iterator iterator()>();
+
+     label01:
+        $z0 = interfaceinvoke r104.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label09;
+
+        $r9 = interfaceinvoke r104.<java.util.Iterator: java.lang.Object next()>();
+
+        r105 = (net.sourceforge.plantuml.ugraphic.USegment) $r9;
+
+        r106 = virtualinvoke r105.<net.sourceforge.plantuml.ugraphic.USegment: net.sourceforge.plantuml.ugraphic.USegmentType getSegmentType()>();
+
+        r10 = virtualinvoke r105.<net.sourceforge.plantuml.ugraphic.USegment: double[] getCoord()>();
+
+        $r11 = <net.sourceforge.plantuml.ugraphic.USegmentType: net.sourceforge.plantuml.ugraphic.USegmentType SEG_MOVETO>;
+
+        if r106 != $r11 goto label02;
+
+        $r94 = new java.lang.StringBuilder;
+
+        specialinvoke $r94.<java.lang.StringBuilder: void <init>()>();
+
+        $r95 = virtualinvoke $r94.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("M");
+
+        $d96 = r10[0];
+
+        $d97 = $d96 + d1;
+
+        $r96 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d97);
+
+        $r97 = virtualinvoke $r95.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r96);
+
+        $r98 = virtualinvoke $r97.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d98 = r10[1];
+
+        $d99 = $d98 + d2;
+
+        $r99 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d99);
+
+        $r100 = virtualinvoke $r98.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r99);
+
+        $r101 = virtualinvoke $r100.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r102 = virtualinvoke $r101.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r102);
+
+        $d100 = r10[0];
+
+        $d102 = $d100 + d1;
+
+        $d101 = 2.0 * d0;
+
+        $d107 = $d102 + $d101;
+
+        $d103 = r10[1];
+
+        $d105 = $d103 + d2;
+
+        $d104 = 2.0 * d0;
+
+        $d106 = $d105 + $d104;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d107, $d106);
+
+        goto label08;
+
+     label02:
+        $r12 = <net.sourceforge.plantuml.ugraphic.USegmentType: net.sourceforge.plantuml.ugraphic.USegmentType SEG_LINETO>;
+
+        if r106 != $r12 goto label03;
+
+        $r84 = new java.lang.StringBuilder;
+
+        specialinvoke $r84.<java.lang.StringBuilder: void <init>()>();
+
+        $r85 = virtualinvoke $r84.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("L");
+
+        $d84 = r10[0];
+
+        $d85 = $d84 + d1;
+
+        $r86 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d85);
+
+        $r87 = virtualinvoke $r85.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r86);
+
+        $r88 = virtualinvoke $r87.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d86 = r10[1];
+
+        $d87 = $d86 + d2;
+
+        $r89 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d87);
+
+        $r90 = virtualinvoke $r88.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r89);
+
+        $r91 = virtualinvoke $r90.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r92 = virtualinvoke $r91.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r92);
+
+        $d88 = r10[0];
+
+        $d90 = $d88 + d1;
+
+        $d89 = 2.0 * d0;
+
+        $d95 = $d90 + $d89;
+
+        $d91 = r10[1];
+
+        $d93 = $d91 + d2;
+
+        $d92 = 2.0 * d0;
+
+        $d94 = $d93 + $d92;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d95, $d94);
+
+        goto label08;
+
+     label03:
+        $r13 = <net.sourceforge.plantuml.ugraphic.USegmentType: net.sourceforge.plantuml.ugraphic.USegmentType SEG_QUADTO>;
+
+        if r106 != $r13 goto label04;
+
+        $r68 = new java.lang.StringBuilder;
+
+        specialinvoke $r68.<java.lang.StringBuilder: void <init>()>();
+
+        $r69 = virtualinvoke $r68.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Q");
+
+        $d60 = r10[0];
+
+        $d61 = $d60 + d1;
+
+        $r70 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d61);
+
+        $r71 = virtualinvoke $r69.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r70);
+
+        $r72 = virtualinvoke $r71.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d62 = r10[1];
+
+        $d63 = $d62 + d2;
+
+        $r73 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d63);
+
+        $r74 = virtualinvoke $r72.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r73);
+
+        $r75 = virtualinvoke $r74.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $d64 = r10[2];
+
+        $d65 = $d64 + d1;
+
+        $r76 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d65);
+
+        $r77 = virtualinvoke $r75.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r76);
+
+        $r78 = virtualinvoke $r77.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d66 = r10[3];
+
+        $d67 = $d66 + d2;
+
+        $r79 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d67);
+
+        $r80 = virtualinvoke $r78.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r79);
+
+        $r81 = virtualinvoke $r80.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r82 = virtualinvoke $r81.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r82);
+
+        $d68 = r10[0];
+
+        $d70 = $d68 + d1;
+
+        $d69 = 2.0 * d0;
+
+        $d75 = $d70 + $d69;
+
+        $d71 = r10[1];
+
+        $d73 = $d71 + d2;
+
+        $d72 = 2.0 * d0;
+
+        $d74 = $d73 + $d72;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d75, $d74);
+
+        $d76 = r10[2];
+
+        $d78 = $d76 + d1;
+
+        $d77 = 2.0 * d0;
+
+        $d83 = $d78 + $d77;
+
+        $d79 = r10[3];
+
+        $d81 = $d79 + d2;
+
+        $d80 = 2.0 * d0;
+
+        $d82 = $d81 + $d80;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d83, $d82);
+
+        goto label08;
+
+     label04:
+        $r14 = <net.sourceforge.plantuml.ugraphic.USegmentType: net.sourceforge.plantuml.ugraphic.USegmentType SEG_CUBICTO>;
+
+        if r106 != $r14 goto label05;
+
+        $r46 = new java.lang.StringBuilder;
+
+        specialinvoke $r46.<java.lang.StringBuilder: void <init>()>();
+
+        $r47 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("C");
+
+        $d24 = r10[0];
+
+        $d25 = $d24 + d1;
+
+        $r48 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d25);
+
+        $r49 = virtualinvoke $r47.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r48);
+
+        $r50 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d26 = r10[1];
+
+        $d27 = $d26 + d2;
+
+        $r51 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d27);
+
+        $r52 = virtualinvoke $r50.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r51);
+
+        $r53 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $d28 = r10[2];
+
+        $d29 = $d28 + d1;
+
+        $r54 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d29);
+
+        $r55 = virtualinvoke $r53.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r54);
+
+        $r56 = virtualinvoke $r55.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d30 = r10[3];
+
+        $d31 = $d30 + d2;
+
+        $r57 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d31);
+
+        $r58 = virtualinvoke $r56.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r57);
+
+        $r59 = virtualinvoke $r58.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $d32 = r10[4];
+
+        $d33 = $d32 + d1;
+
+        $r60 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d33);
+
+        $r61 = virtualinvoke $r59.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r60);
+
+        $r62 = virtualinvoke $r61.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d34 = r10[5];
+
+        $d35 = $d34 + d2;
+
+        $r63 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d35);
+
+        $r64 = virtualinvoke $r62.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r63);
+
+        $r65 = virtualinvoke $r64.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r66 = virtualinvoke $r65.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r66);
+
+        $d36 = r10[0];
+
+        $d38 = $d36 + d1;
+
+        $d37 = 2.0 * d0;
+
+        $d43 = $d38 + $d37;
+
+        $d39 = r10[1];
+
+        $d41 = $d39 + d2;
+
+        $d40 = 2.0 * d0;
+
+        $d42 = $d41 + $d40;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d43, $d42);
+
+        $d44 = r10[2];
+
+        $d46 = $d44 + d1;
+
+        $d45 = 2.0 * d0;
+
+        $d51 = $d46 + $d45;
+
+        $d47 = r10[3];
+
+        $d49 = $d47 + d2;
+
+        $d48 = 2.0 * d0;
+
+        $d50 = $d49 + $d48;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d51, $d50);
+
+        $d52 = r10[4];
+
+        $d54 = $d52 + d1;
+
+        $d53 = 2.0 * d0;
+
+        $d59 = $d54 + $d53;
+
+        $d55 = r10[5];
+
+        $d57 = $d55 + d2;
+
+        $d56 = 2.0 * d0;
+
+        $d58 = $d57 + $d56;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d59, $d58);
+
+        goto label08;
+
+     label05:
+        $r15 = <net.sourceforge.plantuml.ugraphic.USegmentType: net.sourceforge.plantuml.ugraphic.USegmentType SEG_ARCTO>;
+
+        if r106 != $r15 goto label06;
+
+        $r21 = new java.lang.StringBuilder;
+
+        specialinvoke $r21.<java.lang.StringBuilder: void <init>()>();
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("A");
+
+        $d3 = r10[0];
+
+        $r23 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d3);
+
+        $r24 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r23);
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d4 = r10[1];
+
+        $r26 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d4);
+
+        $r27 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r26);
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $d5 = r10[2];
+
+        $r29 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String formatBoolean(double)>($d5);
+
+        $r30 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r29);
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $d6 = r10[3];
+
+        $r32 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String formatBoolean(double)>($d6);
+
+        $r33 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r32);
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $d7 = r10[4];
+
+        $r35 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String formatBoolean(double)>($d7);
+
+        $r36 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r35);
+
+        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $d8 = r10[5];
+
+        $d9 = $d8 + d1;
+
+        $r38 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d9);
+
+        $r39 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r38);
+
+        $r40 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $d10 = r10[6];
+
+        $d11 = $d10 + d2;
+
+        $r41 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d11);
+
+        $r42 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r41);
+
+        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r44 = virtualinvoke $r43.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r44);
+
+        $d13 = r10[5];
+
+        $d12 = r10[0];
+
+        $d14 = $d13 + $d12;
+
+        $d16 = $d14 + d1;
+
+        $d15 = 2.0 * d0;
+
+        $d23 = $d16 + $d15;
+
+        $d18 = r10[6];
+
+        $d17 = r10[1];
+
+        $d19 = $d18 + $d17;
+
+        $d21 = $d19 + d2;
+
+        $d20 = 2.0 * d0;
+
+        $d22 = $d21 + $d20;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d23, $d22);
+
+        goto label08;
+
+     label06:
+        $r16 = <net.sourceforge.plantuml.ugraphic.USegmentType: net.sourceforge.plantuml.ugraphic.USegmentType SEG_CLOSE>;
+
+        if r106 != $r16 goto label07;
+
+        goto label08;
+
+     label07:
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>()>();
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("unknown3 ");
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r105);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r20);
+
+     label08:
+        goto label01;
+
+     label09:
+        $z1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z1 != 0 goto label12;
+
+        $r4 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r107 = interfaceinvoke $r4.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("path");
+
+        $r5 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r107.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("d", $r5);
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getStyle()>();
+
+        interfaceinvoke r107.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("style", $r6);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void fillMe(org.w3c.dom.Element)>(r107);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void manageDarkStroke(org.w3c.dom.Element)>(r107);
+
+        r108 = virtualinvoke r3.<net.sourceforge.plantuml.ugraphic.UPath: java.lang.String getComment()>();
+
+        if r108 == null goto label10;
+
+        interfaceinvoke r107.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("id", r108);
+
+     label10:
+        r109 = virtualinvoke r3.<net.sourceforge.plantuml.ugraphic.UPath: java.lang.String getCodeLine()>();
+
+        if r109 == null goto label11;
+
+        interfaceinvoke r107.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("codeLine", r109);
+
+     label11:
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilterShadowId(org.w3c.dom.Element,double)>(r107, d0);
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r7.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r107);
+
+     label12:
+        return;
+    }
+
+    private void fillMe(org.w3c.dom.Element)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String $r1, $r2, $r4, $r5, $r6, $r7, $r8, $r12;
+        boolean $z0, $z1;
+        org.w3c.dom.Element r3;
+        int $i0;
+        double $d0, d1;
+        java.lang.Object[] $r9;
+        java.util.Locale $r10;
+        java.lang.Double $r11;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r3 := @parameter0: org.w3c.dom.Element;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill>;
+
+        $z0 = virtualinvoke $r1.<java.lang.String: boolean equals(java.lang.Object)>("#00000000");
+
+        if $z0 == 0 goto label1;
+
+        return;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill>;
+
+        $z1 = virtualinvoke $r2.<java.lang.String: boolean matches(java.lang.String)>("#[0-9A-Fa-f]{8}");
+
+        if $z1 == 0 goto label2;
+
+        $r5 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill>;
+
+        $r6 = virtualinvoke $r5.<java.lang.String: java.lang.String substring(int,int)>(0, 7);
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("fill", $r6);
+
+        $r7 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill>;
+
+        $r8 = virtualinvoke $r7.<java.lang.String: java.lang.String substring(int)>(7);
+
+        $i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String,int)>($r8, 16);
+
+        $d0 = (double) $i0;
+
+        d1 = $d0 / 255.0;
+
+        $r10 = <java.util.Locale: java.util.Locale US>;
+
+        $r9 = newarray (java.lang.Object)[1];
+
+        $r11 = staticinvoke <java.lang.Double: java.lang.Double valueOf(double)>(d1);
+
+        $r9[0] = $r11;
+
+        $r12 = staticinvoke <java.lang.String: java.lang.String format(java.util.Locale,java.lang.String,java.lang.Object[])>($r10, "%1.5f", $r9);
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("fill-opacity", $r12);
+
+        goto label3;
+
+     label2:
+        $r4 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String fill>;
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("fill", $r4);
+
+     label3:
+        return;
+    }
+
+    private void addFilterShadowId(org.w3c.dom.Element, double)
+    {
+        double d0;
+        byte $b0;
+        org.w3c.dom.Element r0;
+        java.lang.StringBuilder $r1, $r2, $r5, $r6;
+        net.sourceforge.plantuml.svg.SvgGraphics r3;
+        java.lang.String $r4, $r7;
+
+        r3 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r0 := @parameter0: org.w3c.dom.Element;
+
+        d0 := @parameter1: double;
+
+        $b0 = d0 cmpl 0.0;
+
+        if $b0 <= 0 goto label1;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("url(#");
+
+        $r4 = r3.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String shadowId>;
+
+        $r5 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r0.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("filter", $r7);
+
+     label1:
+        return;
+    }
+
+    public void newpath()
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.StringBuilder $r1;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath> = $r1;
+
+        return;
+    }
+
+    public void moveto(double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r5, $r6, $r8, $r9;
+        double d0, d1;
+        java.lang.String $r4, $r7, $r10;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath>;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("M");
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d0, d1);
+
+        return;
+    }
+
+    public void lineto(double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r5, $r6, $r8, $r9;
+        double d0, d1;
+        java.lang.String $r4, $r7, $r10;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath>;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("L");
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d0, d1);
+
+        return;
+    }
+
+    public void closepath()
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.StringBuilder $r1;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath>;
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Z ");
+
+        return;
+    }
+
+    public void curveto(double, double, double, double, double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r5, $r6, $r8, $r9, $r11, $r12, $r14, $r15, $r17, $r18, $r20, $r21;
+        double d0, d1, d2, d3, d4, d5;
+        java.lang.String $r4, $r7, $r10, $r13, $r16, $r19, $r22;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        d2 := @parameter2: double;
+
+        d3 := @parameter3: double;
+
+        d4 := @parameter4: double;
+
+        d5 := @parameter5: double;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath>;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("C");
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r10 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d2);
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r13 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d3);
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r13);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r16 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d4);
+
+        $r17 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r16);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r19 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d5);
+
+        $r20 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r19);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r22);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d0, d1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d2, d3);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d4, d5);
+
+        return;
+    }
+
+    public void quadto(double, double, double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r5, $r6, $r8, $r9, $r11, $r12, $r14, $r15;
+        double d0, d1, d2, d3;
+        java.lang.String $r4, $r7, $r10, $r13, $r16;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        d2 := @parameter2: double;
+
+        d3 := @parameter3: double;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath>;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Q");
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r10 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d2);
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r13 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d3);
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r13);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r16);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d0, d1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d2, d3);
+
+        return;
+    }
+
+    private java.lang.String format(double)
+    {
+        double d0, $d1, $d2;
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        $d1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: double scale>;
+
+        $d2 = d0 * $d1;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.tikz.TikzGraphics: java.lang.String format(double)>($d2);
+
+        return $r1;
+    }
+
+    private java.lang.String formatBoolean(double)
+    {
+        double d0;
+        byte $b0;
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpl 0.0;
+
+        if $b0 != 0 goto label1;
+
+        $r1 = "0";
+
+        goto label2;
+
+     label1:
+        $r1 = "1";
+
+     label2:
+        return $r1;
+    }
+
+    public void fill(int)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        boolean $z0;
+        org.w3c.dom.Document $r1;
+        org.w3c.dom.Element r2, $r5;
+        java.lang.StringBuilder $r3;
+        java.lang.String $r4;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        i0 := @parameter0: int;
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z0 != 0 goto label1;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("path");
+
+        $r3 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath>;
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("d", $r4);
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void fillMe(org.w3c.dom.Element)>(r2);
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r5.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r2);
+
+     label1:
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.StringBuilder currentPath> = null;
+
+        return;
+    }
+
+    public void drawPathIterator(double, double, java.awt.geom.PathIterator)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        double[] r1;
+        java.awt.geom.PathIterator r2;
+        boolean $z0;
+        int $i0, i1;
+        java.lang.UnsupportedOperationException $r3;
+        java.lang.StringBuilder $r4, $r5, $r6;
+        java.lang.String $r7;
+        double d0, $d1, d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, $d24, $d25, $d26, $d27, $d28, $d29;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        d2 := @parameter1: double;
+
+        r2 := @parameter2: java.awt.geom.PathIterator;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void newpath()>();
+
+        r1 = newarray (double)[6];
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.awt.geom.PathIterator: boolean isDone()>();
+
+        if $z0 != 0 goto label8;
+
+        i1 = interfaceinvoke r2.<java.awt.geom.PathIterator: int currentSegment(double[])>(r1);
+
+        if i1 != 0 goto label2;
+
+        $d26 = r1[0];
+
+        $d29 = $d26 + d0;
+
+        $d27 = r1[1];
+
+        $d28 = $d27 + d2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void moveto(double,double)>($d29, $d28);
+
+        goto label7;
+
+     label2:
+        if i1 != 1 goto label3;
+
+        $d22 = r1[0];
+
+        $d25 = $d22 + d0;
+
+        $d23 = r1[1];
+
+        $d24 = $d23 + d2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void lineto(double,double)>($d25, $d24);
+
+        goto label7;
+
+     label3:
+        if i1 != 4 goto label4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void closepath()>();
+
+        goto label7;
+
+     label4:
+        if i1 != 3 goto label5;
+
+        $d10 = r1[0];
+
+        $d21 = $d10 + d0;
+
+        $d11 = r1[1];
+
+        $d20 = $d11 + d2;
+
+        $d12 = r1[2];
+
+        $d19 = $d12 + d0;
+
+        $d13 = r1[3];
+
+        $d18 = $d13 + d2;
+
+        $d14 = r1[4];
+
+        $d17 = $d14 + d0;
+
+        $d15 = r1[5];
+
+        $d16 = $d15 + d2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void curveto(double,double,double,double,double,double)>($d21, $d20, $d19, $d18, $d17, $d16);
+
+        goto label7;
+
+     label5:
+        if i1 != 2 goto label6;
+
+        $d1 = r1[0];
+
+        $d9 = $d1 + d0;
+
+        $d3 = r1[1];
+
+        $d8 = $d3 + d2;
+
+        $d4 = r1[2];
+
+        $d7 = $d4 + d0;
+
+        $d5 = r1[3];
+
+        $d6 = $d5 + d2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void quadto(double,double,double,double)>($d9, $d8, $d7, $d6);
+
+        goto label7;
+
+     label6:
+        $r3 = new java.lang.UnsupportedOperationException;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("code=");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r3.<java.lang.UnsupportedOperationException: void <init>(java.lang.String)>($r7);
+
+        throw $r3;
+
+     label7:
+        interfaceinvoke r2.<java.awt.geom.PathIterator: void next()>();
+
+        goto label1;
+
+     label8:
+        $i0 = interfaceinvoke r2.<java.awt.geom.PathIterator: int getWindingRule()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void fill(int)>($i0);
+
+        return;
+    }
+
+    public void svgImage(java.awt.image.BufferedImage, double, double) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        boolean $z0;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7;
+        java.awt.image.BufferedImage r1;
+        int $i0, $i1, $i2, $i3;
+        org.w3c.dom.Document $r2;
+        org.w3c.dom.Element r3, $r13;
+        java.lang.String $r4, $r5, $r6, $r7, r8, $r12;
+        java.lang.StringBuilder $r9, $r10, $r11;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: java.awt.image.BufferedImage;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z0 != 0 goto label1;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r3 = interfaceinvoke $r2.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("image");
+
+        $i2 = virtualinvoke r1.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $d6 = (double) $i2;
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d6);
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("width", $r4);
+
+        $i3 = virtualinvoke r1.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $d7 = (double) $i3;
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>($d7);
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("height", $r5);
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x", $r6);
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y", $r7);
+
+        r8 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String toBase64(java.awt.image.BufferedImage)>(r1);
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("data:image/png;base64,");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r8);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xlink:href", $r12);
+
+        $r13 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r13.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r3);
+
+     label1:
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d0, d1);
+
+        $i0 = virtualinvoke r1.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $d2 = (double) $i0;
+
+        $d3 = d0 + $d2;
+
+        $i1 = virtualinvoke r1.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $d4 = (double) $i1;
+
+        $d5 = d1 + $d4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d3, $d5);
+
+        return;
+    }
+
+    public void svgImage(net.sourceforge.plantuml.ugraphic.UImageSvg, double, double)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        boolean $z0;
+        double d0, d1, $d2, $d3, $d4, $d5;
+        net.sourceforge.plantuml.ugraphic.UImageSvg r1;
+        int $i0, $i1, $i2;
+        java.lang.StringBuilder $r2, $r3, $r5, $r6, $r8, $r9, $r11, $r12, $r14, $r15, $r16, $r18, $r20;
+        java.lang.String $r4, $r7, r10, $r13, $r17, r21, r28, r29;
+        java.util.Map $r19, $r26;
+        org.w3c.dom.Document $r22;
+        org.w3c.dom.Element r23, $r24;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UImageSvg;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden>;
+
+        if $z0 != 0 goto label1;
+
+        r28 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String manageScale(net.sourceforge.plantuml.ugraphic.UImageSvg)>(r1);
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<svg x=\"");
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" y=\"");
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d1);
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\">");
+
+        r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r10);
+
+        $r13 = virtualinvoke r28.<java.lang.String: java.lang.String substring(int)>(5);
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r13);
+
+        r29 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("imagesvginlined");
+
+        $r17 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UImageSvg: java.lang.String getMD5Hex()>();
+
+        $r18 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r17);
+
+        $r19 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map images>;
+
+        $i2 = interfaceinvoke $r19.<java.util.Map: int size()>();
+
+        $r20 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i2);
+
+        r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r22 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r23 = interfaceinvoke $r22.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(r21);
+
+        $r24 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r24.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r23);
+
+        $r26 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.Map images>;
+
+        interfaceinvoke $r26.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r21, r29);
+
+     label1:
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>(d0, d1);
+
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UImageSvg: int getData(java.lang.String)>("width");
+
+        $d2 = (double) $i0;
+
+        $d3 = d0 + $d2;
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UImageSvg: int getData(java.lang.String)>("height");
+
+        $d4 = (double) $i1;
+
+        $d5 = d1 + $d4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void ensureVisible(double,double)>($d3, $d5);
+
+        return;
+    }
+
+    private java.lang.String manageScale(net.sourceforge.plantuml.ugraphic.UImageSvg)
+    {
+        net.sourceforge.plantuml.ugraphic.UImageSvg r0;
+        double d0, $d1, $d2;
+        net.sourceforge.plantuml.svg.SvgGraphics r1;
+        byte $b0;
+        java.lang.String $r2, r3, r4, r6, r7, r8, r15;
+        boolean $z0, $z1;
+        java.lang.StringBuilder $r9, $r10, $r11, $r12, $r13, $r14;
+
+        r1 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UImageSvg;
+
+        d0 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UImageSvg: double getScale()>();
+
+        r7 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UImageSvg: java.lang.String getSvg(boolean)>(0);
+
+        $d1 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: double scale>;
+
+        $d2 = d0 * $d1;
+
+        $b0 = $d2 cmpl 1.0;
+
+        if $b0 != 0 goto label1;
+
+        return r7;
+
+     label1:
+        $r2 = virtualinvoke r7.<java.lang.String: java.lang.String replace(char,char)>(10, 32);
+
+        r3 = virtualinvoke $r2.<java.lang.String: java.lang.String replace(char,char)>(13, 32);
+
+        $z0 = virtualinvoke r3.<java.lang.String: boolean contains(java.lang.CharSequence)>("<g ");
+
+        if $z0 != 0 goto label2;
+
+        $z1 = virtualinvoke r3.<java.lang.String: boolean contains(java.lang.CharSequence)>("<g>");
+
+        if $z1 != 0 goto label2;
+
+        r8 = virtualinvoke r7.<java.lang.String: java.lang.String replaceFirst(java.lang.String,java.lang.String)>("\\<svg\\>", "<svg><g>");
+
+        r7 = virtualinvoke r8.<java.lang.String: java.lang.String replaceFirst(java.lang.String,java.lang.String)>("\\</svg\\>", "</g></svg>");
+
+     label2:
+        r4 = specialinvoke r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String format(double)>(d0);
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<g transform=\"scale(");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r4);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r4);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")\" ");
+
+        r6 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r15 = virtualinvoke r7.<java.lang.String: java.lang.String replaceFirst(java.lang.String,java.lang.String)>("\\<g\\b", r6);
+
+        return r15;
+    }
+
+    private java.lang.String toBase64(java.awt.image.BufferedImage) throws java.io.IOException
+    {
+        java.io.ByteArrayOutputStream $r0;
+        java.awt.image.BufferedImage r2;
+        byte[] r3;
+        java.lang.String $r4;
+        char[] $r5;
+        net.sourceforge.plantuml.svg.SvgGraphics r6;
+
+        r6 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r2 := @parameter0: java.awt.image.BufferedImage;
+
+        $r0 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        staticinvoke <net.sourceforge.plantuml.security.SImageIO: void write(java.awt.image.RenderedImage,java.lang.String,java.io.OutputStream)>(r2, "png", $r0);
+
+        r3 = virtualinvoke $r0.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        $r4 = new java.lang.String;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.code.Base64Coder: char[] encode(byte[])>(r3);
+
+        specialinvoke $r4.<java.lang.String: void <init>(char[])>($r5);
+
+        return $r4;
+    }
+
+    private void manageShadow(double)
+    {
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6;
+        byte $b0;
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        boolean $z0;
+        org.w3c.dom.Document $r1;
+        org.w3c.dom.Element r2, $r20;
+        java.lang.String $r3, $r8, $r14, $r18;
+        java.lang.String[] $r4, $r9, $r10, $r19;
+        java.lang.StringBuilder $r5, $r6, $r7, $r11, $r12, $r13, $r15, $r16, $r17;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpl 0.0;
+
+        if $b0 == 0 goto label2;
+
+        $z0 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean withShadow>;
+
+        if $z0 != 0 goto label1;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("filter");
+
+        $r3 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String shadowId>;
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("id", $r3);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("x", "-1");
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("y", "-1");
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("width", "300%");
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("height", "300%");
+
+        $r4 = newarray (java.lang.String)[4];
+
+        $r4[0] = "result";
+
+        $r4[1] = "blurOut";
+
+        $r4[2] = "stdDeviation";
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: double scale>;
+
+        $d2 = 2.0 * $d1;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d2);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r4[3] = $r8;
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilter(org.w3c.dom.Element,java.lang.String,java.lang.String[])>(r2, "feGaussianBlur", $r4);
+
+        $r9 = newarray (java.lang.String)[8];
+
+        $r9[0] = "type";
+
+        $r9[1] = "matrix";
+
+        $r9[2] = "in";
+
+        $r9[3] = "blurOut";
+
+        $r9[4] = "result";
+
+        $r9[5] = "blurOut2";
+
+        $r9[6] = "values";
+
+        $r9[7] = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0";
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilter(org.w3c.dom.Element,java.lang.String,java.lang.String[])>(r2, "feColorMatrix", $r9);
+
+        $r10 = newarray (java.lang.String)[8];
+
+        $r10[0] = "result";
+
+        $r10[1] = "blurOut3";
+
+        $r10[2] = "in";
+
+        $r10[3] = "blurOut2";
+
+        $r10[4] = "dx";
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d3 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: double scale>;
+
+        $d4 = 4.0 * $d3;
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d4);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r10[5] = $r14;
+
+        $r10[6] = "dy";
+
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d5 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: double scale>;
+
+        $d6 = 4.0 * $d5;
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d6);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r10[7] = $r18;
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilter(org.w3c.dom.Element,java.lang.String,java.lang.String[])>(r2, "feOffset", $r10);
+
+        $r19 = newarray (java.lang.String)[6];
+
+        $r19[0] = "in";
+
+        $r19[1] = "SourceGraphic";
+
+        $r19[2] = "in2";
+
+        $r19[3] = "blurOut3";
+
+        $r19[4] = "mode";
+
+        $r19[5] = "normal";
+
+        specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void addFilter(org.w3c.dom.Element,java.lang.String,java.lang.String[])>(r2, "feBlend", $r19);
+
+        $r20 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element defs>;
+
+        interfaceinvoke $r20.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r2);
+
+     label1:
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean withShadow> = 1;
+
+     label2:
+        return;
+    }
+
+    private transient void addFilter(org.w3c.dom.Element, java.lang.String, java.lang.String[])
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.lang.String r1, $r7, $r8;
+        org.w3c.dom.Document $r2;
+        org.w3c.dom.Element r3, r5;
+        java.lang.String[] r4;
+        int $i0, $i1, $i2, i3, $i4;
+        java.lang.AssertionError $r9;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r5 := @parameter0: org.w3c.dom.Element;
+
+        r1 := @parameter1: java.lang.String;
+
+        r4 := @parameter2: java.lang.String[];
+
+        $z0 = <net.sourceforge.plantuml.svg.SvgGraphics: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        $i1 = lengthof r4;
+
+        $i2 = $i1 % 2;
+
+        if $i2 == 0 goto label1;
+
+        $r9 = new java.lang.AssertionError;
+
+        specialinvoke $r9.<java.lang.AssertionError: void <init>()>();
+
+        throw $r9;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r3 = interfaceinvoke $r2.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>(r1);
+
+        i3 = 0;
+
+     label2:
+        $i4 = lengthof r4;
+
+        if i3 >= $i4 goto label3;
+
+        $r8 = r4[i3];
+
+        $i0 = i3 + 1;
+
+        $r7 = r4[$i0];
+
+        interfaceinvoke r3.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>($r8, $r7);
+
+        i3 = i3 + 2;
+
+        goto label2;
+
+     label3:
+        interfaceinvoke r5.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r3);
+
+        return;
+    }
+
+    public void setHidden(boolean)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.svg.SvgGraphics: boolean hidden> = z0;
+
+        return;
+    }
+
+    public static java.lang.String getMD5Hex(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: java.lang.String getMD5Hex(java.lang.String)>(r0);
+
+        return $r1;
+    }
+
+    public void addComment(java.lang.String)
+    {
+        java.lang.String r0, r11, r12;
+        java.lang.StringBuilder $r1, $r2, $r3, $r4, $r5;
+        net.sourceforge.plantuml.svg.SvgGraphics r6;
+        org.w3c.dom.Document $r7;
+        org.w3c.dom.Comment r8;
+        org.w3c.dom.Element $r9;
+
+        r6 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r11 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getMD5Hex(java.lang.String)>(r11);
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("MD5=[");
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("]\n");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r11);
+
+        r12 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r7 = r6.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r8 = interfaceinvoke $r7.<org.w3c.dom.Document: org.w3c.dom.Comment createComment(java.lang.String)>(r12);
+
+        $r9 = virtualinvoke r6.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r9.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r8);
+
+        return;
+    }
+
+    public void addScriptTag(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Document $r1;
+        org.w3c.dom.Element r2, $r4;
+        java.lang.String r3;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("script");
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("type", "text/javascript");
+
+        interfaceinvoke r2.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xlink:href", r3);
+
+        $r4 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        interfaceinvoke $r4.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r2);
+
+        return;
+    }
+
+    public void addScript(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Document $r1, $r5;
+        org.w3c.dom.Element r2, $r8;
+        java.lang.String r3, r4;
+        org.w3c.dom.CDATASection r6;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r2 = interfaceinvoke $r1.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("script");
+
+        r4 = staticinvoke <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getData(java.lang.String)>(r3);
+
+        $r5 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r6 = interfaceinvoke $r5.<org.w3c.dom.Document: org.w3c.dom.CDATASection createCDATASection(java.lang.String)>(r4);
+
+        interfaceinvoke r2.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r6);
+
+        $r8 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        interfaceinvoke $r8.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r2);
+
+        return;
+    }
+
+    public void addStyle(java.lang.String)
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        org.w3c.dom.Element r1, $r7;
+        java.lang.String r2, r3;
+        org.w3c.dom.Document $r4;
+        org.w3c.dom.CDATASection r5;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r2 := @parameter0: java.lang.String;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element simpleElement(java.lang.String)>("style");
+
+        r3 = staticinvoke <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String getData(java.lang.String)>(r2);
+
+        $r4 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        r5 = interfaceinvoke $r4.<org.w3c.dom.Document: org.w3c.dom.CDATASection createCDATASection(java.lang.String)>(r3);
+
+        interfaceinvoke r1.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("type", "text/css");
+
+        interfaceinvoke r1.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r5);
+
+        $r7 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element root>;
+
+        interfaceinvoke $r7.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r1);
+
+        return;
+    }
+
+    public void openLink(java.lang.String, java.lang.String, java.lang.String)
+    {
+        java.lang.String r0, r8, r37, r38;
+        boolean $z0;
+        net.sourceforge.plantuml.svg.SvgGraphics r2;
+        org.w3c.dom.Document $r3;
+        java.util.List $r4, $r6, $r10, $r13, $r16, $r19, $r22, $r25, $r28, $r31, $r34;
+        org.w3c.dom.Element $r5, $r9, $r12, $r15, $r18, $r21, $r24, $r27, $r30, $r33, $r36;
+        java.lang.Object $r7, $r11, $r14, $r17, $r20, $r23, $r26, $r29, $r32, $r35;
+
+        r2 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r0 := @parameter0: java.lang.String;
+
+        r37 := @parameter1: java.lang.String;
+
+        r8 := @parameter2: java.lang.String;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: boolean ignoreThisLink(java.lang.String)>(r0);
+
+        if $z0 == 0 goto label1;
+
+        return;
+
+     label1:
+        $r4 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r3 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        $r5 = interfaceinvoke $r3.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("a");
+
+        interfaceinvoke $r4.<java.util.List: void add(int,java.lang.Object)>(0, $r5);
+
+        $r6 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r7 = interfaceinvoke $r6.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r9 = (org.w3c.dom.Element) $r7;
+
+        interfaceinvoke $r9.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("target", r8);
+
+        $r10 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r11 = interfaceinvoke $r10.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r12 = (org.w3c.dom.Element) $r11;
+
+        interfaceinvoke $r12.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("href", r0);
+
+        $r13 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r14 = interfaceinvoke $r13.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r15 = (org.w3c.dom.Element) $r14;
+
+        interfaceinvoke $r15.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xlink:href", r0);
+
+        $r16 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r17 = interfaceinvoke $r16.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r18 = (org.w3c.dom.Element) $r17;
+
+        interfaceinvoke $r18.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xlink:type", "simple");
+
+        $r19 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r20 = interfaceinvoke $r19.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r21 = (org.w3c.dom.Element) $r20;
+
+        interfaceinvoke $r21.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xlink:actuate", "onRequest");
+
+        $r22 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r23 = interfaceinvoke $r22.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r24 = (org.w3c.dom.Element) $r23;
+
+        interfaceinvoke $r24.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xlink:show", "new");
+
+        if r37 != null goto label2;
+
+        $r31 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r32 = interfaceinvoke $r31.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r33 = (org.w3c.dom.Element) $r32;
+
+        interfaceinvoke $r33.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("title", r0);
+
+        $r34 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r35 = interfaceinvoke $r34.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r36 = (org.w3c.dom.Element) $r35;
+
+        interfaceinvoke $r36.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xlink:title", r0);
+
+        goto label3;
+
+     label2:
+        r38 = specialinvoke r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String formatTitle(java.lang.String)>(r37);
+
+        $r25 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r26 = interfaceinvoke $r25.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r27 = (org.w3c.dom.Element) $r26;
+
+        interfaceinvoke $r27.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("title", r38);
+
+        $r28 = r2.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r29 = interfaceinvoke $r28.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r30 = (org.w3c.dom.Element) $r29;
+
+        interfaceinvoke $r30.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("xlink:title", r38);
+
+     label3:
+        return;
+    }
+
+    private java.lang.String formatTitle(java.lang.String)
+    {
+        java.util.regex.Pattern r0;
+        java.util.regex.Matcher r1;
+        java.lang.StringBuffer $r2;
+        boolean $z0;
+        java.lang.String $r5, r6, $r10, r13, r14;
+        int $i0;
+        char c1;
+        java.lang.StringBuilder $r7, $r8, $r9;
+        net.sourceforge.plantuml.svg.SvgGraphics r12;
+
+        r12 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r13 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("\\<U\\+([0-9A-Fa-f]+)\\>");
+
+        r1 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r13);
+
+        $r2 = new java.lang.StringBuffer;
+
+        specialinvoke $r2.<java.lang.StringBuffer: void <init>()>();
+
+     label1:
+        $z0 = virtualinvoke r1.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label2;
+
+        r6 = virtualinvoke r1.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        $i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String,int)>(r6, 16);
+
+        c1 = (char) $i0;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r1.<java.util.regex.Matcher: java.util.regex.Matcher appendReplacement(java.lang.StringBuffer,java.lang.String)>($r2, $r10);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r1.<java.util.regex.Matcher: java.lang.StringBuffer appendTail(java.lang.StringBuffer)>($r2);
+
+        $r5 = virtualinvoke $r2.<java.lang.StringBuffer: java.lang.String toString()>();
+
+        r14 = virtualinvoke $r5.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("\\\\n", "\n");
+
+        return r14;
+    }
+
+    public void closeLink()
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+        java.util.List $r1, $r2, $r5;
+        int $i0;
+        java.lang.Object $r3;
+        org.w3c.dom.Element r4, $r8;
+        org.w3c.dom.Node $r7;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        $r1 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 <= 0 goto label1;
+
+        $r2 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(0);
+
+        r4 = (org.w3c.dom.Element) $r3;
+
+        $r5 = r0.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        interfaceinvoke $r5.<java.util.List: java.lang.Object remove(int)>(0);
+
+        $r7 = interfaceinvoke r4.<org.w3c.dom.Element: org.w3c.dom.Node getFirstChild()>();
+
+        if $r7 == null goto label1;
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Element getG()>();
+
+        interfaceinvoke $r8.<org.w3c.dom.Element: org.w3c.dom.Node appendChild(org.w3c.dom.Node)>(r4);
+
+     label1:
+        return;
+    }
+
+    public void startGroup(java.util.Map)
+    {
+        java.util.Map r0;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.svg.SvgGraphics r1;
+        org.w3c.dom.Document $r2;
+        java.util.List $r3, $r13, $r18;
+        org.w3c.dom.Element $r4, $r15, $r20;
+        java.util.Set $r5;
+        java.util.Iterator r6;
+        java.lang.Object $r7, $r9, $r11, $r14, $r16, $r19, $r21;
+        java.util.Map$Entry r8;
+        net.sourceforge.plantuml.ugraphic.UGroupType $r10, $r12;
+        java.lang.String $r17, $r22;
+        java.lang.IllegalArgumentException $r23;
+
+        r1 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r0 := @parameter0: java.util.Map;
+
+        $z0 = interfaceinvoke r0.<java.util.Map: boolean isEmpty()>();
+
+        if $z0 == 0 goto label1;
+
+        $r23 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r23.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r23;
+
+     label1:
+        $r3 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r2 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: org.w3c.dom.Document document>;
+
+        $r4 = interfaceinvoke $r2.<org.w3c.dom.Document: org.w3c.dom.Element createElement(java.lang.String)>("g");
+
+        interfaceinvoke $r3.<java.util.List: void add(int,java.lang.Object)>(0, $r4);
+
+        $r5 = interfaceinvoke r0.<java.util.Map: java.util.Set entrySet()>();
+
+        r6 = interfaceinvoke $r5.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z1 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label5;
+
+        $r7 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (java.util.Map$Entry) $r7;
+
+        $r9 = interfaceinvoke r8.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r10 = <net.sourceforge.plantuml.ugraphic.UGroupType: net.sourceforge.plantuml.ugraphic.UGroupType ID>;
+
+        if $r9 != $r10 goto label3;
+
+        $r18 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r19 = interfaceinvoke $r18.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r20 = (org.w3c.dom.Element) $r19;
+
+        $r21 = interfaceinvoke r8.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r22 = (java.lang.String) $r21;
+
+        interfaceinvoke $r20.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("id", $r22);
+
+     label3:
+        $z2 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: boolean interactive>;
+
+        if $z2 == 0 goto label4;
+
+        $r11 = interfaceinvoke r8.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r12 = <net.sourceforge.plantuml.ugraphic.UGroupType: net.sourceforge.plantuml.ugraphic.UGroupType CLASS>;
+
+        if $r11 != $r12 goto label4;
+
+        $r13 = r1.<net.sourceforge.plantuml.svg.SvgGraphics: java.util.List pendingAction>;
+
+        $r14 = interfaceinvoke $r13.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r15 = (org.w3c.dom.Element) $r14;
+
+        $r16 = interfaceinvoke r8.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r17 = (java.lang.String) $r16;
+
+        interfaceinvoke $r15.<org.w3c.dom.Element: void setAttribute(java.lang.String,java.lang.String)>("class", $r17);
+
+     label4:
+        goto label2;
+
+     label5:
+        return;
+    }
+
+    public void closeGroup()
+    {
+        net.sourceforge.plantuml.svg.SvgGraphics r0;
+
+        r0 := @this: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svg.SvgGraphics: void closeLink()>();
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String MD5_HEADER> = "<!--MD5=[";
+
+        <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String XLINK_HREF2> = "xlink:href";
+
+        <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String XLINK_HREF1> = "href";
+
+        <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String XLINK_TITLE2> = "xlink:title";
+
+        <net.sourceforge.plantuml.svg.SvgGraphics: java.lang.String XLINK_TITLE1> = "title";
+
+        $r0 = class "Lnet/sourceforge/plantuml/svg/SvgGraphics;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.svg.SvgGraphics: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

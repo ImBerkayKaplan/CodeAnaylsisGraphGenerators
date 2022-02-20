@@ -1,0 +1,219 @@
+public class net.sourceforge.plantuml.tim.iterator.CodeIteratorSub extends net.sourceforge.plantuml.tim.iterator.AbstractCodeIterator
+{
+    private final java.util.Map subs;
+    private net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress;
+    private final net.sourceforge.plantuml.tim.TMemory memory;
+    private final net.sourceforge.plantuml.tim.TContext context;
+
+    public void <init>(net.sourceforge.plantuml.tim.iterator.CodeIterator, java.util.Map, net.sourceforge.plantuml.tim.TContext, net.sourceforge.plantuml.tim.TMemory)
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorSub r0;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator r1;
+        net.sourceforge.plantuml.tim.TContext r2;
+        net.sourceforge.plantuml.tim.TMemory r3;
+        java.util.Map r4;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorSub;
+
+        r1 := @parameter0: net.sourceforge.plantuml.tim.iterator.CodeIterator;
+
+        r4 := @parameter1: java.util.Map;
+
+        r2 := @parameter2: net.sourceforge.plantuml.tim.TContext;
+
+        r3 := @parameter3: net.sourceforge.plantuml.tim.TMemory;
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.iterator.AbstractCodeIterator: void <init>(net.sourceforge.plantuml.tim.iterator.CodeIterator)>(r1);
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.TContext context> = r2;
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.TMemory memory> = r3;
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: java.util.Map subs> = r4;
+
+        return;
+    }
+
+    public java.util.Map getSubs()
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorSub r0;
+        java.util.Map $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorSub;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: java.util.Map subs>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.Map unmodifiableMap(java.util.Map)>($r1);
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.StringLocated peek() throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorSub r0;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator $r1, $r2, $r6, $r18, $r19, $r25, $r26, $r30, $r33;
+        net.sourceforge.plantuml.StringLocated r3, $r7, $r9, $r20, $r31;
+        net.sourceforge.plantuml.tim.TLineType $r4, $r5, $r21, $r22, $r23, $r24;
+        net.sourceforge.plantuml.tim.EaterStartsub $r8;
+        net.sourceforge.plantuml.tim.TMemory $r11;
+        net.sourceforge.plantuml.tim.TContext $r12;
+        net.sourceforge.plantuml.preproc.Sub $r13;
+        java.lang.String $r14, $r17;
+        java.util.Map $r16;
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorImpl $r27;
+        java.util.List $r28;
+        net.sourceforge.plantuml.tim.EaterException $r29;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorSub;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress>;
+
+        if $r1 == null goto label1;
+
+        $r30 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress>;
+
+        $r31 = interfaceinvoke $r30.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.StringLocated peek()>();
+
+        return $r31;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.StringLocated peek()>();
+
+        if r3 != null goto label2;
+
+        return null;
+
+     label2:
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r5 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType STARTSUB>;
+
+        if $r4 != $r5 goto label6;
+
+        $r8 = new net.sourceforge.plantuml.tim.EaterStartsub;
+
+        $r9 = virtualinvoke r3.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        specialinvoke $r8.<net.sourceforge.plantuml.tim.EaterStartsub: void <init>(net.sourceforge.plantuml.StringLocated)>($r9);
+
+        $r12 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.TContext context>;
+
+        $r11 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.TMemory memory>;
+
+        virtualinvoke $r8.<net.sourceforge.plantuml.tim.EaterStartsub: void analyze(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory)>($r12, $r11);
+
+        $r13 = new net.sourceforge.plantuml.preproc.Sub;
+
+        $r14 = virtualinvoke $r8.<net.sourceforge.plantuml.tim.EaterStartsub: java.lang.String getSubname()>();
+
+        specialinvoke $r13.<net.sourceforge.plantuml.preproc.Sub: void <init>(java.lang.String)>($r14);
+
+        $r16 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: java.util.Map subs>;
+
+        $r17 = virtualinvoke $r8.<net.sourceforge.plantuml.tim.EaterStartsub: java.lang.String getSubname()>();
+
+        interfaceinvoke $r16.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r17, $r13);
+
+        $r18 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        interfaceinvoke $r18.<net.sourceforge.plantuml.tim.iterator.CodeIterator: void next()>();
+
+     label3:
+        $r19 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        $r20 = interfaceinvoke $r19.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.StringLocated peek()>();
+
+        if $r20 == null goto label6;
+
+        $r21 = virtualinvoke $r20.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r22 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType STARTSUB>;
+
+        if $r21 != $r22 goto label4;
+
+        $r29 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException located(java.lang.String)>("Cannot nest sub");
+
+        throw $r29;
+
+     label4:
+        $r23 = virtualinvoke $r20.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r24 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType ENDSUB>;
+
+        if $r23 != $r24 goto label5;
+
+        $r26 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        interfaceinvoke $r26.<net.sourceforge.plantuml.tim.iterator.CodeIterator: void next()>();
+
+        $r27 = new net.sourceforge.plantuml.tim.iterator.CodeIteratorImpl;
+
+        $r28 = virtualinvoke $r13.<net.sourceforge.plantuml.preproc.Sub: java.util.List lines()>();
+
+        specialinvoke $r27.<net.sourceforge.plantuml.tim.iterator.CodeIteratorImpl: void <init>(java.util.List)>($r28);
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress> = $r27;
+
+        goto label6;
+
+     label5:
+        virtualinvoke $r13.<net.sourceforge.plantuml.preproc.Sub: void add(net.sourceforge.plantuml.StringLocated)>($r20);
+
+        $r25 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        interfaceinvoke $r25.<net.sourceforge.plantuml.tim.iterator.CodeIterator: void next()>();
+
+        goto label3;
+
+     label6:
+        $r33 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress>;
+
+        if $r33 == null goto label7;
+
+        $r6 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress>;
+
+        $r7 = interfaceinvoke $r6.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.StringLocated peek()>();
+
+        return $r7;
+
+     label7:
+        return r3;
+    }
+
+    public void next() throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorSub r0;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator $r1, $r2, $r3, $r5;
+        net.sourceforge.plantuml.StringLocated $r4;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorSub;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress>;
+
+        if $r1 != null goto label1;
+
+        $r5 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        interfaceinvoke $r5.<net.sourceforge.plantuml.tim.iterator.CodeIterator: void next()>();
+
+        return;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress>;
+
+        interfaceinvoke $r2.<net.sourceforge.plantuml.tim.iterator.CodeIterator: void next()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress>;
+
+        $r4 = interfaceinvoke $r3.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.StringLocated peek()>();
+
+        if $r4 != null goto label2;
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorSub: net.sourceforge.plantuml.tim.iterator.CodeIterator readingInProgress> = null;
+
+     label2:
+        return;
+    }
+}

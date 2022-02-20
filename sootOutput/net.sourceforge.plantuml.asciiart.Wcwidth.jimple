@@ -1,0 +1,1371 @@
+public class net.sourceforge.plantuml.asciiart.Wcwidth extends java.lang.Object
+{
+    private static final int[][] COMBINING;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.asciiart.Wcwidth r0;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.Wcwidth;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static boolean bisearch(int)
+    {
+        int[][] $r0, $r1, $r3, $r5, $r7;
+        int $i0, i1, $i2, $i3, $i4, i5, $i6, $i7, i8, i9;
+        int[] $r2, $r4, $r6, $r8;
+
+        i1 := @parameter0: int;
+
+        i8 = 0;
+
+        $r0 = <net.sourceforge.plantuml.asciiart.Wcwidth: int[][] COMBINING>;
+
+        $i0 = lengthof $r0;
+
+        i9 = $i0 - 1;
+
+        $r1 = <net.sourceforge.plantuml.asciiart.Wcwidth: int[][] COMBINING>;
+
+        $r2 = $r1[0];
+
+        $i2 = $r2[0];
+
+        if i1 < $i2 goto label1;
+
+        $r3 = <net.sourceforge.plantuml.asciiart.Wcwidth: int[][] COMBINING>;
+
+        $r4 = $r3[i9];
+
+        $i3 = $r4[1];
+
+        if i1 <= $i3 goto label2;
+
+     label1:
+        return 0;
+
+     label2:
+        if i9 < i8 goto label5;
+
+        $i4 = i8 + i9;
+
+        i5 = $i4 / 2;
+
+        $r5 = <net.sourceforge.plantuml.asciiart.Wcwidth: int[][] COMBINING>;
+
+        $r6 = $r5[i5];
+
+        $i6 = $r6[1];
+
+        if i1 <= $i6 goto label3;
+
+        i8 = i5 + 1;
+
+        goto label2;
+
+     label3:
+        $r7 = <net.sourceforge.plantuml.asciiart.Wcwidth: int[][] COMBINING>;
+
+        $r8 = $r7[i5];
+
+        $i7 = $r8[0];
+
+        if i1 >= $i7 goto label4;
+
+        i9 = i5 - 1;
+
+        goto label2;
+
+     label4:
+        return 1;
+
+     label5:
+        return 0;
+    }
+
+    public static int of(int)
+    {
+        int i0, $i3;
+        boolean $z0;
+        byte $b2;
+
+        i0 := @parameter0: int;
+
+        if i0 != 0 goto label01;
+
+        return 0;
+
+     label01:
+        if i0 < 32 goto label02;
+
+        if i0 < 127 goto label03;
+
+        if i0 >= 160 goto label03;
+
+     label02:
+        return -1;
+
+     label03:
+        if i0 >= 127 goto label04;
+
+        return 1;
+
+     label04:
+        $z0 = staticinvoke <net.sourceforge.plantuml.asciiart.Wcwidth: boolean bisearch(int)>(i0);
+
+        if $z0 == 0 goto label05;
+
+        return 0;
+
+     label05:
+        if i0 < 4352 goto label15;
+
+        if i0 <= 4447 goto label14;
+
+        if i0 == 9001 goto label14;
+
+        if i0 == 9002 goto label14;
+
+        if i0 < 11904 goto label06;
+
+        if i0 > 42191 goto label06;
+
+        if i0 != 12351 goto label14;
+
+     label06:
+        if i0 < 44032 goto label07;
+
+        if i0 <= 55203 goto label14;
+
+     label07:
+        if i0 < 63744 goto label08;
+
+        if i0 <= 64255 goto label14;
+
+     label08:
+        if i0 < 65040 goto label09;
+
+        if i0 <= 65049 goto label14;
+
+     label09:
+        if i0 < 65072 goto label10;
+
+        if i0 <= 65135 goto label14;
+
+     label10:
+        if i0 < 65280 goto label11;
+
+        if i0 <= 65376 goto label14;
+
+     label11:
+        if i0 < 65504 goto label12;
+
+        if i0 <= 65510 goto label14;
+
+     label12:
+        if i0 < 131072 goto label13;
+
+        if i0 <= 196605 goto label14;
+
+     label13:
+        if i0 < 196608 goto label15;
+
+        if i0 > 262141 goto label15;
+
+     label14:
+        $b2 = 1;
+
+        goto label16;
+
+     label15:
+        $b2 = 0;
+
+     label16:
+        $i3 = 1 + $b2;
+
+        return $i3;
+    }
+
+    public static int length(java.lang.CharSequence)
+    {
+        java.lang.CharSequence r0;
+        int $i0, $i2, i3, i4;
+        char $c1;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        i3 = 0;
+
+        i4 = 0;
+
+     label1:
+        $i0 = interfaceinvoke r0.<java.lang.CharSequence: int length()>();
+
+        if i4 >= $i0 goto label2;
+
+        $c1 = interfaceinvoke r0.<java.lang.CharSequence: char charAt(int)>(i4);
+
+        $i2 = staticinvoke <net.sourceforge.plantuml.asciiart.Wcwidth: int of(int)>($c1);
+
+        i3 = i3 + $i2;
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        return i3;
+    }
+
+    static void <clinit>()
+    {
+        int[][] $r0;
+        int[] $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r22, $r23, $r24, $r25, $r26, $r27, $r28, $r29, $r30, $r31, $r32, $r33, $r34, $r35, $r36, $r37, $r38, $r39, $r40, $r41, $r42, $r43, $r44, $r45, $r46, $r47, $r48, $r49, $r50, $r51, $r52, $r53, $r54, $r55, $r56, $r57, $r58, $r59, $r60, $r61, $r62, $r63, $r64, $r65, $r66, $r67, $r68, $r69, $r70, $r71, $r72, $r73, $r74, $r75, $r76, $r77, $r78, $r79, $r80, $r81, $r82, $r83, $r84, $r85, $r86, $r87, $r88, $r89, $r90, $r91, $r92, $r93, $r94, $r95, $r96, $r97, $r98, $r99, $r100, $r101, $r102, $r103, $r104, $r105, $r106, $r107, $r108, $r109, $r110, $r111, $r112, $r113, $r114, $r115, $r116, $r117, $r118, $r119, $r120, $r121, $r122, $r123, $r124, $r125, $r126, $r127, $r128, $r129, $r130, $r131, $r132, $r133, $r134, $r135, $r136, $r137, $r138, $r139, $r140, $r141, $r142;
+
+        $r0 = newarray (int[])[142];
+
+        $r1 = newarray (int)[2];
+
+        $r1[0] = 768;
+
+        $r1[1] = 879;
+
+        $r0[0] = $r1;
+
+        $r2 = newarray (int)[2];
+
+        $r2[0] = 1155;
+
+        $r2[1] = 1158;
+
+        $r0[1] = $r2;
+
+        $r3 = newarray (int)[2];
+
+        $r3[0] = 1160;
+
+        $r3[1] = 1161;
+
+        $r0[2] = $r3;
+
+        $r4 = newarray (int)[2];
+
+        $r4[0] = 1425;
+
+        $r4[1] = 1469;
+
+        $r0[3] = $r4;
+
+        $r5 = newarray (int)[2];
+
+        $r5[0] = 1471;
+
+        $r5[1] = 1471;
+
+        $r0[4] = $r5;
+
+        $r6 = newarray (int)[2];
+
+        $r6[0] = 1473;
+
+        $r6[1] = 1474;
+
+        $r0[5] = $r6;
+
+        $r7 = newarray (int)[2];
+
+        $r7[0] = 1476;
+
+        $r7[1] = 1477;
+
+        $r0[6] = $r7;
+
+        $r8 = newarray (int)[2];
+
+        $r8[0] = 1479;
+
+        $r8[1] = 1479;
+
+        $r0[7] = $r8;
+
+        $r9 = newarray (int)[2];
+
+        $r9[0] = 1536;
+
+        $r9[1] = 1539;
+
+        $r0[8] = $r9;
+
+        $r10 = newarray (int)[2];
+
+        $r10[0] = 1552;
+
+        $r10[1] = 1557;
+
+        $r0[9] = $r10;
+
+        $r11 = newarray (int)[2];
+
+        $r11[0] = 1611;
+
+        $r11[1] = 1630;
+
+        $r0[10] = $r11;
+
+        $r12 = newarray (int)[2];
+
+        $r12[0] = 1648;
+
+        $r12[1] = 1648;
+
+        $r0[11] = $r12;
+
+        $r13 = newarray (int)[2];
+
+        $r13[0] = 1750;
+
+        $r13[1] = 1764;
+
+        $r0[12] = $r13;
+
+        $r14 = newarray (int)[2];
+
+        $r14[0] = 1767;
+
+        $r14[1] = 1768;
+
+        $r0[13] = $r14;
+
+        $r15 = newarray (int)[2];
+
+        $r15[0] = 1770;
+
+        $r15[1] = 1773;
+
+        $r0[14] = $r15;
+
+        $r16 = newarray (int)[2];
+
+        $r16[0] = 1807;
+
+        $r16[1] = 1807;
+
+        $r0[15] = $r16;
+
+        $r17 = newarray (int)[2];
+
+        $r17[0] = 1809;
+
+        $r17[1] = 1809;
+
+        $r0[16] = $r17;
+
+        $r18 = newarray (int)[2];
+
+        $r18[0] = 1840;
+
+        $r18[1] = 1866;
+
+        $r0[17] = $r18;
+
+        $r19 = newarray (int)[2];
+
+        $r19[0] = 1958;
+
+        $r19[1] = 1968;
+
+        $r0[18] = $r19;
+
+        $r20 = newarray (int)[2];
+
+        $r20[0] = 2027;
+
+        $r20[1] = 2035;
+
+        $r0[19] = $r20;
+
+        $r21 = newarray (int)[2];
+
+        $r21[0] = 2305;
+
+        $r21[1] = 2306;
+
+        $r0[20] = $r21;
+
+        $r22 = newarray (int)[2];
+
+        $r22[0] = 2364;
+
+        $r22[1] = 2364;
+
+        $r0[21] = $r22;
+
+        $r23 = newarray (int)[2];
+
+        $r23[0] = 2369;
+
+        $r23[1] = 2376;
+
+        $r0[22] = $r23;
+
+        $r24 = newarray (int)[2];
+
+        $r24[0] = 2381;
+
+        $r24[1] = 2381;
+
+        $r0[23] = $r24;
+
+        $r25 = newarray (int)[2];
+
+        $r25[0] = 2385;
+
+        $r25[1] = 2388;
+
+        $r0[24] = $r25;
+
+        $r26 = newarray (int)[2];
+
+        $r26[0] = 2402;
+
+        $r26[1] = 2403;
+
+        $r0[25] = $r26;
+
+        $r27 = newarray (int)[2];
+
+        $r27[0] = 2433;
+
+        $r27[1] = 2433;
+
+        $r0[26] = $r27;
+
+        $r28 = newarray (int)[2];
+
+        $r28[0] = 2492;
+
+        $r28[1] = 2492;
+
+        $r0[27] = $r28;
+
+        $r29 = newarray (int)[2];
+
+        $r29[0] = 2497;
+
+        $r29[1] = 2500;
+
+        $r0[28] = $r29;
+
+        $r30 = newarray (int)[2];
+
+        $r30[0] = 2509;
+
+        $r30[1] = 2509;
+
+        $r0[29] = $r30;
+
+        $r31 = newarray (int)[2];
+
+        $r31[0] = 2530;
+
+        $r31[1] = 2531;
+
+        $r0[30] = $r31;
+
+        $r32 = newarray (int)[2];
+
+        $r32[0] = 2561;
+
+        $r32[1] = 2562;
+
+        $r0[31] = $r32;
+
+        $r33 = newarray (int)[2];
+
+        $r33[0] = 2620;
+
+        $r33[1] = 2620;
+
+        $r0[32] = $r33;
+
+        $r34 = newarray (int)[2];
+
+        $r34[0] = 2625;
+
+        $r34[1] = 2626;
+
+        $r0[33] = $r34;
+
+        $r35 = newarray (int)[2];
+
+        $r35[0] = 2631;
+
+        $r35[1] = 2632;
+
+        $r0[34] = $r35;
+
+        $r36 = newarray (int)[2];
+
+        $r36[0] = 2635;
+
+        $r36[1] = 2637;
+
+        $r0[35] = $r36;
+
+        $r37 = newarray (int)[2];
+
+        $r37[0] = 2672;
+
+        $r37[1] = 2673;
+
+        $r0[36] = $r37;
+
+        $r38 = newarray (int)[2];
+
+        $r38[0] = 2689;
+
+        $r38[1] = 2690;
+
+        $r0[37] = $r38;
+
+        $r39 = newarray (int)[2];
+
+        $r39[0] = 2748;
+
+        $r39[1] = 2748;
+
+        $r0[38] = $r39;
+
+        $r40 = newarray (int)[2];
+
+        $r40[0] = 2753;
+
+        $r40[1] = 2757;
+
+        $r0[39] = $r40;
+
+        $r41 = newarray (int)[2];
+
+        $r41[0] = 2759;
+
+        $r41[1] = 2760;
+
+        $r0[40] = $r41;
+
+        $r42 = newarray (int)[2];
+
+        $r42[0] = 2765;
+
+        $r42[1] = 2765;
+
+        $r0[41] = $r42;
+
+        $r43 = newarray (int)[2];
+
+        $r43[0] = 2786;
+
+        $r43[1] = 2787;
+
+        $r0[42] = $r43;
+
+        $r44 = newarray (int)[2];
+
+        $r44[0] = 2817;
+
+        $r44[1] = 2817;
+
+        $r0[43] = $r44;
+
+        $r45 = newarray (int)[2];
+
+        $r45[0] = 2876;
+
+        $r45[1] = 2876;
+
+        $r0[44] = $r45;
+
+        $r46 = newarray (int)[2];
+
+        $r46[0] = 2879;
+
+        $r46[1] = 2879;
+
+        $r0[45] = $r46;
+
+        $r47 = newarray (int)[2];
+
+        $r47[0] = 2881;
+
+        $r47[1] = 2883;
+
+        $r0[46] = $r47;
+
+        $r48 = newarray (int)[2];
+
+        $r48[0] = 2893;
+
+        $r48[1] = 2893;
+
+        $r0[47] = $r48;
+
+        $r49 = newarray (int)[2];
+
+        $r49[0] = 2902;
+
+        $r49[1] = 2902;
+
+        $r0[48] = $r49;
+
+        $r50 = newarray (int)[2];
+
+        $r50[0] = 2946;
+
+        $r50[1] = 2946;
+
+        $r0[49] = $r50;
+
+        $r51 = newarray (int)[2];
+
+        $r51[0] = 3008;
+
+        $r51[1] = 3008;
+
+        $r0[50] = $r51;
+
+        $r52 = newarray (int)[2];
+
+        $r52[0] = 3021;
+
+        $r52[1] = 3021;
+
+        $r0[51] = $r52;
+
+        $r53 = newarray (int)[2];
+
+        $r53[0] = 3134;
+
+        $r53[1] = 3136;
+
+        $r0[52] = $r53;
+
+        $r54 = newarray (int)[2];
+
+        $r54[0] = 3142;
+
+        $r54[1] = 3144;
+
+        $r0[53] = $r54;
+
+        $r55 = newarray (int)[2];
+
+        $r55[0] = 3146;
+
+        $r55[1] = 3149;
+
+        $r0[54] = $r55;
+
+        $r56 = newarray (int)[2];
+
+        $r56[0] = 3157;
+
+        $r56[1] = 3158;
+
+        $r0[55] = $r56;
+
+        $r57 = newarray (int)[2];
+
+        $r57[0] = 3260;
+
+        $r57[1] = 3260;
+
+        $r0[56] = $r57;
+
+        $r58 = newarray (int)[2];
+
+        $r58[0] = 3263;
+
+        $r58[1] = 3263;
+
+        $r0[57] = $r58;
+
+        $r59 = newarray (int)[2];
+
+        $r59[0] = 3270;
+
+        $r59[1] = 3270;
+
+        $r0[58] = $r59;
+
+        $r60 = newarray (int)[2];
+
+        $r60[0] = 3276;
+
+        $r60[1] = 3277;
+
+        $r0[59] = $r60;
+
+        $r61 = newarray (int)[2];
+
+        $r61[0] = 3298;
+
+        $r61[1] = 3299;
+
+        $r0[60] = $r61;
+
+        $r62 = newarray (int)[2];
+
+        $r62[0] = 3393;
+
+        $r62[1] = 3395;
+
+        $r0[61] = $r62;
+
+        $r63 = newarray (int)[2];
+
+        $r63[0] = 3405;
+
+        $r63[1] = 3405;
+
+        $r0[62] = $r63;
+
+        $r64 = newarray (int)[2];
+
+        $r64[0] = 3530;
+
+        $r64[1] = 3530;
+
+        $r0[63] = $r64;
+
+        $r65 = newarray (int)[2];
+
+        $r65[0] = 3538;
+
+        $r65[1] = 3540;
+
+        $r0[64] = $r65;
+
+        $r66 = newarray (int)[2];
+
+        $r66[0] = 3542;
+
+        $r66[1] = 3542;
+
+        $r0[65] = $r66;
+
+        $r67 = newarray (int)[2];
+
+        $r67[0] = 3633;
+
+        $r67[1] = 3633;
+
+        $r0[66] = $r67;
+
+        $r68 = newarray (int)[2];
+
+        $r68[0] = 3636;
+
+        $r68[1] = 3642;
+
+        $r0[67] = $r68;
+
+        $r69 = newarray (int)[2];
+
+        $r69[0] = 3655;
+
+        $r69[1] = 3662;
+
+        $r0[68] = $r69;
+
+        $r70 = newarray (int)[2];
+
+        $r70[0] = 3761;
+
+        $r70[1] = 3761;
+
+        $r0[69] = $r70;
+
+        $r71 = newarray (int)[2];
+
+        $r71[0] = 3764;
+
+        $r71[1] = 3769;
+
+        $r0[70] = $r71;
+
+        $r72 = newarray (int)[2];
+
+        $r72[0] = 3771;
+
+        $r72[1] = 3772;
+
+        $r0[71] = $r72;
+
+        $r73 = newarray (int)[2];
+
+        $r73[0] = 3784;
+
+        $r73[1] = 3789;
+
+        $r0[72] = $r73;
+
+        $r74 = newarray (int)[2];
+
+        $r74[0] = 3864;
+
+        $r74[1] = 3865;
+
+        $r0[73] = $r74;
+
+        $r75 = newarray (int)[2];
+
+        $r75[0] = 3893;
+
+        $r75[1] = 3893;
+
+        $r0[74] = $r75;
+
+        $r76 = newarray (int)[2];
+
+        $r76[0] = 3895;
+
+        $r76[1] = 3895;
+
+        $r0[75] = $r76;
+
+        $r77 = newarray (int)[2];
+
+        $r77[0] = 3897;
+
+        $r77[1] = 3897;
+
+        $r0[76] = $r77;
+
+        $r78 = newarray (int)[2];
+
+        $r78[0] = 3953;
+
+        $r78[1] = 3966;
+
+        $r0[77] = $r78;
+
+        $r79 = newarray (int)[2];
+
+        $r79[0] = 3968;
+
+        $r79[1] = 3972;
+
+        $r0[78] = $r79;
+
+        $r80 = newarray (int)[2];
+
+        $r80[0] = 3974;
+
+        $r80[1] = 3975;
+
+        $r0[79] = $r80;
+
+        $r81 = newarray (int)[2];
+
+        $r81[0] = 3984;
+
+        $r81[1] = 3991;
+
+        $r0[80] = $r81;
+
+        $r82 = newarray (int)[2];
+
+        $r82[0] = 3993;
+
+        $r82[1] = 4028;
+
+        $r0[81] = $r82;
+
+        $r83 = newarray (int)[2];
+
+        $r83[0] = 4038;
+
+        $r83[1] = 4038;
+
+        $r0[82] = $r83;
+
+        $r84 = newarray (int)[2];
+
+        $r84[0] = 4141;
+
+        $r84[1] = 4144;
+
+        $r0[83] = $r84;
+
+        $r85 = newarray (int)[2];
+
+        $r85[0] = 4146;
+
+        $r85[1] = 4146;
+
+        $r0[84] = $r85;
+
+        $r86 = newarray (int)[2];
+
+        $r86[0] = 4150;
+
+        $r86[1] = 4151;
+
+        $r0[85] = $r86;
+
+        $r87 = newarray (int)[2];
+
+        $r87[0] = 4153;
+
+        $r87[1] = 4153;
+
+        $r0[86] = $r87;
+
+        $r88 = newarray (int)[2];
+
+        $r88[0] = 4184;
+
+        $r88[1] = 4185;
+
+        $r0[87] = $r88;
+
+        $r89 = newarray (int)[2];
+
+        $r89[0] = 4448;
+
+        $r89[1] = 4607;
+
+        $r0[88] = $r89;
+
+        $r90 = newarray (int)[2];
+
+        $r90[0] = 4959;
+
+        $r90[1] = 4959;
+
+        $r0[89] = $r90;
+
+        $r91 = newarray (int)[2];
+
+        $r91[0] = 5906;
+
+        $r91[1] = 5908;
+
+        $r0[90] = $r91;
+
+        $r92 = newarray (int)[2];
+
+        $r92[0] = 5938;
+
+        $r92[1] = 5940;
+
+        $r0[91] = $r92;
+
+        $r93 = newarray (int)[2];
+
+        $r93[0] = 5970;
+
+        $r93[1] = 5971;
+
+        $r0[92] = $r93;
+
+        $r94 = newarray (int)[2];
+
+        $r94[0] = 6002;
+
+        $r94[1] = 6003;
+
+        $r0[93] = $r94;
+
+        $r95 = newarray (int)[2];
+
+        $r95[0] = 6068;
+
+        $r95[1] = 6069;
+
+        $r0[94] = $r95;
+
+        $r96 = newarray (int)[2];
+
+        $r96[0] = 6071;
+
+        $r96[1] = 6077;
+
+        $r0[95] = $r96;
+
+        $r97 = newarray (int)[2];
+
+        $r97[0] = 6086;
+
+        $r97[1] = 6086;
+
+        $r0[96] = $r97;
+
+        $r98 = newarray (int)[2];
+
+        $r98[0] = 6089;
+
+        $r98[1] = 6099;
+
+        $r0[97] = $r98;
+
+        $r99 = newarray (int)[2];
+
+        $r99[0] = 6109;
+
+        $r99[1] = 6109;
+
+        $r0[98] = $r99;
+
+        $r100 = newarray (int)[2];
+
+        $r100[0] = 6155;
+
+        $r100[1] = 6157;
+
+        $r0[99] = $r100;
+
+        $r101 = newarray (int)[2];
+
+        $r101[0] = 6313;
+
+        $r101[1] = 6313;
+
+        $r0[100] = $r101;
+
+        $r102 = newarray (int)[2];
+
+        $r102[0] = 6432;
+
+        $r102[1] = 6434;
+
+        $r0[101] = $r102;
+
+        $r103 = newarray (int)[2];
+
+        $r103[0] = 6439;
+
+        $r103[1] = 6440;
+
+        $r0[102] = $r103;
+
+        $r104 = newarray (int)[2];
+
+        $r104[0] = 6450;
+
+        $r104[1] = 6450;
+
+        $r0[103] = $r104;
+
+        $r105 = newarray (int)[2];
+
+        $r105[0] = 6457;
+
+        $r105[1] = 6459;
+
+        $r0[104] = $r105;
+
+        $r106 = newarray (int)[2];
+
+        $r106[0] = 6679;
+
+        $r106[1] = 6680;
+
+        $r0[105] = $r106;
+
+        $r107 = newarray (int)[2];
+
+        $r107[0] = 6912;
+
+        $r107[1] = 6915;
+
+        $r0[106] = $r107;
+
+        $r108 = newarray (int)[2];
+
+        $r108[0] = 6964;
+
+        $r108[1] = 6964;
+
+        $r0[107] = $r108;
+
+        $r109 = newarray (int)[2];
+
+        $r109[0] = 6966;
+
+        $r109[1] = 6970;
+
+        $r0[108] = $r109;
+
+        $r110 = newarray (int)[2];
+
+        $r110[0] = 6972;
+
+        $r110[1] = 6972;
+
+        $r0[109] = $r110;
+
+        $r111 = newarray (int)[2];
+
+        $r111[0] = 6978;
+
+        $r111[1] = 6978;
+
+        $r0[110] = $r111;
+
+        $r112 = newarray (int)[2];
+
+        $r112[0] = 7019;
+
+        $r112[1] = 7027;
+
+        $r0[111] = $r112;
+
+        $r113 = newarray (int)[2];
+
+        $r113[0] = 7616;
+
+        $r113[1] = 7626;
+
+        $r0[112] = $r113;
+
+        $r114 = newarray (int)[2];
+
+        $r114[0] = 7678;
+
+        $r114[1] = 7679;
+
+        $r0[113] = $r114;
+
+        $r115 = newarray (int)[2];
+
+        $r115[0] = 8203;
+
+        $r115[1] = 8207;
+
+        $r0[114] = $r115;
+
+        $r116 = newarray (int)[2];
+
+        $r116[0] = 8234;
+
+        $r116[1] = 8238;
+
+        $r0[115] = $r116;
+
+        $r117 = newarray (int)[2];
+
+        $r117[0] = 8288;
+
+        $r117[1] = 8291;
+
+        $r0[116] = $r117;
+
+        $r118 = newarray (int)[2];
+
+        $r118[0] = 8298;
+
+        $r118[1] = 8303;
+
+        $r0[117] = $r118;
+
+        $r119 = newarray (int)[2];
+
+        $r119[0] = 8400;
+
+        $r119[1] = 8431;
+
+        $r0[118] = $r119;
+
+        $r120 = newarray (int)[2];
+
+        $r120[0] = 12330;
+
+        $r120[1] = 12335;
+
+        $r0[119] = $r120;
+
+        $r121 = newarray (int)[2];
+
+        $r121[0] = 12441;
+
+        $r121[1] = 12442;
+
+        $r0[120] = $r121;
+
+        $r122 = newarray (int)[2];
+
+        $r122[0] = 43014;
+
+        $r122[1] = 43014;
+
+        $r0[121] = $r122;
+
+        $r123 = newarray (int)[2];
+
+        $r123[0] = 43019;
+
+        $r123[1] = 43019;
+
+        $r0[122] = $r123;
+
+        $r124 = newarray (int)[2];
+
+        $r124[0] = 43045;
+
+        $r124[1] = 43046;
+
+        $r0[123] = $r124;
+
+        $r125 = newarray (int)[2];
+
+        $r125[0] = 64286;
+
+        $r125[1] = 64286;
+
+        $r0[124] = $r125;
+
+        $r126 = newarray (int)[2];
+
+        $r126[0] = 65024;
+
+        $r126[1] = 65039;
+
+        $r0[125] = $r126;
+
+        $r127 = newarray (int)[2];
+
+        $r127[0] = 65056;
+
+        $r127[1] = 65059;
+
+        $r0[126] = $r127;
+
+        $r128 = newarray (int)[2];
+
+        $r128[0] = 65279;
+
+        $r128[1] = 65279;
+
+        $r0[127] = $r128;
+
+        $r129 = newarray (int)[2];
+
+        $r129[0] = 65529;
+
+        $r129[1] = 65531;
+
+        $r0[128] = $r129;
+
+        $r130 = newarray (int)[2];
+
+        $r130[0] = 68097;
+
+        $r130[1] = 68099;
+
+        $r0[129] = $r130;
+
+        $r131 = newarray (int)[2];
+
+        $r131[0] = 68101;
+
+        $r131[1] = 68102;
+
+        $r0[130] = $r131;
+
+        $r132 = newarray (int)[2];
+
+        $r132[0] = 68108;
+
+        $r132[1] = 68111;
+
+        $r0[131] = $r132;
+
+        $r133 = newarray (int)[2];
+
+        $r133[0] = 68152;
+
+        $r133[1] = 68154;
+
+        $r0[132] = $r133;
+
+        $r134 = newarray (int)[2];
+
+        $r134[0] = 68159;
+
+        $r134[1] = 68159;
+
+        $r0[133] = $r134;
+
+        $r135 = newarray (int)[2];
+
+        $r135[0] = 119143;
+
+        $r135[1] = 119145;
+
+        $r0[134] = $r135;
+
+        $r136 = newarray (int)[2];
+
+        $r136[0] = 119155;
+
+        $r136[1] = 119170;
+
+        $r0[135] = $r136;
+
+        $r137 = newarray (int)[2];
+
+        $r137[0] = 119173;
+
+        $r137[1] = 119179;
+
+        $r0[136] = $r137;
+
+        $r138 = newarray (int)[2];
+
+        $r138[0] = 119210;
+
+        $r138[1] = 119213;
+
+        $r0[137] = $r138;
+
+        $r139 = newarray (int)[2];
+
+        $r139[0] = 119362;
+
+        $r139[1] = 119364;
+
+        $r0[138] = $r139;
+
+        $r140 = newarray (int)[2];
+
+        $r140[0] = 917505;
+
+        $r140[1] = 917505;
+
+        $r0[139] = $r140;
+
+        $r141 = newarray (int)[2];
+
+        $r141[0] = 917536;
+
+        $r141[1] = 917631;
+
+        $r0[140] = $r141;
+
+        $r142 = newarray (int)[2];
+
+        $r142[0] = 917760;
+
+        $r142[1] = 917999;
+
+        $r0[141] = $r142;
+
+        <net.sourceforge.plantuml.asciiart.Wcwidth: int[][] COMBINING> = $r0;
+
+        return;
+    }
+}

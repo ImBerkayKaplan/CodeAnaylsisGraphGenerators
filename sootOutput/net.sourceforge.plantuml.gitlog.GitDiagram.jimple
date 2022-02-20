@@ -1,0 +1,142 @@
+public class net.sourceforge.plantuml.gitlog.GitDiagram extends net.sourceforge.plantuml.UmlDiagram
+{
+    private final java.util.Collection gnodes;
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.gitlog.GitTextArea)
+    {
+        net.sourceforge.plantuml.gitlog.GitDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType $r3;
+        net.sourceforge.plantuml.gitlog.GNodeBuilder $r4, $r8;
+        net.sourceforge.plantuml.gitlog.GitTextArea r5;
+        java.util.List $r6, $r9;
+        java.util.Collection $r7;
+
+        r0 := @this: net.sourceforge.plantuml.gitlog.GitDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r5 := @parameter2: net.sourceforge.plantuml.gitlog.GitTextArea;
+
+        $r3 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType GIT>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.UmlDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType)>(r1, r2, $r3);
+
+        $r4 = new net.sourceforge.plantuml.gitlog.GNodeBuilder;
+
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.gitlog.GitTextArea: java.util.List getAllCommits()>();
+
+        specialinvoke $r4.<net.sourceforge.plantuml.gitlog.GNodeBuilder: void <init>(java.util.List)>($r6);
+
+        $r7 = virtualinvoke $r4.<net.sourceforge.plantuml.gitlog.GNodeBuilder: java.util.Collection getAllNodes()>();
+
+        r0.<net.sourceforge.plantuml.gitlog.GitDiagram: java.util.Collection gnodes> = $r7;
+
+        $r8 = new net.sourceforge.plantuml.gitlog.GNodeBuilder;
+
+        $r9 = virtualinvoke r5.<net.sourceforge.plantuml.gitlog.GitTextArea: java.util.List getAllCommits()>();
+
+        specialinvoke $r8.<net.sourceforge.plantuml.gitlog.GNodeBuilder: void <init>(java.util.List)>($r9);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.gitlog.GitDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.gitlog.GitDiagram;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Git)");
+
+        return $r0;
+    }
+
+    protected net.sourceforge.plantuml.core.ImageData exportDiagramInternal(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.gitlog.GitDiagram r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r4;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r3;
+        java.io.OutputStream r5;
+        net.sourceforge.plantuml.core.ImageData $r6;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.gitlog.GitDiagram;
+
+        r5 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.gitlog.GitDiagram: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.gitlog.GitDiagram: net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock()>();
+
+        $r4 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>($r3);
+
+        $r6 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r5);
+
+        return $r6;
+    }
+
+    private void drawInternal(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.gitlog.SmetanaForGit $r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+        net.sourceforge.plantuml.gitlog.GitDiagram r2;
+        net.sourceforge.plantuml.ISkinParam $r3;
+        java.util.Collection $r4;
+
+        r2 := @this: net.sourceforge.plantuml.gitlog.GitDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r0 = new net.sourceforge.plantuml.gitlog.SmetanaForGit;
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.gitlog.GitDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.gitlog.SmetanaForGit: void <init>(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.ISkinParam)>(r1, $r3);
+
+        $r4 = r2.<net.sourceforge.plantuml.gitlog.GitDiagram: java.util.Collection gnodes>;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.gitlog.SmetanaForGit: void drawMe(java.util.Collection)>($r4);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock()
+    {
+        net.sourceforge.plantuml.gitlog.GitDiagram$1 $r0;
+        net.sourceforge.plantuml.gitlog.GitDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.gitlog.GitDiagram;
+
+        $r0 = new net.sourceforge.plantuml.gitlog.GitDiagram$1;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.gitlog.GitDiagram$1: void <init>(net.sourceforge.plantuml.gitlog.GitDiagram)>(r1);
+
+        return $r0;
+    }
+
+    static void access$000(net.sourceforge.plantuml.gitlog.GitDiagram, net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.gitlog.GitDiagram r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.gitlog.GitDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        specialinvoke r0.<net.sourceforge.plantuml.gitlog.GitDiagram: void drawInternal(net.sourceforge.plantuml.ugraphic.UGraphic)>(r1);
+
+        return;
+    }
+}

@@ -1,0 +1,503 @@
+public class net.sourceforge.plantuml.bpm.CleanerInterleavingLines extends java.lang.Object implements net.sourceforge.plantuml.bpm.GridCleaner
+{
+    static final boolean $assertionsDisabled;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r0;
+
+        r0 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public boolean clean(net.sourceforge.plantuml.bpm.Grid)
+    {
+        net.sourceforge.plantuml.bpm.Grid r0;
+        net.sourceforge.plantuml.bpm.Chain $r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z1, $z2;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.bpm.Line r5, r7;
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r6;
+
+        r6 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        r0 := @parameter0: net.sourceforge.plantuml.bpm.Grid;
+
+        r7 = null;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.Grid: net.sourceforge.plantuml.bpm.Chain lines()>();
+
+        $r2 = interfaceinvoke $r1.<net.sourceforge.plantuml.bpm.Chain: java.util.List toList()>();
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.bpm.Line) $r4;
+
+        if r7 == null goto label2;
+
+        $z2 = specialinvoke r6.<net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean mergeable(net.sourceforge.plantuml.bpm.Grid,net.sourceforge.plantuml.bpm.Line,net.sourceforge.plantuml.bpm.Line)>(r0, r7, r5);
+
+        if $z2 == 0 goto label2;
+
+        specialinvoke r6.<net.sourceforge.plantuml.bpm.CleanerInterleavingLines: void mergeLines(net.sourceforge.plantuml.bpm.Grid,net.sourceforge.plantuml.bpm.Line,net.sourceforge.plantuml.bpm.Line)>(r0, r7, r5);
+
+        return 1;
+
+     label2:
+        r7 = r5;
+
+        goto label1;
+
+     label3:
+        return 0;
+    }
+
+    private void mergeLines(net.sourceforge.plantuml.bpm.Grid, net.sourceforge.plantuml.bpm.Line, net.sourceforge.plantuml.bpm.Line)
+    {
+        net.sourceforge.plantuml.bpm.Grid r0;
+        net.sourceforge.plantuml.bpm.Chain $r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        net.sourceforge.plantuml.bpm.Line r4, r7;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.bpm.Col r6;
+        net.sourceforge.plantuml.bpm.Cell r8, r9;
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r10;
+        net.sourceforge.plantuml.bpm.Placeable $r11, $r12, $r13;
+
+        r10 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        r0 := @parameter0: net.sourceforge.plantuml.bpm.Grid;
+
+        r7 := @parameter1: net.sourceforge.plantuml.bpm.Line;
+
+        r4 := @parameter2: net.sourceforge.plantuml.bpm.Line;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.Grid: net.sourceforge.plantuml.bpm.Chain cols()>();
+
+        $r2 = interfaceinvoke $r1.<net.sourceforge.plantuml.bpm.Chain: java.util.List toList()>();
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.bpm.Col) $r5;
+
+        r8 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.Grid: net.sourceforge.plantuml.bpm.Cell getCell(net.sourceforge.plantuml.bpm.Line,net.sourceforge.plantuml.bpm.Col)>(r7, r6);
+
+        r9 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.Grid: net.sourceforge.plantuml.bpm.Cell getCell(net.sourceforge.plantuml.bpm.Line,net.sourceforge.plantuml.bpm.Col)>(r4, r6);
+
+        $r11 = virtualinvoke r8.<net.sourceforge.plantuml.bpm.Cell: net.sourceforge.plantuml.bpm.Placeable getData()>();
+
+        $r12 = virtualinvoke r9.<net.sourceforge.plantuml.bpm.Cell: net.sourceforge.plantuml.bpm.Placeable getData()>();
+
+        $r13 = specialinvoke r10.<net.sourceforge.plantuml.bpm.CleanerInterleavingLines: net.sourceforge.plantuml.bpm.Placeable merge(net.sourceforge.plantuml.bpm.Placeable,net.sourceforge.plantuml.bpm.Placeable)>($r11, $r12);
+
+        virtualinvoke r8.<net.sourceforge.plantuml.bpm.Cell: void setData(net.sourceforge.plantuml.bpm.Placeable)>($r13);
+
+        virtualinvoke r9.<net.sourceforge.plantuml.bpm.Cell: void setData(net.sourceforge.plantuml.bpm.Placeable)>(null);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r0.<net.sourceforge.plantuml.bpm.Grid: void removeLine(net.sourceforge.plantuml.bpm.Line)>(r4);
+
+        return;
+    }
+
+    private boolean mergeable(net.sourceforge.plantuml.bpm.Grid, net.sourceforge.plantuml.bpm.Line, net.sourceforge.plantuml.bpm.Line)
+    {
+        net.sourceforge.plantuml.bpm.Grid r0;
+        net.sourceforge.plantuml.bpm.Chain $r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0, $z1;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.bpm.Col r5;
+        net.sourceforge.plantuml.bpm.Line r6, r9;
+        net.sourceforge.plantuml.bpm.Cell $r7, $r10;
+        net.sourceforge.plantuml.bpm.Placeable r8, r11;
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r12;
+
+        r12 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        r0 := @parameter0: net.sourceforge.plantuml.bpm.Grid;
+
+        r6 := @parameter1: net.sourceforge.plantuml.bpm.Line;
+
+        r9 := @parameter2: net.sourceforge.plantuml.bpm.Line;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.Grid: net.sourceforge.plantuml.bpm.Chain cols()>();
+
+        $r2 = interfaceinvoke $r1.<net.sourceforge.plantuml.bpm.Chain: java.util.List toList()>();
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.bpm.Col) $r4;
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.Grid: net.sourceforge.plantuml.bpm.Cell getCell(net.sourceforge.plantuml.bpm.Line,net.sourceforge.plantuml.bpm.Col)>(r6, r5);
+
+        r8 = virtualinvoke $r7.<net.sourceforge.plantuml.bpm.Cell: net.sourceforge.plantuml.bpm.Placeable getData()>();
+
+        $r10 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.Grid: net.sourceforge.plantuml.bpm.Cell getCell(net.sourceforge.plantuml.bpm.Line,net.sourceforge.plantuml.bpm.Col)>(r9, r5);
+
+        r11 = virtualinvoke $r10.<net.sourceforge.plantuml.bpm.Cell: net.sourceforge.plantuml.bpm.Placeable getData()>();
+
+        $z1 = specialinvoke r12.<net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean mergeable(net.sourceforge.plantuml.bpm.Placeable,net.sourceforge.plantuml.bpm.Placeable)>(r8, r11);
+
+        if $z1 != 0 goto label2;
+
+        return 0;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 1;
+    }
+
+    private net.sourceforge.plantuml.bpm.Placeable merge(net.sourceforge.plantuml.bpm.Placeable, net.sourceforge.plantuml.bpm.Placeable)
+    {
+        net.sourceforge.plantuml.bpm.Placeable r0, r1;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
+        net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty r2, r10, r11;
+        java.lang.AssertionError $r3, $r8;
+        net.sourceforge.plantuml.bpm.ConnectorPuzzle$Where $r4, $r6;
+        net.sourceforge.plantuml.bpm.BpmElement $r5, $r7;
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r9;
+
+        r9 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        r0 := @parameter0: net.sourceforge.plantuml.bpm.Placeable;
+
+        r1 := @parameter1: net.sourceforge.plantuml.bpm.Placeable;
+
+        if r0 != null goto label1;
+
+        return r1;
+
+     label1:
+        if r1 != null goto label2;
+
+        return r0;
+
+     label2:
+        $z0 = <net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label4;
+
+        if r0 == null goto label3;
+
+        if r1 != null goto label4;
+
+     label3:
+        $r8 = new java.lang.AssertionError;
+
+        specialinvoke $r8.<java.lang.AssertionError: void <init>()>();
+
+        throw $r8;
+
+     label4:
+        $z1 = r0 instanceof net.sourceforge.plantuml.bpm.BpmElement;
+
+        if $z1 == 0 goto label5;
+
+        return r0;
+
+     label5:
+        $z2 = r1 instanceof net.sourceforge.plantuml.bpm.BpmElement;
+
+        if $z2 == 0 goto label7;
+
+        r10 = (net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty) r0;
+
+        $z6 = virtualinvoke r10.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("SW");
+
+        if $z6 == 0 goto label6;
+
+        $r5 = (net.sourceforge.plantuml.bpm.BpmElement) r1;
+
+        $r4 = <net.sourceforge.plantuml.bpm.ConnectorPuzzle$Where: net.sourceforge.plantuml.bpm.ConnectorPuzzle$Where NORTH>;
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.bpm.BpmElement: void remove(net.sourceforge.plantuml.bpm.ConnectorPuzzle$Where)>($r4);
+
+        $r7 = (net.sourceforge.plantuml.bpm.BpmElement) r1;
+
+        $r6 = <net.sourceforge.plantuml.bpm.ConnectorPuzzle$Where: net.sourceforge.plantuml.bpm.ConnectorPuzzle$Where WEST>;
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.bpm.BpmElement: void append(net.sourceforge.plantuml.bpm.ConnectorPuzzle$Where)>($r6);
+
+     label6:
+        return r1;
+
+     label7:
+        $z3 = <net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean $assertionsDisabled>;
+
+        if $z3 != 0 goto label9;
+
+        $z4 = r0 instanceof net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        if $z4 == 0 goto label8;
+
+        $z5 = r1 instanceof net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        if $z5 != 0 goto label9;
+
+     label8:
+        $r3 = new java.lang.AssertionError;
+
+        specialinvoke $r3.<java.lang.AssertionError: void <init>()>();
+
+        throw $r3;
+
+     label9:
+        r11 = (net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty) r0;
+
+        r2 = (net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty) r1;
+
+        return r2;
+    }
+
+    private boolean mergeable(net.sourceforge.plantuml.bpm.Placeable, net.sourceforge.plantuml.bpm.Placeable)
+    {
+        net.sourceforge.plantuml.bpm.Placeable r0, r1;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, z8, z9;
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r2;
+        net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty $r3, $r6, $r7, $r8;
+        net.sourceforge.plantuml.bpm.BpmElement $r4, $r5;
+        java.lang.AssertionError $r9;
+
+        r2 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        r0 := @parameter0: net.sourceforge.plantuml.bpm.Placeable;
+
+        r1 := @parameter1: net.sourceforge.plantuml.bpm.Placeable;
+
+        if r0 == null goto label1;
+
+        if r1 != null goto label2;
+
+     label1:
+        return 1;
+
+     label2:
+        $z0 = <net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label4;
+
+        if r0 == null goto label3;
+
+        if r1 != null goto label4;
+
+     label3:
+        $r9 = new java.lang.AssertionError;
+
+        specialinvoke $r9.<java.lang.AssertionError: void <init>()>();
+
+        throw $r9;
+
+     label4:
+        $z1 = r0 instanceof net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        if $z1 == 0 goto label5;
+
+        $z6 = r1 instanceof net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        if $z6 == 0 goto label5;
+
+        $r8 = (net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty) r0;
+
+        $r7 = (net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty) r1;
+
+        $z7 = specialinvoke r2.<net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean mergeableCC(net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty,net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty)>($r8, $r7);
+
+        return $z7;
+
+     label5:
+        $z2 = r0 instanceof net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        if $z2 == 0 goto label6;
+
+        $z5 = r1 instanceof net.sourceforge.plantuml.bpm.BpmElement;
+
+        if $z5 == 0 goto label6;
+
+        $r6 = (net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty) r0;
+
+        $r5 = (net.sourceforge.plantuml.bpm.BpmElement) r1;
+
+        z8 = specialinvoke r2.<net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean mergeablePuzzleSingle(net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty,net.sourceforge.plantuml.bpm.BpmElement)>($r6, $r5);
+
+        return z8;
+
+     label6:
+        $z3 = r1 instanceof net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        if $z3 == 0 goto label7;
+
+        $z4 = r0 instanceof net.sourceforge.plantuml.bpm.BpmElement;
+
+        if $z4 == 0 goto label7;
+
+        $r4 = (net.sourceforge.plantuml.bpm.BpmElement) r0;
+
+        $r3 = (net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty) r1;
+
+        z9 = specialinvoke r2.<net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean mergeablePuzzleSingle(net.sourceforge.plantuml.bpm.BpmElement,net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty)>($r4, $r3);
+
+        return z9;
+
+     label7:
+        return 0;
+    }
+
+    private boolean mergeablePuzzleSingle(net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty, net.sourceforge.plantuml.bpm.BpmElement)
+    {
+        net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r1;
+        net.sourceforge.plantuml.bpm.BpmElement r2;
+
+        r1 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        r0 := @parameter0: net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        r2 := @parameter1: net.sourceforge.plantuml.bpm.BpmElement;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("NS");
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $z1 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("SW");
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    private boolean mergeablePuzzleSingle(net.sourceforge.plantuml.bpm.BpmElement, net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty)
+    {
+        net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty r0;
+        boolean $z0;
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r1;
+        net.sourceforge.plantuml.bpm.BpmElement r2;
+
+        r1 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        r2 := @parameter0: net.sourceforge.plantuml.bpm.BpmElement;
+
+        r0 := @parameter1: net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("NS");
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        return 0;
+    }
+
+    private boolean mergeableCC(net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty, net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty)
+    {
+        net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty r0, r1;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5;
+        net.sourceforge.plantuml.bpm.CleanerInterleavingLines r2;
+
+        r2 := @this: net.sourceforge.plantuml.bpm.CleanerInterleavingLines;
+
+        r0 := @parameter0: net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        r1 := @parameter1: net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("NS");
+
+        if $z0 == 0 goto label1;
+
+        $z5 = virtualinvoke r1.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("NS");
+
+        if $z5 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $z1 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("NS");
+
+        if $z1 == 0 goto label2;
+
+        $z4 = virtualinvoke r1.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("NE");
+
+        if $z4 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        $z2 = virtualinvoke r0.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("NS");
+
+        if $z2 == 0 goto label3;
+
+        $z3 = virtualinvoke r1.<net.sourceforge.plantuml.bpm.ConnectorPuzzleEmpty: boolean checkDirections(java.lang.String)>("NW");
+
+        if $z3 == 0 goto label3;
+
+        return 1;
+
+     label3:
+        return 0;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/bpm/CleanerInterleavingLines;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.bpm.CleanerInterleavingLines: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

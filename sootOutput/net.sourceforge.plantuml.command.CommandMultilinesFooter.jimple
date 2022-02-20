@@ -1,0 +1,145 @@
+public class net.sourceforge.plantuml.command.CommandMultilinesFooter extends net.sourceforge.plantuml.command.CommandMultilines
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.CommandMultilinesFooter r0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilinesFooter;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.CommandMultilines: void <init>(java.lang.String)>("^(?:(left|right|center)?[%s]*)footer$");
+
+        return;
+    }
+
+    public java.lang.String getPatternEnd()
+    {
+        net.sourceforge.plantuml.command.CommandMultilinesFooter r0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilinesFooter;
+
+        return "^end[%s]?footer$";
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.TitledDiagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandMultilinesFooter r0;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        net.sourceforge.plantuml.StringLocated $r2, $r3;
+        java.lang.String $r4, r6;
+        net.sourceforge.plantuml.command.regex.Matcher2 r5;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.cucadiagram.Display r7;
+        int $i0;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r8, $r23;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r9, r21;
+        net.sourceforge.plantuml.TitledDiagram r10;
+        net.sourceforge.plantuml.FontParam $r11;
+        net.sourceforge.plantuml.style.StyleSignature $r12;
+        net.sourceforge.plantuml.UmlDiagram $r13;
+        net.sourceforge.plantuml.ISkinParam $r14;
+        net.sourceforge.plantuml.style.StyleBuilder $r15;
+        net.sourceforge.plantuml.style.Style $r16;
+        java.lang.IllegalStateException $r17;
+        net.sourceforge.plantuml.command.BlocLines r18, r19, r20;
+        net.sourceforge.plantuml.cucadiagram.DisplaySection $r22;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilinesFooter;
+
+        r10 := @parameter0: net.sourceforge.plantuml.TitledDiagram;
+
+        r18 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        r19 = virtualinvoke r18.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines trim()>();
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandMultilinesFooter: net.sourceforge.plantuml.command.regex.Pattern2 getStartingPattern()>();
+
+        $r2 = virtualinvoke r19.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r5 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>($r4);
+
+        $z0 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        $r17 = new java.lang.IllegalStateException;
+
+        specialinvoke $r17.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r17;
+
+     label1:
+        r6 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        r20 = virtualinvoke r19.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines subExtract(int,int)>(1, 1);
+
+        r7 = virtualinvoke r20.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.cucadiagram.Display toDisplay()>();
+
+        $i0 = virtualinvoke r7.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        if $i0 <= 0 goto label3;
+
+        $r9 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        r21 = staticinvoke <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment fromString(java.lang.String,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r6, $r9);
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z1 == 0 goto label2;
+
+        if r6 != null goto label2;
+
+        $r11 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam FOOTER>;
+
+        $r12 = virtualinvoke $r11.<net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.style.StyleSignature getStyleDefinition(net.sourceforge.plantuml.style.SName)>(null);
+
+        $r13 = (net.sourceforge.plantuml.UmlDiagram) r10;
+
+        $r14 = virtualinvoke $r13.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r15 = interfaceinvoke $r14.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r16 = virtualinvoke $r12.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r15);
+
+        r21 = virtualinvoke $r16.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.graphic.HorizontalAlignment getHorizontalAlignment()>();
+
+     label2:
+        $r22 = virtualinvoke r10.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.cucadiagram.DisplaySection getFooter()>();
+
+        virtualinvoke $r22.<net.sourceforge.plantuml.cucadiagram.DisplaySection: void putDisplay(net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r7, r21);
+
+        $r23 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r23;
+
+     label3:
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("Empty footer");
+
+        return $r8;
+    }
+
+    public volatile net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandMultilinesFooter r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.command.BlocLines r2;
+        net.sourceforge.plantuml.TitledDiagram $r3;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r4;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilinesFooter;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $r3 = (net.sourceforge.plantuml.TitledDiagram) r1;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandMultilinesFooter: net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.command.BlocLines)>($r3, r2);
+
+        return $r4;
+    }
+}

@@ -1,0 +1,763 @@
+class net.sourceforge.plantuml.zopfli.Squeeze extends java.lang.Object
+{
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.zopfli.Squeeze r0;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.Squeeze;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.zopfli.LzStore optimal(net.sourceforge.plantuml.zopfli.Cookie, int, net.sourceforge.plantuml.zopfli.LongestMatchCache, byte[], int, int)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        net.sourceforge.plantuml.zopfli.LzStore r1, r2;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r3;
+        byte[] r4;
+        int i0, i1, i2, $i4, i5, $i6, $i7, i8, i9, i10, i11;
+        net.sourceforge.plantuml.zopfli.SymbolStats r5, r6, r7;
+        char[] r8, $r10, $r11;
+        long[] r9;
+        long $l3;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        i2 := @parameter1: int;
+
+        r3 := @parameter2: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        r4 := @parameter3: byte[];
+
+        i0 := @parameter4: int;
+
+        i1 := @parameter5: int;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.LzStore store1>;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.LzStore: void reset()>();
+
+        r2 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.LzStore store2>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void greedy(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,byte[],int,int,net.sourceforge.plantuml.zopfli.LzStore)>(r0, r3, r4, i0, i1, r1);
+
+        r5 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.SymbolStats stats>;
+
+        r6 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.SymbolStats bestStats>;
+
+        r7 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.SymbolStats lastStats>;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.SymbolStats: void getFreqs(net.sourceforge.plantuml.zopfli.LzStore)>(r1);
+
+        r8 = r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] lengthArray>;
+
+        r9 = r0.<net.sourceforge.plantuml.zopfli.Cookie: long[] costs>;
+
+        i8 = 2147483647;
+
+        i9 = 0;
+
+        i10 = -1;
+
+        i11 = 0;
+
+     label1:
+        if i11 >= i2 goto label5;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.LzStore: void reset()>();
+
+        $l3 = virtualinvoke r5.<net.sourceforge.plantuml.zopfli.SymbolStats: long minCost()>();
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: void bestLengths(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,int,byte[],int,int,long,net.sourceforge.plantuml.zopfli.SymbolStats,char[],long[])>(r0, r3, i0, r4, i0, i1, $l3, r5, r8, r9);
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: void optimalRun(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,byte[],int,int,char[],net.sourceforge.plantuml.zopfli.LzStore)>(r0, r3, r4, i0, i1, r8, r1);
+
+        $r11 = r1.<net.sourceforge.plantuml.zopfli.LzStore: char[] litLens>;
+
+        $r10 = r1.<net.sourceforge.plantuml.zopfli.LzStore: char[] dists>;
+
+        $i4 = r1.<net.sourceforge.plantuml.zopfli.LzStore: int size>;
+
+        i5 = staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: int calculateBlockSize(net.sourceforge.plantuml.zopfli.Cookie,char[],char[],int,int)>(r0, $r11, $r10, 0, $i4);
+
+        if i5 >= i8 goto label2;
+
+        virtualinvoke r2.<net.sourceforge.plantuml.zopfli.LzStore: void copy(net.sourceforge.plantuml.zopfli.LzStore)>(r1);
+
+        virtualinvoke r6.<net.sourceforge.plantuml.zopfli.SymbolStats: void copy(net.sourceforge.plantuml.zopfli.SymbolStats)>(r5);
+
+        i8 = i5;
+
+     label2:
+        virtualinvoke r7.<net.sourceforge.plantuml.zopfli.SymbolStats: void copy(net.sourceforge.plantuml.zopfli.SymbolStats)>(r5);
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.SymbolStats: void getFreqs(net.sourceforge.plantuml.zopfli.LzStore)>(r1);
+
+        if i10 == -1 goto label3;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.SymbolStats: void alloy(net.sourceforge.plantuml.zopfli.SymbolStats)>(r7);
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.SymbolStats: void calculate()>();
+
+     label3:
+        if i11 <= 5 goto label4;
+
+        if i5 != i9 goto label4;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.SymbolStats: void copy(net.sourceforge.plantuml.zopfli.SymbolStats)>(r6);
+
+        $i6 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int rnd>;
+
+        $i7 = virtualinvoke r5.<net.sourceforge.plantuml.zopfli.SymbolStats: int randomizeFreqs(int)>($i6);
+
+        r0.<net.sourceforge.plantuml.zopfli.Cookie: int rnd> = $i7;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.SymbolStats: void calculate()>();
+
+        i10 = i11;
+
+     label4:
+        i9 = i5;
+
+        i11 = i11 + 1;
+
+        goto label1;
+
+     label5:
+        return r2;
+    }
+
+    static void optimalRun(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.LongestMatchCache, byte[], int, int, char[], net.sourceforge.plantuml.zopfli.LzStore)
+    {
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        char[] r1, r2;
+        int i0, i1, $i2, $i3, $i5, $i7, $i8, i11, i12, i14, i15, i17;
+        net.sourceforge.plantuml.zopfli.Hash r3;
+        byte[] r4;
+        net.sourceforge.plantuml.zopfli.LzStore r5;
+        byte $b4;
+        char $c6, $c9, $c10, c13, c16;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r6;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r6 := @parameter1: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        r4 := @parameter2: byte[];
+
+        i1 := @parameter3: int;
+
+        i0 := @parameter4: int;
+
+        r2 := @parameter5: char[];
+
+        r5 := @parameter6: net.sourceforge.plantuml.zopfli.LzStore;
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] path>;
+
+        i11 = 0;
+
+        i12 = i0 - i1;
+
+     label1:
+        c13 = r2[i12];
+
+        $i2 = i11;
+
+        i11 = i11 + 1;
+
+        r1[$i2] = c13;
+
+        i12 = i12 - c13;
+
+        if i12 != 0 goto label1;
+
+        $i3 = i1 - 32768;
+
+        i14 = staticinvoke <java.lang.Math: int max(int,int)>($i3, 0);
+
+        r3 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Hash h>;
+
+        virtualinvoke r3.<net.sourceforge.plantuml.zopfli.Hash: void init(byte[],int,int,int)>(r4, i14, i1, i0);
+
+        i15 = i1;
+
+     label2:
+        virtualinvoke r3.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r4, i15, i0);
+
+        i11 = i11 + -1;
+
+        c16 = r1[i11];
+
+        if c16 < 3 goto label3;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void findLongestMatch(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,int,net.sourceforge.plantuml.zopfli.Hash,byte[],int,int,int,char[])>(r0, r6, i1, r3, r4, i15, i0, c16, null);
+
+        $c10 = (char) c16;
+
+        $i8 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int distVal>;
+
+        $c9 = (char) $i8;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.LzStore: void append(char,char)>($c10, $c9);
+
+        goto label4;
+
+     label3:
+        c16 = 1;
+
+        $b4 = r4[i15];
+
+        $i5 = $b4 & 255;
+
+        $c6 = (char) $i5;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.zopfli.LzStore: void append(char,char)>($c6, 0);
+
+     label4:
+        i17 = 1;
+
+     label5:
+        if i17 >= c16 goto label6;
+
+        $i7 = i15 + i17;
+
+        virtualinvoke r3.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r4, $i7, i0);
+
+        i17 = i17 + 1;
+
+        goto label5;
+
+     label6:
+        i15 = i15 + c16;
+
+        if i11 != 0 goto label2;
+
+        return;
+    }
+
+    private static long fixedCost(int, int)
+    {
+        int i0, i1, $i5, $i6, $i7, $i8, $i9;
+        long l2, $l3;
+        int[] $r0, $r1, $r2;
+
+        i1 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        if i0 != 0 goto label2;
+
+        if i1 > 143 goto label1;
+
+        return 8L;
+
+     label1:
+        return 9L;
+
+     label2:
+        if i0 >= 4097 goto label3;
+
+        $r0 = <net.sourceforge.plantuml.zopfli.Util: int[] CACHED_DIST_EXTRA_BITS>;
+
+        $i5 = $r0[i0];
+
+        goto label6;
+
+     label3:
+        if i0 >= 16385 goto label5;
+
+        if i0 >= 8193 goto label4;
+
+        $i5 = 11;
+
+        goto label6;
+
+     label4:
+        $i5 = 12;
+
+        goto label6;
+
+     label5:
+        $i5 = 13;
+
+     label6:
+        $i6 = 12 + $i5;
+
+        $r1 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_EXTRA_BITS>;
+
+        $i7 = $r1[i1];
+
+        $i8 = $i6 + $i7;
+
+        l2 = (long) $i8;
+
+        $r2 = <net.sourceforge.plantuml.zopfli.Util: int[] LENGTH_SYMBOL>;
+
+        $i9 = $r2[i1];
+
+        if $i9 <= 279 goto label7;
+
+        $l3 = l2 + 1L;
+
+        return $l3;
+
+     label7:
+        return l2;
+    }
+
+    private static void bestLengths(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.LongestMatchCache, int, byte[], int, int, long, net.sourceforge.plantuml.zopfli.SymbolStats, char[], long[])
+    {
+        int i0, $i1, i2, i3, $i4, $i5, $i9, $i10, i11, $i17, $i25, $i27, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i39, $i40, i41, i42, i43, $i45, i47, $i48, i49, $i51;
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        net.sourceforge.plantuml.zopfli.Hash r1;
+        byte[] r2;
+        long[] r3, r9, r10, r11;
+        char[] r4, r6, $r7;
+        int[] r5, r12;
+        net.sourceforge.plantuml.zopfli.SymbolStats r8;
+        long $l6, $l7, l8, l12, l13, $l14, $l18, $l19, $l20, l21, $l22, $l26, $l28, $l37, $l38, l44, l46;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r13;
+        byte $b15, $b23, $b24, $b29;
+        char $c16, c50;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r13 := @parameter1: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        i11 := @parameter2: int;
+
+        r2 := @parameter3: byte[];
+
+        i0 := @parameter4: int;
+
+        i3 := @parameter5: int;
+
+        l12 := @parameter6: long;
+
+        r8 := @parameter7: net.sourceforge.plantuml.zopfli.SymbolStats;
+
+        r4 := @parameter8: char[];
+
+        r3 := @parameter9: long[];
+
+        $i1 = i0 - 32768;
+
+        i2 = staticinvoke <java.lang.Math: int max(int,int)>($i1, 0);
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Hash h>;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void init(byte[],int,int,int)>(r2, i2, i0, i3);
+
+        $i4 = i3 - i0;
+
+        $i5 = $i4 + 1;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Cookie: void fillCostMax(long[],int)>(r3, $i5);
+
+        r3[0] = 0L;
+
+        r4[0] = 0;
+
+        r5 = r1.<net.sourceforge.plantuml.zopfli.Hash: int[] same>;
+
+        r6 = r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] c259a>;
+
+        $r7 = <net.sourceforge.plantuml.zopfli.Cookie: char[] charZeroes>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r7, 0, r6, 0, 259);
+
+        r9 = r8.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLiterals>;
+
+        r10 = r8.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] lLengths>;
+
+        r11 = r8.<net.sourceforge.plantuml.zopfli.SymbolStats: long[] dSymbols>;
+
+        $l7 = r10[258];
+
+        $l6 = r11[0];
+
+        l8 = $l7 + $l6;
+
+        r12 = <net.sourceforge.plantuml.zopfli.Util: int[] CACHED_DIST_SYMBOL>;
+
+        i41 = i0;
+
+        i42 = 0;
+
+     label1:
+        if i41 >= i3 goto label9;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r2, i41, i3);
+
+        $i9 = i41 & 32767;
+
+        $i10 = r5[$i9];
+
+        if $i10 <= 516 goto label3;
+
+        $i32 = i0 + 259;
+
+        if i41 <= $i32 goto label3;
+
+        $i33 = i41 + 517;
+
+        if $i33 >= i3 goto label3;
+
+        $i34 = i41 - 258;
+
+        $i35 = $i34 & 32767;
+
+        $i36 = r5[$i35];
+
+        if $i36 <= 258 goto label3;
+
+        i43 = 0;
+
+     label2:
+        if i43 >= 258 goto label3;
+
+        $i39 = i42 + 258;
+
+        $l37 = r3[i42];
+
+        $l38 = $l37 + l8;
+
+        r3[$i39] = $l38;
+
+        $i40 = i42 + 258;
+
+        r4[$i40] = 258;
+
+        i41 = i41 + 1;
+
+        i42 = i42 + 1;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r2, i41, i3);
+
+        i43 = i43 + 1;
+
+        goto label2;
+
+     label3:
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void findLongestMatch(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,int,net.sourceforge.plantuml.zopfli.Hash,byte[],int,int,int,char[])>(r0, r13, i11, r1, r2, i41, i3, 258, r6);
+
+        l44 = r3[i42];
+
+        $i45 = i41 + 1;
+
+        if $i45 > i3 goto label4;
+
+        $b24 = r2[i41];
+
+        $i25 = $b24 & 255;
+
+        $l26 = r9[$i25];
+
+        l46 = l44 + $l26;
+
+        $i27 = i42 + 1;
+
+        $l28 = r3[$i27];
+
+        $b29 = l46 cmp $l28;
+
+        if $b29 >= 0 goto label4;
+
+        $i30 = i42 + 1;
+
+        r3[$i30] = l46;
+
+        $i31 = i42 + 1;
+
+        r4[$i31] = 1;
+
+     label4:
+        i47 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal>;
+
+        l13 = l12 + l44;
+
+        $i48 = i3 - i41;
+
+        if i47 <= $i48 goto label5;
+
+        i47 = i3 - i41;
+
+     label5:
+        i49 = i42 + 3;
+
+        c50 = 3;
+
+     label6:
+        if c50 > i47 goto label8;
+
+        $l14 = r3[i49];
+
+        $b15 = $l14 cmp l13;
+
+        if $b15 <= 0 goto label7;
+
+        $l19 = r10[c50];
+
+        $c16 = r6[c50];
+
+        $i17 = r12[$c16];
+
+        $l18 = r11[$i17];
+
+        $l20 = $l19 + $l18;
+
+        l21 = l44 + $l20;
+
+        $l22 = r3[i49];
+
+        $b23 = $l22 cmp l21;
+
+        if $b23 <= 0 goto label7;
+
+        r3[i49] = l21;
+
+        r4[i49] = c50;
+
+     label7:
+        $i51 = c50 + 1;
+
+        c50 = (char) $i51;
+
+        i49 = i49 + 1;
+
+        goto label6;
+
+     label8:
+        i41 = i41 + 1;
+
+        i42 = i42 + 1;
+
+        goto label1;
+
+     label9:
+        return;
+    }
+
+    static void bestFixedLengths(net.sourceforge.plantuml.zopfli.Cookie, net.sourceforge.plantuml.zopfli.LongestMatchCache, byte[], int, int, char[], long[])
+    {
+        int i0, $i1, i2, i3, $i4, $i5, $i6, $i7, $i8, $i9, $i17, $i20, $i21, $i23, $i26, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i40, $i41, i42, i43, i45, $i46, i48, $i51;
+        net.sourceforge.plantuml.zopfli.Cookie r0;
+        net.sourceforge.plantuml.zopfli.Hash r1;
+        byte[] r2;
+        long[] r3;
+        char[] r4, r5;
+        int[] $r6, $r8;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r7;
+        long $l10, $l11, $l12, $l15, $l16, $l18, $l24, $l25, $l27, $l38, $l39, l44, l47, l50;
+        double $d0;
+        byte $b13, $b19, $b22, $b28;
+        char $c14, c49;
+
+        r0 := @parameter0: net.sourceforge.plantuml.zopfli.Cookie;
+
+        r7 := @parameter1: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        r2 := @parameter2: byte[];
+
+        i0 := @parameter3: int;
+
+        i3 := @parameter4: int;
+
+        r4 := @parameter5: char[];
+
+        r3 := @parameter6: long[];
+
+        $i1 = i0 - 32768;
+
+        i2 = staticinvoke <java.lang.Math: int max(int,int)>($i1, 0);
+
+        r1 = r0.<net.sourceforge.plantuml.zopfli.Cookie: net.sourceforge.plantuml.zopfli.Hash h>;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void init(byte[],int,int,int)>(r2, i2, i0, i3);
+
+        $i4 = i3 - i0;
+
+        $i5 = $i4 + 1;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Cookie: void fillCostMax(long[],int)>(r3, $i5);
+
+        r3[0] = 0L;
+
+        r4[0] = 0;
+
+        r5 = r0.<net.sourceforge.plantuml.zopfli.Cookie: char[] c259a>;
+
+        i42 = i0;
+
+     label1:
+        if i42 >= i3 goto label9;
+
+        i43 = i42 - i0;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r2, i42, i3);
+
+        $r6 = r1.<net.sourceforge.plantuml.zopfli.Hash: int[] same>;
+
+        $i6 = i42 & 32767;
+
+        $i7 = $r6[$i6];
+
+        if $i7 <= 516 goto label3;
+
+        $i31 = i0 + 258;
+
+        $i32 = $i31 + 1;
+
+        if i42 <= $i32 goto label3;
+
+        $i33 = i42 + 516;
+
+        $i34 = $i33 + 1;
+
+        if $i34 >= i3 goto label3;
+
+        $r8 = r1.<net.sourceforge.plantuml.zopfli.Hash: int[] same>;
+
+        $i35 = i42 - 258;
+
+        $i36 = $i35 & 32767;
+
+        $i37 = $r8[$i36];
+
+        if $i37 <= 258 goto label3;
+
+        l44 = staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: long fixedCost(int,int)>(258, 1);
+
+        i45 = 0;
+
+     label2:
+        if i45 >= 258 goto label3;
+
+        $i40 = i43 + 258;
+
+        $l38 = r3[i43];
+
+        $l39 = $l38 + l44;
+
+        r3[$i40] = $l39;
+
+        $i41 = i43 + 258;
+
+        r4[$i41] = 258;
+
+        i42 = i42 + 1;
+
+        i43 = i43 + 1;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.zopfli.Hash: void updateHash(byte[],int,int)>(r2, i42, i3);
+
+        i45 = i45 + 1;
+
+        goto label2;
+
+     label3:
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void findLongestMatch(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.LongestMatchCache,int,net.sourceforge.plantuml.zopfli.Hash,byte[],int,int,int,char[])>(r0, r7, i0, r1, r2, i42, i3, 258, r5);
+
+        $i46 = i42 + 1;
+
+        if $i46 > i3 goto label4;
+
+        $l24 = r3[i43];
+
+        $b22 = r2[i42];
+
+        $i23 = $b22 & 255;
+
+        $l25 = staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: long fixedCost(int,int)>($i23, 0);
+
+        l47 = $l24 + $l25;
+
+        $i26 = i43 + 1;
+
+        $l27 = r3[$i26];
+
+        $b28 = l47 cmp $l27;
+
+        if $b28 >= 0 goto label4;
+
+        $i29 = i43 + 1;
+
+        r3[$i29] = l47;
+
+        $i30 = i43 + 1;
+
+        r4[$i30] = 1;
+
+     label4:
+        i48 = r0.<net.sourceforge.plantuml.zopfli.Cookie: int lenVal>;
+
+        c49 = 3;
+
+     label5:
+        if c49 > i48 goto label8;
+
+        $i8 = i42 + c49;
+
+        if $i8 > i3 goto label8;
+
+        $i9 = i43 + c49;
+
+        $l11 = r3[$i9];
+
+        $l10 = r3[i43];
+
+        $l12 = $l11 - $l10;
+
+        $d0 = (double) $l12;
+
+        $b13 = $d0 cmpg 12.0;
+
+        if $b13 > 0 goto label6;
+
+        goto label7;
+
+     label6:
+        $l15 = r3[i43];
+
+        $c14 = r5[c49];
+
+        $l16 = staticinvoke <net.sourceforge.plantuml.zopfli.Squeeze: long fixedCost(int,int)>(c49, $c14);
+
+        l50 = $l15 + $l16;
+
+        $i17 = i43 + c49;
+
+        $l18 = r3[$i17];
+
+        $b19 = l50 cmp $l18;
+
+        if $b19 >= 0 goto label7;
+
+        $i20 = i43 + c49;
+
+        r3[$i20] = l50;
+
+        $i21 = i43 + c49;
+
+        r4[$i21] = c49;
+
+     label7:
+        $i51 = c49 + 1;
+
+        c49 = (char) $i51;
+
+        goto label5;
+
+     label8:
+        i42 = i42 + 1;
+
+        goto label1;
+
+     label9:
+        return;
+    }
+}

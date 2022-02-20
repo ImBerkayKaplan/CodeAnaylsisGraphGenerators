@@ -1,0 +1,324 @@
+public abstract class ext.plantuml.com.ctreber.acearth.shader.Shader extends java.lang.Object
+{
+    private static final java.awt.Color COLOR_SPACE;
+    private static final java.awt.Color COLOR_STAR;
+    private static final java.awt.Color COLOR_WATER;
+    private static final java.awt.Color COLOR_LAND;
+    private static final java.awt.Color COLOR_GRID_LAND;
+    private static final java.awt.Color COLOR_GRID_WATER;
+    ext.plantuml.com.ctreber.acearth.projection.Projection fProjection;
+    private ext.plantuml.com.ctreber.acearth.util.Coordinate fSunPos;
+    private double fNightSideBrightness;
+    private double fDaySideBrightness;
+    private double fTerminatorDiscontinuity;
+    private double fDaySideValueBase;
+    private double fDaySideValueRange;
+    ext.plantuml.com.ctreber.acearth.util.Point3D fLightVector;
+
+    public void <init>()
+    {
+        ext.plantuml.com.ctreber.acearth.shader.Shader r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public abstract java.awt.Color[] getShadedColors(int, int[]);
+
+    public void init()
+    {
+        ext.plantuml.com.ctreber.acearth.shader.Shader r0;
+        double $d0, d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11;
+        int $i0;
+        ext.plantuml.com.ctreber.acearth.util.Coordinate $r1;
+        ext.plantuml.com.ctreber.acearth.projection.Projection $r2;
+        ext.plantuml.com.ctreber.acearth.util.Point3D $r3, $r4;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        $d0 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fTerminatorDiscontinuity>;
+
+        d1 = $d0 / 100.0;
+
+        $d2 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fDaySideBrightness>;
+
+        $d6 = d1 * $d2;
+
+        $d4 = 1.0 - d1;
+
+        $d3 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fNightSideBrightness>;
+
+        $d5 = $d4 * $d3;
+
+        $d7 = $d6 + $d5;
+
+        $i0 = (int) $d7;
+
+        $d8 = (double) $i0;
+
+        r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fDaySideValueBase> = $d8;
+
+        $d10 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fDaySideBrightness>;
+
+        $d9 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fDaySideValueBase>;
+
+        $d11 = $d10 - $d9;
+
+        r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fDaySideValueRange> = $d11;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: ext.plantuml.com.ctreber.acearth.util.Coordinate fSunPos>;
+
+        $r3 = virtualinvoke $r1.<ext.plantuml.com.ctreber.acearth.util.Coordinate: ext.plantuml.com.ctreber.acearth.util.Point3D getPoint3D()>();
+
+        $r4 = virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.projection.Projection: ext.plantuml.com.ctreber.acearth.util.Point3D rotate(ext.plantuml.com.ctreber.acearth.util.Point3D)>($r3);
+
+        r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: ext.plantuml.com.ctreber.acearth.util.Point3D fLightVector> = $r4;
+
+        return;
+    }
+
+    java.awt.Color getShadedColorForType(int, double)
+    {
+        double d0, $d1, $d2, $d3, $d4, $d5, d6;
+        byte $b0, $b1;
+        ext.plantuml.com.ctreber.acearth.shader.Shader r0;
+        int i2;
+        java.awt.Color $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        i2 := @parameter0: int;
+
+        d0 := @parameter1: double;
+
+        $b0 = d0 cmpg 0.0;
+
+        if $b0 >= 0 goto label01;
+
+        $d5 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fNightSideBrightness>;
+
+        d6 = $d5 / 100.0;
+
+        goto label02;
+
+     label01:
+        $d3 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fDaySideValueBase>;
+
+        $d1 = r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fDaySideValueRange>;
+
+        $d2 = d0 * $d1;
+
+        $d4 = $d3 + $d2;
+
+        d6 = $d4 / 100.0;
+
+     label02:
+        $b1 = d6 cmpl 1.0;
+
+        if $b1 <= 0 goto label03;
+
+        d6 = 1.0;
+
+     label03:
+        tableswitch(i2)
+        {
+            case 0: goto label04;
+            case 1: goto label08;
+            case 2: goto label09;
+            case 3: goto label05;
+            case 4: goto label06;
+            case 5: goto label07;
+            default: goto label10;
+        };
+
+     label04:
+        $r10 = <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_SPACE>;
+
+        return $r10;
+
+     label05:
+        $r5 = <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_STAR>;
+
+        return $r5;
+
+     label06:
+        $r3 = <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_GRID_LAND>;
+
+        $r4 = staticinvoke <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color shade(java.awt.Color,double)>($r3, d6);
+
+        return $r4;
+
+     label07:
+        $r1 = <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_GRID_WATER>;
+
+        $r2 = staticinvoke <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color shade(java.awt.Color,double)>($r1, d6);
+
+        return $r2;
+
+     label08:
+        $r8 = <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_LAND>;
+
+        $r9 = staticinvoke <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color shade(java.awt.Color,double)>($r8, d6);
+
+        return $r9;
+
+     label09:
+        $r6 = <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_WATER>;
+
+        $r7 = staticinvoke <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color shade(java.awt.Color,double)>($r6, d6);
+
+        return $r7;
+
+     label10:
+        return null;
+    }
+
+    private static java.awt.Color shade(java.awt.Color, double)
+    {
+        java.awt.Color $r0, r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6;
+
+        r1 := @parameter0: java.awt.Color;
+
+        d0 := @parameter1: double;
+
+        $r0 = new java.awt.Color;
+
+        $i0 = virtualinvoke r1.<java.awt.Color: int getRed()>();
+
+        $d1 = (double) $i0;
+
+        $d2 = $d1 * d0;
+
+        $i1 = (int) $d2;
+
+        $i2 = virtualinvoke r1.<java.awt.Color: int getGreen()>();
+
+        $d3 = (double) $i2;
+
+        $d4 = $d3 * d0;
+
+        $i3 = (int) $d4;
+
+        $i4 = virtualinvoke r1.<java.awt.Color: int getBlue()>();
+
+        $d5 = (double) $i4;
+
+        $d6 = $d5 * d0;
+
+        $i5 = (int) $d6;
+
+        specialinvoke $r0.<java.awt.Color: void <init>(int,int,int)>($i1, $i3, $i5);
+
+        return $r0;
+    }
+
+    public void setProjection(ext.plantuml.com.ctreber.acearth.projection.Projection)
+    {
+        ext.plantuml.com.ctreber.acearth.shader.Shader r0;
+        ext.plantuml.com.ctreber.acearth.projection.Projection r1;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.acearth.projection.Projection;
+
+        r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection> = r1;
+
+        return;
+    }
+
+    public void setSunPos(ext.plantuml.com.ctreber.acearth.util.Coordinate)
+    {
+        ext.plantuml.com.ctreber.acearth.shader.Shader r0;
+        ext.plantuml.com.ctreber.acearth.util.Coordinate r1;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.acearth.util.Coordinate;
+
+        r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: ext.plantuml.com.ctreber.acearth.util.Coordinate fSunPos> = r1;
+
+        return;
+    }
+
+    public void setDaySideBrightness(double)
+    {
+        ext.plantuml.com.ctreber.acearth.shader.Shader r0;
+        double d0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        d0 := @parameter0: double;
+
+        r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fDaySideBrightness> = d0;
+
+        return;
+    }
+
+    public void setNightSideBrightness(double)
+    {
+        ext.plantuml.com.ctreber.acearth.shader.Shader r0;
+        double d0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        d0 := @parameter0: double;
+
+        r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fNightSideBrightness> = d0;
+
+        return;
+    }
+
+    public void setTerminatorDiscontinuity(double)
+    {
+        ext.plantuml.com.ctreber.acearth.shader.Shader r0;
+        double d0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        d0 := @parameter0: double;
+
+        r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: double fTerminatorDiscontinuity> = d0;
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.awt.Color $r0, $r1, $r2, $r3, $r4, $r5;
+
+        $r0 = <java.awt.Color: java.awt.Color black>;
+
+        <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_SPACE> = $r0;
+
+        $r1 = <java.awt.Color: java.awt.Color white>;
+
+        <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_STAR> = $r1;
+
+        $r2 = <java.awt.Color: java.awt.Color blue>;
+
+        <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_WATER> = $r2;
+
+        $r3 = <java.awt.Color: java.awt.Color green>;
+
+        <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_LAND> = $r3;
+
+        $r4 = <java.awt.Color: java.awt.Color white>;
+
+        <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_GRID_LAND> = $r4;
+
+        $r5 = new java.awt.Color;
+
+        specialinvoke $r5.<java.awt.Color: void <init>(int,int,int)>(128, 128, 255);
+
+        <ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color COLOR_GRID_WATER> = $r5;
+
+        return;
+    }
+}

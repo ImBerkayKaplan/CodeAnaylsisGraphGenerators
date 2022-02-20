@@ -1,0 +1,1244 @@
+public class net.sourceforge.plantuml.golem.TilesField extends net.sourceforge.plantuml.graphic.AbstractTextBlock implements net.sourceforge.plantuml.graphic.TextBlock
+{
+    private int size;
+    private final net.sourceforge.plantuml.golem.Tile root;
+    private final java.util.Map positions;
+    private final java.util.List paths;
+    static final boolean $assertionsDisabled;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        net.sourceforge.plantuml.golem.Tile $r1, $r6;
+        java.util.HashMap $r2;
+        java.util.ArrayList $r3;
+        net.sourceforge.plantuml.golem.Position $r4;
+        java.util.Map $r5;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        specialinvoke r0.<net.sourceforge.plantuml.graphic.AbstractTextBlock: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.golem.TilesField: int size> = 1;
+
+        $r1 = new net.sourceforge.plantuml.golem.Tile;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.golem.Tile: void <init>(int)>(0);
+
+        r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Tile root> = $r1;
+
+        $r2 = new java.util.HashMap;
+
+        specialinvoke $r2.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions> = $r2;
+
+        $r3 = new java.util.ArrayList;
+
+        specialinvoke $r3.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.golem.TilesField: java.util.List paths> = $r3;
+
+        $r5 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r6 = r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Tile root>;
+
+        $r4 = new net.sourceforge.plantuml.golem.Position;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.golem.Position: void <init>(int,int,int,int)>(0, 0, 1, 1);
+
+        interfaceinvoke $r5.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r6, $r4);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.golem.Tile getRoot()
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        net.sourceforge.plantuml.golem.Tile $r1;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Tile root>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.golem.Tile createTile(net.sourceforge.plantuml.golem.Tile, net.sourceforge.plantuml.golem.TileGeometry)
+    {
+        net.sourceforge.plantuml.golem.Tile $r0, r3;
+        net.sourceforge.plantuml.golem.TilesField r1;
+        int $i0, $i1;
+        net.sourceforge.plantuml.golem.TileGeometry r4, $r10;
+        net.sourceforge.plantuml.golem.Position r5;
+        java.util.Map $r6;
+        java.util.List $r8;
+        net.sourceforge.plantuml.golem.TileArea $r9, $r11;
+        net.sourceforge.plantuml.golem.Path $r12;
+
+        r1 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r3 := @parameter0: net.sourceforge.plantuml.golem.Tile;
+
+        r4 := @parameter1: net.sourceforge.plantuml.golem.TileGeometry;
+
+        $r0 = new net.sourceforge.plantuml.golem.Tile;
+
+        $i0 = r1.<net.sourceforge.plantuml.golem.TilesField: int size>;
+
+        $i1 = $i0 + 1;
+
+        r1.<net.sourceforge.plantuml.golem.TilesField: int size> = $i1;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.golem.Tile: void <init>(int)>($i0);
+
+        r5 = specialinvoke r1.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getFreePosition(net.sourceforge.plantuml.golem.Tile,net.sourceforge.plantuml.golem.TileGeometry)>(r3, r4);
+
+        $r6 = r1.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r0, r5);
+
+        $r8 = r1.<net.sourceforge.plantuml.golem.TilesField: java.util.List paths>;
+
+        $r9 = virtualinvoke r3.<net.sourceforge.plantuml.golem.Tile: net.sourceforge.plantuml.golem.TileArea getArea(net.sourceforge.plantuml.golem.TileGeometry)>(r4);
+
+        $r10 = virtualinvoke r4.<net.sourceforge.plantuml.golem.TileGeometry: net.sourceforge.plantuml.golem.TileGeometry opposite()>();
+
+        $r11 = virtualinvoke $r0.<net.sourceforge.plantuml.golem.Tile: net.sourceforge.plantuml.golem.TileArea getArea(net.sourceforge.plantuml.golem.TileGeometry)>($r10);
+
+        $r12 = specialinvoke r1.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Path buildPath(net.sourceforge.plantuml.golem.TileArea,net.sourceforge.plantuml.golem.TileArea)>($r9, $r11);
+
+        interfaceinvoke $r8.<java.util.List: boolean add(java.lang.Object)>($r12);
+
+        return $r0;
+    }
+
+    public void addPath(net.sourceforge.plantuml.golem.Tile, net.sourceforge.plantuml.golem.Tile, net.sourceforge.plantuml.golem.TileGeometry)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        net.sourceforge.plantuml.golem.Tile r1, r5;
+        net.sourceforge.plantuml.golem.TileGeometry r2, $r6;
+        java.util.List $r3;
+        net.sourceforge.plantuml.golem.TileArea $r4, $r7;
+        net.sourceforge.plantuml.golem.Path $r8;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r1 := @parameter0: net.sourceforge.plantuml.golem.Tile;
+
+        r5 := @parameter1: net.sourceforge.plantuml.golem.Tile;
+
+        r2 := @parameter2: net.sourceforge.plantuml.golem.TileGeometry;
+
+        $r3 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.List paths>;
+
+        $r4 = virtualinvoke r1.<net.sourceforge.plantuml.golem.Tile: net.sourceforge.plantuml.golem.TileArea getArea(net.sourceforge.plantuml.golem.TileGeometry)>(r2);
+
+        $r6 = virtualinvoke r2.<net.sourceforge.plantuml.golem.TileGeometry: net.sourceforge.plantuml.golem.TileGeometry opposite()>();
+
+        $r7 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Tile: net.sourceforge.plantuml.golem.TileArea getArea(net.sourceforge.plantuml.golem.TileGeometry)>($r6);
+
+        $r8 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Path buildPath(net.sourceforge.plantuml.golem.TileArea,net.sourceforge.plantuml.golem.TileArea)>($r4, $r7);
+
+        interfaceinvoke $r3.<java.util.List: boolean add(java.lang.Object)>($r8);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.golem.Path buildPath(net.sourceforge.plantuml.golem.TileArea, net.sourceforge.plantuml.golem.TileArea)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        net.sourceforge.plantuml.golem.TileArea r1, r2;
+        boolean $z0;
+        net.sourceforge.plantuml.golem.Tile r3, r4;
+        net.sourceforge.plantuml.golem.Position r5, r6;
+        net.sourceforge.plantuml.golem.TileGeometry r7, r8, $r9, $r10;
+        int $i0, $i1, $i2, $i3;
+        net.sourceforge.plantuml.golem.Path $r11, $r12;
+        java.lang.IllegalArgumentException $r13;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r1 := @parameter0: net.sourceforge.plantuml.golem.TileArea;
+
+        r2 := @parameter1: net.sourceforge.plantuml.golem.TileArea;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: boolean isAdjoining(net.sourceforge.plantuml.golem.TileArea,net.sourceforge.plantuml.golem.TileArea)>(r1, r2);
+
+        if $z0 == 0 goto label1;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.golem.Path: net.sourceforge.plantuml.golem.Path build(net.sourceforge.plantuml.golem.TileArea,net.sourceforge.plantuml.golem.TileArea)>(r1, r2);
+
+        return $r12;
+
+     label1:
+        r3 = virtualinvoke r1.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.Tile getTile()>();
+
+        r4 = virtualinvoke r2.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.Tile getTile()>();
+
+        r5 = virtualinvoke r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>(r3);
+
+        r6 = virtualinvoke r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>(r4);
+
+        r7 = virtualinvoke r1.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.TileGeometry getGeometry()>();
+
+        r8 = virtualinvoke r2.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.TileGeometry getGeometry()>();
+
+        $i0 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        $i1 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        if $i0 != $i1 goto label2;
+
+        $i2 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        $i3 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        if $i2 != $i3 goto label2;
+
+        $r9 = <net.sourceforge.plantuml.golem.TileGeometry: net.sourceforge.plantuml.golem.TileGeometry WEST>;
+
+        if r7 != $r9 goto label2;
+
+        $r10 = <net.sourceforge.plantuml.golem.TileGeometry: net.sourceforge.plantuml.golem.TileGeometry EAST>;
+
+        if r8 != $r10 goto label2;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.golem.Path: net.sourceforge.plantuml.golem.Path build(net.sourceforge.plantuml.golem.TileArea,net.sourceforge.plantuml.golem.TileArea)>(r1, r2);
+
+        return $r11;
+
+     label2:
+        $r13 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r13.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r13;
+    }
+
+    private boolean isAdjoining(net.sourceforge.plantuml.golem.TileArea, net.sourceforge.plantuml.golem.TileArea)
+    {
+        net.sourceforge.plantuml.golem.TileArea r0, r2;
+        net.sourceforge.plantuml.golem.Tile r1, r3;
+        net.sourceforge.plantuml.golem.TilesField r4;
+        net.sourceforge.plantuml.golem.Position r5, r6;
+        net.sourceforge.plantuml.golem.TileGeometry r7, r8, $r9;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
+        int[] $r10;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29;
+        java.lang.IllegalStateException $r11;
+        java.lang.IllegalArgumentException $r12;
+        java.lang.AssertionError $r13;
+
+        r4 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r0 := @parameter0: net.sourceforge.plantuml.golem.TileArea;
+
+        r2 := @parameter1: net.sourceforge.plantuml.golem.TileArea;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.Tile getTile()>();
+
+        r3 = virtualinvoke r2.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.Tile getTile()>();
+
+        r5 = virtualinvoke r4.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>(r1);
+
+        r6 = virtualinvoke r4.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>(r3);
+
+        r7 = virtualinvoke r0.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.TileGeometry getGeometry()>();
+
+        r8 = virtualinvoke r2.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.TileGeometry getGeometry()>();
+
+        $z0 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: boolean equals(java.lang.Object)>(r6);
+
+        if $z0 == 0 goto label03;
+
+        $z2 = <net.sourceforge.plantuml.golem.TilesField: boolean $assertionsDisabled>;
+
+        if $z2 != 0 goto label01;
+
+        if r1 == r3 goto label01;
+
+        $r13 = new java.lang.AssertionError;
+
+        specialinvoke $r13.<java.lang.AssertionError: void <init>()>();
+
+        throw $r13;
+
+     label01:
+        if r7 != r8 goto label02;
+
+        $r12 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r12.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r12;
+
+     label02:
+        return 1;
+
+     label03:
+        $r9 = virtualinvoke r8.<net.sourceforge.plantuml.golem.TileGeometry: net.sourceforge.plantuml.golem.TileGeometry opposite()>();
+
+        $z1 = virtualinvoke r7.<net.sourceforge.plantuml.golem.TileGeometry: boolean equals(java.lang.Object)>($r9);
+
+        if $z1 != 0 goto label04;
+
+        return 0;
+
+     label04:
+        $r10 = <net.sourceforge.plantuml.golem.TilesField$1: int[] $SwitchMap$net$sourceforge$plantuml$golem$TileGeometry>;
+
+        $i0 = virtualinvoke r7.<net.sourceforge.plantuml.golem.TileGeometry: int ordinal()>();
+
+        $i1 = $r10[$i0];
+
+        tableswitch($i1)
+        {
+            case 1: goto label05;
+            case 2: goto label08;
+            case 3: goto label11;
+            case 4: goto label14;
+            case 5: goto label17;
+            default: goto label18;
+        };
+
+     label05:
+        $i23 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        $i24 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        if $i23 != $i24 goto label06;
+
+        $i25 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        $i26 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        if $i25 != $i26 goto label06;
+
+        $i27 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getXmax()>();
+
+        $i28 = $i27 + 1;
+
+        $i29 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        if $i28 != $i29 goto label06;
+
+        $z3 = 1;
+
+        goto label07;
+
+     label06:
+        $z3 = 0;
+
+     label07:
+        return $z3;
+
+     label08:
+        $i16 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        $i17 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        if $i16 != $i17 goto label09;
+
+        $i18 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        $i19 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        if $i18 != $i19 goto label09;
+
+        $i20 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        $i21 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getXmax()>();
+
+        $i22 = $i21 + 1;
+
+        if $i20 != $i22 goto label09;
+
+        $z4 = 1;
+
+        goto label10;
+
+     label09:
+        $z4 = 0;
+
+     label10:
+        return $z4;
+
+     label11:
+        $i9 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        $i10 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        if $i9 != $i10 goto label12;
+
+        $i11 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getXmax()>();
+
+        $i12 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getXmax()>();
+
+        if $i11 != $i12 goto label12;
+
+        $i13 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        $i14 = $i13 + 1;
+
+        $i15 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        if $i14 != $i15 goto label12;
+
+        $z5 = 1;
+
+        goto label13;
+
+     label12:
+        $z5 = 0;
+
+     label13:
+        return $z5;
+
+     label14:
+        $i2 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        $i3 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        if $i2 != $i3 goto label15;
+
+        $i4 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getXmax()>();
+
+        $i5 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getXmax()>();
+
+        if $i4 != $i5 goto label15;
+
+        $i6 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        $i7 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        $i8 = $i7 + 1;
+
+        if $i6 != $i8 goto label15;
+
+        $z6 = 1;
+
+        goto label16;
+
+     label15:
+        $z6 = 0;
+
+     label16:
+        return $z6;
+
+     label17:
+        return 0;
+
+     label18:
+        $r11 = new java.lang.IllegalStateException;
+
+        specialinvoke $r11.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r11;
+    }
+
+    private net.sourceforge.plantuml.golem.Tile getTileAt(net.sourceforge.plantuml.golem.Position)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        java.util.Map $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0, $z1;
+        java.lang.Object $r4, $r7, $r8;
+        java.util.Map$Entry r5;
+        net.sourceforge.plantuml.golem.Position r6;
+        net.sourceforge.plantuml.golem.Tile $r9;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r6 := @parameter0: net.sourceforge.plantuml.golem.Position;
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set entrySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.util.Map$Entry) $r4;
+
+        $r7 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $z1 = virtualinvoke r6.<net.sourceforge.plantuml.golem.Position: boolean equals(java.lang.Object)>($r7);
+
+        if $z1 == 0 goto label2;
+
+        $r8 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r9 = (net.sourceforge.plantuml.golem.Tile) $r8;
+
+        return $r9;
+
+     label2:
+        goto label1;
+
+     label3:
+        return null;
+    }
+
+    private net.sourceforge.plantuml.golem.Position getFreePosition(net.sourceforge.plantuml.golem.Tile, net.sourceforge.plantuml.golem.TileGeometry)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        net.sourceforge.plantuml.golem.Tile r1;
+        net.sourceforge.plantuml.golem.Position $r2, r4;
+        net.sourceforge.plantuml.golem.TileGeometry r3;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r1 := @parameter0: net.sourceforge.plantuml.golem.Tile;
+
+        r3 := @parameter1: net.sourceforge.plantuml.golem.TileGeometry;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>(r1);
+
+        r4 = virtualinvoke $r2.<net.sourceforge.plantuml.golem.Position: net.sourceforge.plantuml.golem.Position move(net.sourceforge.plantuml.golem.TileGeometry,int)>(r3, 2);
+
+     label1:
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: boolean isOccuped(net.sourceforge.plantuml.golem.Position)>(r4);
+
+        if $z0 == 0 goto label2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: void moveAllToEast(net.sourceforge.plantuml.golem.Position)>(r4);
+
+        goto label1;
+
+     label2:
+        return r4;
+    }
+
+    private void moveAllToEast(net.sourceforge.plantuml.golem.Position)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.golem.TilesField r2;
+        java.util.Map $r3, $r6;
+        java.util.Collection $r4;
+        boolean $z0, $z2;
+        java.lang.Object $r5, $r11;
+        net.sourceforge.plantuml.golem.Tile $r7;
+        net.sourceforge.plantuml.golem.TileGeometry $r8;
+        net.sourceforge.plantuml.golem.Position $r9, r12, r14, r16;
+        int $i0, $i1, $i2, $i3;
+        java.util.Iterator r13, r15;
+
+        r2 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r12 := @parameter0: net.sourceforge.plantuml.golem.Position;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Collection values()>();
+
+        r13 = interfaceinvoke $r4.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z2 = interfaceinvoke r13.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label4;
+
+        $r11 = interfaceinvoke r13.<java.util.Iterator: java.lang.Object next()>();
+
+        r14 = (net.sourceforge.plantuml.golem.Position) $r11;
+
+        $i0 = virtualinvoke r14.<net.sourceforge.plantuml.golem.Position: int getXmax()>();
+
+        $i1 = virtualinvoke r12.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        if $i0 >= $i1 goto label2;
+
+        goto label1;
+
+     label2:
+        $i2 = virtualinvoke r14.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        $i3 = virtualinvoke r12.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        if $i2 >= $i3 goto label3;
+
+        goto label1;
+
+     label3:
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r14);
+
+        goto label1;
+
+     label4:
+        r15 = interfaceinvoke $r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label5:
+        $z0 = interfaceinvoke r15.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label6;
+
+        $r5 = interfaceinvoke r15.<java.util.Iterator: java.lang.Object next()>();
+
+        r16 = (net.sourceforge.plantuml.golem.Position) $r5;
+
+        $r6 = r2.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r7 = specialinvoke r2.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Tile getTileAt(net.sourceforge.plantuml.golem.Position)>(r16);
+
+        $r8 = <net.sourceforge.plantuml.golem.TileGeometry: net.sourceforge.plantuml.golem.TileGeometry EAST>;
+
+        $r9 = virtualinvoke r16.<net.sourceforge.plantuml.golem.Position: net.sourceforge.plantuml.golem.Position move(net.sourceforge.plantuml.golem.TileGeometry,int)>($r8, 2);
+
+        interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r7, $r9);
+
+        goto label5;
+
+     label6:
+        return;
+    }
+
+    private boolean isOccuped(net.sourceforge.plantuml.golem.Position)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0, $z1;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.golem.Position r5, r6;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r6 := @parameter0: net.sourceforge.plantuml.golem.Position;
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.golem.Position) $r4;
+
+        $z1 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: boolean equals(java.lang.Object)>(r6);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 0;
+    }
+
+    public net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        net.sourceforge.plantuml.golem.Tile r1;
+        java.util.Map $r2;
+        java.lang.Object $r3, $r5;
+        net.sourceforge.plantuml.golem.Position $r4, r6;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r1 := @parameter0: net.sourceforge.plantuml.golem.Tile;
+
+        $r2 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r4 = (net.sourceforge.plantuml.golem.Position) $r3;
+
+        $r5 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>($r4);
+
+        r6 = (net.sourceforge.plantuml.golem.Position) $r5;
+
+        return r6;
+    }
+
+    private int getXmin()
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.golem.Position r5;
+        int i0, i1;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        i1 = 2147483647;
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.golem.Position) $r4;
+
+        i0 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        if i0 >= i1 goto label2;
+
+        i1 = i0;
+
+     label2:
+        goto label1;
+
+     label3:
+        return i1;
+    }
+
+    private int getYmin()
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.golem.Position r5;
+        int i0, i1;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        i1 = 2147483647;
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.golem.Position) $r4;
+
+        i0 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        if i0 >= i1 goto label2;
+
+        i1 = i0;
+
+     label2:
+        goto label1;
+
+     label3:
+        return i1;
+    }
+
+    private int getXmax()
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.golem.Position r5;
+        int i0, i1;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        i1 = -2147483648;
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.golem.Position) $r4;
+
+        i0 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getXmax()>();
+
+        if i0 <= i1 goto label2;
+
+        i1 = i0;
+
+     label2:
+        goto label1;
+
+     label3:
+        return i1;
+    }
+
+    private int getYmax()
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.golem.Position r5;
+        int i0, i1;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        i1 = -2147483648;
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.golem.Position) $r4;
+
+        i0 = virtualinvoke r5.<net.sourceforge.plantuml.golem.Position: int getYmax()>();
+
+        if i0 <= i1 goto label2;
+
+        i1 = i0;
+
+     label2:
+        goto label1;
+
+     label3:
+        return i1;
+    }
+
+    public java.util.List getPaths()
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        java.util.List $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.List paths>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        int i0, i1, $i2, $i3;
+        net.sourceforge.plantuml.golem.Tile $r1, r22;
+        net.sourceforge.plantuml.graphic.StringBounder $r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r3;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, d24, $d25, $d26, d29, d30, d31;
+        java.util.Map $r4;
+        java.util.Set $r5;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r6;
+        java.util.List $r7;
+        java.lang.Object $r8, $r13, $r14, $r15;
+        java.awt.geom.Point2D r9, r28;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r10, $r16;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r11, $r17, r18, r23;
+        net.sourceforge.plantuml.ugraphic.ULine $r12;
+        java.util.Iterator r19, r24;
+        java.util.Map$Entry r20;
+        net.sourceforge.plantuml.golem.Position r21;
+        net.sourceforge.plantuml.golem.Path r25;
+        net.sourceforge.plantuml.golem.TileArea r26, r27;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r18 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        i0 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: int getXmin()>();
+
+        i1 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: int getYmin()>();
+
+        $r1 = r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Tile root>;
+
+        $r2 = interfaceinvoke r18.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        r3 = virtualinvoke $r1.<net.sourceforge.plantuml.golem.Tile: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r2);
+
+        $d0 = (double) i0;
+
+        $d1 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d2 = $d0 * $d1;
+
+        $d3 = $d2 / 2.0;
+
+        d29 = 0.0 - $d3;
+
+        $d4 = (double) i1;
+
+        $d5 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d6 = $d4 * $d5;
+
+        $d7 = $d6 / 2.0;
+
+        d30 = 0.0 - $d7;
+
+        $r4 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.Map positions>;
+
+        $r5 = interfaceinvoke $r4.<java.util.Map: java.util.Set entrySet()>();
+
+        r19 = interfaceinvoke $r5.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r19.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r13 = interfaceinvoke r19.<java.util.Iterator: java.lang.Object next()>();
+
+        r20 = (java.util.Map$Entry) $r13;
+
+        $r14 = interfaceinvoke r20.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r21 = (net.sourceforge.plantuml.golem.Position) $r14;
+
+        $r15 = interfaceinvoke r20.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r22 = (net.sourceforge.plantuml.golem.Tile) $r15;
+
+        $i2 = virtualinvoke r21.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        $d18 = (double) $i2;
+
+        $d19 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d20 = $d18 * $d19;
+
+        d31 = $d20 / 2.0;
+
+        $i3 = virtualinvoke r21.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        $d21 = (double) $i3;
+
+        $d22 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d23 = $d21 * $d22;
+
+        d24 = $d23 / 2.0;
+
+        $r16 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d26 = d29 + d31;
+
+        $d25 = d30 + d24;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d26, $d25);
+
+        $r17 = interfaceinvoke r18.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r16);
+
+        virtualinvoke r22.<net.sourceforge.plantuml.golem.Tile: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r17);
+
+        goto label1;
+
+     label2:
+        $r6 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor RED>;
+
+        r23 = interfaceinvoke r18.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r6);
+
+        $r7 = r0.<net.sourceforge.plantuml.golem.TilesField: java.util.List paths>;
+
+        r24 = interfaceinvoke $r7.<java.util.List: java.util.Iterator iterator()>();
+
+     label3:
+        $z1 = interfaceinvoke r24.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r8 = interfaceinvoke r24.<java.util.Iterator: java.lang.Object next()>();
+
+        r25 = (net.sourceforge.plantuml.golem.Path) $r8;
+
+        r26 = virtualinvoke r25.<net.sourceforge.plantuml.golem.Path: net.sourceforge.plantuml.golem.TileArea getStart()>();
+
+        r27 = virtualinvoke r25.<net.sourceforge.plantuml.golem.Path: net.sourceforge.plantuml.golem.TileArea getDest()>();
+
+        r28 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: java.awt.geom.Point2D getPoint2D(net.sourceforge.plantuml.awt.geom.Dimension2D,net.sourceforge.plantuml.golem.TileArea)>(r3, r26);
+
+        r9 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: java.awt.geom.Point2D getPoint2D(net.sourceforge.plantuml.awt.geom.Dimension2D,net.sourceforge.plantuml.golem.TileArea)>(r3, r27);
+
+        $r10 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d8 = virtualinvoke r28.<java.awt.geom.Point2D: double getX()>();
+
+        $d9 = d29 + $d8;
+
+        $d10 = virtualinvoke r28.<java.awt.geom.Point2D: double getY()>();
+
+        $d11 = d30 + $d10;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d9, $d11);
+
+        $r11 = interfaceinvoke r23.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r10);
+
+        $r12 = new net.sourceforge.plantuml.ugraphic.ULine;
+
+        $d12 = virtualinvoke r9.<java.awt.geom.Point2D: double getX()>();
+
+        $d13 = virtualinvoke r28.<java.awt.geom.Point2D: double getX()>();
+
+        $d14 = $d12 - $d13;
+
+        $d15 = virtualinvoke r9.<java.awt.geom.Point2D: double getY()>();
+
+        $d16 = virtualinvoke r28.<java.awt.geom.Point2D: double getY()>();
+
+        $d17 = $d15 - $d16;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.ugraphic.ULine: void <init>(double,double)>($d14, $d17);
+
+        interfaceinvoke $r11.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r12);
+
+        goto label3;
+
+     label4:
+        return;
+    }
+
+    private java.awt.geom.Point2D getPoint2D(net.sourceforge.plantuml.awt.geom.Dimension2D, net.sourceforge.plantuml.golem.TileArea)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        net.sourceforge.plantuml.golem.TileArea r1;
+        net.sourceforge.plantuml.golem.Tile $r2;
+        net.sourceforge.plantuml.golem.Position r3;
+        int $i0, $i1, $i2, $i3;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r4;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, d19, d20, d21, d22;
+        int[] $r5;
+        net.sourceforge.plantuml.golem.TileGeometry $r6;
+        java.lang.IllegalStateException $r7;
+        java.awt.geom.Point2D$Double $r8;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r4 := @parameter0: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        r1 := @parameter1: net.sourceforge.plantuml.golem.TileArea;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.Tile getTile()>();
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Position getPosition(net.sourceforge.plantuml.golem.Tile)>($r2);
+
+        $i0 = virtualinvoke r3.<net.sourceforge.plantuml.golem.Position: int getXmin()>();
+
+        $d0 = (double) $i0;
+
+        $d1 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d2 = $d0 * $d1;
+
+        d19 = $d2 / 2.0;
+
+        $i1 = virtualinvoke r3.<net.sourceforge.plantuml.golem.Position: int getYmin()>();
+
+        $d3 = (double) $i1;
+
+        $d4 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d5 = $d3 * $d4;
+
+        d20 = $d5 / 2.0;
+
+        $d6 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d7 = $d6 / 2.0;
+
+        d21 = d19 + $d7;
+
+        $d8 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d9 = $d8 / 2.0;
+
+        d22 = d20 + $d9;
+
+        $r5 = <net.sourceforge.plantuml.golem.TilesField$1: int[] $SwitchMap$net$sourceforge$plantuml$golem$TileGeometry>;
+
+        $r6 = virtualinvoke r1.<net.sourceforge.plantuml.golem.TileArea: net.sourceforge.plantuml.golem.TileGeometry getGeometry()>();
+
+        $i2 = virtualinvoke $r6.<net.sourceforge.plantuml.golem.TileGeometry: int ordinal()>();
+
+        $i3 = $r5[$i2];
+
+        tableswitch($i3)
+        {
+            case 1: goto label3;
+            case 2: goto label4;
+            case 3: goto label2;
+            case 4: goto label1;
+            default: goto label5;
+        };
+
+     label1:
+        $d11 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d12 = $d11 * 0.33;
+
+        d22 = d22 - $d12;
+
+        goto label6;
+
+     label2:
+        $d13 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d14 = $d13 * 0.33;
+
+        d22 = d22 + $d14;
+
+        goto label6;
+
+     label3:
+        $d17 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d18 = $d17 * 0.33;
+
+        d21 = d21 + $d18;
+
+        goto label6;
+
+     label4:
+        $d15 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d16 = $d15 * 0.33;
+
+        d21 = d21 - $d16;
+
+        goto label6;
+
+     label5:
+        $r7 = new java.lang.IllegalStateException;
+
+        specialinvoke $r7.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r7;
+
+     label6:
+        $r8 = new java.awt.geom.Point2D$Double;
+
+        specialinvoke $r8.<java.awt.geom.Point2D$Double: void <init>(double,double)>(d21, d22);
+
+        return $r8;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.golem.TilesField r0;
+        int i0, i1, i2, i3, $i4, $i5, i6, $i7, $i8, i9;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.golem.Tile $r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r3;
+        net.sourceforge.plantuml.Dimension2DDouble $r4;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        r0 := @this: net.sourceforge.plantuml.golem.TilesField;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        i0 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: int getXmin()>();
+
+        i1 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: int getXmax()>();
+
+        i2 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: int getYmin()>();
+
+        i3 = specialinvoke r0.<net.sourceforge.plantuml.golem.TilesField: int getYmax()>();
+
+        $i4 = i1 - i0;
+
+        $i5 = $i4 / 2;
+
+        i6 = $i5 + 1;
+
+        $i7 = i3 - i2;
+
+        $i8 = $i7 / 2;
+
+        i9 = $i8 + 1;
+
+        $r2 = r0.<net.sourceforge.plantuml.golem.TilesField: net.sourceforge.plantuml.golem.Tile root>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.golem.Tile: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $r4 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        $d0 = (double) i6;
+
+        $d1 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d2 = $d0 * $d1;
+
+        $d3 = (double) i9;
+
+        $d4 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d5 = $d3 * $d4;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>($d2, $d5);
+
+        return $r4;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/golem/TilesField;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.golem.TilesField: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

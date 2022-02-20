@@ -1,0 +1,144 @@
+class net.sourceforge.plantuml.security.SURL$3 extends java.lang.Object implements java.util.concurrent.Callable
+{
+    final java.net.Proxy val$proxy;
+    final java.net.URL val$url;
+    final java.lang.String val$data;
+    final net.sourceforge.plantuml.security.authentication.SecurityAuthentication val$authentication;
+    final java.util.Map val$headers;
+
+    void <init>(java.net.Proxy, java.net.URL, java.lang.String, net.sourceforge.plantuml.security.authentication.SecurityAuthentication, java.util.Map)
+    {
+        net.sourceforge.plantuml.security.SURL$3 r0;
+        java.net.Proxy r1;
+        java.net.URL r2;
+        java.lang.String r3;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r4;
+        java.util.Map r5;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL$3;
+
+        r1 := @parameter0: java.net.Proxy;
+
+        r2 := @parameter1: java.net.URL;
+
+        r3 := @parameter2: java.lang.String;
+
+        r4 := @parameter3: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        r5 := @parameter4: java.util.Map;
+
+        r0.<net.sourceforge.plantuml.security.SURL$3: java.net.Proxy val$proxy> = r1;
+
+        r0.<net.sourceforge.plantuml.security.SURL$3: java.net.URL val$url> = r2;
+
+        r0.<net.sourceforge.plantuml.security.SURL$3: java.lang.String val$data> = r3;
+
+        r0.<net.sourceforge.plantuml.security.SURL$3: net.sourceforge.plantuml.security.authentication.SecurityAuthentication val$authentication> = r4;
+
+        r0.<net.sourceforge.plantuml.security.SURL$3: java.util.Map val$headers> = r5;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public byte[] call() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.security.SURL$3 r0;
+        java.net.Proxy $r1, $r2;
+        java.net.URL $r3, $r14;
+        java.lang.String $r5, $r9, $r11;
+        boolean z0;
+        java.net.HttpURLConnection r6;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication $r7;
+        java.util.Map $r8;
+        java.nio.charset.Charset r10, $r16;
+        byte[] $r12, $r17;
+        java.net.URLConnection $r15;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL$3;
+
+        $r1 = r0.<net.sourceforge.plantuml.security.SURL$3: java.net.Proxy val$proxy>;
+
+        if $r1 != null goto label1;
+
+        $r14 = r0.<net.sourceforge.plantuml.security.SURL$3: java.net.URL val$url>;
+
+        $r15 = virtualinvoke $r14.<java.net.URL: java.net.URLConnection openConnection()>();
+
+        goto label2;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.security.SURL$3: java.net.URL val$url>;
+
+        $r2 = r0.<net.sourceforge.plantuml.security.SURL$3: java.net.Proxy val$proxy>;
+
+        $r15 = virtualinvoke $r3.<java.net.URL: java.net.URLConnection openConnection(java.net.Proxy)>($r2);
+
+     label2:
+        if $r15 != null goto label3;
+
+        return null;
+
+     label3:
+        $r5 = r0.<net.sourceforge.plantuml.security.SURL$3: java.lang.String val$data>;
+
+        z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>($r5);
+
+        r6 = (java.net.HttpURLConnection) $r15;
+
+        virtualinvoke r6.<java.net.HttpURLConnection: void setRequestMethod(java.lang.String)>("POST");
+
+        if z0 == 0 goto label4;
+
+        virtualinvoke r6.<java.net.HttpURLConnection: void setDoOutput(boolean)>(1);
+
+     label4:
+        $r7 = r0.<net.sourceforge.plantuml.security.SURL$3: net.sourceforge.plantuml.security.authentication.SecurityAuthentication val$authentication>;
+
+        staticinvoke <net.sourceforge.plantuml.security.SURL: void access$000(java.net.URLConnection,net.sourceforge.plantuml.security.authentication.SecurityAuthentication)>(r6, $r7);
+
+        $r8 = r0.<net.sourceforge.plantuml.security.SURL$3: java.util.Map val$headers>;
+
+        staticinvoke <net.sourceforge.plantuml.security.SURL: void access$100(java.net.URLConnection,java.util.Map)>(r6, $r8);
+
+        $r9 = virtualinvoke r6.<java.net.HttpURLConnection: java.lang.String getRequestProperty(java.lang.String)>("Content-Type");
+
+        r10 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.nio.charset.Charset access$300(java.lang.String)>($r9);
+
+        if z0 == 0 goto label7;
+
+        $r11 = r0.<net.sourceforge.plantuml.security.SURL$3: java.lang.String val$data>;
+
+        if r10 == null goto label5;
+
+        $r16 = r10;
+
+        goto label6;
+
+     label5:
+        $r16 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+     label6:
+        $r12 = virtualinvoke $r11.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r16);
+
+        staticinvoke <net.sourceforge.plantuml.security.SURL: void access$400(java.net.HttpURLConnection,byte[])>(r6, $r12);
+
+     label7:
+        $r17 = staticinvoke <net.sourceforge.plantuml.security.SURL: byte[] access$200(java.net.HttpURLConnection)>(r6);
+
+        return $r17;
+    }
+
+    public volatile java.lang.Object call() throws java.lang.Exception
+    {
+        net.sourceforge.plantuml.security.SURL$3 r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL$3;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.security.SURL$3: byte[] call()>();
+
+        return $r1;
+    }
+}

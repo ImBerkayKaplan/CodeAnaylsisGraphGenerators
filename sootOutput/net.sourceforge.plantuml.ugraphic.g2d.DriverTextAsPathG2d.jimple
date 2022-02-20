@@ -1,0 +1,377 @@
+public class net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d extends java.lang.Object implements net.sourceforge.plantuml.ugraphic.UDriver
+{
+    private final net.sourceforge.plantuml.EnsureVisible visible;
+    private final net.sourceforge.plantuml.graphic.StringBounder stringBounder;
+
+    public void <init>(net.sourceforge.plantuml.EnsureVisible, net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d r0;
+        net.sourceforge.plantuml.EnsureVisible r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d;
+
+        r1 := @parameter0: net.sourceforge.plantuml.EnsureVisible;
+
+        r2 := @parameter1: net.sourceforge.plantuml.graphic.StringBounder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d: net.sourceforge.plantuml.EnsureVisible visible> = r1;
+
+        r0.<net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = r2;
+
+        return;
+    }
+
+    private static void printFont()
+    {
+        java.awt.GraphicsEnvironment r0;
+        java.lang.String[] r1;
+        int i0, i1;
+        java.lang.StringBuilder $r2, $r3, $r5;
+        java.lang.String $r4, $r6;
+
+        r0 = staticinvoke <java.awt.GraphicsEnvironment: java.awt.GraphicsEnvironment getLocalGraphicsEnvironment()>();
+
+        r1 = virtualinvoke r0.<java.awt.GraphicsEnvironment: java.lang.String[] getAvailableFontFamilyNames()>();
+
+        i0 = lengthof r1;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Available fonts: ");
+
+        $r4 = r1[i1];
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r6);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void draw(net.sourceforge.plantuml.ugraphic.UText, double, double, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.UParam, java.awt.Graphics2D)
+    {
+        net.sourceforge.plantuml.ugraphic.UText r0;
+        net.sourceforge.plantuml.graphic.FontConfiguration r1;
+        net.sourceforge.plantuml.ugraphic.UFont r2;
+        net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d r3;
+        net.sourceforge.plantuml.graphic.StringBounder $r4;
+        java.lang.String $r5, $r28;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r6;
+        double $d0, d1, d2, d3, d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22;
+        net.sourceforge.plantuml.graphic.FontStyle $r7, $r10, $r31, $r33;
+        boolean $z0, $z1, $z2, $z3;
+        java.awt.Graphics2D r8;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r9;
+        java.awt.Font $r11, $r25;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, i13, i14, i15, i17;
+        java.awt.BasicStroke $r12, $r13, $r16, $r17;
+        java.awt.Color $r14, $r15, $r18, r22, $r27;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r19, $r26, r32, r34, r36;
+        java.awt.geom.Rectangle2D$Double $r20;
+        net.sourceforge.plantuml.ugraphic.UParam r21;
+        net.sourceforge.plantuml.EnsureVisible $r23, $r24;
+        java.awt.font.TextLayout r29;
+        java.awt.Shape $r30;
+        byte $b16;
+        java.awt.FontMetrics r35;
+
+        r3 := @this: net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UText;
+
+        d3 := @parameter1: double;
+
+        d4 := @parameter2: double;
+
+        r9 := @parameter3: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r21 := @parameter4: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r8 := @parameter5: java.awt.Graphics2D;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UText: net.sourceforge.plantuml.graphic.FontConfiguration getFontConfiguration()>();
+
+        r2 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.ugraphic.UFont getFont()>();
+
+        $r4 = r3.<net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UText: java.lang.String getText()>();
+
+        r6 = interfaceinvoke $r4.<net.sourceforge.plantuml.graphic.StringBounder: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.ugraphic.UFont,java.lang.String)>(r2, $r5);
+
+        $d0 = virtualinvoke r6.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d1 = staticinvoke <java.lang.Math: double max(double,double)>(10.0, $d0);
+
+        d2 = virtualinvoke r6.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $r7 = <net.sourceforge.plantuml.graphic.FontStyle: net.sourceforge.plantuml.graphic.FontStyle BACKCOLOR>;
+
+        $z0 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: boolean containsStyle(net.sourceforge.plantuml.graphic.FontStyle)>($r7);
+
+        if $z0 == 0 goto label1;
+
+        $r19 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.ugraphic.color.HColor getExtendedColor()>();
+
+        r22 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>($r19);
+
+        if r22 == null goto label1;
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setColor(java.awt.Color)>(r22);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setBackground(java.awt.Color)>(r22);
+
+        $r20 = new java.awt.geom.Rectangle2D$Double;
+
+        $d12 = d4 - d1;
+
+        $d13 = $d12 + 1.5;
+
+        specialinvoke $r20.<java.awt.geom.Rectangle2D$Double: void <init>(double,double,double,double)>(d3, $d13, d2, d1);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void fill(java.awt.Shape)>($r20);
+
+     label1:
+        $r23 = r3.<net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d: net.sourceforge.plantuml.EnsureVisible visible>;
+
+        $d14 = d4 - d1;
+
+        $d15 = $d14 + 1.5;
+
+        interfaceinvoke $r23.<net.sourceforge.plantuml.EnsureVisible: void ensureVisible(double,double)>(d3, $d15);
+
+        $r24 = r3.<net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d: net.sourceforge.plantuml.EnsureVisible visible>;
+
+        $d16 = d3 + d2;
+
+        $d17 = d4 + 1.5;
+
+        interfaceinvoke $r24.<net.sourceforge.plantuml.EnsureVisible: void ensureVisible(double,double)>($d16, $d17);
+
+        $r25 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.UFont: java.awt.Font getUnderlayingFont()>();
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setFont(java.awt.Font)>($r25);
+
+        $r26 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.ugraphic.color.HColor getColor()>();
+
+        $r27 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>($r26);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r27);
+
+        $r28 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UText: java.lang.String getText()>();
+
+        r29 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: java.awt.font.TextLayout createTextLayout(net.sourceforge.plantuml.ugraphic.UFont,java.lang.String)>(r2, $r28);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void translate(double,double)>(d3, d4);
+
+        $r30 = virtualinvoke r29.<java.awt.font.TextLayout: java.awt.Shape getOutline(java.awt.geom.AffineTransform)>(null);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void fill(java.awt.Shape)>($r30);
+
+        $d18 = neg d3;
+
+        $d19 = neg d4;
+
+        virtualinvoke r8.<java.awt.Graphics2D: void translate(double,double)>($d18, $d19);
+
+        $r31 = <net.sourceforge.plantuml.graphic.FontStyle: net.sourceforge.plantuml.graphic.FontStyle UNDERLINE>;
+
+        $z2 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: boolean containsStyle(net.sourceforge.plantuml.graphic.FontStyle)>($r31);
+
+        if $z2 == 0 goto label3;
+
+        r32 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.ugraphic.color.HColor getExtendedColor()>();
+
+        if r32 == null goto label2;
+
+        $r18 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>(r32);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r18);
+
+     label2:
+        $d10 = d4 + 2.5;
+
+        i13 = (int) $d10;
+
+        $r16 = new java.awt.BasicStroke;
+
+        specialinvoke $r16.<java.awt.BasicStroke: void <init>(float)>(1.0F);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r16);
+
+        $i12 = (int) d3;
+
+        $d11 = d3 + d2;
+
+        $i11 = (int) $d11;
+
+        virtualinvoke r8.<java.awt.Graphics2D: void drawLine(int,int,int,int)>($i12, i13, $i11, i13);
+
+        $r17 = new java.awt.BasicStroke;
+
+        specialinvoke $r17.<java.awt.BasicStroke: void <init>()>();
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r17);
+
+     label3:
+        $r33 = <net.sourceforge.plantuml.graphic.FontStyle: net.sourceforge.plantuml.graphic.FontStyle WAVE>;
+
+        $z3 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: boolean containsStyle(net.sourceforge.plantuml.graphic.FontStyle)>($r33);
+
+        if $z3 == 0 goto label6;
+
+        $d9 = d4 + 2.5;
+
+        $i3 = (int) $d9;
+
+        i14 = $i3 - 1;
+
+        r34 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.ugraphic.color.HColor getExtendedColor()>();
+
+        if r34 == null goto label4;
+
+        $r15 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>(r34);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r15);
+
+     label4:
+        i15 = (int) d3;
+
+     label5:
+        $d20 = (double) i15;
+
+        $d21 = d3 + d2;
+
+        $d22 = $d21 - 5.0;
+
+        $b16 = $d20 cmpg $d22;
+
+        if $b16 >= 0 goto label6;
+
+        $i6 = i14 - 0;
+
+        $i5 = i15 + 3;
+
+        $i4 = i14 + 1;
+
+        virtualinvoke r8.<java.awt.Graphics2D: void drawLine(int,int,int,int)>(i15, $i6, $i5, $i4);
+
+        $i10 = i15 + 3;
+
+        $i9 = i14 + 1;
+
+        $i8 = i15 + 6;
+
+        $i7 = i14 - 0;
+
+        virtualinvoke r8.<java.awt.Graphics2D: void drawLine(int,int,int,int)>($i10, $i9, $i8, $i7);
+
+        i15 = i15 + 6;
+
+        goto label5;
+
+     label6:
+        $r10 = <net.sourceforge.plantuml.graphic.FontStyle: net.sourceforge.plantuml.graphic.FontStyle STRIKE>;
+
+        $z1 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: boolean containsStyle(net.sourceforge.plantuml.graphic.FontStyle)>($r10);
+
+        if $z1 == 0 goto label8;
+
+        $r11 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.UFont: java.awt.Font getUnderlayingFont()>();
+
+        r35 = virtualinvoke r8.<java.awt.Graphics2D: java.awt.FontMetrics getFontMetrics(java.awt.Font)>($r11);
+
+        $i0 = virtualinvoke r35.<java.awt.FontMetrics: int getDescent()>();
+
+        $d5 = (double) $i0;
+
+        $d6 = d4 - $d5;
+
+        $d7 = $d6 - 0.5;
+
+        i17 = (int) $d7;
+
+        r36 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.ugraphic.color.HColor getExtendedColor()>();
+
+        if r36 == null goto label7;
+
+        $r14 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>(r36);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setColor(java.awt.Color)>($r14);
+
+     label7:
+        $r12 = new java.awt.BasicStroke;
+
+        specialinvoke $r12.<java.awt.BasicStroke: void <init>(float)>(1.5F);
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r12);
+
+        $i2 = (int) d3;
+
+        $d8 = d3 + d2;
+
+        $i1 = (int) $d8;
+
+        virtualinvoke r8.<java.awt.Graphics2D: void drawLine(int,int,int,int)>($i2, i17, $i1, i17);
+
+        $r13 = new java.awt.BasicStroke;
+
+        specialinvoke $r13.<java.awt.BasicStroke: void <init>()>();
+
+        virtualinvoke r8.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r13);
+
+     label8:
+        return;
+    }
+
+    public volatile void draw(net.sourceforge.plantuml.ugraphic.UShape, double, double, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.UParam, java.lang.Object)
+    {
+        net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d r0;
+        net.sourceforge.plantuml.ugraphic.UShape r1;
+        double d0, d1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r2;
+        net.sourceforge.plantuml.ugraphic.UParam r3;
+        java.lang.Object r4;
+        java.awt.Graphics2D $r5;
+        net.sourceforge.plantuml.ugraphic.UText $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UShape;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        r2 := @parameter3: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r3 := @parameter4: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r4 := @parameter5: java.lang.Object;
+
+        $r6 = (net.sourceforge.plantuml.ugraphic.UText) r1;
+
+        $r5 = (java.awt.Graphics2D) r4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.g2d.DriverTextAsPathG2d: void draw(net.sourceforge.plantuml.ugraphic.UText,double,double,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.ugraphic.UParam,java.awt.Graphics2D)>($r6, d0, d1, r2, r3, $r5);
+
+        return;
+    }
+}

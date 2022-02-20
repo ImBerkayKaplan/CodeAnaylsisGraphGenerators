@@ -1,0 +1,147 @@
+public class net.sourceforge.plantuml.objectdiagram.command.CommandAddData extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.objectdiagram.command.CommandAddData r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.command.CommandAddData;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.objectdiagram.command.CommandAddData: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6, $r7, $r8, $r9;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r10;
+
+        $r0 = class "Lnet/sourceforge/plantuml/objectdiagram/command/CommandAddData;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[7];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("NAME", "([%pLN_.]+)");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>(":");
+
+        $r2[3] = $r6;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[4] = $r7;
+
+        $r8 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("DATA", "(.*)");
+
+        $r2[5] = $r8;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[6] = $r9;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r10;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String r1, r6;
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r2;
+        net.sourceforge.plantuml.cucadiagram.Ident $r3;
+        net.sourceforge.plantuml.cucadiagram.Code $r4;
+        net.sourceforge.plantuml.cucadiagram.IEntity r5;
+        int $i0;
+        boolean $z0;
+        net.sourceforge.plantuml.objectdiagram.command.CommandAddData r7;
+        net.sourceforge.plantuml.LineLocation r8;
+        net.sourceforge.plantuml.cucadiagram.Bodier $r9;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r10;
+
+        r7 := @this: net.sourceforge.plantuml.objectdiagram.command.CommandAddData;
+
+        r2 := @parameter0: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r8 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("NAME", 0);
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r1);
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r1);
+
+        r5 = virtualinvoke r2.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>($r3, $r4, null, null);
+
+        r6 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("DATA", 0);
+
+        $i0 = virtualinvoke r6.<java.lang.String: int length()>();
+
+        if $i0 <= 0 goto label1;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.skin.VisibilityModifier: boolean isVisibilityCharacter(java.lang.CharSequence)>(r6);
+
+        if $z0 == 0 goto label1;
+
+        virtualinvoke r2.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void setVisibilityModifierPresent(boolean)>(1);
+
+     label1:
+        $r9 = interfaceinvoke r5.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.Bodier getBodier()>();
+
+        interfaceinvoke $r9.<net.sourceforge.plantuml.cucadiagram.Bodier: void addFieldOrMethod(java.lang.String)>(r6);
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r10;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.objectdiagram.command.CommandAddData r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.command.CommandAddData;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.command.CommandAddData: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

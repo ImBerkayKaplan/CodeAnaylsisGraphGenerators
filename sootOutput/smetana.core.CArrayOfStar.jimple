@@ -1,0 +1,298 @@
+public class smetana.core.CArrayOfStar extends smetana.core.UnsupportedC
+{
+    private final java.util.List data;
+    private final int offset;
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r1, $r3, $r4, $r6, $r7, $r9;
+        smetana.core.CArrayOfStar r2;
+        int $i0, $i1;
+        java.util.List $r5, $r8;
+        java.lang.String $r10;
+
+        r2 := @this: smetana.core.CArrayOfStar;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("*Array offset=");
+
+        $i0 = r2.<smetana.core.CArrayOfStar: int offset>;
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" [");
+
+        $r5 = r2.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        $i1 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("]");
+
+        $r8 = r2.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r10;
+    }
+
+    private void <init>(java.util.List, int)
+    {
+        smetana.core.CArrayOfStar r0;
+        java.util.List r1;
+        int i0;
+
+        r0 := @this: smetana.core.CArrayOfStar;
+
+        r1 := @parameter0: java.util.List;
+
+        i0 := @parameter1: int;
+
+        specialinvoke r0.<smetana.core.UnsupportedC: void <init>()>();
+
+        r0.<smetana.core.CArrayOfStar: java.util.List data> = r1;
+
+        r0.<smetana.core.CArrayOfStar: int offset> = i0;
+
+        return;
+    }
+
+    public static smetana.core.CArrayOfStar ALLOC(int, java.lang.Class)
+    {
+        smetana.core.CArrayOfStar $r0;
+        java.util.ArrayList $r1;
+        int i0;
+        java.lang.Class r3;
+
+        i0 := @parameter0: int;
+
+        r3 := @parameter1: java.lang.Class;
+
+        $r0 = new smetana.core.CArrayOfStar;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        specialinvoke $r0.<smetana.core.CArrayOfStar: void <init>(java.util.List,int)>($r1, 0);
+
+        virtualinvoke $r0.<smetana.core.CArrayOfStar: void realloc(int)>(i0);
+
+        return $r0;
+    }
+
+    public static smetana.core.CArrayOfStar REALLOC(int, smetana.core.CArrayOfStar, java.lang.Class)
+    {
+        smetana.core.CArrayOfStar r0, $r2;
+        int i0;
+        java.lang.Class r1;
+
+        i0 := @parameter0: int;
+
+        r0 := @parameter1: smetana.core.CArrayOfStar;
+
+        r1 := @parameter2: java.lang.Class;
+
+        if r0 != null goto label1;
+
+        $r2 = staticinvoke <smetana.core.CArrayOfStar: smetana.core.CArrayOfStar ALLOC(int,java.lang.Class)>(i0, r1);
+
+        return $r2;
+
+     label1:
+        virtualinvoke r0.<smetana.core.CArrayOfStar: void realloc(int)>(i0);
+
+        return r0;
+    }
+
+    public int comparePointer_(smetana.core.CArrayOfStar)
+    {
+        smetana.core.CArrayOfStar r0, r1;
+        java.util.List $r2, $r3;
+        int $i0, $i1, $i2;
+        java.lang.IllegalArgumentException $r4;
+
+        r0 := @this: smetana.core.CArrayOfStar;
+
+        r1 := @parameter0: smetana.core.CArrayOfStar;
+
+        $r3 = r0.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        $r2 = r1.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        if $r3 == $r2 goto label1;
+
+        $r4 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r4.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r4;
+
+     label1:
+        $i1 = r0.<smetana.core.CArrayOfStar: int offset>;
+
+        $i0 = r1.<smetana.core.CArrayOfStar: int offset>;
+
+        $i2 = $i1 - $i0;
+
+        return $i2;
+    }
+
+    public java.lang.Object get_(int)
+    {
+        smetana.core.CArrayOfStar r0;
+        int i0, $i1, $i2;
+        java.util.List $r1;
+        java.lang.Object $r2;
+
+        r0 := @this: smetana.core.CArrayOfStar;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        $i1 = r0.<smetana.core.CArrayOfStar: int offset>;
+
+        $i2 = i0 + $i1;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>($i2);
+
+        return $r2;
+    }
+
+    public void set_(int, java.lang.Object)
+    {
+        smetana.core.CArrayOfStar r0;
+        int i0, $i1, $i2;
+        java.lang.Object r1;
+        java.util.List $r2;
+
+        r0 := @this: smetana.core.CArrayOfStar;
+
+        i0 := @parameter0: int;
+
+        r1 := @parameter1: java.lang.Object;
+
+        $r2 = r0.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        $i1 = r0.<smetana.core.CArrayOfStar: int offset>;
+
+        $i2 = i0 + $i1;
+
+        interfaceinvoke $r2.<java.util.List: java.lang.Object set(int,java.lang.Object)>($i2, r1);
+
+        return;
+    }
+
+    public void realloc(int)
+    {
+        smetana.core.CArrayOfStar r0;
+        int $i0, i1, i2;
+        java.util.List $r1;
+        java.lang.IllegalStateException $r2;
+
+        r0 := @this: smetana.core.CArrayOfStar;
+
+        i1 := @parameter0: int;
+
+        $i0 = r0.<smetana.core.CArrayOfStar: int offset>;
+
+        if $i0 == 0 goto label1;
+
+        $r2 = new java.lang.IllegalStateException;
+
+        specialinvoke $r2.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r2;
+
+     label1:
+        i2 = 0;
+
+     label2:
+        if i2 >= i1 goto label3;
+
+        $r1 = r0.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>(null);
+
+        i2 = i2 + 1;
+
+        goto label2;
+
+     label3:
+        return;
+    }
+
+    public smetana.core.CArrayOfStar plus_(int)
+    {
+        smetana.core.CArrayOfStar $r0, r1;
+        int i0, $i1, $i2;
+        java.util.List $r2;
+
+        r1 := @this: smetana.core.CArrayOfStar;
+
+        i0 := @parameter0: int;
+
+        $r0 = new smetana.core.CArrayOfStar;
+
+        $r2 = r1.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        $i1 = r1.<smetana.core.CArrayOfStar: int offset>;
+
+        $i2 = $i1 + i0;
+
+        specialinvoke $r0.<smetana.core.CArrayOfStar: void <init>(java.util.List,int)>($r2, $i2);
+
+        return $r0;
+    }
+
+    public void _swap(int, int)
+    {
+        smetana.core.CArrayOfStar r0;
+        int $i0, i1, i2;
+        java.util.List $r1, $r3, $r5, $r7;
+        java.lang.Object r2, r4;
+        java.lang.IllegalStateException $r9;
+
+        r0 := @this: smetana.core.CArrayOfStar;
+
+        i1 := @parameter0: int;
+
+        i2 := @parameter1: int;
+
+        $i0 = r0.<smetana.core.CArrayOfStar: int offset>;
+
+        if $i0 == 0 goto label1;
+
+        $r9 = new java.lang.IllegalStateException;
+
+        specialinvoke $r9.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r9;
+
+     label1:
+        $r1 = r0.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>(i1);
+
+        $r3 = r0.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r5 = r0.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        interfaceinvoke $r5.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i1, r4);
+
+        $r7 = r0.<smetana.core.CArrayOfStar: java.util.List data>;
+
+        interfaceinvoke $r7.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i2, r2);
+
+        return;
+    }
+}

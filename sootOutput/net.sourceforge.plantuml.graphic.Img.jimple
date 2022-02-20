@@ -1,0 +1,406 @@
+public class net.sourceforge.plantuml.graphic.Img extends java.lang.Object implements net.sourceforge.plantuml.graphic.HtmlCommand
+{
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 srcPattern;
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 vspacePattern;
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 valignPattern;
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 noSrcColonPattern;
+    private final net.sourceforge.plantuml.graphic.TextBlock tileImage;
+
+    private void <init>(net.sourceforge.plantuml.graphic.TextBlock)
+    {
+        net.sourceforge.plantuml.graphic.Img r0;
+        net.sourceforge.plantuml.graphic.TextBlock r1;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.Img;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.TextBlock;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.graphic.TextBlock tileImage> = r1;
+
+        return;
+    }
+
+    static int getVspace(java.lang.String)
+    {
+        java.lang.String r0, $r3;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        net.sourceforge.plantuml.command.regex.Matcher2 r2;
+        boolean $z0;
+        int $i0;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.command.regex.Pattern2 vspacePattern>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r0);
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        $i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r3);
+
+        return $i0;
+    }
+
+    static net.sourceforge.plantuml.graphic.ImgValign getValign(java.lang.String)
+    {
+        java.lang.String r0, $r3, $r4;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        net.sourceforge.plantuml.command.regex.Matcher2 r2;
+        boolean $z0;
+        net.sourceforge.plantuml.graphic.ImgValign $r5, $r6;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.command.regex.Pattern2 valignPattern>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r0);
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        $r6 = <net.sourceforge.plantuml.graphic.ImgValign: net.sourceforge.plantuml.graphic.ImgValign TOP>;
+
+        return $r6;
+
+     label1:
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goUpperCase(java.lang.String)>($r3);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.graphic.ImgValign: net.sourceforge.plantuml.graphic.ImgValign valueOf(java.lang.String)>($r4);
+
+        return $r5;
+    }
+
+    static net.sourceforge.plantuml.graphic.HtmlCommand getInstance(java.lang.String, boolean)
+    {
+        boolean z0;
+        java.lang.String r0;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1, $r4;
+        net.sourceforge.plantuml.graphic.ImgValign $r2, r5;
+        net.sourceforge.plantuml.graphic.HtmlCommand $r3, $r6;
+        int i0;
+        net.sourceforge.plantuml.command.regex.Matcher2 r7, r8;
+
+        r0 := @parameter0: java.lang.String;
+
+        z0 := @parameter1: boolean;
+
+        if z0 == 0 goto label1;
+
+        $r4 = <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.command.regex.Pattern2 srcPattern>;
+
+        r7 = virtualinvoke $r4.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r0);
+
+        i0 = staticinvoke <net.sourceforge.plantuml.graphic.Img: int getVspace(java.lang.String)>(r0);
+
+        r5 = staticinvoke <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.graphic.ImgValign getValign(java.lang.String)>(r0);
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.graphic.HtmlCommand build(net.sourceforge.plantuml.command.regex.Matcher2,net.sourceforge.plantuml.graphic.ImgValign,int)>(r7, r5, i0);
+
+        return $r6;
+
+     label1:
+        $r1 = <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.command.regex.Pattern2 noSrcColonPattern>;
+
+        r8 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r0);
+
+        $r2 = <net.sourceforge.plantuml.graphic.ImgValign: net.sourceforge.plantuml.graphic.ImgValign TOP>;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.graphic.HtmlCommand build(net.sourceforge.plantuml.command.regex.Matcher2,net.sourceforge.plantuml.graphic.ImgValign,int)>(r8, $r2, 0);
+
+        return $r3;
+    }
+
+    private static net.sourceforge.plantuml.graphic.HtmlCommand build(net.sourceforge.plantuml.command.regex.Matcher2, net.sourceforge.plantuml.graphic.ImgValign, int)
+    {
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        java.lang.String r1, $r3, $r13, $r21, $r30, $r36, $r42, $r48, $r50, r53;
+        net.sourceforge.plantuml.FileSystem $r2;
+        net.sourceforge.plantuml.graphic.Img $r4, $r14, $r23;
+        net.sourceforge.plantuml.graphic.TileImage $r5, $r24;
+        java.awt.image.BufferedImage $r6, r22, r54;
+        net.sourceforge.plantuml.graphic.ImgValign r7;
+        int i0;
+        net.sourceforge.plantuml.graphic.Text $r8, $r16, $r25, $r31, $r37, $r43, $r45;
+        java.lang.StringBuilder $r9, $r10, $r11, $r12, $r17, $r18, $r19, $r20, $r26, $r27, $r28, $r29, $r32, $r33, $r34, $r35, $r38, $r39, $r40, $r41, $r46, $r47, $r49;
+        net.sourceforge.plantuml.graphic.TileImageSvg $r15;
+        java.io.IOException $r44;
+        net.sourceforge.plantuml.security.SFile r51;
+        net.sourceforge.plantuml.security.SURL r52;
+
+        r0 := @parameter0: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        r7 := @parameter1: net.sourceforge.plantuml.graphic.ImgValign;
+
+        i0 := @parameter2: int;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label01;
+
+        $r43 = new net.sourceforge.plantuml.graphic.Text;
+
+        specialinvoke $r43.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>("(SYNTAX ERROR)");
+
+        return $r43;
+
+     label01:
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+     label02:
+        $r2 = staticinvoke <net.sourceforge.plantuml.FileSystem: net.sourceforge.plantuml.FileSystem getInstance()>();
+
+        r51 = virtualinvoke $r2.<net.sourceforge.plantuml.FileSystem: net.sourceforge.plantuml.security.SFile getFile(java.lang.String)>(r1);
+
+        $z1 = virtualinvoke r51.<net.sourceforge.plantuml.security.SFile: boolean exists()>();
+
+        if $z1 != 0 goto label11;
+
+        $z3 = virtualinvoke r1.<java.lang.String: boolean startsWith(java.lang.String)>("http:");
+
+        if $z3 != 0 goto label03;
+
+        $z4 = virtualinvoke r1.<java.lang.String: boolean startsWith(java.lang.String)>("https:");
+
+        if $z4 == 0 goto label09;
+
+     label03:
+        r52 = staticinvoke <net.sourceforge.plantuml.security.SURL: net.sourceforge.plantuml.security.SURL create(java.lang.String)>(r1);
+
+        if r52 != null goto label05;
+
+        $r31 = new net.sourceforge.plantuml.graphic.Text;
+
+        $r32 = new java.lang.StringBuilder;
+
+        specialinvoke $r32.<java.lang.StringBuilder: void <init>()>();
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(Cannot decode: ");
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r31.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>($r36);
+
+     label04:
+        return $r31;
+
+     label05:
+        r22 = virtualinvoke r52.<net.sourceforge.plantuml.security.SURL: java.awt.image.BufferedImage readRasterImageFromURL()>();
+
+        if r22 != null goto label07;
+
+        $r25 = new net.sourceforge.plantuml.graphic.Text;
+
+        $r26 = new java.lang.StringBuilder;
+
+        specialinvoke $r26.<java.lang.StringBuilder: void <init>()>();
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(Cannot decode: ");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r25.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>($r30);
+
+     label06:
+        return $r25;
+
+     label07:
+        $r23 = new net.sourceforge.plantuml.graphic.Img;
+
+        $r24 = new net.sourceforge.plantuml.graphic.TileImage;
+
+        specialinvoke $r24.<net.sourceforge.plantuml.graphic.TileImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.graphic.ImgValign,int)>(r22, r7, i0);
+
+        specialinvoke $r23.<net.sourceforge.plantuml.graphic.Img: void <init>(net.sourceforge.plantuml.graphic.TextBlock)>($r24);
+
+     label08:
+        return $r23;
+
+     label09:
+        $r37 = new net.sourceforge.plantuml.graphic.Text;
+
+        $r38 = new java.lang.StringBuilder;
+
+        specialinvoke $r38.<java.lang.StringBuilder: void <init>()>();
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(Cannot decode: ");
+
+        $r40 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r51);
+
+        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r37.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>($r42);
+
+     label10:
+        return $r37;
+
+     label11:
+        $r3 = virtualinvoke r51.<net.sourceforge.plantuml.security.SFile: java.lang.String getName()>();
+
+        $z2 = virtualinvoke $r3.<java.lang.String: boolean endsWith(java.lang.String)>(".svg");
+
+        if $z2 == 0 goto label15;
+
+        r53 = staticinvoke <net.sourceforge.plantuml.FileUtils: java.lang.String readSvg(net.sourceforge.plantuml.security.SFile)>(r51);
+
+        if r53 != null goto label13;
+
+        $r16 = new net.sourceforge.plantuml.graphic.Text;
+
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>()>();
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(Cannot decode: ");
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r51);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r16.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>($r21);
+
+     label12:
+        return $r16;
+
+     label13:
+        $r14 = new net.sourceforge.plantuml.graphic.Img;
+
+        $r15 = new net.sourceforge.plantuml.graphic.TileImageSvg;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.graphic.TileImageSvg: void <init>(java.lang.String)>(r53);
+
+        specialinvoke $r14.<net.sourceforge.plantuml.graphic.Img: void <init>(net.sourceforge.plantuml.graphic.TextBlock)>($r15);
+
+     label14:
+        return $r14;
+
+     label15:
+        r54 = virtualinvoke r51.<net.sourceforge.plantuml.security.SFile: java.awt.image.BufferedImage readRasterImageFromFile()>();
+
+        if r54 != null goto label17;
+
+        $r8 = new net.sourceforge.plantuml.graphic.Text;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(Cannot decode: ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r51);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r8.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>($r13);
+
+     label16:
+        return $r8;
+
+     label17:
+        $r4 = new net.sourceforge.plantuml.graphic.Img;
+
+        $r5 = new net.sourceforge.plantuml.graphic.TileImage;
+
+        $r6 = virtualinvoke r51.<net.sourceforge.plantuml.security.SFile: java.awt.image.BufferedImage readRasterImageFromFile()>();
+
+        specialinvoke $r5.<net.sourceforge.plantuml.graphic.TileImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.graphic.ImgValign,int)>($r6, r7, i0);
+
+        specialinvoke $r4.<net.sourceforge.plantuml.graphic.Img: void <init>(net.sourceforge.plantuml.graphic.TextBlock)>($r5);
+
+     label18:
+        return $r4;
+
+     label19:
+        $r44 := @caughtexception;
+
+        virtualinvoke $r44.<java.io.IOException: void printStackTrace()>();
+
+        $r45 = new net.sourceforge.plantuml.graphic.Text;
+
+        $r46 = new java.lang.StringBuilder;
+
+        specialinvoke $r46.<java.lang.StringBuilder: void <init>()>();
+
+        $r47 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("ERROR ");
+
+        $r48 = virtualinvoke $r44.<java.io.IOException: java.lang.String toString()>();
+
+        $r49 = virtualinvoke $r47.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r48);
+
+        $r50 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r45.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>($r50);
+
+        return $r45;
+
+        catch java.io.IOException from label02 to label04 with label19;
+        catch java.io.IOException from label05 to label06 with label19;
+        catch java.io.IOException from label07 to label08 with label19;
+        catch java.io.IOException from label09 to label10 with label19;
+        catch java.io.IOException from label11 to label12 with label19;
+        catch java.io.IOException from label13 to label14 with label19;
+        catch java.io.IOException from label15 to label16 with label19;
+        catch java.io.IOException from label17 to label18 with label19;
+    }
+
+    public net.sourceforge.plantuml.graphic.TextBlock createMonoImage()
+    {
+        net.sourceforge.plantuml.graphic.Img r0;
+        net.sourceforge.plantuml.graphic.TextBlock $r1;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.Img;
+
+        $r1 = r0.<net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.graphic.TextBlock tileImage>;
+
+        return $r1;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.command.regex.Pattern2 $r0, $r1, $r2, $r3;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("src[%s]*=[%s]*[\"%q]?([^%s\">]+)[\"%q]?");
+
+        <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.command.regex.Pattern2 srcPattern> = $r0;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("vspace[%s]*=[%s]*[\"%q]?(\\d+)[\"%q]?");
+
+        <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.command.regex.Pattern2 vspacePattern> = $r1;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("valign[%s]*=[%s]*[\"%q]?(top|bottom|middle)[\"%q]?");
+
+        <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.command.regex.Pattern2 valignPattern> = $r2;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("\\<img[\\s:]+([^>{}]+)(\\{scale=(?:[0-9.]+)\\})?\\>");
+
+        <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.command.regex.Pattern2 noSrcColonPattern> = $r3;
+
+        return;
+    }
+}

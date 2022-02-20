@@ -1,0 +1,97 @@
+public class net.sourceforge.plantuml.code.deflate.OutputStreamProtected extends java.lang.Object implements java.io.Closeable
+{
+    public static final int MAX_OUTPUT_SIZE;
+    private final java.io.ByteArrayOutputStream baos;
+    private int counter;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected r0;
+        java.io.ByteArrayOutputStream $r1;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.OutputStreamProtected;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r1.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: java.io.ByteArrayOutputStream baos> = $r1;
+
+        r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: int counter> = 0;
+
+        return;
+    }
+
+    public void close() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected r0;
+        java.io.ByteArrayOutputStream $r1;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.OutputStreamProtected;
+
+        $r1 = r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: java.io.ByteArrayOutputStream baos>;
+
+        virtualinvoke $r1.<java.io.ByteArrayOutputStream: void close()>();
+
+        return;
+    }
+
+    public byte[] toByteArray()
+    {
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected r0;
+        java.io.ByteArrayOutputStream $r1;
+        byte[] $r2;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.OutputStreamProtected;
+
+        $r1 = r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: java.io.ByteArrayOutputStream baos>;
+
+        $r2 = virtualinvoke $r1.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        return $r2;
+    }
+
+    public void write(int) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected r0;
+        int $i0, $i1, i2, $i3;
+        java.io.ByteArrayOutputStream $r1;
+        java.io.IOException $r2;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.OutputStreamProtected;
+
+        i2 := @parameter0: int;
+
+        $i0 = r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: int counter>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: int counter> = $i1;
+
+        $r1 = r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: java.io.ByteArrayOutputStream baos>;
+
+        virtualinvoke $r1.<java.io.ByteArrayOutputStream: void write(int)>(i2);
+
+        $i3 = r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: int counter>;
+
+        if $i3 <= 1048576 goto label1;
+
+        $r2 = new java.io.IOException;
+
+        specialinvoke $r2.<java.io.IOException: void <init>(java.lang.String)>("Too big");
+
+        throw $r2;
+
+     label1:
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.code.deflate.OutputStreamProtected: int MAX_OUTPUT_SIZE> = 1048576;
+
+        return;
+    }
+}

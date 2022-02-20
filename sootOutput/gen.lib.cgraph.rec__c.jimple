@@ -1,0 +1,366 @@
+public class gen.lib.cgraph.rec__c extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        gen.lib.cgraph.rec__c r0;
+
+        r0 := @this: gen.lib.cgraph.rec__c;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void set_data(h.ST_Agobj_s, h.ST_Agrec_s, int)
+    {
+        h.ST_Agobj_s r0, $r4;
+        h.ST_Agrec_s r1;
+        int i0, $i1, $i2;
+        h.ST_Agtag_s $r2, $r5;
+        h.ST_Agedge_s r3;
+        java.lang.Throwable $r6;
+
+        r0 := @parameter0: h.ST_Agobj_s;
+
+        r1 := @parameter1: h.ST_Agrec_s;
+
+        i0 := @parameter2: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("62z9z5vraa2as0c9t108j9xaf", "set_data");
+
+     label1:
+        r0.<h.ST_Agobj_s: h.ST_Agrec_s data> = r1;
+
+        $r2 = r0.<h.ST_Agobj_s: h.ST_Agtag_s tag>;
+
+        $r2.<h.ST_Agtag_s: int mtflock> = i0;
+
+        $i1 = staticinvoke <smetana.core.Macro: int AGTYPE(h.ST_Agobj_s)>(r0);
+
+        if $i1 == 3 goto label2;
+
+        $i2 = staticinvoke <smetana.core.Macro: int AGTYPE(h.ST_Agobj_s)>(r0);
+
+        if $i2 != 2 goto label3;
+
+     label2:
+        r3 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agedge_s agopp(smetana.core.__ptr__)>(r0);
+
+        staticinvoke <smetana.core.Macro: void AGDATA(h.ST_Agobj_s,h.ST_Agrec_s)>(r3, r1);
+
+        $r4 = r3.<h.ST_Agedge_s: h.ST_Agobj_s base>;
+
+        $r5 = $r4.<h.ST_Agobj_s: h.ST_Agtag_s tag>;
+
+        $r5.<h.ST_Agtag_s: int mtflock> = i0;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("62z9z5vraa2as0c9t108j9xaf", "set_data");
+
+        goto label6;
+
+     label4:
+        $r6 := @caughtexception;
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("62z9z5vraa2as0c9t108j9xaf", "set_data");
+
+        throw $r6;
+
+     label6:
+        return;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+        catch java.lang.Throwable from label4 to label5 with label4;
+    }
+
+    public static h.ST_Agrec_s aggetrec(smetana.core.__ptr__, smetana.core.CString, boolean)
+    {
+        smetana.core.__ptr__ r0;
+        h.ST_Agobj_s r1;
+        h.ST_Agrec_s $r2, $r7, r13;
+        h.ST_Agtag_s $r5, $r6;
+        int $i0, $i1, $i2, $i3;
+        boolean $z0, z1, $z3, $z4, $z5, $z6;
+        java.io.PrintStream $r8;
+        smetana.core.CString r9, $r10;
+        java.lang.Throwable $r11;
+
+        r0 := @parameter0: smetana.core.__ptr__;
+
+        r9 := @parameter1: smetana.core.CString;
+
+        z1 := @parameter2: boolean;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("7p2ne3oknmyclvsw4lh3axtd8", "aggetrec");
+
+     label01:
+        r1 = (h.ST_Agobj_s) r0;
+
+        $r2 = r1.<h.ST_Agobj_s: h.ST_Agrec_s data>;
+
+        r13 = $r2;
+
+     label02:
+        if r13 == null goto label04;
+
+        $r10 = r13.<h.ST_Agrec_s: smetana.core.CString name>;
+
+        $i3 = staticinvoke <smetana.core.JUtils: int strcmp(smetana.core.CString,smetana.core.CString)>(r9, $r10);
+
+        $z4 = staticinvoke <smetana.core.Macro: boolean N(int)>($i3);
+
+        if $z4 == 0 goto label03;
+
+        goto label04;
+
+     label03:
+        r13 = r13.<h.ST_Agrec_s: h.ST_Agrec_s next>;
+
+        $z5 = staticinvoke <smetana.core.JUtils: boolean EQ(java.lang.Object,java.lang.Object)>(r13, $r2);
+
+        if $z5 == 0 goto label02;
+
+        r13 = null;
+
+        goto label04;
+
+     label04:
+        if r13 == null goto label09;
+
+        $r5 = r1.<h.ST_Agobj_s: h.ST_Agtag_s tag>;
+
+        $i0 = $r5.<h.ST_Agtag_s: int mtflock>;
+
+        if $i0 == 0 goto label05;
+
+        if z1 == 0 goto label09;
+
+        $r7 = r1.<h.ST_Agobj_s: h.ST_Agrec_s data>;
+
+        $z3 = staticinvoke <smetana.core.JUtils: boolean NEQ(java.lang.Object,java.lang.Object)>($r7, r13);
+
+        if $z3 == 0 goto label09;
+
+        $r8 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r8.<java.io.PrintStream: void println(java.lang.String)>("move to front lock inconsistency");
+
+        goto label09;
+
+     label05:
+        $z0 = staticinvoke <smetana.core.JUtils: boolean NEQ(java.lang.Object,java.lang.Object)>(r13, $r2);
+
+        if $z0 != 0 goto label08;
+
+        $r6 = r1.<h.ST_Agobj_s: h.ST_Agtag_s tag>;
+
+        $i2 = $r6.<h.ST_Agtag_s: int mtflock>;
+
+        if $i2 == 0 goto label06;
+
+        $z6 = 1;
+
+        goto label07;
+
+     label06:
+        $z6 = 0;
+
+     label07:
+        if z1 == $z6 goto label09;
+
+     label08:
+        $i1 = staticinvoke <smetana.core.Macro: int ASINT(boolean)>(z1);
+
+        staticinvoke <gen.lib.cgraph.rec__c: void set_data(h.ST_Agobj_s,h.ST_Agrec_s,int)>(r1, r13, $i1);
+
+     label09:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("7p2ne3oknmyclvsw4lh3axtd8", "aggetrec");
+
+        return r13;
+
+     label10:
+        $r11 := @caughtexception;
+
+     label11:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("7p2ne3oknmyclvsw4lh3axtd8", "aggetrec");
+
+        throw $r11;
+
+        catch java.lang.Throwable from label01 to label09 with label10;
+        catch java.lang.Throwable from label10 to label11 with label10;
+    }
+
+    private static void objputrec(h.ST_Agraph_s, h.ST_Agobj_s, h.ST_Agrec_s)
+    {
+        h.ST_Agrec_s r0, r3, $r4, $r5;
+        h.ST_Agobj_s r2;
+        boolean $z0, $z1;
+        java.lang.Throwable $r6;
+        h.ST_Agraph_s r8;
+        h.ST_Agtag_s $r9;
+        int $i0;
+
+        r8 := @parameter0: h.ST_Agraph_s;
+
+        r2 := @parameter1: h.ST_Agobj_s;
+
+        r0 := @parameter2: h.ST_Agrec_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("7sk4k5ipm2jnd244556g1kr6", "objputrec");
+
+     label1:
+        r3 = r2.<h.ST_Agobj_s: h.ST_Agrec_s data>;
+
+        if r3 != null goto label2;
+
+        r0.<h.ST_Agrec_s: h.ST_Agrec_s next> = r0;
+
+        goto label4;
+
+     label2:
+        $r4 = r3.<h.ST_Agrec_s: h.ST_Agrec_s next>;
+
+        $z0 = staticinvoke <smetana.core.JUtils: boolean EQ(java.lang.Object,java.lang.Object)>($r4, r3);
+
+        if $z0 == 0 goto label3;
+
+        r3.<h.ST_Agrec_s: h.ST_Agrec_s next> = r0;
+
+        r0.<h.ST_Agrec_s: h.ST_Agrec_s next> = r3;
+
+        goto label4;
+
+     label3:
+        $r5 = r3.<h.ST_Agrec_s: h.ST_Agrec_s next>;
+
+        r0.<h.ST_Agrec_s: h.ST_Agrec_s next> = $r5;
+
+        r3.<h.ST_Agrec_s: h.ST_Agrec_s next> = r0;
+
+     label4:
+        $r9 = r2.<h.ST_Agobj_s: h.ST_Agtag_s tag>;
+
+        $i0 = $r9.<h.ST_Agtag_s: int mtflock>;
+
+        $z1 = staticinvoke <smetana.core.Macro: boolean NOT(int)>($i0);
+
+        if $z1 == 0 goto label5;
+
+        staticinvoke <gen.lib.cgraph.rec__c: void set_data(h.ST_Agobj_s,h.ST_Agrec_s,int)>(r2, r0, 0);
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("7sk4k5ipm2jnd244556g1kr6", "objputrec");
+
+        goto label8;
+
+     label6:
+        $r6 := @caughtexception;
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("7sk4k5ipm2jnd244556g1kr6", "objputrec");
+
+        throw $r6;
+
+     label8:
+        return;
+
+        catch java.lang.Throwable from label1 to label5 with label6;
+        catch java.lang.Throwable from label6 to label7 with label6;
+    }
+
+    public static smetana.core.__ptr__ agbindrec(smetana.core.__ptr__, smetana.core.CString, smetana.core.size_t, boolean)
+    {
+        smetana.core.__ptr__ r0, $r7;
+        h.ST_Agobj_s r1;
+        h.ST_Agraph_s r2;
+        smetana.core.CString r3, $r8;
+        boolean z0, $z1, $z2;
+        smetana.core.size_t r6;
+        h.ST_Agtag_s $r9;
+        int $i0;
+        java.lang.Throwable $r10;
+        h.ST_Agrec_s r12;
+
+        r0 := @parameter0: smetana.core.__ptr__;
+
+        r3 := @parameter1: smetana.core.CString;
+
+        r6 := @parameter2: smetana.core.size_t;
+
+        z0 := @parameter3: boolean;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("dmh5i83l15mnn1pnu6f5dfv8l", "agbindrec");
+
+     label1:
+        r1 = (h.ST_Agobj_s) r0;
+
+        r2 = staticinvoke <gen.lib.cgraph.obj__c: h.ST_Agraph_s agraphof(h.ST_Agobj_s)>(r1);
+
+        r12 = staticinvoke <gen.lib.cgraph.rec__c: h.ST_Agrec_s aggetrec(smetana.core.__ptr__,smetana.core.CString,boolean)>(r1, r3, 0);
+
+        if r12 != null goto label5;
+
+        $z2 = virtualinvoke r6.<smetana.core.size_t: boolean isStrictPositive()>();
+
+        if $z2 == 0 goto label5;
+
+        $r7 = virtualinvoke r6.<smetana.core.size_t: smetana.core.__ptr__ malloc()>();
+
+        r12 = (h.ST_Agrec_s) $r7;
+
+        $r8 = staticinvoke <gen.lib.cgraph.refstr__c: smetana.core.CString agstrdup(h.ST_Agraph_s,smetana.core.CString)>(r2, r3);
+
+        r12.<h.ST_Agrec_s: smetana.core.CString name> = $r8;
+
+        $r9 = r1.<h.ST_Agobj_s: h.ST_Agtag_s tag>;
+
+        $i0 = $r9.<h.ST_Agtag_s: int objtype>;
+
+        tableswitch($i0)
+        {
+            case 0: goto label2;
+            case 1: goto label3;
+            case 2: goto label4;
+            case 3: goto label4;
+            default: goto label5;
+        };
+
+     label2:
+        staticinvoke <gen.lib.cgraph.rec__c: void objputrec(h.ST_Agraph_s,h.ST_Agobj_s,h.ST_Agrec_s)>(r2, r1, r12);
+
+        goto label5;
+
+     label3:
+        staticinvoke <gen.lib.cgraph.rec__c: void objputrec(h.ST_Agraph_s,h.ST_Agobj_s,h.ST_Agrec_s)>(r2, r1, r12);
+
+        goto label5;
+
+     label4:
+        staticinvoke <gen.lib.cgraph.rec__c: void objputrec(h.ST_Agraph_s,h.ST_Agobj_s,h.ST_Agrec_s)>(r2, r1, r12);
+
+     label5:
+        if z0 == 0 goto label6;
+
+        $z1 = staticinvoke <smetana.core.Macro: boolean N(int)>(0);
+
+        staticinvoke <gen.lib.cgraph.rec__c: h.ST_Agrec_s aggetrec(smetana.core.__ptr__,smetana.core.CString,boolean)>(r0, r3, $z1);
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("dmh5i83l15mnn1pnu6f5dfv8l", "agbindrec");
+
+        return r12;
+
+     label7:
+        $r10 := @caughtexception;
+
+     label8:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("dmh5i83l15mnn1pnu6f5dfv8l", "agbindrec");
+
+        throw $r10;
+
+        catch java.lang.Throwable from label1 to label6 with label7;
+        catch java.lang.Throwable from label7 to label8 with label7;
+    }
+}

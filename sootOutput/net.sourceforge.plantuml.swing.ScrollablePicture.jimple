@@ -1,0 +1,250 @@
+class net.sourceforge.plantuml.swing.ScrollablePicture extends javax.swing.JLabel implements javax.swing.Scrollable, java.awt.event.MouseMotionListener
+{
+    private int maxUnitIncrement;
+    private boolean missingPicture;
+
+    public void <init>(javax.swing.ImageIcon, int)
+    {
+        net.sourceforge.plantuml.swing.ScrollablePicture r0;
+        javax.swing.ImageIcon r1;
+        int i0;
+        java.awt.Color $r2;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        r1 := @parameter0: javax.swing.ImageIcon;
+
+        i0 := @parameter1: int;
+
+        specialinvoke r0.<javax.swing.JLabel: void <init>(javax.swing.Icon)>(r1);
+
+        r0.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement> = 1;
+
+        r0.<net.sourceforge.plantuml.swing.ScrollablePicture: boolean missingPicture> = 0;
+
+        if r1 != null goto label1;
+
+        r0.<net.sourceforge.plantuml.swing.ScrollablePicture: boolean missingPicture> = 1;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ScrollablePicture: void setText(java.lang.String)>("No picture found.");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ScrollablePicture: void setHorizontalAlignment(int)>(0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ScrollablePicture: void setOpaque(boolean)>(1);
+
+        $r2 = <java.awt.Color: java.awt.Color white>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ScrollablePicture: void setBackground(java.awt.Color)>($r2);
+
+     label1:
+        r0.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement> = i0;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ScrollablePicture: void setAutoscrolls(boolean)>(1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ScrollablePicture: void addMouseMotionListener(java.awt.event.MouseMotionListener)>(r0);
+
+        return;
+    }
+
+    public void mouseMoved(java.awt.event.MouseEvent)
+    {
+        net.sourceforge.plantuml.swing.ScrollablePicture r0;
+        java.awt.event.MouseEvent r1;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        r1 := @parameter0: java.awt.event.MouseEvent;
+
+        return;
+    }
+
+    public void mouseDragged(java.awt.event.MouseEvent)
+    {
+        java.awt.Rectangle $r0;
+        java.awt.event.MouseEvent r1;
+        int $i0, $i1;
+        net.sourceforge.plantuml.swing.ScrollablePicture r3;
+
+        r3 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        r1 := @parameter0: java.awt.event.MouseEvent;
+
+        $r0 = new java.awt.Rectangle;
+
+        $i0 = virtualinvoke r1.<java.awt.event.MouseEvent: int getX()>();
+
+        $i1 = virtualinvoke r1.<java.awt.event.MouseEvent: int getY()>();
+
+        specialinvoke $r0.<java.awt.Rectangle: void <init>(int,int,int,int)>($i0, $i1, 1, 1);
+
+        virtualinvoke r3.<net.sourceforge.plantuml.swing.ScrollablePicture: void scrollRectToVisible(java.awt.Rectangle)>($r0);
+
+        return;
+    }
+
+    public java.awt.Dimension getPreferredSize()
+    {
+        net.sourceforge.plantuml.swing.ScrollablePicture r0;
+        boolean $z0;
+        java.awt.Dimension $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        $z0 = r0.<net.sourceforge.plantuml.swing.ScrollablePicture: boolean missingPicture>;
+
+        if $z0 == 0 goto label1;
+
+        $r2 = new java.awt.Dimension;
+
+        specialinvoke $r2.<java.awt.Dimension: void <init>(int,int)>(320, 480);
+
+        return $r2;
+
+     label1:
+        $r1 = specialinvoke r0.<javax.swing.JLabel: java.awt.Dimension getPreferredSize()>();
+
+        return $r1;
+    }
+
+    public java.awt.Dimension getPreferredScrollableViewportSize()
+    {
+        net.sourceforge.plantuml.swing.ScrollablePicture r0;
+        java.awt.Dimension $r1;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.swing.ScrollablePicture: java.awt.Dimension getPreferredSize()>();
+
+        return $r1;
+    }
+
+    public int getScrollableUnitIncrement(java.awt.Rectangle, int, int)
+    {
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, i12, i13, $i14;
+        java.awt.Rectangle r0;
+        net.sourceforge.plantuml.swing.ScrollablePicture r1;
+
+        r1 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        r0 := @parameter0: java.awt.Rectangle;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        if i0 != 0 goto label1;
+
+        i13 = r0.<java.awt.Rectangle: int x>;
+
+        goto label2;
+
+     label1:
+        i13 = r0.<java.awt.Rectangle: int y>;
+
+     label2:
+        if i1 >= 0 goto label5;
+
+        $i8 = r1.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement>;
+
+        $i10 = i13 / $i8;
+
+        $i9 = r1.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement>;
+
+        $i11 = $i10 * $i9;
+
+        i12 = i13 - $i11;
+
+        if i12 != 0 goto label3;
+
+        $i14 = r1.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement>;
+
+        goto label4;
+
+     label3:
+        $i14 = i12;
+
+     label4:
+        return $i14;
+
+     label5:
+        $i2 = r1.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement>;
+
+        $i3 = i13 / $i2;
+
+        $i5 = $i3 + 1;
+
+        $i4 = r1.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement>;
+
+        $i6 = $i5 * $i4;
+
+        $i7 = $i6 - i13;
+
+        return $i7;
+    }
+
+    public int getScrollableBlockIncrement(java.awt.Rectangle, int, int)
+    {
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, i7;
+        java.awt.Rectangle r0;
+        net.sourceforge.plantuml.swing.ScrollablePicture r1;
+
+        r1 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        r0 := @parameter0: java.awt.Rectangle;
+
+        i0 := @parameter1: int;
+
+        i7 := @parameter2: int;
+
+        if i0 != 0 goto label1;
+
+        $i5 = r0.<java.awt.Rectangle: int width>;
+
+        $i4 = r1.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement>;
+
+        $i6 = $i5 - $i4;
+
+        return $i6;
+
+     label1:
+        $i2 = r0.<java.awt.Rectangle: int height>;
+
+        $i1 = r1.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement>;
+
+        $i3 = $i2 - $i1;
+
+        return $i3;
+    }
+
+    public boolean getScrollableTracksViewportWidth()
+    {
+        net.sourceforge.plantuml.swing.ScrollablePicture r0;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        return 0;
+    }
+
+    public boolean getScrollableTracksViewportHeight()
+    {
+        net.sourceforge.plantuml.swing.ScrollablePicture r0;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        return 0;
+    }
+
+    public void setMaxUnitIncrement(int)
+    {
+        net.sourceforge.plantuml.swing.ScrollablePicture r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.swing.ScrollablePicture: int maxUnitIncrement> = i0;
+
+        return;
+    }
+}

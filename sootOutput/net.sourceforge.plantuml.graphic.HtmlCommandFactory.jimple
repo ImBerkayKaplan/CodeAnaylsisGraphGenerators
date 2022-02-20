@@ -1,0 +1,331 @@
+class net.sourceforge.plantuml.graphic.HtmlCommandFactory extends java.lang.Object
+{
+    static final net.sourceforge.plantuml.command.regex.Pattern2 addStyle;
+    static final net.sourceforge.plantuml.command.regex.Pattern2 removeStyle;
+    private net.sourceforge.plantuml.command.regex.Pattern2 htmlTag;
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.graphic.HtmlCommandFactory r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r2;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.HtmlCommandFactory;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = <net.sourceforge.plantuml.graphic.Splitter: java.lang.String htmlTag>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>($r1);
+
+        r0.<net.sourceforge.plantuml.graphic.HtmlCommandFactory: net.sourceforge.plantuml.command.regex.Pattern2 htmlTag> = $r2;
+
+        return;
+    }
+
+    net.sourceforge.plantuml.graphic.HtmlCommand getHtmlCommand(net.sourceforge.plantuml.api.ThemeStyle, java.lang.String)
+    {
+        net.sourceforge.plantuml.graphic.HtmlCommandFactory r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r2, $r4, $r6;
+        net.sourceforge.plantuml.command.regex.Matcher2 $r3, $r5, $r7;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, $z15;
+        net.sourceforge.plantuml.graphic.SvgAttributesChange $r8;
+        net.sourceforge.plantuml.UrlBuilder $r9;
+        net.sourceforge.plantuml.UrlBuilder$ModeUrl $r10;
+        net.sourceforge.plantuml.Url r12;
+        net.sourceforge.plantuml.graphic.TextLink $r13;
+        net.sourceforge.plantuml.graphic.SpriteCommand $r14;
+        net.sourceforge.plantuml.graphic.FontFamilyChange $r15;
+        net.sourceforge.plantuml.graphic.ExposantChange $r16, $r19, $r21;
+        net.sourceforge.plantuml.graphic.FontPosition $r17, $r20, $r22;
+        net.sourceforge.plantuml.graphic.ResetFont $r18;
+        net.sourceforge.plantuml.graphic.SizeChange $r23;
+        net.sourceforge.plantuml.graphic.ColorChange $r24;
+        net.sourceforge.plantuml.api.ThemeStyle r25;
+        net.sourceforge.plantuml.graphic.ColorAndSizeChange $r26;
+        net.sourceforge.plantuml.graphic.RemoveStyle $r27;
+        net.sourceforge.plantuml.graphic.FontStyle $r28;
+        net.sourceforge.plantuml.graphic.AddStyle $r29;
+        net.sourceforge.plantuml.graphic.HtmlCommand $r30, $r31;
+        net.sourceforge.plantuml.graphic.Text $r32;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.HtmlCommandFactory;
+
+        r25 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r1 := @parameter1: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.graphic.HtmlCommandFactory: net.sourceforge.plantuml.command.regex.Pattern2 htmlTag>;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r1);
+
+        $z0 = virtualinvoke $r3.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        if $z0 != 0 goto label01;
+
+        $r32 = new net.sourceforge.plantuml.graphic.Text;
+
+        specialinvoke $r32.<net.sourceforge.plantuml.graphic.Text: void <init>(java.lang.String)>(r1);
+
+        return $r32;
+
+     label01:
+        $z1 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<img\\s+(src[%s]*=[%s]*[%q%g]?[^\\s%g>]+[%q%g]?[%s]*|vspace\\s*=\\s*[%q%g]?\\d+[%q%g]?\\s*|valign[%s]*=[%s]*[%q%g]?(top|middle|bottom)[%q%g]?[%s]*)+\\>");
+
+        if $z1 == 0 goto label02;
+
+        $r31 = staticinvoke <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.graphic.HtmlCommand getInstance(java.lang.String,boolean)>(r1, 1);
+
+        return $r31;
+
+     label02:
+        $z2 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<img[\\s:]+([^>{}]+)(\\{scale=(?:[0-9.]+)\\})?\\>");
+
+        if $z2 == 0 goto label03;
+
+        $r30 = staticinvoke <net.sourceforge.plantuml.graphic.Img: net.sourceforge.plantuml.graphic.HtmlCommand getInstance(java.lang.String,boolean)>(r1, 0);
+
+        return $r30;
+
+     label03:
+        $r4 = <net.sourceforge.plantuml.graphic.HtmlCommandFactory: net.sourceforge.plantuml.command.regex.Pattern2 addStyle>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r1);
+
+        $z3 = virtualinvoke $r5.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        if $z3 == 0 goto label04;
+
+        $r29 = new net.sourceforge.plantuml.graphic.AddStyle;
+
+        specialinvoke $r29.<net.sourceforge.plantuml.graphic.AddStyle: void <init>(java.lang.String)>(r1);
+
+        return $r29;
+
+     label04:
+        $r6 = <net.sourceforge.plantuml.graphic.HtmlCommandFactory: net.sourceforge.plantuml.command.regex.Pattern2 removeStyle>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r1);
+
+        $z4 = virtualinvoke $r7.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        if $z4 == 0 goto label05;
+
+        $r27 = new net.sourceforge.plantuml.graphic.RemoveStyle;
+
+        $r28 = staticinvoke <net.sourceforge.plantuml.graphic.FontStyle: net.sourceforge.plantuml.graphic.FontStyle getStyle(java.lang.String)>(r1);
+
+        specialinvoke $r27.<net.sourceforge.plantuml.graphic.RemoveStyle: void <init>(net.sourceforge.plantuml.graphic.FontStyle)>($r28);
+
+        return $r27;
+
+     label05:
+        $z5 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<font(\\s+size[%s]*=[%s]*[%g]?\\d+[%g]?|[%s]+color[%s]*=\\s*[%g]?(#[0-9a-fA-F]{6}|\\w+)[%g]?)+[%s]*\\>");
+
+        if $z5 == 0 goto label06;
+
+        $r26 = new net.sourceforge.plantuml.graphic.ColorAndSizeChange;
+
+        specialinvoke $r26.<net.sourceforge.plantuml.graphic.ColorAndSizeChange: void <init>(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>(r25, r1);
+
+        return $r26;
+
+     label06:
+        $z6 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<color[\\s:]+(#[0-9a-fA-F]{6}|#?\\w+)[%s]*\\>");
+
+        if $z6 == 0 goto label07;
+
+        $r24 = new net.sourceforge.plantuml.graphic.ColorChange;
+
+        specialinvoke $r24.<net.sourceforge.plantuml.graphic.ColorChange: void <init>(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>(r25, r1);
+
+        return $r24;
+
+     label07:
+        $z7 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<size[\\s:]+(\\d+)[%s]*\\>");
+
+        if $z7 == 0 goto label08;
+
+        $r23 = new net.sourceforge.plantuml.graphic.SizeChange;
+
+        specialinvoke $r23.<net.sourceforge.plantuml.graphic.SizeChange: void <init>(java.lang.String)>(r1);
+
+        return $r23;
+
+     label08:
+        $z8 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<sup\\>");
+
+        if $z8 == 0 goto label09;
+
+        $r21 = new net.sourceforge.plantuml.graphic.ExposantChange;
+
+        $r22 = <net.sourceforge.plantuml.graphic.FontPosition: net.sourceforge.plantuml.graphic.FontPosition EXPOSANT>;
+
+        specialinvoke $r21.<net.sourceforge.plantuml.graphic.ExposantChange: void <init>(net.sourceforge.plantuml.graphic.FontPosition)>($r22);
+
+        return $r21;
+
+     label09:
+        $z9 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<sub\\>");
+
+        if $z9 == 0 goto label10;
+
+        $r19 = new net.sourceforge.plantuml.graphic.ExposantChange;
+
+        $r20 = <net.sourceforge.plantuml.graphic.FontPosition: net.sourceforge.plantuml.graphic.FontPosition INDICE>;
+
+        specialinvoke $r19.<net.sourceforge.plantuml.graphic.ExposantChange: void <init>(net.sourceforge.plantuml.graphic.FontPosition)>($r20);
+
+        return $r19;
+
+     label10:
+        $z10 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\</font\\>|\\</color\\>|\\</size\\>|\\</text\\>");
+
+        if $z10 == 0 goto label11;
+
+        $r18 = new net.sourceforge.plantuml.graphic.ResetFont;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.graphic.ResetFont: void <init>()>();
+
+        return $r18;
+
+     label11:
+        $z11 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\</sup\\>|\\</sub\\>");
+
+        if $z11 == 0 goto label12;
+
+        $r16 = new net.sourceforge.plantuml.graphic.ExposantChange;
+
+        $r17 = <net.sourceforge.plantuml.graphic.FontPosition: net.sourceforge.plantuml.graphic.FontPosition NORMAL>;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.graphic.ExposantChange: void <init>(net.sourceforge.plantuml.graphic.FontPosition)>($r17);
+
+        return $r16;
+
+     label12:
+        $z12 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<font[\\s:]+([^>]+)/?\\>");
+
+        if $z12 == 0 goto label13;
+
+        $r15 = new net.sourceforge.plantuml.graphic.FontFamilyChange;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.graphic.FontFamilyChange: void <init>(java.lang.String)>(r1);
+
+        return $r15;
+
+     label13:
+        $z13 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<\\$([-\\p{L}0-9_/]+)([\\{,]?(?:(?:scale=|\\*)[0-9.]+)?(?:,color[= :](?:#[0-9a-fA-F]{6}|\\w+))?\\}?)?\\>");
+
+        if $z13 == 0 goto label14;
+
+        $r14 = new net.sourceforge.plantuml.graphic.SpriteCommand;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.graphic.SpriteCommand: void <init>(java.lang.String)>(r1);
+
+        return $r14;
+
+     label14:
+        $z14 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\[\\[([^\\[\\]]+)\\]\\]");
+
+        if $z14 == 0 goto label15;
+
+        $r9 = new net.sourceforge.plantuml.UrlBuilder;
+
+        $r10 = <net.sourceforge.plantuml.UrlBuilder$ModeUrl: net.sourceforge.plantuml.UrlBuilder$ModeUrl STRICT>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.UrlBuilder: void <init>(java.lang.String,net.sourceforge.plantuml.UrlBuilder$ModeUrl)>(null, $r10);
+
+        r12 = virtualinvoke $r9.<net.sourceforge.plantuml.UrlBuilder: net.sourceforge.plantuml.Url getUrl(java.lang.String)>(r1);
+
+        virtualinvoke r12.<net.sourceforge.plantuml.Url: void setMember(boolean)>(1);
+
+        $r13 = new net.sourceforge.plantuml.graphic.TextLink;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.graphic.TextLink: void <init>(net.sourceforge.plantuml.Url)>(r12);
+
+        return $r13;
+
+     label15:
+        $z15 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r1, "\\<text[\\s:]+([^>]+)/?\\>");
+
+        if $z15 == 0 goto label16;
+
+        $r8 = new net.sourceforge.plantuml.graphic.SvgAttributesChange;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.graphic.SvgAttributesChange: void <init>(java.lang.String)>(r1);
+
+        return $r8;
+
+     label16:
+        return null;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.StringBuilder $r0, $r2;
+        java.util.EnumSet $r4;
+        java.util.Iterator r5;
+        boolean $z0;
+        java.lang.String $r6, $r8, $r12, $r14;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r7, $r9;
+        java.lang.Object $r10;
+        net.sourceforge.plantuml.graphic.FontStyle r11;
+        int $i0;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = staticinvoke <java.util.EnumSet: java.util.EnumSet allOf(java.lang.Class)>(class "Lnet/sourceforge/plantuml/graphic/FontStyle;");
+
+        r5 = virtualinvoke $r4.<java.util.EnumSet: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r10 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r11 = (net.sourceforge.plantuml.graphic.FontStyle) $r10;
+
+        $i0 = virtualinvoke $r0.<java.lang.StringBuilder: int length()>();
+
+        if $i0 <= 0 goto label2;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(124);
+
+     label2:
+        $r12 = virtualinvoke r11.<net.sourceforge.plantuml.graphic.FontStyle: java.lang.String getActivationPattern()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r12);
+
+        $r14 = virtualinvoke r11.<net.sourceforge.plantuml.graphic.FontStyle: java.lang.String getDeactivationPattern()>();
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r14);
+
+        goto label1;
+
+     label3:
+        $r6 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>($r6);
+
+        <net.sourceforge.plantuml.graphic.HtmlCommandFactory: net.sourceforge.plantuml.command.regex.Pattern2 addStyle> = $r7;
+
+        $r8 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>($r8);
+
+        <net.sourceforge.plantuml.graphic.HtmlCommandFactory: net.sourceforge.plantuml.command.regex.Pattern2 removeStyle> = $r9;
+
+        return;
+    }
+}

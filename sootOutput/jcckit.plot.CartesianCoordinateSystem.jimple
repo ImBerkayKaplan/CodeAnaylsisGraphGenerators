@@ -1,0 +1,564 @@
+public class jcckit.plot.CartesianCoordinateSystem extends java.lang.Object implements jcckit.plot.CoordinateSystem
+{
+    public static final java.lang.String ORIGIN_KEY;
+    public static final java.lang.String X_AXIS_KEY;
+    public static final java.lang.String Y_AXIS_KEY;
+    private final jcckit.transformation.CartesianTransformation _transformation;
+    private final jcckit.graphic.GraphicalComposite _view;
+    private final jcckit.graphic.ClippingRectangle _clippingRectangle;
+
+    public void <init>(jcckit.util.ConfigParameters)
+    {
+        jcckit.plot.CartesianCoordinateSystem r0;
+        jcckit.graphic.GraphPoint $r1;
+        jcckit.util.ConfigParameters r2, $r5, $r7;
+        double[] $r3, $r4;
+        jcckit.plot.AxisParameters $r6, $r8;
+
+        r0 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        r2 := @parameter0: jcckit.util.ConfigParameters;
+
+        $r1 = new jcckit.graphic.GraphPoint;
+
+        $r3 = newarray (double)[2];
+
+        $r3[0] = 0.15;
+
+        $r3[1] = 0.1;
+
+        $r4 = virtualinvoke r2.<jcckit.util.ConfigParameters: double[] getDoubleArray(java.lang.String,double[])>("origin", $r3);
+
+        specialinvoke $r1.<jcckit.graphic.GraphPoint: void <init>(double[])>($r4);
+
+        $r5 = virtualinvoke r2.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("xAxis");
+
+        $r6 = staticinvoke <jcckit.plot.AxisParameters: jcckit.plot.AxisParameters createXAxis(jcckit.util.ConfigParameters)>($r5);
+
+        $r7 = virtualinvoke r2.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("yAxis");
+
+        $r8 = staticinvoke <jcckit.plot.AxisParameters: jcckit.plot.AxisParameters createYAxis(jcckit.util.ConfigParameters)>($r7);
+
+        specialinvoke r0.<jcckit.plot.CartesianCoordinateSystem: void <init>(jcckit.graphic.GraphPoint,jcckit.plot.AxisParameters,jcckit.plot.AxisParameters)>($r1, $r6, $r8);
+
+        return;
+    }
+
+    public void <init>(jcckit.graphic.GraphPoint, jcckit.plot.AxisParameters, jcckit.plot.AxisParameters)
+    {
+        jcckit.plot.CartesianCoordinateSystem r0;
+        jcckit.graphic.GraphPoint r1, $r6, $r8;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13;
+        jcckit.transformation.CartesianTransformation $r2;
+        jcckit.plot.AxisParameters r3, r4;
+        jcckit.data.DataPoint $r5, $r7;
+        boolean $z0, $z1;
+        jcckit.graphic.ClippingRectangle $r9;
+        jcckit.graphic.GraphicalComposite $r10;
+
+        r0 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        r1 := @parameter0: jcckit.graphic.GraphPoint;
+
+        r3 := @parameter1: jcckit.plot.AxisParameters;
+
+        r4 := @parameter2: jcckit.plot.AxisParameters;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        d0 = virtualinvoke r1.<jcckit.graphic.GraphPoint: double getX()>();
+
+        d1 = virtualinvoke r1.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $r2 = new jcckit.transformation.CartesianTransformation;
+
+        $z0 = r3.<jcckit.plot.AxisParameters: boolean logScale>;
+
+        $z1 = r4.<jcckit.plot.AxisParameters: boolean logScale>;
+
+        $r5 = new jcckit.data.DataPoint;
+
+        $d3 = r3.<jcckit.plot.AxisParameters: double minimum>;
+
+        $d2 = r4.<jcckit.plot.AxisParameters: double minimum>;
+
+        specialinvoke $r5.<jcckit.data.DataPoint: void <init>(double,double)>($d3, $d2);
+
+        $r6 = new jcckit.graphic.GraphPoint;
+
+        specialinvoke $r6.<jcckit.graphic.GraphPoint: void <init>(double,double)>(d0, d1);
+
+        $r7 = new jcckit.data.DataPoint;
+
+        $d5 = r3.<jcckit.plot.AxisParameters: double maximum>;
+
+        $d4 = r4.<jcckit.plot.AxisParameters: double maximum>;
+
+        specialinvoke $r7.<jcckit.data.DataPoint: void <init>(double,double)>($d5, $d4);
+
+        $r8 = new jcckit.graphic.GraphPoint;
+
+        $d6 = r3.<jcckit.plot.AxisParameters: double axisLength>;
+
+        $d9 = d0 + $d6;
+
+        $d7 = r4.<jcckit.plot.AxisParameters: double axisLength>;
+
+        $d8 = d1 + $d7;
+
+        specialinvoke $r8.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d9, $d8);
+
+        specialinvoke $r2.<jcckit.transformation.CartesianTransformation: void <init>(boolean,boolean,jcckit.data.DataPoint,jcckit.graphic.GraphPoint,jcckit.data.DataPoint,jcckit.graphic.GraphPoint)>($z0, $z1, $r5, $r6, $r7, $r8);
+
+        r0.<jcckit.plot.CartesianCoordinateSystem: jcckit.transformation.CartesianTransformation _transformation> = $r2;
+
+        $r9 = new jcckit.graphic.ClippingRectangle;
+
+        $d10 = r3.<jcckit.plot.AxisParameters: double axisLength>;
+
+        $d13 = d0 + $d10;
+
+        $d11 = r4.<jcckit.plot.AxisParameters: double axisLength>;
+
+        $d12 = d1 + $d11;
+
+        specialinvoke $r9.<jcckit.graphic.ClippingRectangle: void <init>(double,double,double,double)>(d0, d1, $d13, $d12);
+
+        r0.<jcckit.plot.CartesianCoordinateSystem: jcckit.graphic.ClippingRectangle _clippingRectangle> = $r9;
+
+        $r10 = new jcckit.graphic.GraphicalComposite;
+
+        specialinvoke $r10.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(null);
+
+        r0.<jcckit.plot.CartesianCoordinateSystem: jcckit.graphic.GraphicalComposite _view> = $r10;
+
+        specialinvoke r0.<jcckit.plot.CartesianCoordinateSystem: void createView(jcckit.graphic.GraphPoint,jcckit.plot.AxisParameters,jcckit.plot.AxisParameters)>(r1, r3, r4);
+
+        return;
+    }
+
+    private void createView(jcckit.graphic.GraphPoint, jcckit.plot.AxisParameters, jcckit.plot.AxisParameters)
+    {
+        jcckit.graphic.GraphPoint r0, $r3, $r5, $r7, $r9;
+        double d0, $d1, d2, d3, $d4, d5, $d6, $d7, $d8, $d9;
+        jcckit.plot.AxisParameters r1, r2;
+        jcckit.graphic.LineAttributes r11, r12;
+        jcckit.plot.CartesianCoordinateSystem r13;
+
+        r13 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        r0 := @parameter0: jcckit.graphic.GraphPoint;
+
+        r1 := @parameter1: jcckit.plot.AxisParameters;
+
+        r2 := @parameter2: jcckit.plot.AxisParameters;
+
+        d0 = virtualinvoke r0.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $d1 = r1.<jcckit.plot.AxisParameters: double axisLength>;
+
+        d2 = d0 + $d1;
+
+        d3 = virtualinvoke r0.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d4 = r2.<jcckit.plot.AxisParameters: double axisLength>;
+
+        d5 = d3 + $d4;
+
+        $r3 = new jcckit.graphic.GraphPoint;
+
+        specialinvoke $r3.<jcckit.graphic.GraphPoint: void <init>(double,double)>(d0, d3);
+
+        $r5 = new jcckit.graphic.GraphPoint;
+
+        specialinvoke $r5.<jcckit.graphic.GraphPoint: void <init>(double,double)>(d0, d5);
+
+        $r7 = new jcckit.graphic.GraphPoint;
+
+        specialinvoke $r7.<jcckit.graphic.GraphPoint: void <init>(double,double)>(d2, d3);
+
+        $r9 = new jcckit.graphic.GraphPoint;
+
+        specialinvoke $r9.<jcckit.graphic.GraphPoint: void <init>(double,double)>(d2, d5);
+
+        r11 = r1.<jcckit.plot.AxisParameters: jcckit.graphic.LineAttributes axisAttributes>;
+
+        r12 = r2.<jcckit.plot.AxisParameters: jcckit.graphic.LineAttributes axisAttributes>;
+
+        specialinvoke r13.<jcckit.plot.CartesianCoordinateSystem: void createTicsAndGrid(boolean,double,double,jcckit.plot.AxisParameters)>(1, d3, d5, r1);
+
+        specialinvoke r13.<jcckit.plot.CartesianCoordinateSystem: void createTicsAndGrid(boolean,double,double,jcckit.plot.AxisParameters)>(0, d0, d2, r2);
+
+        specialinvoke r13.<jcckit.plot.CartesianCoordinateSystem: void addLine(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint,jcckit.graphic.GraphicAttributes)>($r3, $r7, r11);
+
+        specialinvoke r13.<jcckit.plot.CartesianCoordinateSystem: void addLine(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint,jcckit.graphic.GraphicAttributes)>($r3, $r5, r12);
+
+        specialinvoke r13.<jcckit.plot.CartesianCoordinateSystem: void addLine(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint,jcckit.graphic.GraphicAttributes)>($r5, $r9, r11);
+
+        specialinvoke r13.<jcckit.plot.CartesianCoordinateSystem: void addLine(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint,jcckit.graphic.GraphicAttributes)>($r7, $r9, r12);
+
+        $d6 = d0 + d2;
+
+        $d7 = 0.5 * $d6;
+
+        specialinvoke r13.<jcckit.plot.CartesianCoordinateSystem: void createLabel(double,double,jcckit.plot.AxisParameters)>($d7, d3, r1);
+
+        $d8 = d3 + d5;
+
+        $d9 = 0.5 * $d8;
+
+        specialinvoke r13.<jcckit.plot.CartesianCoordinateSystem: void createLabel(double,double,jcckit.plot.AxisParameters)>(d0, $d9, r2);
+
+        return;
+    }
+
+    private void createLabel(double, double, jcckit.plot.AxisParameters)
+    {
+        jcckit.plot.AxisParameters r0;
+        java.lang.String $r1, $r9;
+        int $i0;
+        jcckit.plot.CartesianCoordinateSystem r2;
+        jcckit.graphic.Text $r3;
+        jcckit.graphic.GraphPoint $r4, $r5, $r7;
+        double d0, $d1, d2, $d3, $d4, $d5;
+        jcckit.graphic.GraphicalComposite $r6;
+        jcckit.graphic.TextAttributes $r8;
+
+        r2 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        d0 := @parameter0: double;
+
+        d2 := @parameter1: double;
+
+        r0 := @parameter2: jcckit.plot.AxisParameters;
+
+        $r1 = r0.<jcckit.plot.AxisParameters: java.lang.String axisLabel>;
+
+        $i0 = virtualinvoke $r1.<java.lang.String: int length()>();
+
+        if $i0 <= 0 goto label1;
+
+        $r6 = r2.<jcckit.plot.CartesianCoordinateSystem: jcckit.graphic.GraphicalComposite _view>;
+
+        $r3 = new jcckit.graphic.Text;
+
+        $r4 = new jcckit.graphic.GraphPoint;
+
+        $r5 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.GraphPoint axisLabelPosition>;
+
+        $d1 = virtualinvoke $r5.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $d3 = d0 + $d1;
+
+        $r7 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.GraphPoint axisLabelPosition>;
+
+        $d4 = virtualinvoke $r7.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d5 = d2 + $d4;
+
+        specialinvoke $r4.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d3, $d5);
+
+        $r9 = r0.<jcckit.plot.AxisParameters: java.lang.String axisLabel>;
+
+        $r8 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.TextAttributes axisLabelAttributes>;
+
+        specialinvoke $r3.<jcckit.graphic.Text: void <init>(jcckit.graphic.GraphPoint,java.lang.String,jcckit.graphic.GraphicAttributes)>($r4, $r9, $r8);
+
+        virtualinvoke $r6.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r3);
+
+     label1:
+        return;
+    }
+
+    private void createTicsAndGrid(boolean, double, double, jcckit.plot.AxisParameters)
+    {
+        jcckit.plot.AxisParameters r0;
+        double[] r1, r2;
+        boolean z0, $z1;
+        byte b0, $b5;
+        double $d0, $d1, $d2, $d3, $d4, d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, $d24, $d25, $d26, $d27, $d28, $d29, $d30, $d31, $d32;
+        int $i1, i6, $i7;
+        jcckit.plot.CartesianCoordinateSystem r3;
+        jcckit.data.DataPoint $r4;
+        jcckit.transformation.CartesianTransformation $r5;
+        jcckit.graphic.GraphPoint $r6, $r7, $r9, $r11, $r14, $r15, $r17, r24;
+        jcckit.graphic.LineAttributes $r8, $r12, $r22;
+        jcckit.util.TicLabelFormat $r13, $r19;
+        jcckit.graphic.Text $r16;
+        jcckit.graphic.GraphicalComposite $r18;
+        java.lang.String $r20;
+        jcckit.graphic.TextAttributes $r21;
+
+        r3 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        z0 := @parameter0: boolean;
+
+        d13 := @parameter1: double;
+
+        d5 := @parameter2: double;
+
+        r0 := @parameter3: jcckit.plot.AxisParameters;
+
+        r1 = virtualinvoke r0.<jcckit.plot.AxisParameters: double[] calculateTics()>();
+
+        if z0 == 0 goto label1;
+
+        $b5 = 1;
+
+        goto label2;
+
+     label1:
+        $b5 = 0;
+
+     label2:
+        b0 = $b5;
+
+        r2 = newarray (double)[2];
+
+        i6 = 0;
+
+     label3:
+        $i7 = lengthof r1;
+
+        if i6 >= $i7 goto label6;
+
+        $i1 = 1 - b0;
+
+        $d0 = r1[i6];
+
+        r2[$i1] = $d0;
+
+        r2[b0] = 1.0;
+
+        $r5 = r3.<jcckit.plot.CartesianCoordinateSystem: jcckit.transformation.CartesianTransformation _transformation>;
+
+        $r4 = new jcckit.data.DataPoint;
+
+        $d2 = r2[0];
+
+        $d1 = r2[1];
+
+        specialinvoke $r4.<jcckit.data.DataPoint: void <init>(double,double)>($d2, $d1);
+
+        r24 = virtualinvoke $r5.<jcckit.transformation.CartesianTransformation: jcckit.graphic.GraphPoint transformToGraph(jcckit.data.DataPoint)>($r4);
+
+        $d3 = virtualinvoke r24.<jcckit.graphic.GraphPoint: double getX()>();
+
+        r2[0] = $d3;
+
+        $d4 = virtualinvoke r24.<jcckit.graphic.GraphPoint: double getY()>();
+
+        r2[1] = $d4;
+
+        r2[b0] = d5;
+
+        $r6 = new jcckit.graphic.GraphPoint;
+
+        $d7 = r2[0];
+
+        $d6 = r2[1];
+
+        specialinvoke $r6.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d7, $d6);
+
+        $d9 = r2[b0];
+
+        $d8 = r0.<jcckit.plot.AxisParameters: double ticLength>;
+
+        $d10 = $d9 + $d8;
+
+        r2[b0] = $d10;
+
+        $r7 = new jcckit.graphic.GraphPoint;
+
+        $d12 = r2[0];
+
+        $d11 = r2[1];
+
+        specialinvoke $r7.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d12, $d11);
+
+        $r8 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.LineAttributes ticAttributes>;
+
+        specialinvoke r3.<jcckit.plot.CartesianCoordinateSystem: void addLine(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint,jcckit.graphic.GraphicAttributes)>($r6, $r7, $r8);
+
+        r2[b0] = d13;
+
+        $r9 = new jcckit.graphic.GraphPoint;
+
+        $d15 = r2[0];
+
+        $d14 = r2[1];
+
+        specialinvoke $r9.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d15, $d14);
+
+        $z1 = r0.<jcckit.plot.AxisParameters: boolean grid>;
+
+        if $z1 == 0 goto label4;
+
+        $r22 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.LineAttributes gridAttributes>;
+
+        specialinvoke r3.<jcckit.plot.CartesianCoordinateSystem: void addLine(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint,jcckit.graphic.GraphicAttributes)>($r6, $r9, $r22);
+
+     label4:
+        $d17 = r2[b0];
+
+        $d16 = r0.<jcckit.plot.AxisParameters: double ticLength>;
+
+        $d18 = $d17 - $d16;
+
+        r2[b0] = $d18;
+
+        $r11 = new jcckit.graphic.GraphPoint;
+
+        $d20 = r2[0];
+
+        $d19 = r2[1];
+
+        specialinvoke $r11.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d20, $d19);
+
+        $r12 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.LineAttributes ticAttributes>;
+
+        specialinvoke r3.<jcckit.plot.CartesianCoordinateSystem: void addLine(jcckit.graphic.GraphPoint,jcckit.graphic.GraphPoint,jcckit.graphic.GraphicAttributes)>($r9, $r11, $r12);
+
+        $r13 = r0.<jcckit.plot.AxisParameters: jcckit.util.TicLabelFormat ticLabelFormat>;
+
+        if $r13 == null goto label5;
+
+        $d22 = r2[b0];
+
+        $d21 = r0.<jcckit.plot.AxisParameters: double ticLength>;
+
+        $d23 = $d22 + $d21;
+
+        r2[b0] = $d23;
+
+        $d24 = r2[0];
+
+        $r14 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.GraphPoint ticLabelPosition>;
+
+        $d25 = virtualinvoke $r14.<jcckit.graphic.GraphPoint: double getX()>();
+
+        $d26 = $d24 + $d25;
+
+        r2[0] = $d26;
+
+        $d27 = r2[1];
+
+        $r15 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.GraphPoint ticLabelPosition>;
+
+        $d28 = virtualinvoke $r15.<jcckit.graphic.GraphPoint: double getY()>();
+
+        $d29 = $d27 + $d28;
+
+        r2[1] = $d29;
+
+        $r18 = r3.<jcckit.plot.CartesianCoordinateSystem: jcckit.graphic.GraphicalComposite _view>;
+
+        $r16 = new jcckit.graphic.Text;
+
+        $r17 = new jcckit.graphic.GraphPoint;
+
+        $d31 = r2[0];
+
+        $d30 = r2[1];
+
+        specialinvoke $r17.<jcckit.graphic.GraphPoint: void <init>(double,double)>($d31, $d30);
+
+        $r19 = r0.<jcckit.plot.AxisParameters: jcckit.util.TicLabelFormat ticLabelFormat>;
+
+        $d32 = r1[i6];
+
+        $r20 = interfaceinvoke $r19.<jcckit.util.TicLabelFormat: java.lang.String form(double)>($d32);
+
+        $r21 = r0.<jcckit.plot.AxisParameters: jcckit.graphic.TextAttributes ticLabelAttributes>;
+
+        specialinvoke $r16.<jcckit.graphic.Text: void <init>(jcckit.graphic.GraphPoint,java.lang.String,jcckit.graphic.GraphicAttributes)>($r17, $r20, $r21);
+
+        virtualinvoke $r18.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r16);
+
+     label5:
+        i6 = i6 + 1;
+
+        goto label3;
+
+     label6:
+        return;
+    }
+
+    private void addLine(jcckit.graphic.GraphPoint, jcckit.graphic.GraphPoint, jcckit.graphic.GraphicAttributes)
+    {
+        jcckit.graphic.Polygon $r0;
+        jcckit.graphic.GraphicAttributes r1;
+        jcckit.graphic.GraphPoint r3, r4;
+        jcckit.plot.CartesianCoordinateSystem r5;
+        jcckit.graphic.GraphicalComposite $r6;
+
+        r5 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        r3 := @parameter0: jcckit.graphic.GraphPoint;
+
+        r4 := @parameter1: jcckit.graphic.GraphPoint;
+
+        r1 := @parameter2: jcckit.graphic.GraphicAttributes;
+
+        $r0 = new jcckit.graphic.Polygon;
+
+        specialinvoke $r0.<jcckit.graphic.Polygon: void <init>(jcckit.graphic.GraphicAttributes,boolean)>(r1, 0);
+
+        virtualinvoke $r0.<jcckit.graphic.Polygon: void addPoint(jcckit.graphic.GraphPoint)>(r3);
+
+        virtualinvoke $r0.<jcckit.graphic.Polygon: void addPoint(jcckit.graphic.GraphPoint)>(r4);
+
+        $r6 = r5.<jcckit.plot.CartesianCoordinateSystem: jcckit.graphic.GraphicalComposite _view>;
+
+        virtualinvoke $r6.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r0);
+
+        return;
+    }
+
+    public jcckit.graphic.GraphicalElement getView()
+    {
+        jcckit.plot.CartesianCoordinateSystem r0;
+        jcckit.graphic.GraphicalComposite $r1;
+
+        r0 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        $r1 = r0.<jcckit.plot.CartesianCoordinateSystem: jcckit.graphic.GraphicalComposite _view>;
+
+        return $r1;
+    }
+
+    public jcckit.graphic.ClippingShape getClippingShape()
+    {
+        jcckit.plot.CartesianCoordinateSystem r0;
+        jcckit.graphic.ClippingRectangle $r1;
+
+        r0 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        $r1 = r0.<jcckit.plot.CartesianCoordinateSystem: jcckit.graphic.ClippingRectangle _clippingRectangle>;
+
+        return $r1;
+    }
+
+    public jcckit.transformation.Transformation getTransformation()
+    {
+        jcckit.plot.CartesianCoordinateSystem r0;
+        jcckit.transformation.CartesianTransformation $r1;
+
+        r0 := @this: jcckit.plot.CartesianCoordinateSystem;
+
+        $r1 = r0.<jcckit.plot.CartesianCoordinateSystem: jcckit.transformation.CartesianTransformation _transformation>;
+
+        return $r1;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.plot.CartesianCoordinateSystem: java.lang.String Y_AXIS_KEY> = "yAxis";
+
+        <jcckit.plot.CartesianCoordinateSystem: java.lang.String X_AXIS_KEY> = "xAxis";
+
+        <jcckit.plot.CartesianCoordinateSystem: java.lang.String ORIGIN_KEY> = "origin";
+
+        return;
+    }
+}

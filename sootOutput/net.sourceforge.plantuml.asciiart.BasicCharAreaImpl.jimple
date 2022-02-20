@@ -1,0 +1,634 @@
+public class net.sourceforge.plantuml.asciiart.BasicCharAreaImpl extends java.lang.Object implements net.sourceforge.plantuml.asciiart.BasicCharArea
+{
+    private int charSize1;
+    private int charSize2;
+    private int width;
+    private int height;
+    private char[][] chars;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        int $i0, $i1, $i2, $i3, i4, i5;
+        char[][] $r1, $r2;
+        char[] $r3;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize1> = 160;
+
+        r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize2> = 160;
+
+        $i1 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize1>;
+
+        $i0 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize2>;
+
+        $r1 = newmultiarray (char)[$i1][$i0];
+
+        r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: char[][] chars> = $r1;
+
+        i4 = 0;
+
+     label1:
+        $i2 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize1>;
+
+        if i4 >= $i2 goto label4;
+
+        i5 = 0;
+
+     label2:
+        $i3 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize2>;
+
+        if i5 >= $i3 goto label3;
+
+        $r2 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: char[][] chars>;
+
+        $r3 = $r2[i4];
+
+        $r3[i5] = 32;
+
+        i5 = i5 + 1;
+
+        goto label2;
+
+     label3:
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    public final int getWidth()
+    {
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        $i0 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int width>;
+
+        return $i0;
+    }
+
+    public final int getHeight()
+    {
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        $i0 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int height>;
+
+        return $i0;
+    }
+
+    public void drawChar(char, int, int)
+    {
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        int i0, i1, $i3, $i4, $i5, $i6;
+        char[][] $r1;
+        char c2;
+        char[] $r2;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        c2 := @parameter0: char;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        specialinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void ensurePossible(int,int)>(i0, i1);
+
+        $r1 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: char[][] chars>;
+
+        $r2 = $r1[i0];
+
+        $r2[i1] = c2;
+
+        $i3 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int width>;
+
+        if i0 < $i3 goto label1;
+
+        $i6 = i0 + 1;
+
+        r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int width> = $i6;
+
+     label1:
+        $i4 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int height>;
+
+        if i1 < $i4 goto label2;
+
+        $i5 = i1 + 1;
+
+        r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int height> = $i5;
+
+     label2:
+        return;
+    }
+
+    private boolean isLong(char)
+    {
+        char c0;
+        int i1;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        c0 := @parameter0: char;
+
+        i1 = staticinvoke <net.sourceforge.plantuml.asciiart.Wcwidth: int of(int)>(c0);
+
+        if i1 != 1 goto label1;
+
+        return 0;
+
+     label1:
+        if i1 != 2 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    private void ensurePossible(int, int)
+    {
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        int i0, i1, $i2, $i3, $i4, $i5, i6, i7, i8, i9;
+        char[][] r1, $r2;
+        char[] $r3, $r4;
+        char c10;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        i6 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize1>;
+
+        i7 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize2>;
+
+     label01:
+        if i0 < i6 goto label02;
+
+        i6 = i6 * 2;
+
+        goto label01;
+
+     label02:
+        if i1 < i7 goto label03;
+
+        i7 = i7 * 2;
+
+        goto label02;
+
+     label03:
+        $i2 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize1>;
+
+        if i6 != $i2 goto label04;
+
+        $i5 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize2>;
+
+        if i7 == $i5 goto label10;
+
+     label04:
+        r1 = newmultiarray (char)[i6][i7];
+
+        i8 = 0;
+
+     label05:
+        if i8 >= i6 goto label09;
+
+        i9 = 0;
+
+     label06:
+        if i9 >= i7 goto label08;
+
+        c10 = 32;
+
+        $i3 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize1>;
+
+        if i8 >= $i3 goto label07;
+
+        $i4 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize2>;
+
+        if i9 >= $i4 goto label07;
+
+        $r2 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: char[][] chars>;
+
+        $r3 = $r2[i8];
+
+        c10 = $r3[i9];
+
+     label07:
+        $r4 = r1[i8];
+
+        $r4[i9] = c10;
+
+        i9 = i9 + 1;
+
+        goto label06;
+
+     label08:
+        i8 = i8 + 1;
+
+        goto label05;
+
+     label09:
+        r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: char[][] chars> = r1;
+
+        r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize1> = i6;
+
+        r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize2> = i7;
+
+     label10:
+        return;
+    }
+
+    public void drawStringLR(java.lang.String, int, int)
+    {
+        int i0, $i1, i3, i4, i5;
+        java.lang.String r0;
+        char c2;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r1;
+        boolean $z0;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        r0 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        i3 := @parameter2: int;
+
+        i4 = i0;
+
+        i5 = 0;
+
+     label1:
+        $i1 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if i5 >= $i1 goto label3;
+
+        c2 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i5);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void drawChar(char,int,int)>(c2, i4, i3);
+
+        i4 = i4 + 1;
+
+        $z0 = specialinvoke r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: boolean isLong(char)>(c2);
+
+        if $z0 == 0 goto label2;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void drawChar(char,int,int)>(0, i4, i3);
+
+        i4 = i4 + 1;
+
+     label2:
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    public void drawStringTB(java.lang.String, int, int)
+    {
+        java.lang.String r0;
+        int $i0, i2, i3, $i4, i5;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r1;
+        char $c1;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        r0 := @parameter0: java.lang.String;
+
+        i2 := @parameter1: int;
+
+        i3 := @parameter2: int;
+
+        i5 = 0;
+
+     label1:
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if i5 >= $i0 goto label2;
+
+        $c1 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i5);
+
+        $i4 = i3 + i5;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void drawChar(char,int,int)>($c1, i2, $i4);
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public java.lang.String getLine(int)
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r1;
+        int $i0, $i1, i2, i4;
+        java.lang.String $r3;
+        char[][] $r4;
+        char[] $r5;
+        char c3;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        i2 := @parameter0: int;
+
+        $r0 = new java.lang.StringBuilder;
+
+        $i0 = r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int charSize1>;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>(int)>($i0);
+
+        i4 = 0;
+
+     label1:
+        $i1 = r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int width>;
+
+        if i4 >= $i1 goto label3;
+
+        $r4 = r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: char[][] chars>;
+
+        $r5 = $r4[i4];
+
+        c3 = $r5[i2];
+
+        if c3 == 0 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.StringUtils: void appendInternalToRealBoldNumber(java.lang.StringBuilder,char)>($r0, c3);
+
+     label2:
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label3:
+        $r3 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+
+    public void print(java.io.PrintStream)
+    {
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        java.lang.String r4;
+        java.io.PrintStream r5;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        r5 := @parameter0: java.io.PrintStream;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: java.util.List getLines()>();
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (java.lang.String) $r3;
+
+        virtualinvoke r5.<java.io.PrintStream: void println(java.lang.String)>(r4);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public java.util.List getLines()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r1;
+        int $i0, $i1, i2;
+        java.util.List $r3;
+        java.lang.String $r4;
+
+        r1 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        $r0 = new java.util.ArrayList;
+
+        $i0 = r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int height>;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(int)>($i0);
+
+        i2 = 0;
+
+     label1:
+        $i1 = r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: int height>;
+
+        if i2 >= $i1 goto label2;
+
+        $r4 = virtualinvoke r1.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: java.lang.String getLine(int)>(i2);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r4);
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label2:
+        $r3 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r0);
+
+        return $r3;
+    }
+
+    public void drawHLine(char, int, int, int)
+    {
+        int i0, i1, i3, i4;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        char c2;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        c2 := @parameter0: char;
+
+        i3 := @parameter1: int;
+
+        i0 := @parameter2: int;
+
+        i1 := @parameter3: int;
+
+        i4 = i0;
+
+     label1:
+        if i4 >= i1 goto label2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void drawChar(char,int,int)>(c2, i4, i3);
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void drawHLine(char, int, int, int, char, char)
+    {
+        int i0, i1, i2, i7;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        char[][] $r1;
+        char[] $r2;
+        char c3, $c4, c5, c6;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        c5 := @parameter0: char;
+
+        i2 := @parameter1: int;
+
+        i0 := @parameter2: int;
+
+        i1 := @parameter3: int;
+
+        c3 := @parameter4: char;
+
+        c6 := @parameter5: char;
+
+        i7 = i0;
+
+     label1:
+        if i7 >= i1 goto label4;
+
+        specialinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void ensurePossible(int,int)>(i7, i2);
+
+        $r1 = r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: char[][] chars>;
+
+        $r2 = $r1[i7];
+
+        $c4 = $r2[i2];
+
+        if $c4 != c3 goto label2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void drawChar(char,int,int)>(c6, i7, i2);
+
+        goto label3;
+
+     label2:
+        virtualinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void drawChar(char,int,int)>(c5, i7, i2);
+
+     label3:
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    public void drawVLine(char, int, int, int)
+    {
+        int i0, i1, i3, i4;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        char c2;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        c2 := @parameter0: char;
+
+        i3 := @parameter1: int;
+
+        i0 := @parameter2: int;
+
+        i1 := @parameter3: int;
+
+        i4 = i0;
+
+     label1:
+        if i4 >= i1 goto label2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void drawChar(char,int,int)>(c2, i3, i4);
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        java.util.List $r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: java.util.List getLines()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.Object: java.lang.String toString()>();
+
+        return $r2;
+    }
+
+    public void fillRect(char, int, int, int, int)
+    {
+        int i0, i1, i3, i4, $i5, $i6, i7, i8;
+        net.sourceforge.plantuml.asciiart.BasicCharAreaImpl r0;
+        char c2;
+
+        r0 := @this: net.sourceforge.plantuml.asciiart.BasicCharAreaImpl;
+
+        c2 := @parameter0: char;
+
+        i3 := @parameter1: int;
+
+        i4 := @parameter2: int;
+
+        i0 := @parameter3: int;
+
+        i1 := @parameter4: int;
+
+        i7 = 0;
+
+     label1:
+        if i7 >= i0 goto label4;
+
+        i8 = 0;
+
+     label2:
+        if i8 >= i1 goto label3;
+
+        $i6 = i3 + i7;
+
+        $i5 = i4 + i8;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.asciiart.BasicCharAreaImpl: void drawChar(char,int,int)>(c2, $i6, $i5);
+
+        i8 = i8 + 1;
+
+        goto label2;
+
+     label3:
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+}

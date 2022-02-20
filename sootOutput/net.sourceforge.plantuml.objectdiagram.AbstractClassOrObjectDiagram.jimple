@@ -1,0 +1,857 @@
+public abstract class net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram extends net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram
+{
+    private final java.util.List associations;
+    static final boolean $assertionsDisabled;
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.UmlDiagramType, net.sourceforge.plantuml.ISkinSimple)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType r3;
+        net.sourceforge.plantuml.ISkinSimple r4;
+        java.util.ArrayList $r5;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r3 := @parameter2: net.sourceforge.plantuml.UmlDiagramType;
+
+        r4 := @parameter3: net.sourceforge.plantuml.ISkinSimple;
+
+        specialinvoke r0.<net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType,net.sourceforge.plantuml.ISkinSimple)>(r1, r2, r3, r4);
+
+        $r5 = new java.util.ArrayList;
+
+        specialinvoke $r5.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List associations> = $r5;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.Ident cleanIdent(net.sourceforge.plantuml.cucadiagram.Ident)
+    {
+        net.sourceforge.plantuml.cucadiagram.Ident r0, $r2;
+        java.lang.String r1;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r3;
+
+        r3 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.Ident;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getName()>();
+
+        $z0 = virtualinvoke r1.<java.lang.String: boolean startsWith(java.lang.String)>("\"");
+
+        if $z0 == 0 goto label1;
+
+        $z1 = virtualinvoke r1.<java.lang.String: boolean endsWith(java.lang.String)>("\"");
+
+        if $z1 == 0 goto label1;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Ident: net.sourceforge.plantuml.cucadiagram.Ident eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String)>("\"");
+
+        return $r2;
+
+     label1:
+        return r0;
+    }
+
+    public final boolean insertBetween(net.sourceforge.plantuml.cucadiagram.IEntity, net.sourceforge.plantuml.cucadiagram.IEntity, net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.IEntity r1, r2, r5;
+        net.sourceforge.plantuml.cucadiagram.Link r3, $r4, $r14;
+        net.sourceforge.plantuml.cucadiagram.LinkType $r6, $r15;
+        net.sourceforge.plantuml.cucadiagram.Display $r7, $r16;
+        int $i0, $i1;
+        java.lang.String $r8, $r9, $r10, $r17, $r18, $r19;
+        net.sourceforge.plantuml.ISkinParam $r11, $r20;
+        net.sourceforge.plantuml.style.StyleBuilder $r12, $r21;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r2 := @parameter1: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r5 := @parameter2: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r3 = specialinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Link foundLink(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r1, r2);
+
+        if r3 != null goto label1;
+
+        return 0;
+
+     label1:
+        $r4 = new net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r6 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        $r7 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        $i0 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        $r8 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier1()>();
+
+        $r9 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getLabeldistance()>();
+
+        $r10 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getLabelangle()>();
+
+        $r11 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r12 = interfaceinvoke $r11.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r4.<net.sourceforge.plantuml.cucadiagram.Link: void <init>(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,net.sourceforge.plantuml.style.StyleBuilder)>(r1, r5, $r6, $r7, $i0, $r8, null, $r9, $r10, $r12);
+
+        $r14 = new net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r15 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        $r16 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        $i1 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        $r17 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier2()>();
+
+        $r18 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getLabeldistance()>();
+
+        $r19 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getLabelangle()>();
+
+        $r20 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r21 = interfaceinvoke $r20.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r14.<net.sourceforge.plantuml.cucadiagram.Link: void <init>(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,net.sourceforge.plantuml.style.StyleBuilder)>(r5, r2, $r15, $r16, $i1, null, $r17, $r18, $r19, $r21);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void addLink(net.sourceforge.plantuml.cucadiagram.Link)>($r4);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void addLink(net.sourceforge.plantuml.cucadiagram.Link)>($r14);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void removeLink(net.sourceforge.plantuml.cucadiagram.Link)>(r3);
+
+        return 1;
+    }
+
+    private net.sourceforge.plantuml.cucadiagram.Link foundLink(net.sourceforge.plantuml.cucadiagram.IEntity, net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        java.util.List r1;
+        int $i0, i1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.cucadiagram.Link r3;
+        net.sourceforge.plantuml.cucadiagram.IEntity r4, r5;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r4 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r5 := @parameter1: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List getLinks()>();
+
+        $i0 = interfaceinvoke r1.<java.util.List: int size()>();
+
+        i1 = $i0 - 1;
+
+     label1:
+        if i1 < 0 goto label3;
+
+        $r2 = interfaceinvoke r1.<java.util.List: java.lang.Object get(int)>(i1);
+
+        r3 = (net.sourceforge.plantuml.cucadiagram.Link) $r2;
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.Link: boolean isBetween(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r4, r5);
+
+        if $z0 == 0 goto label2;
+
+        return r3;
+
+     label2:
+        i1 = i1 + -1;
+
+        goto label1;
+
+     label3:
+        return null;
+    }
+
+    public int getNbOfHozizontalLollipop(net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.cucadiagram.IEntity r0;
+        net.sourceforge.plantuml.cucadiagram.LeafType $r1, $r2, $r4, $r5, $r11, $r12;
+        java.lang.IllegalArgumentException $r3;
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r6;
+        java.util.List $r7;
+        java.util.Iterator r8;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.Object $r9;
+        net.sourceforge.plantuml.cucadiagram.Link r10;
+        int $i0, i1;
+
+        r6 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        $r1 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.LeafType getLeafType()>();
+
+        $r2 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType LOLLIPOP_FULL>;
+
+        if $r1 == $r2 goto label1;
+
+        $r4 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.LeafType getLeafType()>();
+
+        $r5 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType LOLLIPOP_HALF>;
+
+        if $r4 != $r5 goto label2;
+
+     label1:
+        $r3 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r3.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r3;
+
+     label2:
+        i1 = 0;
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List getLinks()>();
+
+        r8 = interfaceinvoke $r7.<java.util.List: java.util.Iterator iterator()>();
+
+     label3:
+        $z0 = interfaceinvoke r8.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label6;
+
+        $r9 = interfaceinvoke r8.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (net.sourceforge.plantuml.cucadiagram.Link) $r9;
+
+        $i0 = virtualinvoke r10.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        if $i0 != 1 goto label5;
+
+        $z1 = virtualinvoke r10.<net.sourceforge.plantuml.cucadiagram.Link: boolean contains(net.sourceforge.plantuml.cucadiagram.IEntity)>(r0);
+
+        if $z1 == 0 goto label5;
+
+        $r11 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType LOLLIPOP_FULL>;
+
+        $z2 = virtualinvoke r10.<net.sourceforge.plantuml.cucadiagram.Link: boolean containsType(net.sourceforge.plantuml.cucadiagram.LeafType)>($r11);
+
+        if $z2 != 0 goto label4;
+
+        $r12 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType LOLLIPOP_HALF>;
+
+        $z3 = virtualinvoke r10.<net.sourceforge.plantuml.cucadiagram.Link: boolean containsType(net.sourceforge.plantuml.cucadiagram.LeafType)>($r12);
+
+        if $z3 == 0 goto label5;
+
+     label4:
+        i1 = i1 + 1;
+
+     label5:
+        goto label3;
+
+     label6:
+        return i1;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult associationClass(java.lang.String, java.lang.String, java.lang.String, java.lang.String, net.sourceforge.plantuml.cucadiagram.LinkType, net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        java.lang.String r1, r3, r5, r7, r20, r21;
+        net.sourceforge.plantuml.cucadiagram.Ident r2, r4, r6, r8, r22, r23;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5;
+        net.sourceforge.plantuml.cucadiagram.Code r9, r10, r11, r24, $r37, $r38, $r39, $r40, $r41, $r42;
+        net.sourceforge.plantuml.cucadiagram.IEntity r13, r14, r15, r16, r27, r29;
+        java.util.List r17, r18;
+        int $i0, $i1;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r19, $r36;
+        net.sourceforge.plantuml.cucadiagram.LeafType $r26, $r28;
+        net.sourceforge.plantuml.cucadiagram.Link $r30;
+        net.sourceforge.plantuml.cucadiagram.LinkType r31;
+        net.sourceforge.plantuml.cucadiagram.Display r32;
+        net.sourceforge.plantuml.ISkinParam $r33;
+        net.sourceforge.plantuml.style.StyleBuilder $r34;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r1 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: java.lang.String;
+
+        r5 := @parameter2: java.lang.String;
+
+        r7 := @parameter3: java.lang.String;
+
+        r31 := @parameter4: net.sourceforge.plantuml.cucadiagram.LinkType;
+
+        r32 := @parameter5: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r1);
+
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r3);
+
+        r6 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r5);
+
+        r8 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r7);
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label01;
+
+        $r37 = r2;
+
+        goto label02;
+
+     label01:
+        $r37 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r1);
+
+     label02:
+        r9 = $r37;
+
+        $z1 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean V1972()>();
+
+        if $z1 == 0 goto label03;
+
+        $r38 = r4;
+
+        goto label04;
+
+     label03:
+        $r38 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r3);
+
+     label04:
+        r10 = $r38;
+
+        $z2 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean V1972()>();
+
+        if $z2 == 0 goto label05;
+
+        $r39 = r6;
+
+        goto label06;
+
+     label05:
+        $r39 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r5);
+
+     label06:
+        r11 = $r39;
+
+        $z3 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean V1972()>();
+
+        if $z3 == 0 goto label07;
+
+        $r40 = r8;
+
+        goto label08;
+
+     label07:
+        $r40 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r7);
+
+     label08:
+        r13 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r2, r9, null, null);
+
+        r14 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r4, r10, null, null);
+
+        r15 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r6, r11, null, null);
+
+        r16 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r8, $r40, null, null);
+
+        r17 = specialinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List getExistingAssociatedPoints(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r13, r14);
+
+        r18 = specialinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List getExistingAssociatedPoints(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r15, r16);
+
+        $i0 = interfaceinvoke r17.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label13;
+
+        $i1 = interfaceinvoke r18.<java.util.List: int size()>();
+
+        if $i1 != 0 goto label13;
+
+        r20 = staticinvoke <net.sourceforge.plantuml.utils.UniqueSequence: java.lang.String getString(java.lang.String)>("apoint");
+
+        r21 = staticinvoke <net.sourceforge.plantuml.utils.UniqueSequence: java.lang.String getString(java.lang.String)>("apoint");
+
+        r22 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r20);
+
+        r23 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r21);
+
+        $z4 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean V1972()>();
+
+        if $z4 == 0 goto label09;
+
+        $r41 = r22;
+
+        goto label10;
+
+     label09:
+        $r41 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r20);
+
+     label10:
+        r24 = $r41;
+
+        $z5 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean V1972()>();
+
+        if $z5 == 0 goto label11;
+
+        $r42 = r23;
+
+        goto label12;
+
+     label11:
+        $r42 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r21);
+
+     label12:
+        $r26 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType POINT_FOR_ASSOCIATION>;
+
+        r27 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r22, r24, $r26, null);
+
+        $r28 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType POINT_FOR_ASSOCIATION>;
+
+        r29 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r23, $r42, $r28, null);
+
+        specialinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void insertPointBetween(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r13, r14, r27);
+
+        specialinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void insertPointBetween(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r15, r16, r29);
+
+        $r30 = new net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r33 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r34 = interfaceinvoke $r33.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r30.<net.sourceforge.plantuml.cucadiagram.Link: void <init>(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display,int,net.sourceforge.plantuml.style.StyleBuilder)>(r27, r29, r31, r32, 1, $r34);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void addLink(net.sourceforge.plantuml.cucadiagram.Link)>($r30);
+
+        $r36 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r36;
+
+     label13:
+        $r19 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("Cannot link two associations points");
+
+        return $r19;
+    }
+
+    private void insertPointBetween(net.sourceforge.plantuml.cucadiagram.IEntity, net.sourceforge.plantuml.cucadiagram.IEntity, net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.IEntity r1, r2, r3, r6, $r35, $r36;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.cucadiagram.Link $r5, $r17, $r27, r34;
+        net.sourceforge.plantuml.cucadiagram.LinkType $r7, $r8, $r18, $r19, $r28;
+        net.sourceforge.plantuml.cucadiagram.Display $r9, $r20, $r31;
+        int $i0, $i1;
+        java.lang.String $r10, $r11, $r12, $r21, $r22, $r23;
+        net.sourceforge.plantuml.ISkinParam $r13, $r24, $r32;
+        net.sourceforge.plantuml.style.StyleBuilder $r14, $r25, $r33;
+        net.sourceforge.plantuml.cucadiagram.LinkArrow $r16;
+        net.sourceforge.plantuml.cucadiagram.LinkDecor $r29, $r30;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r2 := @parameter1: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r6 := @parameter2: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r34 = specialinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Link foundLink(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r1, r2);
+
+        if r34 != null goto label1;
+
+        $r27 = new net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r28 = new net.sourceforge.plantuml.cucadiagram.LinkType;
+
+        $r30 = <net.sourceforge.plantuml.cucadiagram.LinkDecor: net.sourceforge.plantuml.cucadiagram.LinkDecor NONE>;
+
+        $r29 = <net.sourceforge.plantuml.cucadiagram.LinkDecor: net.sourceforge.plantuml.cucadiagram.LinkDecor NONE>;
+
+        specialinvoke $r28.<net.sourceforge.plantuml.cucadiagram.LinkType: void <init>(net.sourceforge.plantuml.cucadiagram.LinkDecor,net.sourceforge.plantuml.cucadiagram.LinkDecor)>($r30, $r29);
+
+        $r31 = <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display NULL>;
+
+        $r32 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r33 = interfaceinvoke $r32.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r27.<net.sourceforge.plantuml.cucadiagram.Link: void <init>(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display,int,net.sourceforge.plantuml.style.StyleBuilder)>(r1, r2, $r28, $r31, 2, $r33);
+
+        r34 = $r27;
+
+        goto label2;
+
+     label1:
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void removeLink(net.sourceforge.plantuml.cucadiagram.Link)>(r34);
+
+     label2:
+        $z0 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: boolean isInverted()>();
+
+        if $z0 == 0 goto label3;
+
+        $r35 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        goto label4;
+
+     label3:
+        $r35 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+     label4:
+        r3 = $r35;
+
+        $z1 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: boolean isInverted()>();
+
+        if $z1 == 0 goto label5;
+
+        $r36 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        goto label6;
+
+     label5:
+        $r36 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+     label6:
+        $r5 = new net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r7 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkType getPart2()>();
+
+        $r9 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        $i0 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        $r10 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier1()>();
+
+        $r11 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getLabeldistance()>();
+
+        $r12 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getLabelangle()>();
+
+        $r13 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r14 = interfaceinvoke $r13.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r5.<net.sourceforge.plantuml.cucadiagram.Link: void <init>(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,net.sourceforge.plantuml.style.StyleBuilder)>(r3, r6, $r8, $r9, $i0, $r10, null, $r11, $r12, $r14);
+
+        $r16 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkArrow getLinkArrow()>();
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.cucadiagram.Link: void setLinkArrow(net.sourceforge.plantuml.cucadiagram.LinkArrow)>($r16);
+
+        $r17 = new net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r18 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        $r19 = virtualinvoke $r18.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkType getPart1()>();
+
+        $r20 = <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display NULL>;
+
+        $i1 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        $r21 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier2()>();
+
+        $r22 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getLabeldistance()>();
+
+        $r23 = virtualinvoke r34.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getLabelangle()>();
+
+        $r24 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r25 = interfaceinvoke $r24.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r17.<net.sourceforge.plantuml.cucadiagram.Link: void <init>(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,net.sourceforge.plantuml.style.StyleBuilder)>(r6, $r36, $r19, $r20, $i1, null, $r21, $r22, $r23, $r25);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void addLink(net.sourceforge.plantuml.cucadiagram.Link)>($r5);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void addLink(net.sourceforge.plantuml.cucadiagram.Link)>($r17);
+
+        return;
+    }
+
+    public boolean associationClass(int, java.lang.String, java.lang.String, net.sourceforge.plantuml.cucadiagram.IEntity, net.sourceforge.plantuml.cucadiagram.LinkType, net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        java.lang.String r1, r3;
+        net.sourceforge.plantuml.cucadiagram.Ident r2, r4;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.cucadiagram.Code r5, $r19, $r20;
+        net.sourceforge.plantuml.cucadiagram.IEntity r7, r8, r11;
+        java.util.List r9, $r15, $r18;
+        int $i0, $i1, i2, $i3;
+        java.lang.Object $r10;
+        net.sourceforge.plantuml.cucadiagram.Display r12;
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association $r13, $r17, r22;
+        net.sourceforge.plantuml.cucadiagram.LinkType r14;
+        java.lang.AssertionError $r16;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        i2 := @parameter0: int;
+
+        r1 := @parameter1: java.lang.String;
+
+        r3 := @parameter2: java.lang.String;
+
+        r11 := @parameter3: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r14 := @parameter4: net.sourceforge.plantuml.cucadiagram.LinkType;
+
+        r12 := @parameter5: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r1);
+
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r3);
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r19 = r2;
+
+        goto label2;
+
+     label1:
+        $r19 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r1);
+
+     label2:
+        r5 = $r19;
+
+        $z1 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean V1972()>();
+
+        if $z1 == 0 goto label3;
+
+        $r20 = r4;
+
+        goto label4;
+
+     label3:
+        $r20 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r3);
+
+     label4:
+        r7 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r2, r5, null, null);
+
+        r8 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r4, $r20, null, null);
+
+        r9 = specialinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List getExistingAssociatedPoints(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r7, r8);
+
+        $i0 = interfaceinvoke r9.<java.util.List: int size()>();
+
+        if $i0 <= 1 goto label5;
+
+        return 0;
+
+     label5:
+        $i1 = interfaceinvoke r9.<java.util.List: int size()>();
+
+        if $i1 != 0 goto label6;
+
+        $r17 = new net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association;
+
+        specialinvoke $r17.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association: void <init>(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram,int,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r0, i2, r7, r8, r11);
+
+        virtualinvoke $r17.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association: void createNew(int,net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display)>(i2, r14, r12);
+
+        $r18 = r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List associations>;
+
+        interfaceinvoke $r18.<java.util.List: boolean add(java.lang.Object)>($r17);
+
+        return 1;
+
+     label6:
+        $z2 = <net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean $assertionsDisabled>;
+
+        if $z2 != 0 goto label7;
+
+        $i3 = interfaceinvoke r9.<java.util.List: int size()>();
+
+        if $i3 == 1 goto label7;
+
+        $r16 = new java.lang.AssertionError;
+
+        specialinvoke $r16.<java.lang.AssertionError: void <init>()>();
+
+        throw $r16;
+
+     label7:
+        $r10 = interfaceinvoke r9.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r13 = (net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association) $r10;
+
+        r22 = virtualinvoke $r13.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association createSecondAssociation(int,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.Display)>(i2, r11, r12);
+
+        virtualinvoke r22.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association: void createInSecond(net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display)>(r14, r12);
+
+        $r15 = r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List associations>;
+
+        interfaceinvoke $r15.<java.util.List: boolean add(java.lang.Object)>(r22);
+
+        return 1;
+    }
+
+    private java.util.List getExistingAssociatedPoints(net.sourceforge.plantuml.cucadiagram.IEntity, net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0, $z1;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association r6;
+        net.sourceforge.plantuml.cucadiagram.IEntity r7, r8;
+
+        r2 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r7 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r8 := @parameter1: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: java.util.List associations>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association) $r5;
+
+        $z1 = virtualinvoke r6.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram$Association: boolean sameCouple(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r7, r8);
+
+        if $z1 == 0 goto label2;
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r6);
+
+     label2:
+        goto label1;
+
+     label3:
+        return $r0;
+    }
+
+    public void setLegend(net.sourceforge.plantuml.cucadiagram.DisplayPositioned)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.IGroup r1;
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositioned r2;
+
+        r0 := @this: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.DisplayPositioned;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.IGroup getCurrentGroup()>();
+
+        $z0 = r1 instanceof net.sourceforge.plantuml.cucadiagram.GroupRoot;
+
+        if $z0 == 0 goto label1;
+
+        specialinvoke r0.<net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram: void setLegend(net.sourceforge.plantuml.cucadiagram.DisplayPositioned)>(r2);
+
+        return;
+
+     label1:
+        interfaceinvoke r1.<net.sourceforge.plantuml.cucadiagram.IGroup: void setLegend(net.sourceforge.plantuml.cucadiagram.DisplayPositioned)>(r2);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.cucadiagram.Link access$000(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram, net.sourceforge.plantuml.cucadiagram.IEntity, net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.IEntity r1, r2;
+        net.sourceforge.plantuml.cucadiagram.Link $r3;
+
+        r0 := @parameter0: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        r2 := @parameter2: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: net.sourceforge.plantuml.cucadiagram.Link foundLink(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity)>(r1, r2);
+
+        return $r3;
+    }
+
+    static void access$100(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram, net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.Link;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void removeLink(net.sourceforge.plantuml.cucadiagram.Link)>(r1);
+
+        return;
+    }
+
+    static void access$200(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram, net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.Link;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void removeLink(net.sourceforge.plantuml.cucadiagram.Link)>(r1);
+
+        return;
+    }
+
+    static void access$300(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram, net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.Link;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: void removeLink(net.sourceforge.plantuml.cucadiagram.Link)>(r1);
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/objectdiagram/AbstractClassOrObjectDiagram;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

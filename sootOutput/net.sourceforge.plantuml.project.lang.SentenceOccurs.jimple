@@ -1,0 +1,159 @@
+public class net.sourceforge.plantuml.project.lang.SentenceOccurs extends net.sourceforge.plantuml.project.lang.SentenceSimple
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.project.lang.SentenceOccurs r0;
+        net.sourceforge.plantuml.project.lang.SubjectTask $r1;
+        net.sourceforge.plantuml.command.regex.IRegex $r2;
+        net.sourceforge.plantuml.project.lang.ComplementFromTo $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.lang.SentenceOccurs;
+
+        $r1 = new net.sourceforge.plantuml.project.lang.SubjectTask;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.project.lang.SubjectTask: void <init>()>();
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.project.lang.Verbs: net.sourceforge.plantuml.command.regex.IRegex occurs()>();
+
+        $r3 = new net.sourceforge.plantuml.project.lang.ComplementFromTo;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.project.lang.ComplementFromTo: void <init>()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.lang.SentenceSimple: void <init>(net.sourceforge.plantuml.project.lang.Subject,net.sourceforge.plantuml.command.regex.IRegex,net.sourceforge.plantuml.project.lang.Something)>($r1, $r2, $r3);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.project.GanttDiagram, java.lang.Object, java.lang.Object)
+    {
+        java.lang.Object r0, r2;
+        net.sourceforge.plantuml.project.core.Task r1, r7, r8;
+        net.sourceforge.plantuml.project.lang.TwoNames r3;
+        java.lang.String r4, r5, $r30, $r36;
+        net.sourceforge.plantuml.project.GanttDiagram r6;
+        net.sourceforge.plantuml.project.time.Day $r9, $r10;
+        net.sourceforge.plantuml.project.GanttConstraint $r11, $r18;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r12, $r19;
+        net.sourceforge.plantuml.style.StyleBuilder $r13, $r20;
+        net.sourceforge.plantuml.project.core.TaskInstant $r14, $r16, $r21, $r23;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r15, $r17, $r22, $r24;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r25, $r31, $r37;
+        java.lang.StringBuilder $r26, $r27, $r28, $r29, $r32, $r33, $r34, $r35;
+        net.sourceforge.plantuml.project.lang.SentenceOccurs r38;
+
+        r38 := @this: net.sourceforge.plantuml.project.lang.SentenceOccurs;
+
+        r6 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0 := @parameter1: java.lang.Object;
+
+        r2 := @parameter2: java.lang.Object;
+
+        r1 = (net.sourceforge.plantuml.project.core.Task) r0;
+
+        r3 = (net.sourceforge.plantuml.project.lang.TwoNames) r2;
+
+        r4 = virtualinvoke r3.<net.sourceforge.plantuml.project.lang.TwoNames: java.lang.String getName1()>();
+
+        r5 = virtualinvoke r3.<net.sourceforge.plantuml.project.lang.TwoNames: java.lang.String getName2()>();
+
+        r7 = virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.Task getExistingTask(java.lang.String)>(r4);
+
+        if r7 != null goto label1;
+
+        $r32 = new java.lang.StringBuilder;
+
+        specialinvoke $r32.<java.lang.StringBuilder: void <init>()>();
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("No such ");
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r4);
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" task");
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r37 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r36);
+
+        return $r37;
+
+     label1:
+        r8 = virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.Task getExistingTask(java.lang.String)>(r5);
+
+        if r8 != null goto label2;
+
+        $r26 = new java.lang.StringBuilder;
+
+        specialinvoke $r26.<java.lang.StringBuilder: void <init>()>();
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("No such ");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r5);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" task");
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r31 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r30);
+
+        return $r31;
+
+     label2:
+        $r9 = interfaceinvoke r7.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        interfaceinvoke r1.<net.sourceforge.plantuml.project.core.Task: void setStart(net.sourceforge.plantuml.project.time.Day)>($r9);
+
+        $r10 = interfaceinvoke r8.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        interfaceinvoke r1.<net.sourceforge.plantuml.project.core.Task: void setEnd(net.sourceforge.plantuml.project.time.Day)>($r10);
+
+        $r11 = new net.sourceforge.plantuml.project.GanttConstraint;
+
+        $r12 = virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r13 = virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r14 = new net.sourceforge.plantuml.project.core.TaskInstant;
+
+        $r15 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute START>;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.project.core.TaskInstant: void <init>(net.sourceforge.plantuml.project.core.Moment,net.sourceforge.plantuml.project.core.TaskAttribute)>(r7, $r15);
+
+        $r16 = new net.sourceforge.plantuml.project.core.TaskInstant;
+
+        $r17 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute START>;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.project.core.TaskInstant: void <init>(net.sourceforge.plantuml.project.core.Moment,net.sourceforge.plantuml.project.core.TaskAttribute)>(r1, $r17);
+
+        specialinvoke $r11.<net.sourceforge.plantuml.project.GanttConstraint: void <init>(net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.project.core.TaskInstant,net.sourceforge.plantuml.project.core.TaskInstant)>($r12, $r13, $r14, $r16);
+
+        virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: void addContraint(net.sourceforge.plantuml.project.GanttConstraint)>($r11);
+
+        $r18 = new net.sourceforge.plantuml.project.GanttConstraint;
+
+        $r19 = virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r20 = virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r21 = new net.sourceforge.plantuml.project.core.TaskInstant;
+
+        $r22 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute END>;
+
+        specialinvoke $r21.<net.sourceforge.plantuml.project.core.TaskInstant: void <init>(net.sourceforge.plantuml.project.core.Moment,net.sourceforge.plantuml.project.core.TaskAttribute)>(r8, $r22);
+
+        $r23 = new net.sourceforge.plantuml.project.core.TaskInstant;
+
+        $r24 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute END>;
+
+        specialinvoke $r23.<net.sourceforge.plantuml.project.core.TaskInstant: void <init>(net.sourceforge.plantuml.project.core.Moment,net.sourceforge.plantuml.project.core.TaskAttribute)>(r1, $r24);
+
+        specialinvoke $r18.<net.sourceforge.plantuml.project.GanttConstraint: void <init>(net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.project.core.TaskInstant,net.sourceforge.plantuml.project.core.TaskInstant)>($r19, $r20, $r21, $r23);
+
+        virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: void addContraint(net.sourceforge.plantuml.project.GanttConstraint)>($r18);
+
+        $r25 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r25;
+    }
+}

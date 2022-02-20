@@ -1,0 +1,633 @@
+public class net.sourceforge.plantuml.style.StyleLoader extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.SkinParam skinParam;
+    private net.sourceforge.plantuml.style.StyleBuilder styleBuilder;
+    private static final java.lang.String KEYNAMES;
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 keyName;
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 propertyAndValue;
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 closeBracket;
+
+    public void <init>(net.sourceforge.plantuml.SkinParam)
+    {
+        net.sourceforge.plantuml.style.StyleLoader r0;
+        net.sourceforge.plantuml.SkinParam r1;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleLoader;
+
+        r1 := @parameter0: net.sourceforge.plantuml.SkinParam;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.SkinParam skinParam> = r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.style.StyleBuilder loadSkin(java.lang.String) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.style.StyleLoader r0;
+        net.sourceforge.plantuml.style.StyleBuilder $r1, $r7, $r8;
+        net.sourceforge.plantuml.SkinParam $r2;
+        java.lang.String r3;
+        java.io.InputStream r4;
+        net.sourceforge.plantuml.LineLocationImpl $r5;
+        net.sourceforge.plantuml.command.BlocLines r6;
+        net.sourceforge.plantuml.style.NoStyleAvailableException $r9, $r10;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleLoader;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r1 = new net.sourceforge.plantuml.style.StyleBuilder;
+
+        $r2 = r0.<net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.SkinParam skinParam>;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.style.StyleBuilder: void <init>(net.sourceforge.plantuml.SkinParam)>($r2);
+
+        r0.<net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.style.StyleBuilder styleBuilder> = $r1;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.style.StyleLoader: java.io.InputStream getInputStreamForStyle(java.lang.String)>(r3);
+
+        if r4 != null goto label1;
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>("No .skin file seems to be available");
+
+        $r10 = new net.sourceforge.plantuml.style.NoStyleAvailableException;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.style.NoStyleAvailableException: void <init>()>();
+
+        throw $r10;
+
+     label1:
+        $r5 = new net.sourceforge.plantuml.LineLocationImpl;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.LineLocationImpl: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>(r3, null);
+
+        r6 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines load(java.io.InputStream,net.sourceforge.plantuml.LineLocation)>(r4, $r5);
+
+        specialinvoke r0.<net.sourceforge.plantuml.style.StyleLoader: void loadSkinInternal(net.sourceforge.plantuml.command.BlocLines)>(r6);
+
+        $r7 = r0.<net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.style.StyleBuilder styleBuilder>;
+
+        if $r7 != null goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>("No .skin file seems to be available");
+
+        $r9 = new net.sourceforge.plantuml.style.NoStyleAvailableException;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.style.NoStyleAvailableException: void <init>()>();
+
+        throw $r9;
+
+     label2:
+        $r8 = r0.<net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.style.StyleBuilder styleBuilder>;
+
+        return $r8;
+    }
+
+    public static java.io.InputStream getInputStreamForStyle(java.lang.String) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.security.SFile $r0, r27;
+        java.lang.String r1, $r5, $r8, $r10, r14, $r20, $r23, $r25;
+        java.lang.StringBuilder $r2, $r3, $r4, $r6, $r7, $r9, $r11, $r12, $r13, $r16, $r17, $r18, $r19, $r21, $r22, $r24;
+        boolean $z0, $z1;
+        java.lang.Class $r15;
+        net.sourceforge.plantuml.FileSystem $r26;
+        java.io.InputStream r28;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = new net.sourceforge.plantuml.security.SFile;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.security.SFile: void <init>(java.lang.String)>(r1);
+
+        r27 = $r0;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Trying to load style ");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r5);
+
+        $z0 = virtualinvoke $r0.<net.sourceforge.plantuml.security.SFile: boolean exists()>();
+
+        if $z0 != 0 goto label1;
+
+        $r26 = staticinvoke <net.sourceforge.plantuml.FileSystem: net.sourceforge.plantuml.FileSystem getInstance()>();
+
+        r27 = virtualinvoke $r26.<net.sourceforge.plantuml.FileSystem: net.sourceforge.plantuml.security.SFile getFile(java.lang.String)>(r1);
+
+     label1:
+        $z1 = virtualinvoke r27.<net.sourceforge.plantuml.security.SFile: boolean exists()>();
+
+        if $z1 == 0 goto label2;
+
+        $r21 = new java.lang.StringBuilder;
+
+        specialinvoke $r21.<java.lang.StringBuilder: void <init>()>();
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("File found : ");
+
+        $r23 = virtualinvoke r27.<net.sourceforge.plantuml.security.SFile: java.lang.String getPrintablePath()>();
+
+        $r24 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r23);
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r25);
+
+        r28 = virtualinvoke r27.<net.sourceforge.plantuml.security.SFile: java.io.InputStream openFile()>();
+
+        goto label3;
+
+     label2:
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("File not found : ");
+
+        $r8 = virtualinvoke r27.<net.sourceforge.plantuml.security.SFile: java.lang.String getPrintablePath()>();
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r10);
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/skin/");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r15 = class "Lnet/sourceforge/plantuml/style/StyleLoader;";
+
+        r28 = virtualinvoke $r15.<java.lang.Class: java.io.InputStream getResourceAsStream(java.lang.String)>(r14);
+
+        if r28 == null goto label3;
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("... but ");
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" found inside the .jar");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r20);
+
+     label3:
+        return r28;
+    }
+
+    private void loadSkinInternal(net.sourceforge.plantuml.command.BlocLines)
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        net.sourceforge.plantuml.style.StyleLoader r1;
+        net.sourceforge.plantuml.style.StyleBuilder $r2, $r7;
+        java.util.Collection $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.style.Style r6;
+        net.sourceforge.plantuml.style.StyleSignature $r8;
+
+        r1 := @this: net.sourceforge.plantuml.style.StyleLoader;
+
+        r0 := @parameter0: net.sourceforge.plantuml.command.BlocLines;
+
+        $r2 = r1.<net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.style.StyleBuilder styleBuilder>;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.style.StyleLoader: java.util.Collection getDeclaredStyles(net.sourceforge.plantuml.command.BlocLines,net.sourceforge.plantuml.style.AutomaticCounter)>(r0, $r2);
+
+        r4 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.style.Style) $r5;
+
+        $r7 = r1.<net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.style.StyleBuilder styleBuilder>;
+
+        $r8 = virtualinvoke r6.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.StyleSignature getSignature()>();
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.style.StyleBuilder: void loadInternal(net.sourceforge.plantuml.style.StyleSignature,net.sourceforge.plantuml.style.Style)>($r8, r6);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public static java.util.Collection getDeclaredStyles(net.sourceforge.plantuml.command.BlocLines, net.sourceforge.plantuml.style.AutomaticCounter)
+    {
+        java.util.ArrayList $r0, $r5;
+        net.sourceforge.plantuml.style.CssVariables $r2;
+        net.sourceforge.plantuml.style.Context $r4, r41;
+        java.util.Iterator r7, r16;
+        java.util.List $r8;
+        java.lang.Object $r9, $r18, $r20, $r25;
+        net.sourceforge.plantuml.StringLocated r10, $r11;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11, $z12, $z13, $z14, z17, $z18, $z19;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r12, $r14, $r15;
+        net.sourceforge.plantuml.command.regex.Matcher2 r13, r44, r48;
+        net.sourceforge.plantuml.style.StyleSignature r19;
+        net.sourceforge.plantuml.style.Style $r21;
+        java.lang.String $r23, $r24, $r31, $r32, $r37, r42, r43, r46;
+        net.sourceforge.plantuml.style.StyleScheme $r26, r40;
+        net.sourceforge.plantuml.style.AutomaticCounter r27;
+        java.util.Map $r28, r50;
+        java.util.EnumMap $r33;
+        java.lang.StringBuilder $r34, $r35, $r36;
+        net.sourceforge.plantuml.command.BlocLines r38, r39;
+        net.sourceforge.plantuml.style.PName r45;
+        net.sourceforge.plantuml.style.ValueImpl $r47;
+        java.util.Collection r49;
+
+        r38 := @parameter0: net.sourceforge.plantuml.command.BlocLines;
+
+        r27 := @parameter1: net.sourceforge.plantuml.style.AutomaticCounter;
+
+        r39 = virtualinvoke r38.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines eventuallyMoveAllEmptyBracket()>();
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r2 = new net.sourceforge.plantuml.style.CssVariables;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.style.CssVariables: void <init>()>();
+
+        r40 = <net.sourceforge.plantuml.style.StyleScheme: net.sourceforge.plantuml.style.StyleScheme REGULAR>;
+
+        $r4 = new net.sourceforge.plantuml.style.Context;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.style.Context: void <init>()>();
+
+        r41 = $r4;
+
+        $r5 = new java.util.ArrayList;
+
+        specialinvoke $r5.<java.util.ArrayList: void <init>()>();
+
+        z17 = 0;
+
+        r7 = virtualinvoke r39.<net.sourceforge.plantuml.command.BlocLines: java.util.Iterator iterator()>();
+
+     label01:
+        $z18 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z18 == 0 goto label25;
+
+        $r9 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (net.sourceforge.plantuml.StringLocated) $r9;
+
+        $r11 = virtualinvoke r10.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        r42 = virtualinvoke $r11.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = virtualinvoke r42.<java.lang.String: boolean startsWith(java.lang.String)>("/*");
+
+        if $z0 != 0 goto label01;
+
+        $z1 = virtualinvoke r42.<java.lang.String: boolean endsWith(java.lang.String)>("*/");
+
+        if $z1 == 0 goto label02;
+
+        goto label01;
+
+     label02:
+        $z2 = virtualinvoke r42.<java.lang.String: boolean startsWith(java.lang.String)>("/\'");
+
+        if $z2 != 0 goto label01;
+
+        $z3 = virtualinvoke r42.<java.lang.String: boolean endsWith(java.lang.String)>("\'/");
+
+        if $z3 == 0 goto label03;
+
+        goto label01;
+
+     label03:
+        $z4 = virtualinvoke r42.<java.lang.String: boolean startsWith(java.lang.String)>("/*");
+
+        if $z4 != 0 goto label04;
+
+        $z5 = virtualinvoke r42.<java.lang.String: boolean startsWith(java.lang.String)>("/\'");
+
+        if $z5 == 0 goto label05;
+
+     label04:
+        z17 = 1;
+
+        goto label01;
+
+     label05:
+        $z6 = virtualinvoke r42.<java.lang.String: boolean endsWith(java.lang.String)>("*/");
+
+        if $z6 != 0 goto label06;
+
+        $z7 = virtualinvoke r42.<java.lang.String: boolean endsWith(java.lang.String)>("\'/");
+
+        if $z7 == 0 goto label07;
+
+     label06:
+        z17 = 0;
+
+        goto label01;
+
+     label07:
+        if z17 == 0 goto label08;
+
+        goto label01;
+
+     label08:
+        $z8 = virtualinvoke r42.<java.lang.String: boolean matches(java.lang.String)>("@media.*dark.*\\{");
+
+        if $z8 == 0 goto label09;
+
+        r40 = <net.sourceforge.plantuml.style.StyleScheme: net.sourceforge.plantuml.style.StyleScheme DARK>;
+
+        goto label01;
+
+     label09:
+        $z9 = virtualinvoke r42.<java.lang.String: boolean startsWith(java.lang.String)>("--");
+
+        if $z9 == 0 goto label10;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.style.CssVariables: void learn(java.lang.String)>(r42);
+
+        goto label01;
+
+     label10:
+        i0 = virtualinvoke r42.<java.lang.String: int lastIndexOf(java.lang.String)>("//");
+
+        if i0 == -1 goto label11;
+
+        $r37 = virtualinvoke r42.<java.lang.String: java.lang.String substring(int,int)>(0, i0);
+
+        r42 = virtualinvoke $r37.<java.lang.String: java.lang.String trim()>();
+
+     label11:
+        $r12 = <net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.command.regex.Pattern2 keyName>;
+
+        r13 = virtualinvoke $r12.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r42);
+
+        $z10 = virtualinvoke r13.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z10 == 0 goto label15;
+
+        $r31 = virtualinvoke r13.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        r43 = virtualinvoke $r31.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>(" ", "");
+
+        $r32 = virtualinvoke r13.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(2);
+
+        if $r32 == null goto label12;
+
+        $z19 = 1;
+
+        goto label13;
+
+     label12:
+        $z19 = 0;
+
+     label13:
+        if $z19 == 0 goto label14;
+
+        $r34 = new java.lang.StringBuilder;
+
+        specialinvoke $r34.<java.lang.StringBuilder: void <init>()>();
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r43);
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("*");
+
+        r43 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label14:
+        r41 = virtualinvoke r41.<net.sourceforge.plantuml.style.Context: net.sourceforge.plantuml.style.Context push(java.lang.String)>(r43);
+
+        $r33 = new java.util.EnumMap;
+
+        specialinvoke $r33.<java.util.EnumMap: void <init>(java.lang.Class)>(class "Lnet/sourceforge/plantuml/style/PName;");
+
+        interfaceinvoke $r5.<java.util.List: boolean add(java.lang.Object)>($r33);
+
+        goto label01;
+
+     label15:
+        $r14 = <net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.command.regex.Pattern2 propertyAndValue>;
+
+        r44 = virtualinvoke $r14.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r42);
+
+        $z11 = virtualinvoke r44.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z11 == 0 goto label18;
+
+        $r23 = virtualinvoke r44.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        r45 = staticinvoke <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName getFromName(java.lang.String,net.sourceforge.plantuml.style.StyleScheme)>($r23, r40);
+
+        $r24 = virtualinvoke r44.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(2);
+
+        r46 = virtualinvoke $r2.<net.sourceforge.plantuml.style.CssVariables: java.lang.String value(java.lang.String)>($r24);
+
+        if r45 == null goto label01;
+
+        $i7 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        if $i7 <= 0 goto label01;
+
+        $i8 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        $i9 = $i8 - 1;
+
+        $r25 = interfaceinvoke $r5.<java.util.List: java.lang.Object get(int)>($i9);
+
+        $r28 = (java.util.Map) $r25;
+
+        $r26 = <net.sourceforge.plantuml.style.StyleScheme: net.sourceforge.plantuml.style.StyleScheme REGULAR>;
+
+        if r40 != $r26 goto label16;
+
+        $r47 = staticinvoke <net.sourceforge.plantuml.style.ValueImpl: net.sourceforge.plantuml.style.ValueImpl regular(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)>(r46, r27);
+
+        goto label17;
+
+     label16:
+        $r47 = staticinvoke <net.sourceforge.plantuml.style.ValueImpl: net.sourceforge.plantuml.style.ValueImpl dark(java.lang.String,net.sourceforge.plantuml.style.AutomaticCounter)>(r46, r27);
+
+     label17:
+        interfaceinvoke $r28.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r45, $r47);
+
+        goto label01;
+
+     label18:
+        $r15 = <net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.command.regex.Pattern2 closeBracket>;
+
+        r48 = virtualinvoke $r15.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r42);
+
+        $z12 = virtualinvoke r48.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z12 == 0 goto label24;
+
+        $i1 = virtualinvoke r41.<net.sourceforge.plantuml.style.Context: int size()>();
+
+        if $i1 <= 0 goto label23;
+
+        r49 = virtualinvoke r41.<net.sourceforge.plantuml.style.Context: java.util.Collection toSignatures()>();
+
+        r16 = interfaceinvoke r49.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label19:
+        $z13 = interfaceinvoke r16.<java.util.Iterator: boolean hasNext()>();
+
+        if $z13 == 0 goto label22;
+
+        $r18 = interfaceinvoke r16.<java.util.Iterator: java.lang.Object next()>();
+
+        r19 = (net.sourceforge.plantuml.style.StyleSignature) $r18;
+
+        $i4 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        $i5 = $i4 - 1;
+
+        $r20 = interfaceinvoke $r5.<java.util.List: java.lang.Object get(int)>($i5);
+
+        r50 = (java.util.Map) $r20;
+
+        $z14 = virtualinvoke r19.<net.sourceforge.plantuml.style.StyleSignature: boolean isWithDot()>();
+
+        if $z14 == 0 goto label20;
+
+        r50 = staticinvoke <net.sourceforge.plantuml.style.StyleLoader: java.util.Map addPriority(java.util.Map)>(r50);
+
+     label20:
+        $i6 = interfaceinvoke r50.<java.util.Map: int size()>();
+
+        if $i6 <= 0 goto label21;
+
+        $r21 = new net.sourceforge.plantuml.style.Style;
+
+        specialinvoke $r21.<net.sourceforge.plantuml.style.Style: void <init>(net.sourceforge.plantuml.style.StyleSignature,java.util.Map)>(r19, r50);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r21);
+
+     label21:
+        goto label19;
+
+     label22:
+        r41 = virtualinvoke r41.<net.sourceforge.plantuml.style.Context: net.sourceforge.plantuml.style.Context pop()>();
+
+        $i2 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        $i3 = $i2 - 1;
+
+        interfaceinvoke $r5.<java.util.List: java.lang.Object remove(int)>($i3);
+
+        goto label24;
+
+     label23:
+        r40 = <net.sourceforge.plantuml.style.StyleScheme: net.sourceforge.plantuml.style.StyleScheme REGULAR>;
+
+     label24:
+        goto label01;
+
+     label25:
+        $r8 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r0);
+
+        return $r8;
+    }
+
+    private static java.util.Map addPriority(java.util.Map)
+    {
+        java.util.EnumMap $r0;
+        java.util.Map r2;
+        java.util.Set $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5, $r7, $r9;
+        java.util.Map$Entry r6;
+        net.sourceforge.plantuml.style.PName $r8;
+        net.sourceforge.plantuml.style.ValueImpl $r10;
+        net.sourceforge.plantuml.style.Value $r11;
+
+        r2 := @parameter0: java.util.Map;
+
+        $r0 = new java.util.EnumMap;
+
+        specialinvoke $r0.<java.util.EnumMap: void <init>(java.lang.Class)>(class "Lnet/sourceforge/plantuml/style/PName;");
+
+        $r3 = interfaceinvoke r2.<java.util.Map: java.util.Set entrySet()>();
+
+        r4 = interfaceinvoke $r3.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (java.util.Map$Entry) $r5;
+
+        $r7 = interfaceinvoke r6.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r8 = (net.sourceforge.plantuml.style.PName) $r7;
+
+        $r9 = interfaceinvoke r6.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r10 = (net.sourceforge.plantuml.style.ValueImpl) $r9;
+
+        $r11 = virtualinvoke $r10.<net.sourceforge.plantuml.style.ValueImpl: net.sourceforge.plantuml.style.Value addPriority(int)>(1000);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r8, $r11);
+
+        goto label1;
+
+     label2:
+        return $r0;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.command.regex.Pattern2 $r0, $r1, $r2;
+
+        <net.sourceforge.plantuml.style.StyleLoader: java.lang.String KEYNAMES> = "[.\\w(), ]+?";
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("^[:]?([.\\w(), ]+?)([%s]+\\*)?[%s]*\\{$");
+
+        <net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.command.regex.Pattern2 keyName> = $r0;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("^([\\w]+):?[%s]+(.*?);?$");
+
+        <net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.command.regex.Pattern2 propertyAndValue> = $r1;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("^\\}$");
+
+        <net.sourceforge.plantuml.style.StyleLoader: net.sourceforge.plantuml.command.regex.Pattern2 closeBracket> = $r2;
+
+        return;
+    }
+}

@@ -1,0 +1,209 @@
+public class net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps extends java.lang.Object implements net.sourceforge.plantuml.ugraphic.UDriver
+{
+    private final net.sourceforge.plantuml.ugraphic.ClipContainer clipContainer;
+
+    public void <init>(net.sourceforge.plantuml.ugraphic.ClipContainer)
+    {
+        net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps r0;
+        net.sourceforge.plantuml.ugraphic.ClipContainer r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.ClipContainer;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps: net.sourceforge.plantuml.ugraphic.ClipContainer clipContainer> = r1;
+
+        return;
+    }
+
+    public void draw(net.sourceforge.plantuml.ugraphic.UPolygon, double, double, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.UParam, net.sourceforge.plantuml.eps.EpsGraphics)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.util.List $r1, $r3;
+        int $i0, $i1, $i3, $i4, i5, i6, i7;
+        double[] r2;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps r4;
+        net.sourceforge.plantuml.ugraphic.ClipContainer $r5;
+        double $d0, $d1, $d2, $d3, $d4, d5, $d6, $d7, d8, $d9;
+        byte $b2;
+        net.sourceforge.plantuml.ugraphic.UParam r6;
+        net.sourceforge.plantuml.eps.EpsGraphics r7;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r8;
+        java.awt.Color $r9, $r11, $r13;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r10, $r12, r19;
+        net.sourceforge.plantuml.ugraphic.color.HColorGradient $r14;
+        java.lang.Object $r15;
+        java.util.Iterator r16;
+        java.awt.geom.Point2D r17;
+        net.sourceforge.plantuml.ugraphic.UClip r18;
+
+        r4 := @this: net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        d5 := @parameter1: double;
+
+        d8 := @parameter2: double;
+
+        r8 := @parameter3: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r6 := @parameter4: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r7 := @parameter5: net.sourceforge.plantuml.eps.EpsGraphics;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List getPoints()>();
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        $i1 = $i0 * 2;
+
+        r2 = newarray (double)[$i1];
+
+        i5 = 0;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List getPoints()>();
+
+        r16 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r16.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r15 = interfaceinvoke r16.<java.util.Iterator: java.lang.Object next()>();
+
+        r17 = (java.awt.geom.Point2D) $r15;
+
+        i6 = i5 + 1;
+
+        $d4 = virtualinvoke r17.<java.awt.geom.Point2D: double getX()>();
+
+        $d6 = $d4 + d5;
+
+        r2[i5] = $d6;
+
+        i5 = i6 + 1;
+
+        $d7 = virtualinvoke r17.<java.awt.geom.Point2D: double getY()>();
+
+        $d9 = $d7 + d8;
+
+        r2[i6] = $d9;
+
+        goto label1;
+
+     label2:
+        $r5 = r4.<net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps: net.sourceforge.plantuml.ugraphic.ClipContainer clipContainer>;
+
+        r18 = interfaceinvoke $r5.<net.sourceforge.plantuml.ugraphic.ClipContainer: net.sourceforge.plantuml.ugraphic.UClip getClip()>();
+
+        if r18 == null goto label5;
+
+        i7 = 0;
+
+     label3:
+        $i3 = lengthof r2;
+
+        if i7 >= $i3 goto label5;
+
+        $d3 = r2[i7];
+
+        $i4 = i7 + 1;
+
+        $d2 = r2[$i4];
+
+        $z2 = virtualinvoke r18.<net.sourceforge.plantuml.ugraphic.UClip: boolean isInside(double,double)>($d3, $d2);
+
+        if $z2 != 0 goto label4;
+
+        return;
+
+     label4:
+        i7 = i7 + 2;
+
+        goto label3;
+
+     label5:
+        $d0 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: double getDeltaShadow()>();
+
+        $b2 = $d0 cmpl 0.0;
+
+        if $b2 == 0 goto label6;
+
+        $d1 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: double getDeltaShadow()>();
+
+        virtualinvoke r7.<net.sourceforge.plantuml.eps.EpsGraphics: void epsPolygonShadow(double,double[])>($d1, r2);
+
+     label6:
+        r19 = interfaceinvoke r6.<net.sourceforge.plantuml.ugraphic.UParam: net.sourceforge.plantuml.ugraphic.color.HColor getBackcolor()>();
+
+        $z1 = r19 instanceof net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+
+        if $z1 == 0 goto label7;
+
+        $r12 = interfaceinvoke r6.<net.sourceforge.plantuml.ugraphic.UParam: net.sourceforge.plantuml.ugraphic.color.HColor getColor()>();
+
+        $r13 = interfaceinvoke r8.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>($r12);
+
+        virtualinvoke r7.<net.sourceforge.plantuml.eps.EpsGraphics: void setStrokeColor(java.awt.Color)>($r13);
+
+        $r14 = (net.sourceforge.plantuml.ugraphic.color.HColorGradient) r19;
+
+        virtualinvoke r7.<net.sourceforge.plantuml.eps.EpsGraphics: void epsPolygon(net.sourceforge.plantuml.ugraphic.color.HColorGradient,net.sourceforge.plantuml.ugraphic.color.ColorMapper,double[])>($r14, r8, r2);
+
+        goto label8;
+
+     label7:
+        $r9 = interfaceinvoke r8.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>(r19);
+
+        virtualinvoke r7.<net.sourceforge.plantuml.eps.EpsGraphics: void setFillColor(java.awt.Color)>($r9);
+
+        $r10 = interfaceinvoke r6.<net.sourceforge.plantuml.ugraphic.UParam: net.sourceforge.plantuml.ugraphic.color.HColor getColor()>();
+
+        $r11 = interfaceinvoke r8.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>($r10);
+
+        virtualinvoke r7.<net.sourceforge.plantuml.eps.EpsGraphics: void setStrokeColor(java.awt.Color)>($r11);
+
+        virtualinvoke r7.<net.sourceforge.plantuml.eps.EpsGraphics: void epsPolygon(double[])>(r2);
+
+     label8:
+        return;
+    }
+
+    public volatile void draw(net.sourceforge.plantuml.ugraphic.UShape, double, double, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.UParam, java.lang.Object)
+    {
+        net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps r0;
+        net.sourceforge.plantuml.ugraphic.UShape r1;
+        double d0, d1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r2;
+        net.sourceforge.plantuml.ugraphic.UParam r3;
+        java.lang.Object r4;
+        net.sourceforge.plantuml.eps.EpsGraphics $r5;
+        net.sourceforge.plantuml.ugraphic.UPolygon $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UShape;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        r2 := @parameter3: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r3 := @parameter4: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r4 := @parameter5: java.lang.Object;
+
+        $r6 = (net.sourceforge.plantuml.ugraphic.UPolygon) r1;
+
+        $r5 = (net.sourceforge.plantuml.eps.EpsGraphics) r4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.eps.DriverPolygonEps: void draw(net.sourceforge.plantuml.ugraphic.UPolygon,double,double,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.ugraphic.UParam,net.sourceforge.plantuml.eps.EpsGraphics)>($r6, d0, d1, r2, r3, $r5);
+
+        return;
+    }
+}

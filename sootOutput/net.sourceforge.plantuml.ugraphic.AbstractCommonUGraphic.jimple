@@ -1,0 +1,549 @@
+public abstract class net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic extends java.lang.Object implements net.sourceforge.plantuml.ugraphic.UGraphic
+{
+    private net.sourceforge.plantuml.ugraphic.UStroke stroke;
+    private net.sourceforge.plantuml.ugraphic.UPattern pattern;
+    private boolean hidden;
+    private net.sourceforge.plantuml.ugraphic.color.HColor backColor;
+    private net.sourceforge.plantuml.ugraphic.color.HColor color;
+    private boolean enlargeClip;
+    private final net.sourceforge.plantuml.graphic.StringBounder stringBounder;
+    private net.sourceforge.plantuml.ugraphic.UTranslate translate;
+    private final net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper;
+    private net.sourceforge.plantuml.ugraphic.UClip clip;
+    private final net.sourceforge.plantuml.ugraphic.color.HColor defaultBackground;
+
+    public net.sourceforge.plantuml.ugraphic.color.HColor getDefaultBackground()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor defaultBackground>;
+
+        return $r1;
+    }
+
+    public double dpiFactor()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        return 1.0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)
+    {
+        net.sourceforge.plantuml.ugraphic.UChange r0;
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r2, r3;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r4, $r6;
+        net.sourceforge.plantuml.ugraphic.UBackground $r5;
+        net.sourceforge.plantuml.ugraphic.UHidden $r7;
+        net.sourceforge.plantuml.ugraphic.UPattern $r9;
+        net.sourceforge.plantuml.ugraphic.UStroke $r10;
+        net.sourceforge.plantuml.ugraphic.UClip $r11, $r12, $r13;
+        double $d0, $d1;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r14, $r15, $r16;
+
+        r2 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UChange;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        r3 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic copyUGraphic()>();
+
+        $z0 = r0 instanceof net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        if $z0 == 0 goto label01;
+
+        $r15 = (net.sourceforge.plantuml.ugraphic.UTranslate) r0;
+
+        $r14 = r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UTranslate translate>;
+
+        $r16 = virtualinvoke $r15.<net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate compose(net.sourceforge.plantuml.ugraphic.UTranslate)>($r14);
+
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UTranslate translate> = $r16;
+
+        goto label10;
+
+     label01:
+        $z1 = r0 instanceof net.sourceforge.plantuml.ugraphic.UClip;
+
+        if $z1 == 0 goto label02;
+
+        $r11 = (net.sourceforge.plantuml.ugraphic.UClip) r0;
+
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UClip clip> = $r11;
+
+        $r12 = r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UClip clip>;
+
+        $d0 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: double getTranslateX()>();
+
+        $d1 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: double getTranslateY()>();
+
+        $r13 = virtualinvoke $r12.<net.sourceforge.plantuml.ugraphic.UClip: net.sourceforge.plantuml.ugraphic.UClip translate(double,double)>($d0, $d1);
+
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UClip clip> = $r13;
+
+        goto label10;
+
+     label02:
+        $z2 = r0 instanceof net.sourceforge.plantuml.ugraphic.UStroke;
+
+        if $z2 == 0 goto label03;
+
+        $r10 = (net.sourceforge.plantuml.ugraphic.UStroke) r0;
+
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UStroke stroke> = $r10;
+
+        goto label10;
+
+     label03:
+        $z3 = r0 instanceof net.sourceforge.plantuml.ugraphic.UPattern;
+
+        if $z3 == 0 goto label04;
+
+        $r9 = (net.sourceforge.plantuml.ugraphic.UPattern) r0;
+
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UPattern pattern> = $r9;
+
+        goto label10;
+
+     label04:
+        $z4 = r0 instanceof net.sourceforge.plantuml.ugraphic.UHidden;
+
+        if $z4 == 0 goto label07;
+
+        $r7 = <net.sourceforge.plantuml.ugraphic.UHidden: net.sourceforge.plantuml.ugraphic.UHidden HIDDEN>;
+
+        if r0 != $r7 goto label05;
+
+        $z8 = 1;
+
+        goto label06;
+
+     label05:
+        $z8 = 0;
+
+     label06:
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean hidden> = $z8;
+
+        goto label10;
+
+     label07:
+        $z5 = r0 instanceof net.sourceforge.plantuml.ugraphic.UBackground;
+
+        if $z5 == 0 goto label08;
+
+        $r5 = (net.sourceforge.plantuml.ugraphic.UBackground) r0;
+
+        $r6 = interfaceinvoke $r5.<net.sourceforge.plantuml.ugraphic.UBackground: net.sourceforge.plantuml.ugraphic.color.HColor getBackColor()>();
+
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor backColor> = $r6;
+
+        goto label10;
+
+     label08:
+        $z6 = r0 instanceof net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        if $z6 == 0 goto label09;
+
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor color> = null;
+
+        goto label10;
+
+     label09:
+        $z7 = r0 instanceof net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        if $z7 == 0 goto label10;
+
+        $r4 = (net.sourceforge.plantuml.ugraphic.color.HColor) r0;
+
+        r3.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor color> = $r4;
+
+     label10:
+        return r3;
+    }
+
+    public final net.sourceforge.plantuml.ugraphic.UClip getClip()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        boolean $z0;
+        net.sourceforge.plantuml.ugraphic.UClip $r1, $r2, $r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $z0 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean enlargeClip>;
+
+        if $z0 == 0 goto label1;
+
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UClip clip>;
+
+        if $r2 == null goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UClip clip>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.ugraphic.UClip: net.sourceforge.plantuml.ugraphic.UClip enlarge(double)>(1.0);
+
+        return $r4;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UClip clip>;
+
+        return $r1;
+    }
+
+    public final void enlargeClip()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean enlargeClip> = 1;
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.ugraphic.color.HColor, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.ugraphic.UStroke $r1;
+        net.sourceforge.plantuml.ugraphic.UPattern $r2;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r3;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r4;
+        net.sourceforge.plantuml.ugraphic.color.HColor r5;
+        net.sourceforge.plantuml.graphic.StringBounder r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        r5 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        r4 := @parameter1: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r6 := @parameter2: net.sourceforge.plantuml.graphic.StringBounder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.ugraphic.UStroke;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.ugraphic.UStroke: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UStroke stroke> = $r1;
+
+        $r2 = <net.sourceforge.plantuml.ugraphic.UPattern: net.sourceforge.plantuml.ugraphic.UPattern FULL>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UPattern pattern> = $r2;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean hidden> = 0;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor backColor> = null;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor color> = null;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean enlargeClip> = 0;
+
+        $r3 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UTranslate translate> = $r3;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper> = r4;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor defaultBackground> = r5;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = r6;
+
+        return;
+    }
+
+    protected void <init>(net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0, r4;
+        net.sourceforge.plantuml.ugraphic.UStroke $r1, $r10;
+        net.sourceforge.plantuml.ugraphic.UPattern $r2, $r11;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r3, $r8;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r5, $r12, $r13;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper $r6;
+        net.sourceforge.plantuml.graphic.StringBounder $r7;
+        net.sourceforge.plantuml.ugraphic.UClip $r9;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        r4 := @parameter0: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.ugraphic.UStroke;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.ugraphic.UStroke: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UStroke stroke> = $r1;
+
+        $r2 = <net.sourceforge.plantuml.ugraphic.UPattern: net.sourceforge.plantuml.ugraphic.UPattern FULL>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UPattern pattern> = $r2;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean hidden> = 0;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor backColor> = null;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor color> = null;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean enlargeClip> = 0;
+
+        $r3 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UTranslate translate> = $r3;
+
+        $r5 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor defaultBackground>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor defaultBackground> = $r5;
+
+        $z0 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean enlargeClip>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean enlargeClip> = $z0;
+
+        $r6 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper> = $r6;
+
+        $r7 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = $r7;
+
+        $r8 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UTranslate translate>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UTranslate translate> = $r8;
+
+        $r9 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UClip clip>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UClip clip> = $r9;
+
+        $r10 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UStroke stroke>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UStroke stroke> = $r10;
+
+        $r11 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UPattern pattern>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UPattern pattern> = $r11;
+
+        $z1 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean hidden>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean hidden> = $z1;
+
+        $r12 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor color>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor color> = $r12;
+
+        $r13 = r4.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor backColor>;
+
+        r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor backColor> = $r13;
+
+        return;
+    }
+
+    protected abstract net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic copyUGraphic();
+
+    public final net.sourceforge.plantuml.ugraphic.UParam getParam()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic$1 $r0;
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r1;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic$1;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic$1: void <init>(net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic)>(r1);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.graphic.StringBounder getStringBounder()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.graphic.StringBounder $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        return $r1;
+    }
+
+    protected final double getTranslateX()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UTranslate translate>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDx()>();
+
+        return $d0;
+    }
+
+    protected final double getTranslateY()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UTranslate translate>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDy()>();
+
+        return $d0;
+    }
+
+    public final net.sourceforge.plantuml.ugraphic.color.ColorMapper getColorMapper()
+    {
+        net.sourceforge.plantuml.ugraphic.color.ColorMapperTransparentWrapper $r0;
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper $r2;
+
+        r1 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.color.ColorMapperTransparentWrapper;
+
+        $r2 = r1.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.ColorMapperTransparentWrapper: void <init>(net.sourceforge.plantuml.ugraphic.color.ColorMapper)>($r2);
+
+        return $r0;
+    }
+
+    public final void flushUg()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        return;
+    }
+
+    public void startUrl(net.sourceforge.plantuml.Url)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.Url r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        r1 := @parameter0: net.sourceforge.plantuml.Url;
+
+        return;
+    }
+
+    public void closeUrl()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        return;
+    }
+
+    public void startGroup(java.util.Map)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        java.util.Map r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        r1 := @parameter0: java.util.Map;
+
+        return;
+    }
+
+    public void closeGroup()
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        return;
+    }
+
+    public boolean matchesProperty(java.lang.String)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        java.lang.String r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        r1 := @parameter0: java.lang.String;
+
+        return 0;
+    }
+
+    static boolean access$000(net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $z0 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: boolean hidden>;
+
+        return $z0;
+    }
+
+    static net.sourceforge.plantuml.ugraphic.UStroke access$100(net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.ugraphic.UStroke $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UStroke stroke>;
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.ugraphic.color.HColor access$200(net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor color>;
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.ugraphic.color.HColor access$300(net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.color.HColor backColor>;
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.ugraphic.UPattern access$400(net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic r0;
+        net.sourceforge.plantuml.ugraphic.UPattern $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.AbstractCommonUGraphic: net.sourceforge.plantuml.ugraphic.UPattern pattern>;
+
+        return $r1;
+    }
+}

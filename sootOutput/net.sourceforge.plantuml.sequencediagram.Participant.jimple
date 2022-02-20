@@ -1,0 +1,639 @@
+public class net.sourceforge.plantuml.sequencediagram.Participant extends java.lang.Object implements net.sourceforge.plantuml.SpecificBackcolorable, net.sourceforge.plantuml.style.WithStyle
+{
+    private final java.lang.String code;
+    private net.sourceforge.plantuml.cucadiagram.Display display;
+    private final net.sourceforge.plantuml.sequencediagram.ParticipantType type;
+    private int initialLife;
+    private net.sourceforge.plantuml.cucadiagram.Stereotype stereotype;
+    private boolean stereotypePositionTop;
+    private final java.util.Set hiddenPortions;
+    private final int order;
+    private final net.sourceforge.plantuml.style.StyleBuilder styleBuilder;
+    private net.sourceforge.plantuml.graphic.SymbolContext liveBackcolors;
+    private net.sourceforge.plantuml.graphic.color.Colors colors;
+    private net.sourceforge.plantuml.Url url;
+
+    public net.sourceforge.plantuml.style.StyleSignature getStyleSignature()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.sequencediagram.ParticipantType $r1;
+        net.sourceforge.plantuml.style.StyleSignature $r2, $r4;
+        net.sourceforge.plantuml.Url $r3;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType type>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.Url getUrl()>();
+
+        $r4 = virtualinvoke $r2.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature addClickable(net.sourceforge.plantuml.Url)>($r3);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.style.Style[] getUsedStyles()
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.style.StyleSignature $r1, r3, $r6, $r8;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r2, $r7;
+        net.sourceforge.plantuml.style.StyleBuilder $r4, $r9;
+        net.sourceforge.plantuml.graphic.color.Colors $r5;
+        net.sourceforge.plantuml.style.Style[] $r10;
+        net.sourceforge.plantuml.style.Style r11, r12, r13;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype stereotype>;
+
+        r3 = virtualinvoke $r1.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature 'with'(net.sourceforge.plantuml.cucadiagram.Stereotype)>($r2);
+
+        $r4 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.style.StyleBuilder styleBuilder>;
+
+        r11 = virtualinvoke r3.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r4);
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        r12 = virtualinvoke r11.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Style eventuallyOverride(net.sourceforge.plantuml.graphic.color.Colors)>($r5);
+
+        $r6 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r7 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype stereotype>;
+
+        $r8 = virtualinvoke $r6.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature forStereotypeItself(net.sourceforge.plantuml.cucadiagram.Stereotype)>($r7);
+
+        $r9 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.style.StyleBuilder styleBuilder>;
+
+        r13 = virtualinvoke $r8.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r9);
+
+        if r12 == null goto label2;
+
+        r13 = virtualinvoke r12.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Style mergeWith(net.sourceforge.plantuml.style.Style)>(r13);
+
+     label2:
+        $r10 = newarray (net.sourceforge.plantuml.style.Style)[2];
+
+        $r10[0] = r12;
+
+        $r10[1] = r13;
+
+        return $r10;
+    }
+
+    public void <init>(net.sourceforge.plantuml.sequencediagram.ParticipantType, java.lang.String, net.sourceforge.plantuml.cucadiagram.Display, java.util.Set, int, net.sourceforge.plantuml.style.StyleBuilder)
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.graphic.color.Colors $r1;
+        java.util.Set r2;
+        net.sourceforge.plantuml.style.StyleBuilder r3;
+        int i0, $i1, $i2;
+        java.lang.String r4, $r6;
+        java.lang.Object $r5, $r10;
+        net.sourceforge.plantuml.cucadiagram.Display r7;
+        boolean $z0;
+        java.lang.IllegalArgumentException $r8, $r12;
+        net.sourceforge.plantuml.sequencediagram.ParticipantType r9, $r11;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        r9 := @parameter0: net.sourceforge.plantuml.sequencediagram.ParticipantType;
+
+        r4 := @parameter1: java.lang.String;
+
+        r7 := @parameter2: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r2 := @parameter3: java.util.Set;
+
+        i0 := @parameter4: int;
+
+        r3 := @parameter5: net.sourceforge.plantuml.style.StyleBuilder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: int initialLife> = 0;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.graphic.color.Colors empty()>();
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.color.Colors colors> = $r1;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: java.util.Set hiddenPortions> = r2;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.style.StyleBuilder styleBuilder> = r3;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: int order> = i0;
+
+        $r5 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r4);
+
+        $r6 = (java.lang.String) $r5;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: java.lang.String code> = $r6;
+
+        $i1 = virtualinvoke r4.<java.lang.String: int length()>();
+
+        if $i1 != 0 goto label1;
+
+        $r12 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r12.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r12;
+
+     label1:
+        $z0 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: boolean isNull(net.sourceforge.plantuml.cucadiagram.Display)>(r7);
+
+        if $z0 != 0 goto label2;
+
+        $i2 = virtualinvoke r7.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        if $i2 != 0 goto label3;
+
+     label2:
+        $r8 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r8.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r8;
+
+     label3:
+        $r10 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r9);
+
+        $r11 = (net.sourceforge.plantuml.sequencediagram.ParticipantType) $r10;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType type> = $r11;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Display display> = r7;
+
+        return;
+    }
+
+    public java.lang.String getCode()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: java.lang.String code>;
+
+        return $r1;
+    }
+
+    public java.lang.String toString()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: java.lang.String getCode()>();
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.Display getDisplay(boolean)
+    {
+        boolean z0, $z1, $z2;
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r1, $r4, $r5;
+        net.sourceforge.plantuml.cucadiagram.EntityPortion $r2;
+        java.util.Set $r3;
+        net.sourceforge.plantuml.cucadiagram.Display $r6, $r7, r8;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        z0 := @parameter0: boolean;
+
+        if z0 == 0 goto label1;
+
+        $r6 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Display display>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display underlined()>();
+
+        goto label2;
+
+     label1:
+        $r7 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Display display>;
+
+     label2:
+        r8 = $r7;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype stereotype>;
+
+        if $r1 == null goto label4;
+
+        $r3 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: java.util.Set hiddenPortions>;
+
+        $r2 = <net.sourceforge.plantuml.cucadiagram.EntityPortion: net.sourceforge.plantuml.cucadiagram.EntityPortion STEREOTYPE>;
+
+        $z1 = interfaceinvoke $r3.<java.util.Set: boolean contains(java.lang.Object)>($r2);
+
+        if $z1 != 0 goto label4;
+
+        $z2 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: boolean stereotypePositionTop>;
+
+        if $z2 == 0 goto label3;
+
+        $r5 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype stereotype>;
+
+        r8 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display addFirst(java.lang.CharSequence)>($r5);
+
+        goto label4;
+
+     label3:
+        $r4 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype stereotype>;
+
+        r8 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display add(java.lang.CharSequence)>($r4);
+
+     label4:
+        return r8;
+    }
+
+    public net.sourceforge.plantuml.sequencediagram.ParticipantType getType()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.sequencediagram.ParticipantType $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType type>;
+
+        return $r1;
+    }
+
+    public final void setStereotype(net.sourceforge.plantuml.cucadiagram.Stereotype, boolean)
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r1, r2, $r4;
+        java.lang.Object $r3;
+        boolean z0;
+        java.lang.IllegalStateException $r5;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.Stereotype;
+
+        z0 := @parameter1: boolean;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype stereotype>;
+
+        if $r1 == null goto label1;
+
+        $r5 = new java.lang.IllegalStateException;
+
+        specialinvoke $r5.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r5;
+
+     label1:
+        $r3 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r2);
+
+        $r4 = (net.sourceforge.plantuml.cucadiagram.Stereotype) $r3;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype stereotype> = $r4;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: boolean stereotypePositionTop> = z0;
+
+        return;
+    }
+
+    public final int getInitialLife()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $i0 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: int initialLife>;
+
+        return $i0;
+    }
+
+    public final void incInitialLife(net.sourceforge.plantuml.graphic.SymbolContext)
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        int $i0, $i1;
+        net.sourceforge.plantuml.graphic.SymbolContext r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.SymbolContext;
+
+        $i0 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: int initialLife>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: int initialLife> = $i1;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.SymbolContext liveBackcolors> = r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.graphic.SymbolContext getLiveSpecificBackColors()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.graphic.SymbolContext $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.SymbolContext liveBackcolors>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.graphic.color.Colors getColors()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.graphic.color.Colors $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.color.Colors colors>;
+
+        return $r1;
+    }
+
+    public void setSpecificColorTOBEREMOVED(net.sourceforge.plantuml.graphic.color.ColorType, net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColor r0;
+        net.sourceforge.plantuml.sequencediagram.Participant r1;
+        net.sourceforge.plantuml.graphic.color.ColorType r2;
+        net.sourceforge.plantuml.graphic.color.Colors $r3, $r4;
+
+        r1 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.color.ColorType;
+
+        r0 := @parameter1: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        if r0 == null goto label1;
+
+        $r3 = r1.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.color.Colors colors>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.graphic.color.Colors add(net.sourceforge.plantuml.graphic.color.ColorType,net.sourceforge.plantuml.ugraphic.color.HColor)>(r2, r0);
+
+        r1.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.color.Colors colors> = $r4;
+
+     label1:
+        return;
+    }
+
+    public void setColors(net.sourceforge.plantuml.graphic.color.Colors)
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.graphic.color.Colors r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.color.Colors;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.color.Colors colors> = r1;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.Url getUrl()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.Url $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.Url url>;
+
+        return $r1;
+    }
+
+    public final void setUrl(net.sourceforge.plantuml.Url)
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.Url r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        r1 := @parameter0: net.sourceforge.plantuml.Url;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.Url url> = r1;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.Stereotype getStereotype()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype stereotype>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.ColorParam getBackgroundColorParam()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.sequencediagram.ParticipantType $r1;
+        net.sourceforge.plantuml.ColorParam $r2;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType type>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.ColorParam getBackgroundColorParam()>();
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.SkinParamBackcolored getSkinParamBackcolored(net.sourceforge.plantuml.ISkinParam)
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.ColorParam r1, $r6;
+        net.sourceforge.plantuml.graphic.color.Colors $r2;
+        net.sourceforge.plantuml.graphic.color.ColorType $r3;
+        net.sourceforge.plantuml.Url $r4;
+        boolean z0, $z1;
+        net.sourceforge.plantuml.ISkinParam r5;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r7, $r13;
+        net.sourceforge.plantuml.ugraphic.color.HColor r8, r10, r11;
+        net.sourceforge.plantuml.SkinParamBackcolored $r12;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        r5 := @parameter0: net.sourceforge.plantuml.ISkinParam;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.ColorParam getColorParam()>();
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        $r3 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        r11 = virtualinvoke $r2.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.graphic.color.ColorType)>($r3);
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.Url getUrl()>();
+
+        if $r4 == null goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        z0 = $z1;
+
+        $r6 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.ColorParam getBackgroundColorParam()>();
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype getStereotype()>();
+
+        r8 = interfaceinvoke r5.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor getHtmlColor(net.sourceforge.plantuml.ColorParam,net.sourceforge.plantuml.cucadiagram.Stereotype,boolean)>($r6, $r7, $z1);
+
+        if r8 == null goto label3;
+
+        if r11 != null goto label3;
+
+        r11 = r8;
+
+     label3:
+        $r12 = new net.sourceforge.plantuml.SkinParamBackcolored;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.SkinParamBackcolored: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.ugraphic.color.HColor,boolean)>(r5, r11, z0);
+
+        $r13 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.cucadiagram.Stereotype getStereotype()>();
+
+        r10 = interfaceinvoke r5.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor getHtmlColor(net.sourceforge.plantuml.ColorParam,net.sourceforge.plantuml.cucadiagram.Stereotype,boolean)>(r1, $r13, z0);
+
+        if r10 == null goto label4;
+
+        virtualinvoke $r12.<net.sourceforge.plantuml.SkinParamBackcolored: void forceColor(net.sourceforge.plantuml.ColorParam,net.sourceforge.plantuml.ugraphic.color.HColor)>(r1, r10);
+
+     label4:
+        return $r12;
+    }
+
+    public int getOrder()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $i0 = r0.<net.sourceforge.plantuml.sequencediagram.Participant: int order>;
+
+        return $i0;
+    }
+
+    private net.sourceforge.plantuml.ColorParam getColorParam()
+    {
+        net.sourceforge.plantuml.sequencediagram.Participant r0;
+        net.sourceforge.plantuml.sequencediagram.ParticipantType $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16;
+        net.sourceforge.plantuml.ColorParam $r17, $r18, $r19, $r20, $r21, $r22, $r23, $r24, $r25;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.Participant;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType getType()>();
+
+        $r2 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType PARTICIPANT>;
+
+        if $r1 != $r2 goto label1;
+
+        $r25 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam participantBorder>;
+
+        return $r25;
+
+     label1:
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType getType()>();
+
+        $r4 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType ACTOR>;
+
+        if $r3 != $r4 goto label2;
+
+        $r24 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam actorBorder>;
+
+        return $r24;
+
+     label2:
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType getType()>();
+
+        $r6 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType BOUNDARY>;
+
+        if $r5 != $r6 goto label3;
+
+        $r23 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam boundaryBorder>;
+
+        return $r23;
+
+     label3:
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType getType()>();
+
+        $r8 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType CONTROL>;
+
+        if $r7 != $r8 goto label4;
+
+        $r22 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam controlBorder>;
+
+        return $r22;
+
+     label4:
+        $r9 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType getType()>();
+
+        $r10 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType ENTITY>;
+
+        if $r9 != $r10 goto label5;
+
+        $r21 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam entityBorder>;
+
+        return $r21;
+
+     label5:
+        $r11 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType getType()>();
+
+        $r12 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType QUEUE>;
+
+        if $r11 != $r12 goto label6;
+
+        $r20 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam queueBorder>;
+
+        return $r20;
+
+     label6:
+        $r13 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType getType()>();
+
+        $r14 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType DATABASE>;
+
+        if $r13 != $r14 goto label7;
+
+        $r19 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam databaseBorder>;
+
+        return $r19;
+
+     label7:
+        $r15 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.Participant: net.sourceforge.plantuml.sequencediagram.ParticipantType getType()>();
+
+        $r16 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType COLLECTIONS>;
+
+        if $r15 != $r16 goto label8;
+
+        $r18 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam collectionsBorder>;
+
+        return $r18;
+
+     label8:
+        $r17 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam participantBorder>;
+
+        return $r17;
+    }
+}

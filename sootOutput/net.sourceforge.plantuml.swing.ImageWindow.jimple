@@ -1,0 +1,1325 @@
+class net.sourceforge.plantuml.swing.ImageWindow extends javax.swing.JFrame
+{
+    private static final java.util.prefs.Preferences prefs;
+    private static final java.lang.String KEY_ZOOM_FIT;
+    private static final java.lang.String KEY_WIDTH_FIT;
+    private net.sourceforge.plantuml.swing.SimpleLine simpleLine;
+    private final javax.swing.JScrollPane scrollPane;
+    private final javax.swing.JButton next;
+    private final javax.swing.JButton copy;
+    private final javax.swing.JButton previous;
+    private final javax.swing.JCheckBox zoomFitButt;
+    private final javax.swing.JCheckBox widthFitButt;
+    private final javax.swing.JButton zoomMore;
+    private final javax.swing.JButton zoomLess;
+    private final net.sourceforge.plantuml.swing.MainWindow main;
+    private final javax.swing.ListModel listModel;
+    private int index;
+    private int zoomFactor;
+    private net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode;
+    private int startX;
+    private int startY;
+    private int v1;
+    private int v2;
+
+    public void <init>(net.sourceforge.plantuml.swing.SimpleLine, net.sourceforge.plantuml.swing.MainWindow, javax.swing.ListModel, int)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        net.sourceforge.plantuml.swing.SimpleLine r1;
+        java.lang.String $r2;
+        javax.swing.JButton $r3, $r4, $r5, $r8, $r9, $r16, $r18, $r20, $r26, $r28, $r30, $r32, $r33, $r35, $r36, $r38, $r45, $r47, $r48, $r50;
+        javax.swing.JCheckBox $r6, $r7, $r22, $r24, $r39, $r41, $r42, $r44, $r60, $r62;
+        net.sourceforge.plantuml.swing.ImageWindow$SizeMode $r10, $r64, $r65;
+        java.awt.image.BufferedImage $r11;
+        javax.swing.ListModel r12;
+        int i0;
+        net.sourceforge.plantuml.swing.MainWindow r13;
+        javax.swing.JPanel $r14;
+        net.sourceforge.plantuml.swing.ImageWindow$1 $r31;
+        net.sourceforge.plantuml.swing.ImageWindow$2 $r34;
+        net.sourceforge.plantuml.swing.ImageWindow$3 $r37;
+        net.sourceforge.plantuml.swing.ImageWindow$4 $r40;
+        net.sourceforge.plantuml.swing.ImageWindow$5 $r43;
+        net.sourceforge.plantuml.swing.ImageWindow$6 $r46;
+        net.sourceforge.plantuml.swing.ImageWindow$7 $r49;
+        javax.swing.JScrollPane $r51, $r55;
+        net.sourceforge.plantuml.swing.ScrollablePicture $r52;
+        java.awt.Container $r53, $r54, $r56;
+        net.sourceforge.plantuml.swing.ImageWindow$8 $r57;
+        net.sourceforge.plantuml.swing.ImageWindow$9 $r58;
+        java.util.prefs.Preferences $r59, $r61;
+        boolean z0, z1;
+        net.sourceforge.plantuml.swing.ImageWindow$10 $r63;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        r1 := @parameter0: net.sourceforge.plantuml.swing.SimpleLine;
+
+        r13 := @parameter1: net.sourceforge.plantuml.swing.MainWindow;
+
+        r12 := @parameter2: javax.swing.ListModel;
+
+        i0 := @parameter3: int;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.swing.SimpleLine: java.lang.String toString()>();
+
+        specialinvoke r0.<javax.swing.JFrame: void <init>(java.lang.String)>($r2);
+
+        $r3 = new javax.swing.JButton;
+
+        specialinvoke $r3.<javax.swing.JButton: void <init>(java.lang.String)>("Next");
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton next> = $r3;
+
+        $r4 = new javax.swing.JButton;
+
+        specialinvoke $r4.<javax.swing.JButton: void <init>(java.lang.String)>("Copy");
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton copy> = $r4;
+
+        $r5 = new javax.swing.JButton;
+
+        specialinvoke $r5.<javax.swing.JButton: void <init>(java.lang.String)>("Previous");
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton previous> = $r5;
+
+        $r6 = new javax.swing.JCheckBox;
+
+        specialinvoke $r6.<javax.swing.JCheckBox: void <init>(java.lang.String)>("Zoom fit");
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox zoomFitButt> = $r6;
+
+        $r7 = new javax.swing.JCheckBox;
+
+        specialinvoke $r7.<javax.swing.JCheckBox: void <init>(java.lang.String)>("Width fit");
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox widthFitButt> = $r7;
+
+        $r8 = new javax.swing.JButton;
+
+        specialinvoke $r8.<javax.swing.JButton: void <init>(java.lang.String)>("+");
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton zoomMore> = $r8;
+
+        $r9 = new javax.swing.JButton;
+
+        specialinvoke $r9.<javax.swing.JButton: void <init>(java.lang.String)>("-");
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton zoomLess> = $r9;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor> = 0;
+
+        $r10 = <net.sourceforge.plantuml.swing.ImageWindow$SizeMode: net.sourceforge.plantuml.swing.ImageWindow$SizeMode FULL_SIZE>;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode> = $r10;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: java.awt.image.BufferedImage getPlantumlSmallIcon2()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void setIconImage(java.awt.Image)>($r11);
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine> = r1;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.ListModel listModel> = r12;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int index> = i0;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.MainWindow main> = r13;
+
+        $r14 = new javax.swing.JPanel;
+
+        specialinvoke $r14.<javax.swing.JPanel: void <init>()>();
+
+        $r16 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton previous>;
+
+        virtualinvoke $r14.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r16);
+
+        $r18 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton copy>;
+
+        virtualinvoke $r14.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r18);
+
+        $r20 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton next>;
+
+        virtualinvoke $r14.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r20);
+
+        $r22 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox zoomFitButt>;
+
+        virtualinvoke $r14.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r22);
+
+        $r24 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox widthFitButt>;
+
+        virtualinvoke $r14.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r24);
+
+        $r26 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton zoomMore>;
+
+        virtualinvoke $r14.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r26);
+
+        $r28 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton zoomLess>;
+
+        virtualinvoke $r14.<javax.swing.JPanel: java.awt.Component add(java.awt.Component)>($r28);
+
+        $r30 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton copy>;
+
+        virtualinvoke $r30.<javax.swing.JButton: void setFocusable(boolean)>(0);
+
+        $r32 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton copy>;
+
+        $r31 = new net.sourceforge.plantuml.swing.ImageWindow$1;
+
+        specialinvoke $r31.<net.sourceforge.plantuml.swing.ImageWindow$1: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r32.<javax.swing.JButton: void addActionListener(java.awt.event.ActionListener)>($r31);
+
+        $r33 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton next>;
+
+        virtualinvoke $r33.<javax.swing.JButton: void setFocusable(boolean)>(0);
+
+        $r35 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton next>;
+
+        $r34 = new net.sourceforge.plantuml.swing.ImageWindow$2;
+
+        specialinvoke $r34.<net.sourceforge.plantuml.swing.ImageWindow$2: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r35.<javax.swing.JButton: void addActionListener(java.awt.event.ActionListener)>($r34);
+
+        $r36 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton previous>;
+
+        virtualinvoke $r36.<javax.swing.JButton: void setFocusable(boolean)>(0);
+
+        $r38 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton previous>;
+
+        $r37 = new net.sourceforge.plantuml.swing.ImageWindow$3;
+
+        specialinvoke $r37.<net.sourceforge.plantuml.swing.ImageWindow$3: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r38.<javax.swing.JButton: void addActionListener(java.awt.event.ActionListener)>($r37);
+
+        $r39 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox zoomFitButt>;
+
+        virtualinvoke $r39.<javax.swing.JCheckBox: void setFocusable(boolean)>(0);
+
+        $r41 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox zoomFitButt>;
+
+        $r40 = new net.sourceforge.plantuml.swing.ImageWindow$4;
+
+        specialinvoke $r40.<net.sourceforge.plantuml.swing.ImageWindow$4: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r41.<javax.swing.JCheckBox: void addActionListener(java.awt.event.ActionListener)>($r40);
+
+        $r42 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox widthFitButt>;
+
+        virtualinvoke $r42.<javax.swing.JCheckBox: void setFocusable(boolean)>(0);
+
+        $r44 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox widthFitButt>;
+
+        $r43 = new net.sourceforge.plantuml.swing.ImageWindow$5;
+
+        specialinvoke $r43.<net.sourceforge.plantuml.swing.ImageWindow$5: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r44.<javax.swing.JCheckBox: void addActionListener(java.awt.event.ActionListener)>($r43);
+
+        $r45 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton zoomMore>;
+
+        virtualinvoke $r45.<javax.swing.JButton: void setFocusable(boolean)>(0);
+
+        $r47 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton zoomMore>;
+
+        $r46 = new net.sourceforge.plantuml.swing.ImageWindow$6;
+
+        specialinvoke $r46.<net.sourceforge.plantuml.swing.ImageWindow$6: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r47.<javax.swing.JButton: void addActionListener(java.awt.event.ActionListener)>($r46);
+
+        $r48 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton zoomLess>;
+
+        virtualinvoke $r48.<javax.swing.JButton: void setFocusable(boolean)>(0);
+
+        $r50 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JButton zoomLess>;
+
+        $r49 = new net.sourceforge.plantuml.swing.ImageWindow$7;
+
+        specialinvoke $r49.<net.sourceforge.plantuml.swing.ImageWindow$7: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r50.<javax.swing.JButton: void addActionListener(java.awt.event.ActionListener)>($r49);
+
+        $r51 = new javax.swing.JScrollPane;
+
+        $r52 = specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ScrollablePicture buildScrollablePicture()>();
+
+        specialinvoke $r51.<javax.swing.JScrollPane: void <init>(java.awt.Component)>($r52);
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane> = $r51;
+
+        $r53 = virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: java.awt.Container getContentPane()>();
+
+        virtualinvoke $r53.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r14, "North");
+
+        $r54 = virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: java.awt.Container getContentPane()>();
+
+        $r55 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        virtualinvoke $r54.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r55, "Center");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void setSize(int,int)>(640, 400);
+
+        $r56 = virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: java.awt.Container getParent()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void setLocationRelativeTo(java.awt.Component)>($r56);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void setVisible(boolean)>(1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void setDefaultCloseOperation(int)>(2);
+
+        $r57 = new net.sourceforge.plantuml.swing.ImageWindow$8;
+
+        specialinvoke $r57.<net.sourceforge.plantuml.swing.ImageWindow$8: void <init>(net.sourceforge.plantuml.swing.ImageWindow,net.sourceforge.plantuml.swing.MainWindow)>(r0, r13);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void addWindowListener(java.awt.event.WindowListener)>($r57);
+
+        $r58 = new net.sourceforge.plantuml.swing.ImageWindow$9;
+
+        specialinvoke $r58.<net.sourceforge.plantuml.swing.ImageWindow$9: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void addComponentListener(java.awt.event.ComponentListener)>($r58);
+
+        $r59 = <net.sourceforge.plantuml.swing.ImageWindow: java.util.prefs.Preferences prefs>;
+
+        z0 = virtualinvoke $r59.<java.util.prefs.Preferences: boolean getBoolean(java.lang.String,boolean)>("zoomfit", 0);
+
+        $r60 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox zoomFitButt>;
+
+        virtualinvoke $r60.<javax.swing.JCheckBox: void setSelected(boolean)>(z0);
+
+        if z0 == 0 goto label1;
+
+        $r65 = <net.sourceforge.plantuml.swing.ImageWindow$SizeMode: net.sourceforge.plantuml.swing.ImageWindow$SizeMode ZOOM_FIT>;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode> = $r65;
+
+     label1:
+        $r61 = <net.sourceforge.plantuml.swing.ImageWindow: java.util.prefs.Preferences prefs>;
+
+        z1 = virtualinvoke $r61.<java.util.prefs.Preferences: boolean getBoolean(java.lang.String,boolean)>("widthfit", 0);
+
+        $r62 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox widthFitButt>;
+
+        virtualinvoke $r62.<javax.swing.JCheckBox: void setSelected(boolean)>(z1);
+
+        if z1 == 0 goto label2;
+
+        $r64 = <net.sourceforge.plantuml.swing.ImageWindow$SizeMode: net.sourceforge.plantuml.swing.ImageWindow$SizeMode WIDTH_FIT>;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode> = $r64;
+
+     label2:
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void setFocusable(boolean)>(1);
+
+        $r63 = new net.sourceforge.plantuml.swing.ImageWindow$10;
+
+        specialinvoke $r63.<net.sourceforge.plantuml.swing.ImageWindow$10: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void addKeyListener(java.awt.event.KeyListener)>($r63);
+
+        return;
+    }
+
+    private void next()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int index>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int index> = $i1;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void updateSimpleLine()>();
+
+        return;
+    }
+
+    private void previous()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int index>;
+
+        $i1 = $i0 - 1;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int index> = $i1;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void updateSimpleLine()>();
+
+        return;
+    }
+
+    private void imageDown()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JScrollPane $r1;
+        javax.swing.JScrollBar r2;
+        int $i0, $i1, $i2;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        r2 = virtualinvoke $r1.<javax.swing.JScrollPane: javax.swing.JScrollBar getVerticalScrollBar()>();
+
+        $i0 = virtualinvoke r2.<javax.swing.JScrollBar: int getValue()>();
+
+        $i1 = virtualinvoke r2.<javax.swing.JScrollBar: int getBlockIncrement()>();
+
+        $i2 = $i0 + $i1;
+
+        virtualinvoke r2.<javax.swing.JScrollBar: void setValue(int)>($i2);
+
+        return;
+    }
+
+    private void imageUp()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JScrollPane $r1;
+        javax.swing.JScrollBar r2;
+        int $i0, $i1, $i2;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        r2 = virtualinvoke $r1.<javax.swing.JScrollPane: javax.swing.JScrollBar getVerticalScrollBar()>();
+
+        $i0 = virtualinvoke r2.<javax.swing.JScrollBar: int getValue()>();
+
+        $i1 = virtualinvoke r2.<javax.swing.JScrollBar: int getBlockIncrement()>();
+
+        $i2 = $i0 - $i1;
+
+        virtualinvoke r2.<javax.swing.JScrollBar: void setValue(int)>($i2);
+
+        return;
+    }
+
+    private void imageLeft()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JScrollPane $r1;
+        javax.swing.JScrollBar r2;
+        int $i0, $i1, $i2;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        r2 = virtualinvoke $r1.<javax.swing.JScrollPane: javax.swing.JScrollBar getHorizontalScrollBar()>();
+
+        $i0 = virtualinvoke r2.<javax.swing.JScrollBar: int getValue()>();
+
+        $i1 = virtualinvoke r2.<javax.swing.JScrollBar: int getBlockIncrement()>();
+
+        $i2 = $i0 - $i1;
+
+        virtualinvoke r2.<javax.swing.JScrollBar: void setValue(int)>($i2);
+
+        return;
+    }
+
+    private void imageRight()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JScrollPane $r1;
+        javax.swing.JScrollBar r2;
+        int $i0, $i1, $i2;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        r2 = virtualinvoke $r1.<javax.swing.JScrollPane: javax.swing.JScrollBar getHorizontalScrollBar()>();
+
+        $i0 = virtualinvoke r2.<javax.swing.JScrollBar: int getValue()>();
+
+        $i1 = virtualinvoke r2.<javax.swing.JScrollBar: int getBlockIncrement()>();
+
+        $i2 = $i0 + $i1;
+
+        virtualinvoke r2.<javax.swing.JScrollBar: void setValue(int)>($i2);
+
+        return;
+    }
+
+    private void zoomFit()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JCheckBox $r1, $r2;
+        boolean z0, z1;
+        java.util.prefs.Preferences $r3, $r4;
+        net.sourceforge.plantuml.swing.ImageWindow$SizeMode $r5, $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox zoomFitButt>;
+
+        z0 = virtualinvoke $r1.<javax.swing.JCheckBox: boolean isSelected()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox widthFitButt>;
+
+        z1 = virtualinvoke $r2.<javax.swing.JCheckBox: boolean isSelected()>();
+
+        $r3 = <net.sourceforge.plantuml.swing.ImageWindow: java.util.prefs.Preferences prefs>;
+
+        virtualinvoke $r3.<java.util.prefs.Preferences: void putBoolean(java.lang.String,boolean)>("zoomfit", z0);
+
+        $r4 = <net.sourceforge.plantuml.swing.ImageWindow: java.util.prefs.Preferences prefs>;
+
+        virtualinvoke $r4.<java.util.prefs.Preferences: void putBoolean(java.lang.String,boolean)>("widthfit", z1);
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor> = 0;
+
+        if z0 == 0 goto label1;
+
+        $r7 = <net.sourceforge.plantuml.swing.ImageWindow$SizeMode: net.sourceforge.plantuml.swing.ImageWindow$SizeMode ZOOM_FIT>;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode> = $r7;
+
+        goto label3;
+
+     label1:
+        if z1 == 0 goto label2;
+
+        $r6 = <net.sourceforge.plantuml.swing.ImageWindow$SizeMode: net.sourceforge.plantuml.swing.ImageWindow$SizeMode WIDTH_FIT>;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode> = $r6;
+
+        goto label3;
+
+     label2:
+        $r5 = <net.sourceforge.plantuml.swing.ImageWindow$SizeMode: net.sourceforge.plantuml.swing.ImageWindow$SizeMode FULL_SIZE>;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode> = $r5;
+
+     label3:
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void refreshImage(boolean)>(0);
+
+        return;
+    }
+
+    private void updateSimpleLine()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6;
+        javax.swing.ListModel $r1, $r2, $r7;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.swing.SimpleLine $r4, $r5;
+        java.lang.String $r6;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int index>;
+
+        if $i0 >= 0 goto label1;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int index> = 0;
+
+     label1:
+        $i1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int index>;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.ListModel listModel>;
+
+        $i2 = interfaceinvoke $r1.<javax.swing.ListModel: int getSize()>();
+
+        $i3 = $i2 - 1;
+
+        if $i1 <= $i3 goto label2;
+
+        $r7 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.ListModel listModel>;
+
+        $i5 = interfaceinvoke $r7.<javax.swing.ListModel: int getSize()>();
+
+        $i6 = $i5 - 1;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int index> = $i6;
+
+     label2:
+        $r2 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.ListModel listModel>;
+
+        $i4 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int index>;
+
+        $r3 = interfaceinvoke $r2.<javax.swing.ListModel: java.lang.Object getElementAt(int)>($i4);
+
+        $r4 = (net.sourceforge.plantuml.swing.SimpleLine) $r3;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine> = $r4;
+
+        $r5 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.swing.SimpleLine: java.lang.String toString()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void setTitle(java.lang.String)>($r6);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void refreshImage(boolean)>(0);
+
+        return;
+    }
+
+    private void refreshSimpleLine()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        net.sourceforge.plantuml.swing.MainWindow $r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0, $z1;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.swing.SimpleLine r5, $r7, $r9;
+        java.io.File $r6, $r8;
+        java.lang.String $r10;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.MainWindow main>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.swing.MainWindow: java.util.List getCurrentDirectoryListing2()>();
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.swing.SimpleLine) $r4;
+
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.swing.SimpleLine: java.io.File getFile()>();
+
+        $r7 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.swing.SimpleLine: java.io.File getFile()>();
+
+        $z1 = virtualinvoke $r6.<java.io.File: boolean equals(java.lang.Object)>($r8);
+
+        if $z1 == 0 goto label2;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine> = r5;
+
+        $r9 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.swing.SimpleLine: java.lang.String toString()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void setTitle(java.lang.String)>($r10);
+
+     label2:
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    private net.sourceforge.plantuml.swing.ScrollablePicture buildScrollablePicture()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        net.sourceforge.plantuml.swing.SimpleLine $r1, $r44;
+        net.sourceforge.plantuml.GeneratedImage r2;
+        java.io.File r3;
+        net.sourceforge.plantuml.security.SFile $r4;
+        java.lang.String $r5, $r26, r40, $r45;
+        net.sourceforge.plantuml.swing.ImageWindow$SizeMode $r6, $r7, $r8, $r9;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6;
+        java.awt.Dimension $r10, $r12, $r15, $r17, $r20, r34, r36, r38;
+        double $d0;
+        java.awt.RenderingHints $r11, $r16, $r21;
+        javax.swing.JScrollPane $r13, $r18;
+        javax.swing.JViewport $r14, $r19;
+        java.io.IOException $r22, $r23;
+        java.lang.StringBuilder $r24, $r25, $r27;
+        java.lang.String[] $r28;
+        java.util.List $r29;
+        net.sourceforge.plantuml.svek.IEntityImage r30;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r31;
+        java.awt.image.BufferedImage r32;
+        byte[] r41;
+        javax.swing.ImageIcon $r43;
+        net.sourceforge.plantuml.swing.ScrollablePicture $r47;
+        net.sourceforge.plantuml.swing.ImageWindow$11 $r49;
+        net.sourceforge.plantuml.swing.ImageWindow$12 $r50;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.GeneratedImage getGeneratedImage()>();
+
+        if r2 != null goto label01;
+
+        return null;
+
+     label01:
+        r3 = interfaceinvoke r2.<net.sourceforge.plantuml.GeneratedImage: java.io.File getPngFile()>();
+
+        r32 = null;
+
+     label02:
+        $r4 = new net.sourceforge.plantuml.security.SFile;
+
+        $r5 = virtualinvoke r3.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        specialinvoke $r4.<net.sourceforge.plantuml.security.SFile: void <init>(java.lang.String)>($r5);
+
+        r32 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(net.sourceforge.plantuml.security.SFile)>($r4);
+
+        $r7 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode>;
+
+        $r6 = <net.sourceforge.plantuml.swing.ImageWindow$SizeMode: net.sourceforge.plantuml.swing.ImageWindow$SizeMode ZOOM_FIT>;
+
+        if $r7 != $r6 goto label03;
+
+        $r17 = new java.awt.Dimension;
+
+        $i5 = virtualinvoke r32.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i6 = virtualinvoke r32.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r17.<java.awt.Dimension: void <init>(int,int)>($i5, $i6);
+
+        $r18 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        $r19 = virtualinvoke $r18.<javax.swing.JScrollPane: javax.swing.JViewport getViewport()>();
+
+        $r20 = virtualinvoke $r19.<javax.swing.JViewport: java.awt.Dimension getSize()>();
+
+        r34 = staticinvoke <net.sourceforge.plantuml.swing.ImageHelper: java.awt.Dimension getScaledDimension(java.awt.Dimension,java.awt.Dimension)>($r17, $r20);
+
+        $r21 = specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: java.awt.RenderingHints getHints()>();
+
+        r32 = staticinvoke <net.sourceforge.plantuml.swing.ImageHelper: java.awt.image.BufferedImage getScaledInstance(java.awt.image.BufferedImage,java.awt.Dimension,java.awt.RenderingHints,boolean)>(r32, r34, $r21, 1);
+
+        goto label05;
+
+     label03:
+        $r9 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ImageWindow$SizeMode sizeMode>;
+
+        $r8 = <net.sourceforge.plantuml.swing.ImageWindow$SizeMode: net.sourceforge.plantuml.swing.ImageWindow$SizeMode WIDTH_FIT>;
+
+        if $r9 != $r8 goto label04;
+
+        $r12 = new java.awt.Dimension;
+
+        $i3 = virtualinvoke r32.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i4 = virtualinvoke r32.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r12.<java.awt.Dimension: void <init>(int,int)>($i3, $i4);
+
+        $r13 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        $r14 = virtualinvoke $r13.<javax.swing.JScrollPane: javax.swing.JViewport getViewport()>();
+
+        $r15 = virtualinvoke $r14.<javax.swing.JViewport: java.awt.Dimension getSize()>();
+
+        r36 = staticinvoke <net.sourceforge.plantuml.swing.ImageHelper: java.awt.Dimension getScaledDimensionWidthFit(java.awt.Dimension,java.awt.Dimension)>($r12, $r15);
+
+        $r16 = specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: java.awt.RenderingHints getHints()>();
+
+        r32 = staticinvoke <net.sourceforge.plantuml.swing.ImageHelper: java.awt.image.BufferedImage getScaledInstance(java.awt.image.BufferedImage,java.awt.Dimension,java.awt.RenderingHints,boolean)>(r32, r36, $r16, 0);
+
+        goto label05;
+
+     label04:
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor>;
+
+        if $i0 == 0 goto label05;
+
+        $r10 = new java.awt.Dimension;
+
+        $i1 = virtualinvoke r32.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i2 = virtualinvoke r32.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r10.<java.awt.Dimension: void <init>(int,int)>($i1, $i2);
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: double getZoom()>();
+
+        r38 = staticinvoke <net.sourceforge.plantuml.swing.ImageHelper: java.awt.Dimension getScaledDimension(java.awt.Dimension,double)>($r10, $d0);
+
+        $r11 = specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: java.awt.RenderingHints getHints()>();
+
+        r32 = staticinvoke <net.sourceforge.plantuml.swing.ImageHelper: java.awt.image.BufferedImage getScaledInstance(java.awt.image.BufferedImage,java.awt.Dimension,java.awt.RenderingHints,boolean)>(r32, r38, $r11, 0);
+
+     label05:
+        goto label10;
+
+     label06:
+        $r23 := @caughtexception;
+
+        $r24 = new java.lang.StringBuilder;
+
+        specialinvoke $r24.<java.lang.StringBuilder: void <init>()>();
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Error reading file: ");
+
+        $r26 = virtualinvoke $r23.<java.io.IOException: java.lang.String toString()>();
+
+        $r27 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r26);
+
+        r40 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r28 = newarray (java.lang.String)[1];
+
+        $r28[0] = r40;
+
+        $r29 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r28);
+
+        r30 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.svek.IEntityImage createForError(java.util.List,boolean)>($r29, 0);
+
+     label07:
+        $r31 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder plainPngBuilder(net.sourceforge.plantuml.graphic.UDrawable)>(r30);
+
+        r41 = virtualinvoke $r31.<net.sourceforge.plantuml.ugraphic.ImageBuilder: byte[] writeByteArray()>();
+
+        r32 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(byte[])>(r41);
+
+     label08:
+        goto label10;
+
+     label09:
+        $r22 := @caughtexception;
+
+        virtualinvoke $r22.<java.io.IOException: void printStackTrace()>();
+
+     label10:
+        $r43 = new javax.swing.ImageIcon;
+
+        $r44 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        $r45 = virtualinvoke $r44.<net.sourceforge.plantuml.swing.SimpleLine: java.lang.String toString()>();
+
+        specialinvoke $r43.<javax.swing.ImageIcon: void <init>(java.awt.Image,java.lang.String)>(r32, $r45);
+
+        $r47 = new net.sourceforge.plantuml.swing.ScrollablePicture;
+
+        specialinvoke $r47.<net.sourceforge.plantuml.swing.ScrollablePicture: void <init>(javax.swing.ImageIcon,int)>($r43, 1);
+
+        $r49 = new net.sourceforge.plantuml.swing.ImageWindow$11;
+
+        specialinvoke $r49.<net.sourceforge.plantuml.swing.ImageWindow$11: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r47.<net.sourceforge.plantuml.swing.ScrollablePicture: void addMouseListener(java.awt.event.MouseListener)>($r49);
+
+        $r50 = new net.sourceforge.plantuml.swing.ImageWindow$12;
+
+        specialinvoke $r50.<net.sourceforge.plantuml.swing.ImageWindow$12: void <init>(net.sourceforge.plantuml.swing.ImageWindow)>(r0);
+
+        virtualinvoke $r47.<net.sourceforge.plantuml.swing.ScrollablePicture: void addMouseMotionListener(java.awt.event.MouseMotionListener)>($r50);
+
+        return $r47;
+
+        catch java.io.IOException from label02 to label05 with label06;
+        catch java.io.IOException from label07 to label08 with label09;
+    }
+
+    private java.awt.RenderingHints getHints()
+    {
+        java.awt.RenderingHints $r0;
+        java.lang.Object $r1, $r4, $r7;
+        java.awt.RenderingHints$Key $r2, $r5, $r8;
+        net.sourceforge.plantuml.swing.ImageWindow r10;
+
+        r10 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r0 = new java.awt.RenderingHints;
+
+        $r2 = <java.awt.RenderingHints: java.awt.RenderingHints$Key KEY_INTERPOLATION>;
+
+        $r1 = <java.awt.RenderingHints: java.lang.Object VALUE_INTERPOLATION_BILINEAR>;
+
+        specialinvoke $r0.<java.awt.RenderingHints: void <init>(java.awt.RenderingHints$Key,java.lang.Object)>($r2, $r1);
+
+        $r5 = <java.awt.RenderingHints: java.awt.RenderingHints$Key KEY_ANTIALIASING>;
+
+        $r4 = <java.awt.RenderingHints: java.lang.Object VALUE_ANTIALIAS_ON>;
+
+        virtualinvoke $r0.<java.awt.RenderingHints: java.lang.Object put(java.lang.Object,java.lang.Object)>($r5, $r4);
+
+        $r8 = <java.awt.RenderingHints: java.awt.RenderingHints$Key KEY_RENDERING>;
+
+        $r7 = <java.awt.RenderingHints: java.lang.Object VALUE_RENDER_QUALITY>;
+
+        virtualinvoke $r0.<java.awt.RenderingHints: java.lang.Object put(java.lang.Object,java.lang.Object)>($r8, $r7);
+
+        return $r0;
+    }
+
+    private double getZoom()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0;
+        double $d0, $d1;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor>;
+
+        $d0 = (double) $i0;
+
+        $d1 = staticinvoke <java.lang.Math: double pow(double,double)>(1.1, $d0);
+
+        return $d1;
+    }
+
+    private void copy()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        net.sourceforge.plantuml.swing.SimpleLine $r1;
+        net.sourceforge.plantuml.GeneratedImage r2;
+        java.awt.image.BufferedImage r3;
+        net.sourceforge.plantuml.ImageSelection $r4;
+        java.awt.Toolkit $r6;
+        java.awt.datatransfer.Clipboard $r7;
+        java.io.IOException $r8;
+        java.io.File r9;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.GeneratedImage getGeneratedImage()>();
+
+        if r2 != null goto label1;
+
+        return;
+
+     label1:
+        r9 = interfaceinvoke r2.<net.sourceforge.plantuml.GeneratedImage: java.io.File getPngFile()>();
+
+        r3 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(java.io.File)>(r9);
+
+        $r4 = new net.sourceforge.plantuml.ImageSelection;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ImageSelection: void <init>(java.awt.Image)>(r3);
+
+        $r6 = staticinvoke <java.awt.Toolkit: java.awt.Toolkit getDefaultToolkit()>();
+
+        $r7 = virtualinvoke $r6.<java.awt.Toolkit: java.awt.datatransfer.Clipboard getSystemClipboard()>();
+
+        virtualinvoke $r7.<java.awt.datatransfer.Clipboard: void setContents(java.awt.datatransfer.Transferable,java.awt.datatransfer.ClipboardOwner)>($r4, null);
+
+     label2:
+        goto label4;
+
+     label3:
+        $r8 := @caughtexception;
+
+        virtualinvoke $r8.<java.io.IOException: void printStackTrace()>();
+
+     label4:
+        return;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+
+    public net.sourceforge.plantuml.swing.SimpleLine getSimpleLine()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        net.sourceforge.plantuml.swing.SimpleLine $r1;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        return $r1;
+    }
+
+    public void refreshImage(boolean)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JScrollPane $r1, $r3, $r6;
+        javax.swing.JScrollBar r2, r4;
+        boolean z0, $z1;
+        net.sourceforge.plantuml.swing.ImageWindow$13 $r5;
+        int $i0, $i1;
+        net.sourceforge.plantuml.swing.ScrollablePicture $r7;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        z0 := @parameter0: boolean;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        r2 = virtualinvoke $r1.<javax.swing.JScrollPane: javax.swing.JScrollBar getVerticalScrollBar()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        r4 = virtualinvoke $r3.<javax.swing.JScrollPane: javax.swing.JScrollBar getHorizontalScrollBar()>();
+
+        if z0 == 0 goto label1;
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: boolean isError()>();
+
+        if $z1 != 0 goto label1;
+
+        $i0 = virtualinvoke r2.<javax.swing.JScrollBar: int getValue()>();
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int v1> = $i0;
+
+        $i1 = virtualinvoke r4.<javax.swing.JScrollBar: int getValue()>();
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int v2> = $i1;
+
+     label1:
+        $r6 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.ScrollablePicture buildScrollablePicture()>();
+
+        virtualinvoke $r6.<javax.swing.JScrollPane: void setViewportView(java.awt.Component)>($r7);
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void force()>();
+
+        if z0 == 0 goto label2;
+
+        $r5 = new net.sourceforge.plantuml.swing.ImageWindow$13;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.swing.ImageWindow$13: void <init>(net.sourceforge.plantuml.swing.ImageWindow,javax.swing.JScrollBar,javax.swing.JScrollBar)>(r0, r2, r4);
+
+        staticinvoke <javax.swing.SwingUtilities: void invokeLater(java.lang.Runnable)>($r5);
+
+     label2:
+        return;
+    }
+
+    private boolean isError()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        net.sourceforge.plantuml.swing.SimpleLine $r1, $r3;
+        net.sourceforge.plantuml.GeneratedImage $r2, $r4;
+        int $i0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.GeneratedImage getGeneratedImage()>();
+
+        if $r2 == null goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine simpleLine>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.GeneratedImage getGeneratedImage()>();
+
+        $i0 = interfaceinvoke $r4.<net.sourceforge.plantuml.GeneratedImage: int lineErrorRaw()>();
+
+        if $i0 == -1 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private void force()
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @this: net.sourceforge.plantuml.swing.ImageWindow;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void repaint()>();
+
+        return;
+    }
+
+    static void access$000(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void copy()>();
+
+        return;
+    }
+
+    static void access$100(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void next()>();
+
+        return;
+    }
+
+    static void access$200(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void previous()>();
+
+        return;
+    }
+
+    static javax.swing.JCheckBox access$300(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JCheckBox $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox widthFitButt>;
+
+        return $r1;
+    }
+
+    static void access$400(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void zoomFit()>();
+
+        return;
+    }
+
+    static javax.swing.JCheckBox access$500(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JCheckBox $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JCheckBox zoomFitButt>;
+
+        return $r1;
+    }
+
+    static int access$608(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0, $i1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor> = $i1;
+
+        return $i0;
+    }
+
+    static int access$610(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0, $i1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor>;
+
+        $i1 = $i0 - 1;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor> = $i1;
+
+        return $i0;
+    }
+
+    static int access$602(net.sourceforge.plantuml.swing.ImageWindow, int)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        i0 := @parameter1: int;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int zoomFactor> = i0;
+
+        return i0;
+    }
+
+    static void access$700(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void imageRight()>();
+
+        return;
+    }
+
+    static void access$800(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void imageLeft()>();
+
+        return;
+    }
+
+    static void access$900(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void imageDown()>();
+
+        return;
+    }
+
+    static void access$1000(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void imageUp()>();
+
+        return;
+    }
+
+    static int access$1102(net.sourceforge.plantuml.swing.ImageWindow, int)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        i0 := @parameter1: int;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int startX> = i0;
+
+        return i0;
+    }
+
+    static int access$1202(net.sourceforge.plantuml.swing.ImageWindow, int)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        i0 := @parameter1: int;
+
+        r0.<net.sourceforge.plantuml.swing.ImageWindow: int startY> = i0;
+
+        return i0;
+    }
+
+    static int access$1100(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int startX>;
+
+        return $i0;
+    }
+
+    static int access$1200(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int startY>;
+
+        return $i0;
+    }
+
+    static javax.swing.JScrollPane access$1300(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        javax.swing.JScrollPane $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.ImageWindow: javax.swing.JScrollPane scrollPane>;
+
+        return $r1;
+    }
+
+    static void access$1400(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: void refreshSimpleLine()>();
+
+        return;
+    }
+
+    static boolean access$1500(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.swing.ImageWindow: boolean isError()>();
+
+        return $z0;
+    }
+
+    static int access$1600(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int v1>;
+
+        return $i0;
+    }
+
+    static int access$1700(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.ImageWindow r0;
+        int $i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $i0 = r0.<net.sourceforge.plantuml.swing.ImageWindow: int v2>;
+
+        return $i0;
+    }
+
+    static void <clinit>()
+    {
+        java.util.prefs.Preferences $r0;
+
+        <net.sourceforge.plantuml.swing.ImageWindow: java.lang.String KEY_WIDTH_FIT> = "widthfit";
+
+        <net.sourceforge.plantuml.swing.ImageWindow: java.lang.String KEY_ZOOM_FIT> = "zoomfit";
+
+        $r0 = staticinvoke <java.util.prefs.Preferences: java.util.prefs.Preferences userNodeForPackage(java.lang.Class)>(class "Lnet/sourceforge/plantuml/swing/ImageWindow;");
+
+        <net.sourceforge.plantuml.swing.ImageWindow: java.util.prefs.Preferences prefs> = $r0;
+
+        return;
+    }
+}

@@ -1,0 +1,249 @@
+public class net.sourceforge.plantuml.math.PSystemLatex extends net.sourceforge.plantuml.AbstractPSystem
+{
+    private java.lang.String latex;
+    private float scale;
+    private java.awt.Color color;
+    private java.awt.Color backColor;
+
+    public void <init>(net.sourceforge.plantuml.core.UmlSource)
+    {
+        net.sourceforge.plantuml.math.PSystemLatex r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        java.awt.Color $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.math.PSystemLatex;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        r0.<net.sourceforge.plantuml.math.PSystemLatex: java.lang.String latex> = "";
+
+        r0.<net.sourceforge.plantuml.math.PSystemLatex: float scale> = 1.0F;
+
+        $r2 = <java.awt.Color: java.awt.Color BLACK>;
+
+        r0.<net.sourceforge.plantuml.math.PSystemLatex: java.awt.Color color> = $r2;
+
+        $r3 = <java.awt.Color: java.awt.Color WHITE>;
+
+        r0.<net.sourceforge.plantuml.math.PSystemLatex: java.awt.Color backColor> = $r3;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.math.PSystemLatex r1;
+
+        r1 := @this: net.sourceforge.plantuml.math.PSystemLatex;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Latex)");
+
+        return $r0;
+    }
+
+    protected final net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.math.PSystemLatex r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.math.ScientificEquationSafe r2;
+        java.io.OutputStream r3;
+        net.sourceforge.plantuml.FileFormatOption r4;
+        java.awt.Color $r5, $r6;
+        float $f0;
+        net.sourceforge.plantuml.core.ImageData $r7;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.math.PSystemLatex;
+
+        r3 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r4 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r1 = r0.<net.sourceforge.plantuml.math.PSystemLatex: java.lang.String latex>;
+
+        r2 = staticinvoke <net.sourceforge.plantuml.math.ScientificEquationSafe: net.sourceforge.plantuml.math.ScientificEquationSafe fromLatex(java.lang.String)>($r1);
+
+        $f0 = r0.<net.sourceforge.plantuml.math.PSystemLatex: float scale>;
+
+        $r6 = r0.<net.sourceforge.plantuml.math.PSystemLatex: java.awt.Color color>;
+
+        $r5 = r0.<net.sourceforge.plantuml.math.PSystemLatex: java.awt.Color backColor>;
+
+        $r7 = virtualinvoke r2.<net.sourceforge.plantuml.math.ScientificEquationSafe: net.sourceforge.plantuml.core.ImageData export(java.io.OutputStream,net.sourceforge.plantuml.FileFormatOption,float,java.awt.Color,java.awt.Color)>(r3, r4, $f0, $r6, $r5);
+
+        return $r7;
+    }
+
+    public void doCommandLine(java.lang.String)
+    {
+        java.lang.String r0, $r1, r2, $r6, $r7, $r8, $r9, $r10, $r11, r16, r18;
+        boolean $z0, $z1, $z2, $z3;
+        net.sourceforge.plantuml.math.PSystemLatex r5;
+        int $i0, $i2, $i4, $i5;
+        byte $b1, $b3;
+        float $f0, f1, f2;
+        java.lang.Exception $r12, $r13;
+        java.awt.Color r14, r15;
+
+        r5 := @this: net.sourceforge.plantuml.math.PSystemLatex;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goLowerCase(java.lang.String)>(r0);
+
+        r2 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trin(java.lang.String)>($r1);
+
+        $z0 = virtualinvoke r2.<java.lang.String: boolean startsWith(java.lang.String)>("color ");
+
+        if $z0 == 0 goto label02;
+
+        $r10 = "color ";
+
+        $i5 = virtualinvoke $r10.<java.lang.String: int length()>();
+
+        $r11 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>($i5);
+
+        r14 = specialinvoke r5.<net.sourceforge.plantuml.math.PSystemLatex: java.awt.Color getColor(java.lang.String)>($r11);
+
+        if r14 == null goto label01;
+
+        r5.<net.sourceforge.plantuml.math.PSystemLatex: java.awt.Color color> = r14;
+
+     label01:
+        goto label15;
+
+     label02:
+        $z1 = virtualinvoke r2.<java.lang.String: boolean startsWith(java.lang.String)>("backgroundcolor ");
+
+        if $z1 == 0 goto label04;
+
+        $r8 = "backgroundcolor ";
+
+        $i4 = virtualinvoke $r8.<java.lang.String: int length()>();
+
+        $r9 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>($i4);
+
+        r15 = specialinvoke r5.<net.sourceforge.plantuml.math.PSystemLatex: java.awt.Color getColor(java.lang.String)>($r9);
+
+        if r15 == null goto label03;
+
+        r5.<net.sourceforge.plantuml.math.PSystemLatex: java.awt.Color backColor> = r15;
+
+     label03:
+        goto label15;
+
+     label04:
+        $z2 = virtualinvoke r2.<java.lang.String: boolean startsWith(java.lang.String)>("scale ");
+
+        if $z2 == 0 goto label09;
+
+        $r7 = "scale ";
+
+        $i2 = virtualinvoke $r7.<java.lang.String: int length()>();
+
+        r16 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>($i2);
+
+     label05:
+        f1 = staticinvoke <java.lang.Float: float parseFloat(java.lang.String)>(r16);
+
+        $b3 = f1 cmpl 0.0F;
+
+        if $b3 <= 0 goto label06;
+
+        r5.<net.sourceforge.plantuml.math.PSystemLatex: float scale> = f1;
+
+     label06:
+        goto label08;
+
+     label07:
+        $r13 := @caughtexception;
+
+        virtualinvoke $r13.<java.lang.Exception: void printStackTrace()>();
+
+     label08:
+        goto label15;
+
+     label09:
+        $z3 = virtualinvoke r2.<java.lang.String: boolean startsWith(java.lang.String)>("dpi ");
+
+        if $z3 == 0 goto label14;
+
+        $r6 = "dpi ";
+
+        $i0 = virtualinvoke $r6.<java.lang.String: int length()>();
+
+        r18 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>($i0);
+
+     label10:
+        f2 = staticinvoke <java.lang.Float: float parseFloat(java.lang.String)>(r18);
+
+        $b1 = f2 cmpl 0.0F;
+
+        if $b1 <= 0 goto label11;
+
+        $f0 = f2 / 96.0F;
+
+        r5.<net.sourceforge.plantuml.math.PSystemLatex: float scale> = $f0;
+
+     label11:
+        goto label13;
+
+     label12:
+        $r12 := @caughtexception;
+
+        virtualinvoke $r12.<java.lang.Exception: void printStackTrace()>();
+
+     label13:
+        goto label15;
+
+     label14:
+        r5.<net.sourceforge.plantuml.math.PSystemLatex: java.lang.String latex> = r0;
+
+     label15:
+        return;
+
+        catch java.lang.Exception from label05 to label06 with label07;
+        catch java.lang.Exception from label10 to label11 with label12;
+    }
+
+    private java.awt.Color getColor(java.lang.String)
+    {
+        java.lang.String r0;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity $r3;
+        java.awt.Color r4;
+        net.sourceforge.plantuml.math.PSystemLatex r5;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r6;
+
+        r5 := @this: net.sourceforge.plantuml.math.PSystemLatex;
+
+        r0 := @parameter0: java.lang.String;
+
+        if r0 != null goto label1;
+
+        $r6 = null;
+
+        goto label2;
+
+     label1:
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColorSet instance()>();
+
+        $r6 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColorOrWhite(java.lang.String)>(r0);
+
+     label2:
+        $r3 = new net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity: void <init>()>();
+
+        r4 = virtualinvoke $r3.<net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>($r6);
+
+        return r4;
+    }
+}

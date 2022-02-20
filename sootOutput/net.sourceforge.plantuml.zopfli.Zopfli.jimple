@@ -1,0 +1,330 @@
+public class net.sourceforge.plantuml.zopfli.Zopfli extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.zopfli.Cookie cookie;
+
+    public synchronized net.sourceforge.plantuml.zopfli.Buffer compress(net.sourceforge.plantuml.zopfli.Options, byte[])
+    {
+        net.sourceforge.plantuml.zopfli.Buffer $r0;
+        net.sourceforge.plantuml.zopfli.Options r2;
+        net.sourceforge.plantuml.zopfli.Options$OutputFormat $r3, $r11;
+        int[] $r4;
+        int $i0, $i1;
+        net.sourceforge.plantuml.zopfli.Zopfli r5;
+        byte[] r6;
+        net.sourceforge.plantuml.zopfli.Cookie $r7;
+        java.lang.IllegalArgumentException $r8;
+        java.lang.StringBuilder $r9, $r10, $r12;
+        java.lang.String $r13;
+
+        r5 := @this: net.sourceforge.plantuml.zopfli.Zopfli;
+
+        r2 := @parameter0: net.sourceforge.plantuml.zopfli.Options;
+
+        r6 := @parameter1: byte[];
+
+        $r0 = new net.sourceforge.plantuml.zopfli.Buffer;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.zopfli.Buffer: void <init>()>();
+
+        $r4 = <net.sourceforge.plantuml.zopfli.Zopfli$1: int[] $SwitchMap$net$sourceforge$plantuml$zopfli$Options$OutputFormat>;
+
+        $r3 = r2.<net.sourceforge.plantuml.zopfli.Options: net.sourceforge.plantuml.zopfli.Options$OutputFormat outputType>;
+
+        $i0 = virtualinvoke $r3.<net.sourceforge.plantuml.zopfli.Options$OutputFormat: int ordinal()>();
+
+        $i1 = $r4[$i0];
+
+        tableswitch($i1)
+        {
+            case 1: goto label1;
+            case 2: goto label2;
+            case 3: goto label3;
+            default: goto label4;
+        };
+
+     label1:
+        specialinvoke r5.<net.sourceforge.plantuml.zopfli.Zopfli: void compressGzip(net.sourceforge.plantuml.zopfli.Options,byte[],net.sourceforge.plantuml.zopfli.Buffer)>(r2, r6, $r0);
+
+        goto label5;
+
+     label2:
+        specialinvoke r5.<net.sourceforge.plantuml.zopfli.Zopfli: void compressZlib(net.sourceforge.plantuml.zopfli.Options,byte[],net.sourceforge.plantuml.zopfli.Buffer)>(r2, r6, $r0);
+
+        goto label5;
+
+     label3:
+        $r7 = r5.<net.sourceforge.plantuml.zopfli.Zopfli: net.sourceforge.plantuml.zopfli.Cookie cookie>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void compress(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Options,byte[],net.sourceforge.plantuml.zopfli.Buffer)>($r7, r2, r6, $r0);
+
+        goto label5;
+
+     label4:
+        $r8 = new java.lang.IllegalArgumentException;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Unexpected output format: ");
+
+        $r11 = r2.<net.sourceforge.plantuml.zopfli.Options: net.sourceforge.plantuml.zopfli.Options$OutputFormat outputType>;
+
+        $r12 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r11);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r8.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r13);
+
+        throw $r8;
+
+     label5:
+        return $r0;
+    }
+
+    private static int adler32(byte[])
+    {
+        byte[] r0;
+        int $i0, $i1, $i2, $i3, $i4, i5, $i6, i8, i9, i10;
+        byte $b7;
+
+        r0 := @parameter0: byte[];
+
+        i8 = 1;
+
+        i9 = 0;
+
+        i10 = 0;
+
+     label1:
+        $i0 = lengthof r0;
+
+        if i10 >= $i0 goto label4;
+
+        $i4 = lengthof r0;
+
+        $i3 = i10 + 1024;
+
+        i5 = staticinvoke <java.lang.Math: int min(int,int)>($i4, $i3);
+
+     label2:
+        if i10 >= i5 goto label3;
+
+        $i6 = i10;
+
+        i10 = i10 + 1;
+
+        $b7 = r0[$i6];
+
+        i8 = i8 + $b7;
+
+        i9 = i9 + i8;
+
+        goto label2;
+
+     label3:
+        i8 = i8 % 65521;
+
+        i9 = i9 % 65521;
+
+        goto label1;
+
+     label4:
+        $i1 = i9 << 16;
+
+        $i2 = $i1 | i8;
+
+        return $i2;
+    }
+
+    private void compressZlib(net.sourceforge.plantuml.zopfli.Options, byte[], net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        net.sourceforge.plantuml.zopfli.Buffer r0;
+        net.sourceforge.plantuml.zopfli.Zopfli r1;
+        net.sourceforge.plantuml.zopfli.Options r2;
+        byte[] r3;
+        net.sourceforge.plantuml.zopfli.Cookie $r4;
+        int i0, $i1, $i2, $i4, $i5, $i7, $i8, $i10;
+        byte $b3, $b6, $b9, $b11;
+
+        r1 := @this: net.sourceforge.plantuml.zopfli.Zopfli;
+
+        r2 := @parameter0: net.sourceforge.plantuml.zopfli.Options;
+
+        r3 := @parameter1: byte[];
+
+        r0 := @parameter2: net.sourceforge.plantuml.zopfli.Buffer;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(120);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(30);
+
+        $r4 = r1.<net.sourceforge.plantuml.zopfli.Zopfli: net.sourceforge.plantuml.zopfli.Cookie cookie>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void compress(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Options,byte[],net.sourceforge.plantuml.zopfli.Buffer)>($r4, r2, r3, r0);
+
+        i0 = staticinvoke <net.sourceforge.plantuml.zopfli.Zopfli: int adler32(byte[])>(r3);
+
+        $i1 = i0 >> 24;
+
+        $i2 = $i1 & 255;
+
+        $b3 = (byte) $i2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b3);
+
+        $i4 = i0 >> 16;
+
+        $i5 = $i4 & 255;
+
+        $b6 = (byte) $i5;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b6);
+
+        $i7 = i0 >> 8;
+
+        $i8 = $i7 & 255;
+
+        $b9 = (byte) $i8;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b9);
+
+        $i10 = i0 & 255;
+
+        $b11 = (byte) $i10;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b11);
+
+        return;
+    }
+
+    private void compressGzip(net.sourceforge.plantuml.zopfli.Options, byte[], net.sourceforge.plantuml.zopfli.Buffer)
+    {
+        net.sourceforge.plantuml.zopfli.Buffer r0;
+        net.sourceforge.plantuml.zopfli.Zopfli r1;
+        net.sourceforge.plantuml.zopfli.Options r2;
+        byte[] r3;
+        net.sourceforge.plantuml.zopfli.Cookie $r4;
+        int i0, $i1, $i3, $i4, $i6, $i7, $i9, $i10, i12, $i13, $i15, $i16, $i18, $i19, $i21, $i22;
+        byte $b2, $b5, $b8, $b11, $b14, $b17, $b20, $b23;
+
+        r1 := @this: net.sourceforge.plantuml.zopfli.Zopfli;
+
+        r2 := @parameter0: net.sourceforge.plantuml.zopfli.Options;
+
+        r3 := @parameter1: byte[];
+
+        r0 := @parameter2: net.sourceforge.plantuml.zopfli.Buffer;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(31);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(-117);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(8);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(2);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>(3);
+
+        $r4 = r1.<net.sourceforge.plantuml.zopfli.Zopfli: net.sourceforge.plantuml.zopfli.Cookie cookie>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Deflate: void compress(net.sourceforge.plantuml.zopfli.Cookie,net.sourceforge.plantuml.zopfli.Options,byte[],net.sourceforge.plantuml.zopfli.Buffer)>($r4, r2, r3, r0);
+
+        i0 = staticinvoke <net.sourceforge.plantuml.zopfli.Zopfli$Crc: int calculate(byte[])>(r3);
+
+        $i1 = i0 & 255;
+
+        $b2 = (byte) $i1;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b2);
+
+        $i3 = i0 >> 8;
+
+        $i4 = $i3 & 255;
+
+        $b5 = (byte) $i4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b5);
+
+        $i6 = i0 >> 16;
+
+        $i7 = $i6 & 255;
+
+        $b8 = (byte) $i7;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b8);
+
+        $i9 = i0 >> 24;
+
+        $i10 = $i9 & 255;
+
+        $b11 = (byte) $i10;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b11);
+
+        i12 = lengthof r3;
+
+        $i13 = i12 & 255;
+
+        $b14 = (byte) $i13;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b14);
+
+        $i15 = i12 >> 8;
+
+        $i16 = $i15 & 255;
+
+        $b17 = (byte) $i16;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b17);
+
+        $i18 = i12 >> 16;
+
+        $i19 = $i18 & 255;
+
+        $b20 = (byte) $i19;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b20);
+
+        $i21 = i12 >> 24;
+
+        $i22 = $i21 & 255;
+
+        $b23 = (byte) $i22;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.zopfli.Buffer: void append(byte)>($b23);
+
+        return;
+    }
+
+    public void <init>(int)
+    {
+        net.sourceforge.plantuml.zopfli.Zopfli r0;
+        net.sourceforge.plantuml.zopfli.Cookie $r1;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.Zopfli;
+
+        i0 := @parameter0: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.zopfli.Cookie;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.zopfli.Cookie: void <init>(int)>(i0);
+
+        r0.<net.sourceforge.plantuml.zopfli.Zopfli: net.sourceforge.plantuml.zopfli.Cookie cookie> = $r1;
+
+        return;
+    }
+}

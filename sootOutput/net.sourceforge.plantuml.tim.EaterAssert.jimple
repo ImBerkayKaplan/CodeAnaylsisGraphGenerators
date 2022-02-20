@@ -1,0 +1,82 @@
+public class net.sourceforge.plantuml.tim.EaterAssert extends net.sourceforge.plantuml.tim.Eater
+{
+
+    public void <init>(net.sourceforge.plantuml.StringLocated)
+    {
+        net.sourceforge.plantuml.tim.EaterAssert r0;
+        net.sourceforge.plantuml.StringLocated r1;
+
+        r0 := @this: net.sourceforge.plantuml.tim.EaterAssert;
+
+        r1 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.Eater: void <init>(net.sourceforge.plantuml.StringLocated)>(r1);
+
+        return;
+    }
+
+    public void analyze(net.sourceforge.plantuml.tim.TContext, net.sourceforge.plantuml.tim.TMemory) throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.EaterAssert r0;
+        net.sourceforge.plantuml.tim.TContext r1;
+        net.sourceforge.plantuml.tim.TMemory r2;
+        net.sourceforge.plantuml.tim.expression.TValue r3, r5;
+        boolean $z0;
+        char c0;
+        net.sourceforge.plantuml.tim.EaterException $r4, $r11;
+        java.lang.StringBuilder $r6, $r7, $r9;
+        java.lang.String $r8, $r10;
+
+        r0 := @this: net.sourceforge.plantuml.tim.EaterAssert;
+
+        r1 := @parameter0: net.sourceforge.plantuml.tim.TContext;
+
+        r2 := @parameter1: net.sourceforge.plantuml.tim.TMemory;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAssert: void skipSpaces()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAssert: void checkAndEatChar(java.lang.String)>("!assert");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAssert: void skipSpaces()>();
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAssert: net.sourceforge.plantuml.tim.expression.TValue eatExpressionStopAtColon(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory)>(r1, r2);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAssert: void skipSpaces()>();
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.tim.expression.TValue: boolean toBoolean()>();
+
+        if $z0 != 0 goto label2;
+
+        c0 = virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAssert: char peekChar()>();
+
+        if c0 != 58 goto label1;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAssert: void checkAndEatChar(char)>(58);
+
+        r5 = virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAssert: net.sourceforge.plantuml.tim.expression.TValue eatExpression(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory)>(r1, r2);
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Assertion error : ");
+
+        $r8 = virtualinvoke r5.<net.sourceforge.plantuml.tim.expression.TValue: java.lang.String toString()>();
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException located(java.lang.String)>($r10);
+
+        throw $r11;
+
+     label1:
+        $r4 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException located(java.lang.String)>("Assertion error");
+
+        throw $r4;
+
+     label2:
+        return;
+    }
+}

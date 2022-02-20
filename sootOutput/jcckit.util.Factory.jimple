@@ -1,0 +1,181 @@
+public class jcckit.util.Factory extends java.lang.Object
+{
+    public static final java.lang.String CLASS_NAME_KEY;
+
+    private void <init>()
+    {
+        jcckit.util.Factory r0;
+
+        r0 := @this: jcckit.util.Factory;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static java.lang.Object create(java.lang.String)
+    {
+        java.lang.String r0, $r11;
+        java.lang.Class $r1;
+        java.lang.Object $r2;
+        java.lang.Throwable $r3;
+        java.lang.IllegalArgumentException $r5;
+        java.lang.StringBuilder $r6, $r7, $r8, $r9, $r10;
+
+        r0 := @parameter0: java.lang.String;
+
+     label1:
+        $r1 = staticinvoke <java.lang.Class: java.lang.Class forName(java.lang.String)>(r0);
+
+        $r2 = virtualinvoke $r1.<java.lang.Class: java.lang.Object newInstance()>();
+
+     label2:
+        return $r2;
+
+     label3:
+        $r3 := @caughtexception;
+
+        $r5 = new java.lang.IllegalArgumentException;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Could not create an instance of ");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r0);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" because of ");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r3);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r5.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r11);
+
+        throw $r5;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    public static java.lang.Object create(jcckit.util.ConfigParameters)
+    {
+        jcckit.util.ConfigParameters r0;
+        java.lang.String r1;
+        java.lang.Object $r2;
+
+        r0 := @parameter0: jcckit.util.ConfigParameters;
+
+        r1 = virtualinvoke r0.<jcckit.util.ConfigParameters: java.lang.String get(java.lang.String)>("className");
+
+        $r2 = staticinvoke <jcckit.util.Factory: java.lang.Object createObject(jcckit.util.ConfigParameters,java.lang.String)>(r0, r1);
+
+        return $r2;
+    }
+
+    public static java.lang.Object create(jcckit.util.ConfigParameters, java.lang.String)
+    {
+        jcckit.util.ConfigParameters r0;
+        java.lang.String r1, r2;
+        java.lang.Object $r3;
+
+        r0 := @parameter0: jcckit.util.ConfigParameters;
+
+        r1 := @parameter1: java.lang.String;
+
+        r2 = virtualinvoke r0.<jcckit.util.ConfigParameters: java.lang.String get(java.lang.String,java.lang.String)>("className", r1);
+
+        $r3 = staticinvoke <jcckit.util.Factory: java.lang.Object createObject(jcckit.util.ConfigParameters,java.lang.String)>(r0, r2);
+
+        return $r3;
+    }
+
+    public static java.lang.Object createOrGet(jcckit.util.ConfigParameters, java.lang.Object)
+    {
+        jcckit.util.ConfigParameters r0;
+        java.lang.String r1;
+        java.lang.Object r2, $r3;
+
+        r0 := @parameter0: jcckit.util.ConfigParameters;
+
+        r2 := @parameter1: java.lang.Object;
+
+        r1 = virtualinvoke r0.<jcckit.util.ConfigParameters: java.lang.String get(java.lang.String,java.lang.String)>("className", null);
+
+        if r1 != null goto label1;
+
+        $r3 = r2;
+
+        goto label2;
+
+     label1:
+        $r3 = staticinvoke <jcckit.util.Factory: java.lang.Object createObject(jcckit.util.ConfigParameters,java.lang.String)>(r0, r1);
+
+     label2:
+        return $r3;
+    }
+
+    private static java.lang.Object createObject(jcckit.util.ConfigParameters, java.lang.String)
+    {
+        java.lang.String r0;
+        java.lang.Class[] $r1;
+        java.lang.Object[] $r2;
+        jcckit.util.ConfigParameters r3;
+        java.lang.Throwable $r4;
+        jcckit.util.FactoryException $r5;
+        java.lang.NoSuchMethodException $r6;
+        java.lang.Class r8;
+        java.lang.reflect.Constructor r9;
+        java.lang.Object r10;
+
+        r3 := @parameter0: jcckit.util.ConfigParameters;
+
+        r0 := @parameter1: java.lang.String;
+
+     label1:
+        r8 = staticinvoke <java.lang.Class: java.lang.Class forName(java.lang.String)>(r0);
+
+     label2:
+        $r1 = newarray (java.lang.Class)[1];
+
+        $r1[0] = class "Ljcckit/util/ConfigParameters;";
+
+        r9 = virtualinvoke r8.<java.lang.Class: java.lang.reflect.Constructor getConstructor(java.lang.Class[])>($r1);
+
+        $r2 = newarray (java.lang.Object)[1];
+
+        $r2[0] = r3;
+
+        r10 = virtualinvoke r9.<java.lang.reflect.Constructor: java.lang.Object newInstance(java.lang.Object[])>($r2);
+
+     label3:
+        goto label5;
+
+     label4:
+        $r6 := @caughtexception;
+
+        r10 = virtualinvoke r8.<java.lang.Class: java.lang.Object newInstance()>();
+
+     label5:
+        return r10;
+
+     label6:
+        $r4 := @caughtexception;
+
+        $r5 = new jcckit.util.FactoryException;
+
+        specialinvoke $r5.<jcckit.util.FactoryException: void <init>(jcckit.util.ConfigParameters,java.lang.String,java.lang.Object)>(r3, "className", $r4);
+
+        throw $r5;
+
+        catch java.lang.NoSuchMethodException from label2 to label3 with label4;
+        catch java.lang.Throwable from label1 to label5 with label6;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.util.Factory: java.lang.String CLASS_NAME_KEY> = "className";
+
+        return;
+    }
+}

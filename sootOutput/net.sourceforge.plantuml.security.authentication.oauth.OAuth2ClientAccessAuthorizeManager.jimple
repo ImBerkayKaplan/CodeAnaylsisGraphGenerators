@@ -1,0 +1,156 @@
+public class net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager extends net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager
+{
+    private final net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager basicAuthManager;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager r0;
+        net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager $r1;
+
+        r0 := @this: net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager;
+
+        specialinvoke r0.<net.sourceforge.plantuml.security.authentication.oauth.AbstractOAuth2AccessAuthorizeManager: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager: net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager basicAuthManager> = $r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.security.authentication.SecurityAuthentication create(net.sourceforge.plantuml.security.authentication.SecurityCredentials)
+    {
+        net.sourceforge.plantuml.security.authentication.SecurityCredentials r0, $r16, $r21;
+        java.lang.String r1, r2, r3, r4, r5, $r11, $r14, $r18, $r23, $r24, $r27, $r29, $r32;
+        char[] r6, $r15, $r28;
+        net.sourceforge.plantuml.security.SURL r7;
+        java.lang.StringBuilder $r8, $r9, r12, $r22, $r25, $r26, $r31;
+        net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager r10;
+        boolean $z0;
+        net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager $r13, $r20;
+        java.net.Proxy $r17;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r19, r36;
+        int $i0, $i1;
+        java.lang.Throwable $r34;
+
+        r10 := @this: net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager;
+
+        r0 := @parameter0: net.sourceforge.plantuml.security.authentication.SecurityCredentials;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.lang.String getPropertyStr(java.lang.String)>("grantType");
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.lang.String getPropertyStr(java.lang.String)>("scope");
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.lang.String getPropertyStr(java.lang.String)>("accessTokenUri");
+
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.lang.String getPropertyStr(java.lang.String)>("tokenType");
+
+        r5 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.lang.String getPropertyStr(java.lang.String)>("credentials.identifier");
+
+        r6 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: char[] getPropertyChars(java.lang.String)>("credentials.secret");
+
+     label1:
+        r7 = staticinvoke <net.sourceforge.plantuml.security.SURL: net.sourceforge.plantuml.security.SURL create(java.lang.String)>(r3);
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("grant_type=");
+
+        $r11 = virtualinvoke r10.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager: java.lang.String urlEncode(java.lang.String)>(r1);
+
+        r12 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>(r2);
+
+        if $z0 == 0 goto label2;
+
+        $r31 = virtualinvoke r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("&scope=");
+
+        $r32 = virtualinvoke r10.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager: java.lang.String urlEncode(java.lang.String)>(r2);
+
+        virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r32);
+
+     label2:
+        if r5 == null goto label3;
+
+        $r20 = r10.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager: net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager basicAuthManager>;
+
+        $r21 = staticinvoke <net.sourceforge.plantuml.security.authentication.SecurityCredentials: net.sourceforge.plantuml.security.authentication.SecurityCredentials basicAuth(java.lang.String,char[])>(r5, r6);
+
+        r36 = virtualinvoke $r20.<net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager: net.sourceforge.plantuml.security.authentication.SecurityAuthentication create(net.sourceforge.plantuml.security.authentication.SecurityCredentials)>($r21);
+
+        $r22 = virtualinvoke r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("&client_id");
+
+        $r23 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.lang.String getIdentifier()>();
+
+        $r24 = virtualinvoke r10.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager: java.lang.String urlEncode(java.lang.String)>($r23);
+
+        $r25 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r24);
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("&client_secret");
+
+        $r27 = new java.lang.String;
+
+        $r28 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: char[] getSecret()>();
+
+        specialinvoke $r27.<java.lang.String: void <init>(char[])>($r28);
+
+        $r29 = virtualinvoke r10.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager: java.lang.String urlEncode(java.lang.String)>($r27);
+
+        virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r29);
+
+        goto label4;
+
+     label3:
+        $r13 = r10.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager: net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager basicAuthManager>;
+
+        $r14 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.lang.String getIdentifier()>();
+
+        $r15 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: char[] getSecret()>();
+
+        $r16 = staticinvoke <net.sourceforge.plantuml.security.authentication.SecurityCredentials: net.sourceforge.plantuml.security.authentication.SecurityCredentials basicAuth(java.lang.String,char[])>($r14, $r15);
+
+        r36 = virtualinvoke $r13.<net.sourceforge.plantuml.security.authentication.basicauth.BasicAuthAuthorizeManager: net.sourceforge.plantuml.security.authentication.SecurityAuthentication create(net.sourceforge.plantuml.security.authentication.SecurityCredentials)>($r16);
+
+     label4:
+        $r17 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.net.Proxy getProxy()>();
+
+        $r18 = virtualinvoke r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r19 = virtualinvoke r10.<net.sourceforge.plantuml.security.authentication.oauth.OAuth2ClientAccessAuthorizeManager: net.sourceforge.plantuml.security.authentication.SecurityAuthentication requestAndCreateAuthFromResponse(java.net.Proxy,java.lang.String,java.lang.String,net.sourceforge.plantuml.security.SURL,java.lang.String,net.sourceforge.plantuml.security.authentication.SecurityAuthentication)>($r17, r1, r4, r7, $r18, r36);
+
+     label5:
+        if r6 == null goto label6;
+
+        $i0 = lengthof r6;
+
+        if $i0 <= 0 goto label6;
+
+        staticinvoke <java.util.Arrays: void fill(char[],char)>(r6, 42);
+
+     label6:
+        return r19;
+
+     label7:
+        $r34 := @caughtexception;
+
+     label8:
+        if r6 == null goto label9;
+
+        $i1 = lengthof r6;
+
+        if $i1 <= 0 goto label9;
+
+        staticinvoke <java.util.Arrays: void fill(char[],char)>(r6, 42);
+
+     label9:
+        throw $r34;
+
+        catch java.lang.Throwable from label1 to label5 with label7;
+        catch java.lang.Throwable from label7 to label8 with label7;
+    }
+}

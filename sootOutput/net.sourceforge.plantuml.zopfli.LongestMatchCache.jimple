@@ -1,0 +1,328 @@
+class net.sourceforge.plantuml.zopfli.LongestMatchCache extends java.lang.Object
+{
+    private static final int CACHE_LENGTH;
+    public final char[] length;
+    public final char[] dist;
+    private final char[] subLenPos;
+    private final byte[] subLenLen;
+
+    void <init>(int)
+    {
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r0;
+        int i0, $i1, $i2;
+        char[] $r1, $r2, $r3;
+        byte[] $r4;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        i0 := @parameter0: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = newarray (char)[i0];
+
+        r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] length> = $r1;
+
+        $r2 = newarray (char)[i0];
+
+        r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] dist> = $r2;
+
+        $i1 = 8 * i0;
+
+        $r3 = newarray (char)[$i1];
+
+        r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] subLenPos> = $r3;
+
+        $i2 = 8 * i0;
+
+        $r4 = newarray (byte)[$i2];
+
+        r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: byte[] subLenLen> = $r4;
+
+        return;
+    }
+
+    void init(int)
+    {
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r0;
+        int i0, i1, i2, i3, i4, i5, i6, i7;
+        char[] $r1, r2, r4, r5, r7;
+        byte[] r3, r6;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] dist>;
+
+        staticinvoke <net.sourceforge.plantuml.zopfli.Cookie: void fill0(char[],int)>($r1, i0);
+
+        i1 = i0 << 3;
+
+        r2 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] subLenPos>;
+
+        r3 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: byte[] subLenLen>;
+
+        r4 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] length>;
+
+        r5 = <net.sourceforge.plantuml.zopfli.Cookie: char[] charZeroes>;
+
+        r6 = <net.sourceforge.plantuml.zopfli.Cookie: byte[] byteZeroes>;
+
+        r7 = <net.sourceforge.plantuml.zopfli.Cookie: char[] charOnes>;
+
+        i2 = 0;
+
+     label1:
+        if i2 >= i1 goto label3;
+
+        i3 = i2 + 65536;
+
+        if i3 <= i1 goto label2;
+
+        i3 = i1;
+
+     label2:
+        i4 = i3 - i2;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r6, 0, r3, i2, i4);
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r5, 0, r2, i2, i4);
+
+        i2 = i3;
+
+        goto label1;
+
+     label3:
+        i5 = 0;
+
+     label4:
+        if i5 >= i0 goto label6;
+
+        i6 = i5 + 65536;
+
+        if i6 <= i0 goto label5;
+
+        i6 = i0;
+
+     label5:
+        i7 = i6 - i5;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r7, 0, r4, i5, i7);
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r5, 0, r2, i5, i7);
+
+        i5 = i6;
+
+        goto label4;
+
+     label6:
+        return;
+    }
+
+    void subLenToCache(char[], int, int)
+    {
+        int i0, i1, $i2, i3, $i4, $i7, $i9, i12, i13, i14;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r0;
+        byte $b5, $b8;
+        byte[] $r1, $r4;
+        char[] r2, $r3;
+        char $c6, $c10, $c11;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        r2 := @parameter0: char[];
+
+        i1 := @parameter1: int;
+
+        i0 := @parameter2: int;
+
+        if i0 >= 3 goto label1;
+
+        return;
+
+     label1:
+        i12 = 0;
+
+        i13 = i1 * 8;
+
+        $i2 = i13 + 8;
+
+        i3 = $i2 - 1;
+
+        i14 = 3;
+
+     label2:
+        if i14 > i0 goto label5;
+
+        if i14 == i0 goto label3;
+
+        $c11 = r2[i14];
+
+        $i9 = i14 + 1;
+
+        $c10 = r2[$i9];
+
+        if $c11 == $c10 goto label4;
+
+     label3:
+        $r3 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] subLenPos>;
+
+        $c6 = r2[i14];
+
+        $r3[i13] = $c6;
+
+        $r4 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: byte[] subLenLen>;
+
+        $i7 = i14 - 3;
+
+        $b8 = (byte) $i7;
+
+        $r4[i13] = $b8;
+
+        i12 = i14;
+
+        i13 = i13 + 1;
+
+        if i13 <= i3 goto label4;
+
+        goto label5;
+
+     label4:
+        i14 = i14 + 1;
+
+        goto label2;
+
+     label5:
+        if i13 > i3 goto label6;
+
+        $r1 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: byte[] subLenLen>;
+
+        $i4 = i12 - 3;
+
+        $b5 = (byte) $i4;
+
+        $r1[i3] = $b5;
+
+     label6:
+        return;
+    }
+
+    void cacheToSubLen(int, int, char[])
+    {
+        int i0, i1, i2, i3, $i5, i6, i8, i9, i10;
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r0;
+        byte[] $r1;
+        byte $b4;
+        char[] $r2, r3;
+        char c7;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        i1 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        r3 := @parameter2: char[];
+
+        if i0 >= 3 goto label1;
+
+        return;
+
+     label1:
+        i2 = virtualinvoke r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: int maxCachedSubLen(int)>(i1);
+
+        i8 = 0;
+
+        i9 = 8 * i1;
+
+        i3 = i9 + 8;
+
+     label2:
+        if i9 >= i3 goto label6;
+
+        $r1 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: byte[] subLenLen>;
+
+        $b4 = $r1[i9];
+
+        $i5 = $b4 & 255;
+
+        i6 = $i5 + 3;
+
+        $r2 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] subLenPos>;
+
+        c7 = $r2[i9];
+
+        i10 = i8;
+
+     label3:
+        if i10 > i6 goto label4;
+
+        r3[i10] = c7;
+
+        i10 = i10 + 1;
+
+        goto label3;
+
+     label4:
+        if i6 != i2 goto label5;
+
+        goto label6;
+
+     label5:
+        i8 = i6 + 1;
+
+        i9 = i9 + 1;
+
+        goto label2;
+
+     label6:
+        return;
+    }
+
+    int maxCachedSubLen(int)
+    {
+        net.sourceforge.plantuml.zopfli.LongestMatchCache r0;
+        char[] $r1;
+        char $c0;
+        int $i1, $i2, $i4, $i5, i6, i7;
+        byte[] $r2;
+        byte $b3;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.LongestMatchCache;
+
+        i6 := @parameter0: int;
+
+        i7 = i6 * 8;
+
+        $r1 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: char[] subLenPos>;
+
+        $c0 = $r1[i7];
+
+        if $c0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.zopfli.LongestMatchCache: byte[] subLenLen>;
+
+        $i1 = i7 + 8;
+
+        $i2 = $i1 - 1;
+
+        $b3 = $r2[$i2];
+
+        $i4 = $b3 & 255;
+
+        $i5 = $i4 + 3;
+
+        return $i5;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.zopfli.LongestMatchCache: int CACHE_LENGTH> = 8;
+
+        return;
+    }
+}

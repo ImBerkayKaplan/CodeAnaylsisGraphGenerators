@@ -1,0 +1,1255 @@
+class net.sourceforge.plantuml.NeuQuant extends java.lang.Object
+{
+    protected static final int netsize;
+    protected static final int prime1;
+    protected static final int prime2;
+    protected static final int prime3;
+    protected static final int prime4;
+    protected static final int minpicturebytes;
+    protected static final int maxnetpos;
+    protected static final int netbiasshift;
+    protected static final int ncycles;
+    protected static final int intbiasshift;
+    protected static final int intbias;
+    protected static final int gammashift;
+    protected static final int gamma;
+    protected static final int betashift;
+    protected static final int beta;
+    protected static final int betagamma;
+    protected static final int initrad;
+    protected static final int radiusbiasshift;
+    protected static final int radiusbias;
+    protected static final int initradius;
+    protected static final int radiusdec;
+    protected static final int alphabiasshift;
+    protected static final int initalpha;
+    protected int alphadec;
+    protected static final int radbiasshift;
+    protected static final int radbias;
+    protected static final int alpharadbshift;
+    protected static final int alpharadbias;
+    protected byte[] thepicture;
+    protected int lengthcount;
+    protected int samplefac;
+    protected int[][] network;
+    protected int[] netindex;
+    protected int[] bias;
+    protected int[] freq;
+    protected int[] radpower;
+
+    public void <init>(byte[], int, int)
+    {
+        net.sourceforge.plantuml.NeuQuant r0;
+        int[] $r1, $r2, $r3, $r4, $r7, r10, $r11, $r12;
+        byte[] r5;
+        int i0, i1, $i2, $i3, i4;
+        int[][] $r6, $r8, $r9;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        r5 := @parameter0: byte[];
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = newarray (int)[256];
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int[] netindex> = $r1;
+
+        $r2 = newarray (int)[256];
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int[] bias> = $r2;
+
+        $r3 = newarray (int)[256];
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int[] freq> = $r3;
+
+        $r4 = newarray (int)[32];
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int[] radpower> = $r4;
+
+        r0.<net.sourceforge.plantuml.NeuQuant: byte[] thepicture> = r5;
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount> = i0;
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int samplefac> = i1;
+
+        $r6 = newarray (int[])[256];
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int[][] network> = $r6;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= 256 goto label2;
+
+        $r8 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r7 = newarray (int)[4];
+
+        $r8[i4] = $r7;
+
+        $r9 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        r10 = $r9[i4];
+
+        $i2 = i4 << 12;
+
+        $i3 = $i2 / 256;
+
+        r10[2] = $i3;
+
+        r10[1] = $i3;
+
+        r10[0] = $i3;
+
+        $r11 = r0.<net.sourceforge.plantuml.NeuQuant: int[] freq>;
+
+        $r11[i4] = 256;
+
+        $r12 = r0.<net.sourceforge.plantuml.NeuQuant: int[] bias>;
+
+        $r12[i4] = 0;
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public byte[] colorMap()
+    {
+        byte[] r0;
+        int[] r1, $r4, $r6, $r8, $r10;
+        int i0, $i1, $i3, $i5, $i7, i8, i9, i10, i11, i12;
+        net.sourceforge.plantuml.NeuQuant r2;
+        int[][] $r3, $r5, $r7, $r9;
+        byte $b2, $b4, $b6;
+
+        r2 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        r0 = newarray (byte)[768];
+
+        r1 = newarray (int)[256];
+
+        i8 = 0;
+
+     label1:
+        if i8 >= 256 goto label2;
+
+        $r9 = r2.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r10 = $r9[i8];
+
+        $i7 = $r10[3];
+
+        r1[$i7] = i8;
+
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label2:
+        i9 = 0;
+
+        i10 = 0;
+
+     label3:
+        if i10 >= 256 goto label4;
+
+        i0 = r1[i10];
+
+        i11 = i9 + 1;
+
+        $r3 = r2.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r4 = $r3[i0];
+
+        $i1 = $r4[0];
+
+        $b2 = (byte) $i1;
+
+        r0[i9] = $b2;
+
+        i12 = i11 + 1;
+
+        $r5 = r2.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r6 = $r5[i0];
+
+        $i3 = $r6[1];
+
+        $b4 = (byte) $i3;
+
+        r0[i11] = $b4;
+
+        i9 = i12 + 1;
+
+        $r7 = r2.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r8 = $r7[i0];
+
+        $i5 = $r8[2];
+
+        $b6 = (byte) $i5;
+
+        r0[i12] = $b6;
+
+        i10 = i10 + 1;
+
+        goto label3;
+
+     label4:
+        return r0;
+    }
+
+    public void inxbuild()
+    {
+        net.sourceforge.plantuml.NeuQuant r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20;
+        int[] $r1, $r2, r4, $r6, $r7, r9, r10;
+        int[][] $r3, $r5, $r8;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        i9 = 0;
+
+        i10 = 0;
+
+        i11 = 0;
+
+     label01:
+        if i11 >= 256 goto label09;
+
+        $r3 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        r4 = $r3[i11];
+
+        i12 = i11;
+
+        i13 = r4[1];
+
+        i14 = i11 + 1;
+
+     label02:
+        if i14 >= 256 goto label04;
+
+        $r8 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        r9 = $r8[i14];
+
+        $i8 = r9[1];
+
+        if $i8 >= i13 goto label03;
+
+        i12 = i14;
+
+        i13 = r9[1];
+
+     label03:
+        i14 = i14 + 1;
+
+        goto label02;
+
+     label04:
+        $r5 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        r10 = $r5[i12];
+
+        if i11 == i12 goto label05;
+
+        i15 = r10[0];
+
+        $i4 = r4[0];
+
+        r10[0] = $i4;
+
+        r4[0] = i15;
+
+        i16 = r10[1];
+
+        $i5 = r4[1];
+
+        r10[1] = $i5;
+
+        r4[1] = i16;
+
+        i17 = r10[2];
+
+        $i6 = r4[2];
+
+        r10[2] = $i6;
+
+        r4[2] = i17;
+
+        i18 = r10[3];
+
+        $i7 = r4[3];
+
+        r10[3] = $i7;
+
+        r4[3] = i18;
+
+     label05:
+        if i13 == i9 goto label08;
+
+        $r6 = r0.<net.sourceforge.plantuml.NeuQuant: int[] netindex>;
+
+        $i2 = i10 + i11;
+
+        $i3 = $i2 >> 1;
+
+        $r6[i9] = $i3;
+
+        i19 = i9 + 1;
+
+     label06:
+        if i19 >= i13 goto label07;
+
+        $r7 = r0.<net.sourceforge.plantuml.NeuQuant: int[] netindex>;
+
+        $r7[i19] = i11;
+
+        i19 = i19 + 1;
+
+        goto label06;
+
+     label07:
+        i9 = i13;
+
+        i10 = i11;
+
+     label08:
+        i11 = i11 + 1;
+
+        goto label01;
+
+     label09:
+        $r1 = r0.<net.sourceforge.plantuml.NeuQuant: int[] netindex>;
+
+        $i0 = i10 + 255;
+
+        $i1 = $i0 >> 1;
+
+        $r1[i9] = $i1;
+
+        i20 = i9 + 1;
+
+     label10:
+        if i20 >= 256 goto label11;
+
+        $r2 = r0.<net.sourceforge.plantuml.NeuQuant: int[] netindex>;
+
+        $r2[i20] = 255;
+
+        i20 = i20 + 1;
+
+        goto label10;
+
+     label11:
+        return;
+    }
+
+    public void learn()
+    {
+        net.sourceforge.plantuml.NeuQuant r0;
+        int $i0, $i1, $i2, $i3, $i4, i5, $i6, $i7, $i8, i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i19, i20, $i21, $i23, i24, $i25, $i27, i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, $i39, $i40, $i41, $i42, $i43, $i44, $i45, $i46, $i47, i48, i49, i50, i51, i52, i53, i55, i56, i57;
+        byte[] r1;
+        byte $b18, $b22, $b26;
+        int[] $r2, $r3;
+        short s54;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        $i0 = r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount>;
+
+        if $i0 >= 1509 goto label01;
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int samplefac> = 1;
+
+     label01:
+        $i1 = r0.<net.sourceforge.plantuml.NeuQuant: int samplefac>;
+
+        $i2 = $i1 - 1;
+
+        $i3 = $i2 / 3;
+
+        $i4 = 30 + $i3;
+
+        r0.<net.sourceforge.plantuml.NeuQuant: int alphadec> = $i4;
+
+        r1 = r0.<net.sourceforge.plantuml.NeuQuant: byte[] thepicture>;
+
+        i48 = 0;
+
+        i5 = r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount>;
+
+        $i8 = r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount>;
+
+        $i6 = r0.<net.sourceforge.plantuml.NeuQuant: int samplefac>;
+
+        $i7 = 3 * $i6;
+
+        i9 = $i8 / $i7;
+
+        i49 = i9 / 100;
+
+        i50 = 1024;
+
+        i51 = 2048;
+
+        i52 = 2048 >> 6;
+
+        if i52 > 1 goto label02;
+
+        i52 = 0;
+
+     label02:
+        i53 = 0;
+
+     label03:
+        if i53 >= i52 goto label04;
+
+        $r3 = r0.<net.sourceforge.plantuml.NeuQuant: int[] radpower>;
+
+        $i42 = i52 * i52;
+
+        $i41 = i53 * i53;
+
+        $i43 = $i42 - $i41;
+
+        $i45 = $i43 * 256;
+
+        $i44 = i52 * i52;
+
+        $i46 = $i45 / $i44;
+
+        $i47 = 1024 * $i46;
+
+        $r3[i53] = $i47;
+
+        i53 = i53 + 1;
+
+        goto label03;
+
+     label04:
+        $i10 = r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount>;
+
+        if $i10 >= 1509 goto label05;
+
+        s54 = 3;
+
+        goto label09;
+
+     label05:
+        $i11 = r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount>;
+
+        $i12 = $i11 % 499;
+
+        if $i12 == 0 goto label06;
+
+        s54 = 1497;
+
+        goto label09;
+
+     label06:
+        $i13 = r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount>;
+
+        $i14 = $i13 % 491;
+
+        if $i14 == 0 goto label07;
+
+        s54 = 1473;
+
+        goto label09;
+
+     label07:
+        $i15 = r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount>;
+
+        $i16 = $i15 % 487;
+
+        if $i16 == 0 goto label08;
+
+        s54 = 1461;
+
+        goto label09;
+
+     label08:
+        s54 = 1509;
+
+     label09:
+        i55 = 0;
+
+     label10:
+        if i55 >= i9 goto label16;
+
+        $i17 = i48 + 0;
+
+        $b18 = r1[$i17];
+
+        $i19 = $b18 & 255;
+
+        i20 = $i19 << 4;
+
+        $i21 = i48 + 1;
+
+        $b22 = r1[$i21];
+
+        $i23 = $b22 & 255;
+
+        i24 = $i23 << 4;
+
+        $i25 = i48 + 2;
+
+        $b26 = r1[$i25];
+
+        $i27 = $b26 & 255;
+
+        i28 = $i27 << 4;
+
+        i56 = virtualinvoke r0.<net.sourceforge.plantuml.NeuQuant: int contest(int,int,int)>(i20, i24, i28);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.NeuQuant: void altersingle(int,int,int,int,int)>(i50, i56, i20, i24, i28);
+
+        if i52 == 0 goto label11;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.NeuQuant: void alterneigh(int,int,int,int,int)>(i52, i56, i20, i24, i28);
+
+     label11:
+        i48 = i48 + s54;
+
+        if i48 < i5 goto label12;
+
+        $i40 = r0.<net.sourceforge.plantuml.NeuQuant: int lengthcount>;
+
+        i48 = i48 - $i40;
+
+     label12:
+        i55 = i55 + 1;
+
+        if i49 != 0 goto label13;
+
+        i49 = 1;
+
+     label13:
+        $i29 = i55 % i49;
+
+        if $i29 != 0 goto label10;
+
+        $i30 = r0.<net.sourceforge.plantuml.NeuQuant: int alphadec>;
+
+        $i31 = i50 / $i30;
+
+        i50 = i50 - $i31;
+
+        $i32 = i51 / 30;
+
+        i51 = i51 - $i32;
+
+        i52 = i51 >> 6;
+
+        if i52 > 1 goto label14;
+
+        i52 = 0;
+
+     label14:
+        i57 = 0;
+
+     label15:
+        if i57 >= i52 goto label10;
+
+        $r2 = r0.<net.sourceforge.plantuml.NeuQuant: int[] radpower>;
+
+        $i34 = i52 * i52;
+
+        $i33 = i57 * i57;
+
+        $i35 = $i34 - $i33;
+
+        $i37 = $i35 * 256;
+
+        $i36 = i52 * i52;
+
+        $i38 = $i37 / $i36;
+
+        $i39 = i50 * $i38;
+
+        $r2[i57] = $i39;
+
+        i57 = i57 + 1;
+
+        goto label15;
+
+     label16:
+        return;
+    }
+
+    public int map(int, int, int)
+    {
+        net.sourceforge.plantuml.NeuQuant r0;
+        int i0, $i1, i2, $i3, i4, $i5, $i6, $i7, $i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22;
+        int[] $r1, r4, r5;
+        int[][] $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        i2 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        i4 := @parameter2: int;
+
+        i9 = 1000;
+
+        i10 = -1;
+
+        $r1 = r0.<net.sourceforge.plantuml.NeuQuant: int[] netindex>;
+
+        i11 = $r1[i0];
+
+        i12 = i11 - 1;
+
+     label01:
+        if i11 < 256 goto label02;
+
+        if i12 < 0 goto label12;
+
+     label02:
+        if i11 >= 256 goto label07;
+
+        $r3 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        r4 = $r3[i11];
+
+        $i6 = r4[1];
+
+        i13 = $i6 - i0;
+
+        if i13 < i9 goto label03;
+
+        i11 = 256;
+
+        goto label07;
+
+     label03:
+        i11 = i11 + 1;
+
+        if i13 >= 0 goto label04;
+
+        i13 = neg i13;
+
+     label04:
+        $i7 = r4[0];
+
+        i14 = $i7 - i2;
+
+        if i14 >= 0 goto label05;
+
+        i14 = neg i14;
+
+     label05:
+        i15 = i13 + i14;
+
+        if i15 >= i9 goto label07;
+
+        $i8 = r4[2];
+
+        i16 = $i8 - i4;
+
+        if i16 >= 0 goto label06;
+
+        i16 = neg i16;
+
+     label06:
+        i17 = i15 + i16;
+
+        if i17 >= i9 goto label07;
+
+        i9 = i17;
+
+        i10 = r4[3];
+
+     label07:
+        if i12 < 0 goto label01;
+
+        $r2 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        r5 = $r2[i12];
+
+        $i1 = r5[1];
+
+        i18 = i0 - $i1;
+
+        if i18 < i9 goto label08;
+
+        i12 = -1;
+
+        goto label01;
+
+     label08:
+        i12 = i12 + -1;
+
+        if i18 >= 0 goto label09;
+
+        i18 = neg i18;
+
+     label09:
+        $i3 = r5[0];
+
+        i19 = $i3 - i2;
+
+        if i19 >= 0 goto label10;
+
+        i19 = neg i19;
+
+     label10:
+        i20 = i18 + i19;
+
+        if i20 >= i9 goto label01;
+
+        $i5 = r5[2];
+
+        i21 = $i5 - i4;
+
+        if i21 >= 0 goto label11;
+
+        i21 = neg i21;
+
+     label11:
+        i22 = i20 + i21;
+
+        if i22 >= i9 goto label01;
+
+        i9 = i22;
+
+        i10 = r5[3];
+
+        goto label01;
+
+     label12:
+        return i10;
+    }
+
+    public byte[] process()
+    {
+        net.sourceforge.plantuml.NeuQuant r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.NeuQuant: void learn()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.NeuQuant: void unbiasnet()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.NeuQuant: void inxbuild()>();
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.NeuQuant: byte[] colorMap()>();
+
+        return $r1;
+    }
+
+    public void unbiasnet()
+    {
+        net.sourceforge.plantuml.NeuQuant r0;
+        int[][] $r1, $r3, $r5, $r7;
+        int[] $r2, $r4, $r6, $r8;
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        i6 = 0;
+
+     label1:
+        if i6 >= 256 goto label2;
+
+        $r1 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r2 = $r1[i6];
+
+        $i0 = $r2[0];
+
+        $i1 = $i0 >> 4;
+
+        $r2[0] = $i1;
+
+        $r3 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r4 = $r3[i6];
+
+        $i2 = $r4[1];
+
+        $i3 = $i2 >> 4;
+
+        $r4[1] = $i3;
+
+        $r5 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r6 = $r5[i6];
+
+        $i4 = $r6[2];
+
+        $i5 = $i4 >> 4;
+
+        $r6[2] = $i5;
+
+        $r7 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $r8 = $r7[i6];
+
+        $r8[3] = i6;
+
+        i6 = i6 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    protected void alterneigh(int, int, int, int, int)
+    {
+        int i0, i1, $i2, i3, $i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, i12, $i13, $i14, $i15, $i16, $i17, $i18, i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, $i39, $i40, $i41, $i42, $i43, $i44, i45, i46, i47, i48, i49;
+        net.sourceforge.plantuml.NeuQuant r0;
+        int[] $r1, r6, r8;
+        int[][] $r2, $r3;
+        java.lang.Exception $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        i1 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        i5 := @parameter2: int;
+
+        i12 := @parameter3: int;
+
+        i19 := @parameter4: int;
+
+        i45 = i0 - i1;
+
+        if i45 >= -1 goto label01;
+
+        i45 = -1;
+
+     label01:
+        i46 = i0 + i1;
+
+        if i46 <= 256 goto label02;
+
+        i46 = 256;
+
+     label02:
+        i47 = i0 + 1;
+
+        i48 = i0 - 1;
+
+        i49 = 1;
+
+     label03:
+        if i47 < i46 goto label04;
+
+        if i48 <= i45 goto label12;
+
+     label04:
+        $r1 = r0.<net.sourceforge.plantuml.NeuQuant: int[] radpower>;
+
+        $i2 = i49;
+
+        i49 = i49 + 1;
+
+        i3 = $r1[$i2];
+
+        if i47 >= i46 goto label08;
+
+        $r3 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $i26 = i47;
+
+        i47 = i47 + 1;
+
+        r6 = $r3[$i26];
+
+     label05:
+        $i31 = r6[0];
+
+        $i27 = r6[0];
+
+        $i28 = $i27 - i5;
+
+        $i29 = i3 * $i28;
+
+        $i30 = $i29 / 262144;
+
+        $i32 = $i31 - $i30;
+
+        r6[0] = $i32;
+
+        $i37 = r6[1];
+
+        $i33 = r6[1];
+
+        $i34 = $i33 - i12;
+
+        $i35 = i3 * $i34;
+
+        $i36 = $i35 / 262144;
+
+        $i38 = $i37 - $i36;
+
+        r6[1] = $i38;
+
+        $i43 = r6[2];
+
+        $i39 = r6[2];
+
+        $i40 = $i39 - i19;
+
+        $i41 = i3 * $i40;
+
+        $i42 = $i41 / 262144;
+
+        $i44 = $i43 - $i42;
+
+        r6[2] = $i44;
+
+     label06:
+        goto label08;
+
+     label07:
+        $r5 := @caughtexception;
+
+     label08:
+        if i48 <= i45 goto label03;
+
+        $r2 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        $i4 = i48;
+
+        i48 = i48 + -1;
+
+        r8 = $r2[$i4];
+
+     label09:
+        $i10 = r8[0];
+
+        $i6 = r8[0];
+
+        $i7 = $i6 - i5;
+
+        $i8 = i3 * $i7;
+
+        $i9 = $i8 / 262144;
+
+        $i11 = $i10 - $i9;
+
+        r8[0] = $i11;
+
+        $i17 = r8[1];
+
+        $i13 = r8[1];
+
+        $i14 = $i13 - i12;
+
+        $i15 = i3 * $i14;
+
+        $i16 = $i15 / 262144;
+
+        $i18 = $i17 - $i16;
+
+        r8[1] = $i18;
+
+        $i24 = r8[2];
+
+        $i20 = r8[2];
+
+        $i21 = $i20 - i19;
+
+        $i22 = i3 * $i21;
+
+        $i23 = $i22 / 262144;
+
+        $i25 = $i24 - $i23;
+
+        r8[2] = $i25;
+
+     label10:
+        goto label03;
+
+     label11:
+        $r4 := @caughtexception;
+
+        goto label03;
+
+     label12:
+        return;
+
+        catch java.lang.Exception from label05 to label06 with label07;
+        catch java.lang.Exception from label09 to label10 with label11;
+    }
+
+    protected void altersingle(int, int, int, int, int)
+    {
+        net.sourceforge.plantuml.NeuQuant r0;
+        int i0, i1, i2, $i3, $i4, $i5, $i6, $i7, $i8, i9, $i10, $i11, $i12, $i13, $i14, $i15, i16, $i17, $i18, $i19, $i20, $i21, $i22;
+        int[][] $r1;
+        int[] r2;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        i1 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        i2 := @parameter2: int;
+
+        i9 := @parameter3: int;
+
+        i16 := @parameter4: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        r2 = $r1[i0];
+
+        $i7 = r2[0];
+
+        $i3 = r2[0];
+
+        $i4 = $i3 - i2;
+
+        $i5 = i1 * $i4;
+
+        $i6 = $i5 / 1024;
+
+        $i8 = $i7 - $i6;
+
+        r2[0] = $i8;
+
+        $i14 = r2[1];
+
+        $i10 = r2[1];
+
+        $i11 = $i10 - i9;
+
+        $i12 = i1 * $i11;
+
+        $i13 = $i12 / 1024;
+
+        $i15 = $i14 - $i13;
+
+        r2[1] = $i15;
+
+        $i21 = r2[2];
+
+        $i17 = r2[2];
+
+        $i18 = $i17 - i16;
+
+        $i19 = i1 * $i18;
+
+        $i20 = $i19 / 1024;
+
+        $i22 = $i21 - $i20;
+
+        r2[2] = $i22;
+
+        return;
+    }
+
+    protected int contest(int, int, int)
+    {
+        net.sourceforge.plantuml.NeuQuant r0;
+        int[] $r1, $r2, r4, $r5, $r6, $r7, $r8;
+        int $i0, $i1, $i2, $i3, i4, $i5, i6, $i7, i8, $i9, $i10, $i11, i12, $i13, i14, $i15, $i16, $i17, $i18, $i19, i22, i23, i24, i25, i26, i27, i28, i29, i30, i31;
+        int[][] $r3;
+
+        r0 := @this: net.sourceforge.plantuml.NeuQuant;
+
+        i4 := @parameter0: int;
+
+        i6 := @parameter1: int;
+
+        i8 := @parameter2: int;
+
+        i22 = 2147483647;
+
+        i23 = 2147483647;
+
+        i24 = -1;
+
+        i25 = -1;
+
+        i26 = 0;
+
+     label1:
+        if i26 >= 256 goto label7;
+
+        $r3 = r0.<net.sourceforge.plantuml.NeuQuant: int[][] network>;
+
+        r4 = $r3[i26];
+
+        $i5 = r4[0];
+
+        i27 = $i5 - i4;
+
+        if i27 >= 0 goto label2;
+
+        i27 = neg i27;
+
+     label2:
+        $i7 = r4[1];
+
+        i28 = $i7 - i6;
+
+        if i28 >= 0 goto label3;
+
+        i28 = neg i28;
+
+     label3:
+        i29 = i27 + i28;
+
+        $i9 = r4[2];
+
+        i30 = $i9 - i8;
+
+        if i30 >= 0 goto label4;
+
+        i30 = neg i30;
+
+     label4:
+        i31 = i29 + i30;
+
+        if i31 >= i22 goto label5;
+
+        i22 = i31;
+
+        i24 = i26;
+
+     label5:
+        $r5 = r0.<net.sourceforge.plantuml.NeuQuant: int[] bias>;
+
+        $i10 = $r5[i26];
+
+        $i11 = $i10 >> 12;
+
+        i12 = i31 - $i11;
+
+        if i12 >= i23 goto label6;
+
+        i23 = i12;
+
+        i25 = i26;
+
+     label6:
+        $r6 = r0.<net.sourceforge.plantuml.NeuQuant: int[] freq>;
+
+        $i13 = $r6[i26];
+
+        i14 = $i13 >> 10;
+
+        $r7 = r0.<net.sourceforge.plantuml.NeuQuant: int[] freq>;
+
+        $i15 = $r7[i26];
+
+        $i16 = $i15 - i14;
+
+        $r7[i26] = $i16;
+
+        $r8 = r0.<net.sourceforge.plantuml.NeuQuant: int[] bias>;
+
+        $i18 = $r8[i26];
+
+        $i17 = i14 << 10;
+
+        $i19 = $i18 + $i17;
+
+        $r8[i26] = $i19;
+
+        i26 = i26 + 1;
+
+        goto label1;
+
+     label7:
+        $r1 = r0.<net.sourceforge.plantuml.NeuQuant: int[] freq>;
+
+        $i0 = $r1[i24];
+
+        $i1 = $i0 + 64;
+
+        $r1[i24] = $i1;
+
+        $r2 = r0.<net.sourceforge.plantuml.NeuQuant: int[] bias>;
+
+        $i2 = $r2[i24];
+
+        $i3 = $i2 - 65536;
+
+        $r2[i24] = $i3;
+
+        return i25;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.NeuQuant: int alpharadbias> = 262144;
+
+        <net.sourceforge.plantuml.NeuQuant: int alpharadbshift> = 18;
+
+        <net.sourceforge.plantuml.NeuQuant: int radbias> = 256;
+
+        <net.sourceforge.plantuml.NeuQuant: int radbiasshift> = 8;
+
+        <net.sourceforge.plantuml.NeuQuant: int initalpha> = 1024;
+
+        <net.sourceforge.plantuml.NeuQuant: int alphabiasshift> = 10;
+
+        <net.sourceforge.plantuml.NeuQuant: int radiusdec> = 30;
+
+        <net.sourceforge.plantuml.NeuQuant: int initradius> = 2048;
+
+        <net.sourceforge.plantuml.NeuQuant: int radiusbias> = 64;
+
+        <net.sourceforge.plantuml.NeuQuant: int radiusbiasshift> = 6;
+
+        <net.sourceforge.plantuml.NeuQuant: int initrad> = 32;
+
+        <net.sourceforge.plantuml.NeuQuant: int betagamma> = 65536;
+
+        <net.sourceforge.plantuml.NeuQuant: int beta> = 64;
+
+        <net.sourceforge.plantuml.NeuQuant: int betashift> = 10;
+
+        <net.sourceforge.plantuml.NeuQuant: int gamma> = 1024;
+
+        <net.sourceforge.plantuml.NeuQuant: int gammashift> = 10;
+
+        <net.sourceforge.plantuml.NeuQuant: int intbias> = 65536;
+
+        <net.sourceforge.plantuml.NeuQuant: int intbiasshift> = 16;
+
+        <net.sourceforge.plantuml.NeuQuant: int ncycles> = 100;
+
+        <net.sourceforge.plantuml.NeuQuant: int netbiasshift> = 4;
+
+        <net.sourceforge.plantuml.NeuQuant: int maxnetpos> = 255;
+
+        <net.sourceforge.plantuml.NeuQuant: int minpicturebytes> = 1509;
+
+        <net.sourceforge.plantuml.NeuQuant: int prime4> = 503;
+
+        <net.sourceforge.plantuml.NeuQuant: int prime3> = 487;
+
+        <net.sourceforge.plantuml.NeuQuant: int prime2> = 491;
+
+        <net.sourceforge.plantuml.NeuQuant: int prime1> = 499;
+
+        <net.sourceforge.plantuml.NeuQuant: int netsize> = 256;
+
+        return;
+    }
+}

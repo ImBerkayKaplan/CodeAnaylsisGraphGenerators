@@ -1,0 +1,159 @@
+public class net.sourceforge.plantuml.code.TranscoderSmart extends java.lang.Object implements net.sourceforge.plantuml.code.Transcoder
+{
+    private final net.sourceforge.plantuml.code.Transcoder oldOne;
+    private final net.sourceforge.plantuml.code.Transcoder zlib;
+    private final net.sourceforge.plantuml.code.Transcoder hexOnly;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.code.TranscoderSmart r0;
+        net.sourceforge.plantuml.code.AsciiEncoder $r1, $r5;
+        net.sourceforge.plantuml.code.ArobaseStringCompressor $r2, $r6, $r10;
+        net.sourceforge.plantuml.code.CompressionHuffman $r3;
+        net.sourceforge.plantuml.code.Transcoder $r4, $r8, $r12;
+        net.sourceforge.plantuml.code.CompressionZlib $r7;
+        net.sourceforge.plantuml.code.AsciiEncoderHex $r9;
+        net.sourceforge.plantuml.code.CompressionNone $r11;
+
+        r0 := @this: net.sourceforge.plantuml.code.TranscoderSmart;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.code.AsciiEncoder;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.code.AsciiEncoder: void <init>()>();
+
+        $r2 = new net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.code.ArobaseStringCompressor: void <init>()>();
+
+        $r3 = new net.sourceforge.plantuml.code.CompressionHuffman;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.code.CompressionHuffman: void <init>()>();
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.code.TranscoderImpl: net.sourceforge.plantuml.code.Transcoder utf8(net.sourceforge.plantuml.code.URLEncoder,net.sourceforge.plantuml.code.StringCompressor,net.sourceforge.plantuml.code.Compression)>($r1, $r2, $r3);
+
+        r0.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder oldOne> = $r4;
+
+        $r5 = new net.sourceforge.plantuml.code.AsciiEncoder;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.code.AsciiEncoder: void <init>()>();
+
+        $r6 = new net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.code.ArobaseStringCompressor: void <init>()>();
+
+        $r7 = new net.sourceforge.plantuml.code.CompressionZlib;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.code.CompressionZlib: void <init>()>();
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.code.TranscoderImpl: net.sourceforge.plantuml.code.Transcoder utf8(net.sourceforge.plantuml.code.URLEncoder,net.sourceforge.plantuml.code.StringCompressor,net.sourceforge.plantuml.code.Compression)>($r5, $r6, $r7);
+
+        r0.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder zlib> = $r8;
+
+        $r9 = new net.sourceforge.plantuml.code.AsciiEncoderHex;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.code.AsciiEncoderHex: void <init>()>();
+
+        $r10 = new net.sourceforge.plantuml.code.ArobaseStringCompressor;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.code.ArobaseStringCompressor: void <init>()>();
+
+        $r11 = new net.sourceforge.plantuml.code.CompressionNone;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.code.CompressionNone: void <init>()>();
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.code.TranscoderImpl: net.sourceforge.plantuml.code.Transcoder utf8(net.sourceforge.plantuml.code.URLEncoder,net.sourceforge.plantuml.code.StringCompressor,net.sourceforge.plantuml.code.Compression)>($r9, $r10, $r11);
+
+        r0.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder hexOnly> = $r12;
+
+        return;
+    }
+
+    public java.lang.String decode(java.lang.String) throws net.sourceforge.plantuml.code.NoPlantumlCompressionException
+    {
+        java.lang.String r0, $r3, $r5, $r6, $r8, $r9, $r11, $r12, $r16;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.code.TranscoderSmart r1;
+        net.sourceforge.plantuml.code.Transcoder $r2, $r4, $r7, $r10, $r15;
+        java.lang.Exception $r13;
+
+        r1 := @this: net.sourceforge.plantuml.code.TranscoderSmart;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("~0");
+
+        if $z0 == 0 goto label1;
+
+        $r10 = r1.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder zlib>;
+
+        $r11 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>(2);
+
+        $r12 = interfaceinvoke $r10.<net.sourceforge.plantuml.code.Transcoder: java.lang.String decode(java.lang.String)>($r11);
+
+        return $r12;
+
+     label1:
+        $z1 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("~1");
+
+        if $z1 == 0 goto label2;
+
+        $r7 = r1.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder oldOne>;
+
+        $r8 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>(2);
+
+        $r9 = interfaceinvoke $r7.<net.sourceforge.plantuml.code.Transcoder: java.lang.String decode(java.lang.String)>($r8);
+
+        return $r9;
+
+     label2:
+        $z2 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("~h");
+
+        if $z2 == 0 goto label3;
+
+        $r4 = r1.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder hexOnly>;
+
+        $r5 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>(2);
+
+        $r6 = interfaceinvoke $r4.<net.sourceforge.plantuml.code.Transcoder: java.lang.String decode(java.lang.String)>($r5);
+
+        return $r6;
+
+     label3:
+        $r2 = r1.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder zlib>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.code.Transcoder: java.lang.String decode(java.lang.String)>(r0);
+
+     label4:
+        return $r3;
+
+     label5:
+        $r13 := @caughtexception;
+
+        $r15 = r1.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder oldOne>;
+
+        $r16 = interfaceinvoke $r15.<net.sourceforge.plantuml.code.Transcoder: java.lang.String decode(java.lang.String)>(r0);
+
+        return $r16;
+
+        catch java.lang.Exception from label3 to label4 with label5;
+    }
+
+    public java.lang.String encode(java.lang.String) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.TranscoderSmart r0;
+        java.lang.String r1, $r3;
+        net.sourceforge.plantuml.code.Transcoder $r2;
+
+        r0 := @this: net.sourceforge.plantuml.code.TranscoderSmart;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.code.TranscoderSmart: net.sourceforge.plantuml.code.Transcoder zlib>;
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.code.Transcoder: java.lang.String encode(java.lang.String)>(r1);
+
+        return $r3;
+    }
+}

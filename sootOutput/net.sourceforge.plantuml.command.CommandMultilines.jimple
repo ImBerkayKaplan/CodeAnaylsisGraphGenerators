@@ -1,0 +1,210 @@
+public abstract class net.sourceforge.plantuml.command.CommandMultilines extends java.lang.Object implements net.sourceforge.plantuml.command.Command
+{
+    private final net.sourceforge.plantuml.command.regex.Pattern2 starting;
+
+    public void <init>(java.lang.String)
+    {
+        net.sourceforge.plantuml.command.CommandMultilines r0;
+        java.lang.String r1, $r6;
+        boolean $z0, $z1;
+        java.lang.IllegalArgumentException $r2;
+        java.lang.StringBuilder $r3, $r4, $r5;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r7;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilines;
+
+        r1 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $z0 = virtualinvoke r1.<java.lang.String: boolean startsWith(java.lang.String)>("^");
+
+        if $z0 == 0 goto label1;
+
+        $z1 = virtualinvoke r1.<java.lang.String: boolean endsWith(java.lang.String)>("$");
+
+        if $z1 != 0 goto label2;
+
+     label1:
+        $r2 = new java.lang.IllegalArgumentException;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Bad pattern ");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r6);
+
+        throw $r2;
+
+     label2:
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>(r1);
+
+        r0.<net.sourceforge.plantuml.command.CommandMultilines: net.sourceforge.plantuml.command.regex.Pattern2 starting> = $r7;
+
+        return;
+    }
+
+    public abstract java.lang.String getPatternEnd();
+
+    public java.lang.String[] getDescription()
+    {
+        java.lang.String[] $r0;
+        java.lang.StringBuilder $r1, $r2, $r6, $r8, $r9, $r11;
+        net.sourceforge.plantuml.command.CommandMultilines r3;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r4;
+        java.lang.String $r5, $r7, $r10, $r12;
+
+        r3 := @this: net.sourceforge.plantuml.command.CommandMultilines;
+
+        $r0 = newarray (java.lang.String)[2];
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("START: ");
+
+        $r4 = r3.<net.sourceforge.plantuml.command.CommandMultilines: net.sourceforge.plantuml.command.regex.Pattern2 starting>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.command.regex.Pattern2: java.lang.String pattern()>();
+
+        $r6 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r0[0] = $r7;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("END: ");
+
+        $r10 = virtualinvoke r3.<net.sourceforge.plantuml.command.CommandMultilines: java.lang.String getPatternEnd()>();
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r0[1] = $r12;
+
+        return $r0;
+    }
+
+    public final net.sourceforge.plantuml.command.CommandControl isValid(net.sourceforge.plantuml.command.BlocLines)
+    {
+        net.sourceforge.plantuml.command.CommandMultilines r0;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.command.BlocLines r1;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r2, $r7;
+        net.sourceforge.plantuml.StringLocated $r3, $r4, $r8, $r9;
+        java.lang.String $r5, $r6, $r10;
+        int $i0;
+        net.sourceforge.plantuml.command.CommandControl $r11, $r12, $r13, $r14, $r15;
+        net.sourceforge.plantuml.command.regex.Matcher2 r16, r17;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilines;
+
+        r1 := @parameter0: net.sourceforge.plantuml.command.BlocLines;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandMultilines: boolean isCommandForbidden()>();
+
+        if $z0 == 0 goto label1;
+
+        $r15 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl NOT_OK>;
+
+        return $r15;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.command.CommandMultilines: net.sourceforge.plantuml.command.regex.Pattern2 starting>;
+
+        $r3 = virtualinvoke r1.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r16 = virtualinvoke $r2.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>($r5);
+
+        $z1 = virtualinvoke r16.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        if $z1 != 0 goto label2;
+
+        $r14 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl NOT_OK>;
+
+        return $r14;
+
+     label2:
+        $i0 = virtualinvoke r1.<net.sourceforge.plantuml.command.BlocLines: int size()>();
+
+        if $i0 != 1 goto label3;
+
+        $r13 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK_PARTIAL>;
+
+        return $r13;
+
+     label3:
+        $r6 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandMultilines: java.lang.String getPatternEnd()>();
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>($r6);
+
+        $r8 = virtualinvoke r1.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getLast()>();
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r17 = virtualinvoke $r7.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>($r10);
+
+        $z2 = virtualinvoke r17.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        if $z2 != 0 goto label4;
+
+        $r12 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK_PARTIAL>;
+
+        return $r12;
+
+     label4:
+        virtualinvoke r0.<net.sourceforge.plantuml.command.CommandMultilines: void actionIfCommandValid()>();
+
+        $r11 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK>;
+
+        return $r11;
+    }
+
+    protected boolean isCommandForbidden()
+    {
+        net.sourceforge.plantuml.command.CommandMultilines r0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilines;
+
+        return 0;
+    }
+
+    protected void actionIfCommandValid()
+    {
+        net.sourceforge.plantuml.command.CommandMultilines r0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilines;
+
+        return;
+    }
+
+    protected final net.sourceforge.plantuml.command.regex.Pattern2 getStartingPattern()
+    {
+        net.sourceforge.plantuml.command.CommandMultilines r0;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandMultilines;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.CommandMultilines: net.sourceforge.plantuml.command.regex.Pattern2 starting>;
+
+        return $r1;
+    }
+}

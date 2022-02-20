@@ -1,0 +1,92 @@
+public class net.sourceforge.plantuml.tim.EaterAffectation extends net.sourceforge.plantuml.tim.Eater
+{
+
+    public void <init>(net.sourceforge.plantuml.StringLocated)
+    {
+        net.sourceforge.plantuml.tim.EaterAffectation r0;
+        net.sourceforge.plantuml.StringLocated r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.tim.EaterAffectation;
+
+        r1 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.Eater: void <init>(net.sourceforge.plantuml.StringLocated)>($r2);
+
+        return;
+    }
+
+    public void analyze(net.sourceforge.plantuml.tim.TContext, net.sourceforge.plantuml.tim.TMemory) throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.EaterAffectation r0;
+        char $c0, $c1;
+        net.sourceforge.plantuml.tim.TContext r1;
+        net.sourceforge.plantuml.tim.TMemory r2;
+        java.lang.String $r3, r4;
+        net.sourceforge.plantuml.tim.TVariableScope r5;
+        boolean z0;
+        net.sourceforge.plantuml.tim.expression.TValue r6, r7;
+
+        r0 := @this: net.sourceforge.plantuml.tim.EaterAffectation;
+
+        r1 := @parameter0: net.sourceforge.plantuml.tim.TContext;
+
+        r2 := @parameter1: net.sourceforge.plantuml.tim.TMemory;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: void skipSpaces()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: void checkAndEatChar(java.lang.String)>("!");
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: void skipSpaces()>();
+
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: java.lang.String eatAndGetVarname()>();
+
+        r5 = null;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: void skipSpaces()>();
+
+        z0 = 0;
+
+        $c0 = virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: char peekChar()>();
+
+        if $c0 != 63 goto label1;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: void checkAndEatChar(char)>(63);
+
+        z0 = 1;
+
+     label1:
+        $c1 = virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: char peekChar()>();
+
+        if $c1 == 61 goto label2;
+
+        $r3 = virtualinvoke r4.<java.lang.String: java.lang.String toUpperCase()>();
+
+        r5 = staticinvoke <net.sourceforge.plantuml.tim.TVariableScope: net.sourceforge.plantuml.tim.TVariableScope valueOf(java.lang.String)>($r3);
+
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: java.lang.String eatAndGetVarname()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: void skipSpaces()>();
+
+     label2:
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: void checkAndEatChar(char)>(61);
+
+        if z0 == 0 goto label3;
+
+        r6 = interfaceinvoke r2.<net.sourceforge.plantuml.tim.TMemory: net.sourceforge.plantuml.tim.expression.TValue getVariable(java.lang.String)>(r4);
+
+        if r6 == null goto label3;
+
+        return;
+
+     label3:
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: void skipSpaces()>();
+
+        r7 = virtualinvoke r0.<net.sourceforge.plantuml.tim.EaterAffectation: net.sourceforge.plantuml.tim.expression.TValue eatExpression(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory)>(r1, r2);
+
+        interfaceinvoke r2.<net.sourceforge.plantuml.tim.TMemory: void putVariable(java.lang.String,net.sourceforge.plantuml.tim.expression.TValue,net.sourceforge.plantuml.tim.TVariableScope)>(r4, r7, r5);
+
+        return;
+    }
+}

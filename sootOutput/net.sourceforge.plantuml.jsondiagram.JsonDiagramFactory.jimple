@@ -1,0 +1,141 @@
+public class net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory extends net.sourceforge.plantuml.command.PSystemAbstractFactory
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory r0;
+        net.sourceforge.plantuml.core.DiagramType $r1;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
+
+        $r1 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType JSON>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemAbstractFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r1);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.Diagram createSystem(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource, net.sourceforge.plantuml.ISkinSimple)
+    {
+        java.util.ArrayList $r0;
+        java.lang.StringBuilder $r2;
+        net.sourceforge.plantuml.jsondiagram.StyleExtractor $r3, r22;
+        net.sourceforge.plantuml.core.UmlSource r4;
+        net.sourceforge.plantuml.version.IteratorCounter2 $r5;
+        java.util.Iterator r6;
+        java.lang.String r8, $r11, $r12, $r13, $r14;
+        boolean $z0, $z1, $z3;
+        int $i0;
+        net.sourceforge.plantuml.jsondiagram.JsonDiagram $r15;
+        net.sourceforge.plantuml.api.ThemeStyle r16;
+        net.sourceforge.plantuml.UmlDiagramType $r17;
+        net.sourceforge.plantuml.ISkinParam $r18;
+        net.sourceforge.plantuml.json.ParseException $r19;
+        net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory r20;
+        net.sourceforge.plantuml.ISkinSimple r21;
+        java.lang.Object $r24;
+        net.sourceforge.plantuml.json.JsonValue r25;
+
+        r20 := @this: net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
+
+        r16 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r4 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        r21 := @parameter2: net.sourceforge.plantuml.ISkinSimple;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        r22 = null;
+
+     label01:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = new net.sourceforge.plantuml.jsondiagram.StyleExtractor;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.core.UmlSource: net.sourceforge.plantuml.version.IteratorCounter2 iterator2()>();
+
+        specialinvoke $r3.<net.sourceforge.plantuml.jsondiagram.StyleExtractor: void <init>(java.util.Iterator)>($r5);
+
+        r22 = $r3;
+
+        r6 = virtualinvoke $r3.<net.sourceforge.plantuml.jsondiagram.StyleExtractor: java.util.Iterator getIterator()>();
+
+        interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+     label02:
+        $r24 = interfaceinvoke r6.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (java.lang.String) $r24;
+
+        $z3 = interfaceinvoke r6.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 != 0 goto label03;
+
+        goto label06;
+
+     label03:
+        $z0 = virtualinvoke r8.<java.lang.String: boolean startsWith(java.lang.String)>("#");
+
+        if $z0 == 0 goto label04;
+
+        $z1 = virtualinvoke r8.<java.lang.String: boolean startsWith(java.lang.String)>("#highlight ");
+
+        if $z1 == 0 goto label05;
+
+        $r11 = "#highlight ";
+
+        $i0 = virtualinvoke $r11.<java.lang.String: int length()>();
+
+        $r12 = virtualinvoke r8.<java.lang.String: java.lang.String substring(int)>($i0);
+
+        $r13 = virtualinvoke $r12.<java.lang.String: java.lang.String trim()>();
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r13);
+
+        goto label02;
+
+     label04:
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r8);
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+     label05:
+        goto label02;
+
+     label06:
+        $r14 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r25 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue parse(java.lang.String)>($r14);
+
+     label07:
+        goto label09;
+
+     label08:
+        $r19 := @caughtexception;
+
+        r25 = null;
+
+     label09:
+        $r15 = new net.sourceforge.plantuml.jsondiagram.JsonDiagram;
+
+        $r17 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType JSON>;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType,net.sourceforge.plantuml.json.JsonValue,java.util.List)>(r16, r4, $r17, r25, $r0);
+
+        if r22 == null goto label10;
+
+        $r18 = virtualinvoke $r15.<net.sourceforge.plantuml.jsondiagram.JsonDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        virtualinvoke r22.<net.sourceforge.plantuml.jsondiagram.StyleExtractor: void applyStyles(net.sourceforge.plantuml.ISkinParam)>($r18);
+
+     label10:
+        return $r15;
+
+        catch net.sourceforge.plantuml.json.ParseException from label01 to label07 with label08;
+    }
+}

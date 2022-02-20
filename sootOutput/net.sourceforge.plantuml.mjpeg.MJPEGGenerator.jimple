@@ -1,0 +1,492 @@
+public class net.sourceforge.plantuml.mjpeg.MJPEGGenerator extends java.lang.Object
+{
+    int width;
+    int height;
+    double framerate;
+    int numFrames;
+    net.sourceforge.plantuml.security.SFile aviFile;
+    java.io.FileOutputStream aviOutput;
+    java.nio.channels.FileChannel aviChannel;
+    long riffOffset;
+    long aviMovieOffset;
+    net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList indexlist;
+
+    public void <init>(net.sourceforge.plantuml.security.SFile, int, int, double, int) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator r0;
+        net.sourceforge.plantuml.security.SFile r1;
+        int i0, i1, i2;
+        double d0;
+        java.io.FileOutputStream $r2, $r3, $r7, $r10, $r13, $r16, $r19, $r22, $r26;
+        java.nio.channels.FileChannel $r4, $r24;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$RIFFHeader $r5;
+        byte[] $r8, $r11, $r14, $r17, $r20, $r23, $r27;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIMainHeader $r9;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamList $r12;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamHeader $r15;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamFormat $r18;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIJunk $r21;
+        long $l3;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIMovieList $r25;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList $r28;
+
+        r0 := @this: net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
+
+        r1 := @parameter0: net.sourceforge.plantuml.security.SFile;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        d0 := @parameter3: double;
+
+        i2 := @parameter4: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int width> = 0;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int height> = 0;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: double framerate> = 0.0;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int numFrames> = 0;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: net.sourceforge.plantuml.security.SFile aviFile> = null;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput> = null;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.nio.channels.FileChannel aviChannel> = null;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: long riffOffset> = 0L;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: long aviMovieOffset> = 0L;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList indexlist> = null;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: net.sourceforge.plantuml.security.SFile aviFile> = r1;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int width> = i0;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int height> = i1;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: double framerate> = d0;
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int numFrames> = i2;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.security.SFile: java.io.FileOutputStream createFileOutputStream()>();
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput> = $r2;
+
+        $r3 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $r4 = virtualinvoke $r3.<java.io.FileOutputStream: java.nio.channels.FileChannel getChannel()>();
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.nio.channels.FileChannel aviChannel> = $r4;
+
+        $r5 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator$RIFFHeader;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$RIFFHeader: void <init>(net.sourceforge.plantuml.mjpeg.MJPEGGenerator)>(r0);
+
+        $r7 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $r8 = virtualinvoke $r5.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$RIFFHeader: byte[] toBytes()>();
+
+        virtualinvoke $r7.<java.io.FileOutputStream: void write(byte[])>($r8);
+
+        $r10 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $r9 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIMainHeader;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIMainHeader: void <init>(net.sourceforge.plantuml.mjpeg.MJPEGGenerator)>(r0);
+
+        $r11 = virtualinvoke $r9.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIMainHeader: byte[] toBytes()>();
+
+        virtualinvoke $r10.<java.io.FileOutputStream: void write(byte[])>($r11);
+
+        $r13 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $r12 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamList;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamList: void <init>(net.sourceforge.plantuml.mjpeg.MJPEGGenerator)>(r0);
+
+        $r14 = virtualinvoke $r12.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamList: byte[] toBytes()>();
+
+        virtualinvoke $r13.<java.io.FileOutputStream: void write(byte[])>($r14);
+
+        $r16 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $r15 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamHeader;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamHeader: void <init>(net.sourceforge.plantuml.mjpeg.MJPEGGenerator)>(r0);
+
+        $r17 = virtualinvoke $r15.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamHeader: byte[] toBytes()>();
+
+        virtualinvoke $r16.<java.io.FileOutputStream: void write(byte[])>($r17);
+
+        $r19 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $r18 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamFormat;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamFormat: void <init>(net.sourceforge.plantuml.mjpeg.MJPEGGenerator)>(r0);
+
+        $r20 = virtualinvoke $r18.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIStreamFormat: byte[] toBytes()>();
+
+        virtualinvoke $r19.<java.io.FileOutputStream: void write(byte[])>($r20);
+
+        $r22 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $r21 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIJunk;
+
+        specialinvoke $r21.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIJunk: void <init>(net.sourceforge.plantuml.mjpeg.MJPEGGenerator)>(r0);
+
+        $r23 = virtualinvoke $r21.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIJunk: byte[] toBytes()>();
+
+        virtualinvoke $r22.<java.io.FileOutputStream: void write(byte[])>($r23);
+
+        $r24 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.nio.channels.FileChannel aviChannel>;
+
+        $l3 = virtualinvoke $r24.<java.nio.channels.FileChannel: long position()>();
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: long aviMovieOffset> = $l3;
+
+        $r26 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $r25 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIMovieList;
+
+        specialinvoke $r25.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIMovieList: void <init>(net.sourceforge.plantuml.mjpeg.MJPEGGenerator)>(r0);
+
+        $r27 = virtualinvoke $r25.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIMovieList: byte[] toBytes()>();
+
+        virtualinvoke $r26.<java.io.FileOutputStream: void write(byte[])>($r27);
+
+        $r28 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList;
+
+        specialinvoke $r28.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList: void <init>(net.sourceforge.plantuml.mjpeg.MJPEGGenerator)>(r0);
+
+        r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList indexlist> = $r28;
+
+        return;
+    }
+
+    public void addImage(java.awt.Image) throws java.io.IOException
+    {
+        byte[] $r0, $r8, r11;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator r2;
+        java.awt.Image r3;
+        java.nio.channels.FileChannel $r4;
+        long l0;
+        int $i1, $i2, i3, $i4, $i5, i6, i7;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList $r5;
+        java.io.FileOutputStream $r6, $r7, $r9, $r10;
+
+        r2 := @this: net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
+
+        r3 := @parameter0: java.awt.Image;
+
+        $r0 = newarray (byte)[4];
+
+        $r0[0] = 48;
+
+        $r0[1] = 48;
+
+        $r0[2] = 100;
+
+        $r0[3] = 98;
+
+        r11 = specialinvoke r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: byte[] writeImageToBytes(java.awt.Image)>(r3);
+
+        i6 = lengthof r11;
+
+        $r4 = r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.nio.channels.FileChannel aviChannel>;
+
+        l0 = virtualinvoke $r4.<java.nio.channels.FileChannel: long position()>();
+
+        $i1 = (int) l0;
+
+        $i2 = i6 + $i1;
+
+        i3 = $i2 % 4;
+
+        if i3 <= 0 goto label1;
+
+        i6 = i6 + i3;
+
+     label1:
+        $r5 = r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList indexlist>;
+
+        $i4 = (int) l0;
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList: void addAVIIndex(int,int)>($i4, i6);
+
+        $r6 = r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        virtualinvoke $r6.<java.io.FileOutputStream: void write(byte[])>($r0);
+
+        $r7 = r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        $i5 = staticinvoke <net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int swapInt(int)>(i6);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.mjpeg.MJPEGGenerator: byte[] intBytes(int)>($i5);
+
+        virtualinvoke $r7.<java.io.FileOutputStream: void write(byte[])>($r8);
+
+        $r9 = r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        virtualinvoke $r9.<java.io.FileOutputStream: void write(byte[])>(r11);
+
+        if i3 <= 0 goto label3;
+
+        i7 = 0;
+
+     label2:
+        if i7 >= i3 goto label3;
+
+        $r10 = r2.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        virtualinvoke $r10.<java.io.FileOutputStream: void write(int)>(0);
+
+        i7 = i7 + 1;
+
+        goto label2;
+
+     label3:
+        return;
+    }
+
+    public void finishAVI() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator r0;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList $r1;
+        byte[] r2, $r10, $r11;
+        java.io.FileOutputStream $r3, $r4;
+        net.sourceforge.plantuml.security.SFile $r5, $r7;
+        long l0, $l4, $l5, $l6, $l7, $l9, $l10, $l11;
+        java.io.RandomAccessFile $r6;
+        java.io.File $r8;
+        int $i1, $i2, $i3, $i8, $i12, $i13;
+
+        r0 := @this: net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
+
+        $r1 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList indexlist>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator$AVIIndexList: byte[] toBytes()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        virtualinvoke $r3.<java.io.FileOutputStream: void write(byte[])>(r2);
+
+        $r4 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: java.io.FileOutputStream aviOutput>;
+
+        virtualinvoke $r4.<java.io.FileOutputStream: void close()>();
+
+        $r5 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: net.sourceforge.plantuml.security.SFile aviFile>;
+
+        l0 = virtualinvoke $r5.<net.sourceforge.plantuml.security.SFile: long length()>();
+
+        $r6 = new java.io.RandomAccessFile;
+
+        $r7 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: net.sourceforge.plantuml.security.SFile aviFile>;
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.security.SFile: java.io.File conv()>();
+
+        specialinvoke $r6.<java.io.RandomAccessFile: void <init>(java.io.File,java.lang.String)>($r8, "rw");
+
+        virtualinvoke $r6.<java.io.RandomAccessFile: void seek(long)>(4L);
+
+        $i1 = (int) l0;
+
+        $i2 = $i1 - 8;
+
+        $i3 = staticinvoke <net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int swapInt(int)>($i2);
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.mjpeg.MJPEGGenerator: byte[] intBytes(int)>($i3);
+
+        virtualinvoke $r6.<java.io.RandomAccessFile: void write(byte[])>($r10);
+
+        $l4 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: long aviMovieOffset>;
+
+        $l5 = $l4 + 4L;
+
+        virtualinvoke $r6.<java.io.RandomAccessFile: void seek(long)>($l5);
+
+        $l7 = l0 - 8L;
+
+        $l6 = r0.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: long aviMovieOffset>;
+
+        $l10 = $l7 - $l6;
+
+        $i8 = lengthof r2;
+
+        $l9 = (long) $i8;
+
+        $l11 = $l10 - $l9;
+
+        $i12 = (int) $l11;
+
+        $i13 = staticinvoke <net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int swapInt(int)>($i12);
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.mjpeg.MJPEGGenerator: byte[] intBytes(int)>($i13);
+
+        virtualinvoke $r6.<java.io.RandomAccessFile: void write(byte[])>($r11);
+
+        virtualinvoke $r6.<java.io.RandomAccessFile: void close()>();
+
+        return;
+    }
+
+    public static int swapInt(int)
+    {
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9;
+
+        i0 := @parameter0: int;
+
+        $i2 = i0 >>> 24;
+
+        $i1 = i0 << 24;
+
+        $i5 = $i2 | $i1;
+
+        $i3 = i0 << 8;
+
+        $i4 = $i3 & 16711680;
+
+        $i8 = $i5 | $i4;
+
+        $i6 = i0 >> 8;
+
+        $i7 = $i6 & 65280;
+
+        $i9 = $i8 | $i7;
+
+        return $i9;
+    }
+
+    public static short swapShort(short)
+    {
+        short s0, $s4;
+        int $i1, $i2, $i3;
+
+        s0 := @parameter0: short;
+
+        $i2 = s0 >>> 8;
+
+        $i1 = s0 << 8;
+
+        $i3 = $i2 | $i1;
+
+        $s4 = (short) $i3;
+
+        return $s4;
+    }
+
+    public static byte[] intBytes(int)
+    {
+        byte[] r0;
+        int i0, $i1, $i3, $i4, $i6, $i7, $i9;
+        byte $b2, $b5, $b8, $b10;
+
+        i0 := @parameter0: int;
+
+        r0 = newarray (byte)[4];
+
+        $i1 = i0 >>> 24;
+
+        $b2 = (byte) $i1;
+
+        r0[0] = $b2;
+
+        $i3 = i0 >>> 16;
+
+        $i4 = $i3 & 255;
+
+        $b5 = (byte) $i4;
+
+        r0[1] = $b5;
+
+        $i6 = i0 >>> 8;
+
+        $i7 = $i6 & 255;
+
+        $b8 = (byte) $i7;
+
+        r0[2] = $b8;
+
+        $i9 = i0 & 255;
+
+        $b10 = (byte) $i9;
+
+        r0[3] = $b10;
+
+        return r0;
+    }
+
+    public static byte[] shortBytes(short)
+    {
+        byte[] r0;
+        short s0;
+        int $i1, $i3;
+        byte $b2, $b4;
+
+        s0 := @parameter0: short;
+
+        r0 = newarray (byte)[2];
+
+        $i1 = s0 >>> 8;
+
+        $b2 = (byte) $i1;
+
+        r0[0] = $b2;
+
+        $i3 = s0 & 255;
+
+        $b4 = (byte) $i3;
+
+        r0[1] = $b4;
+
+        return r0;
+    }
+
+    private byte[] writeImageToBytes(java.awt.Image) throws java.io.IOException
+    {
+        java.awt.image.BufferedImage $r0;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator r1;
+        int $i0, $i1, $i2, $i3;
+        java.io.ByteArrayOutputStream $r2;
+        java.awt.Image r4;
+        byte[] $r5;
+        java.awt.Graphics2D r7;
+
+        r1 := @this: net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
+
+        r4 := @parameter0: java.awt.Image;
+
+        $r0 = new java.awt.image.BufferedImage;
+
+        $i1 = r1.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int width>;
+
+        $i0 = r1.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int height>;
+
+        specialinvoke $r0.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i1, $i0, 1);
+
+        $r2 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r2.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        r7 = virtualinvoke $r0.<java.awt.image.BufferedImage: java.awt.Graphics2D createGraphics()>();
+
+        $i3 = r1.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int width>;
+
+        $i2 = r1.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: int height>;
+
+        virtualinvoke r7.<java.awt.Graphics2D: boolean drawImage(java.awt.Image,int,int,int,int,java.awt.image.ImageObserver)>(r4, 0, 0, $i3, $i2, null);
+
+        staticinvoke <net.sourceforge.plantuml.security.SImageIO: void write(java.awt.image.RenderedImage,java.lang.String,java.io.OutputStream)>($r0, "jpg", $r2);
+
+        virtualinvoke $r2.<java.io.ByteArrayOutputStream: void close()>();
+
+        $r5 = virtualinvoke $r2.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        return $r5;
+    }
+}

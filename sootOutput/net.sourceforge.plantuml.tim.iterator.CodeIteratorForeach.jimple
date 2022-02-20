@@ -1,0 +1,269 @@
+public class net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach extends net.sourceforge.plantuml.tim.iterator.AbstractCodeIterator
+{
+    private final net.sourceforge.plantuml.tim.TContext context;
+    private final net.sourceforge.plantuml.tim.TMemory memory;
+    private final java.util.List logs;
+
+    public void <init>(net.sourceforge.plantuml.tim.iterator.CodeIterator, net.sourceforge.plantuml.tim.TContext, net.sourceforge.plantuml.tim.TMemory, java.util.List)
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach r0;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator r1;
+        net.sourceforge.plantuml.tim.TContext r2;
+        net.sourceforge.plantuml.tim.TMemory r3;
+        java.util.List r4;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach;
+
+        r1 := @parameter0: net.sourceforge.plantuml.tim.iterator.CodeIterator;
+
+        r2 := @parameter1: net.sourceforge.plantuml.tim.TContext;
+
+        r3 := @parameter2: net.sourceforge.plantuml.tim.TMemory;
+
+        r4 := @parameter3: java.util.List;
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.iterator.AbstractCodeIterator: void <init>(net.sourceforge.plantuml.tim.iterator.CodeIterator)>(r1);
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.TContext context> = r2;
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.TMemory memory> = r3;
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: java.util.List logs> = r4;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.StringLocated peek() throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach r0;
+        net.sourceforge.plantuml.StringLocated r1, $r17;
+        net.sourceforge.plantuml.tim.TMemory $r2, $r9, $r12, $r16, $r22;
+        net.sourceforge.plantuml.tim.ExecutionContextForeach r3;
+        net.sourceforge.plantuml.tim.TLineType $r4, $r5, $r6, $r7, $r18, $r19, $r20, $r21;
+        java.util.List $r8, $r15;
+        boolean $z1, $z3;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator $r10, $r24;
+        net.sourceforge.plantuml.tim.iterator.CodePosition $r11;
+        net.sourceforge.plantuml.tim.EaterException $r14;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach;
+
+        i0 = 0;
+
+     label01:
+        $r24 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        r1 = interfaceinvoke $r24.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.StringLocated peek()>();
+
+        if r1 != null goto label02;
+
+        return null;
+
+     label02:
+        $r2 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.TMemory memory>;
+
+        r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.tim.TMemory: net.sourceforge.plantuml.tim.ExecutionContextForeach peekForeach()>();
+
+        if r3 == null goto label05;
+
+        $z3 = virtualinvoke r3.<net.sourceforge.plantuml.tim.ExecutionContextForeach: boolean isSkipMe()>();
+
+        if $z3 == 0 goto label05;
+
+        $r18 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r19 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType FOREACH>;
+
+        if $r18 != $r19 goto label03;
+
+        i0 = i0 + 1;
+
+        goto label04;
+
+     label03:
+        $r20 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r21 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType ENDFOREACH>;
+
+        if $r20 != $r21 goto label04;
+
+        i0 = i0 + -1;
+
+        if i0 != -1 goto label04;
+
+        $r22 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.TMemory memory>;
+
+        interfaceinvoke $r22.<net.sourceforge.plantuml.tim.TMemory: net.sourceforge.plantuml.tim.ExecutionContextForeach pollForeach()>();
+
+        i0 = 0;
+
+     label04:
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: void next()>();
+
+        goto label01;
+
+     label05:
+        $r4 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r5 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType FOREACH>;
+
+        if $r4 != $r5 goto label06;
+
+        $r15 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: java.util.List logs>;
+
+        interfaceinvoke $r15.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        $r16 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.TMemory memory>;
+
+        $r17 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: void executeForeach(net.sourceforge.plantuml.tim.TMemory,net.sourceforge.plantuml.StringLocated)>($r16, $r17);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: void next()>();
+
+        goto label01;
+
+     label06:
+        $r6 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r7 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType ENDFOREACH>;
+
+        if $r6 != $r7 goto label10;
+
+        $r8 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: java.util.List logs>;
+
+        interfaceinvoke $r8.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        if r3 != null goto label07;
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException located(java.lang.String)>("No foreach related to this endforeach");
+
+        throw $r14;
+
+     label07:
+        virtualinvoke r3.<net.sourceforge.plantuml.tim.ExecutionContextForeach: void inc()>();
+
+        $z1 = virtualinvoke r3.<net.sourceforge.plantuml.tim.ExecutionContextForeach: boolean isSkipMe()>();
+
+        if $z1 == 0 goto label08;
+
+        $r12 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.TMemory memory>;
+
+        interfaceinvoke $r12.<net.sourceforge.plantuml.tim.TMemory: net.sourceforge.plantuml.tim.ExecutionContextForeach pollForeach()>();
+
+        goto label09;
+
+     label08:
+        $r9 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.TMemory memory>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: void setLoopVariable(net.sourceforge.plantuml.tim.TMemory,net.sourceforge.plantuml.tim.ExecutionContextForeach,net.sourceforge.plantuml.StringLocated)>($r9, r3, r1);
+
+        $r10 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        $r11 = virtualinvoke r3.<net.sourceforge.plantuml.tim.ExecutionContextForeach: net.sourceforge.plantuml.tim.iterator.CodePosition getStartForeach()>();
+
+        interfaceinvoke $r10.<net.sourceforge.plantuml.tim.iterator.CodeIterator: void jumpToCodePosition(net.sourceforge.plantuml.tim.iterator.CodePosition)>($r11);
+
+     label09:
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: void next()>();
+
+        goto label01;
+
+     label10:
+        return r1;
+    }
+
+    private void executeForeach(net.sourceforge.plantuml.tim.TMemory, net.sourceforge.plantuml.StringLocated) throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.EaterForeach $r0;
+        net.sourceforge.plantuml.StringLocated r1;
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach r3;
+        net.sourceforge.plantuml.tim.TMemory r4;
+        net.sourceforge.plantuml.tim.TContext $r5;
+        java.lang.String $r6;
+        net.sourceforge.plantuml.json.JsonArray $r7;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator $r8;
+        net.sourceforge.plantuml.tim.iterator.CodePosition $r9;
+        net.sourceforge.plantuml.tim.ExecutionContextForeach r10;
+        boolean $z0;
+
+        r3 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach;
+
+        r4 := @parameter0: net.sourceforge.plantuml.tim.TMemory;
+
+        r1 := @parameter1: net.sourceforge.plantuml.StringLocated;
+
+        $r0 = new net.sourceforge.plantuml.tim.EaterForeach;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.tim.EaterForeach: void <init>(net.sourceforge.plantuml.StringLocated)>(r1);
+
+        $r5 = r3.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.TContext context>;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.tim.EaterForeach: void analyze(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory)>($r5, r4);
+
+        $r6 = virtualinvoke $r0.<net.sourceforge.plantuml.tim.EaterForeach: java.lang.String getVarname()>();
+
+        $r7 = virtualinvoke $r0.<net.sourceforge.plantuml.tim.EaterForeach: net.sourceforge.plantuml.json.JsonArray getJsonArray()>();
+
+        $r8 = r3.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        $r9 = interfaceinvoke $r8.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.tim.iterator.CodePosition getCodePosition()>();
+
+        r10 = staticinvoke <net.sourceforge.plantuml.tim.ExecutionContextForeach: net.sourceforge.plantuml.tim.ExecutionContextForeach fromValue(java.lang.String,net.sourceforge.plantuml.json.JsonArray,net.sourceforge.plantuml.tim.iterator.CodePosition)>($r6, $r7, $r9);
+
+        $z0 = virtualinvoke $r0.<net.sourceforge.plantuml.tim.EaterForeach: boolean isSkip()>();
+
+        if $z0 == 0 goto label1;
+
+        virtualinvoke r10.<net.sourceforge.plantuml.tim.ExecutionContextForeach: void skipMeNow()>();
+
+        goto label2;
+
+     label1:
+        specialinvoke r3.<net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach: void setLoopVariable(net.sourceforge.plantuml.tim.TMemory,net.sourceforge.plantuml.tim.ExecutionContextForeach,net.sourceforge.plantuml.StringLocated)>(r4, r10, r1);
+
+     label2:
+        interfaceinvoke r4.<net.sourceforge.plantuml.tim.TMemory: void addForeach(net.sourceforge.plantuml.tim.ExecutionContextForeach)>(r10);
+
+        return;
+    }
+
+    private void setLoopVariable(net.sourceforge.plantuml.tim.TMemory, net.sourceforge.plantuml.tim.ExecutionContextForeach, net.sourceforge.plantuml.StringLocated) throws net.sourceforge.plantuml.tim.EaterException
+    {
+        net.sourceforge.plantuml.tim.ExecutionContextForeach r0;
+        net.sourceforge.plantuml.json.JsonArray $r1;
+        int $i0;
+        net.sourceforge.plantuml.json.JsonValue r2;
+        net.sourceforge.plantuml.tim.TMemory r3;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.tim.expression.TValue $r5;
+        net.sourceforge.plantuml.tim.TVariableScope $r6;
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach r7;
+        net.sourceforge.plantuml.StringLocated r8;
+
+        r7 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorForeach;
+
+        r3 := @parameter0: net.sourceforge.plantuml.tim.TMemory;
+
+        r0 := @parameter1: net.sourceforge.plantuml.tim.ExecutionContextForeach;
+
+        r8 := @parameter2: net.sourceforge.plantuml.StringLocated;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.tim.ExecutionContextForeach: net.sourceforge.plantuml.json.JsonArray getJsonArray()>();
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.tim.ExecutionContextForeach: int currentIndex()>();
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonArray: net.sourceforge.plantuml.json.JsonValue get(int)>($i0);
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.tim.ExecutionContextForeach: java.lang.String getVarname()>();
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.tim.expression.TValue: net.sourceforge.plantuml.tim.expression.TValue fromJson(net.sourceforge.plantuml.json.JsonValue)>(r2);
+
+        $r6 = <net.sourceforge.plantuml.tim.TVariableScope: net.sourceforge.plantuml.tim.TVariableScope GLOBAL>;
+
+        interfaceinvoke r3.<net.sourceforge.plantuml.tim.TMemory: void putVariable(java.lang.String,net.sourceforge.plantuml.tim.expression.TValue,net.sourceforge.plantuml.tim.TVariableScope)>($r4, $r5, $r6);
+
+        return;
+    }
+}

@@ -1,0 +1,139 @@
+public class jcckit.data.DataCurve extends jcckit.data.DataContainer implements jcckit.data.DataElement
+{
+    public static final java.lang.String X_KEY;
+    public static final java.lang.String Y_KEY;
+    public static final java.lang.String TITLE_KEY;
+    private final java.lang.String _title;
+    private jcckit.data.DataContainer _container;
+
+    public void <init>(java.lang.String)
+    {
+        jcckit.data.DataCurve r0;
+        java.lang.String r1;
+
+        r0 := @this: jcckit.data.DataCurve;
+
+        r1 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<jcckit.data.DataContainer: void <init>()>();
+
+        r0.<jcckit.data.DataCurve: java.lang.String _title> = r1;
+
+        return;
+    }
+
+    public void <init>(jcckit.util.ConfigParameters)
+    {
+        jcckit.data.DataCurve r0;
+        jcckit.util.ConfigParameters r1;
+        java.lang.String $r2;
+        double[] r3, r4;
+        int $i0, $i1, i2, i3;
+        jcckit.data.DataPoint $r5;
+        double $d0, $d1;
+
+        r0 := @this: jcckit.data.DataCurve;
+
+        r1 := @parameter0: jcckit.util.ConfigParameters;
+
+        $r2 = virtualinvoke r1.<jcckit.util.ConfigParameters: java.lang.String get(java.lang.String,java.lang.String)>("title", "");
+
+        specialinvoke r0.<jcckit.data.DataCurve: void <init>(java.lang.String)>($r2);
+
+        r3 = virtualinvoke r1.<jcckit.util.ConfigParameters: double[] getDoubleArray(java.lang.String)>("x");
+
+        r4 = virtualinvoke r1.<jcckit.util.ConfigParameters: double[] getDoubleArray(java.lang.String)>("y");
+
+        $i1 = lengthof r3;
+
+        $i0 = lengthof r4;
+
+        i2 = staticinvoke <java.lang.Math: int min(int,int)>($i1, $i0);
+
+        i3 = 0;
+
+     label1:
+        if i3 >= i2 goto label2;
+
+        $r5 = new jcckit.data.DataPoint;
+
+        $d1 = r3[i3];
+
+        $d0 = r4[i3];
+
+        specialinvoke $r5.<jcckit.data.DataPoint: void <init>(double,double)>($d1, $d0);
+
+        virtualinvoke r0.<jcckit.data.DataCurve: void addElement(jcckit.data.DataElement)>($r5);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public jcckit.data.DataContainer getContainer()
+    {
+        jcckit.data.DataCurve r0;
+        jcckit.data.DataContainer $r1;
+
+        r0 := @this: jcckit.data.DataCurve;
+
+        $r1 = r0.<jcckit.data.DataCurve: jcckit.data.DataContainer _container>;
+
+        return $r1;
+    }
+
+    public void setContainer(jcckit.data.DataContainer)
+    {
+        jcckit.data.DataCurve r0;
+        jcckit.data.DataContainer r1;
+
+        r0 := @this: jcckit.data.DataCurve;
+
+        r1 := @parameter0: jcckit.data.DataContainer;
+
+        r0.<jcckit.data.DataCurve: jcckit.data.DataContainer _container> = r1;
+
+        return;
+    }
+
+    public java.lang.String getTitle()
+    {
+        jcckit.data.DataCurve r0;
+        java.lang.String $r1;
+
+        r0 := @this: jcckit.data.DataCurve;
+
+        $r1 = r0.<jcckit.data.DataCurve: java.lang.String _title>;
+
+        return $r1;
+    }
+
+    protected boolean isValid(jcckit.data.DataElement)
+    {
+        jcckit.data.DataElement r0;
+        boolean $z0;
+        jcckit.data.DataCurve r1;
+
+        r1 := @this: jcckit.data.DataCurve;
+
+        r0 := @parameter0: jcckit.data.DataElement;
+
+        $z0 = r0 instanceof jcckit.data.DataPoint;
+
+        return $z0;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.data.DataCurve: java.lang.String TITLE_KEY> = "title";
+
+        <jcckit.data.DataCurve: java.lang.String Y_KEY> = "y";
+
+        <jcckit.data.DataCurve: java.lang.String X_KEY> = "x";
+
+        return;
+    }
+}

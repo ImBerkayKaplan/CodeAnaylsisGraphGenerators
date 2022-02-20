@@ -1,0 +1,210 @@
+public class net.sourceforge.plantuml.png.MetadataTag extends java.lang.Object
+{
+    private final java.lang.Object source;
+    private final java.lang.String tag;
+
+    public void <init>(net.sourceforge.plantuml.security.SFile, java.lang.String) throws java.io.FileNotFoundException
+    {
+        net.sourceforge.plantuml.png.MetadataTag r0;
+        net.sourceforge.plantuml.security.SFile r1;
+        java.io.File $r2;
+        java.lang.String r3;
+
+        r0 := @this: net.sourceforge.plantuml.png.MetadataTag;
+
+        r1 := @parameter0: net.sourceforge.plantuml.security.SFile;
+
+        r3 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.security.SFile: java.io.File conv()>();
+
+        r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.Object source> = $r2;
+
+        r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.String tag> = r3;
+
+        return;
+    }
+
+    public void <init>(java.io.File, java.lang.String)
+    {
+        net.sourceforge.plantuml.png.MetadataTag r0;
+        java.io.File r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.png.MetadataTag;
+
+        r1 := @parameter0: java.io.File;
+
+        r2 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.Object source> = r1;
+
+        r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.String tag> = r2;
+
+        return;
+    }
+
+    public void <init>(java.io.InputStream, java.lang.String)
+    {
+        net.sourceforge.plantuml.png.MetadataTag r0;
+        java.io.InputStream r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.png.MetadataTag;
+
+        r1 := @parameter0: java.io.InputStream;
+
+        r2 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.Object source> = r1;
+
+        r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.String tag> = r2;
+
+        return;
+    }
+
+    public java.lang.String getData() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.png.MetadataTag r0;
+        java.lang.Object $r1, $r4;
+        javax.imageio.stream.ImageInputStream r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        javax.imageio.ImageReader r5;
+        javax.imageio.metadata.IIOMetadata r6;
+        java.lang.String[] r7;
+        int i0, i1;
+        java.lang.String $r8, r10;
+        org.w3c.dom.Node $r9;
+
+        r0 := @this: net.sourceforge.plantuml.png.MetadataTag;
+
+        $r1 = r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.Object source>;
+
+        r2 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: javax.imageio.stream.ImageInputStream createImageInputStream(java.lang.Object)>($r1);
+
+        r3 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.util.Iterator getImageReaders(javax.imageio.stream.ImageInputStream)>(r2);
+
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (javax.imageio.ImageReader) $r4;
+
+        virtualinvoke r5.<javax.imageio.ImageReader: void setInput(java.lang.Object,boolean)>(r2, 1);
+
+        r6 = virtualinvoke r5.<javax.imageio.ImageReader: javax.imageio.metadata.IIOMetadata getImageMetadata(int)>(0);
+
+        r7 = virtualinvoke r6.<javax.imageio.metadata.IIOMetadata: java.lang.String[] getMetadataFormatNames()>();
+
+        i0 = lengthof r7;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label3;
+
+        $r8 = r7[i1];
+
+        $r9 = virtualinvoke r6.<javax.imageio.metadata.IIOMetadata: org.w3c.dom.Node getAsTree(java.lang.String)>($r8);
+
+        r10 = specialinvoke r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.String displayMetadata(org.w3c.dom.Node)>($r9);
+
+        if r10 == null goto label2;
+
+        return r10;
+
+     label2:
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label3:
+        return null;
+    }
+
+    private java.lang.String displayMetadata(org.w3c.dom.Node)
+    {
+        net.sourceforge.plantuml.png.MetadataTag r0;
+        org.w3c.dom.Node r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.png.MetadataTag;
+
+        r1 := @parameter0: org.w3c.dom.Node;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.png.MetadataTag: java.lang.String displayMetadata(org.w3c.dom.Node,int)>(r1, 0);
+
+        return $r2;
+    }
+
+    private java.lang.String displayMetadata(org.w3c.dom.Node, int)
+    {
+        org.w3c.dom.Node r0, r6, r7, r8;
+        org.w3c.dom.NamedNodeMap r1;
+        net.sourceforge.plantuml.png.MetadataTag r2;
+        int i0, $i1;
+        java.lang.String $r3, $r4, $r5, r9;
+        boolean $z0;
+
+        r2 := @this: net.sourceforge.plantuml.png.MetadataTag;
+
+        r0 := @parameter0: org.w3c.dom.Node;
+
+        i0 := @parameter1: int;
+
+        r1 = interfaceinvoke r0.<org.w3c.dom.Node: org.w3c.dom.NamedNodeMap getAttributes()>();
+
+        if r1 == null goto label1;
+
+        r6 = interfaceinvoke r1.<org.w3c.dom.NamedNodeMap: org.w3c.dom.Node getNamedItem(java.lang.String)>("keyword");
+
+        if r6 == null goto label1;
+
+        $r3 = r2.<net.sourceforge.plantuml.png.MetadataTag: java.lang.String tag>;
+
+        $r4 = interfaceinvoke r6.<org.w3c.dom.Node: java.lang.String getNodeValue()>();
+
+        $z0 = virtualinvoke $r3.<java.lang.String: boolean equals(java.lang.Object)>($r4);
+
+        if $z0 == 0 goto label1;
+
+        r7 = interfaceinvoke r1.<org.w3c.dom.NamedNodeMap: org.w3c.dom.Node getNamedItem(java.lang.String)>("value");
+
+        if r7 == null goto label1;
+
+        $r5 = interfaceinvoke r7.<org.w3c.dom.Node: java.lang.String getNodeValue()>();
+
+        return $r5;
+
+     label1:
+        r8 = interfaceinvoke r0.<org.w3c.dom.Node: org.w3c.dom.Node getFirstChild()>();
+
+     label2:
+        if r8 == null goto label4;
+
+        $i1 = i0 + 1;
+
+        r9 = specialinvoke r2.<net.sourceforge.plantuml.png.MetadataTag: java.lang.String displayMetadata(org.w3c.dom.Node,int)>(r8, $i1);
+
+        if r9 == null goto label3;
+
+        return r9;
+
+     label3:
+        r8 = interfaceinvoke r8.<org.w3c.dom.Node: org.w3c.dom.Node getNextSibling()>();
+
+        goto label2;
+
+     label4:
+        return null;
+    }
+}

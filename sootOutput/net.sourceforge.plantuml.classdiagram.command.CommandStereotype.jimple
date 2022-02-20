@@ -1,0 +1,162 @@
+public class net.sourceforge.plantuml.classdiagram.command.CommandStereotype extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.classdiagram.command.CommandStereotype r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.classdiagram.command.CommandStereotype;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.classdiagram.command.CommandStereotype: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6, $r7;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r8;
+
+        $r0 = class "Lnet/sourceforge/plantuml/classdiagram/command/CommandStereotype;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[5];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("NAME", "([%pLN_.]+|[%g][^%g]+[%g])");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("STEREO", "(\\<\\<.*\\>\\>)");
+
+        $r2[3] = $r6;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[4] = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r8;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.classdiagram.ClassDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String r1, r5;
+        net.sourceforge.plantuml.classdiagram.ClassDiagram r2;
+        net.sourceforge.plantuml.cucadiagram.Ident r3;
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r6;
+        net.sourceforge.plantuml.ISkinParam $r7, $r8, $r12;
+        int $i0;
+        double $d0;
+        net.sourceforge.plantuml.FontParam[] $r9;
+        net.sourceforge.plantuml.FontParam $r10;
+        net.sourceforge.plantuml.ugraphic.UFont $r11;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r13;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r14;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r15;
+        net.sourceforge.plantuml.classdiagram.command.CommandStereotype r16;
+        net.sourceforge.plantuml.LineLocation r17;
+        net.sourceforge.plantuml.cucadiagram.Code $r18;
+
+        r16 := @this: net.sourceforge.plantuml.classdiagram.command.CommandStereotype;
+
+        r2 := @parameter0: net.sourceforge.plantuml.classdiagram.ClassDiagram;
+
+        r17 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("NAME", 0);
+
+        r3 = virtualinvoke r2.<net.sourceforge.plantuml.classdiagram.ClassDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r1);
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.classdiagram.ClassDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r18 = r3;
+
+        goto label2;
+
+     label1:
+        $r18 = virtualinvoke r2.<net.sourceforge.plantuml.classdiagram.ClassDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r1);
+
+     label2:
+        r5 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("STEREO", 0);
+
+        r6 = virtualinvoke r2.<net.sourceforge.plantuml.classdiagram.ClassDiagram: net.sourceforge.plantuml.cucadiagram.ILeaf getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r3, $r18, null, null);
+
+        $r7 = virtualinvoke r2.<net.sourceforge.plantuml.classdiagram.ClassDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $i0 = interfaceinvoke $r7.<net.sourceforge.plantuml.ISkinParam: int getCircledCharacterRadius()>();
+
+        $d0 = (double) $i0;
+
+        $r8 = virtualinvoke r2.<net.sourceforge.plantuml.classdiagram.ClassDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r9 = newarray (net.sourceforge.plantuml.FontParam)[1];
+
+        $r10 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam CIRCLED_CHARACTER>;
+
+        $r9[0] = $r10;
+
+        $r11 = interfaceinvoke $r8.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.UFont getFont(net.sourceforge.plantuml.cucadiagram.Stereotype,boolean,net.sourceforge.plantuml.FontParam[])>(null, 0, $r9);
+
+        $r12 = virtualinvoke r2.<net.sourceforge.plantuml.classdiagram.ClassDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r13 = interfaceinvoke $r12.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Stereotype: net.sourceforge.plantuml.cucadiagram.Stereotype build(java.lang.String,double,net.sourceforge.plantuml.ugraphic.UFont,net.sourceforge.plantuml.ugraphic.color.HColorSet)>(r5, $d0, $r11, $r13);
+
+        interfaceinvoke r6.<net.sourceforge.plantuml.cucadiagram.IEntity: void setStereotype(net.sourceforge.plantuml.cucadiagram.Stereotype)>($r14);
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r15;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.classdiagram.command.CommandStereotype r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.classdiagram.ClassDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.classdiagram.command.CommandStereotype;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.classdiagram.ClassDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.classdiagram.command.CommandStereotype: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.classdiagram.ClassDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

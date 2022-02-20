@@ -1,0 +1,340 @@
+public class net.sourceforge.plantuml.utils.Cypher extends java.lang.Object
+{
+    private static final java.util.regex.Pattern p;
+    private final java.security.SecureRandom rnd;
+    private final java.util.Map convert;
+    private final java.util.Set except;
+    private final java.util.List words;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.utils.Cypher r0;
+        java.security.SecureRandom $r1, $r16;
+        java.util.HashMap $r2;
+        java.util.HashSet $r3;
+        java.util.ArrayList $r4;
+        java.lang.Class $r5;
+        java.io.InputStream r6;
+        java.io.BufferedReader $r7;
+        java.io.InputStreamReader $r8;
+        boolean $z0;
+        java.util.List $r10, $r15;
+        java.lang.Exception $r11;
+        java.lang.String $r13;
+
+        r0 := @this: net.sourceforge.plantuml.utils.Cypher;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.security.SecureRandom;
+
+        specialinvoke $r1.<java.security.SecureRandom: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.utils.Cypher: java.security.SecureRandom rnd> = $r1;
+
+        $r2 = new java.util.HashMap;
+
+        specialinvoke $r2.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.utils.Cypher: java.util.Map convert> = $r2;
+
+        $r3 = new java.util.HashSet;
+
+        specialinvoke $r3.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.utils.Cypher: java.util.Set except> = $r3;
+
+        $r4 = new java.util.ArrayList;
+
+        specialinvoke $r4.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.utils.Cypher: java.util.List words> = $r4;
+
+        $r5 = class "Lnet/sourceforge/plantuml/utils/Cypher;";
+
+        r6 = virtualinvoke $r5.<java.lang.Class: java.io.InputStream getResourceAsStream(java.lang.String)>("words.txt");
+
+        if r6 == null goto label6;
+
+     label1:
+        $r7 = new java.io.BufferedReader;
+
+        $r8 = new java.io.InputStreamReader;
+
+        specialinvoke $r8.<java.io.InputStreamReader: void <init>(java.io.InputStream)>(r6);
+
+        specialinvoke $r7.<java.io.BufferedReader: void <init>(java.io.Reader)>($r8);
+
+     label2:
+        $r13 = virtualinvoke $r7.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        if $r13 == null goto label3;
+
+        $z0 = virtualinvoke $r13.<java.lang.String: boolean matches(java.lang.String)>("[a-z]+");
+
+        if $z0 == 0 goto label2;
+
+        $r10 = r0.<net.sourceforge.plantuml.utils.Cypher: java.util.List words>;
+
+        interfaceinvoke $r10.<java.util.List: boolean add(java.lang.Object)>($r13);
+
+        goto label2;
+
+     label3:
+        virtualinvoke r6.<java.io.InputStream: void close()>();
+
+     label4:
+        goto label6;
+
+     label5:
+        $r11 := @caughtexception;
+
+        virtualinvoke $r11.<java.lang.Exception: void printStackTrace()>();
+
+     label6:
+        $r15 = r0.<net.sourceforge.plantuml.utils.Cypher: java.util.List words>;
+
+        $r16 = r0.<net.sourceforge.plantuml.utils.Cypher: java.security.SecureRandom rnd>;
+
+        staticinvoke <java.util.Collections: void shuffle(java.util.List,java.util.Random)>($r15, $r16);
+
+        return;
+
+        catch java.lang.Exception from label1 to label4 with label5;
+    }
+
+    public synchronized java.lang.String cypher(java.lang.String)
+    {
+        java.lang.String r0, $r6, r7, $r9;
+        java.util.regex.Pattern $r1;
+        java.util.regex.Matcher r2;
+        java.lang.StringBuffer $r3;
+        boolean $z0;
+        net.sourceforge.plantuml.utils.Cypher r8;
+
+        r8 := @this: net.sourceforge.plantuml.utils.Cypher;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.utils.Cypher: java.util.regex.Pattern p>;
+
+        r2 = virtualinvoke $r1.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r0);
+
+        $r3 = new java.lang.StringBuffer;
+
+        specialinvoke $r3.<java.lang.StringBuffer: void <init>()>();
+
+     label1:
+        $z0 = virtualinvoke r2.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label2;
+
+        r7 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group(int)>(0);
+
+        $r9 = specialinvoke r8.<net.sourceforge.plantuml.utils.Cypher: java.lang.String changeWord(java.lang.String)>(r7);
+
+        virtualinvoke r2.<java.util.regex.Matcher: java.util.regex.Matcher appendReplacement(java.lang.StringBuffer,java.lang.String)>($r3, $r9);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r2.<java.util.regex.Matcher: java.lang.StringBuffer appendTail(java.lang.StringBuffer)>($r3);
+
+        $r6 = virtualinvoke $r3.<java.lang.StringBuffer: java.lang.String toString()>();
+
+        return $r6;
+    }
+
+    private java.lang.String changeWord(java.lang.String)
+    {
+        java.lang.String r0, r1, r8, r9;
+        net.sourceforge.plantuml.utils.Cypher r2;
+        java.util.Set $r3;
+        boolean $z0, $z1, $z2;
+        java.util.Map $r4, $r6, $r10;
+        java.lang.Object $r5;
+        int i0;
+
+        r2 := @this: net.sourceforge.plantuml.utils.Cypher;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = virtualinvoke r0.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.utils.Cypher: java.util.Set except>;
+
+        $z0 = interfaceinvoke $r3.<java.util.Set: boolean contains(java.lang.Object)>(r1);
+
+        if $z0 != 0 goto label1;
+
+        $z1 = virtualinvoke r1.<java.lang.String: boolean matches(java.lang.String)>("^([a-f0-9]{3}|[a-f0-9]{6})$");
+
+        if $z1 == 0 goto label2;
+
+     label1:
+        return r0;
+
+     label2:
+        $r4 = r2.<net.sourceforge.plantuml.utils.Cypher: java.util.Map convert>;
+
+        $r5 = interfaceinvoke $r4.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r8 = (java.lang.String) $r5;
+
+        if r8 == null goto label3;
+
+        return r8;
+
+     label3:
+        i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if i0 >= 4 goto label4;
+
+        i0 = 4;
+
+     label4:
+        r9 = specialinvoke r2.<net.sourceforge.plantuml.utils.Cypher: java.lang.String buildRandomWord(int)>(i0);
+
+        $r10 = r2.<net.sourceforge.plantuml.utils.Cypher: java.util.Map convert>;
+
+        $z2 = interfaceinvoke $r10.<java.util.Map: boolean containsValue(java.lang.Object)>(r9);
+
+        if $z2 != 0 goto label4;
+
+        $r6 = r2.<net.sourceforge.plantuml.utils.Cypher: java.util.Map convert>;
+
+        interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r0, r9);
+
+        return r9;
+    }
+
+    private java.lang.String buildRandomWord(int)
+    {
+        net.sourceforge.plantuml.utils.Cypher r0;
+        java.util.List $r1;
+        boolean $z0;
+        java.lang.StringBuilder $r2;
+        int i0, $i1, $i2, $i4, i5;
+        java.lang.String $r3, r8;
+        java.security.SecureRandom $r4;
+        char c3;
+        java.lang.Object $r6;
+        java.util.Iterator r7;
+
+        r0 := @this: net.sourceforge.plantuml.utils.Cypher;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.utils.Cypher: java.util.List words>;
+
+        r7 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (java.lang.String) $r6;
+
+        $i4 = virtualinvoke r8.<java.lang.String: int length()>();
+
+        if $i4 != i0 goto label2;
+
+        interfaceinvoke r7.<java.util.Iterator: void remove()>();
+
+        return r8;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        i5 = 0;
+
+     label4:
+        if i5 >= i0 goto label5;
+
+        $r4 = r0.<net.sourceforge.plantuml.utils.Cypher: java.security.SecureRandom rnd>;
+
+        $i1 = virtualinvoke $r4.<java.security.SecureRandom: int nextInt(int)>(26);
+
+        $i2 = 97 + $i1;
+
+        c3 = (char) $i2;
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c3);
+
+        i5 = i5 + 1;
+
+        goto label4;
+
+     label5:
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+
+    public void addException(java.lang.String)
+    {
+        net.sourceforge.plantuml.utils.Cypher r0;
+        java.util.List $r1, $r8;
+        boolean $z0;
+        java.util.Set $r2;
+        java.lang.StringBuilder $r3, $r5, $r6;
+        java.io.PrintStream $r4;
+        java.lang.String $r7, r9, r10;
+
+        r0 := @this: net.sourceforge.plantuml.utils.Cypher;
+
+        r9 := @parameter0: java.lang.String;
+
+        r10 = virtualinvoke r9.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $r1 = r0.<net.sourceforge.plantuml.utils.Cypher: java.util.List words>;
+
+        $z0 = interfaceinvoke $r1.<java.util.List: boolean contains(java.lang.Object)>(r10);
+
+        if $z0 == 0 goto label1;
+
+        $r4 = <java.lang.System: java.io.PrintStream err>;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("CypherWarning:");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r10);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r4.<java.io.PrintStream: void println(java.lang.String)>($r7);
+
+        $r8 = r0.<net.sourceforge.plantuml.utils.Cypher: java.util.List words>;
+
+        interfaceinvoke $r8.<java.util.List: boolean remove(java.lang.Object)>(r10);
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.utils.Cypher: java.util.Set except>;
+
+        interfaceinvoke $r2.<java.util.Set: boolean add(java.lang.Object)>(r10);
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.util.regex.Pattern $r0;
+
+        $r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("[\\p{L}\\p{N}]+");
+
+        <net.sourceforge.plantuml.utils.Cypher: java.util.regex.Pattern p> = $r0;
+
+        return;
+    }
+}

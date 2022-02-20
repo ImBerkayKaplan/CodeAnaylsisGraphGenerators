@@ -1,0 +1,301 @@
+public abstract class net.sourceforge.plantuml.sequencediagram.command.CommandParticipant extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>(net.sourceforge.plantuml.command.regex.IRegex)
+    {
+        net.sourceforge.plantuml.sequencediagram.command.CommandParticipant r0;
+        net.sourceforge.plantuml.command.regex.IRegex r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandParticipant;
+
+        r1 := @parameter0: net.sourceforge.plantuml.command.regex.IRegex;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>(r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getOrderRegex()
+    {
+        net.sourceforge.plantuml.command.regex.RegexOptional $r0;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexOptional;
+
+        $r1 = new net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[3];
+
+        $r3 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("order");
+
+        $r2[0] = $r3;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[1] = $r4;
+
+        $r5 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("ORDER", "(-?\\d{1,7})");
+
+        $r2[2] = $r5;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.command.regex.RegexConcat: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>($r2);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexOptional: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return $r0;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexType()
+    {
+        net.sourceforge.plantuml.command.regex.RegexOr $r0;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r1;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r2, $r3;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexOr;
+
+        $r1 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[2];
+
+        $r2 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("TYPE", "(participant|actor|create|boundary|control|entity|queue|database|collections)");
+
+        $r1[0] = $r2;
+
+        $r3 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("CREATE", "create[%s](participant|actor|boundary|control|entity|queue|database|collections)");
+
+        $r1[1] = $r3;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexOr: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>($r1);
+
+        return $r0;
+    }
+
+    protected final net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.sequencediagram.SequenceDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String r1, $r3, r4, r5, $r6, r7, r9, $r20, $r29, $r30, r38, r40, r42;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram r2;
+        boolean $z0, $z1, z2, z3;
+        net.sourceforge.plantuml.sequencediagram.Participant r8;
+        net.sourceforge.plantuml.graphic.color.ColorType $r10;
+        net.sourceforge.plantuml.ISkinParam $r11, $r13, $r19, $r26, r36;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r12, $r27;
+        net.sourceforge.plantuml.api.ThemeStyle $r14;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r15, $r17, $r31;
+        net.sourceforge.plantuml.sequencediagram.LifeEventType $r16;
+        net.sourceforge.plantuml.UrlBuilder $r18;
+        net.sourceforge.plantuml.UrlBuilder$ModeUrl $r21;
+        net.sourceforge.plantuml.Url r22;
+        net.sourceforge.plantuml.FontParam[] $r24;
+        net.sourceforge.plantuml.FontParam $r25;
+        int $i1, $i2;
+        double $d0;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r28;
+        net.sourceforge.plantuml.sequencediagram.command.CommandParticipant r32;
+        net.sourceforge.plantuml.LineLocation r33;
+        net.sourceforge.plantuml.cucadiagram.Display r34;
+        net.sourceforge.plantuml.sequencediagram.ParticipantType r35;
+        net.sourceforge.plantuml.ugraphic.UFont r37;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r39;
+
+        r32 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandParticipant;
+
+        r2 := @parameter0: net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+
+        r33 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("CODE", 0);
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: boolean participantsContainsKey(java.lang.String)>(r1);
+
+        if $z0 == 0 goto label01;
+
+        virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: void putParticipantInLast(java.lang.String)>(r1);
+
+        $r31 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r31;
+
+     label01:
+        r34 = <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display NULL>;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("FULL", 0);
+
+        if $r3 == null goto label02;
+
+        $r30 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("FULL", 0);
+
+        r34 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r30);
+
+     label02:
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("TYPE", 0);
+
+        r5 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("CREATE", 0);
+
+        if r5 == null goto label03;
+
+        $r29 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goUpperCase(java.lang.String)>(r5);
+
+        r35 = staticinvoke <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType valueOf(java.lang.String)>($r29);
+
+        z2 = 1;
+
+        goto label05;
+
+     label03:
+        $z1 = virtualinvoke r4.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("CREATE");
+
+        if $z1 == 0 goto label04;
+
+        r35 = <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType PARTICIPANT>;
+
+        z2 = 1;
+
+        goto label05;
+
+     label04:
+        $r6 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goUpperCase(java.lang.String)>(r4);
+
+        r35 = staticinvoke <net.sourceforge.plantuml.sequencediagram.ParticipantType: net.sourceforge.plantuml.sequencediagram.ParticipantType valueOf(java.lang.String)>($r6);
+
+        z2 = 0;
+
+     label05:
+        r7 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("ORDER", 0);
+
+        if r7 != null goto label06;
+
+        $i2 = 0;
+
+        goto label07;
+
+     label06:
+        $i2 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>(r7);
+
+     label07:
+        r8 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.sequencediagram.Participant createNewParticipant(net.sourceforge.plantuml.sequencediagram.ParticipantType,java.lang.String,net.sourceforge.plantuml.cucadiagram.Display,int)>(r35, r1, r34, $i2);
+
+        r9 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("STEREO", 0);
+
+        if r9 == null goto label08;
+
+        r36 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        z3 = interfaceinvoke r36.<net.sourceforge.plantuml.ISkinParam: boolean stereotypePositionTop()>();
+
+        $r24 = newarray (net.sourceforge.plantuml.FontParam)[1];
+
+        $r25 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam CIRCLED_CHARACTER>;
+
+        $r24[0] = $r25;
+
+        r37 = interfaceinvoke r36.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.UFont getFont(net.sourceforge.plantuml.cucadiagram.Stereotype,boolean,net.sourceforge.plantuml.FontParam[])>(null, 0, $r24);
+
+        $i1 = interfaceinvoke r36.<net.sourceforge.plantuml.ISkinParam: int getCircledCharacterRadius()>();
+
+        $d0 = (double) $i1;
+
+        $r26 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r27 = interfaceinvoke $r26.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r28 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Stereotype: net.sourceforge.plantuml.cucadiagram.Stereotype build(java.lang.String,double,net.sourceforge.plantuml.ugraphic.UFont,net.sourceforge.plantuml.ugraphic.color.HColorSet)>(r9, $d0, r37, $r27);
+
+        virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.Participant: void setStereotype(net.sourceforge.plantuml.cucadiagram.Stereotype,boolean)>($r28, z3);
+
+     label08:
+        r38 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("COLOR", 0);
+
+        $r10 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        if r38 != null goto label09;
+
+        $r39 = null;
+
+        goto label10;
+
+     label09:
+        $r11 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r12 = interfaceinvoke $r11.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r13 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r14 = interfaceinvoke $r13.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r39 = virtualinvoke $r12.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>($r14, r38);
+
+     label10:
+        virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.Participant: void setSpecificColorTOBEREMOVED(net.sourceforge.plantuml.graphic.color.ColorType,net.sourceforge.plantuml.ugraphic.color.HColor)>($r10, $r39);
+
+        r40 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("URL", 0);
+
+        if r40 == null goto label11;
+
+        $r18 = new net.sourceforge.plantuml.UrlBuilder;
+
+        $r19 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r20 = interfaceinvoke $r19.<net.sourceforge.plantuml.ISkinParam: java.lang.String getValue(java.lang.String)>("topurl");
+
+        $r21 = <net.sourceforge.plantuml.UrlBuilder$ModeUrl: net.sourceforge.plantuml.UrlBuilder$ModeUrl STRICT>;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.UrlBuilder: void <init>(java.lang.String,net.sourceforge.plantuml.UrlBuilder$ModeUrl)>($r20, $r21);
+
+        r22 = virtualinvoke $r18.<net.sourceforge.plantuml.UrlBuilder: net.sourceforge.plantuml.Url getUrl(java.lang.String)>(r40);
+
+        virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.Participant: void setUrl(net.sourceforge.plantuml.Url)>(r22);
+
+     label11:
+        if z2 == 0 goto label12;
+
+        $r16 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType CREATE>;
+
+        r42 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: java.lang.String activate(net.sourceforge.plantuml.sequencediagram.Participant,net.sourceforge.plantuml.sequencediagram.LifeEventType,net.sourceforge.plantuml.ugraphic.color.HColor)>(r8, $r16, null);
+
+        if r42 == null goto label12;
+
+        $r17 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>(r42);
+
+        return $r17;
+
+     label12:
+        $r15 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r15;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.sequencediagram.command.CommandParticipant r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandParticipant;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.sequencediagram.SequenceDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.command.CommandParticipant: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.sequencediagram.SequenceDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

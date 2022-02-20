@@ -1,0 +1,167 @@
+public class net.sourceforge.plantuml.ugraphic.TextBlockInEllipse extends net.sourceforge.plantuml.graphic.AbstractTextBlock implements net.sourceforge.plantuml.graphic.TextBlock
+{
+    private final net.sourceforge.plantuml.graphic.TextBlock text;
+    private final net.sourceforge.plantuml.svek.image.ContainingEllipse ellipse;
+
+    public void <init>(net.sourceforge.plantuml.graphic.TextBlock, net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.ugraphic.TextBlockInEllipse r0;
+        net.sourceforge.plantuml.graphic.TextBlock r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r3;
+        double $d0, $d1, d2;
+        byte $b0, $b1;
+        net.sourceforge.plantuml.svek.image.Footprint $r5;
+        net.sourceforge.plantuml.svek.image.ContainingEllipse $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.TextBlockInEllipse;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.TextBlock;
+
+        r2 := @parameter1: net.sourceforge.plantuml.graphic.StringBounder;
+
+        specialinvoke r0.<net.sourceforge.plantuml.graphic.AbstractTextBlock: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.TextBlockInEllipse: net.sourceforge.plantuml.graphic.TextBlock text> = r1;
+
+        r3 = interfaceinvoke r1.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r2);
+
+        $d0 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d1 = virtualinvoke r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        d2 = $d0 / $d1;
+
+        $b0 = d2 cmpg 0.2;
+
+        if $b0 >= 0 goto label1;
+
+        d2 = 0.2;
+
+        goto label2;
+
+     label1:
+        $b1 = d2 cmpl 0.8;
+
+        if $b1 <= 0 goto label2;
+
+        d2 = 0.8;
+
+     label2:
+        $r5 = new net.sourceforge.plantuml.svek.image.Footprint;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.svek.image.Footprint: void <init>(net.sourceforge.plantuml.graphic.StringBounder)>(r2);
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.svek.image.Footprint: net.sourceforge.plantuml.svek.image.ContainingEllipse getEllipse(net.sourceforge.plantuml.graphic.UDrawable,double)>(r1, d2);
+
+        r0.<net.sourceforge.plantuml.ugraphic.TextBlockInEllipse: net.sourceforge.plantuml.svek.image.ContainingEllipse ellipse> = $r6;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.UEllipse getUEllipse()
+    {
+        net.sourceforge.plantuml.ugraphic.TextBlockInEllipse r0;
+        net.sourceforge.plantuml.svek.image.ContainingEllipse $r1;
+        net.sourceforge.plantuml.ugraphic.UEllipse $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.TextBlockInEllipse;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.TextBlockInEllipse: net.sourceforge.plantuml.svek.image.ContainingEllipse ellipse>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.svek.image.ContainingEllipse: net.sourceforge.plantuml.ugraphic.UEllipse asUEllipse()>();
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.UEllipse: net.sourceforge.plantuml.ugraphic.UEllipse bigger(double)>(6.0);
+
+        return $r3;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.TextBlockInEllipse r0;
+        net.sourceforge.plantuml.ugraphic.UEllipse r1;
+        net.sourceforge.plantuml.svek.image.ContainingEllipse $r2;
+        java.awt.geom.Point2D r3;
+        double $d0, $d1, $d2, d3, $d4, $d5, $d6, d7, $d8;
+        net.sourceforge.plantuml.ugraphic.UGraphic r4, $r7;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r5;
+        net.sourceforge.plantuml.graphic.TextBlock $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.TextBlockInEllipse;
+
+        r4 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.TextBlockInEllipse: net.sourceforge.plantuml.ugraphic.UEllipse getUEllipse()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.TextBlockInEllipse: net.sourceforge.plantuml.svek.image.ContainingEllipse ellipse>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.svek.image.ContainingEllipse: java.awt.geom.Point2D getCenter()>();
+
+        $d0 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UEllipse: double getWidth()>();
+
+        $d1 = $d0 / 2.0;
+
+        $d2 = virtualinvoke r3.<java.awt.geom.Point2D: double getX()>();
+
+        d3 = $d1 - $d2;
+
+        $d4 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UEllipse: double getHeight()>();
+
+        $d5 = $d4 / 2.0;
+
+        $d6 = virtualinvoke r3.<java.awt.geom.Point2D: double getY()>();
+
+        d7 = $d5 - $d6;
+
+        interfaceinvoke r4.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r1);
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.TextBlockInEllipse: net.sourceforge.plantuml.graphic.TextBlock text>;
+
+        $r5 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d8 = d7 - 2.0;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>(d3, $d8);
+
+        $r7 = interfaceinvoke r4.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r5);
+
+        interfaceinvoke $r6.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r7);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.ugraphic.TextBlockInEllipse r0;
+        net.sourceforge.plantuml.ugraphic.UEllipse $r1;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r2;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.TextBlockInEllipse;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.TextBlockInEllipse: net.sourceforge.plantuml.ugraphic.UEllipse getUEllipse()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.UEllipse: net.sourceforge.plantuml.awt.geom.Dimension2D getDimension()>();
+
+        return $r2;
+    }
+
+    public void setDeltaShadow(double)
+    {
+        net.sourceforge.plantuml.ugraphic.TextBlockInEllipse r0;
+        double d0;
+        net.sourceforge.plantuml.svek.image.ContainingEllipse $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.TextBlockInEllipse;
+
+        d0 := @parameter0: double;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.TextBlockInEllipse: net.sourceforge.plantuml.svek.image.ContainingEllipse ellipse>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.svek.image.ContainingEllipse: void setDeltaShadow(double)>(d0);
+
+        return;
+    }
+}

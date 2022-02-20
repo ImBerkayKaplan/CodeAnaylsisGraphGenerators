@@ -1,0 +1,728 @@
+public class net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity extends net.sourceforge.plantuml.command.CommandMultilines2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+        net.sourceforge.plantuml.command.MultilinesStrategy $r2;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        $r2 = <net.sourceforge.plantuml.command.MultilinesStrategy: net.sourceforge.plantuml.command.MultilinesStrategy REMOVE_STARTING_QUOTE>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.CommandMultilines2: void <init>(net.sourceforge.plantuml.command.regex.IRegex,net.sourceforge.plantuml.command.MultilinesStrategy)>($r1, $r2);
+
+        return;
+    }
+
+    public java.lang.String getPatternEnd()
+    {
+        net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity r0;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
+
+        return "^[%s]*([^%g]*)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?[%s]*(\\<\\<.*\\>\\>)?[%s]*(?:in[%s]+([%g][^%g]+[%g]|\\S+))?[%s]*(#\\w+)?$";
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1, $r19, $r22;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2, $r6;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r23, $r24, $r25, $r26, $r27, $r28, $r29, $r31, $r32, $r33, $r34, $r35, $r36;
+        net.sourceforge.plantuml.command.regex.RegexOptional $r4, $r30;
+        net.sourceforge.plantuml.command.regex.RegexOr $r5;
+        java.lang.StringBuilder $r17, $r18, $r20, $r21;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r37;
+
+        $r0 = class "Lnet/sourceforge/plantuml/activitydiagram/command/CommandLinkLongActivity;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[21];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexOptional;
+
+        $r5 = new net.sourceforge.plantuml.command.regex.RegexOr;
+
+        $r6 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[4];
+
+        $r7 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("STAR", "(\\(\\*(top)?\\))");
+
+        $r6[0] = $r7;
+
+        $r8 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("CODE", "([%pLN][%pLN_.]*)");
+
+        $r6[1] = $r8;
+
+        $r9 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)");
+
+        $r6[2] = $r9;
+
+        $r10 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?");
+
+        $r6[3] = $r10;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.regex.RegexOr: void <init>(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>("FIRST", $r6);
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexOptional: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r5);
+
+        $r2[1] = $r4;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[2] = $r11;
+
+        $r12 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("STEREOTYPE", "(\\<\\<.*\\>\\>)?");
+
+        $r2[3] = $r12;
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[4] = $r13;
+
+        $r14 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("BACKCOLOR", "(#\\w+)?");
+
+        $r2[5] = $r14;
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[6] = $r15;
+
+        $r16 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>()>();
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(");
+
+        $r19 = staticinvoke <net.sourceforge.plantuml.UrlBuilder: java.lang.String getRegexp()>();
+
+        $r20 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r19);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")?");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r16.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("URL", $r22);
+
+        $r2[7] = $r16;
+
+        $r23 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r23.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("ARROW_BODY1", "([-.]+)");
+
+        $r2[8] = $r23;
+
+        $r24 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r24.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("ARROW_STYLE1", "(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank|single|thickness=\\d+)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,thickness=\\d+)*)\\])?");
+
+        $r2[9] = $r24;
+
+        $r25 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r25.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?");
+
+        $r2[10] = $r25;
+
+        $r26 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r26.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("ARROW_STYLE2", "(?:\\[((?:#\\w+|dotted|dashed|plain|bold|hidden|norank|single|thickness=\\d+)(?:,#\\w+|,dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,thickness=\\d+)*)\\])?");
+
+        $r2[11] = $r26;
+
+        $r27 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r27.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("ARROW_BODY2", "([-.]*)");
+
+        $r2[12] = $r27;
+
+        $r28 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r28.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("\\>");
+
+        $r2[13] = $r28;
+
+        $r29 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[14] = $r29;
+
+        $r30 = new net.sourceforge.plantuml.command.regex.RegexOptional;
+
+        $r31 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r31.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]");
+
+        specialinvoke $r30.<net.sourceforge.plantuml.command.regex.RegexOptional: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r31);
+
+        $r2[15] = $r30;
+
+        $r32 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[16] = $r32;
+
+        $r33 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r33.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("[%g]");
+
+        $r2[17] = $r33;
+
+        $r34 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r34.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("DESC", "([^%g]*?)");
+
+        $r2[18] = $r34;
+
+        $r35 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[19] = $r35;
+
+        $r36 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[20] = $r36;
+
+        $r37 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r37;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeNow(net.sourceforge.plantuml.activitydiagram.ActivityDiagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+        net.sourceforge.plantuml.StringLocated $r2, $r3, $r15, r106;
+        java.lang.String $r4, $r8, r9, r12, $r13, $r16, r20, $r28, $r29, r30, $r31, r32, $r38, r39, $r40, $r53, $r58, $r62, $r65, $r76, $r85, $r98, $r107, $r110, r111, $r113, r114, r115, r119, r120, $r123;
+        net.sourceforge.plantuml.command.regex.RegexResult r5;
+        net.sourceforge.plantuml.activitydiagram.ActivityDiagram r6;
+        net.sourceforge.plantuml.cucadiagram.IEntity r7, r25;
+        java.lang.StringBuilder $r10, $r33, $r34, $r35, $r36, $r37, $r48, $r49, $r50, $r51, $r52;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r14;
+        java.lang.Object $r17, $r19, $r21, $r26, $r27, $r68, $r75, $r83, $r87, $r109, $r112;
+        java.lang.CharSequence $r18;
+        net.sourceforge.plantuml.cucadiagram.Display $r23, r41, $r80;
+        net.sourceforge.plantuml.cucadiagram.LeafType $r24;
+        int $i0, i1, $i2, i3, $i4, $i5;
+        net.sourceforge.plantuml.cucadiagram.LinkType $r42, r121;
+        net.sourceforge.plantuml.cucadiagram.LinkDecor $r43, $r44;
+        net.sourceforge.plantuml.cucadiagram.Link $r45, r122;
+        net.sourceforge.plantuml.ISkinParam $r46, $r56, $r61, $r70, $r72, $r93, $r95;
+        net.sourceforge.plantuml.style.StyleBuilder $r47;
+        net.sourceforge.plantuml.Direction r54, $r55, $r67;
+        net.sourceforge.plantuml.api.ThemeStyle $r57, $r73, $r96;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r59, $r78, $r100;
+        net.sourceforge.plantuml.UrlBuilder $r60;
+        net.sourceforge.plantuml.UrlBuilder$ModeUrl $r63;
+        net.sourceforge.plantuml.Url r66, r103;
+        net.sourceforge.plantuml.graphic.color.ColorType $r69, $r92;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r71, $r94;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r74, $r97;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r77, $r99;
+        net.sourceforge.plantuml.cucadiagram.Code $r79, $r118;
+        net.sourceforge.plantuml.cucadiagram.NamespaceStrategy $r81;
+        net.sourceforge.plantuml.cucadiagram.GroupType $r82;
+        net.sourceforge.plantuml.command.BlocLines r101, r102, $r104;
+        java.util.Iterator r105;
+        java.util.List r108;
+        net.sourceforge.plantuml.cucadiagram.Ident r116, r117;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
+
+        r6 := @parameter0: net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+
+        r101 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        r102 = virtualinvoke r101.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines trim()>();
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity: net.sourceforge.plantuml.command.regex.IRegex getStartingPattern()>();
+
+        $r2 = virtualinvoke r102.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r5 = interfaceinvoke $r1.<net.sourceforge.plantuml.command.regex.IRegex: net.sourceforge.plantuml.command.regex.RegexResult matcher(java.lang.String)>($r4);
+
+        r7 = staticinvoke <net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity: net.sourceforge.plantuml.cucadiagram.IEntity getEntity(net.sourceforge.plantuml.activitydiagram.ActivityDiagram,net.sourceforge.plantuml.command.regex.RegexResult,boolean)>(r6, r5, 1);
+
+        if r7 != null goto label01;
+
+        $r100 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("No such entity");
+
+        return $r100;
+
+     label01:
+        $r8 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("STEREOTYPE", 0);
+
+        if $r8 == null goto label02;
+
+        $r98 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("STEREOTYPE", 0);
+
+        $r99 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Stereotype: net.sourceforge.plantuml.cucadiagram.Stereotype build(java.lang.String)>($r98);
+
+        interfaceinvoke r7.<net.sourceforge.plantuml.cucadiagram.IEntity: void setStereotype(net.sourceforge.plantuml.cucadiagram.Stereotype)>($r99);
+
+     label02:
+        r9 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("BACKCOLOR", 0);
+
+        if r9 == null goto label03;
+
+        $r92 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        $r93 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r94 = interfaceinvoke $r93.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r95 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r96 = interfaceinvoke $r95.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r97 = virtualinvoke $r94.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>($r96, r9);
+
+        interfaceinvoke r7.<net.sourceforge.plantuml.cucadiagram.IEntity: void setSpecificColorTOBEREMOVED(net.sourceforge.plantuml.graphic.color.ColorType,net.sourceforge.plantuml.ugraphic.color.HColor)>($r92, $r97);
+
+     label03:
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>()>();
+
+        r12 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("DESC", 0);
+
+        r103 = null;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>(r12);
+
+        if $z0 == 0 goto label04;
+
+        r103 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity: net.sourceforge.plantuml.Url extractUrlString(net.sourceforge.plantuml.activitydiagram.ActivityDiagram,java.lang.String)>(r6, r12);
+
+        if r103 != null goto label04;
+
+        virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r12);
+
+        virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\n");
+
+     label04:
+        i3 = 0;
+
+        $r104 = virtualinvoke r102.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines subExtract(int,int)>(1, 1);
+
+        r105 = virtualinvoke $r104.<net.sourceforge.plantuml.command.BlocLines: java.util.Iterator iterator()>();
+
+     label05:
+        $z5 = interfaceinvoke r105.<java.util.Iterator: boolean hasNext()>();
+
+        if $z5 == 0 goto label08;
+
+        $r87 = interfaceinvoke r105.<java.util.Iterator: java.lang.Object next()>();
+
+        r106 = (net.sourceforge.plantuml.StringLocated) $r87;
+
+        i3 = i3 + 1;
+
+        if i3 != 1 goto label06;
+
+        if r103 != null goto label06;
+
+        r103 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity: net.sourceforge.plantuml.Url extractUrl(net.sourceforge.plantuml.activitydiagram.ActivityDiagram,net.sourceforge.plantuml.StringLocated)>(r6, r106);
+
+        if r103 == null goto label06;
+
+        goto label05;
+
+     label06:
+        $r107 = virtualinvoke r106.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r107);
+
+        $i4 = virtualinvoke r102.<net.sourceforge.plantuml.command.BlocLines: int size()>();
+
+        $i5 = $i4 - 2;
+
+        if i3 >= $i5 goto label07;
+
+        virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\n");
+
+     label07:
+        goto label05;
+
+     label08:
+        $r13 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity: java.lang.String getPatternEnd()>();
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>($r13);
+
+        $r15 = virtualinvoke r102.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getLast()>();
+
+        $r16 = virtualinvoke $r15.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r108 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.util.List getSplit(net.sourceforge.plantuml.command.regex.Pattern2,java.lang.String)>($r14, $r16);
+
+        $r17 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r18 = (java.lang.CharSequence) $r17;
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>($r18);
+
+        if $z1 == 0 goto label10;
+
+        $i2 = virtualinvoke $r10.<java.lang.StringBuilder: int length()>();
+
+        if $i2 <= 0 goto label09;
+
+        $r85 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $z4 = virtualinvoke $r85.<java.lang.String: boolean endsWith(java.lang.String)>("\\n");
+
+        if $z4 != 0 goto label09;
+
+        virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\\n");
+
+     label09:
+        $r109 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r110 = (java.lang.String) $r109;
+
+        virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r110);
+
+     label10:
+        r111 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r112 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(1);
+
+        if $r112 != null goto label11;
+
+        $r113 = r111;
+
+        goto label12;
+
+     label11:
+        $r19 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(1);
+
+        $r113 = (java.lang.String) $r19;
+
+     label12:
+        r20 = $r113;
+
+        r114 = null;
+
+        $r21 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(3);
+
+        if $r21 == null goto label13;
+
+        $r83 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(3);
+
+        r115 = (java.lang.String) $r83;
+
+        r114 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String)>(r115);
+
+     label13:
+        if r114 == null goto label14;
+
+        r116 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r114);
+
+        $r79 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r114);
+
+        $r80 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>(r114);
+
+        $r82 = <net.sourceforge.plantuml.cucadiagram.GroupType: net.sourceforge.plantuml.cucadiagram.GroupType PACKAGE>;
+
+        $r81 = <net.sourceforge.plantuml.cucadiagram.NamespaceStrategy: net.sourceforge.plantuml.cucadiagram.NamespaceStrategy SINGLE>;
+
+        virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: void gotoGroup(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.cucadiagram.GroupType,net.sourceforge.plantuml.cucadiagram.IGroup,net.sourceforge.plantuml.cucadiagram.NamespaceStrategy)>(r116, $r79, $r80, $r82, null, $r81);
+
+     label14:
+        r117 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r20);
+
+        $z2 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: boolean V1972()>();
+
+        if $z2 == 0 goto label15;
+
+        $r118 = r117;
+
+        goto label16;
+
+     label15:
+        $r118 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r20);
+
+     label16:
+        $r23 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>(r111);
+
+        $r24 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType ACTIVITY>;
+
+        r25 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreate(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.cucadiagram.LeafType)>(r117, $r118, $r23, $r24);
+
+        if r25 != null goto label17;
+
+        $r78 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("No such entity");
+
+        return $r78;
+
+     label17:
+        if r114 == null goto label18;
+
+        virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: void endGroup()>();
+
+     label18:
+        if r103 == null goto label19;
+
+        interfaceinvoke r25.<net.sourceforge.plantuml.cucadiagram.IEntity: void addUrl(net.sourceforge.plantuml.Url)>(r103);
+
+     label19:
+        $r26 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(2);
+
+        if $r26 == null goto label20;
+
+        $r75 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(2);
+
+        $r76 = (java.lang.String) $r75;
+
+        $r77 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Stereotype: net.sourceforge.plantuml.cucadiagram.Stereotype build(java.lang.String)>($r76);
+
+        interfaceinvoke r25.<net.sourceforge.plantuml.cucadiagram.IEntity: void setStereotype(net.sourceforge.plantuml.cucadiagram.Stereotype)>($r77);
+
+     label20:
+        $r27 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(4);
+
+        if $r27 == null goto label21;
+
+        $r68 = interfaceinvoke r108.<java.util.List: java.lang.Object get(int)>(4);
+
+        r119 = (java.lang.String) $r68;
+
+        $r69 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        $r70 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r71 = interfaceinvoke $r70.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r72 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r73 = interfaceinvoke $r72.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r74 = virtualinvoke $r71.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>($r73, r119);
+
+        interfaceinvoke r25.<net.sourceforge.plantuml.cucadiagram.IEntity: void setSpecificColorTOBEREMOVED(net.sourceforge.plantuml.graphic.color.ColorType,net.sourceforge.plantuml.ugraphic.color.HColor)>($r69, $r74);
+
+     label21:
+        $r28 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("ARROW_BODY1", 0);
+
+        r120 = staticinvoke <net.sourceforge.plantuml.classdiagram.command.CommandLinkClass: java.lang.String notNull(java.lang.String)>($r28);
+
+        $r29 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("ARROW_BODY2", 0);
+
+        r30 = staticinvoke <net.sourceforge.plantuml.classdiagram.command.CommandLinkClass: java.lang.String notNull(java.lang.String)>($r29);
+
+        $r31 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("ARROW_DIRECTION", 0);
+
+        r32 = staticinvoke <net.sourceforge.plantuml.classdiagram.command.CommandLinkClass: java.lang.String notNull(java.lang.String)>($r31);
+
+        $r33 = new java.lang.StringBuilder;
+
+        specialinvoke $r33.<java.lang.StringBuilder: void <init>()>();
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r120);
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r32);
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r30);
+
+        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r39 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String manageArrowForCuca(java.lang.String)>($r38);
+
+        $i0 = virtualinvoke r39.<java.lang.String: int length()>();
+
+        i1 = $i0 - 1;
+
+        $r40 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("BRACKET", 0);
+
+        r41 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r40);
+
+        $r42 = new net.sourceforge.plantuml.cucadiagram.LinkType;
+
+        $r44 = <net.sourceforge.plantuml.cucadiagram.LinkDecor: net.sourceforge.plantuml.cucadiagram.LinkDecor ARROW>;
+
+        $r43 = <net.sourceforge.plantuml.cucadiagram.LinkDecor: net.sourceforge.plantuml.cucadiagram.LinkDecor NONE>;
+
+        specialinvoke $r42.<net.sourceforge.plantuml.cucadiagram.LinkType: void <init>(net.sourceforge.plantuml.cucadiagram.LinkDecor,net.sourceforge.plantuml.cucadiagram.LinkDecor)>($r44, $r43);
+
+        r121 = $r42;
+
+        $z3 = virtualinvoke r39.<java.lang.String: boolean contains(java.lang.CharSequence)>(".");
+
+        if $z3 == 0 goto label22;
+
+        r121 = virtualinvoke $r42.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkType goDotted()>();
+
+     label22:
+        $r45 = new net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r46 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r47 = interfaceinvoke $r46.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r45.<net.sourceforge.plantuml.cucadiagram.Link: void <init>(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.cucadiagram.LinkType,net.sourceforge.plantuml.cucadiagram.Display,int,net.sourceforge.plantuml.style.StyleBuilder)>(r7, r25, r121, r41, i1, $r47);
+
+        r122 = $r45;
+
+        $r48 = new java.lang.StringBuilder;
+
+        specialinvoke $r48.<java.lang.StringBuilder: void <init>()>();
+
+        $r49 = virtualinvoke $r48.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r120);
+
+        $r50 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r32);
+
+        $r51 = virtualinvoke $r50.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r30);
+
+        $r52 = virtualinvoke $r51.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+        $r53 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r54 = staticinvoke <net.sourceforge.plantuml.StringUtils: net.sourceforge.plantuml.Direction getArrowDirection(java.lang.String)>($r53);
+
+        $r55 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+        if r54 == $r55 goto label23;
+
+        $r67 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction UP>;
+
+        if r54 != $r67 goto label24;
+
+     label23:
+        r122 = virtualinvoke $r45.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Link getInv()>();
+
+     label24:
+        $r123 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("URL", 0);
+
+        if $r123 == null goto label25;
+
+        $r60 = new net.sourceforge.plantuml.UrlBuilder;
+
+        $r61 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r62 = interfaceinvoke $r61.<net.sourceforge.plantuml.ISkinParam: java.lang.String getValue(java.lang.String)>("topurl");
+
+        $r63 = <net.sourceforge.plantuml.UrlBuilder$ModeUrl: net.sourceforge.plantuml.UrlBuilder$ModeUrl STRICT>;
+
+        specialinvoke $r60.<net.sourceforge.plantuml.UrlBuilder: void <init>(java.lang.String,net.sourceforge.plantuml.UrlBuilder$ModeUrl)>($r62, $r63);
+
+        $r65 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("URL", 0);
+
+        r66 = virtualinvoke $r60.<net.sourceforge.plantuml.UrlBuilder: net.sourceforge.plantuml.Url getUrl(java.lang.String)>($r65);
+
+        virtualinvoke r122.<net.sourceforge.plantuml.cucadiagram.Link: void setUrl(net.sourceforge.plantuml.Url)>(r66);
+
+     label25:
+        $r56 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r57 = interfaceinvoke $r56.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r58 = virtualinvoke r5.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String getLazzy(java.lang.String,int)>("ARROW_STYLE", 0);
+
+        virtualinvoke r122.<net.sourceforge.plantuml.cucadiagram.Link: void applyStyle(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>($r57, $r58);
+
+        virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: void addLink(net.sourceforge.plantuml.cucadiagram.Link)>(r122);
+
+        $r59 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r59;
+    }
+
+    public net.sourceforge.plantuml.Url extractUrl(net.sourceforge.plantuml.activitydiagram.ActivityDiagram, net.sourceforge.plantuml.StringLocated)
+    {
+        net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity r0;
+        net.sourceforge.plantuml.activitydiagram.ActivityDiagram r1;
+        net.sourceforge.plantuml.StringLocated r2;
+        java.lang.String $r3;
+        net.sourceforge.plantuml.Url $r4;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
+
+        r1 := @parameter0: net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.StringLocated;
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity: net.sourceforge.plantuml.Url extractUrlString(net.sourceforge.plantuml.activitydiagram.ActivityDiagram,java.lang.String)>(r1, $r3);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.Url extractUrlString(net.sourceforge.plantuml.activitydiagram.ActivityDiagram, java.lang.String)
+    {
+        net.sourceforge.plantuml.UrlBuilder $r0;
+        net.sourceforge.plantuml.activitydiagram.ActivityDiagram r1;
+        net.sourceforge.plantuml.ISkinParam $r2;
+        java.lang.String $r3, r6;
+        net.sourceforge.plantuml.UrlBuilder$ModeUrl $r4;
+        net.sourceforge.plantuml.Url $r7;
+        net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity r8;
+
+        r8 := @this: net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
+
+        r1 := @parameter0: net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+
+        r6 := @parameter1: java.lang.String;
+
+        $r0 = new net.sourceforge.plantuml.UrlBuilder;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.activitydiagram.ActivityDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.ISkinParam: java.lang.String getValue(java.lang.String)>("topurl");
+
+        $r4 = <net.sourceforge.plantuml.UrlBuilder$ModeUrl: net.sourceforge.plantuml.UrlBuilder$ModeUrl STRICT>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.UrlBuilder: void <init>(java.lang.String,net.sourceforge.plantuml.UrlBuilder$ModeUrl)>($r3, $r4);
+
+        $r7 = virtualinvoke $r0.<net.sourceforge.plantuml.UrlBuilder: net.sourceforge.plantuml.Url getUrl(java.lang.String)>(r6);
+
+        return $r7;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeNow(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.command.BlocLines r2;
+        net.sourceforge.plantuml.activitydiagram.ActivityDiagram $r3;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r4;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $r3 = (net.sourceforge.plantuml.activitydiagram.ActivityDiagram) r1;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity: net.sourceforge.plantuml.command.CommandExecutionResult executeNow(net.sourceforge.plantuml.activitydiagram.ActivityDiagram,net.sourceforge.plantuml.command.BlocLines)>($r3, r2);
+
+        return $r4;
+    }
+}

@@ -1,0 +1,144 @@
+public class net.sourceforge.plantuml.project.core3.TimeLineSimple extends java.lang.Object implements net.sourceforge.plantuml.project.core3.TimeLine
+{
+    private final java.util.List events;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.project.core3.TimeLineSimple r0;
+        java.util.ArrayList $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.core3.TimeLineSimple;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.core3.TimeLineSimple: java.util.List events> = $r1;
+
+        return;
+    }
+
+    public long getNext(long)
+    {
+        net.sourceforge.plantuml.project.core3.TimeLineSimple r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Long $r3, $r5;
+        long $l0, l1, l2;
+        java.lang.Object $r4;
+        byte $b3;
+
+        r0 := @this: net.sourceforge.plantuml.project.core3.TimeLineSimple;
+
+        l2 := @parameter0: long;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core3.TimeLineSimple: java.util.List events>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        $r5 = (java.lang.Long) $r4;
+
+        l1 = virtualinvoke $r5.<java.lang.Long: long longValue()>();
+
+        $b3 = l1 cmp l2;
+
+        if $b3 <= 0 goto label2;
+
+        return l1;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r3 = <net.sourceforge.plantuml.project.core3.TimeLine: java.lang.Long MAX_TIME>;
+
+        $l0 = virtualinvoke $r3.<java.lang.Long: long longValue()>();
+
+        return $l0;
+    }
+
+    public long getPrevious(long)
+    {
+        java.lang.Long $r0, $r5;
+        long $l0, l1, l2, l4;
+        net.sourceforge.plantuml.project.core3.TimeLineSimple r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        byte $b3;
+
+        r1 := @this: net.sourceforge.plantuml.project.core3.TimeLineSimple;
+
+        l2 := @parameter0: long;
+
+        $r0 = <net.sourceforge.plantuml.project.core3.TimeLine: java.lang.Long MAX_TIME>;
+
+        $l0 = virtualinvoke $r0.<java.lang.Long: long longValue()>();
+
+        l4 = neg $l0;
+
+        $r2 = r1.<net.sourceforge.plantuml.project.core3.TimeLineSimple: java.util.List events>;
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        $r5 = (java.lang.Long) $r4;
+
+        l1 = virtualinvoke $r5.<java.lang.Long: long longValue()>();
+
+        $b3 = l1 cmp l2;
+
+        if $b3 < 0 goto label2;
+
+        return l4;
+
+     label2:
+        l4 = l1;
+
+        goto label1;
+
+     label3:
+        return l4;
+    }
+
+    public void add(long)
+    {
+        net.sourceforge.plantuml.project.core3.TimeLineSimple r0;
+        long l0;
+        java.util.List $r1, $r3;
+        java.lang.Long $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.core3.TimeLineSimple;
+
+        l0 := @parameter0: long;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.core3.TimeLineSimple: java.util.List events>;
+
+        $r2 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>(l0);
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>($r2);
+
+        $r3 = r0.<net.sourceforge.plantuml.project.core3.TimeLineSimple: java.util.List events>;
+
+        staticinvoke <java.util.Collections: void sort(java.util.List)>($r3);
+
+        return;
+    }
+}

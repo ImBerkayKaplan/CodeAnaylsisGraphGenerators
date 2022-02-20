@@ -1,0 +1,177 @@
+public class net.sourceforge.plantuml.project.solver.SolverImpl extends net.sourceforge.plantuml.project.solver.AbstractSolver implements net.sourceforge.plantuml.project.solver.Solver
+{
+    private final net.sourceforge.plantuml.project.LoadPlanable loadPlanable;
+
+    public void <init>(net.sourceforge.plantuml.project.LoadPlanable)
+    {
+        net.sourceforge.plantuml.project.solver.SolverImpl r0;
+        net.sourceforge.plantuml.project.LoadPlanable r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.solver.SolverImpl;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.LoadPlanable;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.solver.AbstractSolver: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.solver.SolverImpl: net.sourceforge.plantuml.project.LoadPlanable loadPlanable> = r1;
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.project.time.Day computeEnd()
+    {
+        net.sourceforge.plantuml.project.solver.SolverImpl r0;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r1, $r4;
+        java.util.Map $r2, $r5;
+        java.lang.Object $r3, $r6;
+        net.sourceforge.plantuml.project.Load $r7;
+        net.sourceforge.plantuml.project.time.Day $r8, r11;
+        net.sourceforge.plantuml.project.LoadPlanable $r9;
+        int $i0, i1, i2;
+        java.lang.IllegalStateException $r10;
+
+        r0 := @this: net.sourceforge.plantuml.project.solver.SolverImpl;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.solver.SolverImpl: java.util.Map values>;
+
+        $r1 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute START>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>($r1);
+
+        r11 = (net.sourceforge.plantuml.project.time.Day) $r3;
+
+        $r5 = r0.<net.sourceforge.plantuml.project.solver.SolverImpl: java.util.Map values>;
+
+        $r4 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute LOAD>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Map: java.lang.Object get(java.lang.Object)>($r4);
+
+        $r7 = (net.sourceforge.plantuml.project.Load) $r6;
+
+        i1 = virtualinvoke $r7.<net.sourceforge.plantuml.project.Load: int getFullLoad()>();
+
+        i2 = 0;
+
+     label1:
+        if i1 <= 0 goto label2;
+
+        $r9 = r0.<net.sourceforge.plantuml.project.solver.SolverImpl: net.sourceforge.plantuml.project.LoadPlanable loadPlanable>;
+
+        $i0 = interfaceinvoke $r9.<net.sourceforge.plantuml.project.LoadPlanable: int getLoadAt(net.sourceforge.plantuml.project.time.Day)>(r11);
+
+        i1 = i1 - $i0;
+
+        r11 = virtualinvoke r11.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day increment()>();
+
+        i2 = i2 + 1;
+
+        if i2 <= 100000 goto label1;
+
+        $r10 = new java.lang.IllegalStateException;
+
+        specialinvoke $r10.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r10;
+
+     label2:
+        $r8 = virtualinvoke r11.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day decrement()>();
+
+        return $r8;
+    }
+
+    protected net.sourceforge.plantuml.project.time.Day computeStart()
+    {
+        net.sourceforge.plantuml.project.solver.SolverImpl r0;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r1, $r4;
+        java.util.Map $r2, $r5;
+        java.lang.Object $r3, $r6;
+        net.sourceforge.plantuml.project.Load $r7;
+        net.sourceforge.plantuml.project.time.Day $r8, r11;
+        net.sourceforge.plantuml.project.LoadPlanable $r9;
+        int $i0, i3, i4;
+        long $l1;
+        byte $b2;
+        java.lang.IllegalStateException $r10;
+
+        r0 := @this: net.sourceforge.plantuml.project.solver.SolverImpl;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.solver.SolverImpl: java.util.Map values>;
+
+        $r1 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute END>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>($r1);
+
+        r11 = (net.sourceforge.plantuml.project.time.Day) $r3;
+
+        $r5 = r0.<net.sourceforge.plantuml.project.solver.SolverImpl: java.util.Map values>;
+
+        $r4 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute LOAD>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Map: java.lang.Object get(java.lang.Object)>($r4);
+
+        $r7 = (net.sourceforge.plantuml.project.Load) $r6;
+
+        i3 = virtualinvoke $r7.<net.sourceforge.plantuml.project.Load: int getFullLoad()>();
+
+        i4 = 0;
+
+     label1:
+        if i3 <= 0 goto label3;
+
+        $r9 = r0.<net.sourceforge.plantuml.project.solver.SolverImpl: net.sourceforge.plantuml.project.LoadPlanable loadPlanable>;
+
+        $i0 = interfaceinvoke $r9.<net.sourceforge.plantuml.project.LoadPlanable: int getLoadAt(net.sourceforge.plantuml.project.time.Day)>(r11);
+
+        i3 = i3 - $i0;
+
+        r11 = virtualinvoke r11.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day decrement()>();
+
+        $l1 = virtualinvoke r11.<net.sourceforge.plantuml.project.time.Day: long getMillis()>();
+
+        $b2 = $l1 cmp 0L;
+
+        if $b2 > 0 goto label2;
+
+        return r11;
+
+     label2:
+        i4 = i4 + 1;
+
+        if i4 <= 100000 goto label1;
+
+        $r10 = new java.lang.IllegalStateException;
+
+        specialinvoke $r10.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r10;
+
+     label3:
+        $r8 = virtualinvoke r11.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day increment()>();
+
+        return $r8;
+    }
+
+    protected volatile net.sourceforge.plantuml.project.Value computeStart()
+    {
+        net.sourceforge.plantuml.project.solver.SolverImpl r0;
+        net.sourceforge.plantuml.project.time.Day $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.solver.SolverImpl;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.solver.SolverImpl: net.sourceforge.plantuml.project.time.Day computeStart()>();
+
+        return $r1;
+    }
+
+    protected volatile net.sourceforge.plantuml.project.Value computeEnd()
+    {
+        net.sourceforge.plantuml.project.solver.SolverImpl r0;
+        net.sourceforge.plantuml.project.time.Day $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.solver.SolverImpl;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.solver.SolverImpl: net.sourceforge.plantuml.project.time.Day computeEnd()>();
+
+        return $r1;
+    }
+}

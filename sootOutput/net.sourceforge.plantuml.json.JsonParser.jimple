@@ -1,0 +1,1466 @@
+public class net.sourceforge.plantuml.json.JsonParser extends java.lang.Object
+{
+    private static final int MAX_NESTING_LEVEL;
+    private static final int MIN_BUFFER_SIZE;
+    private static final int DEFAULT_BUFFER_SIZE;
+    private final net.sourceforge.plantuml.json.JsonHandler handler;
+    private java.io.Reader reader;
+    private char[] buffer;
+    private int bufferOffset;
+    private int index;
+    private int fill;
+    private int line;
+    private int lineOffset;
+    private int current;
+    private java.lang.StringBuilder captureBuffer;
+    private int captureStart;
+    private int nestingLevel;
+
+    public void <init>(net.sourceforge.plantuml.json.JsonHandler)
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        net.sourceforge.plantuml.json.JsonHandler r1;
+        java.lang.NullPointerException $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        r1 := @parameter0: net.sourceforge.plantuml.json.JsonHandler;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        if r1 != null goto label1;
+
+        $r2 = new java.lang.NullPointerException;
+
+        specialinvoke $r2.<java.lang.NullPointerException: void <init>(java.lang.String)>("handler is null");
+
+        throw $r2;
+
+     label1:
+        r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler> = r1;
+
+        r1.<net.sourceforge.plantuml.json.JsonHandler: net.sourceforge.plantuml.json.JsonParser parser> = r0;
+
+        return;
+    }
+
+    public void parse(java.lang.String)
+    {
+        java.lang.String r0;
+        int $i0, $i1, i2;
+        net.sourceforge.plantuml.json.JsonParser r1;
+        java.io.StringReader $r2;
+        java.lang.NullPointerException $r3;
+        java.io.IOException $r4;
+        java.lang.RuntimeException $r6;
+
+        r1 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        r0 := @parameter0: java.lang.String;
+
+        if r0 != null goto label1;
+
+        $r3 = new java.lang.NullPointerException;
+
+        specialinvoke $r3.<java.lang.NullPointerException: void <init>(java.lang.String)>("string is null");
+
+        throw $r3;
+
+     label1:
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i1 = staticinvoke <java.lang.Math: int min(int,int)>(1024, $i0);
+
+        i2 = staticinvoke <java.lang.Math: int max(int,int)>(10, $i1);
+
+     label2:
+        $r2 = new java.io.StringReader;
+
+        specialinvoke $r2.<java.io.StringReader: void <init>(java.lang.String)>(r0);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.json.JsonParser: void parse(java.io.Reader,int)>($r2, i2);
+
+     label3:
+        goto label5;
+
+     label4:
+        $r4 := @caughtexception;
+
+        $r6 = new java.lang.RuntimeException;
+
+        specialinvoke $r6.<java.lang.RuntimeException: void <init>(java.lang.Throwable)>($r4);
+
+        throw $r6;
+
+     label5:
+        return;
+
+        catch java.io.IOException from label2 to label3 with label4;
+    }
+
+    public void parse(java.io.Reader) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        java.io.Reader r1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        r1 := @parameter0: java.io.Reader;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void parse(java.io.Reader,int)>(r1, 1024);
+
+        return;
+    }
+
+    public void parse(java.io.Reader, int) throws java.io.IOException
+    {
+        java.io.Reader r0;
+        int i0;
+        net.sourceforge.plantuml.json.JsonParser r1;
+        char[] $r2;
+        boolean $z0;
+        net.sourceforge.plantuml.json.ParseException $r3;
+        java.lang.IllegalArgumentException $r4;
+        java.lang.NullPointerException $r5;
+
+        r1 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        r0 := @parameter0: java.io.Reader;
+
+        i0 := @parameter1: int;
+
+        if r0 != null goto label1;
+
+        $r5 = new java.lang.NullPointerException;
+
+        specialinvoke $r5.<java.lang.NullPointerException: void <init>(java.lang.String)>("reader is null");
+
+        throw $r5;
+
+     label1:
+        if i0 > 0 goto label2;
+
+        $r4 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r4.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("buffersize is zero or negative");
+
+        throw $r4;
+
+     label2:
+        r1.<net.sourceforge.plantuml.json.JsonParser: java.io.Reader reader> = r0;
+
+        $r2 = newarray (char)[i0];
+
+        r1.<net.sourceforge.plantuml.json.JsonParser: char[] buffer> = $r2;
+
+        r1.<net.sourceforge.plantuml.json.JsonParser: int bufferOffset> = 0;
+
+        r1.<net.sourceforge.plantuml.json.JsonParser: int index> = 0;
+
+        r1.<net.sourceforge.plantuml.json.JsonParser: int fill> = 0;
+
+        r1.<net.sourceforge.plantuml.json.JsonParser: int line> = 1;
+
+        r1.<net.sourceforge.plantuml.json.JsonParser: int lineOffset> = 0;
+
+        r1.<net.sourceforge.plantuml.json.JsonParser: int current> = 0;
+
+        r1.<net.sourceforge.plantuml.json.JsonParser: int captureStart> = -1;
+
+        specialinvoke r1.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        specialinvoke r1.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        specialinvoke r1.<net.sourceforge.plantuml.json.JsonParser: void readValue()>();
+
+        specialinvoke r1.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $z0 = specialinvoke r1.<net.sourceforge.plantuml.json.JsonParser: boolean isEndOfText()>();
+
+        if $z0 != 0 goto label3;
+
+        $r3 = specialinvoke r1.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException error(java.lang.String)>("Unexpected character");
+
+        throw $r3;
+
+     label3:
+        return;
+    }
+
+    private void readValue() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0;
+        net.sourceforge.plantuml.json.ParseException $r1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        lookupswitch($i0)
+        {
+            case 34: goto label4;
+            case 45: goto label7;
+            case 48: goto label7;
+            case 49: goto label7;
+            case 50: goto label7;
+            case 51: goto label7;
+            case 52: goto label7;
+            case 53: goto label7;
+            case 54: goto label7;
+            case 55: goto label7;
+            case 56: goto label7;
+            case 57: goto label7;
+            case 91: goto label5;
+            case 102: goto label3;
+            case 110: goto label1;
+            case 116: goto label2;
+            case 123: goto label6;
+            default: goto label8;
+        };
+
+     label1:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readNull()>();
+
+        goto label9;
+
+     label2:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readTrue()>();
+
+        goto label9;
+
+     label3:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readFalse()>();
+
+        goto label9;
+
+     label4:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readString()>();
+
+        goto label9;
+
+     label5:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readArray()>();
+
+        goto label9;
+
+     label6:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readObject()>();
+
+        goto label9;
+
+     label7:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readNumber()>();
+
+        goto label9;
+
+     label8:
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("value");
+
+        throw $r1;
+
+     label9:
+        return;
+    }
+
+    private void readArray() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        net.sourceforge.plantuml.json.JsonHandler $r1, $r3, $r4, $r5, $r7;
+        java.lang.Object r2;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.json.ParseException $r6, $r8;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonHandler: java.lang.Object startArray()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel> = $i1;
+
+        if $i1 <= 1000 goto label1;
+
+        $r8 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException error(java.lang.String)>("Nesting too deep");
+
+        throw $r8;
+
+     label1:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(93);
+
+        if $z0 == 0 goto label2;
+
+        $i4 = r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel>;
+
+        $i5 = $i4 - 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel> = $i5;
+
+        $r7 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.json.JsonHandler: void endArray(java.lang.Object)>(r2);
+
+        return;
+
+     label2:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r3.<net.sourceforge.plantuml.json.JsonHandler: void startArrayValue(java.lang.Object)>(r2);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readValue()>();
+
+        $r4 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.json.JsonHandler: void endArrayValue(java.lang.Object)>(r2);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(44);
+
+        if $z1 != 0 goto label2;
+
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(93);
+
+        if $z2 != 0 goto label3;
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("\',\' or \']\'");
+
+        throw $r6;
+
+     label3:
+        $i2 = r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel>;
+
+        $i3 = $i2 - 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel> = $i3;
+
+        $r5 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.json.JsonHandler: void endArray(java.lang.Object)>(r2);
+
+        return;
+    }
+
+    private void readObject() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        net.sourceforge.plantuml.json.JsonHandler $r1, $r3, $r5, $r6, $r7, $r8, $r11;
+        java.lang.Object r2;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.String r4;
+        net.sourceforge.plantuml.json.ParseException $r9, $r10, $r12;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonHandler: java.lang.Object startObject()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel> = $i1;
+
+        if $i1 <= 1000 goto label1;
+
+        $r12 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException error(java.lang.String)>("Nesting too deep");
+
+        throw $r12;
+
+     label1:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(125);
+
+        if $z0 == 0 goto label2;
+
+        $i4 = r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel>;
+
+        $i5 = $i4 - 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel> = $i5;
+
+        $r11 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r11.<net.sourceforge.plantuml.json.JsonHandler: void endObject(java.lang.Object)>(r2);
+
+        return;
+
+     label2:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r3.<net.sourceforge.plantuml.json.JsonHandler: void startObjectName(java.lang.Object)>(r2);
+
+        r4 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.String readName()>();
+
+        $r5 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.json.JsonHandler: void endObjectName(java.lang.Object,java.lang.String)>(r2, r4);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(58);
+
+        if $z1 != 0 goto label3;
+
+        $r10 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("\':\'");
+
+        throw $r10;
+
+     label3:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $r6 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r6.<net.sourceforge.plantuml.json.JsonHandler: void startObjectValue(java.lang.Object,java.lang.String)>(r2, r4);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readValue()>();
+
+        $r7 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.json.JsonHandler: void endObjectValue(java.lang.Object,java.lang.String)>(r2, r4);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void skipWhiteSpace()>();
+
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(44);
+
+        if $z2 != 0 goto label2;
+
+        $z3 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(125);
+
+        if $z3 != 0 goto label4;
+
+        $r9 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("\',\' or \'}\'");
+
+        throw $r9;
+
+     label4:
+        $i2 = r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel>;
+
+        $i3 = $i2 - 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int nestingLevel> = $i3;
+
+        $r8 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r8.<net.sourceforge.plantuml.json.JsonHandler: void endObject(java.lang.Object)>(r2);
+
+        return;
+    }
+
+    private java.lang.String readName() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.json.ParseException $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i0 == 34 goto label1;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("name");
+
+        throw $r2;
+
+     label1:
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.String readStringInternal()>();
+
+        return $r1;
+    }
+
+    private void readNull() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        net.sourceforge.plantuml.json.JsonHandler $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonHandler: void startNull()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(117);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(108);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(108);
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.json.JsonHandler: void endNull()>();
+
+        return;
+    }
+
+    private void readTrue() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        net.sourceforge.plantuml.json.JsonHandler $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonHandler: void startBoolean()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(114);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(117);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(101);
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.json.JsonHandler: void endBoolean(boolean)>(1);
+
+        return;
+    }
+
+    private void readFalse() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        net.sourceforge.plantuml.json.JsonHandler $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonHandler: void startBoolean()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(97);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(108);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(115);
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readRequiredChar(char)>(101);
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.json.JsonHandler: void endBoolean(boolean)>(0);
+
+        return;
+    }
+
+    private void readRequiredChar(char) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        char c0;
+        boolean $z0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r4;
+        java.lang.String $r5;
+        net.sourceforge.plantuml.json.ParseException $r6;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        c0 := @parameter0: char;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(c0);
+
+        if $z0 != 0 goto label1;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\'");
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\'");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>($r5);
+
+        throw $r6;
+
+     label1:
+        return;
+    }
+
+    private void readString() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        net.sourceforge.plantuml.json.JsonHandler $r1, $r2;
+        java.lang.String $r3;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonHandler: void startString()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.String readStringInternal()>();
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.json.JsonHandler: void endString(java.lang.String)>($r3);
+
+        return;
+    }
+
+    private java.lang.String readStringInternal() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        java.lang.String r1;
+        int $i0, $i1, $i2;
+        net.sourceforge.plantuml.json.ParseException $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void startCapture()>();
+
+     label1:
+        $i2 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i2 == 34 goto label4;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i0 != 92 goto label2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void pauseCapture()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void readEscape()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void startCapture()>();
+
+        goto label1;
+
+     label2:
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i1 >= 32 goto label3;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("valid string character");
+
+        throw $r2;
+
+     label3:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        goto label1;
+
+     label4:
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.String endCapture()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        return r1;
+    }
+
+    private void readEscape() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0, $i1, $i3, $i5, i7;
+        char[] r1;
+        java.lang.String $r2;
+        java.lang.StringBuilder $r3, $r6, $r8, $r10, $r12, $r14, $r16;
+        char $c2, $c4, $c6;
+        boolean $z0;
+        net.sourceforge.plantuml.json.ParseException $r5, $r18;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        lookupswitch($i0)
+        {
+            case 34: goto label01;
+            case 47: goto label01;
+            case 92: goto label01;
+            case 98: goto label02;
+            case 102: goto label03;
+            case 110: goto label04;
+            case 114: goto label05;
+            case 116: goto label06;
+            case 117: goto label07;
+            default: goto label11;
+        };
+
+     label01:
+        $r16 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        $i5 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        $c6 = (char) $i5;
+
+        virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c6);
+
+        goto label12;
+
+     label02:
+        $r14 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(8);
+
+        goto label12;
+
+     label03:
+        $r12 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(12);
+
+        goto label12;
+
+     label04:
+        $r10 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+        goto label12;
+
+     label05:
+        $r8 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(13);
+
+        goto label12;
+
+     label06:
+        $r6 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(9);
+
+        goto label12;
+
+     label07:
+        r1 = newarray (char)[4];
+
+        i7 = 0;
+
+     label08:
+        if i7 >= 4 goto label10;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean isHexDigit()>();
+
+        if $z0 != 0 goto label09;
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("hexadecimal digit");
+
+        throw $r5;
+
+     label09:
+        $i3 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        $c4 = (char) $i3;
+
+        r1[i7] = $c4;
+
+        i7 = i7 + 1;
+
+        goto label08;
+
+     label10:
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        $r2 = new java.lang.String;
+
+        specialinvoke $r2.<java.lang.String: void <init>(char[])>(r1);
+
+        $i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String,int)>($r2, 16);
+
+        $c2 = (char) $i1;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c2);
+
+        goto label12;
+
+     label11:
+        $r18 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("valid escape sequence");
+
+        throw $r18;
+
+     label12:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        return;
+    }
+
+    private void readNumber() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        net.sourceforge.plantuml.json.JsonHandler $r1, $r2;
+        int i0;
+        boolean $z1, $z4;
+        java.lang.String $r3;
+        net.sourceforge.plantuml.json.ParseException $r4;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonHandler: void startNumber()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void startCapture()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(45);
+
+        i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readDigit()>();
+
+        if $z1 != 0 goto label1;
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("digit");
+
+        throw $r4;
+
+     label1:
+        if i0 == 48 goto label3;
+
+     label2:
+        $z4 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readDigit()>();
+
+        if $z4 == 0 goto label3;
+
+        goto label2;
+
+     label3:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readFraction()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readExponent()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.JsonHandler handler>;
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.String endCapture()>();
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.json.JsonHandler: void endNumber(java.lang.String)>($r3);
+
+        return;
+    }
+
+    private boolean readFraction() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.json.ParseException $r1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(46);
+
+        if $z0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readDigit()>();
+
+        if $z1 != 0 goto label2;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("digit");
+
+        throw $r1;
+
+     label2:
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readDigit()>();
+
+        if $z2 == 0 goto label3;
+
+        goto label2;
+
+     label3:
+        return 1;
+    }
+
+    private boolean readExponent() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        boolean $z0, $z1, $z2, $z3, $z5;
+        net.sourceforge.plantuml.json.ParseException $r1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(101);
+
+        if $z0 != 0 goto label1;
+
+        $z5 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(69);
+
+        if $z5 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(43);
+
+        if $z1 != 0 goto label2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readChar(char)>(45);
+
+     label2:
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readDigit()>();
+
+        if $z2 != 0 goto label3;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException expected(java.lang.String)>("digit");
+
+        throw $r1;
+
+     label3:
+        $z3 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean readDigit()>();
+
+        if $z3 == 0 goto label4;
+
+        goto label3;
+
+     label4:
+        return 1;
+    }
+
+    private boolean readChar(char) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        char c0;
+        int $i1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        c0 := @parameter0: char;
+
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i1 == c0 goto label1;
+
+        return 0;
+
+     label1:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        return 1;
+    }
+
+    private boolean readDigit() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean isDigit()>();
+
+        if $z0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        return 1;
+    }
+
+    private void skipWhiteSpace() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+     label1:
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean isWhiteSpace()>();
+
+        if $z0 == 0 goto label2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: void read()>();
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private void read() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0, $i1, $i2, $i3, $i4, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23;
+        char[] $r1, $r3, $r4, $r6;
+        char $c5;
+        java.io.Reader $r5;
+        java.lang.StringBuilder $r7;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int fill>;
+
+        if $i1 != $i0 goto label2;
+
+        $i11 = r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart>;
+
+        if $i11 == -1 goto label1;
+
+        $r7 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        $r6 = r0.<net.sourceforge.plantuml.json.JsonParser: char[] buffer>;
+
+        $i23 = r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart>;
+
+        $i21 = r0.<net.sourceforge.plantuml.json.JsonParser: int fill>;
+
+        $i20 = r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart>;
+
+        $i22 = $i21 - $i20;
+
+        virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(char[],int,int)>($r6, $i23, $i22);
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart> = 0;
+
+     label1:
+        $i13 = r0.<net.sourceforge.plantuml.json.JsonParser: int bufferOffset>;
+
+        $i12 = r0.<net.sourceforge.plantuml.json.JsonParser: int fill>;
+
+        $i14 = $i13 + $i12;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int bufferOffset> = $i14;
+
+        $r5 = r0.<net.sourceforge.plantuml.json.JsonParser: java.io.Reader reader>;
+
+        $r4 = r0.<net.sourceforge.plantuml.json.JsonParser: char[] buffer>;
+
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonParser: char[] buffer>;
+
+        $i15 = lengthof $r3;
+
+        $i16 = virtualinvoke $r5.<java.io.Reader: int read(char[],int,int)>($r4, 0, $i15);
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int fill> = $i16;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int index> = 0;
+
+        $i17 = r0.<net.sourceforge.plantuml.json.JsonParser: int fill>;
+
+        if $i17 != -1 goto label2;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int current> = -1;
+
+        $i18 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        $i19 = $i18 + 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int index> = $i19;
+
+        return;
+
+     label2:
+        $i2 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i2 != 10 goto label3;
+
+        $i6 = r0.<net.sourceforge.plantuml.json.JsonParser: int line>;
+
+        $i7 = $i6 + 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int line> = $i7;
+
+        $i9 = r0.<net.sourceforge.plantuml.json.JsonParser: int bufferOffset>;
+
+        $i8 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        $i10 = $i9 + $i8;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int lineOffset> = $i10;
+
+     label3:
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: char[] buffer>;
+
+        $i3 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        $i4 = $i3 + 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int index> = $i4;
+
+        $c5 = $r1[$i3];
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int current> = $c5;
+
+        return;
+    }
+
+    private void startCapture()
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        java.lang.StringBuilder $r1, $r2;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        if $r1 != null goto label1;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer> = $r2;
+
+     label1:
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        $i1 = $i0 - 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart> = $i1;
+
+        return;
+    }
+
+    private void pauseCapture()
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0, $i1, $i3, $i4, $i5, $i6;
+        char[] $r1;
+        java.lang.StringBuilder $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i0 != -1 goto label1;
+
+        $i6 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        goto label2;
+
+     label1:
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        $i6 = $i1 - 1;
+
+     label2:
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: char[] buffer>;
+
+        $i5 = r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart>;
+
+        $i3 = r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart>;
+
+        $i4 = $i6 - $i3;
+
+        virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(char[],int,int)>($r1, $i5, $i4);
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart> = -1;
+
+        return;
+    }
+
+    private java.lang.String endCapture()
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int i0, $i1, i2, $i3, $i4, $i5;
+        java.lang.StringBuilder $r1, $r5, $r7, $r9;
+        java.lang.String $r2, r8;
+        char[] $r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart>;
+
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        i2 = $i1 - 1;
+
+        r0.<net.sourceforge.plantuml.json.JsonParser: int captureStart> = -1;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        $i3 = virtualinvoke $r1.<java.lang.StringBuilder: int length()>();
+
+        if $i3 <= 0 goto label1;
+
+        $r5 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        $r4 = r0.<net.sourceforge.plantuml.json.JsonParser: char[] buffer>;
+
+        $i5 = i2 - i0;
+
+        virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(char[],int,int)>($r4, i0, $i5);
+
+        $r7 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r9 = r0.<net.sourceforge.plantuml.json.JsonParser: java.lang.StringBuilder captureBuffer>;
+
+        virtualinvoke $r9.<java.lang.StringBuilder: void setLength(int)>(0);
+
+        return r8;
+
+     label1:
+        $r2 = new java.lang.String;
+
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonParser: char[] buffer>;
+
+        $i4 = i2 - i0;
+
+        specialinvoke $r2.<java.lang.String: void <init>(char[],int,int)>($r3, i0, $i4);
+
+        return $r2;
+    }
+
+    net.sourceforge.plantuml.json.Location getLocation()
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0, $i1, $i2, i3, $i4, $i5, i6, $i7;
+        net.sourceforge.plantuml.json.Location $r1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int bufferOffset>;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int index>;
+
+        $i2 = $i1 + $i0;
+
+        i3 = $i2 - 1;
+
+        $i4 = r0.<net.sourceforge.plantuml.json.JsonParser: int lineOffset>;
+
+        $i5 = i3 - $i4;
+
+        i6 = $i5 + 1;
+
+        $r1 = new net.sourceforge.plantuml.json.Location;
+
+        $i7 = r0.<net.sourceforge.plantuml.json.JsonParser: int line>;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.json.Location: void <init>(int,int,int)>(i3, $i7, i6);
+
+        return $r1;
+    }
+
+    private net.sourceforge.plantuml.json.ParseException expected(java.lang.String)
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        boolean $z0;
+        java.lang.StringBuilder $r1, $r2, $r4;
+        java.lang.String r3, $r5;
+        net.sourceforge.plantuml.json.ParseException $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        r3 := @parameter0: java.lang.String;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: boolean isEndOfText()>();
+
+        if $z0 == 0 goto label1;
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException error(java.lang.String)>("Unexpected end of input");
+
+        return $r7;
+
+     label1:
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Expected ");
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.ParseException error(java.lang.String)>($r5);
+
+        return $r6;
+    }
+
+    private net.sourceforge.plantuml.json.ParseException error(java.lang.String)
+    {
+        net.sourceforge.plantuml.json.ParseException $r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.json.JsonParser r2;
+        net.sourceforge.plantuml.json.Location $r3;
+
+        r2 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = new net.sourceforge.plantuml.json.ParseException;
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonParser: net.sourceforge.plantuml.json.Location getLocation()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.json.ParseException: void <init>(java.lang.String,net.sourceforge.plantuml.json.Location)>(r1, $r3);
+
+        return $r0;
+    }
+
+    private boolean isWhiteSpace()
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0, $i1, $i2, $i3;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i0 == 32 goto label1;
+
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i1 == 9 goto label1;
+
+        $i2 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i2 == 10 goto label1;
+
+        $i3 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i3 != 13 goto label2;
+
+     label1:
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        return $z0;
+    }
+
+    private boolean isDigit()
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0, $i1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i0 < 48 goto label1;
+
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i1 > 57 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private boolean isHexDigit()
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i0 < 48 goto label1;
+
+        $i5 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i5 <= 57 goto label3;
+
+     label1:
+        $i1 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i1 < 97 goto label2;
+
+        $i4 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i4 <= 102 goto label3;
+
+     label2:
+        $i2 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i2 < 65 goto label4;
+
+        $i3 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i3 > 70 goto label4;
+
+     label3:
+        $z0 = 1;
+
+        goto label5;
+
+     label4:
+        $z0 = 0;
+
+     label5:
+        return $z0;
+    }
+
+    private boolean isEndOfText()
+    {
+        net.sourceforge.plantuml.json.JsonParser r0;
+        int $i0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonParser;
+
+        $i0 = r0.<net.sourceforge.plantuml.json.JsonParser: int current>;
+
+        if $i0 != -1 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.json.JsonParser: int DEFAULT_BUFFER_SIZE> = 1024;
+
+        <net.sourceforge.plantuml.json.JsonParser: int MIN_BUFFER_SIZE> = 10;
+
+        <net.sourceforge.plantuml.json.JsonParser: int MAX_NESTING_LEVEL> = 1000;
+
+        return;
+    }
+}

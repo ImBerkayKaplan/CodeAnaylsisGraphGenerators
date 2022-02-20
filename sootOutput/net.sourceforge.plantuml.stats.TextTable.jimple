@@ -1,0 +1,233 @@
+public class net.sourceforge.plantuml.stats.TextTable extends java.lang.Object
+{
+    private static final java.text.DateFormat formatter;
+    private final java.util.List lines;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.stats.TextTable r0;
+        java.util.ArrayList $r1;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextTable;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.stats.TextTable: java.util.List lines> = $r1;
+
+        return;
+    }
+
+    public transient void addLine(java.lang.Object[])
+    {
+        net.sourceforge.plantuml.stats.TextTable r0;
+        net.sourceforge.plantuml.stats.TextTable$DataLine $r1;
+        java.lang.Object[] r2;
+        java.util.List $r3;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextTable;
+
+        r2 := @parameter0: java.lang.Object[];
+
+        $r3 = r0.<net.sourceforge.plantuml.stats.TextTable: java.util.List lines>;
+
+        $r1 = new net.sourceforge.plantuml.stats.TextTable$DataLine;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.stats.TextTable$DataLine: void <init>(java.lang.Object[],net.sourceforge.plantuml.stats.TextTable$1)>(r2, null);
+
+        interfaceinvoke $r3.<java.util.List: boolean add(java.lang.Object)>($r1);
+
+        return;
+    }
+
+    public void addSeparator()
+    {
+        net.sourceforge.plantuml.stats.TextTable r0;
+        net.sourceforge.plantuml.stats.TextTable$Separator $r1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextTable;
+
+        $r2 = r0.<net.sourceforge.plantuml.stats.TextTable: java.util.List lines>;
+
+        $r1 = new net.sourceforge.plantuml.stats.TextTable$Separator;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.stats.TextTable$Separator: void <init>()>();
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>($r1);
+
+        return;
+    }
+
+    private int[] getColsWidth()
+    {
+        net.sourceforge.plantuml.stats.TextTable r0;
+        int $i0, $i1, $i2, $i3, $i4, i5;
+        int[] r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.stats.TextTable$TextLine r5;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextTable;
+
+        $i0 = specialinvoke r0.<net.sourceforge.plantuml.stats.TextTable: int getNbCols()>();
+
+        r1 = newarray (int)[$i0];
+
+        i5 = 0;
+
+     label1:
+        $i1 = lengthof r1;
+
+        if i5 >= $i1 goto label4;
+
+        $r2 = r0.<net.sourceforge.plantuml.stats.TextTable: java.util.List lines>;
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.stats.TextTable$TextLine) $r4;
+
+        $i2 = r1[i5];
+
+        $i3 = interfaceinvoke r5.<net.sourceforge.plantuml.stats.TextTable$TextLine: int getPreferredWidth(int)>(i5);
+
+        $i4 = staticinvoke <java.lang.Math: int max(int,int)>($i2, $i3);
+
+        r1[i5] = $i4;
+
+        goto label2;
+
+     label3:
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label4:
+        return r1;
+    }
+
+    private int getNbCols()
+    {
+        net.sourceforge.plantuml.stats.TextTable r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.stats.TextTable$TextLine r4;
+        int $i0, i1;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextTable;
+
+        i1 = 0;
+
+        $r1 = r0.<net.sourceforge.plantuml.stats.TextTable: java.util.List lines>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.stats.TextTable$TextLine) $r3;
+
+        $i0 = interfaceinvoke r4.<net.sourceforge.plantuml.stats.TextTable$TextLine: int nbCols()>();
+
+        i1 = staticinvoke <java.lang.Math: int max(int,int)>(i1, $i0);
+
+        goto label1;
+
+     label2:
+        return i1;
+    }
+
+    public void printMe(java.io.PrintStream)
+    {
+        net.sourceforge.plantuml.stats.TextTable r0;
+        int[] r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.stats.TextTable$TextLine r5;
+        java.lang.String r6;
+        java.io.PrintStream r7;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextTable;
+
+        r7 := @parameter0: java.io.PrintStream;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.stats.TextTable: int[] getColsWidth()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.stats.TextTable: java.util.List lines>;
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.stats.TextTable$TextLine) $r4;
+
+        r6 = interfaceinvoke r5.<net.sourceforge.plantuml.stats.TextTable$TextLine: java.lang.String getPrinted(int[])>(r1);
+
+        virtualinvoke r7.<java.io.PrintStream: void println(java.lang.String)>(r6);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public int getLines()
+    {
+        net.sourceforge.plantuml.stats.TextTable r0;
+        java.util.List $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.stats.TextTable;
+
+        $r1 = r0.<net.sourceforge.plantuml.stats.TextTable: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        return $i0;
+    }
+
+    static java.text.DateFormat access$000()
+    {
+        java.text.DateFormat $r0;
+
+        $r0 = <net.sourceforge.plantuml.stats.TextTable: java.text.DateFormat formatter>;
+
+        return $r0;
+    }
+
+    static void <clinit>()
+    {
+        java.text.DateFormat $r0;
+
+        $r0 = staticinvoke <java.text.DateFormat: java.text.DateFormat getDateTimeInstance(int,int)>(3, 2);
+
+        <net.sourceforge.plantuml.stats.TextTable: java.text.DateFormat formatter> = $r0;
+
+        return;
+    }
+}

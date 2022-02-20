@@ -1,0 +1,612 @@
+public class net.sourceforge.plantuml.ftp.FtpConnexion extends java.lang.Object
+{
+    private final java.lang.String user;
+    private final java.util.Map incoming;
+    private final java.util.Map outgoing;
+    private final java.util.Set futureOutgoing;
+    private net.sourceforge.plantuml.FileFormat fileFormat;
+
+    public void <init>(java.lang.String, net.sourceforge.plantuml.FileFormat)
+    {
+        net.sourceforge.plantuml.ftp.FtpConnexion r0;
+        java.util.HashMap $r1, $r2;
+        java.util.HashSet $r3;
+        java.lang.String r4;
+        net.sourceforge.plantuml.FileFormat r5;
+
+        r0 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r4 := @parameter0: java.lang.String;
+
+        r5 := @parameter1: net.sourceforge.plantuml.FileFormat;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming> = $r1;
+
+        $r2 = new java.util.HashMap;
+
+        specialinvoke $r2.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing> = $r2;
+
+        $r3 = new java.util.HashSet;
+
+        specialinvoke $r3.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Set futureOutgoing> = $r3;
+
+        r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.lang.String user> = r4;
+
+        r0.<net.sourceforge.plantuml.ftp.FtpConnexion: net.sourceforge.plantuml.FileFormat fileFormat> = r5;
+
+        return;
+    }
+
+    public synchronized void addIncoming(java.lang.String, java.lang.String)
+    {
+        java.lang.String r0, r2;
+        boolean $z0;
+        net.sourceforge.plantuml.ftp.FtpConnexion r1;
+        java.util.Map $r3;
+        java.lang.IllegalArgumentException $r5;
+
+        r1 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r0 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("/");
+
+        if $z0 == 0 goto label1;
+
+        $r5 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r5.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r5;
+
+     label1:
+        $r3 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r0, r2);
+
+        return;
+    }
+
+    public synchronized void futureOutgoing(java.lang.String)
+    {
+        net.sourceforge.plantuml.ftp.FtpConnexion r0;
+        java.lang.String r1;
+        java.util.Map $r2;
+        java.util.Set $r4;
+
+        r0 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        interfaceinvoke $r2.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r1);
+
+        $r4 = r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Set futureOutgoing>;
+
+        interfaceinvoke $r4.<java.util.Set: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public synchronized java.util.Collection getFiles()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.ftp.FtpConnexion r1;
+        java.util.Map $r2, $r5;
+        java.util.Set $r3, $r6, $r7;
+        java.util.Collection $r8;
+
+        r1 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Set keySet()>();
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+        $r5 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Map: java.util.Set keySet()>();
+
+        interfaceinvoke $r0.<java.util.List: boolean addAll(java.util.Collection)>($r6);
+
+        $r7 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Set futureOutgoing>;
+
+        interfaceinvoke $r0.<java.util.List: boolean addAll(java.util.Collection)>($r7);
+
+        $r8 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>($r0);
+
+        return $r8;
+    }
+
+    public synchronized boolean willExist(java.lang.String)
+    {
+        net.sourceforge.plantuml.ftp.FtpConnexion r0;
+        java.lang.String r1;
+        java.util.Map $r2, $r3;
+        boolean $z0, $z1, $z2;
+        java.util.Set $r4;
+
+        r0 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $z1 = interfaceinvoke $r3.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        $r4 = r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Set futureOutgoing>;
+
+        $z2 = interfaceinvoke $r4.<java.util.Set: boolean contains(java.lang.Object)>(r1);
+
+        if $z2 == 0 goto label3;
+
+        return 1;
+
+     label3:
+        return 0;
+    }
+
+    public synchronized boolean doesExist(java.lang.String)
+    {
+        net.sourceforge.plantuml.ftp.FtpConnexion r0;
+        java.lang.String r1;
+        java.util.Map $r2, $r3;
+        boolean $z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $z1 = interfaceinvoke $r3.<java.util.Map: boolean containsKey(java.lang.Object)>(r1);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    public synchronized byte[] getData(java.lang.String) throws java.lang.InterruptedException
+    {
+        java.lang.String r0, r4;
+        boolean $z0;
+        net.sourceforge.plantuml.ftp.FtpConnexion r1;
+        java.util.Map $r2, $r5;
+        java.lang.Object $r3, $r6;
+        byte[] r7, $r8, $r9;
+        java.lang.IllegalArgumentException $r10;
+
+        r1 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("/");
+
+        if $z0 == 0 goto label1;
+
+        $r10 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r10.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r10;
+
+     label1:
+        $r2 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r4 = (java.lang.String) $r3;
+
+        if r4 == null goto label2;
+
+        $r9 = virtualinvoke r4.<java.lang.String: byte[] getBytes()>();
+
+        return $r9;
+
+     label2:
+        $r5 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r7 = (byte[]) $r6;
+
+        if r7 != null goto label3;
+
+        $r8 = newarray (byte)[1];
+
+        return $r8;
+
+     label3:
+        return r7;
+    }
+
+    public synchronized int getSize(java.lang.String)
+    {
+        java.lang.String r0, r4;
+        boolean $z0;
+        net.sourceforge.plantuml.ftp.FtpConnexion r1;
+        java.util.Map $r2, $r5;
+        java.lang.Object $r3, $r6;
+        byte[] r7;
+        int $i0, $i1;
+        java.lang.IllegalArgumentException $r8;
+
+        r1 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("/");
+
+        if $z0 == 0 goto label1;
+
+        $r8 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r8.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r8;
+
+     label1:
+        $r2 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r4 = (java.lang.String) $r3;
+
+        if r4 == null goto label2;
+
+        $i1 = virtualinvoke r4.<java.lang.String: int length()>();
+
+        return $i1;
+
+     label2:
+        $r5 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r7 = (byte[]) $r6;
+
+        if r7 == null goto label3;
+
+        $i0 = lengthof r7;
+
+        return $i0;
+
+     label3:
+        return 0;
+    }
+
+    public void processImage(java.lang.String) throws java.io.IOException
+    {
+        java.lang.String r0, r2, $r6, $r15, r18, $r29, $r33;
+        boolean $z0, $z2, z3;
+        net.sourceforge.plantuml.ftp.FtpConnexion r1;
+        net.sourceforge.plantuml.SourceStringReader $r3;
+        java.util.Map $r4, $r21, $r24, $r27, $r30, $r39, $r51;
+        java.lang.Object $r5, $r42;
+        java.io.ByteArrayOutputStream $r8, $r34;
+        net.sourceforge.plantuml.FileFormat r10, $r37;
+        net.sourceforge.plantuml.FileFormatOption $r11, $r36, $r45;
+        net.sourceforge.plantuml.core.DiagramDescription r12;
+        java.util.List r13;
+        int $i0, $i1, $i2;
+        java.lang.StringBuilder $r14, $r16, $r17;
+        java.util.Set $r23;
+        byte[] $r26, $r31, $r40, $r50;
+        net.sourceforge.plantuml.BlockUml $r43;
+        net.sourceforge.plantuml.core.Diagram $r44;
+        java.lang.IllegalArgumentException $r47;
+        java.lang.Throwable $r48, $r53;
+
+        r1 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("/");
+
+        if $z0 == 0 goto label01;
+
+        $r47 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r47.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r47;
+
+     label01:
+        r2 = virtualinvoke r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.lang.String getFutureFileName(java.lang.String)>(r0);
+
+        z3 = 0;
+
+     label02:
+        $r3 = new net.sourceforge.plantuml.SourceStringReader;
+
+        $r4 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        $r5 = interfaceinvoke $r4.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        $r6 = (java.lang.String) $r5;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.SourceStringReader: void <init>(java.lang.String)>($r6);
+
+        $r8 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r8.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        r10 = specialinvoke r1.<net.sourceforge.plantuml.ftp.FtpConnexion: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r11 = new net.sourceforge.plantuml.FileFormatOption;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>(r10);
+
+        r12 = virtualinvoke $r3.<net.sourceforge.plantuml.SourceStringReader: net.sourceforge.plantuml.core.DiagramDescription generateDiagramDescription(net.sourceforge.plantuml.FileFormatOption)>($r11);
+
+        r13 = virtualinvoke $r3.<net.sourceforge.plantuml.SourceStringReader: java.util.List getBlocks()>();
+
+        $i0 = interfaceinvoke r13.<java.util.List: int size()>();
+
+        if $i0 <= 0 goto label03;
+
+        $r42 = interfaceinvoke r13.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r43 = (net.sourceforge.plantuml.BlockUml) $r42;
+
+        $r44 = virtualinvoke $r43.<net.sourceforge.plantuml.BlockUml: net.sourceforge.plantuml.core.Diagram getDiagram()>();
+
+        $r45 = new net.sourceforge.plantuml.FileFormatOption;
+
+        specialinvoke $r45.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>(r10);
+
+        interfaceinvoke $r44.<net.sourceforge.plantuml.core.Diagram: net.sourceforge.plantuml.core.ImageData exportDiagram(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)>($r8, 0, $r45);
+
+     label03:
+        $r14 = new java.lang.StringBuilder;
+
+        specialinvoke $r14.<java.lang.StringBuilder: void <init>()>();
+
+        $i1 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        $i2 = $i1 - 4;
+
+        $r15 = virtualinvoke r2.<java.lang.String: java.lang.String substring(int,int)>(0, $i2);
+
+        $r16 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r15);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".err");
+
+        r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        entermonitor r1;
+
+     label04:
+        $r21 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        interfaceinvoke $r21.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r2);
+
+        $r23 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Set futureOutgoing>;
+
+        interfaceinvoke $r23.<java.util.Set: boolean remove(java.lang.Object)>(r2);
+
+        $r24 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        interfaceinvoke $r24.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r18);
+
+        if r12 == null goto label05;
+
+        $r29 = virtualinvoke r12.<net.sourceforge.plantuml.core.DiagramDescription: java.lang.String getDescription()>();
+
+        if $r29 == null goto label05;
+
+        $r30 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $r31 = virtualinvoke $r8.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        interfaceinvoke $r30.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r2, $r31);
+
+        z3 = 1;
+
+        $r33 = virtualinvoke r12.<net.sourceforge.plantuml.core.DiagramDescription: java.lang.String getDescription()>();
+
+        $z2 = virtualinvoke $r33.<java.lang.String: boolean startsWith(java.lang.String)>("(Error)");
+
+        if $z2 == 0 goto label05;
+
+        $r34 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r34.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        $r36 = new net.sourceforge.plantuml.FileFormatOption;
+
+        $r37 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat ATXT>;
+
+        specialinvoke $r36.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>($r37);
+
+        virtualinvoke $r3.<net.sourceforge.plantuml.SourceStringReader: net.sourceforge.plantuml.core.DiagramDescription outputImage(java.io.OutputStream,net.sourceforge.plantuml.FileFormatOption)>($r34, $r36);
+
+        virtualinvoke $r34.<java.io.ByteArrayOutputStream: void close()>();
+
+        $r39 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $r40 = virtualinvoke $r34.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        interfaceinvoke $r39.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r18, $r40);
+
+     label05:
+        exitmonitor r1;
+
+     label06:
+        goto label09;
+
+     label07:
+        $r53 := @caughtexception;
+
+        exitmonitor r1;
+
+     label08:
+        throw $r53;
+
+     label09:
+        if z3 != 0 goto label13;
+
+        $r27 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $r26 = newarray (byte)[0];
+
+        interfaceinvoke $r27.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r2, $r26);
+
+        goto label13;
+
+     label10:
+        $r48 := @caughtexception;
+
+     label11:
+        if z3 != 0 goto label12;
+
+        $r51 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        $r50 = newarray (byte)[0];
+
+        interfaceinvoke $r51.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r2, $r50);
+
+     label12:
+        throw $r48;
+
+     label13:
+        return;
+
+        catch java.lang.Throwable from label04 to label06 with label07;
+        catch java.lang.Throwable from label07 to label08 with label07;
+        catch java.lang.Throwable from label02 to label09 with label10;
+        catch java.lang.Throwable from label10 to label11 with label10;
+    }
+
+    public java.lang.String getFutureFileName(java.lang.String)
+    {
+        net.sourceforge.plantuml.ftp.FtpConnexion r0;
+        net.sourceforge.plantuml.FileFormat $r1;
+        java.lang.String r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.ftp.FtpConnexion: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r3 = virtualinvoke $r1.<net.sourceforge.plantuml.FileFormat: java.lang.String changeName(java.lang.String,int)>(r2, 0);
+
+        return $r3;
+    }
+
+    private net.sourceforge.plantuml.FileFormat getFileFormat()
+    {
+        net.sourceforge.plantuml.ftp.FtpConnexion r0;
+        net.sourceforge.plantuml.FileFormat $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        $r1 = r0.<net.sourceforge.plantuml.ftp.FtpConnexion: net.sourceforge.plantuml.FileFormat fileFormat>;
+
+        return $r1;
+    }
+
+    public synchronized void delete(java.lang.String)
+    {
+        java.lang.String r0;
+        boolean $z0;
+        net.sourceforge.plantuml.ftp.FtpConnexion r1;
+        java.util.Map $r2, $r4, $r7, $r8;
+        java.util.Set $r6, $r9;
+
+        r1 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean contains(java.lang.CharSequence)>("*");
+
+        if $z0 == 0 goto label1;
+
+        $r7 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        interfaceinvoke $r7.<java.util.Map: void clear()>();
+
+        $r8 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        interfaceinvoke $r8.<java.util.Map: void clear()>();
+
+        $r9 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Set futureOutgoing>;
+
+        interfaceinvoke $r9.<java.util.Set: void clear()>();
+
+        goto label2;
+
+     label1:
+        $r2 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map incoming>;
+
+        interfaceinvoke $r2.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r0);
+
+        $r4 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Map outgoing>;
+
+        interfaceinvoke $r4.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r0);
+
+        $r6 = r1.<net.sourceforge.plantuml.ftp.FtpConnexion: java.util.Set futureOutgoing>;
+
+        interfaceinvoke $r6.<java.util.Set: boolean add(java.lang.Object)>(r0);
+
+     label2:
+        return;
+    }
+
+    public void setFileFormat(net.sourceforge.plantuml.FileFormat)
+    {
+        net.sourceforge.plantuml.ftp.FtpConnexion r0;
+        net.sourceforge.plantuml.FileFormat r1;
+
+        r0 := @this: net.sourceforge.plantuml.ftp.FtpConnexion;
+
+        r1 := @parameter0: net.sourceforge.plantuml.FileFormat;
+
+        r0.<net.sourceforge.plantuml.ftp.FtpConnexion: net.sourceforge.plantuml.FileFormat fileFormat> = r1;
+
+        return;
+    }
+}

@@ -1,0 +1,1845 @@
+public class net.sourceforge.plantuml.ugraphic.ImageBuilder extends java.lang.Object
+{
+    private net.sourceforge.plantuml.anim.Animation animation;
+    private boolean annotations;
+    private net.sourceforge.plantuml.ugraphic.color.HColor backcolor;
+    private net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper;
+    private net.sourceforge.plantuml.awt.geom.Dimension2D dimension;
+    private final net.sourceforge.plantuml.FileFormatOption fileFormatOption;
+    private net.sourceforge.plantuml.graphic.UDrawable udrawable;
+    private net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin;
+    private java.lang.String metadata;
+    private long seed;
+    private net.sourceforge.plantuml.ISkinParam skinParam;
+    private net.sourceforge.plantuml.graphic.StringBounder stringBounder;
+    private int status;
+    private net.sourceforge.plantuml.TitledDiagram titledDiagram;
+    private boolean randomPixel;
+    private java.lang.String warningOrError;
+
+    public static net.sourceforge.plantuml.ugraphic.ImageBuilder imageBuilder(net.sourceforge.plantuml.FileFormatOption)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+
+        r1 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: void <init>(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.ugraphic.ImageBuilder plainImageBuilder(net.sourceforge.plantuml.graphic.UDrawable, net.sourceforge.plantuml.FileFormatOption)
+    {
+        net.sourceforge.plantuml.FileFormatOption r0;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r1, $r3;
+        net.sourceforge.plantuml.graphic.UDrawable r2;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.UDrawable;
+
+        r0 := @parameter1: net.sourceforge.plantuml.FileFormatOption;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder imageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r0);
+
+        $r3 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>(r2);
+
+        return $r3;
+    }
+
+    public static net.sourceforge.plantuml.ugraphic.ImageBuilder plainPngBuilder(net.sourceforge.plantuml.graphic.UDrawable)
+    {
+        net.sourceforge.plantuml.FileFormatOption $r0;
+        net.sourceforge.plantuml.FileFormat $r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r4;
+        net.sourceforge.plantuml.graphic.UDrawable r3;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.UDrawable;
+
+        $r0 = new net.sourceforge.plantuml.FileFormatOption;
+
+        $r1 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat PNG>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>($r1);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder imageBuilder(net.sourceforge.plantuml.FileFormatOption)>($r0);
+
+        $r4 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>(r3);
+
+        return $r4;
+    }
+
+    private void <init>(net.sourceforge.plantuml.FileFormatOption)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity $r2;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r3;
+        net.sourceforge.plantuml.FileFormatOption r4;
+        net.sourceforge.plantuml.SvgCharSizeHack $r5;
+        net.sourceforge.plantuml.graphic.StringBounder $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r4 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor getDefaultHBackColor()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor> = $r1;
+
+        $r2 = new net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.ugraphic.color.ColorMapperIdentity: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper> = $r2;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft none()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin> = $r3;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: long seed> = 42L;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: int status> = 0;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption> = r4;
+
+        $r5 = <net.sourceforge.plantuml.SvgCharSizeHack: net.sourceforge.plantuml.SvgCharSizeHack NO_HACK>;
+
+        $r6 = virtualinvoke r4.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.graphic.StringBounder getDefaultStringBounder(net.sourceforge.plantuml.SvgCharSizeHack)>($r5);
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = $r6;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder annotations(boolean)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: boolean annotations> = z0;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder backcolor(net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor> = r1;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder blackBackcolor()
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0, $r2;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        $r1 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder backcolor(net.sourceforge.plantuml.ugraphic.color.HColor)>($r1);
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder dimension(net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.awt.geom.Dimension2D dimension> = r1;
+
+        return r0;
+    }
+
+    private int getDpi()
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.ISkinParam $r1, $r2;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        if $r1 != null goto label1;
+
+        $i0 = 96;
+
+        goto label2;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $i0 = interfaceinvoke $r2.<net.sourceforge.plantuml.ISkinParam: int getDpi()>();
+
+     label2:
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.graphic.UDrawable r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r2, $r4;
+        boolean $z0;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r3;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.UDrawable;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.UDrawable udrawable> = r1;
+
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        if $r2 != null goto label1;
+
+        $z0 = r1 instanceof net.sourceforge.plantuml.svek.TextBlockBackcolored;
+
+        if $z0 == 0 goto label1;
+
+        $r3 = (net.sourceforge.plantuml.svek.TextBlockBackcolored) r1;
+
+        $r4 = interfaceinvoke $r3.<net.sourceforge.plantuml.svek.TextBlockBackcolored: net.sourceforge.plantuml.ugraphic.color.HColor getBackcolor()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor> = $r4;
+
+     label1:
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder margin(net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin> = r1;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder metadata(java.lang.String)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        java.lang.String r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String metadata> = r1;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder randomPixel()
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: boolean randomPixel> = 1;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder seed(long)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        long l0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        l0 := @parameter0: long;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: long seed> = l0;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder status(int)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: int status> = i0;
+
+        return r0;
+    }
+
+    private java.lang.String getSvgLinkTarget()
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.FileFormatOption $r1, $r6;
+        java.lang.String $r2, $r5, $r7;
+        net.sourceforge.plantuml.ISkinParam $r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.FileFormatOption: java.lang.String getSvgLinkTarget()>();
+
+        if $r2 == null goto label1;
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.FileFormatOption: java.lang.String getSvgLinkTarget()>();
+
+        return $r7;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        if $r3 == null goto label2;
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r5 = interfaceinvoke $r4.<net.sourceforge.plantuml.ISkinParam: java.lang.String getSvgLinkTarget()>();
+
+        return $r5;
+
+     label2:
+        return null;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder warningOrError(java.lang.String)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        java.lang.String r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String warningOrError> = r1;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder styled(net.sourceforge.plantuml.TitledDiagram)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.TitledDiagram r1;
+        net.sourceforge.plantuml.ISkinParam $r2, $r3, $r8;
+        net.sourceforge.plantuml.FileFormatOption $r4, $r11;
+        net.sourceforge.plantuml.graphic.StringBounder $r5;
+        net.sourceforge.plantuml.anim.Animation $r6;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r7;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper $r9;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r10;
+        boolean $z0;
+        long $l0;
+        java.lang.String $r12, $r14;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.TitledDiagram;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam> = $r2;
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.graphic.StringBounder getDefaultStringBounder(net.sourceforge.plantuml.SvgCharSizeHack)>($r3);
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = $r5;
+
+        $r6 = virtualinvoke r1.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.anim.Animation getAnimation()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.anim.Animation animation> = $r6;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: boolean annotations> = 1;
+
+        $r7 = virtualinvoke r1.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ugraphic.color.HColor calculateBackColor()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor> = $r7;
+
+        $r8 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r9 = interfaceinvoke $r8.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.ColorMapper getColorMapper()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper> = $r9;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram)>(r1);
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin> = $r10;
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $z0 = virtualinvoke $r11.<net.sourceforge.plantuml.FileFormatOption: boolean isWithMetadata()>();
+
+        if $z0 == 0 goto label1;
+
+        $r14 = virtualinvoke r1.<net.sourceforge.plantuml.TitledDiagram: java.lang.String getMetadata()>();
+
+        goto label2;
+
+     label1:
+        $r14 = null;
+
+     label2:
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String metadata> = $r14;
+
+        $l0 = virtualinvoke r1.<net.sourceforge.plantuml.TitledDiagram: long seed()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: long seed> = $l0;
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.TitledDiagram titledDiagram> = r1;
+
+        $r12 = virtualinvoke r1.<net.sourceforge.plantuml.TitledDiagram: java.lang.String getWarningOrError()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String warningOrError> = $r12;
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        boolean $z0, $z1;
+        java.io.OutputStream r1;
+        net.sourceforge.plantuml.core.ImageData $r2, $r3, $r6;
+        net.sourceforge.plantuml.anim.Animation $r4;
+        net.sourceforge.plantuml.FileFormatOption $r5, $r19;
+        net.sourceforge.plantuml.TitledDiagram $r7, $r12;
+        net.sourceforge.plantuml.graphic.UDrawable $r8, $r14;
+        net.sourceforge.plantuml.AnnotatedWorker $r9;
+        net.sourceforge.plantuml.graphic.StringBounder $r10;
+        net.sourceforge.plantuml.ISkinParam $r11;
+        net.sourceforge.plantuml.graphic.TextBlock $r15;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r16;
+        java.lang.IllegalStateException $r17;
+        int[] $r18;
+        net.sourceforge.plantuml.FileFormat $r20;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: java.io.OutputStream;
+
+        $z0 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: boolean annotations>;
+
+        if $z0 == 0 goto label2;
+
+        $r7 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.TitledDiagram titledDiagram>;
+
+        if $r7 == null goto label2;
+
+        $r8 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.UDrawable udrawable>;
+
+        $z1 = $r8 instanceof net.sourceforge.plantuml.graphic.TextBlock;
+
+        if $z1 != 0 goto label1;
+
+        $r17 = new java.lang.IllegalStateException;
+
+        specialinvoke $r17.<java.lang.IllegalStateException: void <init>(java.lang.String)>("udrawable is not a TextBlock");
+
+        throw $r17;
+
+     label1:
+        $r9 = new net.sourceforge.plantuml.AnnotatedWorker;
+
+        $r12 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.TitledDiagram titledDiagram>;
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r10 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.AnnotatedWorker: void <init>(net.sourceforge.plantuml.Annotated,net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.graphic.StringBounder)>($r12, $r11, $r10);
+
+        $r14 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.UDrawable udrawable>;
+
+        $r15 = (net.sourceforge.plantuml.graphic.TextBlock) $r14;
+
+        $r16 = virtualinvoke $r9.<net.sourceforge.plantuml.AnnotatedWorker: net.sourceforge.plantuml.svek.TextBlockBackcolored addAdd(net.sourceforge.plantuml.graphic.TextBlock)>($r15);
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.UDrawable udrawable> = $r16;
+
+     label2:
+        $r18 = <net.sourceforge.plantuml.ugraphic.ImageBuilder$1: int[] $SwitchMap$net$sourceforge$plantuml$FileFormat>;
+
+        $r19 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r20 = virtualinvoke $r19.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $i0 = virtualinvoke $r20.<net.sourceforge.plantuml.FileFormat: int ordinal()>();
+
+        $i1 = $r18[$i0];
+
+        lookupswitch($i1)
+        {
+            case 1: goto label3;
+            case 2: goto label4;
+            default: goto label5;
+        };
+
+     label3:
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData writeImageMjpeg(java.io.OutputStream)>(r1);
+
+        return $r3;
+
+     label4:
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData writeImageAnimatedGif(java.io.OutputStream)>(r1);
+
+        return $r2;
+
+     label5:
+        $r5 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.anim.Animation animation>;
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData writeImageInternal(net.sourceforge.plantuml.FileFormatOption,java.io.OutputStream,net.sourceforge.plantuml.anim.Animation)>($r5, r1, $r4);
+
+        return $r6;
+    }
+
+    public byte[] writeByteArray() throws java.io.IOException
+    {
+        java.io.ByteArrayOutputStream $r0;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r2;
+        java.lang.Throwable $r4, $r6;
+        byte[] r7;
+
+        r2 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        $r0 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayOutputStream: void <init>()>();
+
+     label1:
+        virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>($r0);
+
+        r7 = virtualinvoke $r0.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+     label2:
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void close()>();
+
+        return r7;
+
+     label3:
+        $r6 := @caughtexception;
+
+     label4:
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void close()>();
+
+     label5:
+        goto label7;
+
+     label6:
+        $r4 := @caughtexception;
+
+        virtualinvoke $r6.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r4);
+
+     label7:
+        throw $r6;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label4 to label5 with label6;
+    }
+
+    private net.sourceforge.plantuml.core.ImageData writeImageInternal(net.sourceforge.plantuml.FileFormatOption, java.io.OutputStream, net.sourceforge.plantuml.anim.Animation) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.anim.Animation r1;
+        net.sourceforge.plantuml.TitledDiagram $r2, $r3, $r5, $r6;
+        double $d0, $d1, $d2, $d3, d4, $d5, $d6, $d7, $d8, $d10, $d11, d12, d13, $d14;
+        int $i0, $i2, $i3;
+        byte $b1;
+        net.sourceforge.plantuml.FileFormatOption r4;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r7;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r8, $r9;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r10, r30, r31;
+        net.sourceforge.plantuml.graphic.UDrawable $r11;
+        java.io.OutputStream r12;
+        java.lang.String $r13, $r19;
+        net.sourceforge.plantuml.api.ImageDataSimple $r14;
+        net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d $r15;
+        java.util.Set r16;
+        net.sourceforge.plantuml.CMapData r17;
+        net.sourceforge.plantuml.api.ImageDataComplex $r18;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r21, r25;
+        java.lang.IllegalStateException $r24;
+        net.sourceforge.plantuml.ugraphic.MinMax r26;
+        net.sourceforge.plantuml.Scale $r27;
+        net.sourceforge.plantuml.Pragma $r29;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r4 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        r12 := @parameter1: java.io.OutputStream;
+
+        r1 := @parameter2: net.sourceforge.plantuml.anim.Animation;
+
+        r25 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.awt.geom.Dimension2D getFinalDimension()>();
+
+        d12 = 0.0;
+
+        d13 = 0.0;
+
+        if r1 == null goto label01;
+
+        r26 = virtualinvoke r1.<net.sourceforge.plantuml.anim.Animation: net.sourceforge.plantuml.ugraphic.MinMax getMinMax(net.sourceforge.plantuml.awt.geom.Dimension2D)>(r25);
+
+        virtualinvoke r1.<net.sourceforge.plantuml.anim.Animation: void setDimension(net.sourceforge.plantuml.awt.geom.Dimension2D)>(r25);
+
+        r25 = virtualinvoke r26.<net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.awt.geom.Dimension2D getDimension()>();
+
+        $d10 = virtualinvoke r26.<net.sourceforge.plantuml.ugraphic.MinMax: double getMinX()>();
+
+        d12 = neg $d10;
+
+        $d11 = virtualinvoke r26.<net.sourceforge.plantuml.ugraphic.MinMax: double getMinY()>();
+
+        d13 = neg $d11;
+
+     label01:
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.TitledDiagram titledDiagram>;
+
+        if $r2 != null goto label02;
+
+        $r27 = null;
+
+        goto label03;
+
+     label02:
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.TitledDiagram titledDiagram>;
+
+        $r27 = virtualinvoke $r3.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.Scale getScale()>();
+
+     label03:
+        if $r27 != null goto label04;
+
+        $d14 = 1.0;
+
+        goto label05;
+
+     label04:
+        $d0 = virtualinvoke r25.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d1 = virtualinvoke r25.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d14 = interfaceinvoke $r27.<net.sourceforge.plantuml.Scale: double getScale(double,double)>($d0, $d1);
+
+     label05:
+        $i0 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: int getDpi()>();
+
+        $d2 = (double) $i0;
+
+        $d3 = $d14 * $d2;
+
+        d4 = $d3 / 96.0;
+
+        $b1 = d4 cmpg 0.0;
+
+        if $b1 > 0 goto label06;
+
+        $r24 = new java.lang.IllegalStateException;
+
+        specialinvoke $r24.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Bad scaleFactor");
+
+        throw $r24;
+
+     label06:
+        $r21 = r25;
+
+        $d7 = d12;
+
+        $d8 = d13;
+
+        $r5 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.TitledDiagram titledDiagram>;
+
+        if $r5 != null goto label07;
+
+        $r29 = new net.sourceforge.plantuml.Pragma;
+
+        specialinvoke $r29.<net.sourceforge.plantuml.Pragma: void <init>()>();
+
+        goto label08;
+
+     label07:
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.TitledDiagram titledDiagram>;
+
+        $r29 = virtualinvoke $r6.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.Pragma getPragma()>();
+
+     label08:
+        r30 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.UGraphic createUGraphic(net.sourceforge.plantuml.FileFormatOption,net.sourceforge.plantuml.awt.geom.Dimension2D,net.sourceforge.plantuml.anim.Animation,double,double,double,net.sourceforge.plantuml.Pragma)>(r4, $r21, r1, $d7, $d8, d4, $r29);
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: void maybeDrawBorder(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.awt.geom.Dimension2D)>(r30, r25);
+
+        $z0 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: boolean randomPixel>;
+
+        if $z0 == 0 goto label09;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: void drawRandomPoint(net.sourceforge.plantuml.ugraphic.UGraphic)>(r30);
+
+     label09:
+        $r7 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $r8 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin>;
+
+        $d5 = virtualinvoke $r8.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getLeft()>();
+
+        $r9 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin>;
+
+        $d6 = virtualinvoke $r9.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getTop()>();
+
+        specialinvoke $r7.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d5, $d6);
+
+        $r10 = interfaceinvoke r30.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r7);
+
+        r31 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.UGraphic handwritten(net.sourceforge.plantuml.ugraphic.UGraphic)>($r10);
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.UDrawable udrawable>;
+
+        interfaceinvoke $r11.<net.sourceforge.plantuml.graphic.UDrawable: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r31);
+
+        interfaceinvoke r31.<net.sourceforge.plantuml.ugraphic.UGraphic: void flushUg()>();
+
+        $r13 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String metadata>;
+
+        interfaceinvoke r31.<net.sourceforge.plantuml.ugraphic.UGraphic: void writeToStream(java.io.OutputStream,java.lang.String,int)>(r12, $r13, 96);
+
+        virtualinvoke r12.<java.io.OutputStream: void flush()>();
+
+        $z1 = r31 instanceof net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
+
+        if $z1 == 0 goto label10;
+
+        $r15 = (net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d) r31;
+
+        r16 = virtualinvoke $r15.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: java.util.Set getAllUrlsEncountered()>();
+
+        $i2 = interfaceinvoke r16.<java.util.Set: int size()>();
+
+        if $i2 <= 0 goto label10;
+
+        r17 = staticinvoke <net.sourceforge.plantuml.CMapData: net.sourceforge.plantuml.CMapData cmapString(java.util.Set,double)>(r16, d4);
+
+        $r18 = new net.sourceforge.plantuml.api.ImageDataComplex;
+
+        $r19 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String warningOrError>;
+
+        $i3 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: int status>;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.api.ImageDataComplex: void <init>(net.sourceforge.plantuml.awt.geom.Dimension2D,net.sourceforge.plantuml.CMapData,java.lang.String,int)>(r25, r17, $r19, $i3);
+
+        return $r18;
+
+     label10:
+        $r14 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.api.ImageDataSimple createImageData(net.sourceforge.plantuml.awt.geom.Dimension2D)>(r25);
+
+        return $r14;
+    }
+
+    private void maybeDrawBorder(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.ISkinParam $r1, $r4, $r7, $r11;
+        net.sourceforge.plantuml.skin.rose.Rose $r2;
+        net.sourceforge.plantuml.ColorParam $r3;
+        net.sourceforge.plantuml.ugraphic.color.HColor r5, $r19;
+        net.sourceforge.plantuml.LineParam $r6;
+        net.sourceforge.plantuml.ugraphic.URectangle $r8, r12;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r9;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6;
+        net.sourceforge.plantuml.CornerParam $r10;
+        net.sourceforge.plantuml.ugraphic.UGraphic r13, $r14, $r15;
+        net.sourceforge.plantuml.ugraphic.UStroke $r17, r18;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r13 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r9 := @parameter1: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        if $r1 != null goto label1;
+
+        return;
+
+     label1:
+        $r2 = new net.sourceforge.plantuml.skin.rose.Rose;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.skin.rose.Rose: void <init>()>();
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r3 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam diagramBorder>;
+
+        r5 = virtualinvoke $r2.<net.sourceforge.plantuml.skin.rose.Rose: net.sourceforge.plantuml.ugraphic.color.HColor getHtmlColor(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.ColorParam)>($r4, $r3);
+
+        $r7 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r6 = <net.sourceforge.plantuml.LineParam: net.sourceforge.plantuml.LineParam diagramBorder>;
+
+        r18 = interfaceinvoke $r7.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.UStroke getThickness(net.sourceforge.plantuml.LineParam,net.sourceforge.plantuml.cucadiagram.Stereotype)>($r6, null);
+
+        if r18 != null goto label2;
+
+        if r5 == null goto label2;
+
+        $r17 = new net.sourceforge.plantuml.ugraphic.UStroke;
+
+        specialinvoke $r17.<net.sourceforge.plantuml.ugraphic.UStroke: void <init>()>();
+
+        r18 = $r17;
+
+     label2:
+        if r18 != null goto label3;
+
+        return;
+
+     label3:
+        $r8 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        $d0 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d1 = virtualinvoke r18.<net.sourceforge.plantuml.ugraphic.UStroke: double getThickness()>();
+
+        $d2 = $d0 - $d1;
+
+        $d3 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d4 = virtualinvoke r18.<net.sourceforge.plantuml.ugraphic.UStroke: double getThickness()>();
+
+        $d5 = $d3 - $d4;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>($d2, $d5);
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r10 = <net.sourceforge.plantuml.CornerParam: net.sourceforge.plantuml.CornerParam diagramBorder>;
+
+        $d6 = interfaceinvoke $r11.<net.sourceforge.plantuml.ISkinParam: double getRoundCorner(net.sourceforge.plantuml.CornerParam,net.sourceforge.plantuml.cucadiagram.Stereotype)>($r10, null);
+
+        r12 = virtualinvoke $r8.<net.sourceforge.plantuml.ugraphic.URectangle: net.sourceforge.plantuml.ugraphic.URectangle rounded(double)>($d6);
+
+        if r5 != null goto label4;
+
+        $r19 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        goto label5;
+
+     label4:
+        $r19 = r5;
+
+     label5:
+        $r14 = interfaceinvoke r13.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r19);
+
+        $r15 = interfaceinvoke $r14.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r18);
+
+        interfaceinvoke $r15.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r12);
+
+        return;
+    }
+
+    private void drawRandomPoint(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        java.util.Random $r0;
+        int i0, i1, i2;
+        java.awt.Color $r2;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r4;
+        net.sourceforge.plantuml.ugraphic.UGraphic r6, $r7, $r9;
+        net.sourceforge.plantuml.ugraphic.UBackground $r8;
+        net.sourceforge.plantuml.ugraphic.URectangle $r10;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r11;
+
+        r11 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r6 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r0 = new java.util.Random;
+
+        specialinvoke $r0.<java.util.Random: void <init>()>();
+
+        i0 = virtualinvoke $r0.<java.util.Random: int nextInt(int)>(40);
+
+        i1 = virtualinvoke $r0.<java.util.Random: int nextInt(int)>(40);
+
+        i2 = virtualinvoke $r0.<java.util.Random: int nextInt(int)>(40);
+
+        $r2 = new java.awt.Color;
+
+        specialinvoke $r2.<java.awt.Color: void <init>(int,int,int)>(i0, i1, i2);
+
+        $r4 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r2, 0);
+
+        $r7 = interfaceinvoke r6.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r4);
+
+        $r8 = interfaceinvoke $r4.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r9 = interfaceinvoke $r7.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r8);
+
+        $r10 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>(1.0, 1.0);
+
+        interfaceinvoke $r9.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r10);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.awt.geom.Dimension2D getFinalDimension()
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r1, $r2;
+        net.sourceforge.plantuml.ugraphic.LimitFinder $r3;
+        net.sourceforge.plantuml.graphic.StringBounder $r4;
+        net.sourceforge.plantuml.graphic.UDrawable $r6;
+        net.sourceforge.plantuml.Dimension2DDouble $r7;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r8, $r9, $r10, $r11;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.awt.geom.Dimension2D dimension>;
+
+        if $r1 != null goto label1;
+
+        $r3 = new net.sourceforge.plantuml.ugraphic.LimitFinder;
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.ugraphic.LimitFinder: void <init>(net.sourceforge.plantuml.graphic.StringBounder,boolean)>($r4, 1);
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.UDrawable udrawable>;
+
+        interfaceinvoke $r6.<net.sourceforge.plantuml.graphic.UDrawable: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r3);
+
+        $r7 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        $d0 = virtualinvoke $r3.<net.sourceforge.plantuml.ugraphic.LimitFinder: double getMaxX()>();
+
+        $d1 = $d0 + 1.0;
+
+        $r8 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin>;
+
+        $d2 = virtualinvoke $r8.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getLeft()>();
+
+        $d3 = $d1 + $d2;
+
+        $r9 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin>;
+
+        $d4 = virtualinvoke $r9.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getRight()>();
+
+        $d5 = $d3 + $d4;
+
+        $d6 = virtualinvoke $r3.<net.sourceforge.plantuml.ugraphic.LimitFinder: double getMaxY()>();
+
+        $d7 = $d6 + 1.0;
+
+        $r10 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin>;
+
+        $d8 = virtualinvoke $r10.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getTop()>();
+
+        $d9 = $d7 + $d8;
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft margin>;
+
+        $d10 = virtualinvoke $r11.<net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: double getBottom()>();
+
+        $d11 = $d9 + $d10;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>($d5, $d11);
+
+        r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.awt.geom.Dimension2D dimension> = $r7;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.awt.geom.Dimension2D dimension>;
+
+        return $r2;
+    }
+
+    private net.sourceforge.plantuml.ugraphic.UGraphic handwritten(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.ISkinParam $r1, $r3;
+        net.sourceforge.plantuml.ugraphic.UGraphic r2;
+        boolean $z0;
+        net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten $r4;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        if $r1 == null goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $z0 = interfaceinvoke $r3.<net.sourceforge.plantuml.ISkinParam: boolean handwritten()>();
+
+        if $z0 == 0 goto label1;
+
+        $r4 = new net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.ugraphic.hand.UGraphicHandwritten: void <init>(net.sourceforge.plantuml.ugraphic.UGraphic)>(r2);
+
+        return $r4;
+
+     label1:
+        return r2;
+    }
+
+    private net.sourceforge.plantuml.core.ImageData writeImageMjpeg(java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r1;
+        net.sourceforge.plantuml.security.SFile $r2;
+        net.sourceforge.plantuml.mjpeg.MJPEGGenerator $r4;
+        java.awt.Image $r5, $r6;
+        int $i1, $i2;
+        java.io.OutputStream r8;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12;
+        java.awt.geom.AffineTransform r10;
+        java.lang.UnsupportedOperationException $r11;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r8 := @parameter0: java.io.OutputStream;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.awt.geom.Dimension2D getFinalDimension()>();
+
+        $r2 = new net.sourceforge.plantuml.security.SFile;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.security.SFile: void <init>(java.lang.String)>("c:/tmp.avi");
+
+        $r4 = new net.sourceforge.plantuml.mjpeg.MJPEGGenerator;
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.awt.Image getAviImage(net.sourceforge.plantuml.anim.AffineTransformation)>(null);
+
+        $i1 = virtualinvoke $r5.<java.awt.Image: int getWidth(java.awt.image.ImageObserver)>(null);
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.awt.Image getAviImage(net.sourceforge.plantuml.anim.AffineTransformation)>(null);
+
+        $i2 = virtualinvoke $r6.<java.awt.Image: int getHeight(java.awt.image.ImageObserver)>(null);
+
+        specialinvoke $r4.<net.sourceforge.plantuml.mjpeg.MJPEGGenerator: void <init>(net.sourceforge.plantuml.security.SFile,int,int,double,int)>($r2, $i1, $i2, 12.0, 100);
+
+        $d0 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d1 = $d0 / 2.0;
+
+        $d2 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d3 = $d2 / 2.0;
+
+        r10 = staticinvoke <java.awt.geom.AffineTransform: java.awt.geom.AffineTransform getTranslateInstance(double,double)>($d1, $d3);
+
+        $d4 = (double) 0;
+
+        $d5 = 1.5707963267948966 * $d4;
+
+        $d6 = $d5 / 100.0;
+
+        virtualinvoke r10.<java.awt.geom.AffineTransform: void rotate(double)>($d6);
+
+        $d7 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d8 = neg $d7;
+
+        $d9 = $d8 / 2.0;
+
+        $d10 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d11 = neg $d10;
+
+        $d12 = $d11 / 2.0;
+
+        virtualinvoke r10.<java.awt.geom.AffineTransform: void translate(double,double)>($d9, $d12);
+
+        $r11 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r11.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r11;
+    }
+
+    private net.sourceforge.plantuml.core.ImageData writeImageAnimatedGif(java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r1;
+        net.sourceforge.plantuml.anim.Animation $r2, $r7;
+        net.sourceforge.plantuml.AnimatedGifEncoder $r4;
+        java.io.OutputStream r6;
+        java.util.Collection $r8;
+        java.util.Iterator r9;
+        boolean $z1;
+        net.sourceforge.plantuml.api.ImageDataSimple $r10;
+        java.lang.Object $r11;
+        net.sourceforge.plantuml.anim.AffineTransformation r12;
+        javax.swing.ImageIcon $r13;
+        java.awt.Image $r14, $r16;
+        java.awt.image.BufferedImage $r17;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r6 := @parameter0: java.io.OutputStream;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.awt.geom.Dimension2D getFinalDimension()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.anim.Animation animation>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.anim.Animation: net.sourceforge.plantuml.ugraphic.MinMax getMinMax(net.sourceforge.plantuml.awt.geom.Dimension2D)>(r1);
+
+        $r4 = new net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.AnimatedGifEncoder: void <init>()>();
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.AnimatedGifEncoder: void setRepeat(int)>(0);
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean start(java.io.OutputStream)>(r6);
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.AnimatedGifEncoder: void setDelay(int)>(60);
+
+        $r7 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.anim.Animation animation>;
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.anim.Animation: java.util.Collection getAll()>();
+
+        r9 = interfaceinvoke $r8.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r9.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label2;
+
+        $r11 = interfaceinvoke r9.<java.util.Iterator: java.lang.Object next()>();
+
+        r12 = (net.sourceforge.plantuml.anim.AffineTransformation) $r11;
+
+        $r13 = new javax.swing.ImageIcon;
+
+        $r14 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.awt.Image getAviImage(net.sourceforge.plantuml.anim.AffineTransformation)>(r12);
+
+        specialinvoke $r13.<javax.swing.ImageIcon: void <init>(java.awt.Image)>($r14);
+
+        $r16 = virtualinvoke $r13.<javax.swing.ImageIcon: java.awt.Image getImage()>();
+
+        $r17 = (java.awt.image.BufferedImage) $r16;
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean addFrame(java.awt.image.BufferedImage)>($r17);
+
+        goto label1;
+
+     label2:
+        virtualinvoke $r4.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean finish()>();
+
+        $r10 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.api.ImageDataSimple createImageData(net.sourceforge.plantuml.awt.geom.Dimension2D)>(r1);
+
+        return $r10;
+    }
+
+    private java.awt.Image getAviImage(net.sourceforge.plantuml.anim.AffineTransformation) throws java.io.IOException
+    {
+        java.io.ByteArrayOutputStream $r0;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r2;
+        net.sourceforge.plantuml.FileFormatOption $r3;
+        net.sourceforge.plantuml.FileFormat $r4;
+        net.sourceforge.plantuml.anim.AffineTransformation r5;
+        net.sourceforge.plantuml.anim.Animation $r6;
+        byte[] $r8;
+        java.awt.image.BufferedImage $r9;
+
+        r2 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r5 := @parameter0: net.sourceforge.plantuml.anim.AffineTransformation;
+
+        $r0 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        $r3 = new net.sourceforge.plantuml.FileFormatOption;
+
+        $r4 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat PNG>;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>($r4);
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.anim.Animation: net.sourceforge.plantuml.anim.Animation singleton(net.sourceforge.plantuml.anim.AffineTransformation)>(r5);
+
+        specialinvoke r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData writeImageInternal(net.sourceforge.plantuml.FileFormatOption,java.io.OutputStream,net.sourceforge.plantuml.anim.Animation)>($r3, $r0, $r6);
+
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void close()>();
+
+        $r8 = virtualinvoke $r0.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(byte[])>($r8);
+
+        return $r9;
+    }
+
+    private net.sourceforge.plantuml.ugraphic.UGraphic createUGraphic(net.sourceforge.plantuml.FileFormatOption, net.sourceforge.plantuml.awt.geom.Dimension2D, net.sourceforge.plantuml.anim.Animation, double, double, double, net.sourceforge.plantuml.Pragma)
+    {
+        net.sourceforge.plantuml.FileFormatOption r0;
+        int[] $r1;
+        net.sourceforge.plantuml.FileFormat $r2, $r48;
+        int $i0, $i1;
+        net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug $r3;
+        double d0, d1, d2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r4;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r5;
+        java.lang.String $r6, $r7, $r8, $r41, $r42, $r45, $r49;
+        long $l2;
+        net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt $r9;
+        net.sourceforge.plantuml.braille.UGraphicBraille $r10;
+        net.sourceforge.plantuml.graphic.StringBounder $r11, $r15, $r19, $r23, $r27, $r32, $r38;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper $r12, $r16, $r20, $r24, $r28, $r33, $r37;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r13, $r17, $r21, $r25, $r29, $r34, $r36;
+        net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz $r14, $r18;
+        net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx $r22;
+        net.sourceforge.plantuml.ugraphic.html5.UGraphicHtml5 $r26;
+        net.sourceforge.plantuml.ugraphic.eps.UGraphicEps $r30, $r35;
+        net.sourceforge.plantuml.eps.EpsStrategy $r31, $r39;
+        net.sourceforge.plantuml.Pragma r40;
+        boolean z0;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r43, $r46;
+        net.sourceforge.plantuml.anim.Animation r44;
+        java.lang.UnsupportedOperationException $r47;
+
+        r5 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r0 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        r4 := @parameter1: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        r44 := @parameter2: net.sourceforge.plantuml.anim.Animation;
+
+        d1 := @parameter3: double;
+
+        d2 := @parameter4: double;
+
+        d0 := @parameter5: double;
+
+        r40 := @parameter6: net.sourceforge.plantuml.Pragma;
+
+        $r1 = <net.sourceforge.plantuml.ugraphic.ImageBuilder$1: int[] $SwitchMap$net$sourceforge$plantuml$FileFormat>;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $i0 = virtualinvoke $r2.<net.sourceforge.plantuml.FileFormat: int ordinal()>();
+
+        $i1 = $r1[$i0];
+
+        tableswitch($i1)
+        {
+            case 3: goto label01;
+            case 4: goto label02;
+            case 5: goto label03;
+            case 6: goto label04;
+            case 7: goto label05;
+            case 8: goto label06;
+            case 9: goto label07;
+            case 10: goto label08;
+            case 11: goto label09;
+            case 12: goto label10;
+            case 13: goto label10;
+            case 14: goto label11;
+            default: goto label12;
+        };
+
+     label01:
+        $r45 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: java.lang.String getWatermark()>();
+
+        $r46 = specialinvoke r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.UGraphic createUGraphicPNG(double,net.sourceforge.plantuml.awt.geom.Dimension2D,net.sourceforge.plantuml.anim.Animation,double,double,java.lang.String)>(d0, r4, r44, d1, d2, $r45);
+
+        return $r46;
+
+     label02:
+        $r41 = "true";
+
+        $r42 = virtualinvoke r40.<net.sourceforge.plantuml.Pragma: java.lang.String getValue(java.lang.String)>("svginteractive");
+
+        z0 = virtualinvoke $r41.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>($r42);
+
+        $r43 = specialinvoke r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.UGraphic createUGraphicSVG(double,net.sourceforge.plantuml.awt.geom.Dimension2D,boolean)>(d0, r4, z0);
+
+        return $r43;
+
+     label03:
+        $r35 = new net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
+
+        $r36 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r37 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r38 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r39 = staticinvoke <net.sourceforge.plantuml.eps.EpsStrategy: net.sourceforge.plantuml.eps.EpsStrategy getDefault2()>();
+
+        specialinvoke $r35.<net.sourceforge.plantuml.ugraphic.eps.UGraphicEps: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder,net.sourceforge.plantuml.eps.EpsStrategy)>($r36, $r37, $r38, $r39);
+
+        return $r35;
+
+     label04:
+        $r30 = new net.sourceforge.plantuml.ugraphic.eps.UGraphicEps;
+
+        $r34 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r33 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r32 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r31 = <net.sourceforge.plantuml.eps.EpsStrategy: net.sourceforge.plantuml.eps.EpsStrategy WITH_MACRO_AND_TEXT>;
+
+        specialinvoke $r30.<net.sourceforge.plantuml.ugraphic.eps.UGraphicEps: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder,net.sourceforge.plantuml.eps.EpsStrategy)>($r34, $r33, $r32, $r31);
+
+        return $r30;
+
+     label05:
+        $r26 = new net.sourceforge.plantuml.ugraphic.html5.UGraphicHtml5;
+
+        $r29 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r28 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r27 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r26.<net.sourceforge.plantuml.ugraphic.html5.UGraphicHtml5: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder)>($r29, $r28, $r27);
+
+        return $r26;
+
+     label06:
+        $r22 = new net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx;
+
+        $r25 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r24 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r23 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r22.<net.sourceforge.plantuml.ugraphic.visio.UGraphicVdx: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder)>($r25, $r24, $r23);
+
+        return $r22;
+
+     label07:
+        $r18 = new net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
+
+        $r21 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r20 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r19 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder,double,boolean)>($r21, $r20, $r19, d0, 1);
+
+        return $r18;
+
+     label08:
+        $r14 = new net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz;
+
+        $r17 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r16 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r15 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.ugraphic.tikz.UGraphicTikz: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder,double,boolean)>($r17, $r16, $r15, d0, 0);
+
+        return $r14;
+
+     label09:
+        $r10 = new net.sourceforge.plantuml.braille.UGraphicBraille;
+
+        $r13 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r12 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r11 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.braille.UGraphicBraille: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder)>($r13, $r12, $r11);
+
+        return $r10;
+
+     label10:
+        $r9 = new net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: void <init>()>();
+
+        return $r9;
+
+     label11:
+        $r3 = new net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug;
+
+        $r6 = specialinvoke r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String getSvgLinkTarget()>();
+
+        $r7 = specialinvoke r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String getHoverPathColorRGB()>();
+
+        $l2 = r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: long seed>;
+
+        $r8 = virtualinvoke r5.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String getPreserveAspectRatio()>();
+
+        specialinvoke $r3.<net.sourceforge.plantuml.ugraphic.debug.UGraphicDebug: void <init>(double,net.sourceforge.plantuml.awt.geom.Dimension2D,java.lang.String,java.lang.String,long,java.lang.String)>(d0, r4, $r6, $r7, $l2, $r8);
+
+        return $r3;
+
+     label12:
+        $r47 = new java.lang.UnsupportedOperationException;
+
+        $r48 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r49 = virtualinvoke $r48.<net.sourceforge.plantuml.FileFormat: java.lang.String toString()>();
+
+        specialinvoke $r47.<java.lang.UnsupportedOperationException: void <init>(java.lang.String)>($r49);
+
+        throw $r47;
+    }
+
+    private net.sourceforge.plantuml.ugraphic.UGraphic createUGraphicSVG(double, net.sourceforge.plantuml.awt.geom.Dimension2D, boolean)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        java.lang.String r1, r5, r7;
+        net.sourceforge.plantuml.ISkinParam $r2, $r3, $r6, $r14;
+        net.sourceforge.plantuml.svg.LengthAdjust r4, $r15;
+        net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg $r8;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r9;
+        double d0;
+        boolean z1, $z2, $z3;
+        net.sourceforge.plantuml.graphic.StringBounder $r10;
+        long $l0;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper $r11;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r12;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        d0 := @parameter0: double;
+
+        r9 := @parameter1: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        z1 := @parameter2: boolean;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String getHoverPathColorRGB()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        if $r2 != null goto label1;
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.svg.LengthAdjust: net.sourceforge.plantuml.svg.LengthAdjust defaultValue()>();
+
+        goto label2;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r15 = interfaceinvoke $r3.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.svg.LengthAdjust getlengthAdjust()>();
+
+     label2:
+        r4 = $r15;
+
+        r5 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String getPreserveAspectRatio()>();
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        if $r6 == null goto label3;
+
+        $r14 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $z2 = interfaceinvoke $r14.<net.sourceforge.plantuml.ISkinParam: boolean svgDimensionStyle()>();
+
+        if $z2 == 0 goto label4;
+
+     label3:
+        $z3 = 1;
+
+        goto label5;
+
+     label4:
+        $z3 = 0;
+
+     label5:
+        r7 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: java.lang.String getSvgLinkTarget()>();
+
+        $r8 = new net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg;
+
+        $r12 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $l0 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: long seed>;
+
+        $r10 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.ugraphic.svg.UGraphicSvg: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,boolean,net.sourceforge.plantuml.awt.geom.Dimension2D,net.sourceforge.plantuml.ugraphic.color.ColorMapper,boolean,double,java.lang.String,java.lang.String,long,java.lang.String,net.sourceforge.plantuml.graphic.StringBounder,net.sourceforge.plantuml.svg.LengthAdjust,boolean)>($r12, $z3, r9, $r11, 0, d0, r7, r1, $l0, r5, $r10, r4, z1);
+
+        return $r8;
+    }
+
+    private net.sourceforge.plantuml.ugraphic.UGraphic createUGraphicPNG(double, net.sourceforge.plantuml.awt.geom.Dimension2D, net.sourceforge.plantuml.anim.Animation, double, double, java.lang.String)
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1, $r2, $r9, $r15, $r16, $r23, $r24;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5;
+        java.lang.String r3;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r4;
+        double d0, d1, d2, $d3, $d4, $d5, $d6, $d8, $d9, $d10, $d11;
+        java.awt.Graphics2D r6;
+        net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d $r7;
+        net.sourceforge.plantuml.anim.Animation r8;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper $r10, $r25;
+        net.sourceforge.plantuml.graphic.StringBounder $r11, $r29;
+        java.awt.image.BufferedImage $r13, r14;
+        net.sourceforge.plantuml.ugraphic.UBackground $r17;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r18;
+        net.sourceforge.plantuml.ugraphic.URectangle $r19;
+        int $i0, $i1, $i2, $i3;
+        java.awt.Color $r21, $r22, r26;
+        net.sourceforge.plantuml.OptionFlags $r27;
+        net.sourceforge.plantuml.EmptyImageBuilder $r28;
+        net.sourceforge.plantuml.anim.AffineTransformation $r30;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        d0 := @parameter0: double;
+
+        r4 := @parameter1: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        r8 := @parameter2: net.sourceforge.plantuml.anim.Animation;
+
+        d1 := @parameter3: double;
+
+        d2 := @parameter4: double;
+
+        r3 := @parameter5: java.lang.String;
+
+        r26 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: java.awt.Color getDefaultBackColor()>();
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $z0 = $r1 instanceof net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        if $z0 == 0 goto label1;
+
+        $r25 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r24 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        r26 = interfaceinvoke $r25.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.awt.Color toColor(net.sourceforge.plantuml.ugraphic.color.HColor)>($r24);
+
+        goto label3;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $z1 = $r2 instanceof net.sourceforge.plantuml.ugraphic.color.HColorBackground;
+
+        if $z1 != 0 goto label2;
+
+        $r23 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $z4 = $r23 instanceof net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        if $z4 == 0 goto label3;
+
+     label2:
+        r26 = null;
+
+     label3:
+        $r27 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z5 = virtualinvoke $r27.<net.sourceforge.plantuml.OptionFlags: boolean isReplaceWhiteBackgroundByTransparent()>();
+
+        if $z5 == 0 goto label4;
+
+        if r26 == null goto label4;
+
+        $r21 = <java.awt.Color: java.awt.Color WHITE>;
+
+        $z3 = virtualinvoke r26.<java.awt.Color: boolean equals(java.lang.Object)>($r21);
+
+        if $z3 == 0 goto label4;
+
+        $r22 = new java.awt.Color;
+
+        specialinvoke $r22.<java.awt.Color: void <init>(int,int,int,int)>(0, 0, 0, 0);
+
+        r26 = $r22;
+
+     label4:
+        $r28 = new net.sourceforge.plantuml.EmptyImageBuilder;
+
+        $d8 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d9 = $d8 * d0;
+
+        $i2 = (int) $d9;
+
+        $d10 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d11 = $d10 * d0;
+
+        $i3 = (int) $d11;
+
+        $r29 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        specialinvoke $r28.<net.sourceforge.plantuml.EmptyImageBuilder: void <init>(java.lang.String,int,int,java.awt.Color,net.sourceforge.plantuml.graphic.StringBounder)>(r3, $i2, $i3, r26, $r29);
+
+        r6 = virtualinvoke $r28.<net.sourceforge.plantuml.EmptyImageBuilder: java.awt.Graphics2D getGraphics2D()>();
+
+        $r7 = new net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
+
+        $r9 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r10 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        if r8 != null goto label5;
+
+        $r30 = null;
+
+        goto label6;
+
+     label5:
+        $r30 = virtualinvoke r8.<net.sourceforge.plantuml.anim.Animation: net.sourceforge.plantuml.anim.AffineTransformation getFirst()>();
+
+     label6:
+        specialinvoke $r7.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder,java.awt.Graphics2D,double,net.sourceforge.plantuml.anim.AffineTransformation,double,double)>($r9, $r10, $r11, r6, d0, $r30, d1, d2);
+
+        $r13 = virtualinvoke $r28.<net.sourceforge.plantuml.EmptyImageBuilder: java.awt.image.BufferedImage getBufferedImage()>();
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: void setBufferedImage(java.awt.image.BufferedImage)>($r13);
+
+        r14 = virtualinvoke $r7.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: java.awt.image.BufferedImage getBufferedImage()>();
+
+        $r15 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $z2 = $r15 instanceof net.sourceforge.plantuml.ugraphic.color.HColorGradient;
+
+        if $z2 == 0 goto label7;
+
+        $r16 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.HColor backcolor>;
+
+        $r17 = interfaceinvoke $r16.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r18 = virtualinvoke $r7.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r17);
+
+        $r19 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        $i0 = virtualinvoke r14.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $d3 = (double) $i0;
+
+        $d4 = $d3 / d0;
+
+        $i1 = virtualinvoke r14.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $d5 = (double) $i1;
+
+        $d6 = $d5 / d0;
+
+        specialinvoke $r19.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>($d4, $d6);
+
+        interfaceinvoke $r18.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r19);
+
+     label7:
+        return $r7;
+    }
+
+    private static java.awt.Color getDefaultBackColor()
+    {
+        java.awt.Color $r0;
+
+        $r0 = <java.awt.Color: java.awt.Color WHITE>;
+
+        return $r0;
+    }
+
+    private static net.sourceforge.plantuml.ugraphic.color.HColor getDefaultHBackColor()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r0;
+
+        $r0 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple WHITE>;
+
+        return $r0;
+    }
+
+    private java.lang.String getHoverPathColorRGB()
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.FileFormatOption $r1, $r8;
+        java.lang.String $r2, $r7, $r9;
+        net.sourceforge.plantuml.ISkinParam $r3, $r4;
+        net.sourceforge.plantuml.ugraphic.color.HColor r5;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.FileFormatOption: java.lang.String getHoverColor()>();
+
+        if $r2 == null goto label1;
+
+        $r8 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.FileFormatOption: java.lang.String getHoverColor()>();
+
+        return $r9;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        if $r3 == null goto label2;
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        r5 = interfaceinvoke $r4.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor hoverPathColor()>();
+
+        if r5 == null goto label2;
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        $r7 = interfaceinvoke $r6.<net.sourceforge.plantuml.ugraphic.color.ColorMapper: java.lang.String toRGB(net.sourceforge.plantuml.ugraphic.color.HColor)>(r5);
+
+        return $r7;
+
+     label2:
+        return null;
+    }
+
+    private static net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram)
+    {
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.TitledDiagram r0;
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r1, $r10;
+        net.sourceforge.plantuml.style.SName[] $r2;
+        net.sourceforge.plantuml.style.SName $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.ISkinParam $r6;
+        net.sourceforge.plantuml.style.StyleBuilder $r7;
+        net.sourceforge.plantuml.style.Style r8;
+        net.sourceforge.plantuml.style.PName $r9;
+
+        r0 := @parameter0: net.sourceforge.plantuml.TitledDiagram;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 == 0 goto label1;
+
+        $r2 = newarray (net.sourceforge.plantuml.style.SName)[2];
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r2[0] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName document>;
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r2);
+
+        $r6 = virtualinvoke r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r7 = interfaceinvoke $r6.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        r8 = virtualinvoke $r5.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r7);
+
+        $r9 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName Margin>;
+
+        $z1 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: boolean hasValue(net.sourceforge.plantuml.style.PName)>($r9);
+
+        if $z1 == 0 goto label1;
+
+        $r10 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getMargin()>();
+
+        return $r10;
+
+     label1:
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getDefaultMargins()>();
+
+        return $r1;
+    }
+
+    public java.lang.String getPreserveAspectRatio()
+    {
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r0;
+        net.sourceforge.plantuml.FileFormatOption $r1, $r6;
+        java.lang.String $r2, $r5, $r7;
+        net.sourceforge.plantuml.ISkinParam $r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.FileFormatOption: java.lang.String getPreserveAspectRatio()>();
+
+        if $r2 == null goto label1;
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.FileFormatOption fileFormatOption>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.FileFormatOption: java.lang.String getPreserveAspectRatio()>();
+
+        return $r7;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        if $r3 == null goto label2;
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r5 = interfaceinvoke $r4.<net.sourceforge.plantuml.ISkinParam: java.lang.String getPreserveAspectRatio()>();
+
+        return $r5;
+
+     label2:
+        return "none";
+    }
+
+    private net.sourceforge.plantuml.api.ImageDataSimple createImageData(net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        net.sourceforge.plantuml.api.ImageDataSimple $r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder r2;
+        int $i0;
+
+        r2 := @this: net.sourceforge.plantuml.ugraphic.ImageBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        $r0 = new net.sourceforge.plantuml.api.ImageDataSimple;
+
+        $i0 = r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: int status>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.api.ImageDataSimple: void <init>(net.sourceforge.plantuml.awt.geom.Dimension2D,int)>(r1, $i0);
+
+        return $r0;
+    }
+}

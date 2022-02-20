@@ -1,0 +1,580 @@
+public class net.sourceforge.plantuml.wbs.WBSDiagram extends net.sourceforge.plantuml.UmlDiagram
+{
+    public static final net.sourceforge.plantuml.command.regex.Pattern2 patternStereotype;
+    private net.sourceforge.plantuml.wbs.WElement root;
+    private net.sourceforge.plantuml.wbs.WElement last;
+    private java.lang.String first;
+    static final boolean $assertionsDisabled;
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.wbs.WBSDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("Work Breakdown Structure");
+
+        return $r0;
+    }
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource)
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType $r3;
+
+        r0 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        $r3 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType WBS>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.UmlDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType)>(r1, r2, $r3);
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.core.ImageData exportDiagramInternal(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r4;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r3;
+        java.io.OutputStream r5;
+        net.sourceforge.plantuml.core.ImageData $r6;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r5 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock()>();
+
+        $r4 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>($r3);
+
+        $r6 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r5);
+
+        return $r6;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock()
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram$1 $r0;
+        net.sourceforge.plantuml.wbs.WBSDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        $r0 = new net.sourceforge.plantuml.wbs.WBSDiagram$1;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.wbs.WBSDiagram$1: void <init>(net.sourceforge.plantuml.wbs.WBSDiagram)>(r1);
+
+        return $r0;
+    }
+
+    private void drawMe(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.graphic.TextBlock $r1;
+        net.sourceforge.plantuml.ugraphic.UGraphic r2;
+
+        r0 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.graphic.TextBlock getDrawingElement()>();
+
+        interfaceinvoke $r1.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r2);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock getDrawingElement()
+    {
+        net.sourceforge.plantuml.wbs.Fork $r0;
+        net.sourceforge.plantuml.wbs.WBSDiagram r1;
+        net.sourceforge.plantuml.ISkinParam $r2;
+        net.sourceforge.plantuml.wbs.WElement $r3;
+
+        r1 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        $r0 = new net.sourceforge.plantuml.wbs.Fork;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r3 = r1.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement root>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.wbs.Fork: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.wbs.WElement)>($r2, $r3);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult addIdea(net.sourceforge.plantuml.ugraphic.color.HColor, int, java.lang.String, net.sourceforge.plantuml.Direction, net.sourceforge.plantuml.mindmap.IdeaShape)
+    {
+        net.sourceforge.plantuml.command.regex.Pattern2 $r0;
+        net.sourceforge.plantuml.command.regex.Matcher2 r1;
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.Display r2;
+        net.sourceforge.plantuml.wbs.WBSDiagram r3;
+        net.sourceforge.plantuml.ugraphic.color.HColor r4;
+        int i0;
+        net.sourceforge.plantuml.Direction r5;
+        net.sourceforge.plantuml.mindmap.IdeaShape r6;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r7;
+        java.lang.String r8, r9;
+
+        r3 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r4 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        i0 := @parameter1: int;
+
+        r8 := @parameter2: java.lang.String;
+
+        r5 := @parameter3: net.sourceforge.plantuml.Direction;
+
+        r6 := @parameter4: net.sourceforge.plantuml.mindmap.IdeaShape;
+
+        $r0 = <net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.command.regex.Pattern2 patternStereotype>;
+
+        r1 = virtualinvoke $r0.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r8);
+
+        r9 = null;
+
+        $z0 = virtualinvoke r1.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        if $z0 == 0 goto label1;
+
+        r8 = virtualinvoke r1.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        r9 = virtualinvoke r1.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(2);
+
+     label1:
+        r2 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>(r8);
+
+        $r7 = virtualinvoke r3.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.command.CommandExecutionResult addIdea(net.sourceforge.plantuml.ugraphic.color.HColor,int,net.sourceforge.plantuml.cucadiagram.Display,java.lang.String,net.sourceforge.plantuml.Direction,net.sourceforge.plantuml.mindmap.IdeaShape)>(r4, i0, r2, r9, r5, r6);
+
+        return $r7;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult addIdea(net.sourceforge.plantuml.ugraphic.color.HColor, int, net.sourceforge.plantuml.cucadiagram.Display, java.lang.String, net.sourceforge.plantuml.Direction, net.sourceforge.plantuml.mindmap.IdeaShape)
+    {
+        int i0;
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor r1;
+        net.sourceforge.plantuml.cucadiagram.Display r2;
+        java.lang.String r3;
+        net.sourceforge.plantuml.Direction r4;
+        net.sourceforge.plantuml.mindmap.IdeaShape r5;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r6, $r8, $r9, $r12;
+        net.sourceforge.plantuml.wbs.WElement $r7;
+        net.sourceforge.plantuml.style.NoStyleAvailableException $r10;
+
+        r0 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        i0 := @parameter1: int;
+
+        r2 := @parameter2: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r3 := @parameter3: java.lang.String;
+
+        r4 := @parameter4: net.sourceforge.plantuml.Direction;
+
+        r5 := @parameter5: net.sourceforge.plantuml.mindmap.IdeaShape;
+
+     label1:
+        if i0 != 0 goto label5;
+
+        $r7 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement root>;
+
+        if $r7 == null goto label3;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("Error 44");
+
+     label2:
+        return $r9;
+
+     label3:
+        specialinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: void initRoot(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.cucadiagram.Display,java.lang.String,net.sourceforge.plantuml.mindmap.IdeaShape)>(r1, r2, r3, r5);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+     label4:
+        return $r8;
+
+     label5:
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.command.CommandExecutionResult add(net.sourceforge.plantuml.ugraphic.color.HColor,int,net.sourceforge.plantuml.cucadiagram.Display,java.lang.String,net.sourceforge.plantuml.Direction,net.sourceforge.plantuml.mindmap.IdeaShape)>(r1, i0, r2, r3, r4, r5);
+
+     label6:
+        return $r6;
+
+     label7:
+        $r10 := @caughtexception;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("General failure: no style available.");
+
+        return $r12;
+
+        catch net.sourceforge.plantuml.style.NoStyleAvailableException from label1 to label2 with label7;
+        catch net.sourceforge.plantuml.style.NoStyleAvailableException from label3 to label4 with label7;
+        catch net.sourceforge.plantuml.style.NoStyleAvailableException from label5 to label6 with label7;
+    }
+
+    private void initRoot(net.sourceforge.plantuml.ugraphic.color.HColor, net.sourceforge.plantuml.cucadiagram.Display, java.lang.String, net.sourceforge.plantuml.mindmap.IdeaShape)
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.wbs.WElement $r1, $r8;
+        net.sourceforge.plantuml.ugraphic.color.HColor r2;
+        net.sourceforge.plantuml.cucadiagram.Display r3;
+        java.lang.String r4;
+        net.sourceforge.plantuml.ISkinParam $r5;
+        net.sourceforge.plantuml.style.StyleBuilder $r6;
+        net.sourceforge.plantuml.mindmap.IdeaShape r7;
+
+        r0 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        r3 := @parameter1: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r4 := @parameter2: java.lang.String;
+
+        r7 := @parameter3: net.sourceforge.plantuml.mindmap.IdeaShape;
+
+        $r1 = new net.sourceforge.plantuml.wbs.WElement;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r6 = interfaceinvoke $r5.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r1.<net.sourceforge.plantuml.wbs.WElement: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.cucadiagram.Display,java.lang.String,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.mindmap.IdeaShape)>(r2, r3, r4, $r6, r7);
+
+        r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement root> = $r1;
+
+        $r8 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement root>;
+
+        r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement last> = $r8;
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.wbs.WElement getParentOfLast(int)
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        int i0, i1;
+        net.sourceforge.plantuml.wbs.WElement r1;
+
+        r0 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        i0 := @parameter0: int;
+
+        r1 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement last>;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        r1 = virtualinvoke r1.<net.sourceforge.plantuml.wbs.WElement: net.sourceforge.plantuml.wbs.WElement getParent()>();
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return r1;
+    }
+
+    public int getSmartLevel(java.lang.String)
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.wbs.WElement $r1;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.String $r2, $r3, $r4, $r10, $r13, $r14, $r15, $r16, r18, r19;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10;
+        java.lang.UnsupportedOperationException $r5;
+        java.lang.StringBuilder $r6, $r7, $r8, $r9, $r11, $r12;
+        java.lang.AssertionError $r17;
+
+        r0 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r18 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement root>;
+
+        if $r1 != null goto label2;
+
+        $z3 = <net.sourceforge.plantuml.wbs.WBSDiagram: boolean $assertionsDisabled>;
+
+        if $z3 != 0 goto label1;
+
+        $r16 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: java.lang.String first>;
+
+        if $r16 == null goto label1;
+
+        $r17 = new java.lang.AssertionError;
+
+        specialinvoke $r17.<java.lang.AssertionError: void <init>()>();
+
+        throw $r17;
+
+     label1:
+        r0.<net.sourceforge.plantuml.wbs.WBSDiagram: java.lang.String first> = r18;
+
+        return 0;
+
+     label2:
+        r19 = virtualinvoke r18.<java.lang.String: java.lang.String replace(char,char)>(9, 32);
+
+        $z0 = virtualinvoke r19.<java.lang.String: boolean contains(java.lang.CharSequence)>(" ");
+
+        if $z0 != 0 goto label3;
+
+        $i9 = virtualinvoke r19.<java.lang.String: int length()>();
+
+        $i10 = $i9 - 1;
+
+        return $i10;
+
+     label3:
+        $r2 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: java.lang.String first>;
+
+        $z1 = virtualinvoke r19.<java.lang.String: boolean endsWith(java.lang.String)>($r2);
+
+        if $z1 == 0 goto label4;
+
+        $i6 = virtualinvoke r19.<java.lang.String: int length()>();
+
+        $r15 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: java.lang.String first>;
+
+        $i7 = virtualinvoke $r15.<java.lang.String: int length()>();
+
+        $i8 = $i6 - $i7;
+
+        return $i8;
+
+     label4:
+        $r3 = virtualinvoke r19.<java.lang.String: java.lang.String trim()>();
+
+        $i0 = virtualinvoke $r3.<java.lang.String: int length()>();
+
+        if $i0 != 1 goto label5;
+
+        $i4 = virtualinvoke r19.<java.lang.String: int length()>();
+
+        $i5 = $i4 - 1;
+
+        return $i5;
+
+     label5:
+        $r4 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: java.lang.String first>;
+
+        $z2 = virtualinvoke r19.<java.lang.String: boolean startsWith(java.lang.String)>($r4);
+
+        if $z2 == 0 goto label6;
+
+        $i1 = virtualinvoke r19.<java.lang.String: int length()>();
+
+        $r14 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: java.lang.String first>;
+
+        $i2 = virtualinvoke $r14.<java.lang.String: int length()>();
+
+        $i3 = $i1 - $i2;
+
+        return $i3;
+
+     label6:
+        $r5 = new java.lang.UnsupportedOperationException;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("type=<");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r19);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">[");
+
+        $r10 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: java.lang.String first>;
+
+        $r11 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("]");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r5.<java.lang.UnsupportedOperationException: void <init>(java.lang.String)>($r13);
+
+        throw $r5;
+    }
+
+    private net.sourceforge.plantuml.command.CommandExecutionResult add(net.sourceforge.plantuml.ugraphic.color.HColor, int, net.sourceforge.plantuml.cucadiagram.Display, java.lang.String, net.sourceforge.plantuml.Direction, net.sourceforge.plantuml.mindmap.IdeaShape)
+    {
+        int i0, $i1, $i2, $i3, $i4, $i5, i6;
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.wbs.WElement $r1, $r2, $r4, $r5, r13, $r15, r21;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r3, $r14, $r18, $r20;
+        net.sourceforge.plantuml.ugraphic.color.HColor r6;
+        net.sourceforge.plantuml.cucadiagram.Display r7;
+        java.lang.String r8;
+        net.sourceforge.plantuml.Direction r9;
+        net.sourceforge.plantuml.mindmap.IdeaShape r10;
+        net.sourceforge.plantuml.ISkinParam $r11, $r16;
+        net.sourceforge.plantuml.style.StyleBuilder $r12, $r17;
+        net.sourceforge.plantuml.style.NoStyleAvailableException $r19;
+
+        r0 := @this: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r6 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        i0 := @parameter1: int;
+
+        r7 := @parameter2: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r8 := @parameter3: java.lang.String;
+
+        r9 := @parameter4: net.sourceforge.plantuml.Direction;
+
+        r10 := @parameter5: net.sourceforge.plantuml.mindmap.IdeaShape;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement last>;
+
+        $i1 = virtualinvoke $r1.<net.sourceforge.plantuml.wbs.WElement: int getLevel()>();
+
+        $i2 = $i1 + 1;
+
+        if i0 != $i2 goto label3;
+
+        $r15 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement last>;
+
+        $r16 = virtualinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r17 = interfaceinvoke $r16.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        r21 = virtualinvoke $r15.<net.sourceforge.plantuml.wbs.WElement: net.sourceforge.plantuml.wbs.WElement createElement(net.sourceforge.plantuml.ugraphic.color.HColor,int,net.sourceforge.plantuml.cucadiagram.Display,java.lang.String,net.sourceforge.plantuml.Direction,net.sourceforge.plantuml.mindmap.IdeaShape,net.sourceforge.plantuml.style.StyleBuilder)>(r6, i0, r7, r8, r9, r10, $r17);
+
+        r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement last> = r21;
+
+        $r18 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+     label2:
+        return $r18;
+
+     label3:
+        $r2 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement last>;
+
+        $i3 = virtualinvoke $r2.<net.sourceforge.plantuml.wbs.WElement: int getLevel()>();
+
+        if i0 > $i3 goto label5;
+
+        $r4 = r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement last>;
+
+        $i4 = virtualinvoke $r4.<net.sourceforge.plantuml.wbs.WElement: int getLevel()>();
+
+        $i5 = $i4 - i0;
+
+        i6 = $i5 + 1;
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement getParentOfLast(int)>(i6);
+
+        $r11 = virtualinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r12 = interfaceinvoke $r11.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        r13 = virtualinvoke $r5.<net.sourceforge.plantuml.wbs.WElement: net.sourceforge.plantuml.wbs.WElement createElement(net.sourceforge.plantuml.ugraphic.color.HColor,int,net.sourceforge.plantuml.cucadiagram.Display,java.lang.String,net.sourceforge.plantuml.Direction,net.sourceforge.plantuml.mindmap.IdeaShape,net.sourceforge.plantuml.style.StyleBuilder)>(r6, i0, r7, r8, r9, r10, $r12);
+
+        r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.wbs.WElement last> = r13;
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+     label4:
+        return $r14;
+
+     label5:
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("Bad tree structure");
+
+     label6:
+        return $r3;
+
+     label7:
+        $r19 := @caughtexception;
+
+        $r20 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("General failure: no style available.");
+
+        return $r20;
+
+        catch net.sourceforge.plantuml.style.NoStyleAvailableException from label1 to label2 with label7;
+        catch net.sourceforge.plantuml.style.NoStyleAvailableException from label3 to label4 with label7;
+        catch net.sourceforge.plantuml.style.NoStyleAvailableException from label5 to label6 with label7;
+    }
+
+    static void access$000(net.sourceforge.plantuml.wbs.WBSDiagram, net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        specialinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: void drawMe(net.sourceforge.plantuml.ugraphic.UGraphic)>(r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.graphic.TextBlock access$100(net.sourceforge.plantuml.wbs.WBSDiagram)
+    {
+        net.sourceforge.plantuml.wbs.WBSDiagram r0;
+        net.sourceforge.plantuml.graphic.TextBlock $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.wbs.WBSDiagram;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.graphic.TextBlock getDrawingElement()>();
+
+        return $r1;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/wbs/WBSDiagram;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.wbs.WBSDiagram: boolean $assertionsDisabled> = $z1;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("^\\s*(.*?)(?:\\s*\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+
+        <net.sourceforge.plantuml.wbs.WBSDiagram: net.sourceforge.plantuml.command.regex.Pattern2 patternStereotype> = $r1;
+
+        return;
+    }
+}

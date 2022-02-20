@@ -1,0 +1,3073 @@
+public class net.sourceforge.plantuml.project.GanttDiagram extends net.sourceforge.plantuml.TitledDiagram implements net.sourceforge.plantuml.project.ToTaskDraw, net.sourceforge.plantuml.WithSprite
+{
+    private final java.util.Map draws;
+    private final java.util.Map tasks;
+    private final java.util.Map byShortName;
+    private final java.util.List constraints;
+    private final net.sourceforge.plantuml.ugraphic.color.HColorSet colorSet;
+    private final net.sourceforge.plantuml.project.OpenClose openClose;
+    private final java.util.Map resources;
+    private final java.util.Map colorDaysToday;
+    private final java.util.Map colorDaysInternal;
+    private final java.util.Map colorDaysOfWeek;
+    private final java.util.Map nameDays;
+    private net.sourceforge.plantuml.project.LabelStrategy labelStrategy;
+    private net.sourceforge.plantuml.project.time.WeekNumberStrategy weekNumberStrategy;
+    private net.sourceforge.plantuml.project.core.PrintScale printScale;
+    private double factorScale;
+    private java.util.Locale locale;
+    private net.sourceforge.plantuml.project.time.Day today;
+    private double totalHeightWithoutFooter;
+    private net.sourceforge.plantuml.project.time.Day min;
+    private net.sourceforge.plantuml.project.time.Day max;
+    private net.sourceforge.plantuml.project.time.Day printStart;
+    private net.sourceforge.plantuml.project.time.Day printEnd;
+    private final net.sourceforge.plantuml.real.RealOrigin origin;
+    private boolean showFootbox;
+    private boolean withCalendarDate;
+    private boolean hideRessourceName;
+    private boolean hideRessourceFoobox;
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult changeLanguage(java.lang.String)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Locale $r1;
+        java.lang.String r2;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r1 = new java.util.Locale;
+
+        specialinvoke $r1.<java.util.Locale: void <init>(java.lang.String)>(r2);
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Locale locale> = $r1;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.project.GanttDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Project)");
+
+        return $r0;
+    }
+
+    public void setWeekNumberStrategy(net.sourceforge.plantuml.project.time.DayOfWeek, int)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.WeekNumberStrategy $r1;
+        net.sourceforge.plantuml.project.time.DayOfWeek r2;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.project.time.DayOfWeek;
+
+        i0 := @parameter1: int;
+
+        $r1 = new net.sourceforge.plantuml.project.time.WeekNumberStrategy;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.project.time.WeekNumberStrategy: void <init>(net.sourceforge.plantuml.project.time.DayOfWeek,int)>(r2, i0);
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.WeekNumberStrategy weekNumberStrategy> = $r1;
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.core.UmlSource)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.api.ThemeStyle r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        net.sourceforge.plantuml.UmlDiagramType $r3;
+        java.util.LinkedHashMap $r4, $r5, $r10;
+        java.util.HashMap $r6, $r11, $r12, $r13, $r14;
+        java.util.ArrayList $r7;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r8;
+        net.sourceforge.plantuml.project.OpenClose $r9;
+        net.sourceforge.plantuml.project.LabelStrategy $r15;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r16;
+        net.sourceforge.plantuml.project.LabelPosition $r17;
+        net.sourceforge.plantuml.project.time.WeekNumberStrategy $r18;
+        net.sourceforge.plantuml.project.time.DayOfWeek $r19;
+        net.sourceforge.plantuml.project.core.PrintScale $r20;
+        java.util.Locale $r21;
+        net.sourceforge.plantuml.project.time.Day $r22;
+        net.sourceforge.plantuml.real.RealOrigin $r23;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r2 := @parameter1: net.sourceforge.plantuml.core.UmlSource;
+
+        $r3 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType GANTT>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.TitledDiagram: void <init>(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.UmlDiagramType)>(r1, r2, $r3);
+
+        $r4 = new java.util.LinkedHashMap;
+
+        specialinvoke $r4.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map draws> = $r4;
+
+        $r5 = new java.util.LinkedHashMap;
+
+        specialinvoke $r5.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks> = $r5;
+
+        $r6 = new java.util.HashMap;
+
+        specialinvoke $r6.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map byShortName> = $r6;
+
+        $r7 = new java.util.ArrayList;
+
+        specialinvoke $r7.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.List constraints> = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColorSet instance()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet colorSet> = $r8;
+
+        $r9 = new net.sourceforge.plantuml.project.OpenClose;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.project.OpenClose: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose> = $r9;
+
+        $r10 = new java.util.LinkedHashMap;
+
+        specialinvoke $r10.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map resources> = $r10;
+
+        $r11 = new java.util.HashMap;
+
+        specialinvoke $r11.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysToday> = $r11;
+
+        $r12 = new java.util.HashMap;
+
+        specialinvoke $r12.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysInternal> = $r12;
+
+        $r13 = new java.util.HashMap;
+
+        specialinvoke $r13.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysOfWeek> = $r13;
+
+        $r14 = new java.util.HashMap;
+
+        specialinvoke $r14.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map nameDays> = $r14;
+
+        $r15 = new net.sourceforge.plantuml.project.LabelStrategy;
+
+        $r17 = <net.sourceforge.plantuml.project.LabelPosition: net.sourceforge.plantuml.project.LabelPosition LEGACY>;
+
+        $r16 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.project.LabelStrategy: void <init>(net.sourceforge.plantuml.project.LabelPosition,net.sourceforge.plantuml.graphic.HorizontalAlignment)>($r17, $r16);
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.LabelStrategy labelStrategy> = $r15;
+
+        $r18 = new net.sourceforge.plantuml.project.time.WeekNumberStrategy;
+
+        $r19 = <net.sourceforge.plantuml.project.time.DayOfWeek: net.sourceforge.plantuml.project.time.DayOfWeek MONDAY>;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.project.time.WeekNumberStrategy: void <init>(net.sourceforge.plantuml.project.time.DayOfWeek,int)>($r19, 4);
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.WeekNumberStrategy weekNumberStrategy> = $r18;
+
+        $r20 = <net.sourceforge.plantuml.project.core.PrintScale: net.sourceforge.plantuml.project.core.PrintScale DAILY>;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.PrintScale printScale> = $r20;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: double factorScale> = 1.0;
+
+        $r21 = <java.util.Locale: java.util.Locale ENGLISH>;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Locale locale> = $r21;
+
+        $r22 = staticinvoke <net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day create(long)>(0L);
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min> = $r22;
+
+        $r23 = staticinvoke <net.sourceforge.plantuml.real.RealUtils: net.sourceforge.plantuml.real.RealOrigin createOrigin()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.real.RealOrigin origin> = $r23;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean showFootbox> = 1;
+
+        return;
+    }
+
+    public final int getDpi(net.sourceforge.plantuml.FileFormatOption)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        return 96;
+    }
+
+    protected net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.FileFormatOption r0;
+        net.sourceforge.plantuml.project.GanttDiagram r1;
+        net.sourceforge.plantuml.ISkinParam $r2;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r4, $r6;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r5;
+        java.io.OutputStream r7;
+        net.sourceforge.plantuml.core.ImageData $r8;
+        int i0;
+
+        r1 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r7 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r0 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.graphic.StringBounder getDefaultStringBounder(net.sourceforge.plantuml.SvgCharSizeHack)>($r2);
+
+        $r4 = virtualinvoke r1.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r0);
+
+        $r5 = specialinvoke r1.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock(net.sourceforge.plantuml.graphic.StringBounder)>(r3);
+
+        $r6 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>($r5);
+
+        $r8 = virtualinvoke $r6.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r7);
+
+        return $r8;
+    }
+
+    public void setPrintScale(net.sourceforge.plantuml.project.core.PrintScale)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.core.PrintScale r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.core.PrintScale;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.PrintScale printScale> = r1;
+
+        return;
+    }
+
+    public void setFactorScale(double)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        double d0;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        d0 := @parameter0: double;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: double factorScale> = d0;
+
+        return;
+    }
+
+    private double getFactorScale()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.core.PrintScale $r1;
+        double $d0, $d1, $d2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.PrintScale printScale>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.project.core.PrintScale: double getDefaultScale()>();
+
+        $d1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: double factorScale>;
+
+        $d2 = $d0 * $d1;
+
+        return $d2;
+    }
+
+    private boolean isHidden(net.sourceforge.plantuml.project.core.Task)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day $r1, $r3, $r4, $r5, $r6;
+        net.sourceforge.plantuml.project.core.Task r2;
+        boolean $z0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.project.core.Task;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        if $r1 == null goto label1;
+
+        $z0 = r2 instanceof net.sourceforge.plantuml.project.core.TaskSeparator;
+
+        if $z0 == 0 goto label2;
+
+     label1:
+        return 0;
+
+     label2:
+        $r3 = interfaceinvoke r2.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        $r4 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $i0 = virtualinvoke $r3.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>($r4);
+
+        if $i0 >= 0 goto label3;
+
+        return 1;
+
+     label3:
+        $r5 = interfaceinvoke r2.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.project.time.Day getStart()>();
+
+        $r6 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $i1 = virtualinvoke $r5.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>($r6);
+
+        if $i1 <= 0 goto label4;
+
+        return 1;
+
+     label4:
+        return 0;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getTextBlock(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day $r1, $r2, $r3;
+        net.sourceforge.plantuml.project.draw.TimeHeader r4;
+        net.sourceforge.plantuml.project.timescale.TimeScale $r5;
+        double $d0;
+        net.sourceforge.plantuml.graphic.StringBounder r6;
+        net.sourceforge.plantuml.project.GanttDiagram$1 $r7;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r6 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        if $r1 != null goto label1;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: void initMinMax()>();
+
+        goto label2;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min> = $r2;
+
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printEnd>;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max> = $r3;
+
+     label2:
+        r4 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.draw.TimeHeader getTimeHeader()>();
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.project.draw.TimeHeader: net.sourceforge.plantuml.project.timescale.TimeScale getTimeScale()>();
+
+        $d0 = virtualinvoke r4.<net.sourceforge.plantuml.project.draw.TimeHeader: double getFullHeaderHeight()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: void initTaskAndResourceDraws(net.sourceforge.plantuml.project.timescale.TimeScale,double,net.sourceforge.plantuml.graphic.StringBounder)>($r5, $d0, r6);
+
+        $r7 = new net.sourceforge.plantuml.project.GanttDiagram$1;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.project.GanttDiagram$1: void <init>(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.project.draw.TimeHeader)>(r0, r4);
+
+        return $r7;
+    }
+
+    private net.sourceforge.plantuml.project.draw.TimeHeader getTimeHeader()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.OpenClose $r1, $r18, $r22, $r32, $r36, $r46, $r50, $r61, $r65, $r75, $r79;
+        net.sourceforge.plantuml.project.time.Day $r2, $r19, $r20, $r21, $r33, $r34, $r35, $r47, $r48, $r49, $r62, $r63, $r64, $r76, $r77, $r78, $r83, $r84, $r91, $r92;
+        net.sourceforge.plantuml.project.core.PrintScale $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r12;
+        java.lang.IllegalStateException $r13;
+        net.sourceforge.plantuml.project.draw.TimeHeaderYearly $r14;
+        java.util.Locale $r15, $r29, $r43, $r58, $r72;
+        net.sourceforge.plantuml.style.Style $r16, $r17, $r30, $r31, $r44, $r45, $r59, $r60, $r73, $r74, $r89, $r90;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+        java.util.Map $r23, $r24, $r37, $r38, $r51, $r52, $r66, $r67, $r80, $r81, $r82, $r96;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r25, $r39, $r53, $r68, $r85, $r93;
+        net.sourceforge.plantuml.ISkinParam $r26, $r40, $r54, $r69, $r86, $r94;
+        net.sourceforge.plantuml.api.ThemeStyle $r27, $r41, $r55, $r70, $r87, $r95;
+        net.sourceforge.plantuml.project.draw.TimeHeaderQuarterly $r28;
+        net.sourceforge.plantuml.project.draw.TimeHeaderMonthly $r42;
+        net.sourceforge.plantuml.project.draw.TimeHeaderWeekly $r56;
+        net.sourceforge.plantuml.project.time.WeekNumberStrategy $r57;
+        boolean $z0;
+        net.sourceforge.plantuml.project.draw.TimeHeaderDaily $r71;
+        net.sourceforge.plantuml.project.draw.TimeHeaderSimple $r88;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        if $r2 != null goto label1;
+
+        $r88 = new net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
+
+        $r89 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getTimelineStyle()>();
+
+        $r90 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getClosedStyle()>();
+
+        $d5 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: double getFactorScale()>();
+
+        $r91 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r92 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r93 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r94 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r95 = interfaceinvoke $r94.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r96 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDays()>();
+
+        specialinvoke $r88.<net.sourceforge.plantuml.project.draw.TimeHeaderSimple: void <init>(net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle,java.util.Map)>($r89, $r90, $d5, $r91, $r92, $r93, $r95, $r96);
+
+        return $r88;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.PrintScale printScale>;
+
+        $r3 = <net.sourceforge.plantuml.project.core.PrintScale: net.sourceforge.plantuml.project.core.PrintScale DAILY>;
+
+        if $r4 != $r3 goto label2;
+
+        $r71 = new net.sourceforge.plantuml.project.draw.TimeHeaderDaily;
+
+        $r72 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Locale locale>;
+
+        $r73 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getTimelineStyle()>();
+
+        $r74 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getClosedStyle()>();
+
+        $d4 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: double getFactorScale()>();
+
+        $r75 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r76 = virtualinvoke $r75.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        $r77 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r78 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r79 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r80 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDays()>();
+
+        $r81 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysOfWeek>;
+
+        $r82 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map nameDays>;
+
+        $r83 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        $r84 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printEnd>;
+
+        $r85 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r86 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r87 = interfaceinvoke $r86.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        specialinvoke $r71.<net.sourceforge.plantuml.project.draw.TimeHeaderDaily: void <init>(java.util.Locale,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.LoadPlanable,java.util.Map,java.util.Map,java.util.Map,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle)>($r72, $r73, $r74, $d4, $r76, $r77, $r78, $r79, $r80, $r81, $r82, $r83, $r84, $r85, $r87);
+
+        return $r71;
+
+     label2:
+        $r6 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.PrintScale printScale>;
+
+        $r5 = <net.sourceforge.plantuml.project.core.PrintScale: net.sourceforge.plantuml.project.core.PrintScale WEEKLY>;
+
+        if $r6 != $r5 goto label3;
+
+        $r56 = new net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
+
+        $r57 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.WeekNumberStrategy weekNumberStrategy>;
+
+        $z0 = r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean withCalendarDate>;
+
+        $r58 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Locale locale>;
+
+        $r59 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getTimelineStyle()>();
+
+        $r60 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getClosedStyle()>();
+
+        $d3 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: double getFactorScale()>();
+
+        $r61 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r62 = virtualinvoke $r61.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        $r63 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r64 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r65 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r66 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDays()>();
+
+        $r67 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysOfWeek>;
+
+        $r68 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r69 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r70 = interfaceinvoke $r69.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        specialinvoke $r56.<net.sourceforge.plantuml.project.draw.TimeHeaderWeekly: void <init>(net.sourceforge.plantuml.project.time.WeekNumberStrategy,boolean,java.util.Locale,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.LoadPlanable,java.util.Map,java.util.Map,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle)>($r57, $z0, $r58, $r59, $r60, $d3, $r62, $r63, $r64, $r65, $r66, $r67, $r68, $r70);
+
+        return $r56;
+
+     label3:
+        $r8 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.PrintScale printScale>;
+
+        $r7 = <net.sourceforge.plantuml.project.core.PrintScale: net.sourceforge.plantuml.project.core.PrintScale MONTHLY>;
+
+        if $r8 != $r7 goto label4;
+
+        $r42 = new net.sourceforge.plantuml.project.draw.TimeHeaderMonthly;
+
+        $r43 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Locale locale>;
+
+        $r44 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getTimelineStyle()>();
+
+        $r45 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getClosedStyle()>();
+
+        $d2 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: double getFactorScale()>();
+
+        $r46 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r47 = virtualinvoke $r46.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        $r48 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r49 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r50 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r51 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDays()>();
+
+        $r52 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysOfWeek>;
+
+        $r53 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r54 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r55 = interfaceinvoke $r54.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        specialinvoke $r42.<net.sourceforge.plantuml.project.draw.TimeHeaderMonthly: void <init>(java.util.Locale,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.LoadPlanable,java.util.Map,java.util.Map,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle)>($r43, $r44, $r45, $d2, $r47, $r48, $r49, $r50, $r51, $r52, $r53, $r55);
+
+        return $r42;
+
+     label4:
+        $r10 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.PrintScale printScale>;
+
+        $r9 = <net.sourceforge.plantuml.project.core.PrintScale: net.sourceforge.plantuml.project.core.PrintScale QUARTERLY>;
+
+        if $r10 != $r9 goto label5;
+
+        $r28 = new net.sourceforge.plantuml.project.draw.TimeHeaderQuarterly;
+
+        $r29 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Locale locale>;
+
+        $r30 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getTimelineStyle()>();
+
+        $r31 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getClosedStyle()>();
+
+        $d1 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: double getFactorScale()>();
+
+        $r32 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r33 = virtualinvoke $r32.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        $r34 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r35 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r36 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r37 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDays()>();
+
+        $r38 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysOfWeek>;
+
+        $r39 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r40 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r41 = interfaceinvoke $r40.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        specialinvoke $r28.<net.sourceforge.plantuml.project.draw.TimeHeaderQuarterly: void <init>(java.util.Locale,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.LoadPlanable,java.util.Map,java.util.Map,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle)>($r29, $r30, $r31, $d1, $r33, $r34, $r35, $r36, $r37, $r38, $r39, $r41);
+
+        return $r28;
+
+     label5:
+        $r12 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.PrintScale printScale>;
+
+        $r11 = <net.sourceforge.plantuml.project.core.PrintScale: net.sourceforge.plantuml.project.core.PrintScale YEARLY>;
+
+        if $r12 != $r11 goto label6;
+
+        $r14 = new net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
+
+        $r15 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Locale locale>;
+
+        $r16 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getTimelineStyle()>();
+
+        $r17 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.Style getClosedStyle()>();
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: double getFactorScale()>();
+
+        $r18 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r19 = virtualinvoke $r18.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        $r20 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r21 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r22 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r23 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDays()>();
+
+        $r24 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysOfWeek>;
+
+        $r25 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r26 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r27 = interfaceinvoke $r26.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        specialinvoke $r14.<net.sourceforge.plantuml.project.draw.TimeHeaderYearly: void <init>(java.util.Locale,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.LoadPlanable,java.util.Map,java.util.Map,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle)>($r15, $r16, $r17, $d0, $r19, $r20, $r21, $r22, $r23, $r24, $r25, $r27);
+
+        return $r14;
+
+     label6:
+        $r13 = new java.lang.IllegalStateException;
+
+        specialinvoke $r13.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r13;
+    }
+
+    private java.util.Map colorDays()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1, $r2, $r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysInternal>;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysToday>;
+
+        interfaceinvoke $r2.<java.util.Map: void putAll(java.util.Map)>($r1);
+
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysInternal>;
+
+        $r4 = staticinvoke <java.util.Collections: java.util.Map unmodifiableMap(java.util.Map)>($r3);
+
+        return $r4;
+    }
+
+    private net.sourceforge.plantuml.style.Style getClosedStyle()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.project.GanttDiagram r6;
+        net.sourceforge.plantuml.style.StyleBuilder $r7;
+        net.sourceforge.plantuml.style.Style $r8;
+
+        r6 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName ganttDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName closed>;
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r8 = virtualinvoke $r5.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r7);
+
+        return $r8;
+    }
+
+    private net.sourceforge.plantuml.style.Style getTimelineStyle()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.project.GanttDiagram r6;
+        net.sourceforge.plantuml.style.StyleBuilder $r7;
+        net.sourceforge.plantuml.style.Style $r8;
+
+        r6 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName ganttDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName timeline>;
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r8 = virtualinvoke $r5.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r7);
+
+        return $r8;
+    }
+
+    private double getTotalHeight(net.sourceforge.plantuml.project.draw.TimeHeader)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        boolean $z0;
+        double $d0, $d1, $d2, $d3;
+        net.sourceforge.plantuml.project.draw.TimeHeader r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.draw.TimeHeader;
+
+        $z0 = r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean showFootbox>;
+
+        if $z0 == 0 goto label1;
+
+        $d1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: double totalHeightWithoutFooter>;
+
+        $d2 = virtualinvoke r1.<net.sourceforge.plantuml.project.draw.TimeHeader: double getTimeFooterHeight()>();
+
+        $d3 = $d1 + $d2;
+
+        return $d3;
+
+     label1:
+        $d0 = r0.<net.sourceforge.plantuml.project.GanttDiagram: double totalHeightWithoutFooter>;
+
+        return $d0;
+    }
+
+    private void drawTasksRect(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1, $r6;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        java.lang.Object $r4, $r7;
+        net.sourceforge.plantuml.project.core.Task r5;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.project.draw.TaskDraw r8;
+        net.sourceforge.plantuml.ugraphic.UGraphic r9, $r13;
+        net.sourceforge.plantuml.graphic.StringBounder $r10;
+        net.sourceforge.plantuml.real.Real $r11;
+        double $d0;
+        net.sourceforge.plantuml.ugraphic.UTranslate r12;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r9 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.project.core.Task) $r4;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean isHidden(net.sourceforge.plantuml.project.core.Task)>(r5);
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r6 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map draws>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        r8 = (net.sourceforge.plantuml.project.draw.TaskDraw) $r7;
+
+        $r10 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r11 = interfaceinvoke r8.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.real.Real getY(net.sourceforge.plantuml.graphic.StringBounder)>($r10);
+
+        $d0 = interfaceinvoke $r11.<net.sourceforge.plantuml.real.Real: double getCurrentValue()>();
+
+        r12 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d0);
+
+        $r13 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r12);
+
+        interfaceinvoke r8.<net.sourceforge.plantuml.project.draw.TaskDraw: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r13);
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    private void drawConstraints(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.project.timescale.TimeScale)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.project.GanttConstraint r4;
+        net.sourceforge.plantuml.project.time.Day $r5, $r9, $r10;
+        net.sourceforge.plantuml.project.timescale.TimeScale r6;
+        net.sourceforge.plantuml.graphic.UDrawable $r7;
+        net.sourceforge.plantuml.ugraphic.UGraphic r8;
+        boolean $z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r8 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r6 := @parameter1: net.sourceforge.plantuml.project.timescale.TimeScale;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.List constraints>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.project.GanttConstraint) $r3;
+
+        $r5 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        if $r5 == null goto label2;
+
+        $r10 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r9 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $z0 = virtualinvoke r4.<net.sourceforge.plantuml.project.GanttConstraint: boolean isHidden(net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>($r10, $r9);
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.project.GanttConstraint: net.sourceforge.plantuml.graphic.UDrawable getUDrawable(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.project.ToTaskDraw)>(r6, r0);
+
+        interfaceinvoke $r7.<net.sourceforge.plantuml.graphic.UDrawable: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r8);
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    public net.sourceforge.plantuml.style.StyleSignature getDefaultStyleDefinitionArrow()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.project.GanttDiagram r6;
+
+        r6 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName ganttDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName arrow>;
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        return $r5;
+    }
+
+    private void drawTasksTitle(net.sourceforge.plantuml.ugraphic.UGraphic, double, double)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1, $r6;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        java.lang.Object $r4, $r7;
+        net.sourceforge.plantuml.project.core.Task r5;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.project.draw.TaskDraw r8;
+        net.sourceforge.plantuml.ugraphic.UGraphic r9, $r13;
+        net.sourceforge.plantuml.graphic.StringBounder $r10;
+        net.sourceforge.plantuml.real.Real $r11;
+        double $d0, d1, d2;
+        net.sourceforge.plantuml.ugraphic.UTranslate r12;
+        net.sourceforge.plantuml.project.LabelStrategy $r14;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r9 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        d1 := @parameter1: double;
+
+        d2 := @parameter2: double;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.project.core.Task) $r4;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean isHidden(net.sourceforge.plantuml.project.core.Task)>(r5);
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r6 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map draws>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        r8 = (net.sourceforge.plantuml.project.draw.TaskDraw) $r7;
+
+        $r10 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r11 = interfaceinvoke r8.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.real.Real getY(net.sourceforge.plantuml.graphic.StringBounder)>($r10);
+
+        $d0 = interfaceinvoke $r11.<net.sourceforge.plantuml.real.Real: double getCurrentValue()>();
+
+        r12 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d0);
+
+        $r13 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r12);
+
+        $r14 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.LabelStrategy labelStrategy>;
+
+        interfaceinvoke r8.<net.sourceforge.plantuml.project.draw.TaskDraw: void drawTitle(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.project.LabelStrategy,double,double)>($r13, $r14, d1, d2);
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    private void drawResources(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.project.core.Resource r5;
+        net.sourceforge.plantuml.project.draw.ResourceDraw r6;
+        double $d0;
+        net.sourceforge.plantuml.ugraphic.UTranslate r7;
+        net.sourceforge.plantuml.ugraphic.UGraphic r8, $r9;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r8 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map resources>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.project.core.Resource) $r4;
+
+        r6 = virtualinvoke r5.<net.sourceforge.plantuml.project.core.Resource: net.sourceforge.plantuml.project.draw.ResourceDraw getResourceDraw()>();
+
+        $d0 = virtualinvoke r6.<net.sourceforge.plantuml.project.draw.ResourceDraw: double getY()>();
+
+        r7 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d0);
+
+        $r9 = interfaceinvoke r8.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r7);
+
+        virtualinvoke r6.<net.sourceforge.plantuml.project.draw.ResourceDraw: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r9);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void closeDayOfWeek(net.sourceforge.plantuml.project.time.DayOfWeek)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.DayOfWeek r1;
+        net.sourceforge.plantuml.project.OpenClose $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.DayOfWeek;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.project.OpenClose: void close(net.sourceforge.plantuml.project.time.DayOfWeek)>(r1);
+
+        return;
+    }
+
+    public void closeDayAsDate(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        net.sourceforge.plantuml.project.OpenClose $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.project.OpenClose: void close(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        return;
+    }
+
+    public void openDayAsDate(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        net.sourceforge.plantuml.project.OpenClose $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.project.OpenClose: void open(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        return;
+    }
+
+    private void initTaskAndResourceDraws(net.sourceforge.plantuml.project.timescale.TimeScale, double, net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        double d0, $d1, $d2, d3;
+        net.sourceforge.plantuml.real.RealOrigin $r1, $r4;
+        java.util.Map $r2, $r6, $r16;
+        java.util.Collection $r3, $r7, $r48;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, z6, $z8, $z9;
+        net.sourceforge.plantuml.graphic.StringBounder r5;
+        byte $b0;
+        java.lang.Object $r8, $r13;
+        net.sourceforge.plantuml.project.draw.ResourceDraw $r9;
+        net.sourceforge.plantuml.project.timescale.TimeScale r10;
+        net.sourceforge.plantuml.project.time.Day $r11, $r12, $r15, $r18, $r19, $r20, $r21, $r23, $r32, $r33, $r43, $r45, $r46;
+        net.sourceforge.plantuml.project.core.Task r14, $r55;
+        int $i1, $i2, $i3;
+        net.sourceforge.plantuml.project.draw.TaskDrawDiamond $r22;
+        net.sourceforge.plantuml.ISkinParam $r24, $r26, $r35, $r47, $r50;
+        net.sourceforge.plantuml.style.StyleBuilder $r25, $r34, $r49;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r27, $r36, $r51;
+        net.sourceforge.plantuml.project.core.TaskCode $r28;
+        net.sourceforge.plantuml.project.draw.TaskDrawSeparator $r29;
+        net.sourceforge.plantuml.project.core.TaskSeparator $r30;
+        java.lang.String $r31, $r41, r42;
+        net.sourceforge.plantuml.real.Real r37;
+        java.util.Iterator r38, r56;
+        net.sourceforge.plantuml.project.draw.TaskDraw r39;
+        net.sourceforge.plantuml.project.core.TaskImpl r40;
+        net.sourceforge.plantuml.project.draw.TaskDrawRegular $r44;
+        net.sourceforge.plantuml.project.lang.CenterBorderColor $r52;
+        net.sourceforge.plantuml.Url $r53;
+        net.sourceforge.plantuml.cucadiagram.Display $r54;
+        net.sourceforge.plantuml.project.core.Resource r57;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r10 := @parameter0: net.sourceforge.plantuml.project.timescale.TimeScale;
+
+        d0 := @parameter1: double;
+
+        r5 := @parameter2: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.real.RealOrigin origin>;
+
+        r37 = interfaceinvoke $r1.<net.sourceforge.plantuml.real.RealOrigin: net.sourceforge.plantuml.real.Real addFixed(double)>(d0);
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Collection values()>();
+
+        r38 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label01:
+        $z0 = interfaceinvoke r38.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label13;
+
+        $r13 = interfaceinvoke r38.<java.util.Iterator: java.lang.Object next()>();
+
+        r14 = (net.sourceforge.plantuml.project.core.Task) $r13;
+
+        $z3 = r14 instanceof net.sourceforge.plantuml.project.core.TaskSeparator;
+
+        if $z3 == 0 goto label02;
+
+        $r29 = new net.sourceforge.plantuml.project.draw.TaskDrawSeparator;
+
+        $r30 = (net.sourceforge.plantuml.project.core.TaskSeparator) r14;
+
+        $r31 = virtualinvoke $r30.<net.sourceforge.plantuml.project.core.TaskSeparator: java.lang.String getName()>();
+
+        $r32 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r33 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r34 = interfaceinvoke r14.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        $r35 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r36 = interfaceinvoke $r35.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        specialinvoke $r29.<net.sourceforge.plantuml.project.draw.TaskDrawSeparator: void <init>(java.lang.String,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r31, r10, r37, $r32, $r33, $r34, $r36);
+
+        r39 = $r29;
+
+        goto label11;
+
+     label02:
+        r40 = (net.sourceforge.plantuml.project.core.TaskImpl) r14;
+
+        $z4 = r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean hideRessourceName>;
+
+        if $z4 == 0 goto label03;
+
+        $r28 = virtualinvoke r40.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.core.TaskCode getCode()>();
+
+        $r41 = virtualinvoke $r28.<net.sourceforge.plantuml.project.core.TaskCode: java.lang.String getSimpleDisplay()>();
+
+        goto label04;
+
+     label03:
+        $r41 = virtualinvoke r40.<net.sourceforge.plantuml.project.core.TaskImpl: java.lang.String getPrettyDisplay()>();
+
+     label04:
+        r42 = $r41;
+
+        $z5 = virtualinvoke r40.<net.sourceforge.plantuml.project.core.TaskImpl: boolean isDiamond()>();
+
+        if $z5 == 0 goto label05;
+
+        $r22 = new net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
+
+        $r23 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day getStart(net.sourceforge.plantuml.project.core.TaskImpl)>(r40);
+
+        $r24 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r25 = interfaceinvoke r14.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        $r26 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r27 = interfaceinvoke $r26.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        specialinvoke $r22.<net.sourceforge.plantuml.project.draw.TaskDrawDiamond: void <init>(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.ugraphic.color.HColorSet)>(r10, r37, $r41, $r23, $r24, r14, r0, $r25, $r27);
+
+        r39 = $r22;
+
+        goto label10;
+
+     label05:
+        $r15 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        if $r15 == null goto label06;
+
+        $r20 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r21 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day getStart(net.sourceforge.plantuml.project.core.TaskImpl)>(r40);
+
+        $i2 = virtualinvoke $r20.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>($r21);
+
+        if $i2 != 0 goto label06;
+
+        $z8 = 1;
+
+        goto label07;
+
+     label06:
+        $z8 = 0;
+
+     label07:
+        z6 = $z8;
+
+        $r43 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        if $r43 == null goto label08;
+
+        $r18 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r19 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day getEnd(net.sourceforge.plantuml.project.core.TaskImpl)>(r40);
+
+        $i1 = virtualinvoke $r18.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>($r19);
+
+        if $i1 != 0 goto label08;
+
+        $z9 = 1;
+
+        goto label09;
+
+     label08:
+        $z9 = 0;
+
+     label09:
+        $r44 = new net.sourceforge.plantuml.project.draw.TaskDrawRegular;
+
+        $r45 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day getStart(net.sourceforge.plantuml.project.core.TaskImpl)>(r40);
+
+        $r46 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day getEnd(net.sourceforge.plantuml.project.core.TaskImpl)>(r40);
+
+        $r47 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r48 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Collection getConstraints(net.sourceforge.plantuml.project.core.Task)>(r14);
+
+        $r49 = interfaceinvoke r14.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        $r50 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r51 = interfaceinvoke $r50.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        specialinvoke $r44.<net.sourceforge.plantuml.project.draw.TaskDrawRegular: void <init>(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,boolean,boolean,net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,java.util.Collection,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.ugraphic.color.HColorSet)>(r10, r37, r42, $r45, $r46, z6, $z9, $r47, r14, r0, $r48, $r49, $r51);
+
+        r39 = $r44;
+
+     label10:
+        $r52 = virtualinvoke r40.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.lang.CenterBorderColor getColors()>();
+
+        $i3 = virtualinvoke r40.<net.sourceforge.plantuml.project.core.TaskImpl: int getCompletion()>();
+
+        $r53 = virtualinvoke r40.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.Url getUrl()>();
+
+        $r54 = virtualinvoke r40.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.cucadiagram.Display getNote()>();
+
+        interfaceinvoke r39.<net.sourceforge.plantuml.project.draw.TaskDraw: void setColorsAndCompletion(net.sourceforge.plantuml.project.lang.CenterBorderColor,int,net.sourceforge.plantuml.Url,net.sourceforge.plantuml.cucadiagram.Display)>($r52, $i3, $r53, $r54);
+
+     label11:
+        $r55 = interfaceinvoke r14.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.project.core.Task getRow()>();
+
+        if $r55 != null goto label12;
+
+        $d2 = interfaceinvoke r39.<net.sourceforge.plantuml.project.draw.TaskDraw: double getFullHeightTask(net.sourceforge.plantuml.graphic.StringBounder)>(r5);
+
+        r37 = interfaceinvoke r37.<net.sourceforge.plantuml.real.Real: net.sourceforge.plantuml.real.Real addAtLeast(double)>($d2);
+
+     label12:
+        $r16 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map draws>;
+
+        interfaceinvoke $r16.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r14, r39);
+
+        goto label01;
+
+     label13:
+        $r4 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.real.RealOrigin origin>;
+
+        interfaceinvoke $r4.<net.sourceforge.plantuml.real.RealOrigin: void compileNow()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: void magicPush(net.sourceforge.plantuml.graphic.StringBounder)>(r5);
+
+        d3 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: double lastY(net.sourceforge.plantuml.graphic.StringBounder)>(r5);
+
+        $b0 = d3 cmpl 0.0;
+
+        if $b0 != 0 goto label14;
+
+        d3 = d0;
+
+        goto label16;
+
+     label14:
+        $z1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean hideRessourceFoobox>;
+
+        if $z1 != 0 goto label16;
+
+        $r6 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map resources>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.util.Collection values()>();
+
+        r56 = interfaceinvoke $r7.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label15:
+        $z2 = interfaceinvoke r56.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label16;
+
+        $r8 = interfaceinvoke r56.<java.util.Iterator: java.lang.Object next()>();
+
+        r57 = (net.sourceforge.plantuml.project.core.Resource) $r8;
+
+        $r9 = new net.sourceforge.plantuml.project.draw.ResourceDraw;
+
+        $r12 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r11 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.project.draw.ResourceDraw: void <init>(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.project.core.Resource,net.sourceforge.plantuml.project.timescale.TimeScale,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>(r0, r57, r10, d3, $r12, $r11);
+
+        virtualinvoke r57.<net.sourceforge.plantuml.project.core.Resource: void setTaskDraw(net.sourceforge.plantuml.project.draw.ResourceDraw)>($r9);
+
+        $d1 = virtualinvoke $r9.<net.sourceforge.plantuml.project.draw.ResourceDraw: double getHeight()>();
+
+        d3 = d3 + $d1;
+
+        goto label15;
+
+     label16:
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: double totalHeightWithoutFooter> = d3;
+
+        return;
+    }
+
+    private java.util.Collection getConstraints(net.sourceforge.plantuml.project.core.Task)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.project.GanttDiagram r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0, $z1;
+        java.util.Collection $r5;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.project.GanttConstraint r7;
+        net.sourceforge.plantuml.project.core.Task r8;
+
+        r2 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r8 := @parameter0: net.sourceforge.plantuml.project.core.Task;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.project.GanttDiagram: java.util.List constraints>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.project.GanttConstraint) $r6;
+
+        $z1 = virtualinvoke r7.<net.sourceforge.plantuml.project.GanttConstraint: boolean isOn(net.sourceforge.plantuml.project.core.Task)>(r8);
+
+        if $z1 == 0 goto label2;
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r7);
+
+     label2:
+        goto label1;
+
+     label3:
+        $r5 = staticinvoke <java.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)>($r0);
+
+        return $r5;
+    }
+
+    private double lastY(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.project.draw.TaskDraw r5;
+        net.sourceforge.plantuml.graphic.StringBounder r6;
+        net.sourceforge.plantuml.real.Real $r7;
+        double $d0, $d1, $d2, d3;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r6 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        d3 = 0.0;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map draws>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.project.draw.TaskDraw) $r4;
+
+        $r7 = interfaceinvoke r5.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.real.Real getY(net.sourceforge.plantuml.graphic.StringBounder)>(r6);
+
+        $d0 = interfaceinvoke $r7.<net.sourceforge.plantuml.real.Real: double getCurrentValue()>();
+
+        $d1 = interfaceinvoke r5.<net.sourceforge.plantuml.project.draw.TaskDraw: double getHeightMax(net.sourceforge.plantuml.graphic.StringBounder)>(r6);
+
+        $d2 = $d0 + $d1;
+
+        d3 = staticinvoke <java.lang.Math: double max(double,double)>(d3, $d2);
+
+        goto label1;
+
+     label2:
+        return d3;
+    }
+
+    private void magicPush(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.project.GanttDiagram r2;
+        java.util.Map $r3;
+        java.util.Collection $r4;
+        java.util.Iterator r5, r12;
+        boolean $z0, $z2;
+        java.lang.Object $r6, $r13;
+        net.sourceforge.plantuml.project.draw.TaskDraw r7, $r11, r14;
+        net.sourceforge.plantuml.graphic.StringBounder r8;
+        net.sourceforge.plantuml.project.draw.FingerPrint r9, r10, r15;
+        double d0, $d1;
+        byte $b0;
+        net.sourceforge.plantuml.real.Real $r16, r17, $r18;
+        net.sourceforge.plantuml.real.RealOrigin $r19;
+
+        r2 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r8 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map draws>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Collection values()>();
+
+        r5 = interfaceinvoke $r4.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label6;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.project.draw.TaskDraw) $r6;
+
+        r9 = interfaceinvoke r7.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.project.draw.FingerPrint getFingerPrint(net.sourceforge.plantuml.graphic.StringBounder)>(r8);
+
+        r10 = interfaceinvoke r7.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.project.draw.FingerPrint getFingerPrintNote(net.sourceforge.plantuml.graphic.StringBounder)>(r8);
+
+        $r11 = interfaceinvoke r7.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.project.draw.TaskDraw getTrueRow()>();
+
+        if $r11 != null goto label4;
+
+        r12 = interfaceinvoke $r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z2 = interfaceinvoke r12.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label4;
+
+        $r13 = interfaceinvoke r12.<java.util.Iterator: java.lang.Object next()>();
+
+        r14 = (net.sourceforge.plantuml.project.draw.TaskDraw) $r13;
+
+        r15 = interfaceinvoke r14.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.project.draw.FingerPrint getFingerPrintNote(net.sourceforge.plantuml.graphic.StringBounder)>(r8);
+
+        d0 = virtualinvoke r15.<net.sourceforge.plantuml.project.draw.FingerPrint: double overlap(net.sourceforge.plantuml.project.draw.FingerPrint)>(r9);
+
+        $b0 = d0 cmpl 0.0;
+
+        if $b0 <= 0 goto label3;
+
+        $r16 = interfaceinvoke r14.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.real.Real getY(net.sourceforge.plantuml.graphic.StringBounder)>(r8);
+
+        $d1 = interfaceinvoke r14.<net.sourceforge.plantuml.project.draw.TaskDraw: double getHeightMax(net.sourceforge.plantuml.graphic.StringBounder)>(r8);
+
+        r17 = interfaceinvoke $r16.<net.sourceforge.plantuml.real.Real: net.sourceforge.plantuml.real.Real addAtLeast(double)>($d1);
+
+        $r18 = interfaceinvoke r7.<net.sourceforge.plantuml.project.draw.TaskDraw: net.sourceforge.plantuml.real.Real getY(net.sourceforge.plantuml.graphic.StringBounder)>(r8);
+
+        interfaceinvoke $r18.<net.sourceforge.plantuml.real.Real: void ensureBiggerThan(net.sourceforge.plantuml.real.Real)>(r17);
+
+        $r19 = r2.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.real.RealOrigin origin>;
+
+        interfaceinvoke $r19.<net.sourceforge.plantuml.real.RealOrigin: void compileNow()>();
+
+     label3:
+        goto label2;
+
+     label4:
+        if r10 == null goto label5;
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r7);
+
+     label5:
+        goto label1;
+
+     label6:
+        return;
+    }
+
+    private net.sourceforge.plantuml.project.time.Day getStart(net.sourceforge.plantuml.project.core.TaskImpl)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day $r1, $r3, $r4, $r5, $r6;
+        net.sourceforge.plantuml.project.core.TaskImpl r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        if $r1 != null goto label1;
+
+        $r6 = virtualinvoke r2.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getStart()>();
+
+        return $r6;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getStart()>();
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day max(net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>($r3, $r4);
+
+        return $r5;
+    }
+
+    private net.sourceforge.plantuml.project.time.Day getEnd(net.sourceforge.plantuml.project.core.TaskImpl)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day $r1, $r3, $r4, $r5, $r6;
+        net.sourceforge.plantuml.project.core.TaskImpl r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart>;
+
+        if $r1 != null goto label1;
+
+        $r6 = virtualinvoke r2.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        return $r6;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.project.core.TaskImpl: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day min(net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>($r3, $r4);
+
+        return $r5;
+    }
+
+    private void initMinMax()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1, $r2, $r6, $r8;
+        int $i0, $i1, $i2, $i3;
+        java.util.Collection $r3;
+        net.sourceforge.plantuml.project.OpenClose $r4;
+        net.sourceforge.plantuml.project.time.Day $r5, $r11, $r13, r16, $r17, $r18, $r19, $r20, r24, r26;
+        java.util.Set $r7, $r9;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.Object $r10, $r12, $r14;
+        java.util.Iterator r21, r23, r25;
+        net.sourceforge.plantuml.project.core.Task r22;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $i0 = interfaceinvoke $r1.<java.util.Map: int size()>();
+
+        if $i0 != 0 goto label01;
+
+        $r19 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        $r20 = virtualinvoke $r19.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day increment()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max> = $r20;
+
+        goto label06;
+
+     label01:
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max> = null;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Collection values()>();
+
+        r21 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label02:
+        $z3 = interfaceinvoke r21.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 == 0 goto label06;
+
+        $r14 = interfaceinvoke r21.<java.util.Iterator: java.lang.Object next()>();
+
+        r22 = (net.sourceforge.plantuml.project.core.Task) $r14;
+
+        $z2 = r22 instanceof net.sourceforge.plantuml.project.core.TaskSeparator;
+
+        if $z2 == 0 goto label03;
+
+        goto label02;
+
+     label03:
+        interfaceinvoke r22.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.project.time.Day getStart()>();
+
+        r16 = interfaceinvoke r22.<net.sourceforge.plantuml.project.core.Task: net.sourceforge.plantuml.project.time.Day getEnd()>();
+
+        $r17 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        if $r17 == null goto label04;
+
+        $r18 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $i3 = virtualinvoke $r18.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r16);
+
+        if $i3 >= 0 goto label05;
+
+     label04:
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max> = r16;
+
+     label05:
+        goto label02;
+
+     label06:
+        $r4 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        if $r5 == null goto label12;
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDays()>();
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.util.Set keySet()>();
+
+        r23 = interfaceinvoke $r7.<java.util.Set: java.util.Iterator iterator()>();
+
+     label07:
+        $z0 = interfaceinvoke r23.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label09;
+
+        $r12 = interfaceinvoke r23.<java.util.Iterator: java.lang.Object next()>();
+
+        r24 = (net.sourceforge.plantuml.project.time.Day) $r12;
+
+        $r13 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $i2 = virtualinvoke r24.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>($r13);
+
+        if $i2 <= 0 goto label08;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max> = r24;
+
+     label08:
+        goto label07;
+
+     label09:
+        $r8 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map nameDays>;
+
+        $r9 = interfaceinvoke $r8.<java.util.Map: java.util.Set keySet()>();
+
+        r25 = interfaceinvoke $r9.<java.util.Set: java.util.Iterator iterator()>();
+
+     label10:
+        $z1 = interfaceinvoke r25.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label12;
+
+        $r10 = interfaceinvoke r25.<java.util.Iterator: java.lang.Object next()>();
+
+        r26 = (net.sourceforge.plantuml.project.time.Day) $r10;
+
+        $r11 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        $i1 = virtualinvoke r26.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>($r11);
+
+        if $i1 <= 0 goto label11;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max> = r26;
+
+     label11:
+        goto label10;
+
+     label12:
+        return;
+    }
+
+    public net.sourceforge.plantuml.project.time.Day getThenDate()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1, $r3;
+        java.util.Set $r2, $r4;
+        boolean $z0, $z1;
+        java.lang.Object $r5, $r6;
+        int $i0, $i1;
+        net.sourceforge.plantuml.project.time.Day r7, r9, r11;
+        java.util.Iterator r8, r10;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r7 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day getStartingDate()>();
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDays()>();
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set keySet()>();
+
+        r8 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r8.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r8.<java.util.Iterator: java.lang.Object next()>();
+
+        r9 = (net.sourceforge.plantuml.project.time.Day) $r6;
+
+        $i1 = virtualinvoke r9.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r7);
+
+        if $i1 <= 0 goto label2;
+
+        r7 = r9;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map nameDays>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Set keySet()>();
+
+        r10 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
+
+     label4:
+        $z1 = interfaceinvoke r10.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label6;
+
+        $r5 = interfaceinvoke r10.<java.util.Iterator: java.lang.Object next()>();
+
+        r11 = (net.sourceforge.plantuml.project.time.Day) $r5;
+
+        $i0 = virtualinvoke r11.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r7);
+
+        if $i0 <= 0 goto label5;
+
+        r7 = r11;
+
+     label5:
+        goto label4;
+
+     label6:
+        return r7;
+    }
+
+    public net.sourceforge.plantuml.project.core.Task getExistingTask(java.lang.String)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.lang.String r1;
+        java.util.Map $r2, $r8;
+        java.lang.Object $r3, $r4, $r9;
+        net.sourceforge.plantuml.project.core.Task r5, $r10;
+        net.sourceforge.plantuml.project.core.TaskCode $r6;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map byShortName>;
+
+        $r3 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r4 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>($r3);
+
+        r5 = (net.sourceforge.plantuml.project.core.Task) $r4;
+
+        if r5 == null goto label1;
+
+        return r5;
+
+     label1:
+        $r6 = new net.sourceforge.plantuml.project.core.TaskCode;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.project.core.TaskCode: void <init>(java.lang.String)>(r1);
+
+        $r8 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r9 = interfaceinvoke $r8.<java.util.Map: java.lang.Object get(java.lang.Object)>($r6);
+
+        $r10 = (net.sourceforge.plantuml.project.core.Task) $r9;
+
+        return $r10;
+    }
+
+    public net.sourceforge.plantuml.project.GanttConstraint forceTaskOrder(net.sourceforge.plantuml.project.core.Task, net.sourceforge.plantuml.project.core.Task)
+    {
+        net.sourceforge.plantuml.project.core.TaskInstant $r0, $r11;
+        net.sourceforge.plantuml.project.core.Task r1, r4;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r2, $r12;
+        net.sourceforge.plantuml.project.time.Day $r5;
+        net.sourceforge.plantuml.project.GanttConstraint $r6;
+        net.sourceforge.plantuml.project.GanttDiagram r7;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r8;
+        net.sourceforge.plantuml.ISkinParam $r9;
+        net.sourceforge.plantuml.style.StyleBuilder $r10;
+
+        r7 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.core.Task;
+
+        r4 := @parameter1: net.sourceforge.plantuml.project.core.Task;
+
+        $r0 = new net.sourceforge.plantuml.project.core.TaskInstant;
+
+        $r2 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute END>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.project.core.TaskInstant: void <init>(net.sourceforge.plantuml.project.core.Moment,net.sourceforge.plantuml.project.core.TaskAttribute)>(r1, $r2);
+
+        $r5 = virtualinvoke $r0.<net.sourceforge.plantuml.project.core.TaskInstant: net.sourceforge.plantuml.project.time.Day getInstantPrecise()>();
+
+        interfaceinvoke r4.<net.sourceforge.plantuml.project.core.Task: void setStart(net.sourceforge.plantuml.project.time.Day)>($r5);
+
+        $r6 = new net.sourceforge.plantuml.project.GanttConstraint;
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r9 = virtualinvoke r7.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r10 = interfaceinvoke $r9.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r11 = new net.sourceforge.plantuml.project.core.TaskInstant;
+
+        $r12 = <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute START>;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.project.core.TaskInstant: void <init>(net.sourceforge.plantuml.project.core.Moment,net.sourceforge.plantuml.project.core.TaskAttribute)>(r4, $r12);
+
+        specialinvoke $r6.<net.sourceforge.plantuml.project.GanttConstraint: void <init>(net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.project.core.TaskInstant,net.sourceforge.plantuml.project.core.TaskInstant)>($r8, $r10, $r0, $r11);
+
+        virtualinvoke r7.<net.sourceforge.plantuml.project.GanttDiagram: void addContraint(net.sourceforge.plantuml.project.GanttConstraint)>($r6);
+
+        return $r6;
+    }
+
+    public net.sourceforge.plantuml.project.core.Task getOrCreateTask(java.lang.String, java.lang.String, boolean)
+    {
+        java.lang.String r0, r2;
+        net.sourceforge.plantuml.project.GanttDiagram r3;
+        java.util.Map $r4, $r6, $r10, $r16, $r18, $r20;
+        java.lang.Object $r5, $r7, $r11;
+        net.sourceforge.plantuml.project.core.TaskCode $r8;
+        boolean z0;
+        net.sourceforge.plantuml.project.core.TaskImpl $r12;
+        net.sourceforge.plantuml.ISkinParam $r13;
+        net.sourceforge.plantuml.style.StyleBuilder $r14;
+        net.sourceforge.plantuml.project.OpenClose $r15;
+        net.sourceforge.plantuml.project.core.Task $r22, r24, r25, r26;
+
+        r3 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.lang.String;
+
+        z0 := @parameter2: boolean;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        if r2 != null goto label1;
+
+        $r22 = null;
+
+        goto label2;
+
+     label1:
+        $r4 = r3.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map byShortName>;
+
+        $r5 = interfaceinvoke $r4.<java.util.Map: java.lang.Object get(java.lang.Object)>(r2);
+
+        $r22 = (net.sourceforge.plantuml.project.core.Task) $r5;
+
+     label2:
+        if $r22 == null goto label3;
+
+        return $r22;
+
+     label3:
+        $r6 = r3.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map byShortName>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r24 = (net.sourceforge.plantuml.project.core.Task) $r7;
+
+        if r24 == null goto label4;
+
+        return r24;
+
+     label4:
+        $r8 = new net.sourceforge.plantuml.project.core.TaskCode;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.project.core.TaskCode: void <init>(java.lang.String)>(r0);
+
+        $r10 = r3.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r11 = interfaceinvoke $r10.<java.util.Map: java.lang.Object get(java.lang.Object)>($r8);
+
+        r25 = (net.sourceforge.plantuml.project.core.Task) $r11;
+
+        if r25 != null goto label7;
+
+        r26 = null;
+
+        if z0 == 0 goto label5;
+
+        r26 = specialinvoke r3.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.Task getLastCreatedTask()>();
+
+     label5:
+        $r12 = new net.sourceforge.plantuml.project.core.TaskImpl;
+
+        $r13 = virtualinvoke r3.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r14 = interfaceinvoke $r13.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r15 = r3.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.project.core.TaskImpl: void <init>(net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.project.core.TaskCode,net.sourceforge.plantuml.project.OpenClose)>($r14, $r8, $r15);
+
+        r25 = $r12;
+
+        $r16 = r3.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        interfaceinvoke $r16.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r8, $r12);
+
+        $r18 = r3.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map byShortName>;
+
+        if $r18 == null goto label6;
+
+        $r20 = r3.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map byShortName>;
+
+        interfaceinvoke $r20.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r2, $r12);
+
+     label6:
+        if r26 == null goto label7;
+
+        virtualinvoke r3.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.GanttConstraint forceTaskOrder(net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.core.Task)>(r26, $r12);
+
+     label7:
+        return r25;
+    }
+
+    private net.sourceforge.plantuml.project.core.Task getLastCreatedTask()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.project.GanttDiagram r1;
+        java.util.Map $r2;
+        java.util.Collection $r3;
+        int $i0, i1;
+        java.lang.Object $r5, $r6;
+        boolean $z0;
+        net.sourceforge.plantuml.project.core.Task $r7;
+
+        r1 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Collection values()>();
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+        $i0 = interfaceinvoke $r0.<java.util.List: int size()>();
+
+        i1 = $i0 - 1;
+
+     label1:
+        if i1 < 0 goto label3;
+
+        $r5 = interfaceinvoke $r0.<java.util.List: java.lang.Object get(int)>(i1);
+
+        $z0 = $r5 instanceof net.sourceforge.plantuml.project.core.TaskImpl;
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke $r0.<java.util.List: java.lang.Object get(int)>(i1);
+
+        $r7 = (net.sourceforge.plantuml.project.core.Task) $r6;
+
+        return $r7;
+
+     label2:
+        i1 = i1 + -1;
+
+        goto label1;
+
+     label3:
+        return null;
+    }
+
+    public void addSeparator(java.lang.String)
+    {
+        net.sourceforge.plantuml.project.core.TaskSeparator $r0;
+        net.sourceforge.plantuml.project.GanttDiagram r1;
+        net.sourceforge.plantuml.ISkinParam $r2;
+        net.sourceforge.plantuml.style.StyleBuilder $r3;
+        java.lang.String r4;
+        java.util.Map $r5, $r7;
+        int $i0;
+        net.sourceforge.plantuml.project.core.TaskCode $r8;
+
+        r1 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r4 := @parameter0: java.lang.String;
+
+        $r0 = new net.sourceforge.plantuml.project.core.TaskSeparator;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r5 = r1.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $i0 = interfaceinvoke $r5.<java.util.Map: int size()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.project.core.TaskSeparator: void <init>(net.sourceforge.plantuml.style.StyleBuilder,java.lang.String,int)>($r3, r4, $i0);
+
+        $r7 = r1.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r8 = virtualinvoke $r0.<net.sourceforge.plantuml.project.core.TaskSeparator: net.sourceforge.plantuml.project.core.TaskCode getCode()>();
+
+        interfaceinvoke $r7.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r8, $r0);
+
+        return;
+    }
+
+    public void addContraint(net.sourceforge.plantuml.project.GanttConstraint)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.GanttConstraint r1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.GanttConstraint;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.List constraints>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.ugraphic.color.HColorSet colorSet>;
+
+        return $r1;
+    }
+
+    public void setStartingDate(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        net.sourceforge.plantuml.project.OpenClose $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.project.OpenClose: void setCalendar(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min> = r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.project.time.Day getStartingDate()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.OpenClose $r1, $r3;
+        net.sourceforge.plantuml.project.time.Day $r2, $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        if $r2 != null goto label1;
+
+        $r5 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        return $r5;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        return $r4;
+    }
+
+    public int daysInWeek()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.OpenClose $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $i0 = virtualinvoke $r1.<net.sourceforge.plantuml.project.OpenClose: int daysInWeek()>();
+
+        return $i0;
+    }
+
+    public boolean isOpen(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        net.sourceforge.plantuml.project.OpenClose $r2;
+        int $i0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        $i0 = virtualinvoke $r2.<net.sourceforge.plantuml.project.OpenClose: int getLoadAt(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        if $i0 <= 0 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public boolean affectResource(net.sourceforge.plantuml.project.core.Task, java.lang.String)
+    {
+        java.util.regex.Pattern r0;
+        java.lang.String r1, $r4, $r6, $r8;
+        java.util.regex.Matcher r2;
+        boolean $z0;
+        net.sourceforge.plantuml.project.GanttDiagram r3;
+        net.sourceforge.plantuml.project.core.Resource r5;
+        net.sourceforge.plantuml.project.core.Task r7;
+        java.lang.IllegalArgumentException $r9;
+        int i0;
+
+        r3 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r7 := @parameter0: net.sourceforge.plantuml.project.core.Task;
+
+        r1 := @parameter1: java.lang.String;
+
+        r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("([^:]+)(:(\\d+))?");
+
+        r2 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r1);
+
+        $z0 = virtualinvoke r2.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        $r9 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r9.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r9;
+
+     label1:
+        $r4 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        r5 = virtualinvoke r3.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.Resource getResource(java.lang.String)>($r4);
+
+        i0 = 100;
+
+        $r6 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group(int)>(3);
+
+        if $r6 == null goto label2;
+
+        $r8 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group(int)>(3);
+
+        i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r8);
+
+     label2:
+        if i0 != 0 goto label3;
+
+        return 0;
+
+     label3:
+        interfaceinvoke r7.<net.sourceforge.plantuml.project.core.Task: void addResource(net.sourceforge.plantuml.project.core.Resource,int)>(r5, i0);
+
+        return 1;
+    }
+
+    public net.sourceforge.plantuml.project.core.Resource getResource(java.lang.String)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.lang.String r1;
+        java.util.Map $r2, $r4;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.project.core.Resource $r6, r7;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map resources>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        r7 = (net.sourceforge.plantuml.project.core.Resource) $r3;
+
+        if r7 != null goto label1;
+
+        $r6 = new net.sourceforge.plantuml.project.core.Resource;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.project.core.Resource: void <init>(java.lang.String)>(r1);
+
+        r7 = $r6;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map resources>;
+
+        interfaceinvoke $r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, r7);
+
+        return r7;
+    }
+
+    public int getLoadForResource(net.sourceforge.plantuml.project.core.Resource, net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.project.core.Task r5;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.project.core.TaskImpl r6;
+        net.sourceforge.plantuml.project.core.Resource r7;
+        net.sourceforge.plantuml.project.time.Day r8;
+        int $i0, i1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r7 := @parameter0: net.sourceforge.plantuml.project.core.Resource;
+
+        r8 := @parameter1: net.sourceforge.plantuml.project.time.Day;
+
+        i1 = 0;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.project.core.Task) $r4;
+
+        $z0 = r5 instanceof net.sourceforge.plantuml.project.core.TaskSeparator;
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        r6 = (net.sourceforge.plantuml.project.core.TaskImpl) r5;
+
+        $i0 = virtualinvoke r6.<net.sourceforge.plantuml.project.core.TaskImpl: int loadForResource(net.sourceforge.plantuml.project.core.Resource,net.sourceforge.plantuml.project.time.Day)>(r7, r8);
+
+        i1 = i1 + $i0;
+
+        goto label1;
+
+     label3:
+        return i1;
+    }
+
+    public net.sourceforge.plantuml.project.core.Moment getExistingMoment(java.lang.String)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.lang.String r1, $r9;
+        java.util.Map $r2;
+        java.util.Set $r3;
+        java.util.Iterator r4;
+        net.sourceforge.plantuml.project.core.MomentImpl $r5;
+        java.lang.Object $r6, $r8, $r10, $r12;
+        java.util.Map$Entry r7;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.project.time.Day $r11, $r13, r15, r16;
+        net.sourceforge.plantuml.project.core.Moment r14;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: java.lang.String;
+
+        r14 = virtualinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.Task getExistingTask(java.lang.String)>(r1);
+
+        if r14 != null goto label4;
+
+        r15 = null;
+
+        r16 = null;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map nameDays>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Set entrySet()>();
+
+        r4 = interfaceinvoke $r3.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (java.util.Map$Entry) $r6;
+
+        $r8 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r9 = (java.lang.String) $r8;
+
+        $z0 = virtualinvoke $r9.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>(r1);
+
+        if $z0 != 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r10 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r11 = (net.sourceforge.plantuml.project.time.Day) $r10;
+
+        r15 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min(net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>(r15, $r11);
+
+        $r12 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r13 = (net.sourceforge.plantuml.project.time.Day) $r12;
+
+        r16 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max(net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>(r16, $r13);
+
+        goto label1;
+
+     label3:
+        if r15 == null goto label4;
+
+        $r5 = new net.sourceforge.plantuml.project.core.MomentImpl;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.project.core.MomentImpl: void <init>(net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)>(r15, r16);
+
+        r14 = $r5;
+
+     label4:
+        return r14;
+    }
+
+    private net.sourceforge.plantuml.project.time.Day min(net.sourceforge.plantuml.project.time.Day, net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.time.Day r0, r1;
+        int $i0;
+        net.sourceforge.plantuml.project.GanttDiagram r2;
+
+        r2 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        r1 := @parameter1: net.sourceforge.plantuml.project.time.Day;
+
+        if r0 != null goto label1;
+
+        return r1;
+
+     label1:
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        if $i0 <= 0 goto label2;
+
+        return r1;
+
+     label2:
+        return r0;
+    }
+
+    private net.sourceforge.plantuml.project.time.Day max(net.sourceforge.plantuml.project.time.Day, net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.time.Day r0, r1;
+        int $i0;
+        net.sourceforge.plantuml.project.GanttDiagram r2;
+
+        r2 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        r1 := @parameter1: net.sourceforge.plantuml.project.time.Day;
+
+        if r0 != null goto label1;
+
+        return r1;
+
+     label1:
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        if $i0 >= 0 goto label2;
+
+        return r1;
+
+     label2:
+        return r0;
+    }
+
+    public void colorDay(net.sourceforge.plantuml.project.time.Day, net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor r2;
+        java.util.Map $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        r2 := @parameter1: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysInternal>;
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, r2);
+
+        return;
+    }
+
+    public void colorDay(net.sourceforge.plantuml.project.time.DayOfWeek, net.sourceforge.plantuml.ugraphic.color.HColor)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.DayOfWeek r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor r2;
+        java.util.Map $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.DayOfWeek;
+
+        r2 := @parameter1: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysOfWeek>;
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, r2);
+
+        return;
+    }
+
+    public void nameDay(net.sourceforge.plantuml.project.time.Day, java.lang.String)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        java.lang.String r2;
+        java.util.Map $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        r2 := @parameter1: java.lang.String;
+
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map nameDays>;
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, r2);
+
+        return;
+    }
+
+    public void setTodayColors(net.sourceforge.plantuml.project.lang.CenterBorderColor)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day $r1, $r4, $r7;
+        net.sourceforge.plantuml.project.lang.CenterBorderColor r2;
+        java.util.Map $r3;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r5;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r2 := @parameter0: net.sourceforge.plantuml.project.lang.CenterBorderColor;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day today>;
+
+        if $r1 != null goto label1;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day today()>();
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day today> = $r7;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map colorDaysToday>;
+
+        $r4 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day today>;
+
+        $r5 = virtualinvoke r2.<net.sourceforge.plantuml.project.lang.CenterBorderColor: net.sourceforge.plantuml.ugraphic.color.HColor getCenter()>();
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r4, $r5);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult setToday(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day today> = r1;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult deleteTask(net.sourceforge.plantuml.project.core.Task)
+    {
+        net.sourceforge.plantuml.project.core.Task r0;
+        net.sourceforge.plantuml.project.lang.CenterBorderColor[] $r1;
+        net.sourceforge.plantuml.project.lang.CenterBorderColor $r2;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r3, $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+        net.sourceforge.plantuml.project.GanttDiagram r6;
+
+        r6 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.core.Task;
+
+        $r1 = newarray (net.sourceforge.plantuml.project.lang.CenterBorderColor)[1];
+
+        $r2 = new net.sourceforge.plantuml.project.lang.CenterBorderColor;
+
+        $r4 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple WHITE>;
+
+        $r3 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.project.lang.CenterBorderColor: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.HColor)>($r4, $r3);
+
+        $r1[0] = $r2;
+
+        interfaceinvoke r0.<net.sourceforge.plantuml.project.core.Task: void setColors(net.sourceforge.plantuml.project.lang.CenterBorderColor[])>($r1);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r5;
+    }
+
+    public void setPrintInterval(net.sourceforge.plantuml.project.time.Day, net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day r1, r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        r2 := @parameter1: net.sourceforge.plantuml.project.time.Day;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printStart> = r1;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day printEnd> = r2;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.project.draw.TaskDraw getTaskDraw(net.sourceforge.plantuml.project.core.Task)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.core.Task r1;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.project.draw.TaskDraw $r4;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.core.Task;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map draws>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r4 = (net.sourceforge.plantuml.project.draw.TaskDraw) $r3;
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult addNote(net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.Display r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5, $r6;
+        java.lang.Object $r7;
+        net.sourceforge.plantuml.project.core.Task r8, r9;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r4 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r9 = null;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r7 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (net.sourceforge.plantuml.project.core.Task) $r7;
+
+        r9 = r8;
+
+        goto label1;
+
+     label2:
+        if r9 != null goto label3;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("No task defined");
+
+        return $r6;
+
+     label3:
+        interfaceinvoke r9.<net.sourceforge.plantuml.project.core.Task: void setNote(net.sourceforge.plantuml.cucadiagram.Display)>(r4);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r5;
+    }
+
+    public net.sourceforge.plantuml.project.LoadPlanable getDefaultPlan()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.OpenClose $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.OpenClose openClose>;
+
+        return $r1;
+    }
+
+    public void setShowFootbox(boolean)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean showFootbox> = z0;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft getDefaultMargins()
+    {
+        net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft $r0;
+        net.sourceforge.plantuml.project.GanttDiagram r1;
+
+        r1 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft: net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft none()>();
+
+        return $r0;
+    }
+
+    public void setLabelStrategy(net.sourceforge.plantuml.project.LabelStrategy)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.LabelStrategy r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.LabelStrategy;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.LabelStrategy labelStrategy> = r1;
+
+        return;
+    }
+
+    public void setWithCalendarDate(boolean)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        boolean z0;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        z0 := @parameter0: boolean;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean withCalendarDate> = z0;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult hideRessourceName()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean hideRessourceName> = 1;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult hideRessourceFootbox()
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean hideRessourceFoobox> = 1;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.project.LabelStrategy access$000(net.sourceforge.plantuml.project.GanttDiagram)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.LabelStrategy $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.LabelStrategy labelStrategy>;
+
+        return $r1;
+    }
+
+    static boolean access$100(net.sourceforge.plantuml.project.GanttDiagram)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $z0 = r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean showFootbox>;
+
+        return $z0;
+    }
+
+    static double access$200(net.sourceforge.plantuml.project.GanttDiagram)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        double $d0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $d0 = r0.<net.sourceforge.plantuml.project.GanttDiagram: double totalHeightWithoutFooter>;
+
+        return $d0;
+    }
+
+    static void access$300(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.project.timescale.TimeScale)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+        net.sourceforge.plantuml.project.timescale.TimeScale r2;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r2 := @parameter2: net.sourceforge.plantuml.project.timescale.TimeScale;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: void drawConstraints(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.project.timescale.TimeScale)>(r1, r2);
+
+        return;
+    }
+
+    static void access$400(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: void drawTasksRect(net.sourceforge.plantuml.ugraphic.UGraphic)>(r1);
+
+        return;
+    }
+
+    static void access$500(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.ugraphic.UGraphic, double, double)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+        double d0, d1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        d0 := @parameter2: double;
+
+        d1 := @parameter3: double;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: void drawTasksTitle(net.sourceforge.plantuml.ugraphic.UGraphic,double,double)>(r1, d0, d1);
+
+        return;
+    }
+
+    static boolean access$600(net.sourceforge.plantuml.project.GanttDiagram)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $z0 = r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean hideRessourceFoobox>;
+
+        return $z0;
+    }
+
+    static void access$700(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: void drawResources(net.sourceforge.plantuml.ugraphic.UGraphic)>(r1);
+
+        return;
+    }
+
+    static java.util.Map access$800(net.sourceforge.plantuml.project.GanttDiagram)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map tasks>;
+
+        return $r1;
+    }
+
+    static boolean access$900(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.project.core.Task)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.core.Task r1;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.project.core.Task;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: boolean isHidden(net.sourceforge.plantuml.project.core.Task)>(r1);
+
+        return $z0;
+    }
+
+    static java.util.Map access$1000(net.sourceforge.plantuml.project.GanttDiagram)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        java.util.Map $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: java.util.Map draws>;
+
+        return $r1;
+    }
+
+    static double access$1100(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.project.draw.TimeHeader)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.draw.TimeHeader r1;
+        double $d0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r1 := @parameter1: net.sourceforge.plantuml.project.draw.TimeHeader;
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.project.GanttDiagram: double getTotalHeight(net.sourceforge.plantuml.project.draw.TimeHeader)>(r1);
+
+        return $d0;
+    }
+
+    static net.sourceforge.plantuml.project.time.Day access$1200(net.sourceforge.plantuml.project.GanttDiagram)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day min>;
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.project.time.Day access$1300(net.sourceforge.plantuml.project.GanttDiagram)
+    {
+        net.sourceforge.plantuml.project.GanttDiagram r0;
+        net.sourceforge.plantuml.project.time.Day $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.time.Day max>;
+
+        return $r1;
+    }
+}

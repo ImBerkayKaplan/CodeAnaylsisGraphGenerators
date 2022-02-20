@@ -1,0 +1,300 @@
+public class net.sourceforge.plantuml.preproc2.PreprocessorUtils extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.preproc2.PreprocessorUtils r0;
+
+        r0 := @this: net.sourceforge.plantuml.preproc2.PreprocessorUtils;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static java.lang.String withEnvironmentVariable(java.lang.String)
+    {
+        java.util.regex.Pattern r0;
+        java.util.regex.Matcher r1;
+        java.lang.StringBuffer $r2;
+        boolean $z0;
+        java.lang.String r5, r6, $r7, r9, r10;
+
+        r9 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("%(\\w+)%");
+
+        r1 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r9);
+
+        $r2 = new java.lang.StringBuffer;
+
+        specialinvoke $r2.<java.lang.StringBuffer: void <init>()>();
+
+     label1:
+        $z0 = virtualinvoke r1.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label3;
+
+        r5 = virtualinvoke r1.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        r6 = staticinvoke <net.sourceforge.plantuml.preproc2.PreprocessorUtils: java.lang.String getenv(java.lang.String)>(r5);
+
+        if r6 == null goto label2;
+
+        $r7 = staticinvoke <java.util.regex.Matcher: java.lang.String quoteReplacement(java.lang.String)>(r6);
+
+        virtualinvoke r1.<java.util.regex.Matcher: java.util.regex.Matcher appendReplacement(java.lang.StringBuffer,java.lang.String)>($r2, $r7);
+
+     label2:
+        goto label1;
+
+     label3:
+        virtualinvoke r1.<java.util.regex.Matcher: java.lang.StringBuffer appendTail(java.lang.StringBuffer)>($r2);
+
+        r10 = virtualinvoke $r2.<java.lang.StringBuffer: java.lang.String toString()>();
+
+        return r10;
+    }
+
+    public static java.lang.String getenv(java.lang.String)
+    {
+        java.lang.String r0, r1, r2, $r3, $r4;
+        boolean $z0, $z1;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = staticinvoke <java.lang.System: java.lang.String getProperty(java.lang.String)>(r0);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String)>(r1);
+
+        return $r4;
+
+     label1:
+        r2 = staticinvoke <java.lang.System: java.lang.String getenv(java.lang.String)>(r0);
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>(r2);
+
+        if $z1 == 0 goto label2;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String)>(r2);
+
+        return $r3;
+
+     label2:
+        return null;
+    }
+
+    private static java.io.InputStream getStdlibInputStream(java.lang.String)
+    {
+        java.lang.String r0;
+        java.io.InputStream r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = staticinvoke <net.sourceforge.plantuml.preproc.Stdlib: java.io.InputStream getResourceAsStream(java.lang.String)>(r0);
+
+        return r1;
+    }
+
+    public static net.sourceforge.plantuml.preproc.ReadLine getReaderStdlibInclude(net.sourceforge.plantuml.StringLocated, java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r1, $r3, $r5, $r6, $r7, $r8;
+        java.lang.String r2, $r4, r9, $r17;
+        net.sourceforge.plantuml.StringLocated r10;
+        boolean $z0;
+        java.io.InputStreamReader $r11;
+        net.sourceforge.plantuml.preproc.ReadLine $r12;
+        net.sourceforge.plantuml.preproc.StartDiagramExtractReader $r13;
+        java.io.IOException $r14;
+        net.sourceforge.plantuml.preproc.ReadLineSimple $r16;
+        java.io.InputStream r18, r19, r20;
+
+        r10 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        r2 := @parameter1: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Loading sdlib ");
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r4);
+
+        r18 = staticinvoke <net.sourceforge.plantuml.preproc2.PreprocessorUtils: java.io.InputStream getStdlibInputStream(java.lang.String)>(r2);
+
+        if r18 != null goto label1;
+
+        return null;
+
+     label1:
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+        r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label2:
+        $z0 = staticinvoke <net.sourceforge.plantuml.preproc.StartDiagramExtractReader: boolean containsStartDiagram(java.io.InputStream,net.sourceforge.plantuml.StringLocated,java.lang.String)>(r18, r10, r9);
+
+        if $z0 == 0 goto label4;
+
+        r19 = staticinvoke <net.sourceforge.plantuml.preproc2.PreprocessorUtils: java.io.InputStream getStdlibInputStream(java.lang.String)>(r2);
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.preproc.StartDiagramExtractReader: net.sourceforge.plantuml.preproc.StartDiagramExtractReader build(java.io.InputStream,net.sourceforge.plantuml.StringLocated,java.lang.String)>(r19, r10, r9);
+
+     label3:
+        return $r13;
+
+     label4:
+        r20 = staticinvoke <net.sourceforge.plantuml.preproc2.PreprocessorUtils: java.io.InputStream getStdlibInputStream(java.lang.String)>(r2);
+
+        if r20 != null goto label6;
+
+     label5:
+        return null;
+
+     label6:
+        $r11 = new java.io.InputStreamReader;
+
+        specialinvoke $r11.<java.io.InputStreamReader: void <init>(java.io.InputStream)>(r20);
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.preproc.ReadLineReader: net.sourceforge.plantuml.preproc.ReadLine create(java.io.Reader,java.lang.String)>($r11, r9);
+
+     label7:
+        return $r12;
+
+     label8:
+        $r14 := @caughtexception;
+
+        virtualinvoke $r14.<java.io.IOException: void printStackTrace()>();
+
+        $r16 = new net.sourceforge.plantuml.preproc.ReadLineSimple;
+
+        $r17 = virtualinvoke $r14.<java.io.IOException: java.lang.String toString()>();
+
+        specialinvoke $r16.<net.sourceforge.plantuml.preproc.ReadLineSimple: void <init>(net.sourceforge.plantuml.StringLocated,java.lang.String)>(r10, $r17);
+
+        return $r16;
+
+        catch java.io.IOException from label2 to label3 with label8;
+        catch java.io.IOException from label4 to label5 with label8;
+        catch java.io.IOException from label6 to label7 with label8;
+    }
+
+    public static net.sourceforge.plantuml.preproc.ReadLine getReaderIncludeUrl(net.sourceforge.plantuml.security.SURL, net.sourceforge.plantuml.StringLocated, java.lang.String, java.nio.charset.Charset) throws net.sourceforge.plantuml.tim.EaterException
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        net.sourceforge.plantuml.StringLocated r1;
+        java.nio.charset.Charset r2;
+        boolean $z0;
+        net.sourceforge.plantuml.LineLocation $r3;
+        net.sourceforge.plantuml.preproc.ReadLine $r4;
+        java.lang.String r5, $r11, $r13;
+        net.sourceforge.plantuml.preproc.StartDiagramExtractReader $r6;
+        java.io.IOException $r7;
+        java.lang.StringBuilder $r9, $r10, $r12;
+        net.sourceforge.plantuml.tim.EaterException $r14;
+
+        r0 := @parameter0: net.sourceforge.plantuml.security.SURL;
+
+        r1 := @parameter1: net.sourceforge.plantuml.StringLocated;
+
+        r5 := @parameter2: java.lang.String;
+
+        r2 := @parameter3: java.nio.charset.Charset;
+
+     label1:
+        $z0 = staticinvoke <net.sourceforge.plantuml.preproc.StartDiagramExtractReader: boolean containsStartDiagram(net.sourceforge.plantuml.security.SURL,net.sourceforge.plantuml.StringLocated,java.nio.charset.Charset)>(r0, r1, r2);
+
+        if $z0 == 0 goto label3;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.preproc.StartDiagramExtractReader: net.sourceforge.plantuml.preproc.StartDiagramExtractReader build(net.sourceforge.plantuml.security.SURL,net.sourceforge.plantuml.StringLocated,java.lang.String,java.nio.charset.Charset)>(r0, r1, r5, r2);
+
+     label2:
+        return $r6;
+
+     label3:
+        $r3 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.preproc2.PreprocessorUtils: net.sourceforge.plantuml.preproc.ReadLine getReaderInclude(net.sourceforge.plantuml.security.SURL,net.sourceforge.plantuml.LineLocation,java.nio.charset.Charset)>(r0, $r3, r2);
+
+     label4:
+        return $r4;
+
+     label5:
+        $r7 := @caughtexception;
+
+        virtualinvoke $r7.<java.io.IOException: void printStackTrace()>();
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot open URL ");
+
+        $r11 = virtualinvoke $r7.<java.io.IOException: java.lang.String getMessage()>();
+
+        $r12 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException located(java.lang.String)>($r13);
+
+        throw $r14;
+
+        catch java.io.IOException from label1 to label2 with label5;
+        catch java.io.IOException from label3 to label4 with label5;
+    }
+
+    public static net.sourceforge.plantuml.preproc.ReadLine getReaderInclude(net.sourceforge.plantuml.security.SURL, net.sourceforge.plantuml.LineLocation, java.nio.charset.Charset) throws net.sourceforge.plantuml.tim.EaterException, java.io.UnsupportedEncodingException
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        java.io.InputStream r1;
+        java.io.InputStreamReader $r2;
+        java.nio.charset.Charset r3;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.LineLocation r5;
+        net.sourceforge.plantuml.preproc.ReadLine $r6;
+        net.sourceforge.plantuml.tim.EaterException $r7;
+
+        r0 := @parameter0: net.sourceforge.plantuml.security.SURL;
+
+        r5 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: java.nio.charset.Charset;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.security.SURL: java.io.InputStream openStream()>();
+
+        if r1 != null goto label1;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException located(java.lang.String)>("Cannot open URL");
+
+        throw $r7;
+
+     label1:
+        $r2 = new java.io.InputStreamReader;
+
+        specialinvoke $r2.<java.io.InputStreamReader: void <init>(java.io.InputStream,java.nio.charset.Charset)>(r1, r3);
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.security.SURL: java.lang.String toString()>();
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.preproc.ReadLineReader: net.sourceforge.plantuml.preproc.ReadLine create(java.io.Reader,java.lang.String,net.sourceforge.plantuml.LineLocation)>($r2, $r4, r5);
+
+        return $r6;
+    }
+}

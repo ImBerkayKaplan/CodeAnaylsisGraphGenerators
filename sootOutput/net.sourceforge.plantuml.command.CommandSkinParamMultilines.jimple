@@ -1,0 +1,135 @@
+public class net.sourceforge.plantuml.command.CommandSkinParamMultilines extends net.sourceforge.plantuml.command.CommandMultilinesBracket
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.CommandSkinParamMultilines r0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandSkinParamMultilines;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.CommandMultilinesBracket: void <init>(java.lang.String)>("^skinparam[%s]*(?:[%s]+([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*))?[%s]*\\{$");
+
+        return;
+    }
+
+    protected boolean isLineConsistent(java.lang.String, int)
+    {
+        net.sourceforge.plantuml.command.CommandSkinParamMultilines r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        net.sourceforge.plantuml.command.regex.Matcher2 $r2;
+        int i0;
+        java.lang.String r3, r4;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandSkinParamMultilines;
+
+        r3 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trin(java.lang.String)>(r3);
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.command.CommandSkinParamMultilines: boolean hasStartingQuote(java.lang.CharSequence)>(r4);
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $r1 = <net.sourceforge.plantuml.command.SkinLoader: net.sourceforge.plantuml.command.regex.Pattern2 p1>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r4);
+
+        $z1 = virtualinvoke $r2.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        return $z1;
+    }
+
+    private boolean hasStartingQuote(java.lang.CharSequence)
+    {
+        java.lang.CharSequence r0;
+        boolean $z0;
+        net.sourceforge.plantuml.command.CommandSkinParamMultilines r1;
+
+        r1 := @this: net.sourceforge.plantuml.command.CommandSkinParamMultilines;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: boolean mtches(java.lang.CharSequence,java.lang.String)>(r0, "^[%s]*([%q].*||/[%q].*[%q]/[%s]*)$");
+
+        return $z0;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.TitledDiagram, net.sourceforge.plantuml.command.BlocLines)
+    {
+        net.sourceforge.plantuml.command.SkinLoader $r0;
+        net.sourceforge.plantuml.TitledDiagram r1;
+        net.sourceforge.plantuml.command.CommandSkinParamMultilines r3;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r4;
+        net.sourceforge.plantuml.command.BlocLines r5;
+        net.sourceforge.plantuml.StringLocated $r6, $r7;
+        java.lang.String $r8, r10;
+        net.sourceforge.plantuml.command.regex.Matcher2 r9;
+        boolean $z0;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r11;
+        java.lang.IllegalStateException $r12;
+
+        r3 := @this: net.sourceforge.plantuml.command.CommandSkinParamMultilines;
+
+        r1 := @parameter0: net.sourceforge.plantuml.TitledDiagram;
+
+        r5 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $r0 = new net.sourceforge.plantuml.command.SkinLoader;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.SkinLoader: void <init>(net.sourceforge.plantuml.TitledDiagram)>(r1);
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.command.CommandSkinParamMultilines: net.sourceforge.plantuml.command.regex.Pattern2 getStartingPattern()>();
+
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r9 = virtualinvoke $r4.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>($r8);
+
+        $z0 = virtualinvoke r9.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        $r12 = new java.lang.IllegalStateException;
+
+        specialinvoke $r12.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r12;
+
+     label1:
+        r10 = virtualinvoke r9.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        $r11 = virtualinvoke $r0.<net.sourceforge.plantuml.command.SkinLoader: net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.command.BlocLines,java.lang.String)>(r5, r10);
+
+        return $r11;
+    }
+
+    public volatile net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandSkinParamMultilines r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.command.BlocLines r2;
+        net.sourceforge.plantuml.TitledDiagram $r3;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r4;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandSkinParamMultilines;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $r3 = (net.sourceforge.plantuml.TitledDiagram) r1;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandSkinParamMultilines: net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.command.BlocLines)>($r3, r2);
+
+        return $r4;
+    }
+}

@@ -1,0 +1,1853 @@
+public class net.sourceforge.plantuml.StringUtils extends java.lang.Object
+{
+    public static final char USER_NEWLINE;
+    public static final char USER_TAB;
+    public static final char HR_SIMPLE;
+    public static final char HR_DOUBLE;
+    public static final char HR_DOTTED;
+    public static final char HR_BOLD;
+    public static final char PRIVATE_FIELD;
+    public static final char PROTECTED_FIELD;
+    public static final char PACKAGE_PRIVATE_FIELD;
+    public static final char PUBLIC_FIELD;
+    public static final char PRIVATE_METHOD;
+    public static final char PROTECTED_METHOD;
+    public static final char PACKAGE_PRIVATE_METHOD;
+    public static final char PUBLIC_METHOD;
+    public static final char IE_MANDATORY;
+    public static final char BOLD_START;
+    public static final char BOLD_END;
+    public static final char PRIVATE_BLOCK;
+    public static final char INTERNAL_BOLD;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.StringUtils r0;
+
+        r0 := @this: net.sourceforge.plantuml.StringUtils;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static java.lang.String toInternalBoldNumber(java.lang.String)
+    {
+        java.lang.StringBuilder $r0;
+        java.lang.String r2, $r3;
+        int $i0, $i2, $i3, i4;
+        char c1;
+        char[] $r5;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        i4 = 0;
+
+     label1:
+        $i0 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        if i4 >= $i0 goto label4;
+
+        c1 = virtualinvoke r2.<java.lang.String: char charAt(int)>(i4);
+
+        if c1 < 48 goto label2;
+
+        if c1 > 57 goto label2;
+
+        $i2 = 57600 + c1;
+
+        $i3 = $i2 - 48;
+
+        $r5 = staticinvoke <java.lang.Character: char[] toChars(int)>($i3);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char[])>($r5);
+
+        goto label3;
+
+     label2:
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+     label3:
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label4:
+        $r3 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+
+    public static void appendInternalToRealBoldNumber(java.lang.StringBuilder, char)
+    {
+        char c0;
+        java.lang.StringBuilder r0;
+        int $i1, $i2;
+        char[] $r2;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        c0 := @parameter1: char;
+
+        if c0 < 57600 goto label1;
+
+        if c0 > 57609 goto label1;
+
+        $i1 = 120782 + c0;
+
+        $i2 = $i1 - 57600;
+
+        $r2 = staticinvoke <java.lang.Character: char[] toChars(int)>($i2);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char[])>($r2);
+
+        goto label2;
+
+     label1:
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c0);
+
+     label2:
+        return;
+    }
+
+    public static void appendInternalToPlainNumber(java.lang.StringBuilder, char)
+    {
+        char c0;
+        java.lang.StringBuilder r0;
+        int $i1, $i2;
+        char[] $r2;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        c0 := @parameter1: char;
+
+        if c0 < 57600 goto label1;
+
+        if c0 > 57609 goto label1;
+
+        $i1 = 48 + c0;
+
+        $i2 = $i1 - 57600;
+
+        $r2 = staticinvoke <java.lang.Character: char[] toChars(int)>($i2);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char[])>($r2);
+
+        goto label2;
+
+     label1:
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c0);
+
+     label2:
+        return;
+    }
+
+    public static final java.util.List getSplit(net.sourceforge.plantuml.command.regex.Pattern2, java.lang.String)
+    {
+        net.sourceforge.plantuml.command.regex.Pattern2 r0;
+        java.lang.String r1, $r5;
+        net.sourceforge.plantuml.command.regex.Matcher2 r2;
+        boolean $z0;
+        java.util.ArrayList $r3;
+        int $i0, i1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.command.regex.Pattern2;
+
+        r1 := @parameter1: java.lang.String;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r1);
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r3 = new java.util.ArrayList;
+
+        specialinvoke $r3.<java.util.ArrayList: void <init>()>();
+
+        i1 = 1;
+
+     label2:
+        $i0 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: int groupCount()>();
+
+        if i1 > $i0 goto label3;
+
+        $r5 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(i1);
+
+        interfaceinvoke $r3.<java.util.List: boolean add(java.lang.Object)>($r5);
+
+        i1 = i1 + 1;
+
+        goto label2;
+
+     label3:
+        return $r3;
+    }
+
+    public static boolean isNotEmpty(java.lang.CharSequence)
+    {
+        java.lang.CharSequence r0;
+        boolean $z0, $z1;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isEmpty(java.lang.CharSequence)>(r0);
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        return $z1;
+    }
+
+    public static boolean isNotEmpty(java.util.List)
+    {
+        java.util.List r0;
+        int $i0;
+        boolean $z0;
+
+        r0 := @parameter0: java.util.List;
+
+        if r0 == null goto label1;
+
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        if $i0 <= 0 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public static boolean isEmpty(java.lang.CharSequence)
+    {
+        java.lang.CharSequence r0;
+        int i0, i2;
+        char $c1;
+        boolean $z0;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        if r0 != null goto label1;
+
+        return 1;
+
+     label1:
+        i0 = interfaceinvoke r0.<java.lang.CharSequence: int length()>();
+
+        if i0 != 0 goto label2;
+
+        return 1;
+
+     label2:
+        i2 = 0;
+
+     label3:
+        if i2 >= i0 goto label5;
+
+        $c1 = interfaceinvoke r0.<java.lang.CharSequence: char charAt(int)>(i2);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isSpaceOrTabOrNull(char)>($c1);
+
+        if $z0 != 0 goto label4;
+
+        return 0;
+
+     label4:
+        i2 = i2 + 1;
+
+        goto label3;
+
+     label5:
+        return 1;
+    }
+
+    public static java.lang.String manageHtml(java.lang.String)
+    {
+        java.lang.String r0, r1, r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = virtualinvoke r0.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("<", "&lt;");
+
+        r2 = virtualinvoke r1.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>(">", "&gt;");
+
+        return r2;
+    }
+
+    public static java.lang.String unicode(java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r7, $r8, $r9, $r10;
+        java.lang.String r2, $r4, $r11;
+        char[] r3;
+        int i0, i3;
+        char c1;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        r3 = virtualinvoke r2.<java.lang.String: char[] toCharArray()>();
+
+        i0 = lengthof r3;
+
+        i3 = 0;
+
+     label1:
+        if i3 >= i0 goto label5;
+
+        c1 = r3[i3];
+
+        if c1 > 127 goto label2;
+
+        if c1 == 38 goto label2;
+
+        if c1 != 124 goto label3;
+
+     label2:
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("&#");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(c1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        goto label4;
+
+     label3:
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+     label4:
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label5:
+        $r4 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r4;
+    }
+
+    public static java.lang.String unicodeForHtml(java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r7, $r8, $r9, $r10;
+        java.lang.String r2, $r4, $r11;
+        char[] r3;
+        int i0, i3;
+        char c1;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        r3 = virtualinvoke r2.<java.lang.String: char[] toCharArray()>();
+
+        i0 = lengthof r3;
+
+        i3 = 0;
+
+     label1:
+        if i3 >= i0 goto label5;
+
+        c1 = r3[i3];
+
+        if c1 > 127 goto label2;
+
+        if c1 == 38 goto label2;
+
+        if c1 == 124 goto label2;
+
+        if c1 == 60 goto label2;
+
+        if c1 != 62 goto label3;
+
+     label2:
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("&#");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(c1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        goto label4;
+
+     label3:
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+     label4:
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label5:
+        $r4 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r4;
+    }
+
+    public static java.lang.String unicodeForHtml(net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.cucadiagram.Display r2;
+        int $i0, $i1, $i2, i3;
+        java.lang.String $r3, $r5, $r6;
+        java.lang.CharSequence $r4;
+
+        r2 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        i3 = 0;
+
+     label1:
+        $i0 = virtualinvoke r2.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        if i3 >= $i0 goto label3;
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.cucadiagram.Display: java.lang.CharSequence get(int)>(i3);
+
+        $r5 = interfaceinvoke $r4.<java.lang.CharSequence: java.lang.String toString()>();
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String unicodeForHtml(java.lang.String)>($r5);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r6);
+
+        $i1 = virtualinvoke r2.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        $i2 = $i1 - 1;
+
+        if i3 >= $i2 goto label2;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<br>");
+
+     label2:
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label3:
+        $r3 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+
+    public static java.lang.String manageArrowForSequence(java.lang.String)
+    {
+        java.lang.String $r0, r1, r2;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = virtualinvoke r1.<java.lang.String: java.lang.String replace(char,char)>(61, 45);
+
+        r2 = virtualinvoke $r0.<java.lang.String: java.lang.String toLowerCase()>();
+
+        return r2;
+    }
+
+    public static java.lang.String capitalize(java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r4, $r7;
+        java.lang.String r1, $r2, $r3, $r5, $r6, $r8;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int,int)>(0, 1);
+
+        $r3 = virtualinvoke $r2.<java.lang.String: java.lang.String toUpperCase()>();
+
+        $r4 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        $r5 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int)>(1);
+
+        $r6 = virtualinvoke $r5.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $r7 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r8;
+    }
+
+    public static java.lang.String goUpperCase(java.lang.String)
+    {
+        java.lang.String r0, $r2;
+        java.util.Locale $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <java.util.Locale: java.util.Locale ENGLISH>;
+
+        $r2 = virtualinvoke r0.<java.lang.String: java.lang.String toUpperCase(java.util.Locale)>($r1);
+
+        return $r2;
+    }
+
+    public static char goUpperCase(char)
+    {
+        java.lang.StringBuilder $r0, $r1, $r2;
+        char c0, $c1;
+        java.lang.String $r3, $r4;
+
+        c0 := @parameter0: char;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c0);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goUpperCase(java.lang.String)>($r3);
+
+        $c1 = virtualinvoke $r4.<java.lang.String: char charAt(int)>(0);
+
+        return $c1;
+    }
+
+    public static java.lang.String goLowerCase(java.lang.String)
+    {
+        java.lang.String r0, $r2;
+        java.util.Locale $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <java.util.Locale: java.util.Locale ENGLISH>;
+
+        $r2 = virtualinvoke r0.<java.lang.String: java.lang.String toLowerCase(java.util.Locale)>($r1);
+
+        return $r2;
+    }
+
+    public static char goLowerCase(char)
+    {
+        java.lang.StringBuilder $r0, $r1, $r2;
+        char c0, $c1;
+        java.lang.String $r3, $r4;
+
+        c0 := @parameter0: char;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c0);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goLowerCase(java.lang.String)>($r3);
+
+        $c1 = virtualinvoke $r4.<java.lang.String: char charAt(int)>(0);
+
+        return $c1;
+    }
+
+    public static java.lang.String manageArrowForCuca(java.lang.String)
+    {
+        net.sourceforge.plantuml.Direction r0, $r1, $r2, $r3, $r4;
+        java.lang.String r5, r6, r7;
+        int $i0;
+
+        r5 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.StringUtils: net.sourceforge.plantuml.Direction getArrowDirection(java.lang.String)>(r5);
+
+        r6 = virtualinvoke r5.<java.lang.String: java.lang.String replace(char,char)>(61, 45);
+
+        r7 = virtualinvoke r6.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("\\w*", "");
+
+        $r1 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+        if r0 == $r1 goto label1;
+
+        $r4 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction RIGHT>;
+
+        if r0 != $r4 goto label2;
+
+     label1:
+        r7 = virtualinvoke r7.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("-+", "-");
+
+     label2:
+        $i0 = virtualinvoke r7.<java.lang.String: int length()>();
+
+        if $i0 != 2 goto label4;
+
+        $r2 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction UP>;
+
+        if r0 == $r2 goto label3;
+
+        $r3 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction DOWN>;
+
+        if r0 != $r3 goto label4;
+
+     label3:
+        r7 = virtualinvoke r7.<java.lang.String: java.lang.String replaceFirst(java.lang.String,java.lang.String)>("-", "--");
+
+     label4:
+        return r7;
+    }
+
+    public static java.lang.String manageQueueForCuca(java.lang.String)
+    {
+        net.sourceforge.plantuml.Direction r0, $r1, $r2, $r3, $r4;
+        java.lang.String r5, r6, r7;
+        int $i0;
+
+        r5 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.StringUtils: net.sourceforge.plantuml.Direction getQueueDirection(java.lang.String)>(r5);
+
+        r6 = virtualinvoke r5.<java.lang.String: java.lang.String replace(char,char)>(61, 45);
+
+        r7 = virtualinvoke r6.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("\\w*", "");
+
+        $r1 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+        if r0 == $r1 goto label1;
+
+        $r4 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction RIGHT>;
+
+        if r0 != $r4 goto label2;
+
+     label1:
+        r7 = virtualinvoke r7.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("-+", "-");
+
+     label2:
+        $i0 = virtualinvoke r7.<java.lang.String: int length()>();
+
+        if $i0 != 1 goto label4;
+
+        $r2 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction UP>;
+
+        if r0 == $r2 goto label3;
+
+        $r3 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction DOWN>;
+
+        if r0 != $r3 goto label4;
+
+     label3:
+        r7 = virtualinvoke r7.<java.lang.String: java.lang.String replaceFirst(java.lang.String,java.lang.String)>("-", "--");
+
+     label4:
+        return r7;
+    }
+
+    public static net.sourceforge.plantuml.Direction getArrowDirection(java.lang.String)
+    {
+        java.lang.String r0, $r4;
+        boolean $z0, $z1;
+        java.lang.IllegalArgumentException $r1;
+        int $i0, $i1, $i2;
+        net.sourceforge.plantuml.Direction $r2, $r3, $r5;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean endsWith(java.lang.String)>(">");
+
+        if $z0 == 0 goto label1;
+
+        $i1 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i2 = $i1 - 1;
+
+        $r4 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>(0, $i2);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.StringUtils: net.sourceforge.plantuml.Direction getQueueDirection(java.lang.String)>($r4);
+
+        return $r5;
+
+     label1:
+        $z1 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("<");
+
+        if $z1 == 0 goto label3;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if $i0 != 2 goto label2;
+
+        $r3 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+        return $r3;
+
+     label2:
+        $r2 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction UP>;
+
+        return $r2;
+
+     label3:
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>(r0);
+
+        throw $r1;
+    }
+
+    public static net.sourceforge.plantuml.Direction getQueueDirection(java.lang.String)
+    {
+        int $i0, $i1, $i2;
+        java.lang.IllegalArgumentException $r0;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7;
+        net.sourceforge.plantuml.Direction $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10;
+        java.lang.String r11, r12;
+
+        r11 := @parameter0: java.lang.String;
+
+        $i0 = virtualinvoke r11.<java.lang.String: int indexOf(int)>(60);
+
+        if $i0 != -1 goto label01;
+
+        $i1 = virtualinvoke r11.<java.lang.String: int indexOf(int)>(62);
+
+        if $i1 == -1 goto label02;
+
+     label01:
+        $r0 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r0.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>(r11);
+
+        throw $r0;
+
+     label02:
+        r12 = virtualinvoke r11.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $z0 = virtualinvoke r12.<java.lang.String: boolean contains(java.lang.CharSequence)>("left");
+
+        if $z0 == 0 goto label03;
+
+        $r10 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+        return $r10;
+
+     label03:
+        $z1 = virtualinvoke r12.<java.lang.String: boolean contains(java.lang.CharSequence)>("right");
+
+        if $z1 == 0 goto label04;
+
+        $r9 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction RIGHT>;
+
+        return $r9;
+
+     label04:
+        $z2 = virtualinvoke r12.<java.lang.String: boolean contains(java.lang.CharSequence)>("up");
+
+        if $z2 == 0 goto label05;
+
+        $r8 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction UP>;
+
+        return $r8;
+
+     label05:
+        $z3 = virtualinvoke r12.<java.lang.String: boolean contains(java.lang.CharSequence)>("down");
+
+        if $z3 == 0 goto label06;
+
+        $r7 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction DOWN>;
+
+        return $r7;
+
+     label06:
+        $z4 = virtualinvoke r12.<java.lang.String: boolean contains(java.lang.CharSequence)>("l");
+
+        if $z4 == 0 goto label07;
+
+        $r6 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+        return $r6;
+
+     label07:
+        $z5 = virtualinvoke r12.<java.lang.String: boolean contains(java.lang.CharSequence)>("r");
+
+        if $z5 == 0 goto label08;
+
+        $r5 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction RIGHT>;
+
+        return $r5;
+
+     label08:
+        $z6 = virtualinvoke r12.<java.lang.String: boolean contains(java.lang.CharSequence)>("u");
+
+        if $z6 == 0 goto label09;
+
+        $r4 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction UP>;
+
+        return $r4;
+
+     label09:
+        $z7 = virtualinvoke r12.<java.lang.String: boolean contains(java.lang.CharSequence)>("d");
+
+        if $z7 == 0 goto label10;
+
+        $r3 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction DOWN>;
+
+        return $r3;
+
+     label10:
+        $i2 = virtualinvoke r12.<java.lang.String: int length()>();
+
+        if $i2 != 1 goto label11;
+
+        $r2 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction RIGHT>;
+
+        return $r2;
+
+     label11:
+        $r1 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction DOWN>;
+
+        return $r1;
+    }
+
+    public static java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String, java.lang.String)
+    {
+        java.lang.String r0, r1, $r2, $r3, $r4, $r5;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10, $z11;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i8, $i9, $i11, $i12;
+        char $c7, $c10;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: java.lang.String;
+
+        if r0 != null goto label1;
+
+        return null;
+
+     label1:
+        $z0 = virtualinvoke r1.<java.lang.String: boolean contains(java.lang.CharSequence)>("\"");
+
+        if $z0 == 0 goto label2;
+
+        $i6 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if $i6 <= 1 goto label2;
+
+        $c7 = virtualinvoke r0.<java.lang.String: char charAt(int)>(0);
+
+        $z7 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isDoubleQuote(char)>($c7);
+
+        if $z7 == 0 goto label2;
+
+        $i8 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i9 = $i8 - 1;
+
+        $c10 = virtualinvoke r0.<java.lang.String: char charAt(int)>($i9);
+
+        $z8 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isDoubleQuote(char)>($c10);
+
+        if $z8 == 0 goto label2;
+
+        $i11 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i12 = $i11 - 1;
+
+        $r5 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>(1, $i12);
+
+        return $r5;
+
+     label2:
+        $z9 = virtualinvoke r1.<java.lang.String: boolean contains(java.lang.CharSequence)>("(");
+
+        if $z9 == 0 goto label3;
+
+        $z5 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("(");
+
+        if $z5 == 0 goto label3;
+
+        $z6 = virtualinvoke r0.<java.lang.String: boolean endsWith(java.lang.String)>(")");
+
+        if $z6 == 0 goto label3;
+
+        $i4 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i5 = $i4 - 1;
+
+        $r4 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>(1, $i5);
+
+        return $r4;
+
+     label3:
+        $z10 = virtualinvoke r1.<java.lang.String: boolean contains(java.lang.CharSequence)>("[");
+
+        if $z10 == 0 goto label4;
+
+        $z3 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("[");
+
+        if $z3 == 0 goto label4;
+
+        $z4 = virtualinvoke r0.<java.lang.String: boolean endsWith(java.lang.String)>("]");
+
+        if $z4 == 0 goto label4;
+
+        $i2 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i3 = $i2 - 1;
+
+        $r3 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>(1, $i3);
+
+        return $r3;
+
+     label4:
+        $z11 = virtualinvoke r1.<java.lang.String: boolean contains(java.lang.CharSequence)>(":");
+
+        if $z11 == 0 goto label5;
+
+        $z1 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>(":");
+
+        if $z1 == 0 goto label5;
+
+        $z2 = virtualinvoke r0.<java.lang.String: boolean endsWith(java.lang.String)>(":");
+
+        if $z2 == 0 goto label5;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i1 = $i0 - 1;
+
+        $r2 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>(1, $i1);
+
+        return $r2;
+
+     label5:
+        return r0;
+    }
+
+    public static java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        if r0 != null goto label1;
+
+        return r0;
+
+     label1:
+        $r1 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String,java.lang.String)>(r0, "\"([:");
+
+        return $r1;
+    }
+
+    private static boolean isDoubleQuote(char)
+    {
+        char c0;
+        boolean $z0;
+
+        c0 := @parameter0: char;
+
+        if c0 == 34 goto label1;
+
+        if c0 == 8220 goto label1;
+
+        if c0 == 8221 goto label1;
+
+        if c0 == 171 goto label1;
+
+        if c0 != 187 goto label2;
+
+     label1:
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        return $z0;
+    }
+
+    public static boolean isCJK(char)
+    {
+        char c0;
+        java.lang.Character$UnicodeBlock r0;
+        java.lang.StringBuilder $r1, $r2, $r3;
+        java.lang.String $r4;
+
+        c0 := @parameter0: char;
+
+        r0 = staticinvoke <java.lang.Character$UnicodeBlock: java.lang.Character$UnicodeBlock of(char)>(c0);
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("block=");
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r4);
+
+        return 0;
+    }
+
+    public static char hiddenLesserThan()
+    {
+        return 5;
+    }
+
+    public static char hiddenBiggerThan()
+    {
+        return 6;
+    }
+
+    public static java.lang.String hideComparatorCharacters(java.lang.String)
+    {
+        char $c0, $c1;
+        java.lang.String r0, r1, r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $c0 = staticinvoke <net.sourceforge.plantuml.StringUtils: char hiddenLesserThan()>();
+
+        r1 = virtualinvoke r0.<java.lang.String: java.lang.String replace(char,char)>(60, $c0);
+
+        $c1 = staticinvoke <net.sourceforge.plantuml.StringUtils: char hiddenBiggerThan()>();
+
+        r2 = virtualinvoke r1.<java.lang.String: java.lang.String replace(char,char)>(62, $c1);
+
+        return r2;
+    }
+
+    public static java.lang.String showComparatorCharacters(java.lang.String)
+    {
+        char $c0, $c1;
+        java.lang.String r0, r1, r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $c0 = staticinvoke <net.sourceforge.plantuml.StringUtils: char hiddenLesserThan()>();
+
+        r1 = virtualinvoke r0.<java.lang.String: java.lang.String replace(char,char)>($c0, 60);
+
+        $c1 = staticinvoke <net.sourceforge.plantuml.StringUtils: char hiddenBiggerThan()>();
+
+        r2 = virtualinvoke r1.<java.lang.String: java.lang.String replace(char,char)>($c1, 62);
+
+        return r2;
+    }
+
+    private static int getWidth(net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.cucadiagram.Display r0;
+        java.util.ListIterator r1;
+        boolean $z0;
+        java.lang.Object $r2;
+        java.lang.CharSequence r3;
+        int $i0, i1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        i1 = 1;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Display: java.util.ListIterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r2 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (java.lang.CharSequence) $r2;
+
+        if r3 == null goto label2;
+
+        $i0 = interfaceinvoke r3.<java.lang.CharSequence: int length()>();
+
+        if i1 >= $i0 goto label2;
+
+        i1 = interfaceinvoke r3.<java.lang.CharSequence: int length()>();
+
+     label2:
+        goto label1;
+
+     label3:
+        return i1;
+    }
+
+    public static int getWcWidth(net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.cucadiagram.Display r0;
+        java.util.ListIterator r1;
+        java.lang.Object $r2;
+        java.lang.CharSequence r3;
+        int i0, i1;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        i1 = 1;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Display: java.util.ListIterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r2 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (java.lang.CharSequence) $r2;
+
+        if r3 != null goto label2;
+
+        goto label1;
+
+     label2:
+        i0 = staticinvoke <net.sourceforge.plantuml.asciiart.Wcwidth: int length(java.lang.CharSequence)>(r3);
+
+        if i1 >= i0 goto label3;
+
+        i1 = i0;
+
+     label3:
+        goto label1;
+
+     label4:
+        return i1;
+    }
+
+    public static int getHeight(java.util.List)
+    {
+        java.util.List r0;
+        int $i0;
+
+        r0 := @parameter0: java.util.List;
+
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        return $i0;
+    }
+
+    public static int getHeight(net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.cucadiagram.Display r0;
+        int $i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        return $i0;
+    }
+
+    public static boolean isDiagramCacheable(java.lang.String)
+    {
+        java.lang.String r0;
+        int $i0;
+
+        r0 := @parameter0: java.lang.String;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if $i0 >= 35 goto label1;
+
+        return 0;
+
+     label1:
+        return 1;
+    }
+
+    public static int getPragmaRevision(java.lang.String)
+    {
+        boolean $z0, $z1;
+        java.lang.String $r1, $r2, r3, r4;
+        int i0, $i1, $i2, i4;
+        char $c3;
+
+        r3 := @parameter0: java.lang.String;
+
+        r4 = virtualinvoke r3.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $z0 = virtualinvoke r4.<java.lang.String: boolean startsWith(java.lang.String)>("@startuml\n!pragma revision ");
+
+        if $z0 != 0 goto label1;
+
+        return -1;
+
+     label1:
+        $r1 = "@startuml\n!pragma revision ";
+
+        i0 = virtualinvoke $r1.<java.lang.String: int length()>();
+
+        i4 = i0;
+
+     label2:
+        $i1 = virtualinvoke r4.<java.lang.String: int length()>();
+
+        if i4 >= $i1 goto label3;
+
+        $c3 = virtualinvoke r4.<java.lang.String: char charAt(int)>(i4);
+
+        $z1 = staticinvoke <java.lang.Character: boolean isDigit(char)>($c3);
+
+        if $z1 == 0 goto label3;
+
+        i4 = i4 + 1;
+
+        goto label2;
+
+     label3:
+        if i0 != i4 goto label4;
+
+        return -1;
+
+     label4:
+        $r2 = virtualinvoke r4.<java.lang.String: java.lang.String substring(int,int)>(i0, i4);
+
+        $i2 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r2);
+
+        return $i2;
+    }
+
+    public static java.util.List splitComma(java.lang.String)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.regex.Pattern2 r2;
+        net.sourceforge.plantuml.command.regex.Matcher2 r3;
+        boolean $z0;
+        java.util.List $r4;
+        java.lang.String $r5, $r6, r7, r8;
+
+        r7 := @parameter0: java.lang.String;
+
+        r8 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trin(java.lang.String)>(r7);
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        r2 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("([%pLN_.]+|[%g][^%g]+[%g])");
+
+        r3 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r8);
+
+     label1:
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = virtualinvoke r3.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(0);
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String)>($r5);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        goto label1;
+
+     label2:
+        $r4 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r0);
+
+        return $r4;
+    }
+
+    public static java.lang.String getUid(java.lang.String, int)
+    {
+        java.lang.StringBuilder $r0, $r2, $r6;
+        java.lang.String r1, $r5, $r7;
+        java.lang.Object[] $r3;
+        int i0;
+        java.lang.Integer $r4;
+
+        r1 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r3 = newarray (java.lang.Object)[1];
+
+        $r4 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(i0);
+
+        $r3[0] = $r4;
+
+        $r5 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("%04d", $r3);
+
+        $r6 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r7;
+    }
+
+    public static java.util.List merge(java.util.List, java.util.List)
+    {
+        java.util.ArrayList $r0;
+        java.util.List r1, r3, $r4;
+
+        r1 := @parameter0: java.util.List;
+
+        r3 := @parameter1: java.util.List;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>(r1);
+
+        interfaceinvoke $r0.<java.util.List: boolean addAll(java.util.Collection)>(r3);
+
+        $r4 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r0);
+
+        return $r4;
+    }
+
+    public static boolean endsWithBackslash(java.lang.String)
+    {
+        java.lang.String r0;
+        boolean $z0, $z1, $z2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean endsWith(java.lang.String)>("\\");
+
+        if $z0 == 0 goto label1;
+
+        $z1 = virtualinvoke r0.<java.lang.String: boolean endsWith(java.lang.String)>("\\\\");
+
+        if $z1 != 0 goto label1;
+
+        $z2 = 1;
+
+        goto label2;
+
+     label1:
+        $z2 = 0;
+
+     label2:
+        return $z2;
+    }
+
+    public static java.lang.String rot(java.lang.String)
+    {
+        java.lang.StringBuilder $r0;
+        java.lang.String r2, $r3;
+        int $i0, $i1, $i2, i3;
+        java.lang.IllegalArgumentException $r5;
+        char c4;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        i3 = 0;
+
+     label1:
+        $i0 = virtualinvoke r2.<java.lang.String: int length()>();
+
+        if i3 >= $i0 goto label9;
+
+        c4 = virtualinvoke r2.<java.lang.String: char charAt(int)>(i3);
+
+        if c4 < 97 goto label2;
+
+        if c4 <= 109 goto label3;
+
+     label2:
+        if c4 < 65 goto label4;
+
+        if c4 > 77 goto label4;
+
+     label3:
+        $i2 = c4 + 13;
+
+        c4 = (char) $i2;
+
+        goto label8;
+
+     label4:
+        if c4 < 110 goto label5;
+
+        if c4 <= 122 goto label6;
+
+     label5:
+        if c4 < 78 goto label7;
+
+        if c4 > 90 goto label7;
+
+     label6:
+        $i1 = c4 - 13;
+
+        c4 = (char) $i1;
+
+        goto label8;
+
+     label7:
+        if c4 <= 126 goto label8;
+
+        $r5 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r5.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>(r2);
+
+        throw $r5;
+
+     label8:
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c4);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label9:
+        $r3 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+
+    public static java.lang.String manageUnicodeNotationUplus(java.lang.String)
+    {
+        java.util.regex.Pattern r0;
+        java.lang.String r1, $r6, r7, $r8, $r11;
+        java.util.regex.Matcher r2;
+        java.lang.StringBuffer $r3;
+        boolean $z0;
+        int i0;
+        char[] $r9;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("\\<U\\+([0-9a-fA-F]{4,5})\\>");
+
+        r2 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r1);
+
+        $r3 = new java.lang.StringBuffer;
+
+        specialinvoke $r3.<java.lang.StringBuffer: void <init>()>();
+
+     label1:
+        $z0 = virtualinvoke r2.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label2;
+
+        r7 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String,int)>(r7, 16);
+
+        $r8 = new java.lang.String;
+
+        $r9 = staticinvoke <java.lang.Character: char[] toChars(int)>(i0);
+
+        specialinvoke $r8.<java.lang.String: void <init>(char[])>($r9);
+
+        $r11 = staticinvoke <java.util.regex.Matcher: java.lang.String quoteReplacement(java.lang.String)>($r8);
+
+        virtualinvoke r2.<java.util.regex.Matcher: java.util.regex.Matcher appendReplacement(java.lang.StringBuffer,java.lang.String)>($r3, $r11);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r2.<java.util.regex.Matcher: java.lang.StringBuffer appendTail(java.lang.StringBuffer)>($r3);
+
+        $r6 = virtualinvoke $r3.<java.lang.StringBuffer: java.lang.String toString()>();
+
+        return $r6;
+    }
+
+    public static java.lang.String manageAmpDiese(java.lang.String)
+    {
+        java.util.regex.Pattern r0;
+        java.lang.String r1, $r6, r7, $r11;
+        java.util.regex.Matcher r2;
+        java.lang.StringBuffer $r3;
+        boolean $z0;
+        int $i0;
+        char c1;
+        java.lang.StringBuilder $r8, $r9, $r10;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("\\&#([0-9]+);");
+
+        r2 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r1);
+
+        $r3 = new java.lang.StringBuffer;
+
+        specialinvoke $r3.<java.lang.StringBuffer: void <init>()>();
+
+     label1:
+        $z0 = virtualinvoke r2.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label2;
+
+        r7 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        $i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>(r7);
+
+        c1 = (char) $i0;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r2.<java.util.regex.Matcher: java.util.regex.Matcher appendReplacement(java.lang.StringBuffer,java.lang.String)>($r3, $r11);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r2.<java.util.regex.Matcher: java.lang.StringBuffer appendTail(java.lang.StringBuffer)>($r3);
+
+        $r6 = virtualinvoke $r3.<java.lang.StringBuffer: java.lang.String toString()>();
+
+        return $r6;
+    }
+
+    public static java.lang.String manageTildeArobaseStart(java.lang.String)
+    {
+        java.lang.String r0, r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = virtualinvoke r0.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("~@start", "@start");
+
+        return r1;
+    }
+
+    public static java.lang.String trinNoTrace(java.lang.CharSequence)
+    {
+        java.lang.CharSequence r0;
+        java.lang.String $r1, $r2;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        $r1 = interfaceinvoke r0.<java.lang.CharSequence: java.lang.String toString()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.String: java.lang.String trim()>();
+
+        return $r2;
+    }
+
+    public static java.lang.String trin(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+        int $i0, $i1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label1;
+
+        return r0;
+
+     label1:
+        $i1 = staticinvoke <net.sourceforge.plantuml.StringUtils: int getPositionStartNonSpace(java.lang.String)>(r0);
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trinEndingInternal(java.lang.String,int)>(r0, $i1);
+
+        return $r1;
+    }
+
+    private static int getPositionStartNonSpace(java.lang.String)
+    {
+        java.lang.String r0;
+        int $i0, i2;
+        char $c1;
+        boolean $z0;
+
+        r0 := @parameter0: java.lang.String;
+
+        i2 = 0;
+
+     label1:
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if i2 >= $i0 goto label2;
+
+        $c1 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i2);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isSpaceOrTabOrNull(char)>($c1);
+
+        if $z0 == 0 goto label2;
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label2:
+        return i2;
+    }
+
+    private static java.lang.String trinEnding(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+        int $i0;
+
+        r0 := @parameter0: java.lang.String;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label1;
+
+        return r0;
+
+     label1:
+        $r1 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trinEndingInternal(java.lang.String,int)>(r0, 0);
+
+        return $r1;
+    }
+
+    private static java.lang.String trinEndingInternal(java.lang.String, int)
+    {
+        java.lang.String r0, $r1;
+        int $i0, i1, $i2, $i3, $i4, i6;
+        char $c5;
+        boolean $z0;
+
+        r0 := @parameter0: java.lang.String;
+
+        i1 := @parameter1: int;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        i6 = $i0 - 1;
+
+     label1:
+        if i6 < i1 goto label2;
+
+        $c5 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i6);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isSpaceOrTabOrNull(char)>($c5);
+
+        if $z0 == 0 goto label2;
+
+        i6 = i6 + -1;
+
+        goto label1;
+
+     label2:
+        if i1 != 0 goto label3;
+
+        $i3 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i4 = $i3 - 1;
+
+        if i6 != $i4 goto label3;
+
+        return r0;
+
+     label3:
+        $i2 = i6 + 1;
+
+        $r1 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>(i1, $i2);
+
+        return $r1;
+    }
+
+    private static boolean isSpaceOrTabOrNull(char)
+    {
+        char c0;
+        boolean $z0;
+
+        c0 := @parameter0: char;
+
+        if c0 == 32 goto label1;
+
+        if c0 == 9 goto label1;
+
+        if c0 == 13 goto label1;
+
+        if c0 == 10 goto label1;
+
+        if c0 != 0 goto label2;
+
+     label1:
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        return $z0;
+    }
+
+    public static java.lang.String manageEscapedTabs(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = virtualinvoke r0.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("\\t", "\t");
+
+        return $r1;
+    }
+
+    public static long seed(java.lang.String)
+    {
+        java.lang.String r0;
+        int i0, i5;
+        long $l1, $l3, l4;
+        char $c2;
+
+        r0 := @parameter0: java.lang.String;
+
+        l4 = 1125899906842597L;
+
+        i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        i5 = 0;
+
+     label1:
+        if i5 >= i0 goto label2;
+
+        $l1 = 31L * l4;
+
+        $c2 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i5);
+
+        $l3 = (long) $c2;
+
+        l4 = $l1 + $l3;
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label2:
+        return l4;
+    }
+
+    public static java.lang.String sharp000000(int)
+    {
+        int i0, i1, $i2, $i3;
+        java.lang.StringBuilder $r0, $r1, $r4, $r5, $r6, $r7;
+        java.lang.String $r2, $r3, $r8, r9, r10;
+
+        i0 := @parameter0: int;
+
+        i1 = 16777215 & i0;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("000000");
+
+        $r2 = staticinvoke <java.lang.Integer: java.lang.String toHexString(int)>(i1);
+
+        $r3 = virtualinvoke $r2.<java.lang.String: java.lang.String toUpperCase()>();
+
+        $r4 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        r9 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $i2 = virtualinvoke r9.<java.lang.String: int length()>();
+
+        $i3 = $i2 - 6;
+
+        r10 = virtualinvoke r9.<java.lang.String: java.lang.String substring(int)>($i3);
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("#");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r10);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r8;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.StringUtils: char INTERNAL_BOLD> = 57600;
+
+        <net.sourceforge.plantuml.StringUtils: char PRIVATE_BLOCK> = 57344;
+
+        <net.sourceforge.plantuml.StringUtils: char BOLD_END> = 61169;
+
+        <net.sourceforge.plantuml.StringUtils: char BOLD_START> = 61170;
+
+        <net.sourceforge.plantuml.StringUtils: char IE_MANDATORY> = 61171;
+
+        <net.sourceforge.plantuml.StringUtils: char PUBLIC_METHOD> = 61172;
+
+        <net.sourceforge.plantuml.StringUtils: char PACKAGE_PRIVATE_METHOD> = 61173;
+
+        <net.sourceforge.plantuml.StringUtils: char PROTECTED_METHOD> = 61174;
+
+        <net.sourceforge.plantuml.StringUtils: char PRIVATE_METHOD> = 61175;
+
+        <net.sourceforge.plantuml.StringUtils: char PUBLIC_FIELD> = 61176;
+
+        <net.sourceforge.plantuml.StringUtils: char PACKAGE_PRIVATE_FIELD> = 61177;
+
+        <net.sourceforge.plantuml.StringUtils: char PROTECTED_FIELD> = 61178;
+
+        <net.sourceforge.plantuml.StringUtils: char PRIVATE_FIELD> = 61179;
+
+        <net.sourceforge.plantuml.StringUtils: char HR_BOLD> = 61180;
+
+        <net.sourceforge.plantuml.StringUtils: char HR_DOTTED> = 61181;
+
+        <net.sourceforge.plantuml.StringUtils: char HR_DOUBLE> = 61182;
+
+        <net.sourceforge.plantuml.StringUtils: char HR_SIMPLE> = 61183;
+
+        <net.sourceforge.plantuml.StringUtils: char USER_TAB> = 60929;
+
+        <net.sourceforge.plantuml.StringUtils: char USER_NEWLINE> = 60928;
+
+        return;
+    }
+}

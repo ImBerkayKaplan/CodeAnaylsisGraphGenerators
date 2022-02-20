@@ -1,0 +1,174 @@
+public class net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d extends net.sourceforge.plantuml.ugraphic.g2d.DriverShadowedG2d implements net.sourceforge.plantuml.ugraphic.UDriver
+{
+    private final double dpiFactor;
+
+    public void <init>(double)
+    {
+        net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d r0;
+        double d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d;
+
+        d0 := @parameter0: double;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.g2d.DriverShadowedG2d: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d: double dpiFactor> = d0;
+
+        return;
+    }
+
+    public void draw(net.sourceforge.plantuml.ugraphic.ULine, double, double, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.UParam, java.awt.Graphics2D)
+    {
+        java.awt.geom.Line2D$Double $r0;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8;
+        net.sourceforge.plantuml.ugraphic.ULine r1;
+        net.sourceforge.plantuml.ugraphic.UParam r3;
+        java.awt.Graphics2D r4;
+        byte $b0;
+        net.sourceforge.plantuml.ugraphic.color.HColor r5;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r6;
+        net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d r7;
+
+        r7 := @this: net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.ULine;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        r6 := @parameter3: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r3 := @parameter4: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r4 := @parameter5: java.awt.Graphics2D;
+
+        $r0 = new java.awt.geom.Line2D$Double;
+
+        $d2 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.ULine: double getDX()>();
+
+        $d3 = d0 + $d2;
+
+        $d4 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.ULine: double getDY()>();
+
+        $d5 = d1 + $d4;
+
+        specialinvoke $r0.<java.awt.geom.Line2D$Double: void <init>(double,double,double,double)>(d0, d1, $d3, $d5);
+
+        staticinvoke <net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d: void manageStroke(net.sourceforge.plantuml.ugraphic.UParam,java.awt.Graphics2D)>(r3, r4);
+
+        $d6 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.ULine: double getDeltaShadow()>();
+
+        $b0 = $d6 cmpl 0.0;
+
+        if $b0 == 0 goto label1;
+
+        $d7 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.ULine: double getDeltaShadow()>();
+
+        $d8 = r7.<net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d: double dpiFactor>;
+
+        virtualinvoke r7.<net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d: void drawShadow(java.awt.Graphics2D,java.awt.Shape,double,double)>(r4, $r0, $d7, $d8);
+
+     label1:
+        r5 = interfaceinvoke r3.<net.sourceforge.plantuml.ugraphic.UParam: net.sourceforge.plantuml.ugraphic.color.HColor getColor()>();
+
+        staticinvoke <net.sourceforge.plantuml.ugraphic.g2d.DriverRectangleG2d: void drawBorder(net.sourceforge.plantuml.ugraphic.UParam,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.ugraphic.UShapeSized,java.awt.Shape,java.awt.Graphics2D,double,double)>(r3, r5, r6, r1, $r0, r4, d0, d1);
+
+        return;
+    }
+
+    static void manageStroke(net.sourceforge.plantuml.ugraphic.UParam, java.awt.Graphics2D)
+    {
+        net.sourceforge.plantuml.ugraphic.UParam r0;
+        net.sourceforge.plantuml.ugraphic.UStroke r1;
+        double $d0, $d1, $d2, $d3;
+        float f0, f1, f2;
+        byte $b0;
+        float[] $r2;
+        java.awt.Graphics2D r4;
+        java.awt.BasicStroke $r5, $r6;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r4 := @parameter1: java.awt.Graphics2D;
+
+        r1 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UParam: net.sourceforge.plantuml.ugraphic.UStroke getStroke()>();
+
+        $d0 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UStroke: double getThickness()>();
+
+        f0 = (float) $d0;
+
+        $d1 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UStroke: double getDashVisible()>();
+
+        $b0 = $d1 cmpl 0.0;
+
+        if $b0 != 0 goto label1;
+
+        $r6 = new java.awt.BasicStroke;
+
+        specialinvoke $r6.<java.awt.BasicStroke: void <init>(float)>(f0);
+
+        virtualinvoke r4.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r6);
+
+        goto label2;
+
+     label1:
+        $d2 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UStroke: double getDashVisible()>();
+
+        f1 = (float) $d2;
+
+        $d3 = virtualinvoke r1.<net.sourceforge.plantuml.ugraphic.UStroke: double getDashSpace()>();
+
+        f2 = (float) $d3;
+
+        $r2 = newarray (float)[2];
+
+        $r2[0] = f1;
+
+        $r2[1] = f2;
+
+        $r5 = new java.awt.BasicStroke;
+
+        specialinvoke $r5.<java.awt.BasicStroke: void <init>(float,int,int,float,float[],float)>(f0, 0, 0, 10.0F, $r2, 0.0F);
+
+        virtualinvoke r4.<java.awt.Graphics2D: void setStroke(java.awt.Stroke)>($r5);
+
+     label2:
+        return;
+    }
+
+    public volatile void draw(net.sourceforge.plantuml.ugraphic.UShape, double, double, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.UParam, java.lang.Object)
+    {
+        net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d r0;
+        net.sourceforge.plantuml.ugraphic.UShape r1;
+        double d0, d1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r2;
+        net.sourceforge.plantuml.ugraphic.UParam r3;
+        java.lang.Object r4;
+        java.awt.Graphics2D $r5;
+        net.sourceforge.plantuml.ugraphic.ULine $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UShape;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        r2 := @parameter3: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r3 := @parameter4: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r4 := @parameter5: java.lang.Object;
+
+        $r6 = (net.sourceforge.plantuml.ugraphic.ULine) r1;
+
+        $r5 = (java.awt.Graphics2D) r4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.g2d.DriverLineG2d: void draw(net.sourceforge.plantuml.ugraphic.ULine,double,double,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.ugraphic.UParam,java.awt.Graphics2D)>($r6, d0, d1, r2, r3, $r5);
+
+        return;
+    }
+}

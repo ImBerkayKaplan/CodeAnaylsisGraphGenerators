@@ -1,0 +1,657 @@
+public class net.sourceforge.plantuml.version.PLSSignature extends java.lang.Object
+{
+    private final int type;
+    private final byte[] sha;
+    private final long now;
+    private final long exp;
+    private final java.lang.String owner;
+    private final java.lang.String context;
+
+    public void <init>(int, byte[], long, long, java.lang.String, java.lang.String)
+    {
+        net.sourceforge.plantuml.version.PLSSignature r0;
+        int i0;
+        byte[] r1;
+        long l1, l2;
+        java.lang.String r2, r3;
+
+        r0 := @this: net.sourceforge.plantuml.version.PLSSignature;
+
+        i0 := @parameter0: int;
+
+        r1 := @parameter1: byte[];
+
+        l1 := @parameter2: long;
+
+        l2 := @parameter3: long;
+
+        r2 := @parameter4: java.lang.String;
+
+        r3 := @parameter5: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.version.PLSSignature: int type> = i0;
+
+        r0.<net.sourceforge.plantuml.version.PLSSignature: byte[] sha> = r1;
+
+        r0.<net.sourceforge.plantuml.version.PLSSignature: long now> = l1;
+
+        r0.<net.sourceforge.plantuml.version.PLSSignature: long exp> = l2;
+
+        r0.<net.sourceforge.plantuml.version.PLSSignature: java.lang.String owner> = r2;
+
+        r0.<net.sourceforge.plantuml.version.PLSSignature: java.lang.String context> = r3;
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.version.LicenseInfo toLicenseInfo()
+    {
+        net.sourceforge.plantuml.version.LicenseInfo $r0;
+        net.sourceforge.plantuml.version.PLSSignature r1;
+        int $i0;
+        net.sourceforge.plantuml.version.LicenseType $r2;
+        byte[] $r3;
+        java.lang.String $r4, $r5;
+        long $l1, $l2;
+
+        r1 := @this: net.sourceforge.plantuml.version.PLSSignature;
+
+        $r0 = new net.sourceforge.plantuml.version.LicenseInfo;
+
+        $i0 = r1.<net.sourceforge.plantuml.version.PLSSignature: int type>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.version.LicenseType: net.sourceforge.plantuml.version.LicenseType fromInt(int)>($i0);
+
+        $l2 = r1.<net.sourceforge.plantuml.version.PLSSignature: long now>;
+
+        $l1 = r1.<net.sourceforge.plantuml.version.PLSSignature: long exp>;
+
+        $r5 = r1.<net.sourceforge.plantuml.version.PLSSignature: java.lang.String owner>;
+
+        $r4 = r1.<net.sourceforge.plantuml.version.PLSSignature: java.lang.String context>;
+
+        $r3 = r1.<net.sourceforge.plantuml.version.PLSSignature: byte[] sha>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.version.LicenseInfo: void <init>(net.sourceforge.plantuml.version.LicenseType,long,long,java.lang.String,java.lang.String,byte[])>($r2, $l2, $l1, $r5, $r4, $r3);
+
+        return $r0;
+    }
+
+    public static byte[] retrieveDistributorImageSignature() throws java.io.IOException, java.security.NoSuchAlgorithmException
+    {
+        java.lang.Class $r0;
+        java.io.InputStream r1;
+        java.io.ByteArrayOutputStream $r2;
+        byte[] $r4, $r5;
+
+        $r0 = class "Lnet/sourceforge/plantuml/version/PSystemVersion;";
+
+        r1 = virtualinvoke $r0.<java.lang.Class: java.io.InputStream getResourceAsStream(java.lang.String)>("/distributor.png");
+
+        $r2 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r2.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        staticinvoke <net.sourceforge.plantuml.FileUtils: void copyToStream(java.io.InputStream,java.io.OutputStream)>(r1, $r2);
+
+        $r4 = virtualinvoke $r2.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: byte[] getSHA512raw(byte[])>($r4);
+
+        return $r5;
+    }
+
+    public static net.sourceforge.plantuml.version.PLSSignature fromRaw512(byte[]) throws java.security.NoSuchAlgorithmException, java.io.IOException
+    {
+        byte[] r0, r1, r2, r3, r12, r14;
+        int $i0, $i1, $i2, i3;
+        java.lang.String $r4, $r5, r8, r13, r15;
+        boolean $z0;
+        java.io.ByteArrayInputStream $r6;
+        net.sourceforge.plantuml.version.PLSSignature $r9, $r10;
+        java.lang.IllegalArgumentException $r11;
+        long l5, l6, l8, l9;
+
+        r0 := @parameter0: byte[];
+
+        $i0 = lengthof r0;
+
+        if $i0 == 512 goto label1;
+
+        $r11 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r11.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r11;
+
+     label1:
+        r1 = newarray (byte)[64];
+
+        r2 = newarray (byte)[448];
+
+        $i1 = lengthof r1;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r0, 0, r1, 0, $i1);
+
+        $i2 = lengthof r2;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>(r0, 64, r2, 0, $i2);
+
+        r3 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: byte[] getSHA512raw(byte[])>(r2);
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: java.lang.String toHexString(byte[])>(r1);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: java.lang.String toHexString(byte[])>(r3);
+
+        $z0 = virtualinvoke $r4.<java.lang.String: boolean equals(java.lang.Object)>($r5);
+
+        if $z0 != 0 goto label2;
+
+        return null;
+
+     label2:
+        $r6 = new java.io.ByteArrayInputStream;
+
+        specialinvoke $r6.<java.io.ByteArrayInputStream: void <init>(byte[])>(r2);
+
+        i3 = virtualinvoke $r6.<java.io.ByteArrayInputStream: int read()>();
+
+        if i3 != 0 goto label3;
+
+        virtualinvoke $r6.<java.io.ByteArrayInputStream: int read()>();
+
+        r12 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: byte[] readBytes(java.io.ByteArrayInputStream,int)>($r6, 64);
+
+        l5 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: long readLong(java.io.ByteArrayInputStream)>($r6);
+
+        l6 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: long readLong(java.io.ByteArrayInputStream)>($r6);
+
+        r13 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: java.lang.String readString(java.io.ByteArrayInputStream)>($r6);
+
+        $r10 = new net.sourceforge.plantuml.version.PLSSignature;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.version.PLSSignature: void <init>(int,byte[],long,long,java.lang.String,java.lang.String)>(i3, r12, l5, l6, r13, null);
+
+        return $r10;
+
+     label3:
+        if i3 != 2 goto label4;
+
+        virtualinvoke $r6.<java.io.ByteArrayInputStream: int read()>();
+
+        r14 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: byte[] readBytes(java.io.ByteArrayInputStream,int)>($r6, 64);
+
+        l8 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: long readLong(java.io.ByteArrayInputStream)>($r6);
+
+        l9 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: long readLong(java.io.ByteArrayInputStream)>($r6);
+
+        r15 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: java.lang.String readString(java.io.ByteArrayInputStream)>($r6);
+
+        r8 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: java.lang.String readString(java.io.ByteArrayInputStream)>($r6);
+
+        $r9 = new net.sourceforge.plantuml.version.PLSSignature;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.version.PLSSignature: void <init>(int,byte[],long,long,java.lang.String,java.lang.String)>(i3, r14, l8, l9, r15, r8);
+
+        return $r9;
+
+     label4:
+        return null;
+    }
+
+    private static byte[] readBytes(java.io.ByteArrayInputStream, int) throws java.io.IOException
+    {
+        int i0, i1;
+        byte[] r0;
+        java.io.ByteArrayInputStream r1;
+        java.io.IOException $r2;
+
+        r1 := @parameter0: java.io.ByteArrayInputStream;
+
+        i0 := @parameter1: int;
+
+        r0 = newarray (byte)[i0];
+
+        i1 = virtualinvoke r1.<java.io.ByteArrayInputStream: int read(byte[])>(r0);
+
+        if i1 == i0 goto label1;
+
+        $r2 = new java.io.IOException;
+
+        specialinvoke $r2.<java.io.IOException: void <init>()>();
+
+        throw $r2;
+
+     label1:
+        return r0;
+    }
+
+    private static java.lang.String readString(java.io.ByteArrayInputStream) throws java.io.IOException
+    {
+        java.io.ByteArrayInputStream r0;
+        int i0, i1;
+        byte[] r1;
+        java.lang.String $r2;
+        java.nio.charset.Charset $r3;
+        java.io.IOException $r4, $r5;
+
+        r0 := @parameter0: java.io.ByteArrayInputStream;
+
+        i0 = virtualinvoke r0.<java.io.ByteArrayInputStream: int read()>();
+
+        if i0 <= 80 goto label1;
+
+        $r5 = new java.io.IOException;
+
+        specialinvoke $r5.<java.io.IOException: void <init>()>();
+
+        throw $r5;
+
+     label1:
+        r1 = newarray (byte)[i0];
+
+        i1 = virtualinvoke r0.<java.io.ByteArrayInputStream: int read(byte[])>(r1);
+
+        if i1 == i0 goto label2;
+
+        $r4 = new java.io.IOException;
+
+        specialinvoke $r4.<java.io.IOException: void <init>()>();
+
+        throw $r4;
+
+     label2:
+        $r2 = new java.lang.String;
+
+        $r3 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        specialinvoke $r2.<java.lang.String: void <init>(byte[],java.nio.charset.Charset)>(r1, $r3);
+
+        return $r2;
+    }
+
+    private static long readLong(java.io.ByteArrayInputStream) throws java.io.IOException
+    {
+        byte[] r0;
+        java.io.ByteArrayInputStream r1;
+        int i0, $i2, $i3, $i4, i8;
+        byte $b1;
+        long $l5, l6, l7;
+        java.io.IOException $r2;
+
+        r1 := @parameter0: java.io.ByteArrayInputStream;
+
+        r0 = newarray (byte)[8];
+
+        i0 = virtualinvoke r1.<java.io.ByteArrayInputStream: int read(byte[])>(r0);
+
+        if i0 == 8 goto label1;
+
+        $r2 = new java.io.IOException;
+
+        specialinvoke $r2.<java.io.IOException: void <init>()>();
+
+        throw $r2;
+
+     label1:
+        l7 = 0L;
+
+        i8 = 7;
+
+     label2:
+        if i8 < 0 goto label3;
+
+        $b1 = r0[i8];
+
+        $i2 = $b1 & 255;
+
+        $l5 = (long) $i2;
+
+        $i3 = 7 - i8;
+
+        $i4 = 8 * $i3;
+
+        l6 = $l5 << $i4;
+
+        l7 = l7 | l6;
+
+        i8 = i8 + -1;
+
+        goto label2;
+
+     label3:
+        return l7;
+    }
+
+    public static net.sourceforge.plantuml.version.LicenseInfo retrieveNamed(java.lang.String, java.lang.String, boolean) throws java.security.NoSuchAlgorithmException, java.security.spec.InvalidKeySpecException, java.io.IOException
+    {
+        java.lang.String r0, r2;
+        byte[] r1, $r3, $r4, $r5;
+        net.sourceforge.plantuml.version.PLSSignature r6;
+        net.sourceforge.plantuml.version.LicenseInfo $r7, $r8;
+        boolean z0;
+
+        r2 := @parameter0: java.lang.String;
+
+        r0 := @parameter1: java.lang.String;
+
+        z0 := @parameter2: boolean;
+
+        r1 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: byte[] decode(java.lang.String)>(r0);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: byte[] getSalt(java.lang.String)>(r2);
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: byte[] salting(java.lang.String,byte[])>(r2, $r3);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: byte[] getSHA512raw(byte[])>($r4);
+
+        staticinvoke <net.sourceforge.plantuml.version.PLSSignature: void xor(byte[],byte[])>(r1, $r5);
+
+        r6 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: net.sourceforge.plantuml.version.PLSSignature fromRaw512(byte[])>(r1);
+
+        if r6 != null goto label1;
+
+        $r8 = <net.sourceforge.plantuml.version.LicenseInfo: net.sourceforge.plantuml.version.LicenseInfo NONE>;
+
+        return $r8;
+
+     label1:
+        $r7 = specialinvoke r6.<net.sourceforge.plantuml.version.PLSSignature: net.sourceforge.plantuml.version.LicenseInfo toLicenseInfo()>();
+
+        return $r7;
+    }
+
+    public static net.sourceforge.plantuml.version.LicenseInfo retrieveDistributor(java.lang.String) throws java.io.IOException, java.security.NoSuchAlgorithmException
+    {
+        java.lang.String r0;
+        byte[] r1;
+        net.sourceforge.plantuml.version.PLSSignature r2;
+        net.sourceforge.plantuml.version.LicenseInfo $r3, $r4;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: byte[] decode(java.lang.String)>(r0);
+
+        r2 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: net.sourceforge.plantuml.version.PLSSignature fromRaw512(byte[])>(r1);
+
+        if r2 != null goto label1;
+
+        $r4 = <net.sourceforge.plantuml.version.LicenseInfo: net.sourceforge.plantuml.version.LicenseInfo NONE>;
+
+        return $r4;
+
+     label1:
+        $r3 = specialinvoke r2.<net.sourceforge.plantuml.version.PLSSignature: net.sourceforge.plantuml.version.LicenseInfo toLicenseInfo()>();
+
+        return $r3;
+    }
+
+    private static byte[] decode(java.lang.String) throws java.io.IOException
+    {
+        java.math.BigInteger $r0, $r5, $r6;
+        java.lang.String r1;
+        net.sourceforge.plantuml.dedication.QBlock $r3, r7;
+        byte[] r8;
+        int $i0;
+        java.io.IOException $r9;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = new java.math.BigInteger;
+
+        specialinvoke $r0.<java.math.BigInteger: void <init>(java.lang.String,int)>(r1, 36);
+
+        $r3 = new net.sourceforge.plantuml.dedication.QBlock;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.dedication.QBlock: void <init>(java.math.BigInteger)>($r0);
+
+        $r6 = <net.sourceforge.plantuml.dedication.Dedication: java.math.BigInteger E>;
+
+        $r5 = <net.sourceforge.plantuml.dedication.Dedication: java.math.BigInteger N>;
+
+        r7 = virtualinvoke $r3.<net.sourceforge.plantuml.dedication.QBlock: net.sourceforge.plantuml.dedication.QBlock change(java.math.BigInteger,java.math.BigInteger)>($r6, $r5);
+
+        r8 = virtualinvoke r7.<net.sourceforge.plantuml.dedication.QBlock: byte[] getData512()>();
+
+        $i0 = lengthof r8;
+
+        if $i0 == 512 goto label1;
+
+        $r9 = new java.io.IOException;
+
+        specialinvoke $r9.<java.io.IOException: void <init>()>();
+
+        throw $r9;
+
+     label1:
+        return r8;
+    }
+
+    private static void xor(byte[], net.sourceforge.plantuml.dedication.TurningBytes)
+    {
+        byte[] r0;
+        int $i0, $i3, i5;
+        net.sourceforge.plantuml.dedication.TurningBytes r1;
+        byte $b1, $b2, $b4;
+
+        r0 := @parameter0: byte[];
+
+        r1 := @parameter1: net.sourceforge.plantuml.dedication.TurningBytes;
+
+        i5 = 0;
+
+     label1:
+        $i0 = lengthof r0;
+
+        if i5 >= $i0 goto label2;
+
+        $b1 = r0[i5];
+
+        $b2 = virtualinvoke r1.<net.sourceforge.plantuml.dedication.TurningBytes: byte nextByte()>();
+
+        $i3 = $b1 ^ $b2;
+
+        $b4 = (byte) $i3;
+
+        r0[i5] = $b4;
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public static void xor(byte[], byte[])
+    {
+        byte[] r0, r2;
+        net.sourceforge.plantuml.dedication.TurningBytes $r1;
+
+        r0 := @parameter0: byte[];
+
+        r2 := @parameter1: byte[];
+
+        $r1 = new net.sourceforge.plantuml.dedication.TurningBytes;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.dedication.TurningBytes: void <init>(byte[])>(r2);
+
+        staticinvoke <net.sourceforge.plantuml.version.PLSSignature: void xor(byte[],net.sourceforge.plantuml.dedication.TurningBytes)>(r0, $r1);
+
+        return;
+    }
+
+    public static byte[] getSalt(java.lang.String) throws java.io.UnsupportedEncodingException
+    {
+        java.util.Random $r0;
+        java.lang.String r1;
+        java.nio.charset.Charset $r2;
+        byte[] $r3, r5;
+        long $l0;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = new java.util.Random;
+
+        $r2 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r3 = virtualinvoke r1.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r2);
+
+        $l0 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: long getSeed(byte[])>($r3);
+
+        specialinvoke $r0.<java.util.Random: void <init>(long)>($l0);
+
+        r5 = newarray (byte)[512];
+
+        virtualinvoke $r0.<java.util.Random: void nextBytes(byte[])>(r5);
+
+        return r5;
+    }
+
+    private static long getSeed(byte[])
+    {
+        byte[] r0;
+        int i0, i5;
+        byte b1;
+        long $l2, $l3, l4;
+
+        r0 := @parameter0: byte[];
+
+        l4 = 19L;
+
+        i0 = lengthof r0;
+
+        i5 = 0;
+
+     label1:
+        if i5 >= i0 goto label2;
+
+        b1 = r0[i5];
+
+        $l3 = l4 * 41L;
+
+        $l2 = (long) b1;
+
+        l4 = $l3 + $l2;
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label2:
+        return l4;
+    }
+
+    public static byte[] signature() throws java.io.IOException
+    {
+        java.lang.StringBuilder $r0, $r2, $r4;
+        java.lang.String $r1, $r3, r5;
+        byte[] $r6, $r7, $r8;
+        java.lang.Exception $r9;
+        java.io.IOException $r11;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.OptionPrint: java.lang.String getHostName()>();
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r1);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: java.lang.String getMacAddress()>();
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label1:
+        $r6 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: byte[] getSalt(java.lang.String)>(r5);
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: byte[] salting(java.lang.String,byte[])>(r5, $r6);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: byte[] getSHA512raw(byte[])>($r7);
+
+     label2:
+        return $r8;
+
+     label3:
+        $r9 := @caughtexception;
+
+        virtualinvoke $r9.<java.lang.Exception: void printStackTrace()>();
+
+        $r11 = new java.io.IOException;
+
+        specialinvoke $r11.<java.io.IOException: void <init>()>();
+
+        throw $r11;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    private static java.lang.String getMacAddress() throws java.io.IOException
+    {
+        java.util.Enumeration r0;
+        java.lang.StringBuilder $r1;
+        boolean $z0;
+        java.lang.String $r3, $r10;
+        java.lang.Object $r4;
+        java.net.NetworkInterface r5;
+        byte[] r6;
+        int i0, i2;
+        byte b1;
+        java.lang.Object[] $r8;
+        java.lang.Byte $r9;
+
+        r0 = staticinvoke <java.net.NetworkInterface: java.util.Enumeration getNetworkInterfaces()>();
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+     label1:
+        $z0 = interfaceinvoke r0.<java.util.Enumeration: boolean hasMoreElements()>();
+
+        if $z0 == 0 goto label4;
+
+        $r4 = interfaceinvoke r0.<java.util.Enumeration: java.lang.Object nextElement()>();
+
+        r5 = (java.net.NetworkInterface) $r4;
+
+        r6 = virtualinvoke r5.<java.net.NetworkInterface: byte[] getHardwareAddress()>();
+
+        if r6 == null goto label3;
+
+        i0 = lengthof r6;
+
+        i2 = 0;
+
+     label2:
+        if i2 >= i0 goto label3;
+
+        b1 = r6[i2];
+
+        $r8 = newarray (java.lang.Object)[1];
+
+        $r9 = staticinvoke <java.lang.Byte: java.lang.Byte valueOf(byte)>(b1);
+
+        $r8[0] = $r9;
+
+        $r10 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("%02x", $r8);
+
+        virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        i2 = i2 + 1;
+
+        goto label2;
+
+     label3:
+        goto label1;
+
+     label4:
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+}

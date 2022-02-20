@@ -1,0 +1,1057 @@
+public class net.sourceforge.plantuml.AnimatedGifEncoder extends java.lang.Object
+{
+    protected int width;
+    protected int height;
+    protected java.awt.Color transparent;
+    protected int transIndex;
+    protected int repeat;
+    protected int delay;
+    protected boolean started;
+    protected java.io.OutputStream out;
+    protected java.awt.image.BufferedImage image;
+    protected byte[] pixels;
+    protected byte[] indexedPixels;
+    protected int colorDepth;
+    protected byte[] colorTab;
+    protected boolean[] usedEntry;
+    protected int palSize;
+    protected int dispose;
+    protected boolean closeStream;
+    protected boolean firstFrame;
+    protected boolean sizeSet;
+    protected int sample;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        boolean[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.Color transparent> = null;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int repeat> = -1;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int delay> = 0;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean started> = 0;
+
+        $r1 = newarray (boolean)[256];
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean[] usedEntry> = $r1;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int palSize> = 7;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int dispose> = -1;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean closeStream> = 0;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean firstFrame> = 1;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean sizeSet> = 0;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int sample> = 10;
+
+        return;
+    }
+
+    public void setDelay(int)
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        int i0, $i1;
+        float $f0, $f1;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        i0 := @parameter0: int;
+
+        $f0 = (float) i0;
+
+        $f1 = $f0 / 10.0F;
+
+        $i1 = staticinvoke <java.lang.Math: int round(float)>($f1);
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int delay> = $i1;
+
+        return;
+    }
+
+    public void setDispose(int)
+    {
+        int i0;
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        i0 := @parameter0: int;
+
+        if i0 < 0 goto label1;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int dispose> = i0;
+
+     label1:
+        return;
+    }
+
+    public void setRepeat(int)
+    {
+        int i0;
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        i0 := @parameter0: int;
+
+        if i0 < 0 goto label1;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int repeat> = i0;
+
+     label1:
+        return;
+    }
+
+    public void setTransparent(java.awt.Color)
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        java.awt.Color r1;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        r1 := @parameter0: java.awt.Color;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.Color transparent> = r1;
+
+        return;
+    }
+
+    public boolean addFrame(java.awt.image.BufferedImage)
+    {
+        java.awt.image.BufferedImage r0;
+        net.sourceforge.plantuml.AnimatedGifEncoder r1;
+        boolean $z0, $z1, $z2, z3, $z4;
+        int $i0, $i1, $i2;
+        java.io.IOException $r2;
+
+        r1 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        r0 := @parameter0: java.awt.image.BufferedImage;
+
+        if r0 == null goto label1;
+
+        $z0 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean started>;
+
+        if $z0 != 0 goto label2;
+
+     label1:
+        return 0;
+
+     label2:
+        z3 = 1;
+
+     label3:
+        $z1 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean sizeSet>;
+
+        if $z1 != 0 goto label4;
+
+        $i1 = virtualinvoke r0.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i2 = virtualinvoke r0.<java.awt.image.BufferedImage: int getHeight()>();
+
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void setSize(int,int)>($i1, $i2);
+
+     label4:
+        r1.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.image.BufferedImage image> = r0;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void getImagePixels()>();
+
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void analyzePixels()>();
+
+        $z2 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean firstFrame>;
+
+        if $z2 == 0 goto label5;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeLSD()>();
+
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void writePalette()>();
+
+        $i0 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: int repeat>;
+
+        if $i0 < 0 goto label5;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeNetscapeExt()>();
+
+     label5:
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeGraphicCtrlExt()>();
+
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeImageDesc()>();
+
+        $z4 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean firstFrame>;
+
+        if $z4 != 0 goto label6;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void writePalette()>();
+
+     label6:
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void writePixels()>();
+
+        r1.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean firstFrame> = 0;
+
+     label7:
+        goto label9;
+
+     label8:
+        $r2 := @caughtexception;
+
+        z3 = 0;
+
+     label9:
+        return z3;
+
+        catch java.io.IOException from label3 to label7 with label8;
+    }
+
+    public boolean finish()
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        boolean $z0, $z1, z2;
+        java.io.OutputStream $r1, $r2, $r3;
+        java.io.IOException $r4;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $z0 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean started>;
+
+        if $z0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        z2 = 1;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean started> = 0;
+
+     label2:
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r1.<java.io.OutputStream: void write(int)>(59);
+
+        $r2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r2.<java.io.OutputStream: void flush()>();
+
+        $z1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean closeStream>;
+
+        if $z1 == 0 goto label3;
+
+        $r3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r3.<java.io.OutputStream: void close()>();
+
+     label3:
+        goto label5;
+
+     label4:
+        $r4 := @caughtexception;
+
+        z2 = 0;
+
+     label5:
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int transIndex> = 0;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out> = null;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.image.BufferedImage image> = null;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] pixels> = null;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] indexedPixels> = null;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab> = null;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean closeStream> = 0;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean firstFrame> = 1;
+
+        return z2;
+
+        catch java.io.IOException from label2 to label3 with label4;
+    }
+
+    public void setFrameRate(float)
+    {
+        float f0, $f1;
+        byte $b0;
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        int $i1;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        f0 := @parameter0: float;
+
+        $b0 = f0 cmpl 0.0F;
+
+        if $b0 == 0 goto label1;
+
+        $f1 = 100.0F / f0;
+
+        $i1 = staticinvoke <java.lang.Math: int round(float)>($f1);
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int delay> = $i1;
+
+     label1:
+        return;
+    }
+
+    public void setQuality(int)
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        i0 := @parameter0: int;
+
+        if i0 >= 1 goto label1;
+
+        i0 = 1;
+
+     label1:
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int sample> = i0;
+
+        return;
+    }
+
+    public void setSize(int, int)
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        boolean $z0, $z1;
+        int i0, i1, $i2, $i3;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        $z0 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean started>;
+
+        if $z0 == 0 goto label1;
+
+        $z1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean firstFrame>;
+
+        if $z1 != 0 goto label1;
+
+        return;
+
+     label1:
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int width> = i0;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int height> = i1;
+
+        $i2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int width>;
+
+        if $i2 >= 1 goto label2;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int width> = 320;
+
+     label2:
+        $i3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int height>;
+
+        if $i3 >= 1 goto label3;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int height> = 240;
+
+     label3:
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean sizeSet> = 1;
+
+        return;
+    }
+
+    public boolean start(java.io.OutputStream)
+    {
+        java.io.OutputStream r0;
+        net.sourceforge.plantuml.AnimatedGifEncoder r1;
+        java.io.IOException $r2;
+        boolean z1;
+
+        r1 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        r0 := @parameter0: java.io.OutputStream;
+
+        if r0 != null goto label1;
+
+        return 0;
+
+     label1:
+        z1 = 1;
+
+        r1.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean closeStream> = 0;
+
+        r1.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out> = r0;
+
+     label2:
+        virtualinvoke r1.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeString(java.lang.String)>("GIF89a");
+
+     label3:
+        goto label5;
+
+     label4:
+        $r2 := @caughtexception;
+
+        z1 = 0;
+
+     label5:
+        r1.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean started> = z1;
+
+        return z1;
+
+        catch java.io.IOException from label2 to label3 with label4;
+    }
+
+    protected void analyzePixels()
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        byte[] $r1, $r2, $r4, $r6, $r7, $r10, $r11, $r12, $r14, $r15, $r16, $r17, $r18;
+        int i0, i1, $i2, $i3, $i4, $i8, $i9, $i10, i11, $i13, $i15, $i16, i17, i19, i20, i21, i22;
+        net.sourceforge.plantuml.NeuQuant $r3;
+        java.awt.Color $r8, $r9;
+        byte $b5, $b6, $b7, $b12, $b14, b18;
+        boolean[] $r13, $r19;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] pixels>;
+
+        i0 = lengthof $r1;
+
+        i1 = i0 / 3;
+
+        $r2 = newarray (byte)[i1];
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] indexedPixels> = $r2;
+
+        $r3 = new net.sourceforge.plantuml.NeuQuant;
+
+        $r4 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] pixels>;
+
+        $i2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int sample>;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.NeuQuant: void <init>(byte[],int,int)>($r4, i0, $i2);
+
+        $r6 = virtualinvoke $r3.<net.sourceforge.plantuml.NeuQuant: byte[] process()>();
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab> = $r6;
+
+        i17 = 0;
+
+     label1:
+        $r7 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        $i3 = lengthof $r7;
+
+        if i17 >= $i3 goto label2;
+
+        $r15 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        b18 = $r15[i17];
+
+        $r17 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        $r16 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        $i13 = i17 + 2;
+
+        $b14 = $r16[$i13];
+
+        $r17[i17] = $b14;
+
+        $r18 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        $i15 = i17 + 2;
+
+        $r18[$i15] = b18;
+
+        $r19 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean[] usedEntry>;
+
+        $i16 = i17 / 3;
+
+        $r19[$i16] = 0;
+
+        i17 = i17 + 3;
+
+        goto label1;
+
+     label2:
+        i19 = 0;
+
+        i20 = 0;
+
+     label3:
+        if i20 >= i1 goto label4;
+
+        $r10 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] pixels>;
+
+        i21 = i19 + 1;
+
+        $b5 = $r10[i19];
+
+        $i10 = $b5 & 255;
+
+        $r11 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] pixels>;
+
+        i22 = i21 + 1;
+
+        $b6 = $r11[i21];
+
+        $i9 = $b6 & 255;
+
+        $r12 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] pixels>;
+
+        i19 = i22 + 1;
+
+        $b7 = $r12[i22];
+
+        $i8 = $b7 & 255;
+
+        i11 = virtualinvoke $r3.<net.sourceforge.plantuml.NeuQuant: int map(int,int,int)>($i10, $i9, $i8);
+
+        $r13 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean[] usedEntry>;
+
+        $r13[i11] = 1;
+
+        $r14 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] indexedPixels>;
+
+        $b12 = (byte) i11;
+
+        $r14[i20] = $b12;
+
+        i20 = i20 + 1;
+
+        goto label3;
+
+     label4:
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] pixels> = null;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int colorDepth> = 8;
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int palSize> = 7;
+
+        $r8 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.Color transparent>;
+
+        if $r8 == null goto label5;
+
+        $r9 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.Color transparent>;
+
+        $i4 = virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int findClosest(java.awt.Color)>($r9);
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int transIndex> = $i4;
+
+     label5:
+        return;
+    }
+
+    protected int findClosest(java.awt.Color)
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        byte[] $r1, $r3, $r4, $r5, $r6;
+        java.awt.Color r2;
+        int i0, i1, i2, i3, $i5, i6, $i8, i9, $i11, i12, $i13, $i14, $i15, $i16, i17, i18, i19, i20, i21, i22, i23;
+        byte $b4, $b7, $b10;
+        boolean[] $r7;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        r2 := @parameter0: java.awt.Color;
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        if $r1 != null goto label1;
+
+        return -1;
+
+     label1:
+        i0 = virtualinvoke r2.<java.awt.Color: int getRed()>();
+
+        i1 = virtualinvoke r2.<java.awt.Color: int getGreen()>();
+
+        i2 = virtualinvoke r2.<java.awt.Color: int getBlue()>();
+
+        i19 = 0;
+
+        i20 = 16777216;
+
+        $r3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        i3 = lengthof $r3;
+
+        i21 = 0;
+
+     label2:
+        if i21 >= i3 goto label4;
+
+        $r4 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        i22 = i21 + 1;
+
+        $b4 = $r4[i21];
+
+        $i5 = $b4 & 255;
+
+        i6 = i0 - $i5;
+
+        $r5 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        i23 = i22 + 1;
+
+        $b7 = $r5[i22];
+
+        $i8 = $b7 & 255;
+
+        i9 = i1 - $i8;
+
+        $r6 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        $b10 = $r6[i23];
+
+        $i11 = $b10 & 255;
+
+        i12 = i2 - $i11;
+
+        $i14 = i6 * i6;
+
+        $i13 = i9 * i9;
+
+        $i16 = $i14 + $i13;
+
+        $i15 = i12 * i12;
+
+        i17 = $i16 + $i15;
+
+        i18 = i23 / 3;
+
+        $r7 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean[] usedEntry>;
+
+        $z0 = $r7[i18];
+
+        if $z0 == 0 goto label3;
+
+        if i17 >= i20 goto label3;
+
+        i20 = i17;
+
+        i19 = i18;
+
+     label3:
+        i21 = i23 + 1;
+
+        goto label2;
+
+     label4:
+        return i19;
+    }
+
+    protected void getImagePixels()
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        java.awt.image.BufferedImage $r1, $r2, $r3, $r6, $r7, $r8;
+        int i0, i1, i2, $i3, $i4, $i5, $i6;
+        java.awt.Graphics2D r5;
+        java.awt.image.WritableRaster $r9;
+        java.awt.image.DataBuffer $r10;
+        java.awt.image.DataBufferByte $r11;
+        byte[] $r12;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.image.BufferedImage image>;
+
+        i0 = virtualinvoke $r1.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.image.BufferedImage image>;
+
+        i1 = virtualinvoke $r2.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.image.BufferedImage image>;
+
+        i2 = virtualinvoke $r3.<java.awt.image.BufferedImage: int getType()>();
+
+        $i3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int width>;
+
+        if i0 != $i3 goto label1;
+
+        $i4 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int height>;
+
+        if i1 != $i4 goto label1;
+
+        if i2 == 5 goto label2;
+
+     label1:
+        $r6 = new java.awt.image.BufferedImage;
+
+        $i5 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int width>;
+
+        $i6 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int height>;
+
+        specialinvoke $r6.<java.awt.image.BufferedImage: void <init>(int,int,int)>($i5, $i6, 5);
+
+        r5 = virtualinvoke $r6.<java.awt.image.BufferedImage: java.awt.Graphics2D createGraphics()>();
+
+        $r7 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.image.BufferedImage image>;
+
+        virtualinvoke r5.<java.awt.Graphics2D: boolean drawImage(java.awt.Image,int,int,java.awt.image.ImageObserver)>($r7, 0, 0, null);
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.image.BufferedImage image> = $r6;
+
+     label2:
+        $r8 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.image.BufferedImage image>;
+
+        $r9 = virtualinvoke $r8.<java.awt.image.BufferedImage: java.awt.image.WritableRaster getRaster()>();
+
+        $r10 = virtualinvoke $r9.<java.awt.image.WritableRaster: java.awt.image.DataBuffer getDataBuffer()>();
+
+        $r11 = (java.awt.image.DataBufferByte) $r10;
+
+        $r12 = virtualinvoke $r11.<java.awt.image.DataBufferByte: byte[] getData()>();
+
+        r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] pixels> = $r12;
+
+        return;
+    }
+
+    protected void writeGraphicCtrlExt() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        java.io.OutputStream $r1, $r2, $r3, $r5, $r6, $r7;
+        java.awt.Color $r4;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, i8, i9;
+        byte b7;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r1.<java.io.OutputStream: void write(int)>(33);
+
+        $r2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r2.<java.io.OutputStream: void write(int)>(249);
+
+        $r3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r3.<java.io.OutputStream: void write(int)>(4);
+
+        $r4 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.awt.Color transparent>;
+
+        if $r4 != null goto label1;
+
+        b7 = 0;
+
+        i8 = 0;
+
+        goto label2;
+
+     label1:
+        b7 = 1;
+
+        i8 = 2;
+
+     label2:
+        $i0 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int dispose>;
+
+        if $i0 < 0 goto label3;
+
+        $i6 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int dispose>;
+
+        i8 = $i6 & 7;
+
+     label3:
+        i9 = i8 << 2;
+
+        $r5 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        $i1 = 0 | i9;
+
+        $i2 = $i1 | 0;
+
+        $i3 = $i2 | b7;
+
+        virtualinvoke $r5.<java.io.OutputStream: void write(int)>($i3);
+
+        $i4 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int delay>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeShort(int)>($i4);
+
+        $r6 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        $i5 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int transIndex>;
+
+        virtualinvoke $r6.<java.io.OutputStream: void write(int)>($i5);
+
+        $r7 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r7.<java.io.OutputStream: void write(int)>(0);
+
+        return;
+    }
+
+    protected void writeImageDesc() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        java.io.OutputStream $r1, $r2, $r3;
+        int $i0, $i1, $i2, $i3;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r1.<java.io.OutputStream: void write(int)>(44);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeShort(int)>(0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeShort(int)>(0);
+
+        $i0 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int width>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeShort(int)>($i0);
+
+        $i1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int height>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeShort(int)>($i1);
+
+        $z0 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: boolean firstFrame>;
+
+        if $z0 == 0 goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r3.<java.io.OutputStream: void write(int)>(0);
+
+        goto label2;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        $i2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int palSize>;
+
+        $i3 = 128 | $i2;
+
+        virtualinvoke $r2.<java.io.OutputStream: void write(int)>($i3);
+
+     label2:
+        return;
+    }
+
+    protected void writeLSD() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        int $i0, $i1, $i2, $i3;
+        java.io.OutputStream $r1, $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $i0 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int width>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeShort(int)>($i0);
+
+        $i1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int height>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeShort(int)>($i1);
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        $i2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int palSize>;
+
+        $i3 = 240 | $i2;
+
+        virtualinvoke $r1.<java.io.OutputStream: void write(int)>($i3);
+
+        $r2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r2.<java.io.OutputStream: void write(int)>(0);
+
+        $r3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r3.<java.io.OutputStream: void write(int)>(0);
+
+        return;
+    }
+
+    protected void writeNetscapeExt() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        java.io.OutputStream $r1, $r2, $r3, $r4, $r5, $r6;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r1.<java.io.OutputStream: void write(int)>(33);
+
+        $r2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r2.<java.io.OutputStream: void write(int)>(255);
+
+        $r3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r3.<java.io.OutputStream: void write(int)>(11);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeString(java.lang.String)>("NETSCAPE2.0");
+
+        $r4 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r4.<java.io.OutputStream: void write(int)>(3);
+
+        $r5 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r5.<java.io.OutputStream: void write(int)>(1);
+
+        $i0 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: int repeat>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.AnimatedGifEncoder: void writeShort(int)>($i0);
+
+        $r6 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r6.<java.io.OutputStream: void write(int)>(0);
+
+        return;
+    }
+
+    protected void writePalette() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        byte[] $r1, $r2, $r4;
+        int $i0, $i1, i2, i3;
+        java.io.OutputStream $r3, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $r3 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        $r2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        $i0 = lengthof $r1;
+
+        virtualinvoke $r3.<java.io.OutputStream: void write(byte[],int,int)>($r2, 0, $i0);
+
+        $r4 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] colorTab>;
+
+        $i1 = lengthof $r4;
+
+        i2 = 768 - $i1;
+
+        i3 = 0;
+
+     label1:
+        if i3 >= i2 goto label2;
+
+        $r5 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r5.<java.io.OutputStream: void write(int)>(0);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    protected void writePixels() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.LZWEncoder $r0;
+        net.sourceforge.plantuml.AnimatedGifEncoder r1;
+        int $i0, $i1, $i2;
+        byte[] $r2;
+        java.io.OutputStream $r4;
+
+        r1 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        $r0 = new net.sourceforge.plantuml.LZWEncoder;
+
+        $i2 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: int width>;
+
+        $i1 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: int height>;
+
+        $r2 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: byte[] indexedPixels>;
+
+        $i0 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: int colorDepth>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.LZWEncoder: void <init>(int,int,byte[],int)>($i2, $i1, $r2, $i0);
+
+        $r4 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.LZWEncoder: void encode(java.io.OutputStream)>($r4);
+
+        return;
+    }
+
+    protected void writeShort(int) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.AnimatedGifEncoder r0;
+        int i0, $i1, $i2, $i3;
+        java.io.OutputStream $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        $i1 = i0 & 255;
+
+        virtualinvoke $r1.<java.io.OutputStream: void write(int)>($i1);
+
+        $r2 = r0.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        $i2 = i0 >> 8;
+
+        $i3 = $i2 & 255;
+
+        virtualinvoke $r2.<java.io.OutputStream: void write(int)>($i3);
+
+        return;
+    }
+
+    protected void writeString(java.lang.String) throws java.io.IOException
+    {
+        java.lang.String r0;
+        int $i0, i3;
+        net.sourceforge.plantuml.AnimatedGifEncoder r1;
+        java.io.OutputStream $r2;
+        char $c1;
+        byte $b2;
+
+        r1 := @this: net.sourceforge.plantuml.AnimatedGifEncoder;
+
+        r0 := @parameter0: java.lang.String;
+
+        i3 = 0;
+
+     label1:
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if i3 >= $i0 goto label2;
+
+        $r2 = r1.<net.sourceforge.plantuml.AnimatedGifEncoder: java.io.OutputStream out>;
+
+        $c1 = virtualinvoke r0.<java.lang.String: char charAt(int)>(i3);
+
+        $b2 = (byte) $c1;
+
+        virtualinvoke $r2.<java.io.OutputStream: void write(int)>($b2);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+}

@@ -1,0 +1,703 @@
+abstract class net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz extends java.lang.Object implements net.sourceforge.plantuml.cucadiagram.dot.Graphviz
+{
+    private final java.io.File dotExe;
+    private final java.lang.String dotString;
+    private final java.lang.String[] type;
+
+    static boolean isWindows()
+    {
+        char $c0;
+        boolean $z0;
+
+        $c0 = <java.io.File: char separatorChar>;
+
+        if $c0 != 92 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private static java.lang.String findExecutableOnPath(java.lang.String)
+    {
+        java.lang.String r0, $r1, r3, r5, $r7;
+        java.lang.String[] r2;
+        int i0, i1;
+        java.io.File $r4;
+        boolean $z0, $z1;
+
+        r5 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <java.lang.System: java.lang.String getenv(java.lang.String)>("PATH");
+
+        if r0 == null goto label3;
+
+        $r1 = <net.sourceforge.plantuml.security.SFile: java.lang.String pathSeparator>;
+
+        r2 = virtualinvoke r0.<java.lang.String: java.lang.String[] split(java.lang.String)>($r1);
+
+        i0 = lengthof r2;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label3;
+
+        r3 = r2[i1];
+
+        $r4 = new java.io.File;
+
+        specialinvoke $r4.<java.io.File: void <init>(java.lang.String,java.lang.String)>(r3, r5);
+
+        $z0 = virtualinvoke $r4.<java.io.File: boolean isFile()>();
+
+        if $z0 == 0 goto label2;
+
+        $z1 = virtualinvoke $r4.<java.io.File: boolean canExecute()>();
+
+        if $z1 == 0 goto label2;
+
+        $r7 = virtualinvoke $r4.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        return $r7;
+
+     label2:
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label3:
+        return null;
+    }
+
+    transient void <init>(net.sourceforge.plantuml.ISkinParam, java.lang.String, java.lang.String[])
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        java.io.File $r1;
+        java.lang.String r2;
+        java.lang.String[] r3, $r5;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.ISkinParam r6;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        r6 := @parameter0: net.sourceforge.plantuml.ISkinParam;
+
+        r2 := @parameter1: java.lang.String;
+
+        r3 := @parameter2: java.lang.String[];
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.io.File searchDotExe()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.io.File dotExe> = $r1;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String dotString> = r2;
+
+        $r4 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r3);
+
+        $r5 = (java.lang.String[]) $r4;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] type> = $r5;
+
+        return;
+    }
+
+    protected boolean findExecutableOnPath()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        return 1;
+    }
+
+    protected final java.io.File searchDotExe()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        boolean $z0;
+        java.io.File $r1, $r2;
+        java.lang.String $r3, r4;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils: java.lang.String getenvGraphvizDot()>();
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: boolean findExecutableOnPath()>();
+
+        if $z0 == 0 goto label1;
+
+        if r4 != null goto label1;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String getExeName()>();
+
+        r4 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String findExecutableOnPath(java.lang.String)>($r3);
+
+     label1:
+        if r4 != null goto label2;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.io.File specificDotExe()>();
+
+        return $r2;
+
+     label2:
+        $r1 = new java.io.File;
+
+        specialinvoke $r1.<java.io.File: void <init>(java.lang.String)>(r4);
+
+        return $r1;
+    }
+
+    protected abstract java.io.File specificDotExe();
+
+    protected abstract java.lang.String getExeName();
+
+    public final net.sourceforge.plantuml.cucadiagram.dot.ProcessState createFile3(java.io.OutputStream)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        java.lang.String $r1, $r10, $r13, $r15, $r17, $r21, $r24, $r26, $r31, $r33, $r34, $r37, $r39, $r44, $r46, $r55, $r59;
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState $r3, $r4;
+        java.lang.String[] r5;
+        java.lang.StringBuilder $r6, $r7, $r9, $r11, $r12, $r14, $r22, $r23, $r25, $r29, $r30, $r32, $r35, $r36, $r38, $r42, $r43, $r45, $r52, $r53, $r54, $r56, $r57, $r58;
+        java.util.List $r8;
+        int $i0, $i1, $i2;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner $r16, r60;
+        byte[] $r18;
+        java.io.OutputStream r19;
+        net.sourceforge.plantuml.OptionFlags $r20, $r27, $r40, $r62;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.IllegalStateException $r28, $r41, $r47;
+        java.lang.Throwable $r48, $r50;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessState r61;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        r19 := @parameter0: java.io.OutputStream;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String dotString>;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>($r1);
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: net.sourceforge.plantuml.cucadiagram.dot.ExeState getExeState()>();
+
+        $r4 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState OK>;
+
+        if $r3 == $r4 goto label01;
+
+        $r47 = new java.lang.IllegalStateException;
+
+        specialinvoke $r47.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r47;
+
+     label01:
+        r5 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] getCommandLine()>();
+
+        r60 = null;
+
+        r61 = null;
+
+     label02:
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Starting Graphviz process ");
+
+        $r8 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>(r5);
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r10);
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("DotString size: ");
+
+        $r13 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String dotString>;
+
+        $i0 = virtualinvoke $r13.<java.lang.String: int length()>();
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r15);
+
+        $r16 = new net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: void <init>(java.lang.String[])>(r5);
+
+        r60 = $r16;
+
+        $r17 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String dotString>;
+
+        $r18 = virtualinvoke $r17.<java.lang.String: byte[] getBytes()>();
+
+        r61 = virtualinvoke $r16.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState run(byte[],java.io.OutputStream)>($r18, r19);
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Ending process ok");
+
+     label03:
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Ending Graphviz process");
+
+        goto label08;
+
+     label04:
+        $r50 := @caughtexception;
+
+        virtualinvoke $r50.<java.lang.Throwable: void printStackTrace()>();
+
+        $r52 = new java.lang.StringBuilder;
+
+        specialinvoke $r52.<java.lang.StringBuilder: void <init>()>();
+
+        $r53 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Error: ");
+
+        $r54 = virtualinvoke $r53.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r50);
+
+        $r55 = virtualinvoke $r54.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r55);
+
+        $r56 = new java.lang.StringBuilder;
+
+        specialinvoke $r56.<java.lang.StringBuilder: void <init>()>();
+
+        $r57 = virtualinvoke $r56.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("The command was ");
+
+        $r58 = virtualinvoke $r57.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r5);
+
+        $r59 = virtualinvoke $r58.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r59);
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>("");
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>("Try java -jar plantuml.jar -testdot to figure out the issue");
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>("");
+
+     label05:
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Ending Graphviz process");
+
+        goto label08;
+
+     label06:
+        $r48 := @caughtexception;
+
+     label07:
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Ending Graphviz process");
+
+        throw $r48;
+
+     label08:
+        $r20 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z0 = virtualinvoke $r20.<net.sourceforge.plantuml.OptionFlags: boolean isCheckDotError()>();
+
+        if $z0 == 0 goto label09;
+
+        if r60 == null goto label09;
+
+        $r34 = virtualinvoke r60.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getError()>();
+
+        $i2 = virtualinvoke $r34.<java.lang.String: int length()>();
+
+        if $i2 <= 0 goto label09;
+
+        $r35 = new java.lang.StringBuilder;
+
+        specialinvoke $r35.<java.lang.StringBuilder: void <init>()>();
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("GraphViz error stream : ");
+
+        $r37 = virtualinvoke r60.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getError()>();
+
+        $r38 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r37);
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r39);
+
+        $r40 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z2 = virtualinvoke $r40.<net.sourceforge.plantuml.OptionFlags: boolean isCheckDotError()>();
+
+        if $z2 == 0 goto label09;
+
+        $r41 = new java.lang.IllegalStateException;
+
+        $r42 = new java.lang.StringBuilder;
+
+        specialinvoke $r42.<java.lang.StringBuilder: void <init>()>();
+
+        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Dot error ");
+
+        $r44 = virtualinvoke r60.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getError()>();
+
+        $r45 = virtualinvoke $r43.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r44);
+
+        $r46 = virtualinvoke $r45.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r41.<java.lang.IllegalStateException: void <init>(java.lang.String)>($r46);
+
+        throw $r41;
+
+     label09:
+        $r62 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z3 = virtualinvoke $r62.<net.sourceforge.plantuml.OptionFlags: boolean isCheckDotError()>();
+
+        if $z3 == 0 goto label10;
+
+        if r60 == null goto label10;
+
+        $r21 = virtualinvoke r60.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getOut()>();
+
+        $i1 = virtualinvoke $r21.<java.lang.String: int length()>();
+
+        if $i1 <= 0 goto label10;
+
+        $r22 = new java.lang.StringBuilder;
+
+        specialinvoke $r22.<java.lang.StringBuilder: void <init>()>();
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("GraphViz out stream : ");
+
+        $r24 = virtualinvoke r60.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getOut()>();
+
+        $r25 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r24);
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r26);
+
+        $r27 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z1 = virtualinvoke $r27.<net.sourceforge.plantuml.OptionFlags: boolean isCheckDotError()>();
+
+        if $z1 == 0 goto label10;
+
+        $r28 = new java.lang.IllegalStateException;
+
+        $r29 = new java.lang.StringBuilder;
+
+        specialinvoke $r29.<java.lang.StringBuilder: void <init>()>();
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Dot out ");
+
+        $r31 = virtualinvoke r60.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getOut()>();
+
+        $r32 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r31);
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r28.<java.lang.IllegalStateException: void <init>(java.lang.String)>($r33);
+
+        throw $r28;
+
+     label10:
+        return r61;
+
+        catch java.lang.Throwable from label02 to label03 with label04;
+        catch java.lang.Throwable from label04 to label05 with label06;
+        catch java.lang.Throwable from label06 to label07 with label06;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.dot.ExeState getExeState()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        java.io.File $r1;
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState $r2;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.io.File dotExe>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState checkFile(java.io.File)>($r1);
+
+        return $r2;
+    }
+
+    public final java.lang.String dotVersion()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        java.lang.String[] r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] getCommandLineVersion()>();
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String executeCmd(java.lang.String[])>(r1);
+
+        return $r2;
+    }
+
+    private java.lang.String executeCmd(java.lang.String[])
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner $r0;
+        java.lang.String[] r1;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessState r3, $r4;
+        boolean $z0, $z1, $z2;
+        java.lang.StringBuilder $r5;
+        java.lang.String $r7, $r8, $r9, $r12, $r15, $r16, $r17;
+        int $i0;
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r14;
+
+        r14 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        r1 := @parameter0: java.lang.String[];
+
+        $r0 = new net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: void <init>(java.lang.String[])>(r1);
+
+        r3 = virtualinvoke $r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState run(byte[],java.io.OutputStream)>(null, null);
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState TERMINATED_OK()>();
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.cucadiagram.dot.ProcessState: boolean differs(net.sourceforge.plantuml.cucadiagram.dot.ProcessState)>($r4);
+
+        if $z0 == 0 goto label1;
+
+        return "?";
+
+     label1:
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getOut()>();
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>($r7);
+
+        if $z1 == 0 goto label2;
+
+        $r12 = virtualinvoke $r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getOut()>();
+
+        virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r12);
+
+     label2:
+        $r8 = virtualinvoke $r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getError()>();
+
+        $z2 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isNotEmpty(java.lang.CharSequence)>($r8);
+
+        if $z2 == 0 goto label4;
+
+        $i0 = virtualinvoke $r5.<java.lang.StringBuilder: int length()>();
+
+        if $i0 <= 0 goto label3;
+
+        virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(32);
+
+     label3:
+        $r9 = virtualinvoke $r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String getError()>();
+
+        virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r9);
+
+     label4:
+        $r15 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.String: java.lang.String replace(char,char)>(10, 32);
+
+        $r17 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trin(java.lang.String)>($r16);
+
+        return $r17;
+    }
+
+    final java.lang.String[] getCommandLine()
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        java.lang.String[] $r1, $r4, $r7, $r11, $r14, $r17, r21, r22;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, i9, i10;
+        java.io.File $r2, $r12;
+        java.lang.String $r3, $r8, $r10, $r13, $r18, $r20;
+        java.lang.StringBuilder $r5, $r6, $r9, $r15, $r16, $r19;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        $z0 = <net.sourceforge.plantuml.OptionFlags: boolean ADD_NICE_FOR_DOT>;
+
+        if $z0 == 0 goto label3;
+
+        $r11 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] type>;
+
+        $i4 = lengthof $r11;
+
+        $i5 = $i4 + 1;
+
+        $i6 = $i5 + 3;
+
+        r21 = newarray (java.lang.String)[$i6];
+
+        r21[0] = "/bin/nice";
+
+        r21[1] = "-n";
+
+        r21[2] = "10";
+
+        $r12 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.io.File getDotExe()>();
+
+        $r13 = virtualinvoke $r12.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        r21[3] = $r13;
+
+        i9 = 0;
+
+     label1:
+        $r14 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] type>;
+
+        $i7 = lengthof $r14;
+
+        if i9 >= $i7 goto label2;
+
+        $i8 = i9 + 4;
+
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("-T");
+
+        $r17 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] type>;
+
+        $r18 = $r17[i9];
+
+        $r19 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r18);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r21[$i8] = $r20;
+
+        i9 = i9 + 1;
+
+        goto label1;
+
+     label2:
+        return r21;
+
+     label3:
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] type>;
+
+        $i0 = lengthof $r1;
+
+        $i1 = $i0 + 1;
+
+        r22 = newarray (java.lang.String)[$i1];
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.io.File getDotExe()>();
+
+        $r3 = virtualinvoke $r2.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        r22[0] = $r3;
+
+        i10 = 0;
+
+     label4:
+        $r4 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] type>;
+
+        $i2 = lengthof $r4;
+
+        if i10 >= $i2 goto label5;
+
+        $i3 = i10 + 1;
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("-T");
+
+        $r7 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] type>;
+
+        $r8 = $r7[i10];
+
+        $r9 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r22[$i3] = $r10;
+
+        i10 = i10 + 1;
+
+        goto label4;
+
+     label5:
+        return r22;
+    }
+
+    final java.lang.String[] getCommandLineVersion()
+    {
+        java.lang.String[] $r0;
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r1;
+        java.io.File $r2;
+        java.lang.String $r3;
+
+        r1 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        $r0 = newarray (java.lang.String)[2];
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.io.File getDotExe()>();
+
+        $r3 = virtualinvoke $r2.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        $r0[0] = $r3;
+
+        $r0[1] = "-V";
+
+        return $r0;
+    }
+
+    public final java.io.File getDotExe()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        java.io.File $r1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.io.File dotExe>;
+
+        return $r1;
+    }
+
+    public final java.lang.String getDotString()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String dotString>;
+
+        return $r1;
+    }
+
+    public final java.util.List getType()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz r0;
+        java.lang.String[] $r1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.AbstractGraphviz: java.lang.String[] type>;
+
+        $r2 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r1);
+
+        return $r2;
+    }
+}

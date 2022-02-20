@@ -1,0 +1,157 @@
+class net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1 extends java.lang.Object implements net.sourceforge.plantuml.preproc.ReadLine
+{
+    private boolean manageEndingBackslash;
+    final net.sourceforge.plantuml.preproc.ReadLine val$source;
+    final net.sourceforge.plantuml.preproc2.ReadFilterMergeLines this$0;
+
+    void <init>(net.sourceforge.plantuml.preproc2.ReadFilterMergeLines, net.sourceforge.plantuml.preproc.ReadLine)
+    {
+        net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1 r0;
+        net.sourceforge.plantuml.preproc2.ReadFilterMergeLines r1;
+        net.sourceforge.plantuml.preproc.ReadLine r2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1;
+
+        r1 := @parameter0: net.sourceforge.plantuml.preproc2.ReadFilterMergeLines;
+
+        r2 := @parameter1: net.sourceforge.plantuml.preproc.ReadLine;
+
+        r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: net.sourceforge.plantuml.preproc2.ReadFilterMergeLines this$0> = r1;
+
+        r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: net.sourceforge.plantuml.preproc.ReadLine val$source> = r2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: boolean manageEndingBackslash> = 1;
+
+        return;
+    }
+
+    public void close() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1 r0;
+        net.sourceforge.plantuml.preproc.ReadLine $r1;
+
+        r0 := @this: net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: net.sourceforge.plantuml.preproc.ReadLine val$source>;
+
+        interfaceinvoke $r1.<net.sourceforge.plantuml.preproc.ReadLine: void close()>();
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.StringLocated readLine() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1 r0;
+        net.sourceforge.plantuml.preproc.ReadLine $r1, $r5, r10;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        java.lang.String $r2, $r6, $r7, $r8;
+        net.sourceforge.plantuml.StringLocated r3, r9;
+        net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment $r4;
+
+        r0 := @this: net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: net.sourceforge.plantuml.preproc.ReadLine val$source>;
+
+        r9 = interfaceinvoke $r1.<net.sourceforge.plantuml.preproc.ReadLine: net.sourceforge.plantuml.StringLocated readLine()>();
+
+        if r9 == null goto label1;
+
+        $r7 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z3 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseStartDiagram(java.lang.String)>($r7);
+
+        if $z3 == 0 goto label1;
+
+        $r8 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z4 = specialinvoke r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: boolean isDitaa(java.lang.String)>($r8);
+
+        if $z4 == 0 goto label1;
+
+        r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: boolean manageEndingBackslash> = 0;
+
+     label1:
+        if r9 == null goto label2;
+
+        $r6 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z2 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseEndDiagram(java.lang.String)>($r6);
+
+        if $z2 == 0 goto label2;
+
+        r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: boolean manageEndingBackslash> = 1;
+
+     label2:
+        r10 = null;
+
+     label3:
+        if r9 == null goto label6;
+
+        $z0 = r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: boolean manageEndingBackslash>;
+
+        if $z0 == 0 goto label6;
+
+        $r2 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean endsWithBackslash(java.lang.String)>($r2);
+
+        if $z1 == 0 goto label6;
+
+        if r10 != null goto label4;
+
+        $r4 = new net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment: void <init>()>();
+
+        $r5 = r0.<net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1: net.sourceforge.plantuml.preproc.ReadLine val$source>;
+
+        r10 = virtualinvoke $r4.<net.sourceforge.plantuml.preproc2.ReadFilterQuoteComment: net.sourceforge.plantuml.preproc.ReadLine applyFilter(net.sourceforge.plantuml.preproc.ReadLine)>($r5);
+
+     label4:
+        r3 = interfaceinvoke r10.<net.sourceforge.plantuml.preproc.ReadLine: net.sourceforge.plantuml.StringLocated readLine()>();
+
+        if r3 != null goto label5;
+
+        goto label6;
+
+     label5:
+        r9 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated mergeEndBackslash(net.sourceforge.plantuml.StringLocated)>(r3);
+
+        goto label3;
+
+     label6:
+        return r9;
+    }
+
+    private boolean isDitaa(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+        net.sourceforge.plantuml.core.DiagramType $r2, $r3;
+        net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1 r4;
+        boolean $z0;
+
+        r4 := @this: net.sourceforge.plantuml.preproc2.ReadFilterMergeLines$1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trinNoTrace(java.lang.CharSequence)>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType getTypeFromArobaseStart(java.lang.String)>($r1);
+
+        $r3 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType DITAA>;
+
+        if $r2 != $r3 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+}

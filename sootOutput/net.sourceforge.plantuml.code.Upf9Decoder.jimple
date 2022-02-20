@@ -1,0 +1,139 @@
+public class net.sourceforge.plantuml.code.Upf9Decoder extends java.lang.Object
+{
+
+    private void <init>()
+    {
+        net.sourceforge.plantuml.code.Upf9Decoder r0;
+
+        r0 := @this: net.sourceforge.plantuml.code.Upf9Decoder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static int decodeChar(java.io.InputStream) throws java.io.IOException
+    {
+        java.io.InputStream r0;
+        int i0, $i2, $i3, $i4, $i6, $i7, i9, $i10, $i11, $i13, i16, i17, i18, i19;
+        char $c1, $c5, $c8, $c12, $c14, $c15;
+
+        r0 := @parameter0: java.io.InputStream;
+
+        i0 = virtualinvoke r0.<java.io.InputStream: int read()>();
+
+        if i0 != -1 goto label1;
+
+        return -1;
+
+     label1:
+        if i0 != 11 goto label3;
+
+        i16 = virtualinvoke r0.<java.io.InputStream: int read()>();
+
+        if i16 < 128 goto label2;
+
+        $c15 = (char) i16;
+
+        return $c15;
+
+     label2:
+        $i13 = 57344 + i16;
+
+        $c14 = (char) $i13;
+
+        return $c14;
+
+     label3:
+        if i0 != 12 goto label4;
+
+        i17 = virtualinvoke r0.<java.io.InputStream: int read()>();
+
+        i9 = virtualinvoke r0.<java.io.InputStream: int read()>();
+
+        $i10 = i17 << 8;
+
+        $i11 = $i10 + i9;
+
+        $c12 = (char) $i11;
+
+        return $c12;
+
+     label4:
+        if i0 < 1 goto label5;
+
+        if i0 > 8 goto label5;
+
+        i18 = virtualinvoke r0.<java.io.InputStream: int read()>();
+
+        $i6 = i0 << 8;
+
+        $i7 = $i6 + i18;
+
+        $c8 = (char) $i7;
+
+        return $c8;
+
+     label5:
+        if i0 < 128 goto label6;
+
+        if i0 > 255 goto label6;
+
+        i19 = virtualinvoke r0.<java.io.InputStream: int read()>();
+
+        $i2 = i0 - 96;
+
+        $i3 = $i2 << 8;
+
+        $i4 = $i3 + i19;
+
+        $c5 = (char) $i4;
+
+        return $c5;
+
+     label6:
+        $c1 = (char) i0;
+
+        return $c1;
+    }
+
+    public static java.lang.String decodeString(byte[], int) throws java.io.IOException
+    {
+        java.io.ByteArrayInputStream $r0;
+        byte[] r1;
+        int i0, $i1;
+        java.lang.StringBuilder $r3;
+        java.lang.String $r5;
+        char $c3;
+
+        r1 := @parameter0: byte[];
+
+        i0 := @parameter1: int;
+
+        $r0 = new java.io.ByteArrayInputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayInputStream: void <init>(byte[],int,int)>(r1, 0, i0);
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+     label1:
+        $i1 = staticinvoke <net.sourceforge.plantuml.code.Upf9Decoder: int decodeChar(java.io.InputStream)>($r0);
+
+        if $i1 == -1 goto label2;
+
+        $c3 = (char) $i1;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c3);
+
+        goto label1;
+
+     label2:
+        virtualinvoke $r0.<java.io.ByteArrayInputStream: void close()>();
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+}

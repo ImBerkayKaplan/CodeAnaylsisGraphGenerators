@@ -1,0 +1,122 @@
+public abstract class net.sourceforge.plantuml.graphic.StringBounderRaw extends java.lang.Object implements net.sourceforge.plantuml.graphic.StringBounder
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.graphic.StringBounderRaw r0;
+
+        r0 := @this: net.sourceforge.plantuml.graphic.StringBounderRaw;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.ugraphic.UFont, java.lang.String)
+    {
+        java.lang.String r0, $r11;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.graphic.StringBounderRaw r1;
+        net.sourceforge.plantuml.ugraphic.UFont r2, r10;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r3, r12;
+        java.util.List $r4;
+        java.util.Iterator r5;
+        net.sourceforge.plantuml.Dimension2DDouble $r6;
+        java.lang.Object $r7;
+        net.sourceforge.plantuml.text.StyledString r8;
+        net.sourceforge.plantuml.graphic.FontStyle $r9;
+        double $d0, $d1, d2, d3;
+
+        r1 := @this: net.sourceforge.plantuml.graphic.StringBounderRaw;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.UFont;
+
+        r0 := @parameter1: java.lang.String;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.text.RichText: boolean isRich(java.lang.String)>(r0);
+
+        if $z0 == 0 goto label3;
+
+        d2 = 0.0;
+
+        d3 = 0.0;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.text.StyledString: java.util.List build(java.lang.String)>(r0);
+
+        r5 = interfaceinvoke $r4.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label2;
+
+        $r7 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (net.sourceforge.plantuml.text.StyledString) $r7;
+
+        $r9 = virtualinvoke r8.<net.sourceforge.plantuml.text.StyledString: net.sourceforge.plantuml.graphic.FontStyle getStyle()>();
+
+        r10 = virtualinvoke $r9.<net.sourceforge.plantuml.graphic.FontStyle: net.sourceforge.plantuml.ugraphic.UFont mutateFont(net.sourceforge.plantuml.ugraphic.UFont)>(r2);
+
+        $r11 = virtualinvoke r8.<net.sourceforge.plantuml.text.StyledString: java.lang.String getText()>();
+
+        r12 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.StringBounderRaw: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimensionInternal(net.sourceforge.plantuml.ugraphic.UFont,java.lang.String)>(r10, $r11);
+
+        $d0 = virtualinvoke r12.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        d2 = d2 + $d0;
+
+        $d1 = virtualinvoke r12.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d3 = staticinvoke <java.lang.Math: double max(double,double)>(d3, $d1);
+
+        goto label1;
+
+     label2:
+        $r6 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>(d2, d3);
+
+        return $r6;
+
+     label3:
+        $r3 = virtualinvoke r1.<net.sourceforge.plantuml.graphic.StringBounderRaw: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimensionInternal(net.sourceforge.plantuml.ugraphic.UFont,java.lang.String)>(r2, r0);
+
+        return $r3;
+    }
+
+    protected abstract net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimensionInternal(net.sourceforge.plantuml.ugraphic.UFont, java.lang.String);
+
+    public double getDescent(net.sourceforge.plantuml.ugraphic.UFont, java.lang.String)
+    {
+        java.awt.Graphics2D $r0;
+        java.awt.font.FontRenderContext r1;
+        net.sourceforge.plantuml.ugraphic.UFont r2;
+        java.awt.Font $r3;
+        java.lang.String r4;
+        java.awt.font.LineMetrics r5;
+        float $f0;
+        double d0;
+        net.sourceforge.plantuml.graphic.StringBounderRaw r6;
+
+        r6 := @this: net.sourceforge.plantuml.graphic.StringBounderRaw;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.UFont;
+
+        r4 := @parameter1: java.lang.String;
+
+        $r0 = <net.sourceforge.plantuml.FileFormat: java.awt.Graphics2D gg>;
+
+        r1 = virtualinvoke $r0.<java.awt.Graphics2D: java.awt.font.FontRenderContext getFontRenderContext()>();
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.ugraphic.UFont: java.awt.Font getUnderlayingFont()>();
+
+        r5 = virtualinvoke $r3.<java.awt.Font: java.awt.font.LineMetrics getLineMetrics(java.lang.String,java.awt.font.FontRenderContext)>(r4, r1);
+
+        $f0 = virtualinvoke r5.<java.awt.font.LineMetrics: float getDescent()>();
+
+        d0 = (double) $f0;
+
+        return d0;
+    }
+}

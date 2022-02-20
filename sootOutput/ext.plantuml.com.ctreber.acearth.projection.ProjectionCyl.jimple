@@ -1,0 +1,168 @@
+public class ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl extends ext.plantuml.com.ctreber.acearth.projection.Projection
+{
+
+    public void <init>()
+    {
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        specialinvoke r0.<ext.plantuml.com.ctreber.acearth.projection.Projection: void <init>()>();
+
+        return;
+    }
+
+    public boolean isVisible(ext.plantuml.com.ctreber.acearth.util.Point3D)
+    {
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl r0;
+        ext.plantuml.com.ctreber.acearth.util.Point3D r1;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.acearth.util.Point3D;
+
+        return 1;
+    }
+
+    public ext.plantuml.com.ctreber.acearth.util.Coordinate getLocation(int, int)
+    {
+        ext.plantuml.com.ctreber.acearth.util.Coordinate $r0, $r5;
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl r1;
+        int i0, i1;
+        double $d0, $d1, $d2, $d3, $d4;
+        ext.plantuml.com.ctreber.acearth.util.Point3D $r3, $r4;
+
+        r1 := @this: ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        i1 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        $r0 = new ext.plantuml.com.ctreber.acearth.util.Coordinate;
+
+        $d0 = (double) i0;
+
+        $d1 = virtualinvoke r1.<ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl: double inverseFinalizeY(double)>($d0);
+
+        $d2 = staticinvoke <java.lang.Math: double atan(double)>($d1);
+
+        $d3 = (double) i1;
+
+        $d4 = virtualinvoke r1.<ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl: double inverseFinalizeX(double)>($d3);
+
+        specialinvoke $r0.<ext.plantuml.com.ctreber.acearth.util.Coordinate: void <init>(double,double)>($d2, $d4);
+
+        $r3 = virtualinvoke $r0.<ext.plantuml.com.ctreber.acearth.util.Coordinate: ext.plantuml.com.ctreber.acearth.util.Point3D getPoint3DRads()>();
+
+        $r4 = virtualinvoke r1.<ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl: ext.plantuml.com.ctreber.acearth.util.Point3D rotateReverse(ext.plantuml.com.ctreber.acearth.util.Point3D)>($r3);
+
+        $r5 = virtualinvoke $r4.<ext.plantuml.com.ctreber.acearth.util.Point3D: ext.plantuml.com.ctreber.acearth.util.Coordinate getCoordinate()>();
+
+        return $r5;
+    }
+
+    protected void setScale()
+    {
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl r0;
+        int $i0;
+        double $d0, $d1, $d2, $d3;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        $d1 = r0.<ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl: double fViewMagnification>;
+
+        $i0 = r0.<ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl: int fImageWidth>;
+
+        $d0 = (double) $i0;
+
+        $d2 = $d1 * $d0;
+
+        $d3 = $d2 / 6.283185307179586;
+
+        r0.<ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl: double fScale> = $d3;
+
+        return;
+    }
+
+    public double projectX(double, double)
+    {
+        double d0, d1, $d2;
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        $d2 = staticinvoke <java.lang.Math: double atan2(double,double)>(d0, d1);
+
+        return $d2;
+    }
+
+    public double inverseProjectX(double)
+    {
+        double d0, $d1;
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        d0 := @parameter0: double;
+
+        $d1 = staticinvoke <java.lang.Math: double sin(double)>(d0);
+
+        return $d1;
+    }
+
+    public double projectY(double)
+    {
+        double d0, $d1, $d2;
+        byte $b0, $b1;
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpl 0.9999999999;
+
+        if $b0 < 0 goto label1;
+
+        $d2 = 1000000.0;
+
+        goto label3;
+
+     label1:
+        $b1 = d0 cmpg -0.9999999999;
+
+        if $b1 > 0 goto label2;
+
+        $d2 = -1000000.0;
+
+        goto label3;
+
+     label2:
+        $d1 = staticinvoke <java.lang.Math: double asin(double)>(d0);
+
+        $d2 = staticinvoke <java.lang.Math: double tan(double)>($d1);
+
+     label3:
+        return $d2;
+    }
+
+    public double inverseProjectY(double)
+    {
+        double d0, $d1, $d2;
+        ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.projection.ProjectionCyl;
+
+        d0 := @parameter0: double;
+
+        $d1 = staticinvoke <java.lang.Math: double atan(double)>(d0);
+
+        $d2 = staticinvoke <java.lang.Math: double sin(double)>($d1);
+
+        return $d2;
+    }
+}

@@ -1,0 +1,922 @@
+public class jcckit.plot.Plot extends java.lang.Object implements jcckit.data.DataListener
+{
+    public static final java.lang.String COORDINATE_SYSTEM_KEY;
+    public static final java.lang.String CURVE_FACTORY_KEY;
+    public static final java.lang.String LEGEND_VISIBLE_KEY;
+    public static final java.lang.String LEGEND_KEY;
+    public static final java.lang.String INITIAL_HINT_FOR_NEXT_CURVE_KEY;
+    private final java.util.Vector _plotListeners;
+    private jcckit.data.DataPlot _dataPlot;
+    private final jcckit.plot.CurveFactory _curveFactory;
+    private final java.util.Vector _curves;
+    private final java.util.Vector _nextCurveHints;
+    private final jcckit.plot.Hint _initialHintForNextCurve;
+    private final jcckit.plot.Legend _legend;
+    private final boolean _legendVisibility;
+    private jcckit.graphic.GraphicalElement _coordinateSystemView;
+    private jcckit.graphic.ClippingShape _clippingShape;
+    private jcckit.transformation.Transformation _transformation;
+    private jcckit.graphic.GraphicalElement _annotation;
+    private jcckit.graphic.GraphicalComposite _legendView;
+
+    public void <init>(jcckit.util.ConfigParameters)
+    {
+        jcckit.plot.Plot r0;
+        java.util.Vector $r1, $r2, $r3;
+        jcckit.graphic.GraphicalComposite $r4;
+        jcckit.util.ConfigParameters r5, $r6, $r11, $r16, $r20;
+        java.lang.Class $r7, $r12;
+        java.lang.String $r8, $r13;
+        java.lang.Object $r9, $r14, $r17;
+        jcckit.plot.CoordinateSystem r10;
+        jcckit.plot.CurveFactory $r15;
+        jcckit.plot.Hint $r18;
+        jcckit.plot.Legend $r19;
+        boolean $z0;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r5 := @parameter0: jcckit.util.ConfigParameters;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.Vector;
+
+        specialinvoke $r1.<java.util.Vector: void <init>()>();
+
+        r0.<jcckit.plot.Plot: java.util.Vector _plotListeners> = $r1;
+
+        $r2 = new java.util.Vector;
+
+        specialinvoke $r2.<java.util.Vector: void <init>()>();
+
+        r0.<jcckit.plot.Plot: java.util.Vector _curves> = $r2;
+
+        $r3 = new java.util.Vector;
+
+        specialinvoke $r3.<java.util.Vector: void <init>()>();
+
+        r0.<jcckit.plot.Plot: java.util.Vector _nextCurveHints> = $r3;
+
+        $r4 = new jcckit.graphic.GraphicalComposite;
+
+        specialinvoke $r4.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(null);
+
+        r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalComposite _legendView> = $r4;
+
+        $r6 = virtualinvoke r5.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("coordinateSystem");
+
+        $r7 = class "Ljcckit/plot/CartesianCoordinateSystem;";
+
+        $r8 = virtualinvoke $r7.<java.lang.Class: java.lang.String getName()>();
+
+        $r9 = staticinvoke <jcckit.util.Factory: java.lang.Object create(jcckit.util.ConfigParameters,java.lang.String)>($r6, $r8);
+
+        r10 = (jcckit.plot.CoordinateSystem) $r9;
+
+        virtualinvoke r0.<jcckit.plot.Plot: void setCoordinateSystem(jcckit.plot.CoordinateSystem)>(r10);
+
+        $r11 = virtualinvoke r5.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("curveFactory");
+
+        $r12 = class "Ljcckit/plot/SimpleCurveFactory;";
+
+        $r13 = virtualinvoke $r12.<java.lang.Class: java.lang.String getName()>();
+
+        $r14 = staticinvoke <jcckit.util.Factory: java.lang.Object create(jcckit.util.ConfigParameters,java.lang.String)>($r11, $r13);
+
+        $r15 = (jcckit.plot.CurveFactory) $r14;
+
+        r0.<jcckit.plot.Plot: jcckit.plot.CurveFactory _curveFactory> = $r15;
+
+        $r16 = virtualinvoke r5.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("initialHintForNextCurve");
+
+        $r17 = staticinvoke <jcckit.util.Factory: java.lang.Object createOrGet(jcckit.util.ConfigParameters,java.lang.Object)>($r16, null);
+
+        $r18 = (jcckit.plot.Hint) $r17;
+
+        r0.<jcckit.plot.Plot: jcckit.plot.Hint _initialHintForNextCurve> = $r18;
+
+        $r19 = new jcckit.plot.Legend;
+
+        $r20 = virtualinvoke r5.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("legend");
+
+        specialinvoke $r19.<jcckit.plot.Legend: void <init>(jcckit.util.ConfigParameters)>($r20);
+
+        r0.<jcckit.plot.Plot: jcckit.plot.Legend _legend> = $r19;
+
+        $z0 = virtualinvoke r5.<jcckit.util.ConfigParameters: boolean getBoolean(java.lang.String,boolean)>("legendVisible", 1);
+
+        r0.<jcckit.plot.Plot: boolean _legendVisibility> = $z0;
+
+        return;
+    }
+
+    public void setCoordinateSystem(jcckit.plot.CoordinateSystem)
+    {
+        jcckit.plot.Plot r0;
+        jcckit.plot.CoordinateSystem r1;
+        jcckit.graphic.GraphicalElement $r2;
+        jcckit.graphic.ClippingShape $r3;
+        jcckit.transformation.Transformation $r4;
+        jcckit.data.DataPlot $r5, $r8;
+        jcckit.plot.PlotEvent $r6;
+        jcckit.plot.PlotEventType $r7;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r1 := @parameter0: jcckit.plot.CoordinateSystem;
+
+        $r2 = interfaceinvoke r1.<jcckit.plot.CoordinateSystem: jcckit.graphic.GraphicalElement getView()>();
+
+        r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement _coordinateSystemView> = $r2;
+
+        $r3 = interfaceinvoke r1.<jcckit.plot.CoordinateSystem: jcckit.graphic.ClippingShape getClippingShape()>();
+
+        r0.<jcckit.plot.Plot: jcckit.graphic.ClippingShape _clippingShape> = $r3;
+
+        $r4 = interfaceinvoke r1.<jcckit.plot.CoordinateSystem: jcckit.transformation.Transformation getTransformation()>();
+
+        r0.<jcckit.plot.Plot: jcckit.transformation.Transformation _transformation> = $r4;
+
+        $r5 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        if $r5 == null goto label1;
+
+        $r8 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        specialinvoke r0.<jcckit.plot.Plot: void generateCurves(jcckit.data.DataPlot)>($r8);
+
+     label1:
+        $r6 = new jcckit.plot.PlotEvent;
+
+        $r7 = <jcckit.plot.PlotEventType: jcckit.plot.PlotEventType COODINATE_SYSTEM_CHANGED>;
+
+        specialinvoke $r6.<jcckit.plot.PlotEvent: void <init>(jcckit.plot.Plot,jcckit.plot.PlotEventType,java.lang.Object)>(r0, $r7, null);
+
+        virtualinvoke r0.<jcckit.plot.Plot: void notifyListeners(jcckit.plot.PlotEvent)>($r6);
+
+        return;
+    }
+
+    public void addPlotListener(jcckit.plot.PlotListener)
+    {
+        jcckit.plot.Plot r0;
+        jcckit.plot.PlotListener r1;
+        java.util.Vector $r2, $r3;
+        boolean $z0;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r1 := @parameter0: jcckit.plot.PlotListener;
+
+        $r2 = r0.<jcckit.plot.Plot: java.util.Vector _plotListeners>;
+
+        $z0 = virtualinvoke $r2.<java.util.Vector: boolean contains(java.lang.Object)>(r1);
+
+        if $z0 != 0 goto label1;
+
+        $r3 = r0.<jcckit.plot.Plot: java.util.Vector _plotListeners>;
+
+        virtualinvoke $r3.<java.util.Vector: void addElement(java.lang.Object)>(r1);
+
+     label1:
+        return;
+    }
+
+    public void removePlotListener(jcckit.plot.PlotListener)
+    {
+        jcckit.plot.Plot r0;
+        jcckit.plot.PlotListener r1;
+        java.util.Vector $r2;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r1 := @parameter0: jcckit.plot.PlotListener;
+
+        $r2 = r0.<jcckit.plot.Plot: java.util.Vector _plotListeners>;
+
+        virtualinvoke $r2.<java.util.Vector: boolean removeElement(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    protected void notifyListeners(jcckit.plot.PlotEvent)
+    {
+        jcckit.plot.Plot r0;
+        java.util.Vector $r1, $r2;
+        int i0, i1;
+        java.lang.Object $r3;
+        jcckit.plot.PlotEvent r4;
+        jcckit.plot.PlotListener $r5;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r4 := @parameter0: jcckit.plot.PlotEvent;
+
+        i1 = 0;
+
+        $r1 = r0.<jcckit.plot.Plot: java.util.Vector _plotListeners>;
+
+        i0 = virtualinvoke $r1.<java.util.Vector: int size()>();
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        $r2 = r0.<jcckit.plot.Plot: java.util.Vector _plotListeners>;
+
+        $r3 = virtualinvoke $r2.<java.util.Vector: java.lang.Object elementAt(int)>(i1);
+
+        $r5 = (jcckit.plot.PlotListener) $r3;
+
+        interfaceinvoke $r5.<jcckit.plot.PlotListener: void plotChanged(jcckit.plot.PlotEvent)>(r4);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void connect(jcckit.data.DataPlot)
+    {
+        jcckit.plot.Plot r0;
+        jcckit.data.DataPlot $r1, r2, $r3, $r4, $r5, $r7, $r9, $r11;
+        jcckit.plot.PlotEvent $r6, $r10;
+        jcckit.plot.PlotEventType $r8, $r12;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r2 := @parameter0: jcckit.data.DataPlot;
+
+        $r1 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        if $r1 == null goto label1;
+
+        $r9 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        virtualinvoke $r9.<jcckit.data.DataPlot: void removeDataListener(jcckit.data.DataListener)>(r0);
+
+        $r10 = new jcckit.plot.PlotEvent;
+
+        $r12 = <jcckit.plot.PlotEventType: jcckit.plot.PlotEventType DATA_PLOT_DISCONNECTED>;
+
+        $r11 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        specialinvoke $r10.<jcckit.plot.PlotEvent: void <init>(jcckit.plot.Plot,jcckit.plot.PlotEventType,java.lang.Object)>(r0, $r12, $r11);
+
+        virtualinvoke r0.<jcckit.plot.Plot: void notifyListeners(jcckit.plot.PlotEvent)>($r10);
+
+     label1:
+        r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot> = r2;
+
+        $r3 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        if $r3 == null goto label2;
+
+        $r4 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        virtualinvoke $r4.<jcckit.data.DataPlot: void addDataListener(jcckit.data.DataListener)>(r0);
+
+        $r5 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        specialinvoke r0.<jcckit.plot.Plot: void generateCurves(jcckit.data.DataPlot)>($r5);
+
+        $r6 = new jcckit.plot.PlotEvent;
+
+        $r8 = <jcckit.plot.PlotEventType: jcckit.plot.PlotEventType DATA_PLOT_CONNECTED>;
+
+        $r7 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        specialinvoke $r6.<jcckit.plot.PlotEvent: void <init>(jcckit.plot.Plot,jcckit.plot.PlotEventType,java.lang.Object)>(r0, $r8, $r7);
+
+        virtualinvoke r0.<jcckit.plot.Plot: void notifyListeners(jcckit.plot.PlotEvent)>($r6);
+
+     label2:
+        return;
+    }
+
+    public jcckit.data.DataPoint transform(jcckit.graphic.GraphPoint)
+    {
+        jcckit.plot.Plot r0;
+        jcckit.graphic.GraphPoint r1;
+        jcckit.transformation.Transformation $r2;
+        jcckit.data.DataPoint $r3;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r1 := @parameter0: jcckit.graphic.GraphPoint;
+
+        $r2 = r0.<jcckit.plot.Plot: jcckit.transformation.Transformation _transformation>;
+
+        $r3 = interfaceinvoke $r2.<jcckit.transformation.Transformation: jcckit.data.DataPoint transformToData(jcckit.graphic.GraphPoint)>(r1);
+
+        return $r3;
+    }
+
+    public jcckit.graphic.GraphicalComposite getCompletePlot()
+    {
+        jcckit.graphic.GraphicalComposite $r0;
+        jcckit.plot.Plot r2;
+        jcckit.graphic.GraphicalElement $r3, $r5, $r6, $r7, $r8;
+        jcckit.graphic.GraphicalElement[] r4;
+        int $i0, i1;
+        boolean $z0;
+
+        r2 := @this: jcckit.plot.Plot;
+
+        $r0 = new jcckit.graphic.GraphicalComposite;
+
+        specialinvoke $r0.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(null);
+
+        $r3 = r2.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement _coordinateSystemView>;
+
+        virtualinvoke $r0.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r3);
+
+        r4 = virtualinvoke r2.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement[] getCurves()>();
+
+        i1 = 0;
+
+     label1:
+        $i0 = lengthof r4;
+
+        if i1 >= $i0 goto label2;
+
+        $r8 = r4[i1];
+
+        virtualinvoke $r0.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r8);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        $r5 = r2.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement _annotation>;
+
+        if $r5 == null goto label3;
+
+        $r7 = r2.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement _annotation>;
+
+        virtualinvoke $r0.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r7);
+
+     label3:
+        $z0 = r2.<jcckit.plot.Plot: boolean _legendVisibility>;
+
+        if $z0 == 0 goto label4;
+
+        $r6 = virtualinvoke r2.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement getLegend()>();
+
+        virtualinvoke $r0.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r6);
+
+     label4:
+        return $r0;
+    }
+
+    public jcckit.graphic.GraphicalElement getCoordinateSystem()
+    {
+        jcckit.plot.Plot r0;
+        jcckit.graphic.GraphicalElement $r1;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        $r1 = r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement _coordinateSystemView>;
+
+        return $r1;
+    }
+
+    public jcckit.graphic.GraphicalElement[] getCurves()
+    {
+        jcckit.plot.Plot r0;
+        java.util.Vector $r1, $r3, $r5;
+        int $i0, $i1, i2;
+        jcckit.graphic.GraphicalElement[] r4;
+        java.lang.Object $r6;
+        jcckit.plot.Curve $r7;
+        jcckit.graphic.GraphicalElement $r8;
+        java.lang.Throwable $r9;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        $r1 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        entermonitor $r1;
+
+     label1:
+        $r3 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        $i0 = virtualinvoke $r3.<java.util.Vector: int size()>();
+
+        r4 = newarray (jcckit.graphic.GraphicalElement)[$i0];
+
+        i2 = 0;
+
+     label2:
+        $i1 = lengthof r4;
+
+        if i2 >= $i1 goto label3;
+
+        $r5 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        $r6 = virtualinvoke $r5.<java.util.Vector: java.lang.Object elementAt(int)>(i2);
+
+        $r7 = (jcckit.plot.Curve) $r6;
+
+        $r8 = interfaceinvoke $r7.<jcckit.plot.Curve: jcckit.graphic.GraphicalElement getView()>();
+
+        r4[i2] = $r8;
+
+        i2 = i2 + 1;
+
+        goto label2;
+
+     label3:
+        exitmonitor $r1;
+
+     label4:
+        return r4;
+
+     label5:
+        $r9 := @caughtexception;
+
+        exitmonitor $r1;
+
+     label6:
+        throw $r9;
+
+        catch java.lang.Throwable from label1 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    public jcckit.graphic.GraphicalElement getAnnotation()
+    {
+        jcckit.plot.Plot r0;
+        jcckit.graphic.GraphicalElement $r1;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        $r1 = r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement _annotation>;
+
+        return $r1;
+    }
+
+    public void setAnnotation(jcckit.graphic.GraphicalElement)
+    {
+        jcckit.plot.Plot r0;
+        jcckit.graphic.GraphicalElement r1;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r1 := @parameter0: jcckit.graphic.GraphicalElement;
+
+        r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalElement _annotation> = r1;
+
+        return;
+    }
+
+    public boolean isLegendVisible()
+    {
+        jcckit.plot.Plot r0;
+        boolean $z0;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        $z0 = r0.<jcckit.plot.Plot: boolean _legendVisibility>;
+
+        return $z0;
+    }
+
+    public jcckit.graphic.GraphicalElement getLegend()
+    {
+        jcckit.plot.Plot r0;
+        jcckit.graphic.GraphicalComposite $r1;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        $r1 = r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalComposite _legendView>;
+
+        return $r1;
+    }
+
+    public void dataChanged(jcckit.data.DataEvent)
+    {
+        jcckit.plot.Plot r0;
+        java.util.Vector $r1, $r3, $r13, r15;
+        int i0, $i1, $i2, i3, i4, i5, i6;
+        jcckit.data.DataEvent r4;
+        jcckit.data.DataContainer $r5, $r10, $r12;
+        boolean $z0;
+        jcckit.data.DataPlot $r6, $r9, $r17;
+        jcckit.plot.PlotEvent $r7;
+        java.lang.Integer $r8;
+        jcckit.data.DataCurve r11, $r19;
+        java.lang.Object $r14, $r16;
+        jcckit.data.DataElement $r18;
+        java.lang.Throwable $r20;
+        jcckit.plot.PlotEventType r22;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r4 := @parameter0: jcckit.data.DataEvent;
+
+        i4 = 0;
+
+        r22 = <jcckit.plot.PlotEventType: jcckit.plot.PlotEventType DATA_PLOT_CHANGED>;
+
+        $r1 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        entermonitor $r1;
+
+     label01:
+        $r3 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        i0 = virtualinvoke $r3.<java.util.Vector: int size()>();
+
+        $r5 = virtualinvoke r4.<jcckit.data.DataEvent: jcckit.data.DataContainer getContainer()>();
+
+        $z0 = $r5 instanceof jcckit.data.DataCurve;
+
+        if $z0 == 0 goto label07;
+
+        $r9 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        $i1 = virtualinvoke $r9.<jcckit.data.DataPlot: int getNumberOfElements()>();
+
+        if i0 != $i1 goto label07;
+
+        $r10 = virtualinvoke r4.<jcckit.data.DataEvent: jcckit.data.DataContainer getContainer()>();
+
+        r11 = (jcckit.data.DataCurve) $r10;
+
+        $r12 = virtualinvoke r11.<jcckit.data.DataCurve: jcckit.data.DataContainer getContainer()>();
+
+        i4 = virtualinvoke $r12.<jcckit.data.DataContainer: int getIndexOf(jcckit.data.DataElement)>(r11);
+
+        r22 = <jcckit.plot.PlotEventType: jcckit.plot.PlotEventType DATA_CURVE_CHANGED>;
+
+        specialinvoke r0.<jcckit.plot.Plot: void fillCurve(int,jcckit.data.DataCurve)>(i4, r11);
+
+        $i2 = i0 - 1;
+
+        if i4 >= $i2 goto label06;
+
+        $r13 = r0.<jcckit.plot.Plot: java.util.Vector _nextCurveHints>;
+
+        $r14 = virtualinvoke $r13.<java.util.Vector: java.lang.Object elementAt(int)>(i4);
+
+        r15 = (java.util.Vector) $r14;
+
+        i5 = 0;
+
+        i3 = virtualinvoke r15.<java.util.Vector: int size()>();
+
+     label02:
+        if i5 >= i3 goto label06;
+
+        $r16 = virtualinvoke r15.<java.util.Vector: java.lang.Object elementAt(int)>(i5);
+
+        if $r16 == null goto label05;
+
+        r22 = <jcckit.plot.PlotEventType: jcckit.plot.PlotEventType DATA_PLOT_CHANGED>;
+
+        i6 = i4 + 1;
+
+     label03:
+        if i6 >= i0 goto label04;
+
+        $r17 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        $r18 = virtualinvoke $r17.<jcckit.data.DataPlot: jcckit.data.DataElement getElement(int)>(i6);
+
+        $r19 = (jcckit.data.DataCurve) $r18;
+
+        specialinvoke r0.<jcckit.plot.Plot: void fillCurve(int,jcckit.data.DataCurve)>(i6, $r19);
+
+        i6 = i6 + 1;
+
+        goto label03;
+
+     label04:
+        goto label06;
+
+     label05:
+        i5 = i5 + 1;
+
+        goto label02;
+
+     label06:
+        goto label08;
+
+     label07:
+        $r6 = r0.<jcckit.plot.Plot: jcckit.data.DataPlot _dataPlot>;
+
+        specialinvoke r0.<jcckit.plot.Plot: void generateCurves(jcckit.data.DataPlot)>($r6);
+
+     label08:
+        exitmonitor $r1;
+
+     label09:
+        goto label12;
+
+     label10:
+        $r20 := @caughtexception;
+
+        exitmonitor $r1;
+
+     label11:
+        throw $r20;
+
+     label12:
+        $r7 = new jcckit.plot.PlotEvent;
+
+        $r8 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(i4);
+
+        specialinvoke $r7.<jcckit.plot.PlotEvent: void <init>(jcckit.plot.Plot,jcckit.plot.PlotEventType,java.lang.Object)>(r0, r22, $r8);
+
+        virtualinvoke r0.<jcckit.plot.Plot: void notifyListeners(jcckit.plot.PlotEvent)>($r7);
+
+        return;
+
+        catch java.lang.Throwable from label01 to label09 with label10;
+        catch java.lang.Throwable from label10 to label11 with label10;
+    }
+
+    private void generateCurves(jcckit.data.DataPlot)
+    {
+        jcckit.plot.Plot r0;
+        java.util.Vector $r1, $r7, $r8, $r14, $r15, $r16;
+        jcckit.graphic.GraphicalComposite $r3, $r5, $r19, $r21;
+        jcckit.plot.Legend $r4, $r10, $r22;
+        jcckit.graphic.GraphicalElement $r6, $r20, $r24;
+        jcckit.data.DataPlot r9;
+        int i0, i1;
+        jcckit.graphic.ClippingShape $r11;
+        jcckit.plot.CurveFactory $r12;
+        jcckit.plot.Curve r13;
+        jcckit.data.DataElement $r17;
+        jcckit.data.DataCurve r18;
+        java.lang.String $r23;
+        java.lang.Throwable $r25;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        r9 := @parameter0: jcckit.data.DataPlot;
+
+        $r1 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        entermonitor $r1;
+
+     label1:
+        $r3 = new jcckit.graphic.GraphicalComposite;
+
+        specialinvoke $r3.<jcckit.graphic.GraphicalComposite: void <init>(jcckit.graphic.ClippingShape)>(null);
+
+        r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalComposite _legendView> = $r3;
+
+        $r5 = r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalComposite _legendView>;
+
+        $r4 = r0.<jcckit.plot.Plot: jcckit.plot.Legend _legend>;
+
+        $r6 = virtualinvoke $r4.<jcckit.plot.Legend: jcckit.graphic.GraphicalElement getBox()>();
+
+        virtualinvoke $r5.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r6);
+
+        $r7 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        virtualinvoke $r7.<java.util.Vector: void setSize(int)>(0);
+
+        $r8 = r0.<jcckit.plot.Plot: java.util.Vector _nextCurveHints>;
+
+        virtualinvoke $r8.<java.util.Vector: void setSize(int)>(0);
+
+        i1 = 0;
+
+        i0 = virtualinvoke r9.<jcckit.data.DataPlot: int getNumberOfElements()>();
+
+     label2:
+        if i1 >= i0 goto label3;
+
+        $r12 = r0.<jcckit.plot.Plot: jcckit.plot.CurveFactory _curveFactory>;
+
+        $r11 = r0.<jcckit.plot.Plot: jcckit.graphic.ClippingShape _clippingShape>;
+
+        $r10 = r0.<jcckit.plot.Plot: jcckit.plot.Legend _legend>;
+
+        r13 = interfaceinvoke $r12.<jcckit.plot.CurveFactory: jcckit.plot.Curve create(int,int,jcckit.graphic.ClippingShape,jcckit.plot.Legend)>(i1, i0, $r11, $r10);
+
+        $r14 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        virtualinvoke $r14.<java.util.Vector: void addElement(java.lang.Object)>(r13);
+
+        $r16 = r0.<jcckit.plot.Plot: java.util.Vector _nextCurveHints>;
+
+        $r15 = new java.util.Vector;
+
+        specialinvoke $r15.<java.util.Vector: void <init>()>();
+
+        virtualinvoke $r16.<java.util.Vector: void addElement(java.lang.Object)>($r15);
+
+        $r17 = virtualinvoke r9.<jcckit.data.DataPlot: jcckit.data.DataElement getElement(int)>(i1);
+
+        r18 = (jcckit.data.DataCurve) $r17;
+
+        $r19 = r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalComposite _legendView>;
+
+        $r20 = interfaceinvoke r13.<jcckit.plot.Curve: jcckit.graphic.GraphicalElement getLegendSymbol()>();
+
+        virtualinvoke $r19.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r20);
+
+        $r21 = r0.<jcckit.plot.Plot: jcckit.graphic.GraphicalComposite _legendView>;
+
+        $r22 = r0.<jcckit.plot.Plot: jcckit.plot.Legend _legend>;
+
+        $r23 = virtualinvoke r18.<jcckit.data.DataCurve: java.lang.String getTitle()>();
+
+        $r24 = virtualinvoke $r22.<jcckit.plot.Legend: jcckit.graphic.GraphicalElement createCurveTitle(int,int,java.lang.String)>(i1, i0, $r23);
+
+        virtualinvoke $r21.<jcckit.graphic.GraphicalComposite: void addElement(jcckit.graphic.GraphicalElement)>($r24);
+
+        specialinvoke r0.<jcckit.plot.Plot: void fillCurve(int,jcckit.data.DataCurve)>(i1, r18);
+
+        i1 = i1 + 1;
+
+        goto label2;
+
+     label3:
+        exitmonitor $r1;
+
+     label4:
+        goto label7;
+
+     label5:
+        $r25 := @caughtexception;
+
+        exitmonitor $r1;
+
+     label6:
+        throw $r25;
+
+     label7:
+        return;
+
+        catch java.lang.Throwable from label1 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    private void fillCurve(int, jcckit.data.DataCurve)
+    {
+        jcckit.plot.Plot r0;
+        int i0, i1, $i2, i3;
+        java.util.Vector $r1, r3, $r4;
+        java.lang.Object $r2, $r5;
+        jcckit.plot.Curve r6;
+        jcckit.data.DataCurve r7;
+        jcckit.transformation.Transformation $r8;
+        jcckit.data.DataElement $r9;
+        jcckit.data.DataPoint $r10;
+        jcckit.graphic.GraphPoint $r11;
+        jcckit.plot.Hint $r12, $r13;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        i0 := @parameter0: int;
+
+        r7 := @parameter1: jcckit.data.DataCurve;
+
+        $r1 = r0.<jcckit.plot.Plot: java.util.Vector _nextCurveHints>;
+
+        $r2 = virtualinvoke $r1.<java.util.Vector: java.lang.Object elementAt(int)>(i0);
+
+        r3 = (java.util.Vector) $r2;
+
+        $r4 = r0.<jcckit.plot.Plot: java.util.Vector _curves>;
+
+        $r5 = virtualinvoke $r4.<java.util.Vector: java.lang.Object elementAt(int)>(i0);
+
+        r6 = (jcckit.plot.Curve) $r5;
+
+        interfaceinvoke r6.<jcckit.plot.Curve: void removeAllPoints()>();
+
+        i3 = 0;
+
+        i1 = virtualinvoke r7.<jcckit.data.DataCurve: int getNumberOfElements()>();
+
+     label1:
+        if i3 >= i1 goto label2;
+
+        $r8 = r0.<jcckit.plot.Plot: jcckit.transformation.Transformation _transformation>;
+
+        $r9 = virtualinvoke r7.<jcckit.data.DataCurve: jcckit.data.DataElement getElement(int)>(i3);
+
+        $r10 = (jcckit.data.DataPoint) $r9;
+
+        $r11 = interfaceinvoke $r8.<jcckit.transformation.Transformation: jcckit.graphic.GraphPoint transformToGraph(jcckit.data.DataPoint)>($r10);
+
+        $i2 = i0 - 1;
+
+        $r12 = specialinvoke r0.<jcckit.plot.Plot: jcckit.plot.Hint getHintForNextCurve(int,int)>($i2, i3);
+
+        $r13 = interfaceinvoke r6.<jcckit.plot.Curve: jcckit.plot.Hint addPoint(jcckit.graphic.GraphPoint,jcckit.plot.Hint)>($r11, $r12);
+
+        specialinvoke r0.<jcckit.plot.Plot: void setHintForNextCurve(java.util.Vector,int,jcckit.plot.Hint)>(r3, i3, $r13);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private jcckit.plot.Hint getHintForNextCurve(int, int)
+    {
+        jcckit.plot.Plot r0;
+        int i0, i1, $i2, $i3;
+        java.util.Vector $r1, r3;
+        java.lang.Object $r2, $r4;
+        jcckit.plot.Hint r5, $r6;
+
+        r0 := @this: jcckit.plot.Plot;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        r5 = r0.<jcckit.plot.Plot: jcckit.plot.Hint _initialHintForNextCurve>;
+
+        if i0 < 0 goto label3;
+
+        $r1 = r0.<jcckit.plot.Plot: java.util.Vector _nextCurveHints>;
+
+        $r2 = virtualinvoke $r1.<java.util.Vector: java.lang.Object elementAt(int)>(i0);
+
+        r3 = (java.util.Vector) $r2;
+
+        $i2 = virtualinvoke r3.<java.util.Vector: int size()>();
+
+        if i1 >= $i2 goto label1;
+
+        $r4 = virtualinvoke r3.<java.util.Vector: java.lang.Object elementAt(int)>(i1);
+
+        $r6 = (jcckit.plot.Hint) $r4;
+
+        goto label2;
+
+     label1:
+        $i3 = i0 - 1;
+
+        $r6 = specialinvoke r0.<jcckit.plot.Plot: jcckit.plot.Hint getHintForNextCurve(int,int)>($i3, i1);
+
+     label2:
+        r5 = $r6;
+
+     label3:
+        return r5;
+    }
+
+    private void setHintForNextCurve(java.util.Vector, int, jcckit.plot.Hint)
+    {
+        java.util.Vector r0;
+        int $i0, i1;
+        jcckit.plot.Hint r1, $r3;
+        jcckit.plot.Plot r2;
+
+        r2 := @this: jcckit.plot.Plot;
+
+        r0 := @parameter0: java.util.Vector;
+
+        i1 := @parameter1: int;
+
+        r1 := @parameter2: jcckit.plot.Hint;
+
+     label1:
+        $i0 = virtualinvoke r0.<java.util.Vector: int size()>();
+
+        if $i0 > i1 goto label2;
+
+        $r3 = r2.<jcckit.plot.Plot: jcckit.plot.Hint _initialHintForNextCurve>;
+
+        virtualinvoke r0.<java.util.Vector: void addElement(java.lang.Object)>($r3);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r0.<java.util.Vector: void setElementAt(java.lang.Object,int)>(r1, i1);
+
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.plot.Plot: java.lang.String INITIAL_HINT_FOR_NEXT_CURVE_KEY> = "initialHintForNextCurve";
+
+        <jcckit.plot.Plot: java.lang.String LEGEND_KEY> = "legend";
+
+        <jcckit.plot.Plot: java.lang.String LEGEND_VISIBLE_KEY> = "legendVisible";
+
+        <jcckit.plot.Plot: java.lang.String CURVE_FACTORY_KEY> = "curveFactory";
+
+        <jcckit.plot.Plot: java.lang.String COORDINATE_SYSTEM_KEY> = "coordinateSystem";
+
+        return;
+    }
+}

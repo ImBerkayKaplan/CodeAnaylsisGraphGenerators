@@ -1,0 +1,286 @@
+public class net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest extends java.lang.Object
+{
+    private static final java.lang.String CONTENT_LENGTH_HEADER;
+    private java.lang.String method;
+    private java.lang.String path;
+    private byte[] body;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest r0;
+
+        r0 := @this: net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.String getMethod()
+    {
+        net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest;
+
+        $r1 = r0.<net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: java.lang.String method>;
+
+        return $r1;
+    }
+
+    public java.lang.String getPath()
+    {
+        net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest;
+
+        $r1 = r0.<net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: java.lang.String path>;
+
+        return $r1;
+    }
+
+    public byte[] getBody()
+    {
+        net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest;
+
+        $r1 = r0.<net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: byte[] body>;
+
+        return $r1;
+    }
+
+    public static net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest fromStream(java.io.InputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest $r0;
+        java.io.InputStream r2;
+        java.lang.String r3, $r6, $r7, $r8, r9, $r10;
+        java.util.StringTokenizer $r4;
+        int $i0, i1;
+        boolean $z0, $z1;
+        byte[] $r11;
+        net.sourceforge.plantuml.picoweb.BadRequest400 $r12;
+
+        r2 := @parameter0: java.io.InputStream;
+
+        $r0 = new net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: void <init>()>();
+
+        r3 = staticinvoke <net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: java.lang.String readLine(java.io.InputStream)>(r2);
+
+        $r4 = new java.util.StringTokenizer;
+
+        specialinvoke $r4.<java.util.StringTokenizer: void <init>(java.lang.String)>(r3);
+
+        $i0 = virtualinvoke $r4.<java.util.StringTokenizer: int countTokens()>();
+
+        if $i0 == 3 goto label1;
+
+        $r12 = new net.sourceforge.plantuml.picoweb.BadRequest400;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.picoweb.BadRequest400: void <init>(java.lang.String)>("Bad request line");
+
+        throw $r12;
+
+     label1:
+        $r6 = virtualinvoke $r4.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.String: java.lang.String toUpperCase()>();
+
+        $r0.<net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: java.lang.String method> = $r7;
+
+        $r8 = virtualinvoke $r4.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $r0.<net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: java.lang.String path> = $r8;
+
+        i1 = 0;
+
+     label2:
+        r9 = staticinvoke <net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: java.lang.String readLine(java.io.InputStream)>(r2);
+
+        $z0 = virtualinvoke r9.<java.lang.String: boolean isEmpty()>();
+
+        if $z0 == 0 goto label3;
+
+        goto label5;
+
+     label3:
+        $r10 = virtualinvoke r9.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $z1 = virtualinvoke $r10.<java.lang.String: boolean startsWith(java.lang.String)>("content-length: ");
+
+        if $z1 == 0 goto label4;
+
+        i1 = staticinvoke <net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: int parseContentLengthHeader(java.lang.String)>(r9);
+
+     label4:
+        goto label2;
+
+     label5:
+        $r11 = staticinvoke <net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: byte[] readBody(java.io.InputStream,int)>(r2, i1);
+
+        $r0.<net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: byte[] body> = $r11;
+
+        return $r0;
+    }
+
+    private static int parseContentLengthHeader(java.lang.String) throws java.io.IOException
+    {
+        java.lang.String r0, $r1, $r2, $r3;
+        int $i0, i1;
+        net.sourceforge.plantuml.picoweb.BadRequest400 $r4, $r7;
+        java.lang.NumberFormatException $r5;
+
+        r0 := @parameter0: java.lang.String;
+
+     label1:
+        $r1 = "content-length: ";
+
+        $i0 = virtualinvoke $r1.<java.lang.String: int length()>();
+
+        $r2 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int)>($i0);
+
+        $r3 = virtualinvoke $r2.<java.lang.String: java.lang.String trim()>();
+
+        i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r3);
+
+     label2:
+        goto label4;
+
+     label3:
+        $r5 := @caughtexception;
+
+        $r7 = new net.sourceforge.plantuml.picoweb.BadRequest400;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.picoweb.BadRequest400: void <init>(java.lang.String)>("Invalid content length");
+
+        throw $r7;
+
+     label4:
+        if i1 >= 0 goto label5;
+
+        $r4 = new net.sourceforge.plantuml.picoweb.BadRequest400;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.picoweb.BadRequest400: void <init>(java.lang.String)>("Negative content length");
+
+        throw $r4;
+
+     label5:
+        return i1;
+
+        catch java.lang.NumberFormatException from label1 to label2 with label3;
+    }
+
+    private static byte[] readBody(java.io.InputStream, int) throws java.io.IOException
+    {
+        int i0, $i2, $i3, i4, i5;
+        byte[] r0, $r3;
+        java.io.InputStream r1;
+        net.sourceforge.plantuml.picoweb.BadRequest400 $r2;
+
+        r1 := @parameter0: java.io.InputStream;
+
+        i0 := @parameter1: int;
+
+        if i0 != 0 goto label1;
+
+        $r3 = newarray (byte)[0];
+
+        return $r3;
+
+     label1:
+        r0 = newarray (byte)[i0];
+
+        i5 = 0;
+
+     label2:
+        if i5 >= i0 goto label4;
+
+        $i3 = 0 + i5;
+
+        $i2 = i0 - i5;
+
+        i4 = virtualinvoke r1.<java.io.InputStream: int read(byte[],int,int)>(r0, $i3, $i2);
+
+        if i4 >= 0 goto label3;
+
+        $r2 = new net.sourceforge.plantuml.picoweb.BadRequest400;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.picoweb.BadRequest400: void <init>(java.lang.String)>("Body too short");
+
+        throw $r2;
+
+     label3:
+        i5 = i5 + i4;
+
+        goto label2;
+
+     label4:
+        return r0;
+    }
+
+    private static java.lang.String readLine(java.io.InputStream) throws java.io.IOException
+    {
+        java.lang.StringBuilder $r0;
+        java.io.InputStream r2;
+        int i0, $i1, $i2, $i3, $i5, $i6;
+        char $c4, $c7;
+        java.lang.String $r5;
+
+        r2 := @parameter0: java.io.InputStream;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+     label1:
+        i0 = virtualinvoke r2.<java.io.InputStream: int read()>();
+
+        if i0 == -1 goto label3;
+
+        if i0 != 10 goto label2;
+
+        goto label3;
+
+     label2:
+        $c7 = (char) i0;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c7);
+
+        goto label1;
+
+     label3:
+        $i1 = virtualinvoke $r0.<java.lang.StringBuilder: int length()>();
+
+        if $i1 <= 0 goto label4;
+
+        $i2 = virtualinvoke $r0.<java.lang.StringBuilder: int length()>();
+
+        $i3 = $i2 - 1;
+
+        $c4 = virtualinvoke $r0.<java.lang.StringBuilder: char charAt(int)>($i3);
+
+        if $c4 != 13 goto label4;
+
+        $i5 = virtualinvoke $r0.<java.lang.StringBuilder: int length()>();
+
+        $i6 = $i5 - 1;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder deleteCharAt(int)>($i6);
+
+     label4:
+        $r5 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest: java.lang.String CONTENT_LENGTH_HEADER> = "content-length: ";
+
+        return;
+    }
+}

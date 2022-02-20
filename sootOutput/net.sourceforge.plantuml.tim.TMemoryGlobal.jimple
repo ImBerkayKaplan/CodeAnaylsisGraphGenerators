@@ -1,0 +1,296 @@
+public class net.sourceforge.plantuml.tim.TMemoryGlobal extends net.sourceforge.plantuml.tim.ExecutionContexts implements net.sourceforge.plantuml.tim.TMemory
+{
+    private final java.util.Map globalVariables;
+    private final net.sourceforge.plantuml.tim.TrieImpl variables;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.tim.TMemoryGlobal r0;
+        java.util.HashMap $r1;
+        net.sourceforge.plantuml.tim.TrieImpl $r2;
+
+        r0 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.ExecutionContexts: void <init>()>();
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.tim.TMemoryGlobal: java.util.Map globalVariables> = $r1;
+
+        $r2 = new net.sourceforge.plantuml.tim.TrieImpl;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.tim.TrieImpl: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.tim.TMemoryGlobal: net.sourceforge.plantuml.tim.TrieImpl variables> = $r2;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.tim.expression.TValue getVariable(java.lang.String)
+    {
+        net.sourceforge.plantuml.tim.TMemoryGlobal r0;
+        java.lang.String r1;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.tim.expression.TValue $r4;
+
+        r0 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.tim.TMemoryGlobal: java.util.Map globalVariables>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r4 = (net.sourceforge.plantuml.tim.expression.TValue) $r3;
+
+        return $r4;
+    }
+
+    public void dumpDebug(java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r1, $r3;
+        java.lang.String r2, $r4;
+        net.sourceforge.plantuml.tim.TMemoryGlobal r5;
+
+        r5 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("[MemGlobal] Start of memory_dump ");
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r4);
+
+        virtualinvoke r5.<net.sourceforge.plantuml.tim.TMemoryGlobal: void dumpMemoryInternal()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>("[MemGlobal] End of memory_dump");
+
+        return;
+    }
+
+    void dumpMemoryInternal()
+    {
+        java.lang.StringBuilder $r0, $r1, $r4, $r16, $r17, $r18, $r19, $r20;
+        net.sourceforge.plantuml.tim.TMemoryGlobal r2;
+        java.util.Map $r3, $r7;
+        int $i0;
+        java.lang.String $r5, r13, $r21;
+        java.util.TreeMap $r6;
+        java.util.Set $r8;
+        java.util.Iterator r9;
+        boolean $z0;
+        java.lang.Object $r10, $r12, $r14;
+        java.util.Map$Entry r11;
+        net.sourceforge.plantuml.tim.expression.TValue r15;
+
+        r2 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("[MemGlobal] Number of variable(s) : ");
+
+        $r3 = r2.<net.sourceforge.plantuml.tim.TMemoryGlobal: java.util.Map globalVariables>;
+
+        $i0 = interfaceinvoke $r3.<java.util.Map: int size()>();
+
+        $r4 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r5);
+
+        $r6 = new java.util.TreeMap;
+
+        $r7 = r2.<net.sourceforge.plantuml.tim.TMemoryGlobal: java.util.Map globalVariables>;
+
+        specialinvoke $r6.<java.util.TreeMap: void <init>(java.util.Map)>($r7);
+
+        $r8 = virtualinvoke $r6.<java.util.TreeMap: java.util.Set entrySet()>();
+
+        r9 = interfaceinvoke $r8.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r9.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r10 = interfaceinvoke r9.<java.util.Iterator: java.lang.Object next()>();
+
+        r11 = (java.util.Map$Entry) $r10;
+
+        $r12 = interfaceinvoke r11.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r13 = (java.lang.String) $r12;
+
+        $r14 = interfaceinvoke r11.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r15 = (net.sourceforge.plantuml.tim.expression.TValue) $r14;
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("[MemGlobal] ");
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r13);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" = ");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r15);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r21);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void putVariable(java.lang.String, net.sourceforge.plantuml.tim.expression.TValue, net.sourceforge.plantuml.tim.TVariableScope) throws net.sourceforge.plantuml.tim.EaterException
+    {
+        java.lang.StringBuilder $r0, $r1, $r3;
+        java.lang.String r2, $r4;
+        net.sourceforge.plantuml.tim.TVariableScope r5, $r6;
+        net.sourceforge.plantuml.tim.TMemoryGlobal r7;
+        net.sourceforge.plantuml.tim.expression.TValue r8;
+        java.util.Map $r9;
+        net.sourceforge.plantuml.tim.TrieImpl $r11;
+        net.sourceforge.plantuml.tim.EaterException $r12;
+
+        r7 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        r2 := @parameter0: java.lang.String;
+
+        r8 := @parameter1: net.sourceforge.plantuml.tim.expression.TValue;
+
+        r5 := @parameter2: net.sourceforge.plantuml.tim.TVariableScope;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("[MemGlobal] Setting ");
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r4);
+
+        $r6 = <net.sourceforge.plantuml.tim.TVariableScope: net.sourceforge.plantuml.tim.TVariableScope LOCAL>;
+
+        if r5 != $r6 goto label1;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException unlocated(java.lang.String)>("Cannot use local variable here");
+
+        throw $r12;
+
+     label1:
+        $r9 = r7.<net.sourceforge.plantuml.tim.TMemoryGlobal: java.util.Map globalVariables>;
+
+        interfaceinvoke $r9.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r2, r8);
+
+        $r11 = r7.<net.sourceforge.plantuml.tim.TMemoryGlobal: net.sourceforge.plantuml.tim.TrieImpl variables>;
+
+        virtualinvoke $r11.<net.sourceforge.plantuml.tim.TrieImpl: void add(java.lang.String)>(r2);
+
+        return;
+    }
+
+    public void removeVariable(java.lang.String)
+    {
+        net.sourceforge.plantuml.tim.TMemoryGlobal r0;
+        java.lang.String r1;
+        java.util.Map $r2;
+        net.sourceforge.plantuml.tim.TrieImpl $r4;
+
+        r0 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.tim.TMemoryGlobal: java.util.Map globalVariables>;
+
+        interfaceinvoke $r2.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r1);
+
+        $r4 = r0.<net.sourceforge.plantuml.tim.TMemoryGlobal: net.sourceforge.plantuml.tim.TrieImpl variables>;
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.tim.TrieImpl: boolean remove(java.lang.String)>(r1);
+
+        return;
+    }
+
+    public boolean isEmpty()
+    {
+        net.sourceforge.plantuml.tim.TMemoryGlobal r0;
+        java.util.Map $r1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.TMemoryGlobal: java.util.Map globalVariables>;
+
+        $z0 = interfaceinvoke $r1.<java.util.Map: boolean isEmpty()>();
+
+        return $z0;
+    }
+
+    public java.util.Set variablesNames()
+    {
+        net.sourceforge.plantuml.tim.TMemoryGlobal r0;
+        java.util.Map $r1;
+        java.util.Set $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.TMemoryGlobal: java.util.Map globalVariables>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set keySet()>();
+
+        $r3 = staticinvoke <java.util.Collections: java.util.Set unmodifiableSet(java.util.Set)>($r2);
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.tim.Trie variablesNames3()
+    {
+        net.sourceforge.plantuml.tim.TMemoryGlobal r0;
+        net.sourceforge.plantuml.tim.TrieImpl $r1;
+
+        r0 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.TMemoryGlobal: net.sourceforge.plantuml.tim.TrieImpl variables>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.tim.TMemory forkFromGlobal(java.util.Map)
+    {
+        net.sourceforge.plantuml.tim.TMemoryLocal $r0;
+        net.sourceforge.plantuml.tim.TMemoryGlobal r1;
+        java.util.Map r2;
+
+        r1 := @this: net.sourceforge.plantuml.tim.TMemoryGlobal;
+
+        r2 := @parameter0: java.util.Map;
+
+        $r0 = new net.sourceforge.plantuml.tim.TMemoryLocal;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.tim.TMemoryLocal: void <init>(net.sourceforge.plantuml.tim.TMemoryGlobal,java.util.Map)>(r1, r2);
+
+        return $r0;
+    }
+}

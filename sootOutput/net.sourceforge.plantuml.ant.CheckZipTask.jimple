@@ -1,0 +1,403 @@
+public class net.sourceforge.plantuml.ant.CheckZipTask extends org.apache.tools.ant.Task
+{
+    private java.lang.String zipfile;
+    private java.util.List filesets;
+    private java.util.List filelists;
+    private final java.util.List entries;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.ant.CheckZipTask r0;
+        java.util.ArrayList $r1, $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        specialinvoke r0.<org.apache.tools.ant.Task: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.lang.String zipfile> = null;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List filesets> = $r1;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List filelists> = $r2;
+
+        $r3 = new java.util.ArrayList;
+
+        specialinvoke $r3.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List entries> = $r3;
+
+        return;
+    }
+
+    public void addFileset(org.apache.tools.ant.types.FileSet)
+    {
+        net.sourceforge.plantuml.ant.CheckZipTask r0;
+        org.apache.tools.ant.types.FileSet r1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        r1 := @parameter0: org.apache.tools.ant.types.FileSet;
+
+        $r2 = r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List filesets>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public void addFilelist(org.apache.tools.ant.types.FileList)
+    {
+        net.sourceforge.plantuml.ant.CheckZipTask r0;
+        org.apache.tools.ant.types.FileList r1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        r1 := @parameter0: org.apache.tools.ant.types.FileList;
+
+        $r2 = r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List filelists>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public void execute() throws org.apache.tools.ant.BuildException
+    {
+        net.sourceforge.plantuml.ant.CheckZipTask r0;
+        java.lang.StringBuilder $r2, $r4, $r16;
+        java.lang.String $r3, $r5, $r7, $r13;
+        java.util.List $r8;
+        boolean $z0;
+        java.lang.Object $r9;
+        org.apache.tools.ant.types.FileList r10;
+        java.io.IOException $r11;
+        java.util.Iterator r14;
+        net.sourceforge.plantuml.security.SFile $r17;
+        org.apache.tools.ant.BuildException $r18;
+        java.lang.Throwable $r19;
+
+        r0 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Check ");
+
+        $r3 = r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.lang.String zipfile>;
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.ant.CheckZipTask: void myLog(java.lang.String)>($r5);
+
+     label1:
+        $r17 = new net.sourceforge.plantuml.security.SFile;
+
+        $r7 = r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.lang.String zipfile>;
+
+        specialinvoke $r17.<net.sourceforge.plantuml.security.SFile: void <init>(java.lang.String)>($r7);
+
+        specialinvoke r0.<net.sourceforge.plantuml.ant.CheckZipTask: void loadZipFile(net.sourceforge.plantuml.security.SFile)>($r17);
+
+        $r8 = r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List filelists>;
+
+        r14 = interfaceinvoke $r8.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r14.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r9 = interfaceinvoke r14.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (org.apache.tools.ant.types.FileList) $r9;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ant.CheckZipTask: void manageFileList(org.apache.tools.ant.types.FileList)>(r10);
+
+        goto label2;
+
+     label3:
+        goto label5;
+
+     label4:
+        $r11 := @caughtexception;
+
+        virtualinvoke $r11.<java.io.IOException: void printStackTrace()>();
+
+        $r18 = new org.apache.tools.ant.BuildException;
+
+        $r13 = virtualinvoke $r11.<java.io.IOException: java.lang.String toString()>();
+
+        specialinvoke $r18.<org.apache.tools.ant.BuildException: void <init>(java.lang.String)>($r13);
+
+        $r19 = (java.lang.Throwable) $r18;
+
+        throw $r19;
+
+     label5:
+        return;
+
+        catch java.io.IOException from label1 to label3 with label4;
+    }
+
+    private void manageFileList(org.apache.tools.ant.types.FileList)
+    {
+        org.apache.tools.ant.types.FileList r0;
+        net.sourceforge.plantuml.ant.CheckZipTask r1;
+        org.apache.tools.ant.Project $r2;
+        java.lang.String[] r3;
+        int i0, i1;
+        java.lang.String r6, $r10;
+        boolean $z0, z1;
+        java.lang.StringBuilder $r8, $r9, $r11;
+        org.apache.tools.ant.BuildException $r12;
+        java.lang.Throwable $r13;
+
+        r1 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        r0 := @parameter0: org.apache.tools.ant.types.FileList;
+
+        z1 = 0;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.ant.CheckZipTask: org.apache.tools.ant.Project getProject()>();
+
+        r3 = virtualinvoke r0.<org.apache.tools.ant.types.FileList: java.lang.String[] getFiles(org.apache.tools.ant.Project)>($r2);
+
+        i0 = lengthof r3;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label3;
+
+        r6 = r3[i1];
+
+        $z0 = specialinvoke r1.<net.sourceforge.plantuml.ant.CheckZipTask: boolean isPresentInFile(java.lang.String)>(r6);
+
+        if $z0 != 0 goto label2;
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Missing ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r6);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke r1.<net.sourceforge.plantuml.ant.CheckZipTask: void myLog(java.lang.String)>($r10);
+
+        z1 = 1;
+
+     label2:
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label3:
+        if z1 == 0 goto label4;
+
+        $r12 = new org.apache.tools.ant.BuildException;
+
+        specialinvoke $r12.<org.apache.tools.ant.BuildException: void <init>(java.lang.String)>("Some entries are missing in the zipfile");
+
+        $r13 = (java.lang.Throwable) $r12;
+
+        throw $r13;
+
+     label4:
+        return;
+    }
+
+    private boolean isPresentInFile(java.lang.String)
+    {
+        net.sourceforge.plantuml.ant.CheckZipTask r0;
+        java.lang.String r1;
+        java.util.List $r2;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List entries>;
+
+        $z0 = interfaceinvoke $r2.<java.util.List: boolean contains(java.lang.Object)>(r1);
+
+        return $z0;
+    }
+
+    private void loadZipFile(net.sourceforge.plantuml.security.SFile) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.ant.CheckZipTask r0;
+        java.util.List $r1, $r6;
+        net.sourceforge.plantuml.security.SFile r2;
+        java.io.InputStream r3;
+        java.io.PrintWriter r4;
+        java.util.zip.ZipInputStream $r5;
+        boolean $z1;
+        java.lang.StringBuilder $r7, $r8, $r9, $r10;
+        java.lang.String $r11, r19;
+        java.io.FileNotFoundException $r12;
+        java.lang.Throwable $r13, $r14, $r15, $r16;
+        java.util.zip.ZipEntry r18;
+
+        r0 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        r2 := @parameter0: net.sourceforge.plantuml.security.SFile;
+
+        $r1 = r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List entries>;
+
+        interfaceinvoke $r1.<java.util.List: void clear()>();
+
+        r3 = virtualinvoke r2.<net.sourceforge.plantuml.security.SFile: java.io.InputStream openFile()>();
+
+        if r3 != null goto label01;
+
+        $r12 = new java.io.FileNotFoundException;
+
+        specialinvoke $r12.<java.io.FileNotFoundException: void <init>()>();
+
+        throw $r12;
+
+     label01:
+        r4 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.io.PrintWriter createPrintWriter(java.lang.String)>("tmp.txt");
+
+     label02:
+        $r5 = new java.util.zip.ZipInputStream;
+
+        specialinvoke $r5.<java.util.zip.ZipInputStream: void <init>(java.io.InputStream)>(r3);
+
+     label03:
+        r18 = virtualinvoke $r5.<java.util.zip.ZipInputStream: java.util.zip.ZipEntry getNextEntry()>();
+
+     label04:
+        if r18 == null goto label06;
+
+        r19 = virtualinvoke r18.<java.util.zip.ZipEntry: java.lang.String getName()>();
+
+        $r6 = r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.util.List entries>;
+
+        interfaceinvoke $r6.<java.util.List: boolean add(java.lang.Object)>(r19);
+
+        $z1 = virtualinvoke r19.<java.lang.String: boolean endsWith(java.lang.String)>("/");
+
+        if $z1 != 0 goto label05;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<file name=\"");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r19);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" />");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r4.<java.io.PrintWriter: void println(java.lang.String)>($r11);
+
+     label05:
+        r18 = virtualinvoke $r5.<java.util.zip.ZipInputStream: java.util.zip.ZipEntry getNextEntry()>();
+
+        goto label04;
+
+     label06:
+        virtualinvoke $r5.<java.util.zip.ZipInputStream: void close()>();
+
+        goto label12;
+
+     label07:
+        $r16 := @caughtexception;
+
+     label08:
+        virtualinvoke $r5.<java.util.zip.ZipInputStream: void close()>();
+
+     label09:
+        goto label11;
+
+     label10:
+        $r15 := @caughtexception;
+
+        virtualinvoke $r16.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r15);
+
+     label11:
+        throw $r16;
+
+     label12:
+        if r4 == null goto label18;
+
+        virtualinvoke r4.<java.io.PrintWriter: void close()>();
+
+        goto label18;
+
+     label13:
+        $r14 := @caughtexception;
+
+        if r4 == null goto label17;
+
+     label14:
+        virtualinvoke r4.<java.io.PrintWriter: void close()>();
+
+     label15:
+        goto label17;
+
+     label16:
+        $r13 := @caughtexception;
+
+        virtualinvoke $r14.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r13);
+
+     label17:
+        throw $r14;
+
+     label18:
+        return;
+
+        catch java.lang.Throwable from label03 to label06 with label07;
+        catch java.lang.Throwable from label08 to label09 with label10;
+        catch java.lang.Throwable from label02 to label12 with label13;
+        catch java.lang.Throwable from label14 to label15 with label16;
+    }
+
+    private synchronized void myLog(java.lang.String)
+    {
+        net.sourceforge.plantuml.ant.CheckZipTask r0;
+        java.lang.String r1;
+
+        r0 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        r1 := @parameter0: java.lang.String;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.ant.CheckZipTask: void log(java.lang.String)>(r1);
+
+        return;
+    }
+
+    public void setZipfile(java.lang.String)
+    {
+        net.sourceforge.plantuml.ant.CheckZipTask r0;
+        java.lang.String r1;
+
+        r0 := @this: net.sourceforge.plantuml.ant.CheckZipTask;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<net.sourceforge.plantuml.ant.CheckZipTask: java.lang.String zipfile> = r1;
+
+        return;
+    }
+}

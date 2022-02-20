@@ -1,0 +1,152 @@
+public class ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho extends ext.plantuml.com.ctreber.acearth.shader.Shader
+{
+    private static double[] fXValues;
+
+    public void <init>()
+    {
+        ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho;
+
+        specialinvoke r0.<ext.plantuml.com.ctreber.acearth.shader.Shader: void <init>()>();
+
+        return;
+    }
+
+    public java.awt.Color[] getShadedColors(int, int[])
+    {
+        int i0, $i1, $i2, $i3, i4, $i5;
+        ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho r0;
+        double $d0, $d1, d2, $d3, d4, $d5, d6, d7, $d8, $d9, d10, $d11, $d12, $d13, $d14, $d15, d16;
+        ext.plantuml.com.ctreber.acearth.projection.Projection $r1, $r2;
+        ext.plantuml.com.ctreber.acearth.util.Point3D $r3, $r7, $r8;
+        int[] r4;
+        java.awt.Color[] r5;
+        double[] $r6, $r10;
+        java.awt.Color $r9;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho;
+
+        i0 := @parameter0: int;
+
+        r4 := @parameter1: int[];
+
+        if i0 != 0 goto label1;
+
+        $i3 = lengthof r4;
+
+        $r10 = specialinvoke r0.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: double[] computeXValues(int)>($i3);
+
+        <ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: double[] fXValues> = $r10;
+
+     label1:
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        $d0 = (double) i0;
+
+        $d1 = virtualinvoke $r1.<ext.plantuml.com.ctreber.acearth.projection.Projection: double inverseFinalizeY(double)>($d0);
+
+        d2 = virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.projection.Projection: double inverseProjectY(double)>($d1);
+
+        $d3 = d2 * d2;
+
+        d4 = 1.0 - $d3;
+
+        $r3 = r0.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: ext.plantuml.com.ctreber.acearth.util.Point3D fLightVector>;
+
+        $d5 = virtualinvoke $r3.<ext.plantuml.com.ctreber.acearth.util.Point3D: double getY()>();
+
+        d6 = d2 * $d5;
+
+        $i1 = lengthof r4;
+
+        r5 = newarray (java.awt.Color)[$i1];
+
+        i4 = 0;
+
+     label2:
+        $i5 = lengthof r4;
+
+        if i4 >= $i5 goto label3;
+
+        $r6 = <ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: double[] fXValues>;
+
+        d7 = $r6[i4];
+
+        $d8 = d7 * d7;
+
+        $d9 = d4 - $d8;
+
+        d10 = staticinvoke <java.lang.Math: double sqrt(double)>($d9);
+
+        $r7 = r0.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: ext.plantuml.com.ctreber.acearth.util.Point3D fLightVector>;
+
+        $d11 = virtualinvoke $r7.<ext.plantuml.com.ctreber.acearth.util.Point3D: double getX()>();
+
+        $d12 = d7 * $d11;
+
+        $d13 = $d12 + d6;
+
+        $r8 = r0.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: ext.plantuml.com.ctreber.acearth.util.Point3D fLightVector>;
+
+        $d14 = virtualinvoke $r8.<ext.plantuml.com.ctreber.acearth.util.Point3D: double getZ()>();
+
+        $d15 = d10 * $d14;
+
+        d16 = $d13 + $d15;
+
+        $i2 = r4[i4];
+
+        $r9 = virtualinvoke r0.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: java.awt.Color getShadedColorForType(int,double)>($i2, d16);
+
+        r5[i4] = $r9;
+
+        i4 = i4 + 1;
+
+        goto label2;
+
+     label3:
+        return r5;
+    }
+
+    private double[] computeXValues(int)
+    {
+        int i0, i1;
+        double[] r0;
+        ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho r1;
+        double $d0, $d1, $d2;
+        ext.plantuml.com.ctreber.acearth.projection.Projection $r2, $r3;
+
+        r1 := @this: ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho;
+
+        i0 := @parameter0: int;
+
+        r0 = newarray (double)[i0];
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        $r3 = r1.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        $r2 = r1.<ext.plantuml.com.ctreber.acearth.shader.ShaderOrtho: ext.plantuml.com.ctreber.acearth.projection.Projection fProjection>;
+
+        $d0 = (double) i1;
+
+        $d1 = virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.projection.Projection: double inverseFinalizeX(double)>($d0);
+
+        $d2 = virtualinvoke $r3.<ext.plantuml.com.ctreber.acearth.projection.Projection: double inverseProjectX(double)>($d1);
+
+        r0[i1] = $d2;
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return r0;
+    }
+}

@@ -1,0 +1,327 @@
+public class net.sourceforge.plantuml.preproc.EvalBoolean extends java.lang.Object
+{
+    private final java.lang.String str;
+    private int pos;
+    private char ch;
+    private final net.sourceforge.plantuml.preproc.Truth truth;
+
+    public void <init>(java.lang.String, net.sourceforge.plantuml.preproc.Truth)
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.preproc.Truth r2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: net.sourceforge.plantuml.preproc.Truth;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.preproc.EvalBoolean: int pos> = -1;
+
+        r0.<net.sourceforge.plantuml.preproc.EvalBoolean: java.lang.String str> = r1;
+
+        r0.<net.sourceforge.plantuml.preproc.EvalBoolean: net.sourceforge.plantuml.preproc.Truth truth> = r2;
+
+        return;
+    }
+
+    private void nextChar()
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean r0;
+        int $i0, $i1, $i2, $i3, $i4;
+        java.lang.String $r1, $r2;
+        char $c5;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        $i0 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: int pos>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.preproc.EvalBoolean: int pos> = $i1;
+
+        $i2 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: int pos>;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: java.lang.String str>;
+
+        $i3 = virtualinvoke $r1.<java.lang.String: int length()>();
+
+        if $i2 >= $i3 goto label1;
+
+        $r2 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: java.lang.String str>;
+
+        $i4 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: int pos>;
+
+        $c5 = virtualinvoke $r2.<java.lang.String: char charAt(int)>($i4);
+
+        r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch> = $c5;
+
+        goto label2;
+
+     label1:
+        r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch> = 0;
+
+     label2:
+        return;
+    }
+
+    private boolean eat(char)
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean r0;
+        char $c0, c1, $c2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        c1 := @parameter0: char;
+
+     label1:
+        $c0 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch>;
+
+        if $c0 != 32 goto label2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: void nextChar()>();
+
+        goto label1;
+
+     label2:
+        $c2 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch>;
+
+        if $c2 != c1 goto label3;
+
+        specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: void nextChar()>();
+
+        return 1;
+
+     label3:
+        return 0;
+    }
+
+    private boolean parseExpression()
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean r0;
+        boolean $z0, $z2, z3;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        z3 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean parseTerm()>();
+
+     label1:
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean eat(char)>(124);
+
+        if $z0 == 0 goto label2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean eat(char)>(124);
+
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean parseTerm()>();
+
+        z3 = z3 | $z2;
+
+        goto label1;
+
+     label2:
+        return z3;
+    }
+
+    private boolean parseTerm()
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean r0;
+        boolean $z0, $z2, z3;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        z3 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean parseFactor()>();
+
+     label1:
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean eat(char)>(38);
+
+        if $z0 == 0 goto label2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean eat(char)>(38);
+
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean parseFactor()>();
+
+        z3 = z3 & $z2;
+
+        goto label1;
+
+     label2:
+        return z3;
+    }
+
+    private boolean parseFactor()
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean r0;
+        boolean $z0, $z1, $z2, $z3, $z5, $z6, z7;
+        int i0, $i2;
+        java.lang.IllegalArgumentException $r1;
+        java.lang.StringBuilder $r2, $r3, $r4;
+        char $c1;
+        java.lang.String $r5, $r6, r7;
+        net.sourceforge.plantuml.preproc.Truth $r8;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean eat(char)>(33);
+
+        if $z0 == 0 goto label3;
+
+        $z5 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean parseFactor()>();
+
+        if $z5 != 0 goto label1;
+
+        $z6 = 1;
+
+        goto label2;
+
+     label1:
+        $z6 = 0;
+
+     label2:
+        return $z6;
+
+     label3:
+        i0 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: int pos>;
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean eat(char)>(40);
+
+        if $z1 == 0 goto label4;
+
+        z7 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean parseExpression()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean eat(char)>(41);
+
+        goto label8;
+
+     label4:
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean isIdentifier()>();
+
+        if $z2 == 0 goto label7;
+
+     label5:
+        $z3 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean isIdentifier()>();
+
+        if $z3 == 0 goto label6;
+
+        specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: void nextChar()>();
+
+        goto label5;
+
+     label6:
+        $r6 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: java.lang.String str>;
+
+        $i2 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: int pos>;
+
+        r7 = virtualinvoke $r6.<java.lang.String: java.lang.String substring(int,int)>(i0, $i2);
+
+        $r8 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: net.sourceforge.plantuml.preproc.Truth truth>;
+
+        z7 = interfaceinvoke $r8.<net.sourceforge.plantuml.preproc.Truth: boolean isTrue(java.lang.String)>(r7);
+
+        goto label8;
+
+     label7:
+        $r1 = new java.lang.IllegalArgumentException;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Unexpected: ");
+
+        $c1 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch>;
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c1);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r5);
+
+        throw $r1;
+
+     label8:
+        return z7;
+    }
+
+    private boolean isIdentifier()
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean r0;
+        char $c0, $c1, $c2;
+        boolean $z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        $c0 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch>;
+
+        if $c0 == 95 goto label1;
+
+        $c1 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch>;
+
+        if $c1 == 36 goto label1;
+
+        $c2 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch>;
+
+        $z0 = staticinvoke <java.lang.Character: boolean isLetterOrDigit(char)>($c2);
+
+        if $z0 == 0 goto label2;
+
+     label1:
+        $z1 = 1;
+
+        goto label3;
+
+     label2:
+        $z1 = 0;
+
+     label3:
+        return $z1;
+    }
+
+    public boolean eval()
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean r0;
+        boolean z0;
+        java.lang.String $r1, $r6;
+        int $i0, $i1;
+        java.lang.IllegalArgumentException $r2;
+        java.lang.StringBuilder $r3, $r4, $r5;
+        char $c2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: void nextChar()>();
+
+        z0 = specialinvoke r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean parseExpression()>();
+
+        $i0 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: int pos>;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: java.lang.String str>;
+
+        $i1 = virtualinvoke $r1.<java.lang.String: int length()>();
+
+        if $i0 >= $i1 goto label1;
+
+        $r2 = new java.lang.IllegalArgumentException;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Unexpected: ");
+
+        $c2 = r0.<net.sourceforge.plantuml.preproc.EvalBoolean: char ch>;
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c2);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r6);
+
+        throw $r2;
+
+     label1:
+        return z0;
+    }
+}

@@ -1,0 +1,190 @@
+final class net.sourceforge.plantuml.code.deflate.ByteHistory extends java.lang.Object
+{
+    private byte[] data;
+    private int index;
+
+    public void <init>(int)
+    {
+        net.sourceforge.plantuml.code.deflate.ByteHistory r0;
+        int i0;
+        byte[] $r1;
+        java.lang.IllegalArgumentException $r2;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.ByteHistory;
+
+        i0 := @parameter0: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        if i0 >= 1 goto label1;
+
+        $r2 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("Size must be positive");
+
+        throw $r2;
+
+     label1:
+        $r1 = newarray (byte)[i0];
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data> = $r1;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: int index> = 0;
+
+        return;
+    }
+
+    public void append(int)
+    {
+        net.sourceforge.plantuml.code.deflate.ByteHistory r0;
+        int $i0, $i1, $i2, i3, $i5, $i6, $i7, $i8, $i9;
+        java.lang.IllegalStateException $r1;
+        byte[] $r2, $r3, $r4;
+        byte $b4;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.ByteHistory;
+
+        i3 := @parameter0: int;
+
+        $i0 = r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: int index>;
+
+        if $i0 < 0 goto label1;
+
+        $i2 = r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: int index>;
+
+        $r2 = r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        $i1 = lengthof $r2;
+
+        if $i2 < $i1 goto label2;
+
+     label1:
+        $r1 = new java.lang.IllegalStateException;
+
+        specialinvoke $r1.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r1;
+
+     label2:
+        $r3 = r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        $i5 = r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: int index>;
+
+        $b4 = (byte) i3;
+
+        $r3[$i5] = $b4;
+
+        $i6 = r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: int index>;
+
+        $i8 = $i6 + 1;
+
+        $r4 = r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        $i7 = lengthof $r4;
+
+        $i9 = $i8 % $i7;
+
+        r0.<net.sourceforge.plantuml.code.deflate.ByteHistory: int index> = $i9;
+
+        return;
+    }
+
+    public void copy(int, int, net.sourceforge.plantuml.code.deflate.OutputStreamProtected) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected r0;
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i10, $i11, i12, i13;
+        net.sourceforge.plantuml.code.deflate.ByteHistory r2;
+        byte[] $r3, $r4, $r5, $r7, $r8, $r9;
+        java.lang.IllegalStateException $r6;
+        byte b9;
+        java.lang.IllegalArgumentException $r10;
+
+        r2 := @this: net.sourceforge.plantuml.code.deflate.ByteHistory;
+
+        i1 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        r0 := @parameter2: net.sourceforge.plantuml.code.deflate.OutputStreamProtected;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        if i0 < 0 goto label1;
+
+        if i1 < 1 goto label1;
+
+        $r3 = r2.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        $i2 = lengthof $r3;
+
+        if i1 <= $i2 goto label2;
+
+     label1:
+        $r10 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r10.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r10;
+
+     label2:
+        $i3 = r2.<net.sourceforge.plantuml.code.deflate.ByteHistory: int index>;
+
+        $i5 = $i3 - i1;
+
+        $r4 = r2.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        $i4 = lengthof $r4;
+
+        $i7 = $i5 + $i4;
+
+        $r5 = r2.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        $i6 = lengthof $r5;
+
+        i12 = $i7 % $i6;
+
+        if i12 < 0 goto label3;
+
+        $r7 = r2.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        $i8 = lengthof $r7;
+
+        if i12 < $i8 goto label4;
+
+     label3:
+        $r6 = new java.lang.IllegalStateException;
+
+        specialinvoke $r6.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r6;
+
+     label4:
+        i13 = 0;
+
+     label5:
+        if i13 >= i0 goto label6;
+
+        $r8 = r2.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        b9 = $r8[i12];
+
+        $i11 = i12 + 1;
+
+        $r9 = r2.<net.sourceforge.plantuml.code.deflate.ByteHistory: byte[] data>;
+
+        $i10 = lengthof $r9;
+
+        i12 = $i11 % $i10;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: void write(int)>(b9);
+
+        virtualinvoke r2.<net.sourceforge.plantuml.code.deflate.ByteHistory: void append(int)>(b9);
+
+        i13 = i13 + 1;
+
+        goto label5;
+
+     label6:
+        return;
+    }
+}

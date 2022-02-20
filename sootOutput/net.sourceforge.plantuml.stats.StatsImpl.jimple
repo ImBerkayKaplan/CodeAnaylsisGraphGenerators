@@ -1,0 +1,513 @@
+public class net.sourceforge.plantuml.stats.StatsImpl extends java.lang.Object implements net.sourceforge.plantuml.stats.api.Stats
+{
+    private final net.sourceforge.plantuml.stats.FormatCounter formatCounterCurrent;
+    private final net.sourceforge.plantuml.stats.FormatCounter formatCounterEver;
+    private final java.util.Map byTypeEver;
+    private final java.util.Map byTypeCurrent;
+    private final net.sourceforge.plantuml.stats.ParsedGenerated fullEver;
+    private final net.sourceforge.plantuml.stats.HistoricalData historicalData;
+
+    void <init>(java.util.Map, java.util.Map, net.sourceforge.plantuml.stats.FormatCounter, net.sourceforge.plantuml.stats.FormatCounter, net.sourceforge.plantuml.stats.HistoricalData, net.sourceforge.plantuml.stats.ParsedGenerated)
+    {
+        net.sourceforge.plantuml.stats.StatsImpl r0;
+        java.util.Map r1, r2;
+        net.sourceforge.plantuml.stats.FormatCounter r3, r4;
+        net.sourceforge.plantuml.stats.ParsedGenerated r5;
+        net.sourceforge.plantuml.stats.HistoricalData r6;
+
+        r0 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        r1 := @parameter0: java.util.Map;
+
+        r2 := @parameter1: java.util.Map;
+
+        r3 := @parameter2: net.sourceforge.plantuml.stats.FormatCounter;
+
+        r4 := @parameter3: net.sourceforge.plantuml.stats.FormatCounter;
+
+        r6 := @parameter4: net.sourceforge.plantuml.stats.HistoricalData;
+
+        r5 := @parameter5: net.sourceforge.plantuml.stats.ParsedGenerated;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.stats.StatsImpl: java.util.Map byTypeEver> = r1;
+
+        r0.<net.sourceforge.plantuml.stats.StatsImpl: java.util.Map byTypeCurrent> = r2;
+
+        r0.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.FormatCounter formatCounterCurrent> = r3;
+
+        r0.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.FormatCounter formatCounterEver> = r4;
+
+        r0.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.ParsedGenerated fullEver> = r5;
+
+        r0.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.HistoricalData historicalData> = r6;
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.stats.api.StatsLine createDataLineSession(net.sourceforge.plantuml.stats.ParsedGenerated)
+    {
+        java.util.EnumMap $r0;
+        net.sourceforge.plantuml.stats.ParsedGenerated r2;
+        long l0, l2, l3, $l4, $l5, $l6, $l7, $l8, $l9, $l10, $l11, $l12;
+        byte $b1;
+        net.sourceforge.plantuml.stats.api.StatsColumn $r3, $r9, $r12, $r15, $r17, $r21, $r25, $r29, $r33, $r37, $r41, $r45, $r50;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.api.NumberAnalyzedDated $r6, $r7, $r18, $r22, $r26, $r30, $r34, $r38, $r42, $r46;
+        java.util.Date $r8, $r11;
+        net.sourceforge.plantuml.stats.HumanDuration $r14;
+        java.lang.Long $r19, $r23, $r27, $r31, $r35, $r39, $r43, $r47, $r51;
+        net.sourceforge.plantuml.stats.StatsLineImpl $r49;
+        net.sourceforge.plantuml.stats.StatsImpl r53;
+
+        r53 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        r2 := @parameter0: net.sourceforge.plantuml.stats.ParsedGenerated;
+
+        $r0 = new java.util.EnumMap;
+
+        specialinvoke $r0.<java.util.EnumMap: void <init>(java.lang.Class)>(class "Lnet/sourceforge/plantuml/stats/api/StatsColumn;");
+
+        l0 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: long getId()>();
+
+        $b1 = l0 cmp -1L;
+
+        if $b1 == 0 goto label1;
+
+        $r50 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn SESSION_ID>;
+
+        $r51 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>(l0);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r50, $r51);
+
+     label1:
+        $r3 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn VERSION>;
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: java.lang.String getVersion()>();
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r3, $r4);
+
+        $r6 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated parsedDated()>();
+
+        l2 = virtualinvoke $r6.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getCreationTime()>();
+
+        $r7 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated parsedDated()>();
+
+        l3 = virtualinvoke $r7.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getModificationTime()>();
+
+        $r9 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn STARTING>;
+
+        $r8 = new java.util.Date;
+
+        specialinvoke $r8.<java.util.Date: void <init>(long)>(l2);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r9, $r8);
+
+        $r12 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn LAST>;
+
+        $r11 = new java.util.Date;
+
+        specialinvoke $r11.<java.util.Date: void <init>(long)>(l3);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r12, $r11);
+
+        $r15 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn DURATION_STRING>;
+
+        $r14 = new net.sourceforge.plantuml.stats.HumanDuration;
+
+        $l4 = l3 - l2;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.stats.HumanDuration: void <init>(long)>($l4);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r15, $r14);
+
+        $r17 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn PARSED_COUNT>;
+
+        $r18 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated parsedDated()>();
+
+        $l5 = virtualinvoke $r18.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getNb()>();
+
+        $r19 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l5);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r17, $r19);
+
+        $r21 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn PARSED_MEAN_TIME>;
+
+        $r22 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated parsedDated()>();
+
+        $l6 = virtualinvoke $r22.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getMean()>();
+
+        $r23 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l6);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r21, $r23);
+
+        $r25 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn PARSED_STANDARD_DEVIATION>;
+
+        $r26 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated parsedDated()>();
+
+        $l7 = virtualinvoke $r26.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getStandardDeviation()>();
+
+        $r27 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l7);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r25, $r27);
+
+        $r29 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn PARSED_MAX_TIME>;
+
+        $r30 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated parsedDated()>();
+
+        $l8 = virtualinvoke $r30.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getMax()>();
+
+        $r31 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l8);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r29, $r31);
+
+        $r33 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_COUNT>;
+
+        $r34 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated generatedDated()>();
+
+        $l9 = virtualinvoke $r34.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getNb()>();
+
+        $r35 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l9);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r33, $r35);
+
+        $r37 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_MEAN_TIME>;
+
+        $r38 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated generatedDated()>();
+
+        $l10 = virtualinvoke $r38.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getMean()>();
+
+        $r39 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l10);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r37, $r39);
+
+        $r41 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_STANDARD_DEVIATION>;
+
+        $r42 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated generatedDated()>();
+
+        $l11 = virtualinvoke $r42.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getStandardDeviation()>();
+
+        $r43 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l11);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r41, $r43);
+
+        $r45 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_MAX_TIME>;
+
+        $r46 = virtualinvoke r2.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzedDated generatedDated()>();
+
+        $l12 = virtualinvoke $r46.<net.sourceforge.plantuml.api.NumberAnalyzedDated: long getMax()>();
+
+        $r47 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l12);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r45, $r47);
+
+        $r49 = new net.sourceforge.plantuml.stats.StatsLineImpl;
+
+        specialinvoke $r49.<net.sourceforge.plantuml.stats.StatsLineImpl: void <init>(java.util.Map)>($r0);
+
+        return $r49;
+    }
+
+    private net.sourceforge.plantuml.stats.api.StatsLine createLineByDiagramType(java.lang.String, net.sourceforge.plantuml.api.NumberAnalyzed, net.sourceforge.plantuml.api.NumberAnalyzed)
+    {
+        java.util.EnumMap $r0;
+        java.lang.String r2;
+        net.sourceforge.plantuml.stats.api.StatsColumn $r3, $r6, $r9, $r12, $r15, $r19, $r22, $r25, $r28;
+        net.sourceforge.plantuml.api.NumberAnalyzed r5, r18;
+        long $l0, $l1, $l2, $l3, $l4, $l5, $l6, $l7;
+        java.lang.Long $r7, $r10, $r13, $r16, $r20, $r23, $r26, $r29;
+        net.sourceforge.plantuml.stats.StatsLineImpl $r31;
+        net.sourceforge.plantuml.stats.StatsImpl r32;
+
+        r32 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        r2 := @parameter0: java.lang.String;
+
+        r5 := @parameter1: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        r18 := @parameter2: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $r0 = new java.util.EnumMap;
+
+        specialinvoke $r0.<java.util.EnumMap: void <init>(java.lang.Class)>(class "Lnet/sourceforge/plantuml/stats/api/StatsColumn;");
+
+        $r3 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn DIAGRAM_TYPE>;
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r3, r2);
+
+        $r6 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn PARSED_COUNT>;
+
+        $l0 = virtualinvoke r5.<net.sourceforge.plantuml.api.NumberAnalyzed: long getNb()>();
+
+        $r7 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l0);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r6, $r7);
+
+        $r9 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn PARSED_MEAN_TIME>;
+
+        $l1 = virtualinvoke r5.<net.sourceforge.plantuml.api.NumberAnalyzed: long getMean()>();
+
+        $r10 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l1);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r9, $r10);
+
+        $r12 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn PARSED_STANDARD_DEVIATION>;
+
+        $l2 = virtualinvoke r5.<net.sourceforge.plantuml.api.NumberAnalyzed: long getStandardDeviation()>();
+
+        $r13 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l2);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r12, $r13);
+
+        $r15 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn PARSED_MAX_TIME>;
+
+        $l3 = virtualinvoke r5.<net.sourceforge.plantuml.api.NumberAnalyzed: long getMax()>();
+
+        $r16 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l3);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r15, $r16);
+
+        $r19 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_COUNT>;
+
+        $l4 = virtualinvoke r18.<net.sourceforge.plantuml.api.NumberAnalyzed: long getNb()>();
+
+        $r20 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l4);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r19, $r20);
+
+        $r22 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_MEAN_TIME>;
+
+        $l5 = virtualinvoke r18.<net.sourceforge.plantuml.api.NumberAnalyzed: long getMean()>();
+
+        $r23 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l5);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r22, $r23);
+
+        $r25 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_STANDARD_DEVIATION>;
+
+        $l6 = virtualinvoke r18.<net.sourceforge.plantuml.api.NumberAnalyzed: long getStandardDeviation()>();
+
+        $r26 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l6);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r25, $r26);
+
+        $r28 = <net.sourceforge.plantuml.stats.api.StatsColumn: net.sourceforge.plantuml.stats.api.StatsColumn GENERATED_MAX_TIME>;
+
+        $l7 = virtualinvoke r18.<net.sourceforge.plantuml.api.NumberAnalyzed: long getMax()>();
+
+        $r29 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l7);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r28, $r29);
+
+        $r31 = new net.sourceforge.plantuml.stats.StatsLineImpl;
+
+        specialinvoke $r31.<net.sourceforge.plantuml.stats.StatsLineImpl: void <init>(java.util.Map)>($r0);
+
+        return $r31;
+    }
+
+    public net.sourceforge.plantuml.stats.api.StatsTable getLastSessions()
+    {
+        net.sourceforge.plantuml.stats.StatsTableImpl $r0;
+        net.sourceforge.plantuml.stats.StatsImpl r2;
+        net.sourceforge.plantuml.stats.HistoricalData $r3, $r6, $r10;
+        java.util.List $r4;
+        java.util.Iterator r5;
+        boolean $z0;
+        net.sourceforge.plantuml.stats.ParsedGenerated $r7, $r8, $r11, r14;
+        net.sourceforge.plantuml.stats.api.StatsLine $r9, $r12, $r15;
+        java.lang.Object $r13;
+
+        r2 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        $r0 = new net.sourceforge.plantuml.stats.StatsTableImpl;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.stats.StatsTableImpl: void <init>(java.lang.String)>("Statistics");
+
+        $r3 = r2.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.HistoricalData historicalData>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.stats.HistoricalData: java.util.List getHistorical()>();
+
+        r5 = interfaceinvoke $r4.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r13 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r14 = (net.sourceforge.plantuml.stats.ParsedGenerated) $r13;
+
+        $r15 = specialinvoke r2.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.api.StatsLine createDataLineSession(net.sourceforge.plantuml.stats.ParsedGenerated)>(r14);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.StatsTableImpl: void addLine(net.sourceforge.plantuml.stats.api.StatsLine)>($r15);
+
+        goto label1;
+
+     label2:
+        $r6 = r2.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.HistoricalData historicalData>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.stats.HistoricalData: net.sourceforge.plantuml.stats.ParsedGenerated current()>();
+
+        if $r7 == null goto label3;
+
+        $r10 = r2.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.HistoricalData historicalData>;
+
+        $r11 = virtualinvoke $r10.<net.sourceforge.plantuml.stats.HistoricalData: net.sourceforge.plantuml.stats.ParsedGenerated current()>();
+
+        $r12 = specialinvoke r2.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.api.StatsLine createDataLineSession(net.sourceforge.plantuml.stats.ParsedGenerated)>($r11);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.StatsTableImpl: void addLine(net.sourceforge.plantuml.stats.api.StatsLine)>($r12);
+
+     label3:
+        $r8 = r2.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.ParsedGenerated fullEver>;
+
+        $r9 = specialinvoke r2.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.api.StatsLine createDataLineSession(net.sourceforge.plantuml.stats.ParsedGenerated)>($r8);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.StatsTableImpl: void addLine(net.sourceforge.plantuml.stats.api.StatsLine)>($r9);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.stats.api.StatsTable getCurrentSessionByFormat()
+    {
+        net.sourceforge.plantuml.stats.StatsImpl r0;
+        net.sourceforge.plantuml.stats.FormatCounter $r1;
+        net.sourceforge.plantuml.stats.api.StatsTable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.FormatCounter formatCounterCurrent>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.stats.FormatCounter: net.sourceforge.plantuml.stats.api.StatsTable getStatsTable(java.lang.String)>("current format");
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.stats.api.StatsTable getAllByFormat()
+    {
+        net.sourceforge.plantuml.stats.StatsImpl r0;
+        net.sourceforge.plantuml.stats.FormatCounter $r1;
+        net.sourceforge.plantuml.stats.api.StatsTable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.FormatCounter formatCounterEver>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.stats.FormatCounter: net.sourceforge.plantuml.stats.api.StatsTable getStatsTable(java.lang.String)>("all format");
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.stats.api.StatsTable getCurrentSessionByDiagramType()
+    {
+        net.sourceforge.plantuml.stats.StatsImpl r0;
+        java.util.Map $r1;
+        net.sourceforge.plantuml.stats.api.StatsTable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.stats.StatsImpl: java.util.Map byTypeCurrent>;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.api.StatsTable getByDiagramType(java.lang.String,java.util.Map)>("Current session", $r1);
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.stats.api.StatsTable getAllByDiagramType()
+    {
+        net.sourceforge.plantuml.stats.StatsImpl r0;
+        java.util.Map $r1;
+        net.sourceforge.plantuml.stats.api.StatsTable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        $r1 = r0.<net.sourceforge.plantuml.stats.StatsImpl: java.util.Map byTypeEver>;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.api.StatsTable getByDiagramType(java.lang.String,java.util.Map)>("All session", $r1);
+
+        return $r2;
+    }
+
+    private net.sourceforge.plantuml.stats.api.StatsTable getByDiagramType(java.lang.String, java.util.Map)
+    {
+        net.sourceforge.plantuml.stats.StatsTableImpl $r0;
+        java.lang.String r1, r15;
+        java.util.TreeSet $r3;
+        java.util.Map r4;
+        java.util.Set $r5;
+        net.sourceforge.plantuml.api.NumberAnalyzed $r7, $r9, r18, r21;
+        java.util.Iterator r11;
+        boolean $z0;
+        net.sourceforge.plantuml.stats.StatsImpl r12;
+        net.sourceforge.plantuml.stats.api.StatsLine $r13, $r22;
+        java.lang.Object $r14, $r16, $r19;
+        net.sourceforge.plantuml.stats.ParsedGenerated $r17, $r20;
+
+        r12 := @this: net.sourceforge.plantuml.stats.StatsImpl;
+
+        r1 := @parameter0: java.lang.String;
+
+        r4 := @parameter1: java.util.Map;
+
+        $r0 = new net.sourceforge.plantuml.stats.StatsTableImpl;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.stats.StatsTableImpl: void <init>(java.lang.String)>(r1);
+
+        $r3 = new java.util.TreeSet;
+
+        $r5 = interfaceinvoke r4.<java.util.Map: java.util.Set keySet()>();
+
+        specialinvoke $r3.<java.util.TreeSet: void <init>(java.util.Collection)>($r5);
+
+        $r7 = new net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.api.NumberAnalyzed: void <init>()>();
+
+        $r9 = new net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.api.NumberAnalyzed: void <init>()>();
+
+        r11 = virtualinvoke $r3.<java.util.TreeSet: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r11.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r14 = interfaceinvoke r11.<java.util.Iterator: java.lang.Object next()>();
+
+        r15 = (java.lang.String) $r14;
+
+        $r16 = interfaceinvoke r4.<java.util.Map: java.lang.Object get(java.lang.Object)>(r15);
+
+        $r17 = (net.sourceforge.plantuml.stats.ParsedGenerated) $r16;
+
+        r18 = virtualinvoke $r17.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzed parsed()>();
+
+        $r19 = interfaceinvoke r4.<java.util.Map: java.lang.Object get(java.lang.Object)>(r15);
+
+        $r20 = (net.sourceforge.plantuml.stats.ParsedGenerated) $r19;
+
+        r21 = virtualinvoke $r20.<net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.api.NumberAnalyzed generated()>();
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.api.NumberAnalyzed: void add(net.sourceforge.plantuml.api.NumberAnalyzed)>(r18);
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.api.NumberAnalyzed: void add(net.sourceforge.plantuml.api.NumberAnalyzed)>(r21);
+
+        $r22 = specialinvoke r12.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.api.StatsLine createLineByDiagramType(java.lang.String,net.sourceforge.plantuml.api.NumberAnalyzed,net.sourceforge.plantuml.api.NumberAnalyzed)>(r15, r18, r21);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.StatsTableImpl: void addLine(net.sourceforge.plantuml.stats.api.StatsLine)>($r22);
+
+        goto label1;
+
+     label2:
+        $r13 = specialinvoke r12.<net.sourceforge.plantuml.stats.StatsImpl: net.sourceforge.plantuml.stats.api.StatsLine createLineByDiagramType(java.lang.String,net.sourceforge.plantuml.api.NumberAnalyzed,net.sourceforge.plantuml.api.NumberAnalyzed)>("Total", $r7, $r9);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.StatsTableImpl: void addLine(net.sourceforge.plantuml.stats.api.StatsLine)>($r13);
+
+        return $r0;
+    }
+}

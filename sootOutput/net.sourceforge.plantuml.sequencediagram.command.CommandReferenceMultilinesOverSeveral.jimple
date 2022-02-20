@@ -1,0 +1,193 @@
+public class net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral extends net.sourceforge.plantuml.command.CommandMultilines
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral r0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.CommandMultilines: void <init>(java.lang.String)>("^ref(#\\w+)?[%s]+over[%s]+((?:[%pLN_.@]+|[%g][^%g]+[%g])(?:[%s]*,[%s]*(?:[%pLN_.@]+|[%g][^%g]+[%g]))*)[%s]*(#\\w+)?$");
+
+        return;
+    }
+
+    public java.lang.String getPatternEnd()
+    {
+        net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral r0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral;
+
+        return "^end[%s]?(ref)?$";
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.sequencediagram.SequenceDiagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral r0;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        net.sourceforge.plantuml.StringLocated $r2, $r3;
+        java.lang.String $r4, r7, $r15, $r26, $r29, $r31, r36;
+        java.util.List r5, r16;
+        java.lang.Object $r6, $r14, $r30;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram r8;
+        net.sourceforge.plantuml.ISkinParam $r9, $r11, $r20, $r25;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r10;
+        net.sourceforge.plantuml.api.ThemeStyle $r12;
+        net.sourceforge.plantuml.ugraphic.color.HColor r13, $r34;
+        java.util.ArrayList $r17;
+        int $i0, $i1;
+        net.sourceforge.plantuml.sequencediagram.Reference $r19;
+        net.sourceforge.plantuml.style.StyleBuilder $r21;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r23;
+        net.sourceforge.plantuml.UrlBuilder $r24;
+        net.sourceforge.plantuml.UrlBuilder$ModeUrl $r27;
+        java.lang.CharSequence $r28;
+        net.sourceforge.plantuml.sequencediagram.Participant $r32;
+        net.sourceforge.plantuml.command.BlocLines r33, r37, r38;
+        java.util.Iterator r35;
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.Display r39;
+        net.sourceforge.plantuml.Url r40;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral;
+
+        r8 := @parameter0: net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+
+        r33 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral: net.sourceforge.plantuml.command.regex.Pattern2 getStartingPattern()>();
+
+        $r2 = virtualinvoke r33.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r5 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.util.List getSplit(net.sourceforge.plantuml.command.regex.Pattern2,java.lang.String)>($r1, $r4);
+
+        $r6 = interfaceinvoke r5.<java.util.List: java.lang.Object get(int)>(0);
+
+        r7 = (java.lang.String) $r6;
+
+        if r7 != null goto label1;
+
+        $r34 = null;
+
+        goto label2;
+
+     label1:
+        $r9 = virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r10 = interfaceinvoke $r9.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r11 = virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r12 = interfaceinvoke $r11.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r34 = virtualinvoke $r10.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>($r12, r7);
+
+     label2:
+        r13 = $r34;
+
+        $r14 = interfaceinvoke r5.<java.util.List: java.lang.Object get(int)>(1);
+
+        $r15 = (java.lang.String) $r14;
+
+        r16 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.util.List splitComma(java.lang.String)>($r15);
+
+        $r17 = new java.util.ArrayList;
+
+        specialinvoke $r17.<java.util.ArrayList: void <init>()>();
+
+        r35 = interfaceinvoke r16.<java.util.List: java.util.Iterator iterator()>();
+
+     label3:
+        $z0 = interfaceinvoke r35.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r30 = interfaceinvoke r35.<java.util.Iterator: java.lang.Object next()>();
+
+        r36 = (java.lang.String) $r30;
+
+        $r31 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String)>(r36);
+
+        $r32 = virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.sequencediagram.Participant getOrCreateParticipant(java.lang.String)>($r31);
+
+        interfaceinvoke $r17.<java.util.List: boolean add(java.lang.Object)>($r32);
+
+        goto label3;
+
+     label4:
+        r37 = virtualinvoke r33.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines subExtract(int,int)>(1, 1);
+
+        r38 = virtualinvoke r37.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines removeEmptyColumns()>();
+
+        r39 = virtualinvoke r38.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.cucadiagram.Display toDisplay()>();
+
+        r40 = null;
+
+        $i0 = virtualinvoke r39.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        if $i0 <= 0 goto label5;
+
+        $r24 = new net.sourceforge.plantuml.UrlBuilder;
+
+        $r25 = virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r26 = interfaceinvoke $r25.<net.sourceforge.plantuml.ISkinParam: java.lang.String getValue(java.lang.String)>("topurl");
+
+        $r27 = <net.sourceforge.plantuml.UrlBuilder$ModeUrl: net.sourceforge.plantuml.UrlBuilder$ModeUrl STRICT>;
+
+        specialinvoke $r24.<net.sourceforge.plantuml.UrlBuilder: void <init>(java.lang.String,net.sourceforge.plantuml.UrlBuilder$ModeUrl)>($r26, $r27);
+
+        $r28 = virtualinvoke r39.<net.sourceforge.plantuml.cucadiagram.Display: java.lang.CharSequence get(int)>(0);
+
+        $r29 = interfaceinvoke $r28.<java.lang.CharSequence: java.lang.String toString()>();
+
+        r40 = virtualinvoke $r24.<net.sourceforge.plantuml.UrlBuilder: net.sourceforge.plantuml.Url getUrl(java.lang.String)>($r29);
+
+     label5:
+        if r40 == null goto label6;
+
+        $i1 = virtualinvoke r39.<net.sourceforge.plantuml.cucadiagram.Display: int size()>();
+
+        r39 = virtualinvoke r39.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display subList(int,int)>(1, $i1);
+
+     label6:
+        $r19 = new net.sourceforge.plantuml.sequencediagram.Reference;
+
+        $r20 = virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r21 = interfaceinvoke $r20.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        specialinvoke $r19.<net.sourceforge.plantuml.sequencediagram.Reference: void <init>(java.util.List,net.sourceforge.plantuml.Url,net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.style.StyleBuilder)>($r17, r40, r39, null, r13, $r21);
+
+        virtualinvoke r8.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: void addReference(net.sourceforge.plantuml.sequencediagram.Reference)>($r19);
+
+        $r23 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r23;
+    }
+
+    public volatile net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.command.BlocLines) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.command.BlocLines r2;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram $r3;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r4;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $r3 = (net.sourceforge.plantuml.sequencediagram.SequenceDiagram) r1;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilinesOverSeveral: net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.sequencediagram.SequenceDiagram,net.sourceforge.plantuml.command.BlocLines)>($r3, r2);
+
+        return $r4;
+    }
+}

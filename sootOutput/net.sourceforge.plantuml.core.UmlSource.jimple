@@ -1,0 +1,695 @@
+public final class net.sourceforge.plantuml.core.UmlSource extends java.lang.Object
+{
+    private final java.util.List source;
+    private final java.util.List rawSource;
+
+    public net.sourceforge.plantuml.core.UmlSource removeInitialSkinparam()
+    {
+        net.sourceforge.plantuml.core.UmlSource r0, $r5;
+        java.util.List $r1, $r3, $r6;
+        boolean $z0, $z1;
+        java.util.ArrayList $r2;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r1 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.core.UmlSource: boolean hasInitialSkinparam(java.util.List)>($r1);
+
+        if $z0 != 0 goto label1;
+
+        return r0;
+
+     label1:
+        $r2 = new java.util.ArrayList;
+
+        $r3 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+     label2:
+        $z1 = staticinvoke <net.sourceforge.plantuml.core.UmlSource: boolean hasInitialSkinparam(java.util.List)>($r2);
+
+        if $z1 == 0 goto label3;
+
+        interfaceinvoke $r2.<java.util.List: java.lang.Object remove(int)>(1);
+
+        goto label2;
+
+     label3:
+        $r5 = new net.sourceforge.plantuml.core.UmlSource;
+
+        $r6 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List rawSource>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.core.UmlSource: void <init>(java.util.List,java.util.List)>($r2, $r6);
+
+        return $r5;
+    }
+
+    public boolean containsIgnoreCase(java.lang.String)
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.StringLocated r4;
+        java.lang.String $r5, $r6, r7;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        r7 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.StringLocated) $r3;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goLowerCase(java.lang.String)>($r5);
+
+        $z1 = virtualinvoke $r6.<java.lang.String: boolean contains(java.lang.CharSequence)>(r7);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 0;
+    }
+
+    private static boolean hasInitialSkinparam(java.util.List)
+    {
+        java.util.List r0;
+        int $i0;
+        java.lang.Object $r1, $r4;
+        net.sourceforge.plantuml.StringLocated $r2, $r5;
+        java.lang.String $r3, $r6;
+        boolean $z0, $z1, $z2;
+
+        r0 := @parameter0: java.util.List;
+
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        if $i0 <= 1 goto label2;
+
+        $r1 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(1);
+
+        $r2 = (net.sourceforge.plantuml.StringLocated) $r1;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = virtualinvoke $r3.<java.lang.String: boolean startsWith(java.lang.String)>("skinparam ");
+
+        if $z0 != 0 goto label1;
+
+        $r4 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(1);
+
+        $r5 = (net.sourceforge.plantuml.StringLocated) $r4;
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z1 = virtualinvoke $r6.<java.lang.String: boolean startsWith(java.lang.String)>("skinparamlocked ");
+
+        if $z1 == 0 goto label2;
+
+     label1:
+        $z2 = 1;
+
+        goto label3;
+
+     label2:
+        $z2 = 0;
+
+     label3:
+        return $z2;
+    }
+
+    private void <init>(java.util.List, java.util.List)
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.List r1, r2;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        r1 := @parameter0: java.util.List;
+
+        r2 := @parameter1: java.util.List;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source> = r1;
+
+        r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List rawSource> = r2;
+
+        return;
+    }
+
+    public void <init>(java.util.List, boolean)
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.List r1;
+        boolean z0;
+        java.util.ArrayList $r2;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        r1 := @parameter0: java.util.List;
+
+        z0 := @parameter1: boolean;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.core.UmlSource: void <init>(java.util.List,boolean,java.util.List)>(r1, z0, $r2);
+
+        return;
+    }
+
+    public void <init>(java.util.List, boolean, java.util.List)
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.ArrayList $r1;
+        java.util.List r2, r3, $r4, $r13;
+        boolean z0, $z2, $z3;
+        java.lang.StringBuilder $r5;
+        java.util.Iterator r7;
+        java.lang.Object $r8;
+        net.sourceforge.plantuml.StringLocated r9, $r12;
+        java.lang.String r10, $r14, $r16;
+        net.sourceforge.plantuml.LineLocation $r15;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        r3 := @parameter0: java.util.List;
+
+        z0 := @parameter1: boolean;
+
+        r2 := @parameter2: java.util.List;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.core.UmlSource: void <init>(java.util.List,java.util.List)>($r1, r2);
+
+        if z0 == 0 goto label5;
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        r7 = interfaceinvoke r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z2 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label4;
+
+        $r8 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r9 = (net.sourceforge.plantuml.StringLocated) $r8;
+
+        r10 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z3 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean endsWithBackslash(java.lang.String)>(r10);
+
+        if $z3 == 0 goto label2;
+
+        $i0 = virtualinvoke r10.<java.lang.String: int length()>();
+
+        $i1 = $i0 - 1;
+
+        $r16 = virtualinvoke r10.<java.lang.String: java.lang.String substring(int,int)>(0, $i1);
+
+        virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r16);
+
+        goto label3;
+
+     label2:
+        virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r10);
+
+        $r13 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        $r12 = new net.sourceforge.plantuml.StringLocated;
+
+        $r14 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r15 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        specialinvoke $r12.<net.sourceforge.plantuml.StringLocated: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>($r14, $r15);
+
+        interfaceinvoke $r13.<java.util.List: boolean add(java.lang.Object)>($r12);
+
+        virtualinvoke $r5.<java.lang.StringBuilder: void setLength(int)>(0);
+
+     label3:
+        goto label1;
+
+     label4:
+        goto label6;
+
+     label5:
+        $r4 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        interfaceinvoke $r4.<java.util.List: boolean addAll(java.util.Collection)>(r3);
+
+     label6:
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramType getDiagramType()
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.List $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.StringLocated $r3;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.core.DiagramType $r5;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r1 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r3 = (net.sourceforge.plantuml.StringLocated) $r2;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType getTypeFromArobaseStart(java.lang.String)>($r4);
+
+        return $r5;
+    }
+
+    public net.sourceforge.plantuml.version.IteratorCounter2 iterator2()
+    {
+        net.sourceforge.plantuml.version.IteratorCounter2Impl $r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        java.util.List $r2;
+
+        r1 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r0 = new net.sourceforge.plantuml.version.IteratorCounter2Impl;
+
+        $r2 = r1.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.version.IteratorCounter2Impl: void <init>(java.util.List)>($r2);
+
+        return $r0;
+    }
+
+    public java.lang.String getPlainString()
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.String $r5, $r8;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.StringLocated r7;
+
+        r2 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.StringLocated) $r6;
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(13);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+        goto label1;
+
+     label2:
+        $r5 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+
+    public java.lang.String getRawString()
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.String $r5, $r8;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.StringLocated r7;
+
+        r2 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.core.UmlSource: java.util.List rawSource>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.StringLocated) $r6;
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(13);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+        goto label1;
+
+     label2:
+        $r5 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+
+    public long seed()
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.lang.String $r1;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.core.UmlSource: java.lang.String getPlainString()>();
+
+        $l0 = staticinvoke <net.sourceforge.plantuml.StringUtils: long seed(java.lang.String)>($r1);
+
+        return $l0;
+    }
+
+    public java.lang.String getLine(net.sourceforge.plantuml.LineLocation)
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.StringLocated r4;
+        net.sourceforge.plantuml.LineLocation $r5, r6;
+        int $i0;
+        java.lang.String $r7;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        r6 := @parameter0: net.sourceforge.plantuml.LineLocation;
+
+        $r1 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.StringLocated) $r3;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        $i0 = interfaceinvoke $r5.<net.sourceforge.plantuml.LineLocation: int compareTo(java.lang.Object)>(r6);
+
+        if $i0 != 0 goto label2;
+
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        return $r7;
+
+     label2:
+        goto label1;
+
+     label3:
+        return null;
+    }
+
+    public int getTotalLineCount()
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.List $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r1 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        return $i0;
+    }
+
+    public boolean getTotalLineCountLessThan5()
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        int $i0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.core.UmlSource: int getTotalLineCount()>();
+
+        if $i0 >= 5 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public boolean isEmpty()
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.StringLocated r4;
+        java.lang.String $r5, $r6, $r7, $r8, $r9;
+        boolean $z0, $z1, $z2, $z3;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r1 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z3 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 == 0 goto label6;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.StringLocated) $r3;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseStartDiagram(java.lang.String)>($r5);
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r6 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseEndDiagram(java.lang.String)>($r6);
+
+        if $z1 == 0 goto label3;
+
+        goto label1;
+
+     label3:
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z2 = virtualinvoke $r7.<java.lang.String: boolean matches(java.lang.String)>("\\s*\'.*");
+
+        if $z2 == 0 goto label4;
+
+        goto label1;
+
+     label4:
+        $r8 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trin(java.lang.String)>($r8);
+
+        $i0 = virtualinvoke $r9.<java.lang.String: int length()>();
+
+        if $i0 == 0 goto label5;
+
+        return 0;
+
+     label5:
+        goto label1;
+
+     label6:
+        return 1;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.Display getTitle()
+    {
+        net.sourceforge.plantuml.command.regex.Pattern2 r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0, z1;
+        net.sourceforge.plantuml.cucadiagram.Display $r4, $r11;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.StringLocated r6;
+        java.lang.String $r7, $r10;
+        net.sourceforge.plantuml.command.regex.Matcher2 r8;
+        java.lang.CharSequence[] $r9;
+
+        r1 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("^[%s]*title[%s]+(.+)$");
+
+        $r2 = r1.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r5 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.StringLocated) $r5;
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r8 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>($r7);
+
+        z1 = virtualinvoke r8.<net.sourceforge.plantuml.command.regex.Matcher2: boolean matches()>();
+
+        if z1 == 0 goto label2;
+
+        $r9 = newarray (java.lang.CharSequence)[1];
+
+        $r10 = virtualinvoke r8.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        $r9[0] = $r10;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display create(java.lang.CharSequence[])>($r9);
+
+        return $r11;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r4 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display empty()>();
+
+        return $r4;
+    }
+
+    public boolean isStartDef()
+    {
+        net.sourceforge.plantuml.core.UmlSource r0;
+        java.util.List $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.StringLocated $r3;
+        java.lang.String $r4;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        $r1 = r0.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r3 = (net.sourceforge.plantuml.StringLocated) $r2;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = virtualinvoke $r4.<java.lang.String: boolean startsWith(java.lang.String)>("@startdef");
+
+        return $z0;
+    }
+
+    public java.lang.String getId()
+    {
+        java.util.regex.Pattern r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        java.util.List $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.StringLocated $r4;
+        java.lang.String $r5, $r7;
+        java.util.regex.Matcher r6;
+        boolean $z0;
+
+        r1 := @this: net.sourceforge.plantuml.core.UmlSource;
+
+        r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("id=([\\w]+)\\b");
+
+        $r2 = r1.<net.sourceforge.plantuml.core.UmlSource: java.util.List source>;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r4 = (net.sourceforge.plantuml.StringLocated) $r3;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r6 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>($r5);
+
+        $z0 = virtualinvoke r6.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label1;
+
+        $r7 = virtualinvoke r6.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        return $r7;
+
+     label1:
+        return null;
+    }
+}

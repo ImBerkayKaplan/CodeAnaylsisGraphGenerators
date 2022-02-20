@@ -1,0 +1,2114 @@
+public class net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana extends java.lang.Object implements net.sourceforge.plantuml.svek.CucaDiagramFileMaker
+{
+    private final net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram;
+    private final net.sourceforge.plantuml.graphic.StringBounder stringBounder;
+    private final java.util.Map nodes;
+    private final java.util.Map edges;
+    private final java.util.Map clusters;
+    private final net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory;
+    private static final java.util.concurrent.locks.Lock lock;
+
+    public void <init>(net.sourceforge.plantuml.cucadiagram.CucaDiagram, net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        java.util.LinkedHashMap $r1, $r2, $r3;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram r4;
+        net.sourceforge.plantuml.graphic.StringBounder r5;
+        net.sourceforge.plantuml.svek.DotStringFactory $r6;
+        net.sourceforge.plantuml.cucadiagram.IGroup $r7;
+        java.util.Collection $r8;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r4 := @parameter0: net.sourceforge.plantuml.cucadiagram.CucaDiagram;
+
+        r5 := @parameter1: net.sourceforge.plantuml.graphic.StringBounder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.LinkedHashMap;
+
+        specialinvoke $r1.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map nodes> = $r1;
+
+        $r2 = new java.util.LinkedHashMap;
+
+        specialinvoke $r2.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map edges> = $r2;
+
+        $r3 = new java.util.LinkedHashMap;
+
+        specialinvoke $r3.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map clusters> = $r3;
+
+        r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram> = r4;
+
+        r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = r5;
+
+        $r6 = new net.sourceforge.plantuml.svek.DotStringFactory;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.svek.DotStringFactory: void <init>(net.sourceforge.plantuml.graphic.StringBounder,net.sourceforge.plantuml.cucadiagram.CucaDiagram)>(r5, r4);
+
+        r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory> = $r6;
+
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.cucadiagram.IGroup getRootGroup()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void printAllSubgroups(net.sourceforge.plantuml.cucadiagram.IGroup)>($r7);
+
+        $r8 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Collection getUnpackagedEntities()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void printEntities(java.util.Collection)>($r8);
+
+        return;
+    }
+
+    public void drawGroup(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.sdot.YMirror, net.sourceforge.plantuml.cucadiagram.IGroup, h.ST_Agraph_s)
+    {
+        h.ST_Agraph_s r0;
+        h.ST_Agraphinfo_t r1;
+        h.ST_boxf r2;
+        h.ST_pointf $r3, $r4, $r5, $r6;
+        double d0, d1, d2, d3, d4;
+        net.sourceforge.plantuml.sdot.YMirror r7;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r8;
+        net.sourceforge.plantuml.svek.DotStringFactory $r9;
+        net.sourceforge.plantuml.svek.Bibliotekon $r10;
+        net.sourceforge.plantuml.cucadiagram.IGroup r11;
+        java.lang.StringBuilder $r12, $r13, $r14;
+        java.lang.String $r15;
+        net.sourceforge.plantuml.ugraphic.UGraphic r16;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r17, $r19;
+        net.sourceforge.plantuml.UmlDiagramType $r18;
+        net.sourceforge.plantuml.ISkinParam $r20;
+        java.lang.Exception $r21;
+        java.io.PrintStream $r22;
+        h.ST_Agrec_s r23;
+        net.sourceforge.plantuml.svek.Cluster r24;
+
+        r8 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r16 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r7 := @parameter1: net.sourceforge.plantuml.sdot.YMirror;
+
+        r11 := @parameter2: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        r0 := @parameter3: h.ST_Agraph_s;
+
+        staticinvoke <smetana.core.JUtils: void LOG2(java.lang.String)>("drawGroup");
+
+     label1:
+        r23 = staticinvoke <smetana.core.Macro: h.ST_Agrec_s AGDATA(h.ST_Agobj_s)>(r0);
+
+        r1 = (h.ST_Agraphinfo_t) r23;
+
+        r2 = r1.<h.ST_Agraphinfo_t: h.ST_boxf bb>;
+
+        $r3 = r2.<h.ST_boxf: h.ST_pointf LL>;
+
+        d0 = $r3.<h.ST_pointf: double x>;
+
+        $r4 = r2.<h.ST_boxf: h.ST_pointf LL>;
+
+        d2 = $r4.<h.ST_pointf: double y>;
+
+        $r5 = r2.<h.ST_boxf: h.ST_pointf UR>;
+
+        d1 = $r5.<h.ST_pointf: double x>;
+
+        $r6 = r2.<h.ST_boxf: h.ST_pointf UR>;
+
+        d3 = $r6.<h.ST_pointf: double y>;
+
+        if r7 == null goto label2;
+
+        d4 = d3;
+
+        d3 = virtualinvoke r7.<net.sourceforge.plantuml.sdot.YMirror: double getMirrored(double)>(d2);
+
+        d2 = virtualinvoke r7.<net.sourceforge.plantuml.sdot.YMirror: double getMirrored(double)>(d4);
+
+     label2:
+        $r9 = r8.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.svek.DotStringFactory: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        r24 = virtualinvoke $r10.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.Cluster getCluster(net.sourceforge.plantuml.cucadiagram.IGroup)>(r11);
+
+        virtualinvoke r24.<net.sourceforge.plantuml.svek.Cluster: void setPosition(double,double,double,double)>(d0, d2, d1, d3);
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("cluster=");
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r24);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <smetana.core.JUtils: void LOG2(java.lang.String)>($r15);
+
+        $r17 = r8.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r18 = virtualinvoke $r17.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        $r19 = r8.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r20 = virtualinvoke $r19.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        virtualinvoke r24.<net.sourceforge.plantuml.svek.Cluster: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.UmlDiagramType,net.sourceforge.plantuml.ISkinParam)>(r16, $r18, $r20);
+
+     label3:
+        goto label5;
+
+     label4:
+        $r21 := @caughtexception;
+
+        $r22 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r22.<java.io.PrintStream: void println(java.lang.String)>("CANNOT DRAW GROUP");
+
+     label5:
+        return;
+
+        catch java.lang.Exception from label1 to label3 with label4;
+    }
+
+    private void printAllSubgroups(net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.IGroup r1, r6;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r2, $r7, $r10, $r12;
+        java.util.Collection $r3;
+        java.util.Iterator r4;
+        java.lang.Object $r5;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.cucadiagram.GroupType $r8, $r9;
+        net.sourceforge.plantuml.ISkinParam r11;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r13;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r14;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r2 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.util.Collection getChildrenGroups(net.sourceforge.plantuml.cucadiagram.IGroup)>(r1);
+
+        r4 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z2 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label5;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r5;
+
+        $z0 = interfaceinvoke r6.<net.sourceforge.plantuml.cucadiagram.IGroup: boolean isRemoved()>();
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r7 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $z1 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean isEmpty(net.sourceforge.plantuml.cucadiagram.IGroup)>(r6);
+
+        if $z1 == 0 goto label3;
+
+        $r8 = interfaceinvoke r6.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.GroupType getGroupType()>();
+
+        $r9 = <net.sourceforge.plantuml.cucadiagram.GroupType: net.sourceforge.plantuml.cucadiagram.GroupType PACKAGE>;
+
+        if $r8 != $r9 goto label3;
+
+        $r10 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        r11 = virtualinvoke $r10.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r12 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        r13 = virtualinvoke $r12.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory getEntityFactory()>();
+
+        r14 = virtualinvoke r13.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.ILeaf createLeafForEmptyGroup(net.sourceforge.plantuml.cucadiagram.IGroup,net.sourceforge.plantuml.ISkinParam)>(r6, r11);
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void printEntityNew(net.sourceforge.plantuml.cucadiagram.ILeaf)>(r14);
+
+        goto label4;
+
+     label3:
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void printSingleGroup(net.sourceforge.plantuml.cucadiagram.IGroup)>(r6);
+
+     label4:
+        goto label1;
+
+     label5:
+        return;
+    }
+
+    private void printSingleGroup(net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.IGroup r0;
+        net.sourceforge.plantuml.cucadiagram.GroupType $r1, $r2;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r3;
+        net.sourceforge.plantuml.graphic.TextBlock r4, r5, r7, r12;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r6;
+        net.sourceforge.plantuml.graphic.StringBounder $r8, $r13;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r9, r14;
+        double $d0, d1, d2, d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11;
+        byte $b0, $b1;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r10;
+        net.sourceforge.plantuml.ISkinParam $r11;
+        net.sourceforge.plantuml.graphic.USymbol r15;
+        int i2, $i4, i5, i6, $i7, $i8;
+        net.sourceforge.plantuml.svek.DotStringFactory $r16, $r18;
+        java.util.Collection $r17;
+
+        r3 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r1 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.GroupType getGroupType()>();
+
+        $r2 = <net.sourceforge.plantuml.cucadiagram.GroupType: net.sourceforge.plantuml.cucadiagram.GroupType CONCURRENT_STATE>;
+
+        if $r1 != $r2 goto label1;
+
+        return;
+
+     label1:
+        i5 = 0;
+
+        i6 = 0;
+
+        r4 = specialinvoke r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.TextBlock getTitleBlock(net.sourceforge.plantuml.cucadiagram.IGroup)>(r0);
+
+        r5 = specialinvoke r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.TextBlock getStereoBlock(net.sourceforge.plantuml.cucadiagram.IGroup)>(r0);
+
+        $r6 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        r7 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r5, r4, $r6);
+
+        $r8 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        r9 = interfaceinvoke r7.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r8);
+
+        $d0 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $b0 = $d0 cmpl 0.0;
+
+        if $b0 <= 0 goto label8;
+
+        $r10 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r11 = virtualinvoke $r10.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        r12 = staticinvoke <net.sourceforge.plantuml.svek.GeneralImageBuilder: net.sourceforge.plantuml.graphic.TextBlock stateHeader(net.sourceforge.plantuml.cucadiagram.IEntity,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.ISkinParam)>(r0, null, $r11);
+
+        $r13 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        r14 = interfaceinvoke r12.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r13);
+
+        d1 = virtualinvoke r14.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d2 = virtualinvoke r14.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $b1 = d1 cmpl 0.0;
+
+        if $b1 <= 0 goto label2;
+
+        $d11 = 5.0;
+
+        goto label3;
+
+     label2:
+        $d11 = 0.0;
+
+     label3:
+        d3 = $d11;
+
+        r15 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.graphic.USymbol getUSymbol()>();
+
+        if r15 != null goto label4;
+
+        $i7 = 0;
+
+        goto label5;
+
+     label4:
+        $i7 = virtualinvoke r15.<net.sourceforge.plantuml.graphic.USymbol: int suppHeightBecauseOfShape()>();
+
+     label5:
+        i2 = $i7;
+
+        if r15 != null goto label6;
+
+        $i8 = 0;
+
+        goto label7;
+
+     label6:
+        $i8 = virtualinvoke r15.<net.sourceforge.plantuml.graphic.USymbol: int suppWidthBecauseOfShape()>();
+
+     label7:
+        $d4 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d5 = staticinvoke <java.lang.Math: double max(double,double)>($d4, d2);
+
+        $i4 = (int) $d5;
+
+        i5 = $i4 + $i8;
+
+        $d6 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d7 = $d6 + d1;
+
+        $d9 = $d7 + d3;
+
+        $d8 = (double) i2;
+
+        $d10 = $d9 + $d8;
+
+        i6 = (int) $d10;
+
+     label8:
+        $r16 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        virtualinvoke $r16.<net.sourceforge.plantuml.svek.DotStringFactory: void openCluster(int,int,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.cucadiagram.IGroup)>(i5, i6, r4, r5, r0);
+
+        $r17 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: java.util.Collection getLeafsDirect()>();
+
+        specialinvoke r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void printEntities(java.util.Collection)>($r17);
+
+        specialinvoke r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void printAllSubgroups(net.sourceforge.plantuml.cucadiagram.IGroup)>(r0);
+
+        $r18 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        virtualinvoke $r18.<net.sourceforge.plantuml.svek.DotStringFactory: void closeCluster()>();
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.style.Style getStyle(net.sourceforge.plantuml.FontParam)
+    {
+        net.sourceforge.plantuml.FontParam r0;
+        net.sourceforge.plantuml.style.SName $r1;
+        net.sourceforge.plantuml.style.StyleSignature $r2;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r3;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r4;
+        net.sourceforge.plantuml.ISkinParam $r5;
+        net.sourceforge.plantuml.style.StyleBuilder $r6;
+        net.sourceforge.plantuml.style.Style $r7;
+
+        r3 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: net.sourceforge.plantuml.FontParam;
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName stateDiagram>;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.style.StyleSignature getStyleDefinition(net.sourceforge.plantuml.style.SName)>($r1);
+
+        $r4 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r6 = interfaceinvoke $r5.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r7 = virtualinvoke $r2.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r6);
+
+        return $r7;
+    }
+
+    private void printEntities(java.util.Collection)
+    {
+        java.util.Collection r0;
+        java.util.Iterator r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r3;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r4;
+
+        r4 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: java.util.Collection;
+
+        r1 = interfaceinvoke r0.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r2 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r2;
+
+        $z0 = interfaceinvoke r3.<net.sourceforge.plantuml.cucadiagram.ILeaf: boolean isRemoved()>();
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        specialinvoke r4.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void printEntity(net.sourceforge.plantuml.cucadiagram.ILeaf)>(r3);
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    private void exportEntities(h.ST_Agraph_s, java.util.Collection)
+    {
+        java.util.Collection r0;
+        java.util.Iterator r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r3;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r4;
+        h.ST_Agraph_s r5;
+
+        r4 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r5 := @parameter0: h.ST_Agraph_s;
+
+        r0 := @parameter1: java.util.Collection;
+
+        r1 = interfaceinvoke r0.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label3;
+
+        $r2 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r2;
+
+        $z0 = interfaceinvoke r3.<net.sourceforge.plantuml.cucadiagram.ILeaf: boolean isRemoved()>();
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        specialinvoke r4.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void exportEntity(h.ST_Agraph_s,net.sourceforge.plantuml.cucadiagram.ILeaf)>(r5, r3);
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    private void exportEntity(h.ST_Agraph_s, net.sourceforge.plantuml.cucadiagram.ILeaf)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.svek.DotStringFactory $r1;
+        net.sourceforge.plantuml.svek.Bibliotekon $r2;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r3;
+        net.sourceforge.plantuml.svek.SvekNode r4;
+        h.ST_Agraph_s r5;
+        smetana.core.CString $r6, $r9, $r10, $r11, $r20, $r21, $r22, $r23, $r24, $r25;
+        java.lang.String $r7, r15, r19;
+        h.ST_Agnode_s r8;
+        java.lang.StringBuilder $r12, $r13, $r14, $r16, $r17, $r18;
+        double $d0, $d1, $d2, $d3;
+        java.util.Map $r26;
+        java.io.PrintStream $r28;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r5 := @parameter0: h.ST_Agraph_s;
+
+        r3 := @parameter1: net.sourceforge.plantuml.cucadiagram.ILeaf;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.svek.DotStringFactory: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        r4 = virtualinvoke $r2.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode getNode(net.sourceforge.plantuml.cucadiagram.IEntity)>(r3);
+
+        if r4 != null goto label1;
+
+        $r28 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r28.<java.io.PrintStream: void println(java.lang.String)>("CANNOT FIND NODE");
+
+        return;
+
+     label1:
+        $r6 = new smetana.core.CString;
+
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.svek.SvekNode: java.lang.String getUid()>();
+
+        specialinvoke $r6.<smetana.core.CString: void <init>(java.lang.String)>($r7);
+
+        r8 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agnode(h.ST_Agraph_s,smetana.core.CString,boolean)>(r5, $r6, 1);
+
+        $r9 = new smetana.core.CString;
+
+        specialinvoke $r9.<smetana.core.CString: void <init>(java.lang.String)>("shape");
+
+        $r10 = new smetana.core.CString;
+
+        specialinvoke $r10.<smetana.core.CString: void <init>(java.lang.String)>("box");
+
+        $r11 = new smetana.core.CString;
+
+        specialinvoke $r11.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r8, $r9, $r10, $r11);
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d0 = virtualinvoke r4.<net.sourceforge.plantuml.svek.SvekNode: double getWidth()>();
+
+        $d1 = $d0 / 72.0;
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d1);
+
+        r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d2 = virtualinvoke r4.<net.sourceforge.plantuml.svek.SvekNode: double getHeight()>();
+
+        $d3 = $d2 / 72.0;
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d3);
+
+        r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r20 = new smetana.core.CString;
+
+        specialinvoke $r20.<smetana.core.CString: void <init>(java.lang.String)>("width");
+
+        $r21 = new smetana.core.CString;
+
+        specialinvoke $r21.<smetana.core.CString: void <init>(java.lang.String)>(r15);
+
+        $r22 = new smetana.core.CString;
+
+        specialinvoke $r22.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r8, $r20, $r21, $r22);
+
+        $r23 = new smetana.core.CString;
+
+        specialinvoke $r23.<smetana.core.CString: void <init>(java.lang.String)>("height");
+
+        $r24 = new smetana.core.CString;
+
+        specialinvoke $r24.<smetana.core.CString: void <init>(java.lang.String)>(r19);
+
+        $r25 = new smetana.core.CString;
+
+        specialinvoke $r25.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r8, $r23, $r24, $r25);
+
+        $r26 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map nodes>;
+
+        interfaceinvoke $r26.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r3, r8);
+
+        return;
+    }
+
+    private void printEntity(net.sourceforge.plantuml.cucadiagram.ILeaf)
+    {
+        net.sourceforge.plantuml.cucadiagram.ILeaf r0;
+        boolean $z0;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r1;
+        net.sourceforge.plantuml.svek.IEntityImage r2;
+        net.sourceforge.plantuml.svek.Bibliotekon $r3;
+        net.sourceforge.plantuml.svek.DotStringFactory $r4, $r8;
+        net.sourceforge.plantuml.svek.ColorSequence $r5;
+        net.sourceforge.plantuml.graphic.StringBounder $r6;
+        net.sourceforge.plantuml.svek.SvekNode r7;
+        java.lang.IllegalStateException $r9;
+
+        r1 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.ILeaf;
+
+        $z0 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.ILeaf: boolean isRemoved()>();
+
+        if $z0 == 0 goto label1;
+
+        $r9 = new java.lang.IllegalStateException;
+
+        specialinvoke $r9.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r9;
+
+     label1:
+        r2 = specialinvoke r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.IEntityImage printEntityInternal(net.sourceforge.plantuml.cucadiagram.ILeaf)>(r0);
+
+        $r3 = specialinvoke r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        $r4 = r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.svek.DotStringFactory: net.sourceforge.plantuml.svek.ColorSequence getColorSequence()>();
+
+        $r6 = r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        r7 = virtualinvoke $r3.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode createNode(net.sourceforge.plantuml.cucadiagram.ILeaf,net.sourceforge.plantuml.svek.IEntityImage,net.sourceforge.plantuml.svek.ColorSequence,net.sourceforge.plantuml.graphic.StringBounder)>(r0, r2, $r5, $r6);
+
+        $r8 = r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        virtualinvoke $r8.<net.sourceforge.plantuml.svek.DotStringFactory: void addNode(net.sourceforge.plantuml.svek.SvekNode)>(r7);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock getTitleBlock(net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.IGroup r0;
+        net.sourceforge.plantuml.cucadiagram.Display r1;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r2;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r3;
+        net.sourceforge.plantuml.ISkinParam r4;
+        net.sourceforge.plantuml.graphic.FontConfiguration r5;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r6;
+        net.sourceforge.plantuml.graphic.TextBlock $r7, $r8;
+
+        r2 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        r1 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Display getDisplay()>();
+
+        if r1 != null goto label1;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock empty(double,double)>(0.0, 0.0);
+
+        return $r8;
+
+     label1:
+        $r3 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        r4 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        r5 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.graphic.FontConfiguration getFontConfigurationForTitle(net.sourceforge.plantuml.ISkinParam)>(r4);
+
+        $r6 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r7 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>(r5, $r6, r4);
+
+        return $r7;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock getStereoBlock(net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.cucadiagram.IGroup r0;
+        net.sourceforge.plantuml.cucadiagram.Stereotype r1;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r2;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r3, $r6, $r11, $r15, $r17;
+        net.sourceforge.plantuml.ISkinParam $r4, $r7, $r16, $r19;
+        net.sourceforge.plantuml.graphic.TextBlock r5, $r20, $r21, $r22, $r23;
+        net.sourceforge.plantuml.Guillemet $r8;
+        java.util.List r9;
+        net.sourceforge.plantuml.cucadiagram.EntityPortion $r10;
+        boolean z0;
+        net.sourceforge.plantuml.FontParam r12;
+        net.sourceforge.plantuml.cucadiagram.Display $r13;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r14;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r18;
+
+        r2 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        r1 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.Stereotype getStereotype()>();
+
+        if r1 != null goto label1;
+
+        $r23 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock empty(double,double)>(0.0, 0.0);
+
+        return $r23;
+
+     label1:
+        $r3 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        r5 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Stereotype: net.sourceforge.plantuml.graphic.TextBlock getSprite(net.sourceforge.plantuml.SpriteContainer)>($r4);
+
+        if r5 == null goto label2;
+
+        return r5;
+
+     label2:
+        $r6 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r8 = interfaceinvoke $r7.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.Guillemet guillemet()>();
+
+        r9 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Stereotype: java.util.List getLabels(net.sourceforge.plantuml.Guillemet)>($r8);
+
+        if r9 != null goto label3;
+
+        $r22 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock empty(double,double)>(0.0, 0.0);
+
+        return $r22;
+
+     label3:
+        $r11 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r10 = <net.sourceforge.plantuml.cucadiagram.EntityPortion: net.sourceforge.plantuml.cucadiagram.EntityPortion STEREOTYPE>;
+
+        z0 = virtualinvoke $r11.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean showPortion(net.sourceforge.plantuml.cucadiagram.EntityPortion,net.sourceforge.plantuml.cucadiagram.IEntity)>($r10, r0);
+
+        if z0 != 0 goto label4;
+
+        $r21 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock empty(double,double)>(0.0, 0.0);
+
+        return $r21;
+
+     label4:
+        r12 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam PACKAGE_STEREOTYPE>;
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display create(java.util.Collection)>(r9);
+
+        $r14 = new net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r15 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r16 = virtualinvoke $r15.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        specialinvoke $r14.<net.sourceforge.plantuml.graphic.FontConfiguration: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.FontParam,net.sourceforge.plantuml.cucadiagram.Stereotype)>($r16, r12, r1);
+
+        $r18 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r17 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r19 = virtualinvoke $r17.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r20 = virtualinvoke $r13.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>($r14, $r18, $r19);
+
+        return $r20;
+    }
+
+    private java.util.Collection getUnpackagedEntities()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r2;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r3, $r8;
+        java.util.Collection $r4;
+        java.util.Iterator r5;
+        boolean $z0;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r7;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory $r9;
+        net.sourceforge.plantuml.cucadiagram.IGroup $r10, $r11;
+
+        r2 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.util.Collection getLeafsvalues()>();
+
+        r5 = interfaceinvoke $r4.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r6;
+
+        $r8 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory getEntityFactory()>();
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup getRootGroup()>();
+
+        $r11 = interfaceinvoke r7.<net.sourceforge.plantuml.cucadiagram.ILeaf: net.sourceforge.plantuml.cucadiagram.IGroup getParentContainer()>();
+
+        if $r10 != $r11 goto label2;
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r7);
+
+     label2:
+        goto label1;
+
+     label3:
+        return $r0;
+    }
+
+    private void printCluster(h.ST_Agraph_s, net.sourceforge.plantuml.svek.Cluster)
+    {
+        net.sourceforge.plantuml.svek.Cluster r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.svek.SvekNode r4;
+        h.ST_Agraph_s r5;
+        smetana.core.CString $r6, $r9, $r10, $r11, $r20, $r21, $r22, $r23, $r24, $r25;
+        java.lang.String $r7, r15, r19;
+        h.ST_Agnode_s r8;
+        java.lang.StringBuilder $r12, $r13, $r14, $r16, $r17, $r18;
+        double $d0, $d1, $d2, $d3;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r26;
+        net.sourceforge.plantuml.svek.DotStringFactory $r27;
+        net.sourceforge.plantuml.svek.Bibliotekon $r28;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r29;
+        java.util.Map $r30;
+
+        r26 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r5 := @parameter0: h.ST_Agraph_s;
+
+        r0 := @parameter1: net.sourceforge.plantuml.svek.Cluster;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.svek.Cluster: java.util.List getNodes()>();
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.svek.SvekNode) $r3;
+
+        $r6 = new smetana.core.CString;
+
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.svek.SvekNode: java.lang.String getUid()>();
+
+        specialinvoke $r6.<smetana.core.CString: void <init>(java.lang.String)>($r7);
+
+        r8 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agnode(h.ST_Agraph_s,smetana.core.CString,boolean)>(r5, $r6, 1);
+
+        $r9 = new smetana.core.CString;
+
+        specialinvoke $r9.<smetana.core.CString: void <init>(java.lang.String)>("shape");
+
+        $r10 = new smetana.core.CString;
+
+        specialinvoke $r10.<smetana.core.CString: void <init>(java.lang.String)>("box");
+
+        $r11 = new smetana.core.CString;
+
+        specialinvoke $r11.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r8, $r9, $r10, $r11);
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d0 = virtualinvoke r4.<net.sourceforge.plantuml.svek.SvekNode: double getWidth()>();
+
+        $d1 = $d0 / 72.0;
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d1);
+
+        r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d2 = virtualinvoke r4.<net.sourceforge.plantuml.svek.SvekNode: double getHeight()>();
+
+        $d3 = $d2 / 72.0;
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d3);
+
+        r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r20 = new smetana.core.CString;
+
+        specialinvoke $r20.<smetana.core.CString: void <init>(java.lang.String)>("width");
+
+        $r21 = new smetana.core.CString;
+
+        specialinvoke $r21.<smetana.core.CString: void <init>(java.lang.String)>(r15);
+
+        $r22 = new smetana.core.CString;
+
+        specialinvoke $r22.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r8, $r20, $r21, $r22);
+
+        $r23 = new smetana.core.CString;
+
+        specialinvoke $r23.<smetana.core.CString: void <init>(java.lang.String)>("height");
+
+        $r24 = new smetana.core.CString;
+
+        specialinvoke $r24.<smetana.core.CString: void <init>(java.lang.String)>(r19);
+
+        $r25 = new smetana.core.CString;
+
+        specialinvoke $r25.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r8, $r23, $r24, $r25);
+
+        $r27 = r26.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        $r28 = virtualinvoke $r27.<net.sourceforge.plantuml.svek.DotStringFactory: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        r29 = virtualinvoke $r28.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.cucadiagram.ILeaf getLeaf(net.sourceforge.plantuml.svek.SvekNode)>(r4);
+
+        $r30 = r26.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map nodes>;
+
+        interfaceinvoke $r30.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r29, r8);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.ImageData createFile(java.io.OutputStream, java.util.List, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        java.util.concurrent.locks.Lock $r0, $r6, $r9;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r1;
+        java.io.OutputStream r2;
+        java.util.List r3;
+        net.sourceforge.plantuml.FileFormatOption r4;
+        net.sourceforge.plantuml.core.ImageData r5;
+        java.lang.Throwable $r7;
+
+        r1 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r2 := @parameter0: java.io.OutputStream;
+
+        r3 := @parameter1: java.util.List;
+
+        r4 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r0 = <net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.concurrent.locks.Lock lock>;
+
+        interfaceinvoke $r0.<java.util.concurrent.locks.Lock: void lock()>();
+
+     label1:
+        r5 = specialinvoke r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.core.ImageData createFileLocked(java.io.OutputStream,java.util.List,net.sourceforge.plantuml.FileFormatOption)>(r2, r3, r4);
+
+     label2:
+        $r6 = <net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.concurrent.locks.Lock lock>;
+
+        interfaceinvoke $r6.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        return r5;
+
+     label3:
+        $r7 := @caughtexception;
+
+     label4:
+        $r9 = <net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.concurrent.locks.Lock lock>;
+
+        interfaceinvoke $r9.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        throw $r7;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    private net.sourceforge.plantuml.core.ImageData createFileLocked(java.io.OutputStream, java.util.List, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1, $r7, $r10, $r18, $r30, $r31, $r33;
+        java.util.Collection $r2, $r6;
+        boolean $z0, $z1;
+        smetana.core.CString $r3;
+        smetana.core.Z $r4;
+        h.ST_Agdesc_s $r5;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory $r8;
+        net.sourceforge.plantuml.cucadiagram.IGroup $r9;
+        java.util.List $r11, $r35, r36;
+        java.lang.Object[] $r12;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana$Drawing $r13, $r15;
+        net.sourceforge.plantuml.graphic.StringBounder $r14;
+        net.sourceforge.plantuml.sdot.YMirror $r16;
+        double $d0;
+        net.sourceforge.plantuml.FileFormatOption r17;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r19, $r20;
+        java.io.OutputStream r21;
+        net.sourceforge.plantuml.core.ImageData r22, r47;
+        java.lang.Object $r23, $r26;
+        java.util.Map $r24;
+        java.lang.Throwable $r27, $r29;
+        long $l1;
+        java.lang.String $r32, $r34;
+        java.util.Iterator r37, r40;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r38;
+        h.ST_Agraph_s r39;
+        net.sourceforge.plantuml.cucadiagram.Link r41;
+        h.ST_Agedge_s r42;
+        h.ST_GVC_s r43;
+        net.sourceforge.plantuml.ugraphic.MinMax r44;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r21 := @parameter0: java.io.OutputStream;
+
+        r36 := @parameter1: java.util.List;
+
+        r17 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.util.Collection getLeafsvalues()>();
+
+        r37 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label01:
+        $z0 = interfaceinvoke r37.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label02;
+
+        $r26 = interfaceinvoke r37.<java.util.Iterator: java.lang.Object next()>();
+
+        r38 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r26;
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void printEntityNew(net.sourceforge.plantuml.cucadiagram.ILeaf)>(r38);
+
+        goto label01;
+
+     label02:
+        staticinvoke <smetana.core.Z: void open()>();
+
+     label03:
+        $r3 = new smetana.core.CString;
+
+        specialinvoke $r3.<smetana.core.CString: void <init>(java.lang.String)>("g");
+
+        $r4 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r5 = $r4.<smetana.core.Z: h.ST_Agdesc_s Agdirected>;
+
+        r39 = staticinvoke <gen.lib.cgraph.graph__c: h.ST_Agraph_s agopen(smetana.core.CString,h.ST_Agdesc_s,h.ST_Agdisc_s)>($r3, $r5, null);
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Collection getUnpackagedEntities()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void exportEntities(h.ST_Agraph_s,java.util.Collection)>(r39, $r6);
+
+        $r7 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory getEntityFactory()>();
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.IGroup getRootGroup()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void exportGroups(h.ST_Agraph_s,net.sourceforge.plantuml.cucadiagram.IGroup)>(r39, $r9);
+
+        $r10 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r11 = virtualinvoke $r10.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.util.List getLinks()>();
+
+        r40 = interfaceinvoke $r11.<java.util.List: java.util.Iterator iterator()>();
+
+     label04:
+        $z1 = interfaceinvoke r40.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label06;
+
+        $r23 = interfaceinvoke r40.<java.util.Iterator: java.lang.Object next()>();
+
+        r41 = (net.sourceforge.plantuml.cucadiagram.Link) $r23;
+
+        r42 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: h.ST_Agedge_s createEdge(h.ST_Agraph_s,net.sourceforge.plantuml.cucadiagram.Link)>(r39, r41);
+
+        if r42 == null goto label05;
+
+        $r24 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map edges>;
+
+        interfaceinvoke $r24.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r41, r42);
+
+     label05:
+        goto label04;
+
+     label06:
+        $r12 = newarray (java.lang.Object)[0];
+
+        r43 = staticinvoke <gen.lib.gvc.gvc__c: h.ST_GVC_s gvContext(java.lang.Object[])>($r12);
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void reset()>();
+
+        staticinvoke <gen.lib.gvc.gvlayout__c: int gvLayoutJobs(h.ST_GVC_s,h.ST_Agraph_s)>(r43, r39);
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void printMe()>();
+
+        $r13 = new net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana$Drawing;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana$Drawing: void <init>(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana,net.sourceforge.plantuml.sdot.YMirror,net.sourceforge.plantuml.ugraphic.MinMax)>(r0, null, null);
+
+        $r14 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        r44 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.ugraphic.MinMax getMinMax(net.sourceforge.plantuml.graphic.UDrawable,net.sourceforge.plantuml.graphic.StringBounder,boolean)>($r13, $r14, 0);
+
+        $r15 = new net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana$Drawing;
+
+        $r16 = new net.sourceforge.plantuml.sdot.YMirror;
+
+        $d0 = virtualinvoke r44.<net.sourceforge.plantuml.ugraphic.MinMax: double getMaxY()>();
+
+        specialinvoke $r16.<net.sourceforge.plantuml.sdot.YMirror: void <init>(double)>($d0);
+
+        specialinvoke $r15.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana$Drawing: void <init>(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana,net.sourceforge.plantuml.sdot.YMirror,net.sourceforge.plantuml.ugraphic.MinMax)>(r0, $r16, r44);
+
+        $r18 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r19 = virtualinvoke $r18.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r17);
+
+        $r20 = virtualinvoke $r19.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder drawable(net.sourceforge.plantuml.graphic.UDrawable)>($r15);
+
+        r22 = virtualinvoke $r20.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r21);
+
+     label07:
+        staticinvoke <smetana.core.Z: void close()>();
+
+        return r22;
+
+     label08:
+        $r29 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void printMe()>();
+
+        $r30 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $l1 = virtualinvoke $r30.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: long seed()>();
+
+        $r31 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r32 = virtualinvoke $r31.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.lang.String getMetadata()>();
+
+        $r33 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r34 = virtualinvoke $r33.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.lang.String getFlashData()>();
+
+        $r35 = staticinvoke <net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.List getFailureText3(java.lang.Throwable)>($r29);
+
+        staticinvoke <net.sourceforge.plantuml.UmlDiagram: void exportDiagramError(java.io.OutputStream,java.lang.Throwable,net.sourceforge.plantuml.FileFormatOption,long,java.lang.String,java.lang.String,java.util.List)>(r21, $r29, r17, $l1, $r32, $r34, $r35);
+
+        r47 = staticinvoke <net.sourceforge.plantuml.api.ImageDataSimple: net.sourceforge.plantuml.core.ImageData error()>();
+
+     label09:
+        staticinvoke <smetana.core.Z: void close()>();
+
+        return r47;
+
+     label10:
+        $r27 := @caughtexception;
+
+     label11:
+        staticinvoke <smetana.core.Z: void close()>();
+
+        throw $r27;
+
+        catch java.lang.Throwable from label03 to label07 with label08;
+        catch java.lang.Throwable from label08 to label09 with label10;
+        catch java.lang.Throwable from label10 to label11 with label10;
+    }
+
+    private void exportGroups(h.ST_Agraph_s, net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.IGroup r1, r6;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r2, $r7, $r11;
+        java.util.Collection $r3;
+        java.util.Iterator r4;
+        java.lang.Object $r5;
+        boolean $z0, $z1, $z2;
+        h.ST_Agraph_s r8;
+        net.sourceforge.plantuml.cucadiagram.GroupType $r9, $r10;
+        net.sourceforge.plantuml.cucadiagram.entity.EntityFactory r12;
+        net.sourceforge.plantuml.cucadiagram.ILeaf r13;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r8 := @parameter0: h.ST_Agraph_s;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r2 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.util.Collection getChildrenGroups(net.sourceforge.plantuml.cucadiagram.IGroup)>(r1);
+
+        r4 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z2 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label5;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r5;
+
+        $z0 = interfaceinvoke r6.<net.sourceforge.plantuml.cucadiagram.IGroup: boolean isRemoved()>();
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r7 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $z1 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean isEmpty(net.sourceforge.plantuml.cucadiagram.IGroup)>(r6);
+
+        if $z1 == 0 goto label3;
+
+        $r9 = interfaceinvoke r6.<net.sourceforge.plantuml.cucadiagram.IGroup: net.sourceforge.plantuml.cucadiagram.GroupType getGroupType()>();
+
+        $r10 = <net.sourceforge.plantuml.cucadiagram.GroupType: net.sourceforge.plantuml.cucadiagram.GroupType PACKAGE>;
+
+        if $r9 != $r10 goto label3;
+
+        $r11 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        r12 = virtualinvoke $r11.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.cucadiagram.entity.EntityFactory getEntityFactory()>();
+
+        r13 = virtualinvoke r12.<net.sourceforge.plantuml.cucadiagram.entity.EntityFactory: net.sourceforge.plantuml.cucadiagram.ILeaf getLeafForEmptyGroup(net.sourceforge.plantuml.cucadiagram.IGroup)>(r6);
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void exportEntity(h.ST_Agraph_s,net.sourceforge.plantuml.cucadiagram.ILeaf)>(r8, r13);
+
+        goto label4;
+
+     label3:
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void exportGroup(h.ST_Agraph_s,net.sourceforge.plantuml.cucadiagram.IGroup)>(r8, r6);
+
+     label4:
+        goto label1;
+
+     label5:
+        return;
+    }
+
+    private void exportGroup(h.ST_Agraph_s, net.sourceforge.plantuml.cucadiagram.IGroup)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.svek.Bibliotekon $r1;
+        net.sourceforge.plantuml.cucadiagram.IGroup r2;
+        net.sourceforge.plantuml.svek.Cluster r3;
+        java.lang.StringBuilder $r4, $r5, $r7;
+        java.lang.String $r6, $r8, $r11;
+        h.ST_Agraph_s r9, r12;
+        smetana.core.CString $r10, $r16, $r17, $r18;
+        boolean $z0;
+        java.util.Collection $r13;
+        java.util.Map $r14;
+        int $i0, $i1, $i2, $i3, $i4;
+        double d0, d1;
+        java.io.PrintStream $r19;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r9 := @parameter0: h.ST_Agraph_s;
+
+        r2 := @parameter1: net.sourceforge.plantuml.cucadiagram.IGroup;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        r3 = virtualinvoke $r1.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.Cluster getCluster(net.sourceforge.plantuml.cucadiagram.IGroup)>(r2);
+
+        if r3 != null goto label1;
+
+        $r19 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r19.<java.io.PrintStream: void println(java.lang.String)>("CucaDiagramFileMakerJDot::exportGroup issue");
+
+        return;
+
+     label1:
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("cluster = ");
+
+        $r6 = virtualinvoke r3.<net.sourceforge.plantuml.svek.Cluster: java.lang.String getClusterId()>();
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <smetana.core.JUtils: void LOG2(java.lang.String)>($r8);
+
+        $r10 = new smetana.core.CString;
+
+        $r11 = virtualinvoke r3.<net.sourceforge.plantuml.svek.Cluster: java.lang.String getClusterId()>();
+
+        specialinvoke $r10.<smetana.core.CString: void <init>(java.lang.String)>($r11);
+
+        r12 = staticinvoke <gen.lib.cgraph.subg__c: h.ST_Agraph_s agsubg(h.ST_Agraph_s,smetana.core.CString,boolean)>(r9, $r10, 1);
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.svek.Cluster: boolean isLabel()>();
+
+        if $z0 == 0 goto label2;
+
+        $i0 = virtualinvoke r3.<net.sourceforge.plantuml.svek.Cluster: int getTitleAndAttributeWidth()>();
+
+        d0 = (double) $i0;
+
+        $i1 = virtualinvoke r3.<net.sourceforge.plantuml.svek.Cluster: int getTitleAndAttributeHeight()>();
+
+        $i2 = $i1 - 5;
+
+        d1 = (double) $i2;
+
+        $r16 = new smetana.core.CString;
+
+        specialinvoke $r16.<smetana.core.CString: void <init>(java.lang.String)>("label");
+
+        $i4 = (int) d0;
+
+        $i3 = (int) d1;
+
+        $r17 = staticinvoke <smetana.core.Macro: smetana.core.CString createHackInitDimensionFromLabel(int,int)>($i4, $i3);
+
+        $r18 = new smetana.core.CString;
+
+        specialinvoke $r18.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r12, $r16, $r17, $r18);
+
+     label2:
+        $r13 = interfaceinvoke r2.<net.sourceforge.plantuml.cucadiagram.IGroup: java.util.Collection getLeafsDirect()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void exportEntities(h.ST_Agraph_s,java.util.Collection)>(r12, $r13);
+
+        $r14 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map clusters>;
+
+        interfaceinvoke $r14.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r2, r12);
+
+        specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: void exportGroups(h.ST_Agraph_s,net.sourceforge.plantuml.cucadiagram.IGroup)>(r12, r2);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock getLabel(net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+        net.sourceforge.plantuml.ISkinParam r2;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r3;
+        net.sourceforge.plantuml.FontParam $r4;
+        net.sourceforge.plantuml.cucadiagram.Link r6;
+        net.sourceforge.plantuml.cucadiagram.Display $r7;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r8, $r9;
+        net.sourceforge.plantuml.graphic.TextBlock r10, $r12;
+        net.sourceforge.plantuml.graphic.StringBounder $r11;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r6 := @parameter0: net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r3 = new net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r4 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam ARROW>;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.graphic.FontConfiguration: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.FontParam,net.sourceforge.plantuml.cucadiagram.Stereotype)>(r2, $r4, null);
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        $r8 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r9 = interfaceinvoke r2.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.graphic.HorizontalAlignment getDefaultTextAlignment(net.sourceforge.plantuml.graphic.HorizontalAlignment)>($r8);
+
+        r10 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>($r3, $r9, r2);
+
+        $r11 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: boolean isEmpty(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.StringBounder)>(r10, $r11);
+
+        if $z0 == 0 goto label1;
+
+        return r10;
+
+     label1:
+        $r12 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double)>(r10, 1.0, 1.0);
+
+        return $r12;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock getQualifier(net.sourceforge.plantuml.cucadiagram.Link, int)
+    {
+        int i0;
+        net.sourceforge.plantuml.cucadiagram.Link r0;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r2;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r3;
+        net.sourceforge.plantuml.ISkinParam r4;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r5;
+        net.sourceforge.plantuml.FontParam $r6;
+        net.sourceforge.plantuml.cucadiagram.Display $r8;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r9, $r10;
+        net.sourceforge.plantuml.graphic.TextBlock r11, $r13;
+        net.sourceforge.plantuml.graphic.StringBounder $r12;
+        boolean $z0;
+        java.lang.String $r14;
+
+        r2 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.Link;
+
+        i0 := @parameter1: int;
+
+        if i0 != 1 goto label1;
+
+        $r14 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier1()>();
+
+        goto label2;
+
+     label1:
+        $r14 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier2()>();
+
+     label2:
+        if $r14 != null goto label3;
+
+        return null;
+
+     label3:
+        $r3 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        r4 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r5 = new net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r6 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam ARROW>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.graphic.FontConfiguration: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.FontParam,net.sourceforge.plantuml.cucadiagram.Stereotype)>(r4, $r6, null);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r14);
+
+        $r9 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r10 = interfaceinvoke r4.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.graphic.HorizontalAlignment getDefaultTextAlignment(net.sourceforge.plantuml.graphic.HorizontalAlignment)>($r9);
+
+        r11 = virtualinvoke $r8.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>($r5, $r10, r4);
+
+        $r12 = r2.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: boolean isEmpty(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.StringBounder)>(r11, $r12);
+
+        if $z0 == 0 goto label4;
+
+        return r11;
+
+     label4:
+        $r13 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double)>(r11, 1.0, 1.0);
+
+        return $r13;
+    }
+
+    private h.ST_Agnode_s getAgnodeFromLeaf(net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.IEntity r1;
+        java.util.Map $r2, $r7;
+        java.lang.Object $r3, $r10, $r13, $r16;
+        h.ST_Agnode_s r4, $r17;
+        net.sourceforge.plantuml.svek.Bibliotekon $r5, $r12;
+        net.sourceforge.plantuml.cucadiagram.ILeaf $r6, $r14;
+        java.util.Set $r8;
+        java.util.Iterator r9;
+        boolean $z0, $z1;
+        java.util.Map$Entry r11;
+        java.lang.String $r15, r20;
+        java.lang.IllegalStateException $r18;
+        java.io.PrintStream $r19;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        $r2 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map nodes>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        r4 = (h.ST_Agnode_s) $r3;
+
+        if r4 == null goto label1;
+
+        return r4;
+
+     label1:
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        $r6 = (net.sourceforge.plantuml.cucadiagram.ILeaf) r1;
+
+        r20 = virtualinvoke $r5.<net.sourceforge.plantuml.svek.Bibliotekon: java.lang.String getNodeUid(net.sourceforge.plantuml.cucadiagram.ILeaf)>($r6);
+
+        $r7 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map nodes>;
+
+        $r8 = interfaceinvoke $r7.<java.util.Map: java.util.Set entrySet()>();
+
+        r9 = interfaceinvoke $r8.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r9.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label5;
+
+        $r10 = interfaceinvoke r9.<java.util.Iterator: java.lang.Object next()>();
+
+        r11 = (java.util.Map$Entry) $r10;
+
+        $r12 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        $r13 = interfaceinvoke r11.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r14 = (net.sourceforge.plantuml.cucadiagram.ILeaf) $r13;
+
+        $r15 = virtualinvoke $r12.<net.sourceforge.plantuml.svek.Bibliotekon: java.lang.String getNodeUid(net.sourceforge.plantuml.cucadiagram.ILeaf)>($r14);
+
+        $z1 = virtualinvoke r20.<java.lang.String: boolean equals(java.lang.Object)>($r15);
+
+        if $z1 == 0 goto label4;
+
+        $r16 = interfaceinvoke r11.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r17 = (h.ST_Agnode_s) $r16;
+
+     label3:
+        return $r17;
+
+     label4:
+        goto label2;
+
+     label5:
+        goto label7;
+
+     label6:
+        $r18 := @caughtexception;
+
+        $r19 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r19.<java.io.PrintStream: void println(java.lang.String)>("UNKNOWN ENTITY");
+
+     label7:
+        return null;
+
+        catch java.lang.IllegalStateException from label1 to label3 with label6;
+        catch java.lang.IllegalStateException from label4 to label5 with label6;
+    }
+
+    private h.ST_Agedge_s createEdge(h.ST_Agraph_s, net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1;
+        net.sourceforge.plantuml.cucadiagram.IEntity $r2, $r4;
+        h.ST_Agnode_s r3, r5;
+        h.ST_Agraph_s r6;
+        h.ST_Agedge_s r7;
+        smetana.core.CString $r8, $r9, $r10, $r11, $r12, $r13, $r14, $r15, $r20, r24, $r25, $r26, $r28, $r29, $r31, $r32, r34, r37;
+        int i2, $i3, $i5, $i6, $i8, $i9, $i11, $i12;
+        java.lang.StringBuilder $r16, $r17, $r18;
+        java.lang.String $r19;
+        net.sourceforge.plantuml.graphic.TextBlock r21, r35, r38;
+        net.sourceforge.plantuml.graphic.StringBounder $r22, $r23, $r27, $r30;
+        boolean $z0;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r33, r36, r39;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r6 := @parameter0: h.ST_Agraph_s;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        r3 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: h.ST_Agnode_s getAgnodeFromLeaf(net.sourceforge.plantuml.cucadiagram.IEntity)>($r2);
+
+        $r4 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: h.ST_Agnode_s getAgnodeFromLeaf(net.sourceforge.plantuml.cucadiagram.IEntity)>($r4);
+
+        if r3 != null goto label1;
+
+        return null;
+
+     label1:
+        if r5 != null goto label2;
+
+        return null;
+
+     label2:
+        r7 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agedge_s agedge(h.ST_Agraph_s,h.ST_Agnode_s,h.ST_Agnode_s,smetana.core.CString,boolean)>(r6, r3, r5, null, 1);
+
+        $r8 = new smetana.core.CString;
+
+        specialinvoke $r8.<smetana.core.CString: void <init>(java.lang.String)>("arrowtail");
+
+        $r9 = new smetana.core.CString;
+
+        specialinvoke $r9.<smetana.core.CString: void <init>(java.lang.String)>("none");
+
+        $r10 = new smetana.core.CString;
+
+        specialinvoke $r10.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r7, $r8, $r9, $r10);
+
+        $r11 = new smetana.core.CString;
+
+        specialinvoke $r11.<smetana.core.CString: void <init>(java.lang.String)>("arrowhead");
+
+        $r12 = new smetana.core.CString;
+
+        specialinvoke $r12.<smetana.core.CString: void <init>(java.lang.String)>("none");
+
+        $r13 = new smetana.core.CString;
+
+        specialinvoke $r13.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r7, $r11, $r12, $r13);
+
+        i2 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        $r14 = new smetana.core.CString;
+
+        specialinvoke $r14.<smetana.core.CString: void <init>(java.lang.String)>("minlen");
+
+        $r15 = new smetana.core.CString;
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $i3 = i2 - 1;
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i3);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r15.<smetana.core.CString: void <init>(java.lang.String)>($r19);
+
+        $r20 = new smetana.core.CString;
+
+        specialinvoke $r20.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r7, $r14, $r15, $r20);
+
+        r21 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.TextBlock getLabel(net.sourceforge.plantuml.cucadiagram.Link)>(r1);
+
+        $r22 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: boolean isEmpty(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.StringBounder)>(r21, $r22);
+
+        if $z0 != 0 goto label3;
+
+        $r30 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        r33 = interfaceinvoke r21.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r30);
+
+        $d4 = virtualinvoke r33.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $i11 = (int) $d4;
+
+        $d5 = virtualinvoke r33.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $i12 = (int) $d5;
+
+        r34 = staticinvoke <smetana.core.Macro: smetana.core.CString createHackInitDimensionFromLabel(int,int)>($i11, $i12);
+
+        $r31 = new smetana.core.CString;
+
+        specialinvoke $r31.<smetana.core.CString: void <init>(java.lang.String)>("label");
+
+        $r32 = new smetana.core.CString;
+
+        specialinvoke $r32.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r7, $r31, r34, $r32);
+
+     label3:
+        r35 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.TextBlock getQualifier(net.sourceforge.plantuml.cucadiagram.Link,int)>(r1, 1);
+
+        if r35 == null goto label4;
+
+        $r27 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        r36 = interfaceinvoke r35.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r27);
+
+        $d2 = virtualinvoke r36.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $i8 = (int) $d2;
+
+        $d3 = virtualinvoke r36.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $i9 = (int) $d3;
+
+        r37 = staticinvoke <smetana.core.Macro: smetana.core.CString createHackInitDimensionFromLabel(int,int)>($i8, $i9);
+
+        $r28 = new smetana.core.CString;
+
+        specialinvoke $r28.<smetana.core.CString: void <init>(java.lang.String)>("taillabel");
+
+        $r29 = new smetana.core.CString;
+
+        specialinvoke $r29.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r7, $r28, r37, $r29);
+
+     label4:
+        r38 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.TextBlock getQualifier(net.sourceforge.plantuml.cucadiagram.Link,int)>(r1, 2);
+
+        if r38 == null goto label5;
+
+        $r23 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        r39 = interfaceinvoke r38.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r23);
+
+        $d0 = virtualinvoke r39.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $i5 = (int) $d0;
+
+        $d1 = virtualinvoke r39.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $i6 = (int) $d1;
+
+        r24 = staticinvoke <smetana.core.Macro: smetana.core.CString createHackInitDimensionFromLabel(int,int)>($i5, $i6);
+
+        $r25 = new smetana.core.CString;
+
+        specialinvoke $r25.<smetana.core.CString: void <init>(java.lang.String)>("headlabel");
+
+        $r26 = new smetana.core.CString;
+
+        specialinvoke $r26.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r7, $r25, r24, $r26);
+
+     label5:
+        return r7;
+    }
+
+    private static java.util.List getFailureText3(java.lang.Throwable)
+    {
+        java.lang.Throwable r0;
+        java.util.ArrayList $r1;
+        java.lang.StringBuilder $r3, $r4, $r5, $r9, $r10, $r11;
+        java.lang.String $r6, $r7, r8, $r12;
+
+        r0 := @parameter0: java.lang.Throwable;
+
+        virtualinvoke r0.<java.lang.Throwable: void printStackTrace()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("An error has occured : ");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.graphic.QuoteUtils: java.lang.String getSomeQuote()>();
+
+        r8 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String rot(java.lang.String)>($r7);
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<i>");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r8);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>($r12);
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void addProperties(java.util.List)>($r1);
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>("Sorry, the subproject Smetana is not finished yet...");
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>("post to <b>http://plantuml.com/qa</b> to solve this issue.");
+
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        return $r1;
+    }
+
+    private void printEntityNew(net.sourceforge.plantuml.cucadiagram.ILeaf)
+    {
+        net.sourceforge.plantuml.cucadiagram.ILeaf r0;
+        boolean $z0;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r1;
+        net.sourceforge.plantuml.svek.IEntityImage r2;
+        net.sourceforge.plantuml.svek.Bibliotekon $r3;
+        net.sourceforge.plantuml.svek.DotStringFactory $r4;
+        net.sourceforge.plantuml.svek.ColorSequence $r5;
+        net.sourceforge.plantuml.graphic.StringBounder $r6;
+        java.io.PrintStream $r8;
+
+        r1 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.ILeaf;
+
+        $z0 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.ILeaf: boolean isRemoved()>();
+
+        if $z0 == 0 goto label1;
+
+        $r8 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r8.<java.io.PrintStream: void println(java.lang.String)>("Jdot STRANGE: entity is removed");
+
+        return;
+
+     label1:
+        r2 = specialinvoke r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.IEntityImage printEntityInternal(net.sourceforge.plantuml.cucadiagram.ILeaf)>(r0);
+
+        $r3 = specialinvoke r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        $r4 = r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.svek.DotStringFactory: net.sourceforge.plantuml.svek.ColorSequence getColorSequence()>();
+
+        $r6 = r1.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        virtualinvoke $r3.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode createNode(net.sourceforge.plantuml.cucadiagram.ILeaf,net.sourceforge.plantuml.svek.IEntityImage,net.sourceforge.plantuml.svek.ColorSequence,net.sourceforge.plantuml.graphic.StringBounder)>(r0, r2, $r5, $r6);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.svek.DotStringFactory $r1;
+        net.sourceforge.plantuml.svek.Bibliotekon $r2;
+
+        r0 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.svek.DotStringFactory: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        return $r2;
+    }
+
+    private net.sourceforge.plantuml.svek.IEntityImage printEntityInternal(net.sourceforge.plantuml.cucadiagram.ILeaf)
+    {
+        net.sourceforge.plantuml.cucadiagram.ILeaf r0;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.svek.IEntityImage $r1, $r2, $r13;
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r3;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r4, $r6, $r7, $r9, $r11;
+        net.sourceforge.plantuml.ISkinParam r5;
+        net.sourceforge.plantuml.svek.Bibliotekon $r8;
+        net.sourceforge.plantuml.UmlDiagramType $r10;
+        java.util.List $r12;
+        java.io.PrintStream $r14;
+        java.lang.IllegalStateException $r15;
+
+        r3 := @this: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.ILeaf;
+
+        $z0 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.ILeaf: boolean isRemoved()>();
+
+        if $z0 == 0 goto label1;
+
+        $r15 = new java.lang.IllegalStateException;
+
+        specialinvoke $r15.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r15;
+
+     label1:
+        $r1 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.ILeaf: net.sourceforge.plantuml.svek.IEntityImage getSvekImage()>();
+
+        if $r1 != null goto label3;
+
+        $r4 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        r5 = virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $z1 = interfaceinvoke r5.<net.sourceforge.plantuml.ISkinParam: boolean sameClassWidth()>();
+
+        if $z1 == 0 goto label2;
+
+        $r14 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $r14.<java.io.PrintStream: void println(java.lang.String)>("NOT YET IMPLEMENED");
+
+     label2:
+        $r6 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $z2 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: boolean isHideEmptyDescriptionForState()>();
+
+        $r7 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r8 = specialinvoke r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.Bibliotekon getBibliotekon()>();
+
+        $r9 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        $r11 = r3.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        $r12 = virtualinvoke $r11.<net.sourceforge.plantuml.cucadiagram.CucaDiagram: java.util.List getLinks()>();
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.svek.GeneralImageBuilder: net.sourceforge.plantuml.svek.IEntityImage createEntityImageBlock(net.sourceforge.plantuml.cucadiagram.ILeaf,net.sourceforge.plantuml.ISkinParam,boolean,net.sourceforge.plantuml.cucadiagram.PortionShower,net.sourceforge.plantuml.svek.Bibliotekon,net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion,net.sourceforge.plantuml.UmlDiagramType,java.util.Collection)>(r0, r5, $z2, $r7, $r8, null, $r10, $r12);
+
+        return $r13;
+
+     label3:
+        $r2 = interfaceinvoke r0.<net.sourceforge.plantuml.cucadiagram.ILeaf: net.sourceforge.plantuml.svek.IEntityImage getSvekImage()>();
+
+        return $r2;
+    }
+
+    static java.util.Map access$000(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        java.util.Map $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map clusters>;
+
+        return $r1;
+    }
+
+    static java.util.Map access$100(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        java.util.Map $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map nodes>;
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.svek.DotStringFactory access$200(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.svek.DotStringFactory $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.svek.DotStringFactory dotStringFactory>;
+
+        return $r1;
+    }
+
+    static java.util.Map access$300(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        java.util.Map $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.Map edges>;
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.cucadiagram.CucaDiagram access$400(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.CucaDiagram $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        $r1 = r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.cucadiagram.CucaDiagram diagram>;
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.graphic.TextBlock access$500(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana, net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1;
+        net.sourceforge.plantuml.graphic.TextBlock $r2;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.TextBlock getLabel(net.sourceforge.plantuml.cucadiagram.Link)>(r1);
+
+        return $r2;
+    }
+
+    static net.sourceforge.plantuml.graphic.TextBlock access$600(net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana, net.sourceforge.plantuml.cucadiagram.Link, int)
+    {
+        net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1;
+        int i0;
+        net.sourceforge.plantuml.graphic.TextBlock $r2;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.Link;
+
+        i0 := @parameter2: int;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: net.sourceforge.plantuml.graphic.TextBlock getQualifier(net.sourceforge.plantuml.cucadiagram.Link,int)>(r1, i0);
+
+        return $r2;
+    }
+
+    static void <clinit>()
+    {
+        java.util.concurrent.locks.ReentrantLock $r0;
+
+        $r0 = new java.util.concurrent.locks.ReentrantLock;
+
+        specialinvoke $r0.<java.util.concurrent.locks.ReentrantLock: void <init>()>();
+
+        <net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana: java.util.concurrent.locks.Lock lock> = $r0;
+
+        return;
+    }
+}

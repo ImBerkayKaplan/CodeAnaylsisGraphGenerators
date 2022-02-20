@@ -1,0 +1,3971 @@
+public class net.sourceforge.plantuml.svek.SvekLine extends java.lang.Object implements net.sourceforge.plantuml.posimo.Moveable, net.sourceforge.plantuml.Hideable, net.sourceforge.plantuml.svek.GuideLine
+{
+    private static final net.sourceforge.plantuml.Dimension2DDouble CONSTRAINT_SPOT;
+    private final net.sourceforge.plantuml.svek.Cluster ltail;
+    private final net.sourceforge.plantuml.svek.Cluster lhead;
+    private final net.sourceforge.plantuml.cucadiagram.Link link;
+    private final net.sourceforge.plantuml.cucadiagram.EntityPort startUid;
+    private final net.sourceforge.plantuml.cucadiagram.EntityPort endUid;
+    private final net.sourceforge.plantuml.graphic.TextBlock startTailText;
+    private final net.sourceforge.plantuml.graphic.TextBlock endHeadText;
+    private final net.sourceforge.plantuml.graphic.TextBlock labelText;
+    private boolean divideLabelWidthByTwo;
+    private final int lineColor;
+    private final int noteLabelColor;
+    private final int startTailColor;
+    private final int endHeadColor;
+    private final net.sourceforge.plantuml.graphic.StringBounder stringBounder;
+    private final net.sourceforge.plantuml.svek.Bibliotekon bibliotekon;
+    private net.sourceforge.plantuml.posimo.DotPath dotPath;
+    private net.sourceforge.plantuml.posimo.Positionable startTailLabelXY;
+    private net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY;
+    private net.sourceforge.plantuml.posimo.Positionable labelXY;
+    private net.sourceforge.plantuml.graphic.UDrawable extremity2;
+    private net.sourceforge.plantuml.graphic.UDrawable extremity1;
+    private double dx;
+    private double dy;
+    private boolean opale;
+    private net.sourceforge.plantuml.svek.Cluster projectionCluster;
+    private final net.sourceforge.plantuml.Pragma pragma;
+    private final net.sourceforge.plantuml.ugraphic.color.HColor backgroundColor;
+    private final boolean useRankSame;
+    private final net.sourceforge.plantuml.ugraphic.UStroke defaultThickness;
+    private net.sourceforge.plantuml.ugraphic.color.HColor arrowLollipopColor;
+    private final net.sourceforge.plantuml.ISkinParam skinParam;
+    private final double labelShield;
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r3, $r4, $r5;
+        net.sourceforge.plantuml.svek.SvekLine r1;
+        java.lang.String $r2, $r6;
+        int $i0;
+
+        r1 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = specialinvoke r1.<java.lang.Object: java.lang.String toString()>();
+
+        $r3 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" color=");
+
+        $i0 = r1.<net.sourceforge.plantuml.svek.SvekLine: int lineColor>;
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r6;
+    }
+
+    public net.sourceforge.plantuml.Direction getArrowDirection()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.LinkArrow $r1, $r2;
+        net.sourceforge.plantuml.Direction $r3, $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.LinkArrow getLinkArrow()>();
+
+        $r2 = <net.sourceforge.plantuml.cucadiagram.LinkArrow: net.sourceforge.plantuml.cucadiagram.LinkArrow BACKWARD>;
+
+        if $r1 != $r2 goto label1;
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.Direction getArrowDirectionInternal()>();
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction getInv()>();
+
+        return $r5;
+
+     label1:
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.Direction getArrowDirectionInternal()>();
+
+        return $r3;
+    }
+
+    private net.sourceforge.plantuml.Direction getArrowDirectionInternal()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        boolean $z0;
+        net.sourceforge.plantuml.posimo.DotPath $r1, $r2, $r6;
+        java.awt.geom.Point2D r3, r8;
+        double $d0, $d1, $d2, $d3, $d4, $d5, d6, $d7, $d8;
+        byte $b0, $b1, $b2, $b3, $b4;
+        net.sourceforge.plantuml.Direction $r4, $r5, $r7, $r9;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean isAutolink()>();
+
+        if $z0 == 0 goto label1;
+
+        $r6 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        virtualinvoke $r6.<net.sourceforge.plantuml.posimo.DotPath: double getStartAngle()>();
+
+        $r7 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+        return $r7;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r8 = virtualinvoke $r1.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        $d0 = virtualinvoke r3.<java.awt.geom.Point2D: double getX()>();
+
+        $d1 = virtualinvoke r8.<java.awt.geom.Point2D: double getX()>();
+
+        $d2 = $d0 - $d1;
+
+        $d3 = virtualinvoke r3.<java.awt.geom.Point2D: double getY()>();
+
+        $d4 = virtualinvoke r8.<java.awt.geom.Point2D: double getY()>();
+
+        $d5 = $d3 - $d4;
+
+        d6 = staticinvoke <java.lang.Math: double atan2(double,double)>($d2, $d5);
+
+        $b0 = d6 cmpl -0.7853981633974483;
+
+        if $b0 <= 0 goto label2;
+
+        $b4 = d6 cmpg 0.7853981633974483;
+
+        if $b4 >= 0 goto label2;
+
+        $r5 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction DOWN>;
+
+        return $r5;
+
+     label2:
+        $b1 = d6 cmpl 2.356194490192345;
+
+        if $b1 > 0 goto label3;
+
+        $b2 = d6 cmpg -2.356194490192345;
+
+        if $b2 >= 0 goto label4;
+
+     label3:
+        $r4 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction UP>;
+
+        return $r4;
+
+     label4:
+        $d7 = virtualinvoke r3.<java.awt.geom.Point2D: double getX()>();
+
+        $d8 = virtualinvoke r8.<java.awt.geom.Point2D: double getX()>();
+
+        $b3 = $d7 cmpl $d8;
+
+        if $b3 <= 0 goto label5;
+
+        $r9 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction RIGHT>;
+
+        goto label6;
+
+     label5:
+        $r9 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+     label6:
+        return $r9;
+    }
+
+    public double getArrowDirection2()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.LinkArrow $r1, $r2;
+        double $d0, $d1, $d2;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.LinkArrow getLinkArrow()>();
+
+        $r2 = <net.sourceforge.plantuml.cucadiagram.LinkArrow: net.sourceforge.plantuml.cucadiagram.LinkArrow BACKWARD>;
+
+        if $r1 != $r2 goto label1;
+
+        $d1 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: double getArrowDirectionInternal2()>();
+
+        $d2 = 3.141592653589793 + $d1;
+
+        return $d2;
+
+     label1:
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: double getArrowDirectionInternal2()>();
+
+        return $d0;
+    }
+
+    private double getArrowDirectionInternal2()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        boolean $z0;
+        net.sourceforge.plantuml.posimo.DotPath $r1, $r2, $r4;
+        java.awt.geom.Point2D r3, r5;
+        double $d0, $d1, $d2, $d3, $d4, $d5, d6, d7;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean isAutolink()>();
+
+        if $z0 == 0 goto label1;
+
+        $r4 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        d7 = virtualinvoke $r4.<net.sourceforge.plantuml.posimo.DotPath: double getStartAngle()>();
+
+        return d7;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r5 = virtualinvoke $r1.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        $d0 = virtualinvoke r3.<java.awt.geom.Point2D: double getX()>();
+
+        $d1 = virtualinvoke r5.<java.awt.geom.Point2D: double getX()>();
+
+        $d2 = $d0 - $d1;
+
+        $d3 = virtualinvoke r3.<java.awt.geom.Point2D: double getY()>();
+
+        $d4 = virtualinvoke r5.<java.awt.geom.Point2D: double getY()>();
+
+        $d5 = $d3 - $d4;
+
+        d6 = staticinvoke <java.lang.Math: double atan2(double,double)>($d2, $d5);
+
+        return d6;
+    }
+
+    private net.sourceforge.plantuml.svek.Cluster getCluster2(net.sourceforge.plantuml.svek.Bibliotekon, net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.svek.Bibliotekon r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.IllegalArgumentException $r3;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.svek.Cluster r5;
+        java.util.Set $r6;
+        net.sourceforge.plantuml.cucadiagram.IEntity r7;
+        net.sourceforge.plantuml.svek.SvekLine r8;
+
+        r8 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r0 := @parameter0: net.sourceforge.plantuml.svek.Bibliotekon;
+
+        r7 := @parameter1: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.svek.Bibliotekon: java.util.List allCluster()>();
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.svek.Cluster) $r4;
+
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.svek.Cluster: java.util.Set getGroups()>();
+
+        $z1 = interfaceinvoke $r6.<java.util.Set: boolean contains(java.lang.Object)>(r7);
+
+        if $z1 == 0 goto label2;
+
+        return r5;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r3 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r3.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r3;
+    }
+
+    public void <init>(net.sourceforge.plantuml.cucadiagram.Link, net.sourceforge.plantuml.svek.ColorSequence, net.sourceforge.plantuml.ISkinParam, net.sourceforge.plantuml.graphic.StringBounder, net.sourceforge.plantuml.graphic.FontConfiguration, net.sourceforge.plantuml.svek.Bibliotekon, net.sourceforge.plantuml.Pragma)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1, $r3;
+        java.lang.Object $r2;
+        boolean $z0, $z1, $z2, $z3, z4;
+        net.sourceforge.plantuml.svek.Bibliotekon r4;
+        net.sourceforge.plantuml.cucadiagram.EntityPort $r5, $r6, $r7, $r8;
+        net.sourceforge.plantuml.graphic.color.Colors $r9, $r28, $r62, $r63;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r10, $r14, $r15, $r61;
+        net.sourceforge.plantuml.LineParam $r11;
+        net.sourceforge.plantuml.ugraphic.UStroke $r12;
+        net.sourceforge.plantuml.ColorParam $r13;
+        net.sourceforge.plantuml.Pragma r16;
+        net.sourceforge.plantuml.graphic.StringBounder r17;
+        net.sourceforge.plantuml.svek.ColorSequence r18;
+        int $i0, $i1, $i2, $i3;
+        net.sourceforge.plantuml.cucadiagram.Display $r19, $r21, $r22, $r27, $r39, $r44, $r58, $r73;
+        net.sourceforge.plantuml.UmlDiagramType $r20;
+        net.sourceforge.plantuml.LineBreakStrategy $r23;
+        net.sourceforge.plantuml.cucadiagram.LinkArrow $r24, $r25, $r59, $r60;
+        net.sourceforge.plantuml.svek.image.EntityImageNoteLink $r26;
+        net.sourceforge.plantuml.style.StyleBuilder $r29;
+        net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy $r30, $r31, $r56, $r57;
+        net.sourceforge.plantuml.command.Position $r32, $r33, $r34, $r35, $r75, $r76;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r36, $r40, $r45, $r50, r71;
+        net.sourceforge.plantuml.graphic.TextBlock $r37, $r41, $r46, $r51, $r53, $r55, r70, r72, r74;
+        java.lang.String $r38, $r42, $r43, $r77;
+        net.sourceforge.plantuml.cucadiagram.LinkType $r47;
+        net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor $r48, $r49;
+        net.sourceforge.plantuml.graphic.VerticalAlignment $r52, $r54;
+        net.sourceforge.plantuml.cucadiagram.IEntity $r64, $r65;
+        net.sourceforge.plantuml.ISkinParam r66;
+        net.sourceforge.plantuml.graphic.FontConfiguration r67;
+        net.sourceforge.plantuml.svek.Cluster r68, r69;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Link;
+
+        r18 := @parameter1: net.sourceforge.plantuml.svek.ColorSequence;
+
+        r66 := @parameter2: net.sourceforge.plantuml.ISkinParam;
+
+        r17 := @parameter3: net.sourceforge.plantuml.graphic.StringBounder;
+
+        r67 := @parameter4: net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        r4 := @parameter5: net.sourceforge.plantuml.svek.Bibliotekon;
+
+        r16 := @parameter6: net.sourceforge.plantuml.Pragma;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: boolean divideLabelWidthByTwo> = 0;
+
+        $r2 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r3 = (net.sourceforge.plantuml.cucadiagram.Link) $r2;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link> = $r3;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ISkinParam skinParam> = r66;
+
+        $z0 = interfaceinvoke r66.<net.sourceforge.plantuml.ISkinParam: boolean useRankSame()>();
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: boolean useRankSame> = $z0;
+
+        $r5 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.EntityPort getEntityPort1(net.sourceforge.plantuml.svek.Bibliotekon)>(r4);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort startUid> = $r5;
+
+        $r6 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.EntityPort getEntityPort2(net.sourceforge.plantuml.svek.Bibliotekon)>(r4);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort endUid> = $r6;
+
+        r68 = null;
+
+        $r7 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort startUid>;
+
+        $z1 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.EntityPort: boolean startsWith(java.lang.String)>("za");
+
+        if $z1 == 0 goto label01;
+
+        $r65 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        r68 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster getCluster2(net.sourceforge.plantuml.svek.Bibliotekon,net.sourceforge.plantuml.cucadiagram.IEntity)>(r4, $r65);
+
+     label01:
+        r69 = null;
+
+        $r8 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort endUid>;
+
+        $z2 = virtualinvoke $r8.<net.sourceforge.plantuml.cucadiagram.EntityPort: boolean startsWith(java.lang.String)>("za");
+
+        if $z2 == 0 goto label02;
+
+        $r64 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        r69 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster getCluster2(net.sourceforge.plantuml.svek.Bibliotekon,net.sourceforge.plantuml.cucadiagram.IEntity)>(r4, $r64);
+
+     label02:
+        $r9 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        if $r9 == null goto label03;
+
+        $r62 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        r66 = virtualinvoke $r62.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ISkinParam mute(net.sourceforge.plantuml.ISkinParam)>(r66);
+
+        $r63 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        r67 = virtualinvoke r67.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration mute(net.sourceforge.plantuml.graphic.color.Colors)>($r63);
+
+     label03:
+        $r10 = interfaceinvoke r66.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor getBackgroundColor()>();
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor backgroundColor> = $r10;
+
+        $r11 = <net.sourceforge.plantuml.LineParam: net.sourceforge.plantuml.LineParam arrow>;
+
+        $r12 = interfaceinvoke r66.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.UStroke getThickness(net.sourceforge.plantuml.LineParam,net.sourceforge.plantuml.cucadiagram.Stereotype)>($r11, null);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.UStroke defaultThickness> = $r12;
+
+        $r13 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam arrowLollipop>;
+
+        $r14 = interfaceinvoke r66.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor getHtmlColor(net.sourceforge.plantuml.ColorParam,net.sourceforge.plantuml.cucadiagram.Stereotype,boolean)>($r13, null, 0);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor arrowLollipopColor> = $r14;
+
+        $r15 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor arrowLollipopColor>;
+
+        if $r15 != null goto label04;
+
+        $r61 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor backgroundColor>;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor arrowLollipopColor> = $r61;
+
+     label04:
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.Pragma pragma> = r16;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon> = r4;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = r17;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster ltail> = r68;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster lhead> = r69;
+
+        $i0 = virtualinvoke r18.<net.sourceforge.plantuml.svek.ColorSequence: int getValue()>();
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: int lineColor> = $i0;
+
+        $i1 = virtualinvoke r18.<net.sourceforge.plantuml.svek.ColorSequence: int getValue()>();
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: int noteLabelColor> = $i1;
+
+        $i2 = virtualinvoke r18.<net.sourceforge.plantuml.svek.ColorSequence: int getValue()>();
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: int startTailColor> = $i2;
+
+        $i3 = virtualinvoke r18.<net.sourceforge.plantuml.svek.ColorSequence: int getValue()>();
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: int endHeadColor> = $i3;
+
+        $r19 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        $z3 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: boolean isNull(net.sourceforge.plantuml.cucadiagram.Display)>($r19);
+
+        if $z3 == 0 goto label05;
+
+        r70 = <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock EMPTY_TEXT_BLOCK>;
+
+        $r59 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.LinkArrow getLinkArrow()>();
+
+        $r60 = <net.sourceforge.plantuml.cucadiagram.LinkArrow: net.sourceforge.plantuml.cucadiagram.LinkArrow NONE_OR_SEVERAL>;
+
+        if $r59 == $r60 goto label08;
+
+        r70 = staticinvoke <net.sourceforge.plantuml.descdiagram.command.StringWithArrow: net.sourceforge.plantuml.graphic.TextBlock addMagicArrow(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.svek.GuideLine,net.sourceforge.plantuml.graphic.FontConfiguration)>(r70, r0, r67);
+
+        goto label08;
+
+     label05:
+        $r20 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        r71 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.HorizontalAlignment getMessageTextAlignment(net.sourceforge.plantuml.UmlDiagramType,net.sourceforge.plantuml.ISkinParam)>($r20, r66);
+
+        $r21 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        z4 = virtualinvoke $r21.<net.sourceforge.plantuml.cucadiagram.Display: boolean hasSeveralGuideLines()>();
+
+        if z4 == 0 goto label06;
+
+        $r58 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        r72 = staticinvoke <net.sourceforge.plantuml.descdiagram.command.StringWithArrow: net.sourceforge.plantuml.graphic.TextBlock addSeveralMagicArrows(net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.svek.GuideLine,net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinParam)>($r58, r0, r67, r71, r66);
+
+        goto label07;
+
+     label06:
+        $r22 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        $r23 = interfaceinvoke r66.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.LineBreakStrategy maxMessageSize()>();
+
+        r72 = virtualinvoke $r22.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create9(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple,net.sourceforge.plantuml.LineBreakStrategy)>(r67, r71, r66, $r23);
+
+     label07:
+        r70 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock addVisibilityModifier(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.cucadiagram.Link,net.sourceforge.plantuml.ISkinParam)>(r72, r1, r66);
+
+        $r24 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.LinkArrow getLinkArrow()>();
+
+        $r25 = <net.sourceforge.plantuml.cucadiagram.LinkArrow: net.sourceforge.plantuml.cucadiagram.LinkArrow NONE_OR_SEVERAL>;
+
+        if $r24 == $r25 goto label08;
+
+        if z4 != 0 goto label08;
+
+        r70 = staticinvoke <net.sourceforge.plantuml.descdiagram.command.StringWithArrow: net.sourceforge.plantuml.graphic.TextBlock addMagicArrow(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.svek.GuideLine,net.sourceforge.plantuml.graphic.FontConfiguration)>(r70, r0, r67);
+
+     label08:
+        $r73 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getNote()>();
+
+        if $r73 != null goto label09;
+
+        r74 = <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock EMPTY_TEXT_BLOCK>;
+
+        goto label11;
+
+     label09:
+        $r26 = new net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
+
+        $r27 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Display getNote()>();
+
+        $r28 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getNoteColors()>();
+
+        $r29 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        specialinvoke $r26.<net.sourceforge.plantuml.svek.image.EntityImageNoteLink: void <init>(net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.graphic.color.Colors,net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.style.StyleBuilder)>($r27, $r28, r66, $r29);
+
+        r74 = $r26;
+
+        $r30 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy getNoteLinkStrategy()>();
+
+        $r31 = <net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy: net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy HALF_NOT_PRINTED>;
+
+        if $r30 == $r31 goto label10;
+
+        $r56 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy getNoteLinkStrategy()>();
+
+        $r57 = <net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy: net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy HALF_PRINTED_FULL>;
+
+        if $r56 != $r57 goto label11;
+
+     label10:
+        r0.<net.sourceforge.plantuml.svek.SvekLine: boolean divideLabelWidthByTwo> = 1;
+
+     label11:
+        $r75 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.command.Position getNotePosition()>();
+
+        $r76 = <net.sourceforge.plantuml.command.Position: net.sourceforge.plantuml.command.Position LEFT>;
+
+        if $r75 != $r76 goto label12;
+
+        $r54 = <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment CENTER>;
+
+        $r55 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeLR(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.VerticalAlignment)>(r74, r70, $r54);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText> = $r55;
+
+        goto label15;
+
+     label12:
+        $r32 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.command.Position getNotePosition()>();
+
+        $r33 = <net.sourceforge.plantuml.command.Position: net.sourceforge.plantuml.command.Position RIGHT>;
+
+        if $r32 != $r33 goto label13;
+
+        $r52 = <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment CENTER>;
+
+        $r53 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeLR(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.VerticalAlignment)>(r70, r74, $r52);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText> = $r53;
+
+        goto label15;
+
+     label13:
+        $r34 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.command.Position getNotePosition()>();
+
+        $r35 = <net.sourceforge.plantuml.command.Position: net.sourceforge.plantuml.command.Position TOP>;
+
+        if $r34 != $r35 goto label14;
+
+        $r50 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r51 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r74, r70, $r50);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText> = $r51;
+
+        goto label15;
+
+     label14:
+        $r36 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r37 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r70, r74, $r36);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText> = $r37;
+
+     label15:
+        $r77 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier1()>();
+
+        if $r77 != null goto label16;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText> = null;
+
+        goto label17;
+
+     label16:
+        $r38 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier1()>();
+
+        $r39 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r38);
+
+        $r40 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r41 = virtualinvoke $r39.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>(r67, $r40, r66);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText> = $r41;
+
+     label17:
+        $r42 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier2()>();
+
+        if $r42 != null goto label18;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText> = null;
+
+        goto label19;
+
+     label18:
+        $r43 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getQualifier2()>();
+
+        $r44 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>($r43);
+
+        $r45 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r46 = virtualinvoke $r44.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>(r67, $r45, r66);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText> = $r46;
+
+     label19:
+        $r47 = virtualinvoke r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        $r48 = virtualinvoke $r47.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor getMiddleDecor()>();
+
+        $r49 = <net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor: net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor NONE>;
+
+        if $r48 != $r49 goto label20;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: double labelShield> = 0.0;
+
+        goto label21;
+
+     label20:
+        r0.<net.sourceforge.plantuml.svek.SvekLine: double labelShield> = 7.0;
+
+     label21:
+        return;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock addVisibilityModifier(net.sourceforge.plantuml.graphic.TextBlock, net.sourceforge.plantuml.cucadiagram.Link, net.sourceforge.plantuml.ISkinParam)
+    {
+        net.sourceforge.plantuml.cucadiagram.Link r0;
+        net.sourceforge.plantuml.skin.VisibilityModifier r1;
+        net.sourceforge.plantuml.svek.SvekLine r2;
+        net.sourceforge.plantuml.cucadiagram.EntityPort $r3, $r4;
+        boolean $z0;
+        net.sourceforge.plantuml.graphic.TextBlock $r5, r11, r13, r14;
+        net.sourceforge.plantuml.skin.rose.Rose $r6;
+        net.sourceforge.plantuml.ISkinParam r7;
+        net.sourceforge.plantuml.ColorParam $r8;
+        net.sourceforge.plantuml.ugraphic.color.HColor r9;
+        int $i0;
+        net.sourceforge.plantuml.graphic.VerticalAlignment $r10;
+        double $d0;
+
+        r2 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r11 := @parameter0: net.sourceforge.plantuml.graphic.TextBlock;
+
+        r0 := @parameter1: net.sourceforge.plantuml.cucadiagram.Link;
+
+        r7 := @parameter2: net.sourceforge.plantuml.ISkinParam;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.skin.VisibilityModifier getVisibilityModifier()>();
+
+        if r1 == null goto label1;
+
+        $r6 = new net.sourceforge.plantuml.skin.rose.Rose;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.skin.rose.Rose: void <init>()>();
+
+        $r8 = virtualinvoke r1.<net.sourceforge.plantuml.skin.VisibilityModifier: net.sourceforge.plantuml.ColorParam getForeground()>();
+
+        r9 = virtualinvoke $r6.<net.sourceforge.plantuml.skin.rose.Rose: net.sourceforge.plantuml.ugraphic.color.HColor getHtmlColor(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.ColorParam)>(r7, $r8);
+
+        $i0 = interfaceinvoke r7.<net.sourceforge.plantuml.ISkinParam: int classAttributeIconSize()>();
+
+        r13 = virtualinvoke r1.<net.sourceforge.plantuml.skin.VisibilityModifier: net.sourceforge.plantuml.graphic.TextBlock getUBlock(int,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.HColor,boolean)>($i0, r9, null, 0);
+
+        r14 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double,double,double)>(r13, 0.0, 1.0, 2.0, 0.0);
+
+        $r10 = <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment CENTER>;
+
+        r11 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeLR(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.VerticalAlignment)>(r14, r11, $r10);
+
+     label1:
+        $r4 = r2.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort startUid>;
+
+        $r3 = r2.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort endUid>;
+
+        $z0 = virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.EntityPort: boolean equalsId(net.sourceforge.plantuml.cucadiagram.EntityPort)>($r3);
+
+        if $z0 == 0 goto label2;
+
+        $d0 = 6.0;
+
+        goto label3;
+
+     label2:
+        $d0 = 1.0;
+
+     label3:
+        $r5 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double)>(r11, $d0, $d0);
+
+        return $r5;
+    }
+
+    private net.sourceforge.plantuml.graphic.HorizontalAlignment getMessageTextAlignment(net.sourceforge.plantuml.UmlDiagramType, net.sourceforge.plantuml.ISkinParam)
+    {
+        net.sourceforge.plantuml.UmlDiagramType r0, $r1;
+        net.sourceforge.plantuml.ISkinParam r2;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r3, $r4, $r6;
+        net.sourceforge.plantuml.AlignmentParam $r5;
+        net.sourceforge.plantuml.svek.SvekLine r7;
+
+        r7 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r0 := @parameter0: net.sourceforge.plantuml.UmlDiagramType;
+
+        r2 := @parameter1: net.sourceforge.plantuml.ISkinParam;
+
+        $r1 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType STATE>;
+
+        if r0 != $r1 goto label1;
+
+        $r5 = <net.sourceforge.plantuml.AlignmentParam: net.sourceforge.plantuml.AlignmentParam stateMessageAlignment>;
+
+        $r6 = interfaceinvoke r2.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.graphic.HorizontalAlignment getHorizontalAlignment(net.sourceforge.plantuml.AlignmentParam,net.sourceforge.plantuml.skin.ArrowDirection,boolean,net.sourceforge.plantuml.graphic.HorizontalAlignment)>($r5, null, 0, null);
+
+        return $r6;
+
+     label1:
+        $r3 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment CENTER>;
+
+        $r4 = interfaceinvoke r2.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.graphic.HorizontalAlignment getDefaultTextAlignment(net.sourceforge.plantuml.graphic.HorizontalAlignment)>($r3);
+
+        return $r4;
+    }
+
+    public boolean hasNoteLabelText()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.graphic.TextBlock $r1, $r2, $r3;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText>;
+
+        if $r1 == null goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText>;
+
+        $r2 = <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock EMPTY_TEXT_BLOCK>;
+
+        if $r3 == $r2 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private net.sourceforge.plantuml.cucadiagram.LinkArrow getLinkArrow()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        net.sourceforge.plantuml.cucadiagram.LinkArrow $r2;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkArrow getLinkArrow()>();
+
+        return $r2;
+    }
+
+    public void appendLine(net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion, java.lang.StringBuilder, net.sourceforge.plantuml.svek.DotMode, net.sourceforge.plantuml.cucadiagram.dot.DotSplines)
+    {
+        java.lang.StringBuilder r0, $r14, $r15, $r16, $r30, $r31, $r34, $r65, $r66, $r67, $r70, $r71, $r72, $r74, $r75, $r77, $r78;
+        net.sourceforge.plantuml.svek.SvekLine r1;
+        net.sourceforge.plantuml.cucadiagram.EntityPort $r2, $r6;
+        java.lang.String $r3, $r7, $r17, $r33, $r35, r68, $r73, $r76, $r79, $r85;
+        net.sourceforge.plantuml.cucadiagram.Link $r10, $r26, $r27, $r32, $r37, $r59, $r64, $r69, $r84;
+        net.sourceforge.plantuml.cucadiagram.LinkType r11;
+        int $i0, $i1, $i2, $i3, $i4, i5, $i6, $i7;
+        net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion r13;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10;
+        double $d0, $d1;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r23, $r44, $r50, $r80, r82;
+        net.sourceforge.plantuml.graphic.TextBlock $r25, $r43, $r49, $r53, $r83;
+        net.sourceforge.plantuml.graphic.StringBounder $r42, $r48, $r52;
+        net.sourceforge.plantuml.svek.DotMode r54, $r55;
+        net.sourceforge.plantuml.cucadiagram.dot.DotSplines r56, $r57;
+        net.sourceforge.plantuml.cucadiagram.LinkConstraint $r60;
+        net.sourceforge.plantuml.Pragma $r61;
+
+        r1 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r13 := @parameter0: net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
+
+        r0 := @parameter1: java.lang.StringBuilder;
+
+        r54 := @parameter2: net.sourceforge.plantuml.svek.DotMode;
+
+        r56 := @parameter3: net.sourceforge.plantuml.cucadiagram.dot.DotSplines;
+
+        $r2 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort startUid>;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.EntityPort: java.lang.String getFullString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("->");
+
+        $r6 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort endUid>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.EntityPort: java.lang.String getFullString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("[");
+
+        $r10 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        r11 = virtualinvoke $r10.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getTypePatchCluster()>();
+
+        r68 = virtualinvoke r11.<net.sourceforge.plantuml.cucadiagram.LinkType: java.lang.String getSpecificDecorationSvek()>();
+
+        $i0 = virtualinvoke r68.<java.lang.String: int length()>();
+
+        if $i0 <= 0 goto label01;
+
+        $z7 = virtualinvoke r68.<java.lang.String: boolean endsWith(java.lang.String)>(",");
+
+        if $z7 != 0 goto label01;
+
+        $r65 = new java.lang.StringBuilder;
+
+        specialinvoke $r65.<java.lang.StringBuilder: void <init>()>();
+
+        $r66 = virtualinvoke $r65.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r68);
+
+        $r67 = virtualinvoke $r66.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        r68 = virtualinvoke $r67.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label01:
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r68);
+
+        $r69 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        i5 = virtualinvoke $r69.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        $z8 = interfaceinvoke r13.<net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion: boolean ignoreHorizontalLinks()>();
+
+        if $z8 == 0 goto label02;
+
+        if i5 != 1 goto label02;
+
+        i5 = 2;
+
+     label02:
+        $z9 = r1.<net.sourceforge.plantuml.svek.SvekLine: boolean useRankSame>;
+
+        if $z9 == 0 goto label04;
+
+        $r61 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.Pragma pragma>;
+
+        $z5 = virtualinvoke $r61.<net.sourceforge.plantuml.Pragma: boolean horizontalLineBetweenDifferentPackageAllowed()>();
+
+        if $z5 != 0 goto label03;
+
+        $r64 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z6 = virtualinvoke $r64.<net.sourceforge.plantuml.cucadiagram.Link: boolean isInvis()>();
+
+        if $z6 != 0 goto label03;
+
+        if i5 == 1 goto label05;
+
+     label03:
+        $r70 = new java.lang.StringBuilder;
+
+        specialinvoke $r70.<java.lang.StringBuilder: void <init>()>();
+
+        $r71 = virtualinvoke $r70.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("minlen=");
+
+        $i6 = i5 - 1;
+
+        $r72 = virtualinvoke $r71.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i6);
+
+        $r73 = virtualinvoke $r72.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r73);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        goto label05;
+
+     label04:
+        $r14 = new java.lang.StringBuilder;
+
+        specialinvoke $r14.<java.lang.StringBuilder: void <init>()>();
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("minlen=");
+
+        $i1 = i5 - 1;
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r17);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+     label05:
+        $r74 = new java.lang.StringBuilder;
+
+        specialinvoke $r74.<java.lang.StringBuilder: void <init>()>();
+
+        $r75 = virtualinvoke $r74.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("color=\"");
+
+        $i7 = r1.<net.sourceforge.plantuml.svek.SvekLine: int lineColor>;
+
+        $r76 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String sharp000000(int)>($i7);
+
+        $r77 = virtualinvoke $r75.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r76);
+
+        $r78 = virtualinvoke $r77.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"");
+
+        $r79 = virtualinvoke $r78.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r79);
+
+        $z10 = virtualinvoke r1.<net.sourceforge.plantuml.svek.SvekLine: boolean hasNoteLabelText()>();
+
+        if $z10 != 0 goto label06;
+
+        $r59 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r60 = virtualinvoke $r59.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkConstraint getLinkConstraint()>();
+
+        if $r60 == null goto label12;
+
+     label06:
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        $z0 = interfaceinvoke r13.<net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion: boolean useXLabelInsteadOfLabel()>();
+
+        if $z0 != 0 goto label07;
+
+        $r55 = <net.sourceforge.plantuml.svek.DotMode: net.sourceforge.plantuml.svek.DotMode NO_LEFT_RIGHT_AND_XLABEL>;
+
+        if r54 == $r55 goto label07;
+
+        $r57 = <net.sourceforge.plantuml.cucadiagram.dot.DotSplines: net.sourceforge.plantuml.cucadiagram.dot.DotSplines ORTHO>;
+
+        if r56 != $r57 goto label08;
+
+     label07:
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("xlabel=<");
+
+        goto label09;
+
+     label08:
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("label=<");
+
+     label09:
+        $z1 = virtualinvoke r1.<net.sourceforge.plantuml.svek.SvekLine: boolean hasNoteLabelText()>();
+
+        if $z1 == 0 goto label10;
+
+        $r53 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText>;
+
+        $r52 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r80 = interfaceinvoke $r53.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r52);
+
+        goto label11;
+
+     label10:
+        $r80 = <net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.Dimension2DDouble CONSTRAINT_SPOT>;
+
+     label11:
+        $d0 = r1.<net.sourceforge.plantuml.svek.SvekLine: double labelShield>;
+
+        $d1 = 2.0 * $d0;
+
+        r82 = staticinvoke <net.sourceforge.plantuml.Dimension2DDouble: net.sourceforge.plantuml.awt.geom.Dimension2D delta(net.sourceforge.plantuml.awt.geom.Dimension2D,double)>($r80, $d1);
+
+        $r23 = specialinvoke r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.awt.geom.Dimension2D eventuallyDivideByTwo(net.sourceforge.plantuml.awt.geom.Dimension2D)>(r82);
+
+        $i2 = r1.<net.sourceforge.plantuml.svek.SvekLine: int noteLabelColor>;
+
+        staticinvoke <net.sourceforge.plantuml.svek.SvekLine: void appendTable(java.lang.StringBuilder,net.sourceforge.plantuml.awt.geom.Dimension2D,int,net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion)>(r0, $r23, $i2, r13);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+     label12:
+        $r83 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        if $r83 == null goto label13;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("taillabel=<");
+
+        $r49 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        $r48 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r50 = interfaceinvoke $r49.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r48);
+
+        $i4 = r1.<net.sourceforge.plantuml.svek.SvekLine: int startTailColor>;
+
+        staticinvoke <net.sourceforge.plantuml.svek.SvekLine: void appendTable(java.lang.StringBuilder,net.sourceforge.plantuml.awt.geom.Dimension2D,int,net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion)>(r0, $r50, $i4, r13);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+     label13:
+        $r25 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        if $r25 == null goto label14;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("headlabel=<");
+
+        $r43 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        $r42 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r44 = interfaceinvoke $r43.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r42);
+
+        $i3 = r1.<net.sourceforge.plantuml.svek.SvekLine: int endHeadColor>;
+
+        staticinvoke <net.sourceforge.plantuml.svek.SvekLine: void appendTable(java.lang.StringBuilder,net.sourceforge.plantuml.awt.geom.Dimension2D,int,net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion)>(r0, $r44, $i3, r13);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+     label14:
+        $r26 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z2 = virtualinvoke $r26.<net.sourceforge.plantuml.cucadiagram.Link: boolean isInvis()>();
+
+        if $z2 == 0 goto label15;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("style=invis");
+
+     label15:
+        $r27 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z3 = virtualinvoke $r27.<net.sourceforge.plantuml.cucadiagram.Link: boolean isConstraint()>();
+
+        if $z3 == 0 goto label16;
+
+        $r37 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z4 = virtualinvoke $r37.<net.sourceforge.plantuml.cucadiagram.Link: boolean hasTwoEntryPointsSameContainer()>();
+
+        if $z4 == 0 goto label17;
+
+     label16:
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",constraint=false");
+
+     label17:
+        $r84 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r85 = virtualinvoke $r84.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getSametail()>();
+
+        if $r85 == null goto label18;
+
+        $r30 = new java.lang.StringBuilder;
+
+        specialinvoke $r30.<java.lang.StringBuilder: void <init>()>();
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(",sametail=");
+
+        $r32 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r33 = virtualinvoke $r32.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getSametail()>();
+
+        $r34 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r33);
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r35);
+
+     label18:
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("];");
+
+        staticinvoke <net.sourceforge.plantuml.svek.SvekUtils: void println(java.lang.StringBuilder)>(r0);
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.awt.geom.Dimension2D eventuallyDivideByTwo(net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        boolean $z0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r1;
+        net.sourceforge.plantuml.Dimension2DDouble $r2;
+        double $d0, $d1, $d2;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        $z0 = r0.<net.sourceforge.plantuml.svek.SvekLine: boolean divideLabelWidthByTwo>;
+
+        if $z0 == 0 goto label1;
+
+        $r2 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        $d0 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d1 = $d0 / 2.0;
+
+        $d2 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        specialinvoke $r2.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>($d1, $d2);
+
+        return $r2;
+
+     label1:
+        return r1;
+    }
+
+    public java.lang.String rankSame()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.Pragma $r1;
+        boolean $z0;
+        net.sourceforge.plantuml.cucadiagram.Link $r2;
+        int $i0;
+        java.lang.StringBuilder $r3, $r4, $r6, $r7, $r9, $r10;
+        java.lang.String $r5, $r8, $r11;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.Pragma pragma>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.Pragma: boolean horizontalLineBetweenDifferentPackageAllowed()>();
+
+        if $z0 != 0 goto label1;
+
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $i0 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        if $i0 != 1 goto label1;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("{rank=same; ");
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.lang.String getStartUidPrefix()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("; ");
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.lang.String getEndUidPrefix()>();
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("}");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r11;
+
+     label1:
+        return null;
+    }
+
+    public static void appendTable(java.lang.StringBuilder, net.sourceforge.plantuml.awt.geom.Dimension2D, int, net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion)
+    {
+        net.sourceforge.plantuml.awt.geom.Dimension2D r0;
+        double $d0, $d1;
+        int i0, i1, i2;
+        java.lang.StringBuilder r1;
+        net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion r2;
+
+        r1 := @parameter0: java.lang.StringBuilder;
+
+        r0 := @parameter1: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        i2 := @parameter2: int;
+
+        r2 := @parameter3: net.sourceforge.plantuml.cucadiagram.dot.GraphvizVersion;
+
+        $d0 = virtualinvoke r0.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        i0 = (int) $d0;
+
+        $d1 = virtualinvoke r0.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        i1 = (int) $d1;
+
+        staticinvoke <net.sourceforge.plantuml.svek.SvekLine: void appendTable(java.lang.StringBuilder,int,int,int)>(r1, i0, i1, i2);
+
+        return;
+    }
+
+    public static void appendTable(java.lang.StringBuilder, int, int, int)
+    {
+        java.lang.StringBuilder r0, $r2, $r3, $r5, $r6, $r9, $r10, $r11, $r12, $r13, $r14;
+        int i0, i1, i2;
+        java.lang.String $r4, $r7, $r15;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        i1 := @parameter1: int;
+
+        i2 := @parameter2: int;
+
+        i0 := @parameter3: int;
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<TABLE ");
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("BGCOLOR=\"");
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String sharp000000(int)>(i0);
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" ");
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("FIXEDSIZE=\"TRUE\" WIDTH=\"");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\" HEIGHT=\"");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i2);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\">");
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r15);
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<TR");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<TD");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("</TD>");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("</TR>");
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("</TABLE>");
+
+        return;
+    }
+
+    public final java.lang.String getStartUidPrefix()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.EntityPort $r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort startUid>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.EntityPort: java.lang.String getPrefix()>();
+
+        return $r2;
+    }
+
+    public final java.lang.String getEndUidPrefix()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.EntityPort $r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort endUid>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.EntityPort: java.lang.String getPrefix()>();
+
+        return $r2;
+    }
+
+    private net.sourceforge.plantuml.graphic.UDrawable getExtremity(net.sourceforge.plantuml.cucadiagram.LinkDecor, net.sourceforge.plantuml.svek.PointListIterator, java.awt.geom.Point2D, double, net.sourceforge.plantuml.svek.Cluster, net.sourceforge.plantuml.svek.SvekNode)
+    {
+        net.sourceforge.plantuml.cucadiagram.LinkDecor r0, $r5, $r6, $r28;
+        net.sourceforge.plantuml.svek.SvekLine r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r2, $r30;
+        net.sourceforge.plantuml.svek.extremity.ExtremityFactory r3;
+        net.sourceforge.plantuml.svek.Cluster r4;
+        net.sourceforge.plantuml.ugraphic.UPolygon $r7, $r12;
+        net.sourceforge.plantuml.svek.PointListIterator r8, $r13;
+        java.lang.Object $r9, $r14, $r18, $r19, $r20, $r22;
+        java.util.List $r10, $r15, r33;
+        net.sourceforge.plantuml.svek.extremity.ExtremityOther $r11;
+        java.awt.geom.Point2D r16, r21, r23, r34, r37;
+        net.sourceforge.plantuml.svek.SvekLine$1 $r17;
+        int $i0;
+        net.sourceforge.plantuml.svek.SvekNode r24;
+        net.sourceforge.plantuml.graphic.UDrawable $r25, $r27, $r31, $r32;
+        net.sourceforge.plantuml.svek.ClusterPosition $r26;
+        double d0;
+        net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends $r29;
+        net.sourceforge.plantuml.svek.Side r35;
+
+        r1 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.LinkDecor;
+
+        r8 := @parameter1: net.sourceforge.plantuml.svek.PointListIterator;
+
+        r16 := @parameter2: java.awt.geom.Point2D;
+
+        d0 := @parameter3: double;
+
+        r4 := @parameter4: net.sourceforge.plantuml.svek.Cluster;
+
+        r24 := @parameter5: net.sourceforge.plantuml.svek.SvekNode;
+
+        $r2 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor backgroundColor>;
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.LinkDecor: net.sourceforge.plantuml.svek.extremity.ExtremityFactory getExtremityFactory(net.sourceforge.plantuml.ugraphic.color.HColor)>($r2);
+
+        if r4 == null goto label3;
+
+        if r3 == null goto label1;
+
+        $r32 = interfaceinvoke r3.<net.sourceforge.plantuml.svek.extremity.ExtremityFactory: net.sourceforge.plantuml.graphic.UDrawable createUDrawable(java.awt.geom.Point2D,double,net.sourceforge.plantuml.svek.Side)>(r16, d0, null);
+
+        return $r32;
+
+     label1:
+        $r28 = <net.sourceforge.plantuml.cucadiagram.LinkDecor: net.sourceforge.plantuml.cucadiagram.LinkDecor EXTENDS>;
+
+        if r0 != $r28 goto label2;
+
+        $r29 = new net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
+
+        $r30 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor backgroundColor>;
+
+        specialinvoke $r29.<net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor)>($r30);
+
+        $r31 = virtualinvoke $r29.<net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends: net.sourceforge.plantuml.graphic.UDrawable createUDrawable(java.awt.geom.Point2D,double,net.sourceforge.plantuml.svek.Side)>(r16, d0, null);
+
+        return $r31;
+
+     label2:
+        return null;
+
+     label3:
+        if r3 == null goto label6;
+
+        $r18 = interfaceinvoke r8.<net.sourceforge.plantuml.svek.PointListIterator: java.lang.Object next()>();
+
+        r33 = (java.util.List) $r18;
+
+        $i0 = interfaceinvoke r33.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label4;
+
+        $r27 = interfaceinvoke r3.<net.sourceforge.plantuml.svek.extremity.ExtremityFactory: net.sourceforge.plantuml.graphic.UDrawable createUDrawable(java.awt.geom.Point2D,double,net.sourceforge.plantuml.svek.Side)>(r16, d0, null);
+
+        return $r27;
+
+     label4:
+        $r19 = interfaceinvoke r33.<java.util.List: java.lang.Object get(int)>(0);
+
+        r34 = (java.awt.geom.Point2D) $r19;
+
+        $r20 = interfaceinvoke r33.<java.util.List: java.lang.Object get(int)>(1);
+
+        r21 = (java.awt.geom.Point2D) $r20;
+
+        $r22 = interfaceinvoke r33.<java.util.List: java.lang.Object get(int)>(2);
+
+        r23 = (java.awt.geom.Point2D) $r22;
+
+        r35 = null;
+
+        if r24 == null goto label5;
+
+        $r26 = virtualinvoke r24.<net.sourceforge.plantuml.svek.SvekNode: net.sourceforge.plantuml.svek.ClusterPosition getClusterPosition()>();
+
+        r35 = virtualinvoke $r26.<net.sourceforge.plantuml.svek.ClusterPosition: net.sourceforge.plantuml.svek.Side getClosestSide(java.awt.geom.Point2D)>(r21);
+
+     label5:
+        $r25 = interfaceinvoke r3.<net.sourceforge.plantuml.svek.extremity.ExtremityFactory: net.sourceforge.plantuml.graphic.UDrawable createUDrawable(java.awt.geom.Point2D,java.awt.geom.Point2D,java.awt.geom.Point2D,net.sourceforge.plantuml.svek.Side)>(r34, r21, r23, r35);
+
+        return $r25;
+
+     label6:
+        $r5 = <net.sourceforge.plantuml.cucadiagram.LinkDecor: net.sourceforge.plantuml.cucadiagram.LinkDecor NONE>;
+
+        if r0 != $r5 goto label8;
+
+        $r12 = new net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r13 = interfaceinvoke r8.<net.sourceforge.plantuml.svek.PointListIterator: net.sourceforge.plantuml.svek.PointListIterator cloneMe()>();
+
+        $r14 = interfaceinvoke $r13.<net.sourceforge.plantuml.svek.PointListIterator: java.lang.Object next()>();
+
+        $r15 = (java.util.List) $r14;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.ugraphic.UPolygon: void <init>(java.util.List)>($r15);
+
+        r37 = virtualinvoke $r12.<net.sourceforge.plantuml.ugraphic.UPolygon: java.awt.geom.Point2D checkMiddleContactForSpecificTriangle(java.awt.geom.Point2D)>(r16);
+
+        if r37 == null goto label7;
+
+        $r17 = new net.sourceforge.plantuml.svek.SvekLine$1;
+
+        specialinvoke $r17.<net.sourceforge.plantuml.svek.SvekLine$1: void <init>(net.sourceforge.plantuml.svek.SvekLine,java.awt.geom.Point2D,java.awt.geom.Point2D)>(r1, r37, r16);
+
+        return $r17;
+
+     label7:
+        goto label9;
+
+     label8:
+        $r6 = <net.sourceforge.plantuml.cucadiagram.LinkDecor: net.sourceforge.plantuml.cucadiagram.LinkDecor NONE>;
+
+        if r0 == $r6 goto label9;
+
+        $r7 = new net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r9 = interfaceinvoke r8.<net.sourceforge.plantuml.svek.PointListIterator: java.lang.Object next()>();
+
+        $r10 = (java.util.List) $r9;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.ugraphic.UPolygon: void <init>(java.util.List)>($r10);
+
+        $r11 = new net.sourceforge.plantuml.svek.extremity.ExtremityOther;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.svek.extremity.ExtremityOther: void <init>(net.sourceforge.plantuml.ugraphic.UPolygon)>($r7);
+
+        return $r11;
+
+     label9:
+        return null;
+    }
+
+    public void solveLine(net.sourceforge.plantuml.svek.SvgResult)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1, $r12, $r18, $r28, $r34, $r38, $r54, $r74, $r84, $r90, $r95;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6;
+        net.sourceforge.plantuml.svek.SvgResult r2, r3, r11;
+        int $i0, $i1, i2, $i3, $i4, $i5, $i6, $i7, $i10, i11, i12;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.posimo.DotPath $r5, $r9, $r10, $r15, $r17, $r25, $r27, $r62, $r64, $r66, $r68, $r71, $r73, $r81, $r83, $r94, $r99;
+        net.sourceforge.plantuml.svek.Cluster $r6, $r7, $r8, $r19, $r29, $r75, $r85, $r101;
+        net.sourceforge.plantuml.cucadiagram.LinkType r13;
+        net.sourceforge.plantuml.cucadiagram.LinkDecor $r14, $r24, $r70, $r80;
+        java.awt.geom.Point2D $r16, $r26, r61, $r63, $r65, $r67, $r69, $r72, $r82, r104;
+        double $d0, $d1, $d2, d3, d4, d5, d6, $d7, $d8, $d9, $d10, $d11, $d12;
+        net.sourceforge.plantuml.svek.Bibliotekon $r20, $r30, $r76, $r86, $r91, $r96;
+        net.sourceforge.plantuml.cucadiagram.IEntity $r21, $r31, $r35, $r39, $r77, $r87, $r92, $r97;
+        net.sourceforge.plantuml.svek.SvekNode $r22, $r32, $r78, $r88, $r93, $r98;
+        net.sourceforge.plantuml.graphic.UDrawable $r23, $r33, $r42, $r56, $r57, $r59, $r79, $r89;
+        net.sourceforge.plantuml.cucadiagram.LeafType $r36, $r37, $r40, $r41;
+        net.sourceforge.plantuml.graphic.StringBounder $r43, $r46, $r49, $r51, $r100;
+        net.sourceforge.plantuml.graphic.TextBlock $r44, $r47, $r52, $r108, $r110;
+        net.sourceforge.plantuml.posimo.Positionable $r45, $r48, $r107;
+        net.sourceforge.plantuml.Dimension2DDouble $r50;
+        net.sourceforge.plantuml.cucadiagram.LinkConstraint $r55;
+        net.sourceforge.plantuml.svek.extremity.Extremity $r58, $r60;
+        byte $b8, $b9;
+        java.lang.IllegalStateException $r102;
+        net.sourceforge.plantuml.svek.PointListIterator r103, r105;
+        java.awt.geom.Point2D$Double r106, r109, r111;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r2 := @parameter0: net.sourceforge.plantuml.svek.SvgResult;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: boolean isInvis()>();
+
+        if $z0 == 0 goto label01;
+
+        return;
+
+     label01:
+        $i0 = r0.<net.sourceforge.plantuml.svek.SvekLine: int lineColor>;
+
+        i11 = virtualinvoke r2.<net.sourceforge.plantuml.svek.SvgResult: int getIndexFromColor(int)>($i0);
+
+        if i11 != -1 goto label02;
+
+        return;
+
+     label02:
+        i12 = virtualinvoke r2.<net.sourceforge.plantuml.svek.SvgResult: int indexOf(java.lang.String,int)>("d=\"", i11);
+
+        if i12 != -1 goto label03;
+
+        $r102 = new java.lang.IllegalStateException;
+
+        specialinvoke $r102.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r102;
+
+     label03:
+        $i1 = i12 + 3;
+
+        i2 = virtualinvoke r2.<net.sourceforge.plantuml.svek.SvgResult: int indexOf(java.lang.String,int)>("\"", $i1);
+
+        $i3 = i12 + 3;
+
+        r3 = virtualinvoke r2.<net.sourceforge.plantuml.svek.SvgResult: net.sourceforge.plantuml.svek.SvgResult substring(int,int)>($i3, i2);
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.svek.SvgResult: java.lang.String getSvg()>();
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.posimo.DotPath: boolean isPathConsistent(java.lang.String)>($r4);
+
+        if $z1 != 0 goto label04;
+
+        return;
+
+     label04:
+        $r5 = new net.sourceforge.plantuml.posimo.DotPath;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.posimo.DotPath: void <init>(net.sourceforge.plantuml.svek.SvgResult)>(r3);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath> = $r5;
+
+        $r6 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster projectionCluster>;
+
+        if $r6 == null goto label05;
+
+        $r101 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster projectionCluster>;
+
+        $r100 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        virtualinvoke $r101.<net.sourceforge.plantuml.svek.Cluster: void manageEntryExitPoint(net.sourceforge.plantuml.graphic.StringBounder)>($r100);
+
+     label05:
+        $r9 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r8 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster lhead>;
+
+        $r7 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster ltail>;
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.posimo.DotPath: net.sourceforge.plantuml.posimo.DotPath simulateCompound(net.sourceforge.plantuml.svek.Cluster,net.sourceforge.plantuml.svek.Cluster)>($r8, $r7);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath> = $r10;
+
+        r11 = virtualinvoke r2.<net.sourceforge.plantuml.svek.SvgResult: net.sourceforge.plantuml.svek.SvgResult substring(int)>(i2);
+
+        $i4 = r0.<net.sourceforge.plantuml.svek.SvekLine: int lineColor>;
+
+        r103 = virtualinvoke r11.<net.sourceforge.plantuml.svek.SvgResult: net.sourceforge.plantuml.svek.PointListIterator getPointsWithThisColor(int)>($i4);
+
+        $r12 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        r13 = virtualinvoke $r12.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        $r14 = virtualinvoke r13.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkDecor getDecor2()>();
+
+        $r15 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r16 = virtualinvoke $r15.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        $r17 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $d0 = virtualinvoke $r17.<net.sourceforge.plantuml.posimo.DotPath: double getStartAngle()>();
+
+        $d1 = $d0 + 3.141592653589793;
+
+        $r19 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster ltail>;
+
+        $r20 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon>;
+
+        $r18 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r21 = virtualinvoke $r18.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        $r22 = virtualinvoke $r20.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode getNode(net.sourceforge.plantuml.cucadiagram.IEntity)>($r21);
+
+        $r23 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable getExtremity(net.sourceforge.plantuml.cucadiagram.LinkDecor,net.sourceforge.plantuml.svek.PointListIterator,java.awt.geom.Point2D,double,net.sourceforge.plantuml.svek.Cluster,net.sourceforge.plantuml.svek.SvekNode)>($r14, r103, $r16, $d1, $r19, $r22);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity1> = $r23;
+
+        $r24 = virtualinvoke r13.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkDecor getDecor1()>();
+
+        $r25 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r26 = virtualinvoke $r25.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        $r27 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $d2 = virtualinvoke $r27.<net.sourceforge.plantuml.posimo.DotPath: double getEndAngle()>();
+
+        $r29 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster lhead>;
+
+        $r30 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon>;
+
+        $r28 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r31 = virtualinvoke $r28.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $r32 = virtualinvoke $r30.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode getNode(net.sourceforge.plantuml.cucadiagram.IEntity)>($r31);
+
+        $r33 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable getExtremity(net.sourceforge.plantuml.cucadiagram.LinkDecor,net.sourceforge.plantuml.svek.PointListIterator,java.awt.geom.Point2D,double,net.sourceforge.plantuml.svek.Cluster,net.sourceforge.plantuml.svek.SvekNode)>($r24, r103, $r26, $d2, $r29, $r32);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity2> = $r33;
+
+        $r34 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r35 = virtualinvoke $r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        $r36 = interfaceinvoke $r35.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.LeafType getLeafType()>();
+
+        $r37 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType LOLLIPOP_HALF>;
+
+        if $r36 != $r37 goto label06;
+
+        $r96 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon>;
+
+        $r95 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r97 = virtualinvoke $r95.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        $r98 = virtualinvoke $r96.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode getNode(net.sourceforge.plantuml.cucadiagram.IEntity)>($r97);
+
+        $r99 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $d11 = virtualinvoke $r99.<net.sourceforge.plantuml.posimo.DotPath: double getStartAngle()>();
+
+        $d12 = $d11 + 3.141592653589793;
+
+        virtualinvoke $r98.<net.sourceforge.plantuml.svek.SvekNode: void addImpact(double)>($d12);
+
+     label06:
+        $r38 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r39 = virtualinvoke $r38.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $r40 = interfaceinvoke $r39.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.LeafType getLeafType()>();
+
+        $r41 = <net.sourceforge.plantuml.cucadiagram.LeafType: net.sourceforge.plantuml.cucadiagram.LeafType LOLLIPOP_HALF>;
+
+        if $r40 != $r41 goto label07;
+
+        $r91 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon>;
+
+        $r90 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r92 = virtualinvoke $r90.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $r93 = virtualinvoke $r91.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode getNode(net.sourceforge.plantuml.cucadiagram.IEntity)>($r92);
+
+        $r94 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $d10 = virtualinvoke $r94.<net.sourceforge.plantuml.posimo.DotPath: double getEndAngle()>();
+
+        virtualinvoke $r93.<net.sourceforge.plantuml.svek.SvekNode: void addImpact(double)>($d10);
+
+     label07:
+        $r42 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity1>;
+
+        $z2 = $r42 instanceof net.sourceforge.plantuml.svek.extremity.Extremity;
+
+        if $z2 == 0 goto label08;
+
+        $r56 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity2>;
+
+        $z4 = $r56 instanceof net.sourceforge.plantuml.svek.extremity.Extremity;
+
+        if $z4 == 0 goto label08;
+
+        $r57 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity1>;
+
+        $r58 = (net.sourceforge.plantuml.svek.extremity.Extremity) $r57;
+
+        r104 = virtualinvoke $r58.<net.sourceforge.plantuml.svek.extremity.Extremity: java.awt.geom.Point2D somePoint()>();
+
+        $r59 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity2>;
+
+        $r60 = (net.sourceforge.plantuml.svek.extremity.Extremity) $r59;
+
+        r61 = virtualinvoke $r60.<net.sourceforge.plantuml.svek.extremity.Extremity: java.awt.geom.Point2D somePoint()>();
+
+        if r104 == null goto label08;
+
+        if r61 == null goto label08;
+
+        $r62 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r63 = virtualinvoke $r62.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        d3 = virtualinvoke r104.<java.awt.geom.Point2D: double distance(java.awt.geom.Point2D)>($r63);
+
+        $r64 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r65 = virtualinvoke $r64.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        d4 = virtualinvoke r104.<java.awt.geom.Point2D: double distance(java.awt.geom.Point2D)>($r65);
+
+        $r66 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r67 = virtualinvoke $r66.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        d5 = virtualinvoke r61.<java.awt.geom.Point2D: double distance(java.awt.geom.Point2D)>($r67);
+
+        $r68 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r69 = virtualinvoke $r68.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        d6 = virtualinvoke r61.<java.awt.geom.Point2D: double distance(java.awt.geom.Point2D)>($r69);
+
+        $b8 = d3 cmpl d4;
+
+        if $b8 <= 0 goto label08;
+
+        $b9 = d6 cmpl d5;
+
+        if $b9 <= 0 goto label08;
+
+        $i10 = r0.<net.sourceforge.plantuml.svek.SvekLine: int lineColor>;
+
+        r105 = virtualinvoke r11.<net.sourceforge.plantuml.svek.SvgResult: net.sourceforge.plantuml.svek.PointListIterator getPointsWithThisColor(int)>($i10);
+
+        $r70 = virtualinvoke r13.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkDecor getDecor1()>();
+
+        $r71 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r72 = virtualinvoke $r71.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        $r73 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $d7 = virtualinvoke $r73.<net.sourceforge.plantuml.posimo.DotPath: double getEndAngle()>();
+
+        $r75 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster lhead>;
+
+        $r76 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon>;
+
+        $r74 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r77 = virtualinvoke $r74.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $r78 = virtualinvoke $r76.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode getNode(net.sourceforge.plantuml.cucadiagram.IEntity)>($r77);
+
+        $r79 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable getExtremity(net.sourceforge.plantuml.cucadiagram.LinkDecor,net.sourceforge.plantuml.svek.PointListIterator,java.awt.geom.Point2D,double,net.sourceforge.plantuml.svek.Cluster,net.sourceforge.plantuml.svek.SvekNode)>($r70, r105, $r72, $d7, $r75, $r78);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity2> = $r79;
+
+        $r80 = virtualinvoke r13.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkDecor getDecor2()>();
+
+        $r81 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r82 = virtualinvoke $r81.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        $r83 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $d8 = virtualinvoke $r83.<net.sourceforge.plantuml.posimo.DotPath: double getStartAngle()>();
+
+        $d9 = $d8 + 3.141592653589793;
+
+        $r85 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster ltail>;
+
+        $r86 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon>;
+
+        $r84 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r87 = virtualinvoke $r84.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        $r88 = virtualinvoke $r86.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.SvekNode getNode(net.sourceforge.plantuml.cucadiagram.IEntity)>($r87);
+
+        $r89 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable getExtremity(net.sourceforge.plantuml.cucadiagram.LinkDecor,net.sourceforge.plantuml.svek.PointListIterator,java.awt.geom.Point2D,double,net.sourceforge.plantuml.svek.Cluster,net.sourceforge.plantuml.svek.SvekNode)>($r80, r105, $r82, $d9, $r85, $r88);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity1> = $r89;
+
+     label08:
+        $z5 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean hasNoteLabelText()>();
+
+        if $z5 != 0 goto label09;
+
+        $r54 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r55 = virtualinvoke $r54.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkConstraint getLinkConstraint()>();
+
+        if $r55 == null goto label12;
+
+     label09:
+        $i5 = r0.<net.sourceforge.plantuml.svek.SvekLine: int noteLabelColor>;
+
+        r106 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.awt.geom.Point2D$Double getXY(net.sourceforge.plantuml.svek.SvgResult,int)>(r2, $i5);
+
+        if r106 == null goto label12;
+
+        $z3 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean hasNoteLabelText()>();
+
+        if $z3 == 0 goto label10;
+
+        $r52 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText>;
+
+        $r51 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r107 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.posimo.Positionable asPositionable(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.StringBounder,java.awt.geom.Point2D)>($r52, $r51, r106);
+
+        goto label11;
+
+     label10:
+        $r50 = <net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.Dimension2DDouble CONSTRAINT_SPOT>;
+
+        $r49 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r107 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.posimo.Positionable asPositionable(net.sourceforge.plantuml.awt.geom.Dimension2D,net.sourceforge.plantuml.graphic.StringBounder,java.awt.geom.Point2D)>($r50, $r49, r106);
+
+     label11:
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable labelXY> = $r107;
+
+     label12:
+        $r108 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        if $r108 == null goto label13;
+
+        $i7 = r0.<net.sourceforge.plantuml.svek.SvekLine: int startTailColor>;
+
+        r109 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.awt.geom.Point2D$Double getXY(net.sourceforge.plantuml.svek.SvgResult,int)>(r2, $i7);
+
+        if r109 == null goto label13;
+
+        $r47 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        $r46 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r48 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.posimo.Positionable asPositionable(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.StringBounder,java.awt.geom.Point2D)>($r47, $r46, r109);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY> = $r48;
+
+     label13:
+        $r110 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        if $r110 == null goto label14;
+
+        $i6 = r0.<net.sourceforge.plantuml.svek.SvekLine: int endHeadColor>;
+
+        r111 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.awt.geom.Point2D$Double getXY(net.sourceforge.plantuml.svek.SvgResult,int)>(r2, $i6);
+
+        if r111 == null goto label14;
+
+        $r44 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        $r43 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r45 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.posimo.Positionable asPositionable(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.StringBounder,java.awt.geom.Point2D)>($r44, $r43, r111);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY> = $r45;
+
+     label14:
+        $z6 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean isOpalisable()>();
+
+        if $z6 != 0 goto label15;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: void setOpale(boolean)>(0);
+
+     label15:
+        return;
+    }
+
+    private boolean isOpalisable()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.posimo.DotPath $r1;
+        java.util.List $r2;
+        int $i0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.posimo.DotPath: java.util.List getBeziers()>();
+
+        $i0 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        if $i0 > 1 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private java.awt.geom.Point2D$Double getXY(net.sourceforge.plantuml.svek.SvgResult, int)
+    {
+        net.sourceforge.plantuml.svek.SvgResult r0, $r1;
+        int i0, i1;
+        java.util.List $r2;
+        java.awt.geom.Point2D$Double $r3;
+        net.sourceforge.plantuml.svek.SvekLine r4;
+
+        r4 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r0 := @parameter0: net.sourceforge.plantuml.svek.SvgResult;
+
+        i0 := @parameter1: int;
+
+        i1 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvgResult: int getIndexFromColor(int)>(i0);
+
+        if i1 != -1 goto label1;
+
+        return null;
+
+     label1:
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvgResult: net.sourceforge.plantuml.svek.SvgResult substring(int)>(i1);
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.svek.SvgResult: java.util.List extractList(java.lang.String)>("points=\"");
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.svek.SvekUtils: java.awt.geom.Point2D$Double getMinXY(java.util.List)>($r2);
+
+        return $r3;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.ugraphic.UStroke, net.sourceforge.plantuml.ugraphic.color.HColor, java.util.Set)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10;
+        net.sourceforge.plantuml.cucadiagram.Link $r1, $r8, $r13, $r23, $r28, $r34, $r36, $r37, $r39, $r43, $r45, $r48, $r57, $r59, $r60, $r96, $r113, $r116, $r128, $r131, $r134, $r135, $r139, $r148, $r154, $r165, $r168, $r172;
+        net.sourceforge.plantuml.ugraphic.UComment $r2;
+        java.util.EnumMap $r3;
+        java.lang.StringBuilder $r5, $r7, $r11, $r12, $r16, $r17, $r20, $r22, $r26, $r27, $r31, $r124, $r125, $r126;
+        net.sourceforge.plantuml.ugraphic.UGroupType $r6, $r21;
+        net.sourceforge.plantuml.cucadiagram.IEntity $r9, $r14, $r24, $r29, $r46, $r114, $r118, $r141;
+        net.sourceforge.plantuml.cucadiagram.Code $r10, $r15, $r25, $r30;
+        java.lang.String $r18, $r32, $r127, r166, r167, $r169;
+        net.sourceforge.plantuml.Url r35;
+        net.sourceforge.plantuml.graphic.color.Colors $r38, $r44, $r129, $r132, $r136;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r40, $r70, $r71, r146, r149;
+        net.sourceforge.plantuml.ugraphic.UStroke r41, $r42, $r130, $r156, r157, $r174;
+        java.util.Set r47, r183;
+        net.sourceforge.plantuml.cucadiagram.LinkConstraint $r49, $r58, $r61;
+        net.sourceforge.plantuml.posimo.Positionable $r50, $r52, $r75, $r76, $r79, $r82, $r85, $r86, $r89, $r92, $r95, $r100, $r103;
+        java.awt.geom.Point2D $r51, $r53, r64, r67, $r77, $r81, $r83, $r87, $r91, $r93, $r102, $r104, $r109, $r112, $r121, $r144, r163, r164, r184;
+        double $d0, $d1, d2, d3, d4, $d5, $d6, d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, $d23, $d24, $d25, $d26, $d27, $d28, $d29, $d30, $d31, $d32, $d33, $d34, $d35, $d36, d37, d39, $d40, d41, $d42, d43, d44, d45, d46;
+        java.util.List r54, $r173;
+        net.sourceforge.plantuml.posimo.DotPath $r55, $r68, $r120, $r123, $r143, $r159, r160;
+        java.util.Iterator r56, r65;
+        net.sourceforge.plantuml.ISkinParam $r62;
+        java.lang.Object $r63, $r66;
+        byte $b0;
+        net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor $r69, $r179, $r180;
+        net.sourceforge.plantuml.svek.extremity.MiddleFactory $r72;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r73, $r78, $r88, $r99, $r170;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r74, $r84, $r94, $r105, r145, $r152, r153, r158, $r171, $r175, r176;
+        net.sourceforge.plantuml.graphic.TextBlock $r80, $r90, $r101, $r177, $r178;
+        net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy $r97, $r98;
+        net.sourceforge.plantuml.graphic.UDrawable $r106, $r107, $r110, $r162, r182;
+        net.sourceforge.plantuml.svek.extremity.Extremity $r108, $r111;
+        net.sourceforge.plantuml.graphic.USymbol $r115;
+        net.sourceforge.plantuml.svek.Bibliotekon $r117, $r140;
+        net.sourceforge.plantuml.cucadiagram.IGroup $r119, $r142;
+        net.sourceforge.plantuml.graphic.StringBounder $r122;
+        net.sourceforge.plantuml.cucadiagram.LinkStyle $r133;
+        net.sourceforge.plantuml.graphic.color.ColorType $r137, $r138;
+        net.sourceforge.plantuml.svek.Cluster r147, r161;
+        net.sourceforge.plantuml.ugraphic.color.HColorNone $r150;
+        net.sourceforge.plantuml.ugraphic.UBackground $r151;
+        net.sourceforge.plantuml.cucadiagram.LinkType r155;
+        net.sourceforge.plantuml.svek.PointAndAngle r181;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r145 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r41 := @parameter1: net.sourceforge.plantuml.ugraphic.UStroke;
+
+        r146 := @parameter2: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        r47 := @parameter3: java.util.Set;
+
+        $z0 = r0.<net.sourceforge.plantuml.svek.SvekLine: boolean opale>;
+
+        if $z0 == 0 goto label01;
+
+        return;
+
+     label01:
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.ugraphic.UComment commentForSvg()>();
+
+        interfaceinvoke r145.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r2);
+
+        $r3 = new java.util.EnumMap;
+
+        specialinvoke $r3.<java.util.EnumMap: void <init>(java.lang.Class)>(class "Lnet/sourceforge/plantuml/ugraphic/UGroupType;");
+
+        $r6 = <net.sourceforge.plantuml.ugraphic.UGroupType: net.sourceforge.plantuml.ugraphic.UGroupType CLASS>;
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("link ");
+
+        $r8 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        $r10 = interfaceinvoke $r9.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.Code getCode()>();
+
+        $r11 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r10);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r13 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r14 = virtualinvoke $r13.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $r15 = interfaceinvoke $r14.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.Code getCode()>();
+
+        $r16 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r15);
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" selected");
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r6, $r18);
+
+        $r21 = <net.sourceforge.plantuml.ugraphic.UGroupType: net.sourceforge.plantuml.ugraphic.UGroupType ID>;
+
+        $r20 = new java.lang.StringBuilder;
+
+        specialinvoke $r20.<java.lang.StringBuilder: void <init>()>();
+
+        $r22 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("link_");
+
+        $r23 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r24 = virtualinvoke $r23.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        $r25 = interfaceinvoke $r24.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.Code getCode()>();
+
+        $r26 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r25);
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
+
+        $r28 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r29 = virtualinvoke $r28.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $r30 = interfaceinvoke $r29.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.Code getCode()>();
+
+        $r31 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r30);
+
+        $r32 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r21, $r32);
+
+        interfaceinvoke r145.<net.sourceforge.plantuml.ugraphic.UGraphic: void startGroup(java.util.Map)>($r3);
+
+        d37 = 0.0;
+
+        $r34 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        r35 = virtualinvoke $r34.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.Url getUrl()>();
+
+        if r35 == null goto label02;
+
+        interfaceinvoke r145.<net.sourceforge.plantuml.ugraphic.UGraphic: void startUrl(net.sourceforge.plantuml.Url)>(r35);
+
+     label02:
+        $r36 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z1 = virtualinvoke $r36.<net.sourceforge.plantuml.cucadiagram.Link: boolean isAutoLinkOfAGroup()>();
+
+        if $z1 == 0 goto label03;
+
+        $r140 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon>;
+
+        $r139 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r141 = virtualinvoke $r139.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        $r142 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r141;
+
+        r147 = virtualinvoke $r140.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.Cluster getCluster(net.sourceforge.plantuml.cucadiagram.IGroup)>($r142);
+
+        if r147 == null goto label03;
+
+        $d33 = virtualinvoke r147.<net.sourceforge.plantuml.svek.Cluster: double getWidth()>();
+
+        d39 = 0.0 + $d33;
+
+        $r143 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r144 = virtualinvoke $r143.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        $d34 = virtualinvoke $r144.<java.awt.geom.Point2D: double getX()>();
+
+        $d35 = virtualinvoke r147.<net.sourceforge.plantuml.svek.Cluster: double getMinX()>();
+
+        $d36 = $d34 - $d35;
+
+        d37 = d39 - $d36;
+
+     label03:
+        $d40 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dx>;
+
+        d41 = d37 + $d40;
+
+        $d42 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dy>;
+
+        d43 = 0.0 + $d42;
+
+        $r148 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z8 = virtualinvoke $r148.<net.sourceforge.plantuml.cucadiagram.Link: boolean isInvis()>();
+
+        if $z8 == 0 goto label04;
+
+        return;
+
+     label04:
+        $r37 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r38 = virtualinvoke $r37.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        if $r38 == null goto label06;
+
+        $r135 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r136 = virtualinvoke $r135.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        $r138 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType ARROW>;
+
+        $r137 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType LINE>;
+
+        r149 = virtualinvoke $r136.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.graphic.color.ColorType,net.sourceforge.plantuml.graphic.color.ColorType)>($r138, $r137);
+
+        if r149 == null goto label05;
+
+        r146 = r149;
+
+     label05:
+        goto label07;
+
+     label06:
+        $r39 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r40 = virtualinvoke $r39.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.ugraphic.color.HColor getSpecificColor()>();
+
+        if $r40 == null goto label07;
+
+        $r134 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        r146 = virtualinvoke $r134.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.ugraphic.color.HColor getSpecificColor()>();
+
+     label07:
+        $r150 = new net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        specialinvoke $r150.<net.sourceforge.plantuml.ugraphic.color.HColorNone: void <init>()>();
+
+        $r151 = virtualinvoke $r150.<net.sourceforge.plantuml.ugraphic.color.HColorNone: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r152 = interfaceinvoke r145.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r151);
+
+        r153 = interfaceinvoke $r152.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r146);
+
+        $r154 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        r155 = virtualinvoke $r154.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        if r41 == null goto label08;
+
+        $r133 = virtualinvoke r155.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkStyle getStyle()>();
+
+        $z7 = virtualinvoke $r133.<net.sourceforge.plantuml.cucadiagram.LinkStyle: boolean isNormal()>();
+
+        if $z7 != 0 goto label09;
+
+     label08:
+        $r42 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.UStroke defaultThickness>;
+
+        $r156 = virtualinvoke r155.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.ugraphic.UStroke getStroke3(net.sourceforge.plantuml.ugraphic.UStroke)>($r42);
+
+        goto label10;
+
+     label09:
+        $r156 = r41;
+
+     label10:
+        r157 = $r156;
+
+        $r43 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r44 = virtualinvoke $r43.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        if $r44 == null goto label11;
+
+        $r128 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r129 = virtualinvoke $r128.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        $r130 = virtualinvoke $r129.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ugraphic.UStroke getSpecificLineStroke()>();
+
+        if $r130 == null goto label11;
+
+        $r131 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r132 = virtualinvoke $r131.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        r157 = virtualinvoke $r132.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ugraphic.UStroke getSpecificLineStroke()>();
+
+     label11:
+        r158 = interfaceinvoke r153.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r157);
+
+        $r159 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        if $r159 != null goto label12;
+
+        $r124 = new java.lang.StringBuilder;
+
+        specialinvoke $r124.<java.lang.StringBuilder: void <init>()>();
+
+        $r125 = virtualinvoke $r124.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("DotPath is null for ");
+
+        $r126 = virtualinvoke $r125.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r0);
+
+        $r127 = virtualinvoke $r126.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r127);
+
+        return;
+
+     label12:
+        r160 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r45 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r46 = virtualinvoke $r45.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $z2 = interfaceinvoke $r46.<net.sourceforge.plantuml.cucadiagram.IEntity: boolean isGroup()>();
+
+        if $z2 == 0 goto label13;
+
+        $r113 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r114 = virtualinvoke $r113.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $r115 = interfaceinvoke $r114.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.graphic.USymbol getUSymbol()>();
+
+        $z6 = $r115 instanceof net.sourceforge.plantuml.graphic.USymbolFolder;
+
+        if $z6 == 0 goto label13;
+
+        $r117 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Bibliotekon bibliotekon>;
+
+        $r116 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r118 = virtualinvoke $r116.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        $r119 = (net.sourceforge.plantuml.cucadiagram.IGroup) $r118;
+
+        r161 = virtualinvoke $r117.<net.sourceforge.plantuml.svek.Bibliotekon: net.sourceforge.plantuml.svek.Cluster getCluster(net.sourceforge.plantuml.cucadiagram.IGroup)>($r119);
+
+        if r161 == null goto label13;
+
+        $r120 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r121 = virtualinvoke $r120.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        $r122 = interfaceinvoke r158.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        d44 = virtualinvoke r161.<net.sourceforge.plantuml.svek.Cluster: double checkFolderPosition(java.awt.geom.Point2D,net.sourceforge.plantuml.graphic.StringBounder)>($r121, $r122);
+
+        $r123 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r160 = virtualinvoke $r123.<net.sourceforge.plantuml.posimo.DotPath: net.sourceforge.plantuml.posimo.DotPath copy()>();
+
+        virtualinvoke r160.<net.sourceforge.plantuml.posimo.DotPath: void moveEndPoint(double,double)>(0.0, d44);
+
+     label13:
+        $r162 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity1>;
+
+        $z9 = $r162 instanceof net.sourceforge.plantuml.svek.extremity.Extremity;
+
+        if $z9 == 0 goto label15;
+
+        $r106 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity2>;
+
+        $z5 = $r106 instanceof net.sourceforge.plantuml.svek.extremity.Extremity;
+
+        if $z5 == 0 goto label15;
+
+        $r107 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity1>;
+
+        $r108 = (net.sourceforge.plantuml.svek.extremity.Extremity) $r107;
+
+        $r109 = virtualinvoke r160.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        r163 = virtualinvoke $r108.<net.sourceforge.plantuml.svek.extremity.Extremity: java.awt.geom.Point2D isTooSmallSoGiveThePointCloserToThisOne(java.awt.geom.Point2D)>($r109);
+
+        if r163 == null goto label14;
+
+        $d31 = virtualinvoke r163.<java.awt.geom.Point2D: double getX()>();
+
+        $d32 = virtualinvoke r163.<java.awt.geom.Point2D: double getY()>();
+
+        virtualinvoke r160.<net.sourceforge.plantuml.posimo.DotPath: void forceStartPoint(double,double)>($d31, $d32);
+
+     label14:
+        $r110 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity2>;
+
+        $r111 = (net.sourceforge.plantuml.svek.extremity.Extremity) $r110;
+
+        $r112 = virtualinvoke r160.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        r164 = virtualinvoke $r111.<net.sourceforge.plantuml.svek.extremity.Extremity: java.awt.geom.Point2D isTooSmallSoGiveThePointCloserToThisOne(java.awt.geom.Point2D)>($r112);
+
+        if r164 == null goto label15;
+
+        $d29 = virtualinvoke r164.<java.awt.geom.Point2D: double getX()>();
+
+        $d30 = virtualinvoke r164.<java.awt.geom.Point2D: double getY()>();
+
+        virtualinvoke r160.<net.sourceforge.plantuml.posimo.DotPath: void forceEndPoint(double,double)>($d29, $d30);
+
+     label15:
+        $r165 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        r166 = virtualinvoke $r165.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String idCommentForSvg()>();
+
+        r167 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.lang.String uniq(java.util.Set,java.lang.String)>(r47, r166);
+
+        $r168 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r169 = virtualinvoke $r168.<net.sourceforge.plantuml.cucadiagram.Link: java.lang.String getCodeLine()>();
+
+        virtualinvoke r160.<net.sourceforge.plantuml.posimo.DotPath: void setCommentAndCodeLine(java.lang.String,java.lang.String)>(r167, $r169);
+
+        $r170 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        specialinvoke $r170.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>(d41, d43);
+
+        $r171 = interfaceinvoke r158.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r170);
+
+        $r172 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r173 = virtualinvoke $r172.<net.sourceforge.plantuml.cucadiagram.Link: java.util.List getSupplementaryColors()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: void drawRainbow(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.posimo.DotPath,java.util.List,net.sourceforge.plantuml.ugraphic.UStroke)>($r171, r146, r160, $r173, r157);
+
+        $r174 = new net.sourceforge.plantuml.ugraphic.UStroke;
+
+        specialinvoke $r174.<net.sourceforge.plantuml.ugraphic.UStroke: void <init>()>();
+
+        $r175 = interfaceinvoke r158.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r174);
+
+        r176 = interfaceinvoke $r175.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r146);
+
+        $z10 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean hasNoteLabelText()>();
+
+        if $z10 == 0 goto label16;
+
+        $r95 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable labelXY>;
+
+        if $r95 == null goto label16;
+
+        $r96 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r97 = virtualinvoke $r96.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy getNoteLinkStrategy()>();
+
+        $r98 = <net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy: net.sourceforge.plantuml.cucadiagram.NoteLinkStrategy HALF_NOT_PRINTED>;
+
+        if $r97 == $r98 goto label16;
+
+        $r101 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText>;
+
+        $r99 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $r100 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable labelXY>;
+
+        $r102 = interfaceinvoke $r100.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        $d21 = virtualinvoke $r102.<java.awt.geom.Point2D: double getX()>();
+
+        $d23 = d41 + $d21;
+
+        $d22 = r0.<net.sourceforge.plantuml.svek.SvekLine: double labelShield>;
+
+        $d24 = $d23 + $d22;
+
+        $r103 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable labelXY>;
+
+        $r104 = interfaceinvoke $r103.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        $d25 = virtualinvoke $r104.<java.awt.geom.Point2D: double getY()>();
+
+        $d27 = d43 + $d25;
+
+        $d26 = r0.<net.sourceforge.plantuml.svek.SvekLine: double labelShield>;
+
+        $d28 = $d27 + $d26;
+
+        specialinvoke $r99.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d24, $d28);
+
+        $r105 = interfaceinvoke r176.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r99);
+
+        interfaceinvoke $r101.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r105);
+
+     label16:
+        $r177 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        if $r177 == null goto label17;
+
+        $r85 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY>;
+
+        if $r85 == null goto label17;
+
+        $r86 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY>;
+
+        $r87 = interfaceinvoke $r86.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        if $r87 == null goto label17;
+
+        $r90 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        $r88 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $r89 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY>;
+
+        $r91 = interfaceinvoke $r89.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        $d17 = virtualinvoke $r91.<java.awt.geom.Point2D: double getX()>();
+
+        $d18 = d41 + $d17;
+
+        $r92 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY>;
+
+        $r93 = interfaceinvoke $r92.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        $d19 = virtualinvoke $r93.<java.awt.geom.Point2D: double getY()>();
+
+        $d20 = d43 + $d19;
+
+        specialinvoke $r88.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d18, $d20);
+
+        $r94 = interfaceinvoke r176.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r88);
+
+        interfaceinvoke $r90.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r94);
+
+     label17:
+        $r178 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        if $r178 == null goto label18;
+
+        $r75 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY>;
+
+        if $r75 == null goto label18;
+
+        $r76 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY>;
+
+        $r77 = interfaceinvoke $r76.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        if $r77 == null goto label18;
+
+        $r80 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        $r78 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $r79 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY>;
+
+        $r81 = interfaceinvoke $r79.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        $d13 = virtualinvoke $r81.<java.awt.geom.Point2D: double getX()>();
+
+        $d14 = d41 + $d13;
+
+        $r82 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY>;
+
+        $r83 = interfaceinvoke $r82.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        $d15 = virtualinvoke $r83.<java.awt.geom.Point2D: double getY()>();
+
+        $d16 = d43 + $d15;
+
+        specialinvoke $r78.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d14, $d16);
+
+        $r84 = interfaceinvoke r176.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r78);
+
+        interfaceinvoke $r80.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r84);
+
+     label18:
+        $r179 = virtualinvoke r155.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor getMiddleDecor()>();
+
+        $r180 = <net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor: net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor NONE>;
+
+        if $r179 == $r180 goto label19;
+
+        $r68 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r181 = virtualinvoke $r68.<net.sourceforge.plantuml.posimo.DotPath: net.sourceforge.plantuml.svek.PointAndAngle getMiddle()>();
+
+        d4 = virtualinvoke r181.<net.sourceforge.plantuml.svek.PointAndAngle: double getAngle()>();
+
+        $d5 = neg d4;
+
+        $d6 = $d5 * 180.0;
+
+        d7 = $d6 / 3.141592653589793;
+
+        $r69 = virtualinvoke r155.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor getMiddleDecor()>();
+
+        $r71 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor arrowLollipopColor>;
+
+        $r70 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ugraphic.color.HColor backgroundColor>;
+
+        $r72 = virtualinvoke $r69.<net.sourceforge.plantuml.cucadiagram.LinkMiddleDecor: net.sourceforge.plantuml.svek.extremity.MiddleFactory getMiddleFactory(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.HColor)>($r71, $r70);
+
+        $d8 = d7 - 45.0;
+
+        r182 = interfaceinvoke $r72.<net.sourceforge.plantuml.svek.extremity.MiddleFactory: net.sourceforge.plantuml.graphic.UDrawable createUDrawable(double)>($d8);
+
+        $r73 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d9 = virtualinvoke r181.<net.sourceforge.plantuml.svek.PointAndAngle: double getX()>();
+
+        $d10 = d41 + $d9;
+
+        $d11 = virtualinvoke r181.<net.sourceforge.plantuml.svek.PointAndAngle: double getY()>();
+
+        $d12 = d43 + $d11;
+
+        specialinvoke $r73.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d10, $d12);
+
+        $r74 = interfaceinvoke r176.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r73);
+
+        interfaceinvoke r182.<net.sourceforge.plantuml.graphic.UDrawable: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r74);
+
+     label19:
+        if r35 == null goto label20;
+
+        interfaceinvoke r176.<net.sourceforge.plantuml.ugraphic.UGraphic: void closeUrl()>();
+
+     label20:
+        $r48 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r49 = virtualinvoke $r48.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkConstraint getLinkConstraint()>();
+
+        if $r49 == null goto label27;
+
+        $r50 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable labelXY>;
+
+        $r51 = interfaceinvoke $r50.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        $d0 = virtualinvoke $r51.<java.awt.geom.Point2D: double getX()>();
+
+        d45 = d41 + $d0;
+
+        $r52 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable labelXY>;
+
+        $r53 = interfaceinvoke $r52.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        $d1 = virtualinvoke $r53.<java.awt.geom.Point2D: double getY()>();
+
+        d2 = d43 + $d1;
+
+        r54 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.util.List getSquare(double,double)>(d45, d2);
+
+        $r55 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r183 = virtualinvoke $r55.<net.sourceforge.plantuml.posimo.DotPath: java.util.Set sample()>();
+
+        r184 = null;
+
+        d46 = 1.7976931348623157E308;
+
+        r56 = interfaceinvoke r54.<java.util.List: java.util.Iterator iterator()>();
+
+     label21:
+        $z3 = interfaceinvoke r56.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 == 0 goto label26;
+
+        $r63 = interfaceinvoke r56.<java.util.Iterator: java.lang.Object next()>();
+
+        r64 = (java.awt.geom.Point2D) $r63;
+
+        r65 = interfaceinvoke r183.<java.util.Set: java.util.Iterator iterator()>();
+
+     label22:
+        $z4 = interfaceinvoke r65.<java.util.Iterator: boolean hasNext()>();
+
+        if $z4 == 0 goto label25;
+
+        $r66 = interfaceinvoke r65.<java.util.Iterator: java.lang.Object next()>();
+
+        r67 = (java.awt.geom.Point2D) $r66;
+
+        d3 = virtualinvoke r67.<java.awt.geom.Point2D: double distance(java.awt.geom.Point2D)>(r64);
+
+        if r184 == null goto label23;
+
+        $b0 = d3 cmpg d46;
+
+        if $b0 >= 0 goto label24;
+
+     label23:
+        r184 = r64;
+
+        d46 = d3;
+
+     label24:
+        goto label22;
+
+     label25:
+        goto label21;
+
+     label26:
+        $r57 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r58 = virtualinvoke $r57.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkConstraint getLinkConstraint()>();
+
+        $r59 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        virtualinvoke $r58.<net.sourceforge.plantuml.cucadiagram.LinkConstraint: void setPosition(net.sourceforge.plantuml.cucadiagram.Link,java.awt.geom.Point2D)>($r59, r184);
+
+        $r60 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r61 = virtualinvoke $r60.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkConstraint getLinkConstraint()>();
+
+        $r62 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        virtualinvoke $r61.<net.sourceforge.plantuml.cucadiagram.LinkConstraint: void drawMe(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.ISkinParam)>(r176, $r62);
+
+     label27:
+        interfaceinvoke r176.<net.sourceforge.plantuml.ugraphic.UGraphic: void closeGroup()>();
+
+        return;
+    }
+
+    private java.util.List getSquare(double, double)
+    {
+        java.util.ArrayList $r0;
+        java.awt.geom.Point2D$Double $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11;
+        net.sourceforge.plantuml.svek.SvekLine r10;
+
+        r10 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r2 = new java.awt.geom.Point2D$Double;
+
+        specialinvoke $r2.<java.awt.geom.Point2D$Double: void <init>(double,double)>(d0, d1);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r2);
+
+        $r3 = new java.awt.geom.Point2D$Double;
+
+        $d2 = d0 + 5.0;
+
+        specialinvoke $r3.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d2, d1);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r3);
+
+        $r4 = new java.awt.geom.Point2D$Double;
+
+        $d3 = d0 + 10.0;
+
+        specialinvoke $r4.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d3, d1);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r4);
+
+        $r5 = new java.awt.geom.Point2D$Double;
+
+        $d4 = d1 + 5.0;
+
+        specialinvoke $r5.<java.awt.geom.Point2D$Double: void <init>(double,double)>(d0, $d4);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r5);
+
+        $r6 = new java.awt.geom.Point2D$Double;
+
+        $d6 = d0 + 10.0;
+
+        $d5 = d1 + 5.0;
+
+        specialinvoke $r6.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d6, $d5);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        $r7 = new java.awt.geom.Point2D$Double;
+
+        $d7 = d1 + 10.0;
+
+        specialinvoke $r7.<java.awt.geom.Point2D$Double: void <init>(double,double)>(d0, $d7);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r7);
+
+        $r8 = new java.awt.geom.Point2D$Double;
+
+        $d9 = d0 + 5.0;
+
+        $d8 = d1 + 10.0;
+
+        specialinvoke $r8.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d9, $d8);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r8);
+
+        $r9 = new java.awt.geom.Point2D$Double;
+
+        $d11 = d0 + 10.0;
+
+        $d10 = d1 + 10.0;
+
+        specialinvoke $r9.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d11, $d10);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r9);
+
+        return $r0;
+    }
+
+    private java.lang.String uniq(java.util.Set, java.lang.String)
+    {
+        java.util.Set r0;
+        java.lang.String r1, r6;
+        java.lang.StringBuilder $r2, $r3, $r4, $r5;
+        net.sourceforge.plantuml.svek.SvekLine r7;
+        boolean z0, z1;
+        int i0;
+
+        r7 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r0 := @parameter0: java.util.Set;
+
+        r1 := @parameter1: java.lang.String;
+
+        z0 = interfaceinvoke r0.<java.util.Set: boolean add(java.lang.Object)>(r1);
+
+        if z0 == 0 goto label1;
+
+        return r1;
+
+     label1:
+        i0 = 1;
+
+     label2:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("-");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        z1 = interfaceinvoke r0.<java.util.Set: boolean add(java.lang.Object)>(r6);
+
+        if z1 == 0 goto label3;
+
+        return r6;
+
+     label3:
+        i0 = i0 + 1;
+
+        goto label2;
+    }
+
+    private void drawRainbow(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.ugraphic.color.HColor, net.sourceforge.plantuml.posimo.DotPath, java.util.List, net.sourceforge.plantuml.ugraphic.UStroke)
+    {
+        net.sourceforge.plantuml.ugraphic.UGraphic r0, $r11, $r14, $r16, $r24, r31, r32, r34, r35;
+        net.sourceforge.plantuml.posimo.DotPath r1;
+        net.sourceforge.plantuml.svek.SvekLine r2;
+        net.sourceforge.plantuml.cucadiagram.Link $r3;
+        net.sourceforge.plantuml.cucadiagram.LinkType r4;
+        net.sourceforge.plantuml.graphic.UDrawable $r5, $r22, $r29, $r33;
+        java.util.List r6;
+        java.util.Iterator r7;
+        java.lang.Object $r8;
+        net.sourceforge.plantuml.graphic.color.Colors r9;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r10;
+        int $i0, $i1, $i2, $i3, i4;
+        double $d0, $d1;
+        net.sourceforge.plantuml.graphic.color.ColorType $r12;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r13, r15;
+        net.sourceforge.plantuml.ugraphic.UStroke r17, $r18, $r25;
+        net.sourceforge.plantuml.cucadiagram.LinkDecor $r19, $r26;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.ugraphic.color.HColorNone $r20, $r27;
+        net.sourceforge.plantuml.ugraphic.UBackground $r21, $r23, $r28, $r30;
+
+        r2 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r15 := @parameter1: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        r1 := @parameter2: net.sourceforge.plantuml.posimo.DotPath;
+
+        r6 := @parameter3: java.util.List;
+
+        r17 := @parameter4: net.sourceforge.plantuml.ugraphic.UStroke;
+
+        interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r1);
+
+        $r3 = r2.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        r4 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        $r5 = r2.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity2>;
+
+        if $r5 == null goto label3;
+
+        $r24 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r15);
+
+        $r25 = virtualinvoke r17.<net.sourceforge.plantuml.ugraphic.UStroke: net.sourceforge.plantuml.ugraphic.UStroke onlyThickness()>();
+
+        r31 = interfaceinvoke $r24.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r25);
+
+        $r26 = virtualinvoke r4.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkDecor getDecor1()>();
+
+        $z1 = virtualinvoke $r26.<net.sourceforge.plantuml.cucadiagram.LinkDecor: boolean isFill()>();
+
+        if $z1 == 0 goto label1;
+
+        $r30 = interfaceinvoke r15.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        r32 = interfaceinvoke r31.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r30);
+
+        goto label2;
+
+     label1:
+        $r27 = new net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        specialinvoke $r27.<net.sourceforge.plantuml.ugraphic.color.HColorNone: void <init>()>();
+
+        $r28 = virtualinvoke $r27.<net.sourceforge.plantuml.ugraphic.color.HColorNone: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        r32 = interfaceinvoke r31.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r28);
+
+     label2:
+        $r29 = r2.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity2>;
+
+        interfaceinvoke $r29.<net.sourceforge.plantuml.graphic.UDrawable: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r32);
+
+     label3:
+        $r33 = r2.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity1>;
+
+        if $r33 == null goto label6;
+
+        $r16 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r15);
+
+        $r18 = virtualinvoke r17.<net.sourceforge.plantuml.ugraphic.UStroke: net.sourceforge.plantuml.ugraphic.UStroke onlyThickness()>();
+
+        r34 = interfaceinvoke $r16.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r18);
+
+        $r19 = virtualinvoke r4.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkDecor getDecor2()>();
+
+        $z0 = virtualinvoke $r19.<net.sourceforge.plantuml.cucadiagram.LinkDecor: boolean isFill()>();
+
+        if $z0 == 0 goto label4;
+
+        $r23 = interfaceinvoke r15.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        r35 = interfaceinvoke r34.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r23);
+
+        goto label5;
+
+     label4:
+        $r20 = new net.sourceforge.plantuml.ugraphic.color.HColorNone;
+
+        specialinvoke $r20.<net.sourceforge.plantuml.ugraphic.color.HColorNone: void <init>()>();
+
+        $r21 = virtualinvoke $r20.<net.sourceforge.plantuml.ugraphic.color.HColorNone: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        r35 = interfaceinvoke r34.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r21);
+
+     label5:
+        $r22 = r2.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.UDrawable extremity1>;
+
+        interfaceinvoke $r22.<net.sourceforge.plantuml.graphic.UDrawable: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r35);
+
+     label6:
+        i4 = 0;
+
+        r7 = interfaceinvoke r6.<java.util.List: java.util.Iterator iterator()>();
+
+     label7:
+        $z2 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label8;
+
+        $r8 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r9 = (net.sourceforge.plantuml.graphic.color.Colors) $r8;
+
+        $r10 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $i0 = i4 + 1;
+
+        $i1 = 2 * $i0;
+
+        $d1 = (double) $i1;
+
+        $i2 = i4 + 1;
+
+        $i3 = 2 * $i2;
+
+        $d0 = (double) $i3;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d1, $d0);
+
+        $r11 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r10);
+
+        $r12 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType LINE>;
+
+        $r13 = virtualinvoke r9.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.graphic.color.ColorType)>($r12);
+
+        $r14 = interfaceinvoke $r11.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r13);
+
+        interfaceinvoke $r14.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r1);
+
+        i4 = i4 + 1;
+
+        goto label7;
+
+     label8:
+        return;
+    }
+
+    public boolean isInverted()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: boolean isInverted()>();
+
+        return $z0;
+    }
+
+    private double getDecorDzeta()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        net.sourceforge.plantuml.cucadiagram.LinkType r2;
+        net.sourceforge.plantuml.cucadiagram.LinkDecor $r3, $r4;
+        int i0, i1, $i2;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.LinkType getType()>();
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkDecor getDecor1()>();
+
+        i0 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.LinkDecor: int getMargin()>();
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.cucadiagram.LinkType: net.sourceforge.plantuml.cucadiagram.LinkDecor getDecor2()>();
+
+        i1 = virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.LinkDecor: int getMargin()>();
+
+        $i2 = i0 + i1;
+
+        $d0 = (double) $i2;
+
+        return $d0;
+    }
+
+    public double getHorizontalDzeta(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.EntityPort $r1, $r2;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.svek.ArithmeticStrategySum $r3;
+        net.sourceforge.plantuml.graphic.TextBlock $r5, $r6, $r8, $r10, $r12;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6;
+        net.sourceforge.plantuml.graphic.StringBounder r7;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r9, $r11, $r13;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r7 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort startUid>;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort endUid>;
+
+        $z0 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.EntityPort: boolean equalsId(net.sourceforge.plantuml.cucadiagram.EntityPort)>($r1);
+
+        if $z0 == 0 goto label1;
+
+        $d6 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: double getDecorDzeta()>();
+
+        return $d6;
+
+     label1:
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean isHorizontal()>();
+
+        if $z1 == 0 goto label2;
+
+        $r3 = new net.sourceforge.plantuml.svek.ArithmeticStrategySum;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategySum: void <init>()>();
+
+        goto label3;
+
+     label2:
+        return 0.0;
+
+     label3:
+        $z2 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean hasNoteLabelText()>();
+
+        if $z2 == 0 goto label4;
+
+        $r12 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText>;
+
+        $r13 = interfaceinvoke $r12.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r7);
+
+        $d5 = virtualinvoke $r13.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategy: void eat(double)>($d5);
+
+     label4:
+        $r5 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        if $r5 == null goto label5;
+
+        $r10 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        $r11 = interfaceinvoke $r10.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r7);
+
+        $d4 = virtualinvoke $r11.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategy: void eat(double)>($d4);
+
+     label5:
+        $r6 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        if $r6 == null goto label6;
+
+        $r8 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        $r9 = interfaceinvoke $r8.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r7);
+
+        $d3 = virtualinvoke $r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategy: void eat(double)>($d3);
+
+     label6:
+        $d0 = interfaceinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategy: double getResult()>();
+
+        $d1 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: double getDecorDzeta()>();
+
+        $d2 = $d0 + $d1;
+
+        return $d2;
+    }
+
+    private boolean isHorizontal()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        int $i0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $i0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        if $i0 != 1 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public double getVerticalDzeta(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.EntityPort $r1, $r2;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.svek.ArithmeticStrategySum $r3;
+        net.sourceforge.plantuml.graphic.TextBlock $r5, $r6, $r8, $r10, $r12;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6;
+        net.sourceforge.plantuml.graphic.StringBounder r7;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r9, $r11, $r13;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r7 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort startUid>;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.EntityPort endUid>;
+
+        $z0 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.EntityPort: boolean equalsId(net.sourceforge.plantuml.cucadiagram.EntityPort)>($r1);
+
+        if $z0 == 0 goto label1;
+
+        $d6 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: double getDecorDzeta()>();
+
+        return $d6;
+
+     label1:
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean isHorizontal()>();
+
+        if $z1 == 0 goto label2;
+
+        return 0.0;
+
+     label2:
+        $r3 = new net.sourceforge.plantuml.svek.ArithmeticStrategySum;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategySum: void <init>()>();
+
+        $z2 = virtualinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: boolean hasNoteLabelText()>();
+
+        if $z2 == 0 goto label3;
+
+        $r12 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock labelText>;
+
+        $r13 = interfaceinvoke $r12.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r7);
+
+        $d5 = virtualinvoke $r13.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategy: void eat(double)>($d5);
+
+     label3:
+        $r5 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        if $r5 == null goto label4;
+
+        $r10 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        $r11 = interfaceinvoke $r10.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r7);
+
+        $d4 = virtualinvoke $r11.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategy: void eat(double)>($d4);
+
+     label4:
+        $r6 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        if $r6 == null goto label5;
+
+        $r8 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        $r9 = interfaceinvoke $r8.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r7);
+
+        $d3 = virtualinvoke $r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        interfaceinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategy: void eat(double)>($d3);
+
+     label5:
+        $d0 = interfaceinvoke $r3.<net.sourceforge.plantuml.svek.ArithmeticStrategy: double getResult()>();
+
+        $d1 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: double getDecorDzeta()>();
+
+        $d2 = $d0 + $d1;
+
+        return $d2;
+    }
+
+    public void manageCollision(java.util.Collection)
+    {
+        java.util.Collection r0;
+        java.util.Iterator r1;
+        boolean $z0, $z1, $z2;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.svek.SvekNode r3;
+        net.sourceforge.plantuml.posimo.Positionable r4, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r14;
+        net.sourceforge.plantuml.svek.SvekLine r5;
+        net.sourceforge.plantuml.graphic.TextBlock $r6, $r15;
+
+        r5 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r0 := @parameter0: java.util.Collection;
+
+        r1 = interfaceinvoke r0.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r2 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (net.sourceforge.plantuml.svek.SvekNode) $r2;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.posimo.PositionableUtils: net.sourceforge.plantuml.posimo.Positionable addMargin(net.sourceforge.plantuml.posimo.Positionable,double,double)>(r3, 8.0, 8.0);
+
+        $r6 = r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock startTailText>;
+
+        if $r6 == null goto label2;
+
+        $r11 = r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY>;
+
+        if $r11 == null goto label2;
+
+        $r12 = r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY>;
+
+        $z2 = staticinvoke <net.sourceforge.plantuml.posimo.PositionableUtils: boolean intersect(net.sourceforge.plantuml.posimo.Positionable,net.sourceforge.plantuml.posimo.Positionable)>(r4, $r12);
+
+        if $z2 == 0 goto label2;
+
+        $r13 = r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY>;
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.posimo.PositionableUtils: net.sourceforge.plantuml.posimo.Positionable moveAwayFrom(net.sourceforge.plantuml.posimo.Positionable,net.sourceforge.plantuml.posimo.Positionable)>(r4, $r13);
+
+        r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable startTailLabelXY> = $r14;
+
+     label2:
+        $r15 = r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.graphic.TextBlock endHeadText>;
+
+        if $r15 == null goto label3;
+
+        $r7 = r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY>;
+
+        if $r7 == null goto label3;
+
+        $r8 = r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY>;
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.posimo.PositionableUtils: boolean intersect(net.sourceforge.plantuml.posimo.Positionable,net.sourceforge.plantuml.posimo.Positionable)>(r4, $r8);
+
+        if $z1 == 0 goto label3;
+
+        $r9 = r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY>;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.posimo.PositionableUtils: net.sourceforge.plantuml.posimo.Positionable moveAwayFrom(net.sourceforge.plantuml.posimo.Positionable,net.sourceforge.plantuml.posimo.Positionable)>(r4, $r9);
+
+        r5.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.Positionable endHeadLabelXY> = $r10;
+
+     label3:
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    private void avoid(java.awt.geom.Point2D$Double, net.sourceforge.plantuml.posimo.Positionable, net.sourceforge.plantuml.svek.SvekNode)
+    {
+        net.sourceforge.plantuml.svek.Oscillator $r0;
+        java.awt.geom.Point2D$Double $r2, r3, r8;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7;
+        net.sourceforge.plantuml.svek.SvekLine r5;
+        net.sourceforge.plantuml.posimo.Positionable r6;
+        net.sourceforge.plantuml.svek.SvekNode r7;
+        boolean $z0;
+
+        r5 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r3 := @parameter0: java.awt.geom.Point2D$Double;
+
+        r6 := @parameter1: net.sourceforge.plantuml.posimo.Positionable;
+
+        r7 := @parameter2: net.sourceforge.plantuml.svek.SvekNode;
+
+        $r0 = new net.sourceforge.plantuml.svek.Oscillator;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.svek.Oscillator: void <init>()>();
+
+        $r2 = new java.awt.geom.Point2D$Double;
+
+        $d1 = r3.<java.awt.geom.Point2D$Double: double x>;
+
+        $d0 = r3.<java.awt.geom.Point2D$Double: double y>;
+
+        specialinvoke $r2.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d1, $d0);
+
+     label1:
+        $z0 = specialinvoke r5.<net.sourceforge.plantuml.svek.SvekLine: boolean cut(net.sourceforge.plantuml.posimo.Positionable,net.sourceforge.plantuml.svek.SvekNode)>(r6, r7);
+
+        if $z0 == 0 goto label2;
+
+        r8 = virtualinvoke $r0.<net.sourceforge.plantuml.svek.Oscillator: java.awt.geom.Point2D$Double nextPosition()>();
+
+        $d3 = $r2.<java.awt.geom.Point2D$Double: double x>;
+
+        $d2 = r8.<java.awt.geom.Point2D$Double: double x>;
+
+        $d7 = $d3 + $d2;
+
+        $d5 = $r2.<java.awt.geom.Point2D$Double: double y>;
+
+        $d4 = r8.<java.awt.geom.Point2D$Double: double y>;
+
+        $d6 = $d5 + $d4;
+
+        virtualinvoke r3.<java.awt.geom.Point2D$Double: void setLocation(double,double)>($d7, $d6);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private boolean cut(net.sourceforge.plantuml.posimo.Positionable, net.sourceforge.plantuml.svek.SvekNode)
+    {
+        net.sourceforge.plantuml.posimo.Positionable r0;
+        net.sourceforge.plantuml.svek.SvekNode r1;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.svek.SvekLine r2;
+
+        r2 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r0 := @parameter0: net.sourceforge.plantuml.posimo.Positionable;
+
+        r1 := @parameter1: net.sourceforge.plantuml.svek.SvekNode;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: boolean intersect(net.sourceforge.plantuml.posimo.Positionable,net.sourceforge.plantuml.posimo.Positionable)>(r0, r1);
+
+        if $z0 != 0 goto label1;
+
+        $z1 = specialinvoke r2.<net.sourceforge.plantuml.svek.SvekLine: boolean tooClose(net.sourceforge.plantuml.posimo.Positionable)>(r0);
+
+        if $z1 == 0 goto label2;
+
+     label1:
+        $z2 = 1;
+
+        goto label3;
+
+     label2:
+        $z2 = 0;
+
+     label3:
+        return $z2;
+    }
+
+    private boolean tooClose(net.sourceforge.plantuml.posimo.Positionable)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.posimo.Positionable r1;
+        net.sourceforge.plantuml.posimo.DotPath $r2;
+        java.awt.geom.Point2D$Double $r3;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r4;
+        byte $b0, $b1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.posimo.Positionable;
+
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: java.awt.geom.Point2D$Double getCenter(net.sourceforge.plantuml.posimo.Positionable)>(r1);
+
+        d0 = virtualinvoke $r2.<net.sourceforge.plantuml.posimo.DotPath: double getMinDist(java.awt.geom.Point2D)>($r3);
+
+        r4 = interfaceinvoke r1.<net.sourceforge.plantuml.posimo.Positionable: net.sourceforge.plantuml.awt.geom.Dimension2D getSize()>();
+
+        $d1 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d2 = $d1 / 2.0;
+
+        $d3 = $d2 + 2.0;
+
+        $b0 = d0 cmpg $d3;
+
+        if $b0 < 0 goto label1;
+
+        $d4 = virtualinvoke r4.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d5 = $d4 / 2.0;
+
+        $d6 = $d5 + 2.0;
+
+        $b1 = d0 cmpg $d6;
+
+        if $b1 >= 0 goto label2;
+
+     label1:
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        return $z0;
+    }
+
+    public void moveSvek(double, double)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        double d0, $d1, $d2, d3, $d4, $d5;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        d0 := @parameter0: double;
+
+        d3 := @parameter1: double;
+
+        $d1 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dx>;
+
+        $d2 = $d1 + d0;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: double dx> = $d2;
+
+        $d4 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dy>;
+
+        $d5 = $d4 + d3;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: double dy> = $d5;
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.posimo.DotPath getDotPath()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.posimo.DotPath $r1, r2;
+        double $d0, $d1;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.posimo.DotPath: net.sourceforge.plantuml.posimo.DotPath copy()>();
+
+        $d1 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dx>;
+
+        $d0 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dy>;
+
+        virtualinvoke r2.<net.sourceforge.plantuml.posimo.DotPath: void moveSvek(double,double)>($d1, $d0);
+
+        return r2;
+    }
+
+    public int getLength()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $i0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: int getLength()>();
+
+        return $i0;
+    }
+
+    public void setOpale(boolean)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        boolean z0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        z0 := @parameter0: boolean;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: void setOpale(boolean)>(z0);
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: boolean opale> = z0;
+
+        return;
+    }
+
+    public boolean isOpale()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $z0 = r0.<net.sourceforge.plantuml.svek.SvekLine: boolean opale>;
+
+        return $z0;
+    }
+
+    public boolean isHorizontalSolitary()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: boolean isHorizontalSolitary()>();
+
+        return $z0;
+    }
+
+    public boolean isLinkFromOrTo(net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1, $r4;
+        net.sourceforge.plantuml.cucadiagram.IEntity $r2, r3, $r5;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r3 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        if $r2 == r3 goto label1;
+
+        $r4 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        if $r5 != r3 goto label2;
+
+     label1:
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        return $z0;
+    }
+
+    public boolean hasEntryPoint()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: boolean hasEntryPoint()>();
+
+        return $z0;
+    }
+
+    public void setProjectionCluster(net.sourceforge.plantuml.svek.Cluster)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.svek.Cluster r1;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.svek.Cluster;
+
+        r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.svek.Cluster projectionCluster> = r1;
+
+        return;
+    }
+
+    public boolean isHidden()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: boolean isHidden()>();
+
+        return $z0;
+    }
+
+    public boolean sameConnections(net.sourceforge.plantuml.svek.SvekLine)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0, r1;
+        net.sourceforge.plantuml.cucadiagram.Link $r2, $r3;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r3 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r2 = r1.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z0 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.Link: boolean sameConnections(net.sourceforge.plantuml.cucadiagram.Link)>($r2);
+
+        return $z0;
+    }
+
+    private boolean isAutolink()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1, $r3;
+        net.sourceforge.plantuml.cucadiagram.IEntity $r2, $r4;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        if $r2 != $r4 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public java.awt.geom.Point2D getMyPoint(net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1, $r4;
+        net.sourceforge.plantuml.cucadiagram.IEntity $r2, r3, $r5;
+        java.lang.IllegalArgumentException $r6;
+        net.sourceforge.plantuml.posimo.DotPath $r7, $r10;
+        java.awt.geom.Point2D $r8, $r9, $r11, $r12;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r3 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity1()>();
+
+        if $r2 != r3 goto label1;
+
+        $r10 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r11 = virtualinvoke $r10.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        $r12 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.awt.geom.Point2D moveDelta(java.awt.geom.Point2D)>($r11);
+
+        return $r12;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getEntity2()>();
+
+        if $r5 != r3 goto label2;
+
+        $r7 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        $r9 = specialinvoke r0.<net.sourceforge.plantuml.svek.SvekLine: java.awt.geom.Point2D moveDelta(java.awt.geom.Point2D)>($r8);
+
+        return $r9;
+
+     label2:
+        $r6 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r6.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r6;
+    }
+
+    private java.awt.geom.Point2D moveDelta(java.awt.geom.Point2D)
+    {
+        java.awt.geom.Point2D$Double $r0;
+        java.awt.geom.Point2D r1;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+        net.sourceforge.plantuml.svek.SvekLine r2;
+
+        r2 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r1 := @parameter0: java.awt.geom.Point2D;
+
+        $r0 = new java.awt.geom.Point2D$Double;
+
+        $d0 = virtualinvoke r1.<java.awt.geom.Point2D: double getX()>();
+
+        $d1 = r2.<net.sourceforge.plantuml.svek.SvekLine: double dx>;
+
+        $d2 = $d0 + $d1;
+
+        $d3 = virtualinvoke r1.<java.awt.geom.Point2D: double getY()>();
+
+        $d4 = r2.<net.sourceforge.plantuml.svek.SvekLine: double dy>;
+
+        $d5 = $d3 + $d4;
+
+        specialinvoke $r0.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d2, $d5);
+
+        return $r0;
+    }
+
+    public boolean isLink(net.sourceforge.plantuml.cucadiagram.Link)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link r1, $r2;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.Link;
+
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        if $r2 != r1 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public java.awt.geom.Point2D getStartContactPoint()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.posimo.DotPath $r1, $r2;
+        java.awt.geom.Point2D r3;
+        java.awt.geom.Point2D$Double $r4;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        if $r1 != null goto label1;
+
+        return null;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getStartPoint()>();
+
+        if r3 != null goto label2;
+
+        return null;
+
+     label2:
+        $r4 = new java.awt.geom.Point2D$Double;
+
+        $d0 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dx>;
+
+        $d1 = virtualinvoke r3.<java.awt.geom.Point2D: double getX()>();
+
+        $d2 = $d0 + $d1;
+
+        $d3 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dy>;
+
+        $d4 = virtualinvoke r3.<java.awt.geom.Point2D: double getY()>();
+
+        $d5 = $d3 + $d4;
+
+        specialinvoke $r4.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d2, $d5);
+
+        return $r4;
+    }
+
+    public java.awt.geom.Point2D getEndContactPoint()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.posimo.DotPath $r1;
+        java.awt.geom.Point2D r2;
+        java.awt.geom.Point2D$Double $r3;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.posimo.DotPath dotPath>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.posimo.DotPath: java.awt.geom.Point2D getEndPoint()>();
+
+        if r2 != null goto label1;
+
+        return null;
+
+     label1:
+        $r3 = new java.awt.geom.Point2D$Double;
+
+        $d0 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dx>;
+
+        $d1 = virtualinvoke r2.<java.awt.geom.Point2D: double getX()>();
+
+        $d2 = $d0 + $d1;
+
+        $d3 = r0.<net.sourceforge.plantuml.svek.SvekLine: double dy>;
+
+        $d4 = virtualinvoke r2.<java.awt.geom.Point2D: double getY()>();
+
+        $d5 = $d3 + $d4;
+
+        specialinvoke $r3.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d2, $d5);
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.IEntity getOther(net.sourceforge.plantuml.cucadiagram.IEntity)
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.IEntity r1, $r4;
+        net.sourceforge.plantuml.cucadiagram.Link $r2, $r3;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.cucadiagram.IEntity;
+
+        $r2 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $z0 = virtualinvoke $r2.<net.sourceforge.plantuml.cucadiagram.Link: boolean contains(net.sourceforge.plantuml.cucadiagram.IEntity)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.IEntity getOther(net.sourceforge.plantuml.cucadiagram.IEntity)>(r1);
+
+        return $r4;
+
+     label1:
+        return null;
+    }
+
+    public net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        net.sourceforge.plantuml.style.StyleBuilder $r2;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.style.StyleBuilder getStyleBuilder()>();
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.Stereotype getStereotype()
+    {
+        net.sourceforge.plantuml.svek.SvekLine r0;
+        net.sourceforge.plantuml.cucadiagram.Link $r1;
+        net.sourceforge.plantuml.cucadiagram.Stereotype $r2;
+
+        r0 := @this: net.sourceforge.plantuml.svek.SvekLine;
+
+        $r1 = r0.<net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.cucadiagram.Link link>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.Link: net.sourceforge.plantuml.cucadiagram.Stereotype getStereotype()>();
+
+        return $r2;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.Dimension2DDouble $r0;
+
+        $r0 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>(10.0, 10.0);
+
+        <net.sourceforge.plantuml.svek.SvekLine: net.sourceforge.plantuml.Dimension2DDouble CONSTRAINT_SPOT> = $r0;
+
+        return;
+    }
+}

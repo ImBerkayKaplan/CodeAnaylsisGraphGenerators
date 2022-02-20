@@ -1,0 +1,1383 @@
+public class net.sourceforge.plantuml.command.BlocLines extends java.lang.Object implements java.lang.Iterable
+{
+    private java.util.List lines;
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.command.BlocLines r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.String $r5;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.StringLocated r7;
+
+        r2 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.StringLocated) $r6;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<<<");
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r7);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">>>");
+
+        goto label1;
+
+     label2:
+        $r5 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+
+    public static net.sourceforge.plantuml.command.BlocLines load(net.sourceforge.plantuml.security.SFile, net.sourceforge.plantuml.LineLocation) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.security.SFile r0;
+        java.io.BufferedReader r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.BlocLines $r3;
+
+        r0 := @parameter0: net.sourceforge.plantuml.security.SFile;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.security.SFile: java.io.BufferedReader openBufferedReader()>();
+
+        if r1 != null goto label1;
+
+        return null;
+
+     label1:
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines loadInternal(java.io.BufferedReader,net.sourceforge.plantuml.LineLocation)>(r1, r2);
+
+        return $r3;
+    }
+
+    public static net.sourceforge.plantuml.command.BlocLines load(java.io.InputStream, net.sourceforge.plantuml.LineLocation) throws java.io.IOException
+    {
+        java.io.BufferedReader $r0;
+        java.io.InputStreamReader $r1;
+        java.io.InputStream r2;
+        net.sourceforge.plantuml.LineLocation r4;
+        net.sourceforge.plantuml.command.BlocLines $r5;
+
+        r2 := @parameter0: java.io.InputStream;
+
+        r4 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        $r0 = new java.io.BufferedReader;
+
+        $r1 = new java.io.InputStreamReader;
+
+        specialinvoke $r1.<java.io.InputStreamReader: void <init>(java.io.InputStream)>(r2);
+
+        specialinvoke $r0.<java.io.BufferedReader: void <init>(java.io.Reader)>($r1);
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines loadInternal(java.io.BufferedReader,net.sourceforge.plantuml.LineLocation)>($r0, r4);
+
+        return $r5;
+    }
+
+    public static net.sourceforge.plantuml.command.BlocLines 'from'(java.util.List)
+    {
+        net.sourceforge.plantuml.command.BlocLines $r0;
+        java.util.List r1;
+
+        r1 := @parameter0: java.util.List;
+
+        $r0 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>(r1);
+
+        return $r0;
+    }
+
+    private static net.sourceforge.plantuml.command.BlocLines loadInternal(java.io.BufferedReader, net.sourceforge.plantuml.LineLocation) throws java.io.IOException
+    {
+        java.util.ArrayList $r0;
+        java.io.BufferedReader r2;
+        java.lang.String $r3;
+        net.sourceforge.plantuml.command.BlocLines $r5;
+        net.sourceforge.plantuml.StringLocated $r6;
+        net.sourceforge.plantuml.LineLocation r7;
+        java.lang.Throwable $r8;
+
+        r2 := @parameter0: java.io.BufferedReader;
+
+        r7 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+     label1:
+        $r3 = virtualinvoke r2.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        if $r3 == null goto label2;
+
+        $r6 = new net.sourceforge.plantuml.StringLocated;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.StringLocated: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>($r3, r7);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r2.<java.io.BufferedReader: void close()>();
+
+        goto label5;
+
+     label3:
+        $r8 := @caughtexception;
+
+     label4:
+        virtualinvoke r2.<java.io.BufferedReader: void close()>();
+
+        throw $r8;
+
+     label5:
+        $r5 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r5;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    private void <init>(java.util.List)
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        java.util.List r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        r1 := @parameter0: java.util.List;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>(r1);
+
+        r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines> = $r2;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.Display toDisplay() throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        java.util.List $r1;
+        net.sourceforge.plantuml.cucadiagram.Display $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display createFoo(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    public static net.sourceforge.plantuml.command.BlocLines single(net.sourceforge.plantuml.StringLocated)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.StringLocated r2;
+        net.sourceforge.plantuml.command.BlocLines $r3;
+
+        r2 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r2);
+
+        $r3 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r3;
+    }
+
+    public static net.sourceforge.plantuml.command.BlocLines singleString(java.lang.String)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.StringLocated $r2;
+        java.lang.String r3;
+        net.sourceforge.plantuml.command.BlocLines $r4;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r2 = new net.sourceforge.plantuml.StringLocated;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.StringLocated: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>(r3, null);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r2);
+
+        $r4 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r4;
+    }
+
+    public static net.sourceforge.plantuml.command.BlocLines fromArray(java.lang.String[])
+    {
+        java.util.ArrayList $r0;
+        java.lang.String[] r2;
+        int i0, i1;
+        net.sourceforge.plantuml.command.BlocLines $r4;
+        java.lang.String r5;
+        net.sourceforge.plantuml.StringLocated $r6;
+
+        r2 := @parameter0: java.lang.String[];
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        i0 = lengthof r2;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        r5 = r2[i1];
+
+        $r6 = new net.sourceforge.plantuml.StringLocated;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.StringLocated: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>(r5, null);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        $r4 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r4;
+    }
+
+    public static net.sourceforge.plantuml.command.BlocLines getWithNewlines(java.lang.String)
+    {
+        java.util.ArrayList $r0;
+        java.lang.String r2, r7;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        net.sourceforge.plantuml.command.BlocLines $r5;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.StringLocated $r8;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.BackSlash: java.util.List getWithNewlines(java.lang.CharSequence)>(r2);
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (java.lang.String) $r6;
+
+        $r8 = new net.sourceforge.plantuml.StringLocated;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.StringLocated: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>(r7, null);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r8);
+
+        goto label1;
+
+     label2:
+        $r5 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r5;
+    }
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        java.util.ArrayList $r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r1);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines add(net.sourceforge.plantuml.StringLocated)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.BlocLines r1, $r5;
+        java.util.List $r2;
+        net.sourceforge.plantuml.StringLocated r4;
+
+        r1 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        r4 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r2);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r4);
+
+        $r5 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r5;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines addString(java.lang.String)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.BlocLines r1, $r6;
+        java.util.List $r2;
+        net.sourceforge.plantuml.StringLocated $r4;
+        java.lang.String r5;
+
+        r1 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        r5 := @parameter0: java.lang.String;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r2);
+
+        $r4 = new net.sourceforge.plantuml.StringLocated;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.StringLocated: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>(r5, null);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r4);
+
+        $r6 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r6;
+    }
+
+    public java.util.List getLinesAsStringForSprite()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.BlocLines r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.StringLocated r6;
+        java.lang.String $r7;
+
+        r2 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.StringLocated) $r5;
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r7);
+
+        goto label1;
+
+     label2:
+        return $r0;
+    }
+
+    public int size()
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        java.util.List $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        return $i0;
+    }
+
+    public net.sourceforge.plantuml.StringLocated getAt(int)
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        int i0;
+        java.util.List $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.StringLocated $r3;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>(i0);
+
+        $r3 = (net.sourceforge.plantuml.StringLocated) $r2;
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.StringLocated getFirst()
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        java.util.List $r1, $r2;
+        int $i0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.StringLocated $r4;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r4 = (net.sourceforge.plantuml.StringLocated) $r3;
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.StringLocated getLast()
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        java.util.List $r1, $r2;
+        int $i0, $i1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.StringLocated $r4;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r2 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>($i1);
+
+        $r4 = (net.sourceforge.plantuml.StringLocated) $r3;
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines cleanList(net.sourceforge.plantuml.command.MultilinesStrategy)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.BlocLines r1, $r5;
+        java.util.List $r2;
+        net.sourceforge.plantuml.command.MultilinesStrategy r4;
+
+        r1 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        r4 := @parameter0: net.sourceforge.plantuml.command.MultilinesStrategy;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r2);
+
+        virtualinvoke r4.<net.sourceforge.plantuml.command.MultilinesStrategy: void cleanList(java.util.List)>($r0);
+
+        $r5 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r5;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines trim()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.BlocLines r1, $r4;
+        java.util.List $r2;
+        int $i0, i1;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.StringLocated r6, $r7;
+
+        r1 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r2);
+
+        i1 = 0;
+
+     label1:
+        $i0 = interfaceinvoke $r0.<java.util.List: int size()>();
+
+        if i1 >= $i0 goto label2;
+
+        $r5 = interfaceinvoke $r0.<java.util.List: java.lang.Object get(int)>(i1);
+
+        r6 = (net.sourceforge.plantuml.StringLocated) $r5;
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        interfaceinvoke $r0.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i1, $r7);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        $r4 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r4;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines removeEmptyLines()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.BlocLines r1, $r5;
+        java.util.List $r2;
+        java.util.Iterator r4;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.StringLocated $r7;
+        java.lang.String $r8;
+        int $i0;
+        boolean $z0;
+
+        r1 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r2);
+
+        r4 = interfaceinvoke $r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        $r7 = (net.sourceforge.plantuml.StringLocated) $r6;
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i0 = virtualinvoke $r8.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label1;
+
+        interfaceinvoke r4.<java.util.Iterator: void remove()>();
+
+        goto label1;
+
+     label2:
+        $r5 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r5;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines removeEmptyColumns()
+    {
+        net.sourceforge.plantuml.command.BlocLines r0, $r5;
+        java.util.List $r1, $r3;
+        boolean $z0, $z1;
+        java.util.ArrayList $r2;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.StringLocated r7, $r10;
+        java.lang.String $r8, $r9;
+        int $i0, $i1, i2, $i3;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: boolean firstColumnRemovable(java.util.List)>($r1);
+
+        if $z0 != 0 goto label1;
+
+        return r0;
+
+     label1:
+        $r2 = new java.util.ArrayList;
+
+        $r3 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+     label2:
+        i2 = 0;
+
+     label3:
+        $i3 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        if i2 >= $i3 goto label5;
+
+        $r6 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i2);
+
+        r7 = (net.sourceforge.plantuml.StringLocated) $r6;
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i0 = virtualinvoke $r8.<java.lang.String: int length()>();
+
+        if $i0 <= 0 goto label4;
+
+        $r9 = virtualinvoke r7.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i1 = virtualinvoke $r9.<java.lang.String: int length()>();
+
+        $r10 = virtualinvoke r7.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated substring(int,int)>(1, $i1);
+
+        interfaceinvoke $r2.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i2, $r10);
+
+     label4:
+        i2 = i2 + 1;
+
+        goto label3;
+
+     label5:
+        $z1 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: boolean firstColumnRemovable(java.util.List)>($r2);
+
+        if $z1 != 0 goto label2;
+
+        $r5 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r2);
+
+        return $r5;
+    }
+
+    private static boolean firstColumnRemovable(java.util.List)
+    {
+        java.util.List r0;
+        java.util.Iterator r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.StringLocated r3;
+        java.lang.String $r4, $r5;
+        int $i0;
+        char c1;
+        boolean z0, $z1, $z2;
+
+        r0 := @parameter0: java.util.List;
+
+        z0 = 1;
+
+        r1 = interfaceinvoke r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r2 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (net.sourceforge.plantuml.StringLocated) $r2;
+
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i0 = virtualinvoke $r4.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label2;
+
+        goto label1;
+
+     label2:
+        z0 = 0;
+
+        $r5 = virtualinvoke r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        c1 = virtualinvoke $r5.<java.lang.String: char charAt(int)>(0);
+
+        if c1 == 32 goto label3;
+
+        if c1 == 9 goto label3;
+
+        return 0;
+
+     label3:
+        goto label1;
+
+     label4:
+        if z0 != 0 goto label5;
+
+        $z2 = 1;
+
+        goto label6;
+
+     label5:
+        $z2 = 0;
+
+     label6:
+        return $z2;
+    }
+
+    public char getLastChar()
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        java.util.List $r1, $r2;
+        int $i0, $i1, $i2, $i3;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.StringLocated r4;
+        java.lang.String $r5, $r6;
+        char $c4;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r2 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>($i1);
+
+        r4 = (net.sourceforge.plantuml.StringLocated) $r3;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $r6 = virtualinvoke r4.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i2 = virtualinvoke $r6.<java.lang.String: int length()>();
+
+        $i3 = $i2 - 1;
+
+        $c4 = virtualinvoke $r5.<java.lang.String: char charAt(int)>($i3);
+
+        return $c4;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines removeStartingAndEnding(java.lang.String, int)
+    {
+        net.sourceforge.plantuml.command.BlocLines r0, $r13;
+        java.util.List $r1, $r3;
+        int $i0, $i1, i2, $i3, i4, $i5;
+        java.util.ArrayList $r2;
+        net.sourceforge.plantuml.StringLocated $r5, r9, $r11;
+        java.lang.String r6, $r10;
+        java.lang.Object $r8;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        r6 := @parameter0: java.lang.String;
+
+        i4 := @parameter1: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        return r0;
+
+     label1:
+        $r2 = new java.util.ArrayList;
+
+        $r3 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+        $r5 = new net.sourceforge.plantuml.StringLocated;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.StringLocated: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>(r6, null);
+
+        interfaceinvoke $r2.<java.util.List: java.lang.Object set(int,java.lang.Object)>(0, $r5);
+
+        $i1 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        i2 = $i1 - 1;
+
+        $r8 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i2);
+
+        r9 = (net.sourceforge.plantuml.StringLocated) $r8;
+
+        $r10 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i3 = virtualinvoke $r10.<java.lang.String: int length()>();
+
+        $i5 = $i3 - i4;
+
+        $r11 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated substring(int,int)>(0, $i5);
+
+        interfaceinvoke $r2.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i2, $r11);
+
+        $r13 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r2);
+
+        return $r13;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines overrideLastLine(java.lang.String)
+    {
+        net.sourceforge.plantuml.command.BlocLines r0, $r11;
+        java.util.List $r1, $r3;
+        int $i0, $i1, i2;
+        java.util.ArrayList $r2;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.StringLocated r6, $r7;
+        java.lang.String r8;
+        net.sourceforge.plantuml.LineLocation $r9;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        r8 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        return r0;
+
+     label1:
+        $r2 = new java.util.ArrayList;
+
+        $r3 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+        $i1 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        i2 = $i1 - 1;
+
+        $r5 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i2);
+
+        r6 = (net.sourceforge.plantuml.StringLocated) $r5;
+
+        $r7 = new net.sourceforge.plantuml.StringLocated;
+
+        $r9 = virtualinvoke r6.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        specialinvoke $r7.<net.sourceforge.plantuml.StringLocated: void <init>(java.lang.String,net.sourceforge.plantuml.LineLocation)>(r8, $r9);
+
+        interfaceinvoke $r2.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i2, $r7);
+
+        $r11 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r2);
+
+        return $r11;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines toSingleLineWithHiddenNewLine()
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.command.BlocLines r2, $r7;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        int $i0, $i1;
+        java.lang.String $r5, $r6, $r10;
+        java.lang.Object $r8;
+        net.sourceforge.plantuml.StringLocated r9;
+        char $c2;
+
+        r2 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r8 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r9 = (net.sourceforge.plantuml.StringLocated) $r8;
+
+        $r10 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r10);
+
+        $c2 = staticinvoke <net.sourceforge.plantuml.BackSlash: char hiddenNewLine()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c2);
+
+        goto label1;
+
+     label2:
+        $i0 = virtualinvoke $r0.<java.lang.StringBuilder: int length()>();
+
+        $i1 = $i0 - 1;
+
+        $r5 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String substring(int,int)>(0, $i1);
+
+        $r6 = virtualinvoke $r5.<java.lang.String: java.lang.String toString()>();
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines singleString(java.lang.String)>($r6);
+
+        return $r7;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines trimSmart(int)
+    {
+        net.sourceforge.plantuml.command.BlocLines r0, $r8;
+        java.util.List $r1, $r3;
+        int $i0, i1, i2, $i3, i4;
+        java.util.ArrayList $r2;
+        java.lang.Object $r5, $r9;
+        net.sourceforge.plantuml.StringLocated $r6, r10, $r11;
+        java.lang.String $r7;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        i1 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 > i1 goto label1;
+
+        return r0;
+
+     label1:
+        $r2 = new java.util.ArrayList;
+
+        $r3 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+        $r5 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i1);
+
+        $r6 = (net.sourceforge.plantuml.StringLocated) $r5;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        i2 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: int nbStartingSpace(java.lang.CharSequence)>($r7);
+
+        i4 = i1;
+
+     label2:
+        $i3 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        if i4 >= $i3 goto label3;
+
+        $r9 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i4);
+
+        r10 = (net.sourceforge.plantuml.StringLocated) $r9;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated removeStartingSpaces(net.sourceforge.plantuml.StringLocated,int)>(r10, i2);
+
+        interfaceinvoke $r2.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i4, $r11);
+
+        i4 = i4 + 1;
+
+        goto label2;
+
+     label3:
+        $r8 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r2);
+
+        return $r8;
+    }
+
+    private static int nbStartingSpace(java.lang.CharSequence)
+    {
+        java.lang.CharSequence r0;
+        int $i0, i2;
+        char $c1;
+        boolean $z0;
+
+        r0 := @parameter0: java.lang.CharSequence;
+
+        i2 = 0;
+
+     label1:
+        $i0 = interfaceinvoke r0.<java.lang.CharSequence: int length()>();
+
+        if i2 >= $i0 goto label2;
+
+        $c1 = interfaceinvoke r0.<java.lang.CharSequence: char charAt(int)>(i2);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: boolean isSpaceOrTab(char)>($c1);
+
+        if $z0 == 0 goto label2;
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label2:
+        return i2;
+    }
+
+    private static boolean isSpaceOrTab(char)
+    {
+        char c0;
+        boolean $z0;
+
+        c0 := @parameter0: char;
+
+        if c0 == 32 goto label1;
+
+        if c0 != 9 goto label2;
+
+     label1:
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        return $z0;
+    }
+
+    private static net.sourceforge.plantuml.StringLocated removeStartingSpaces(net.sourceforge.plantuml.StringLocated, int)
+    {
+        net.sourceforge.plantuml.StringLocated r0, $r3;
+        java.lang.String $r1, $r2, $r4, $r5;
+        int $i0, i1, $i2, $i3, i5;
+        char $c4;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        i1 := @parameter1: int;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i0 = virtualinvoke $r1.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label1;
+
+        return r0;
+
+     label1:
+        i5 = 0;
+
+     label2:
+        if i5 >= i1 goto label3;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i3 = virtualinvoke $r4.<java.lang.String: int length()>();
+
+        if i5 >= $i3 goto label3;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $c4 = virtualinvoke $r5.<java.lang.String: char charAt(int)>(i5);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.command.BlocLines: boolean isSpaceOrTab(char)>($c4);
+
+        if $z0 == 0 goto label3;
+
+        i5 = i5 + 1;
+
+        goto label2;
+
+     label3:
+        if i5 != 0 goto label4;
+
+        return r0;
+
+     label4:
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i2 = virtualinvoke $r2.<java.lang.String: int length()>();
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated substring(int,int)>(i5, $i2);
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines subExtract(int, int)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.BlocLines r1, $r3;
+        java.util.List $r2, r5;
+        int i0, $i1, i2, $i3;
+
+        r1 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        i0 := @parameter0: int;
+
+        i2 := @parameter1: int;
+
+        $r0 = new java.util.ArrayList;
+
+        $r2 = r1.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(java.util.Collection)>($r2);
+
+        $i1 = interfaceinvoke $r0.<java.util.List: int size()>();
+
+        $i3 = $i1 - i2;
+
+        r5 = interfaceinvoke $r0.<java.util.List: java.util.List subList(int,int)>(i0, $i3);
+
+        $r3 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>(r5);
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines subList(int, int)
+    {
+        net.sourceforge.plantuml.command.BlocLines $r0, r1;
+        int i0, i1;
+        java.util.List $r2, $r3;
+
+        r1 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        $r0 = new net.sourceforge.plantuml.command.BlocLines;
+
+        $r2 = r1.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.util.List subList(int,int)>(i0, i1);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r3);
+
+        return $r0;
+    }
+
+    public java.util.Iterator iterator()
+    {
+        net.sourceforge.plantuml.command.BlocLines r0;
+        java.util.List $r1;
+        java.util.Iterator $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines eventuallyMoveBracket()
+    {
+        net.sourceforge.plantuml.command.BlocLines r0, $r14;
+        int $i0, $i1;
+        net.sourceforge.plantuml.StringLocated $r1, $r2, $r4, $r5, $r7, r8;
+        java.lang.String r3, r6;
+        boolean $z0, $z1;
+        java.util.ArrayList $r9;
+        java.util.List $r11, $r12, $r13;
+
+        r0 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.command.BlocLines: int size()>();
+
+        if $i0 >= 2 goto label1;
+
+        return r0;
+
+     label1:
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getAt(int)>(1);
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        r6 = virtualinvoke $r5.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = virtualinvoke r3.<java.lang.String: boolean endsWith(java.lang.String)>("{");
+
+        if $z0 != 0 goto label2;
+
+        $z1 = virtualinvoke r6.<java.lang.String: boolean equals(java.lang.Object)>("{");
+
+        if $z1 == 0 goto label2;
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        r8 = virtualinvoke $r7.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated append(java.lang.String)>(" {");
+
+        $r9 = new java.util.ArrayList;
+
+        specialinvoke $r9.<java.util.ArrayList: void <init>()>();
+
+        interfaceinvoke $r9.<java.util.List: boolean add(java.lang.Object)>(r8);
+
+        $r12 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $r11 = r0.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        $i1 = interfaceinvoke $r11.<java.util.List: int size()>();
+
+        $r13 = interfaceinvoke $r12.<java.util.List: java.util.List subList(int,int)>(2, $i1);
+
+        interfaceinvoke $r9.<java.util.List: boolean addAll(java.util.Collection)>($r13);
+
+        $r14 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r9);
+
+        return $r14;
+
+     label2:
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.command.BlocLines eventuallyMoveAllEmptyBracket()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.command.BlocLines r2, $r5;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0, $z1;
+        java.lang.Object $r6, $r10;
+        net.sourceforge.plantuml.StringLocated r7, $r8, r11, $r12;
+        java.lang.String $r9;
+        int $i0, $i1, i2;
+
+        r2 := @this: net.sourceforge.plantuml.command.BlocLines;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.command.BlocLines: java.util.List lines>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.StringLocated) $r6;
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated getTrimmed()>();
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.StringLocated: java.lang.String toString()>();
+
+        $z1 = virtualinvoke $r9.<java.lang.String: boolean equals(java.lang.Object)>("{");
+
+        if $z1 == 0 goto label2;
+
+        $i0 = interfaceinvoke $r0.<java.util.List: int size()>();
+
+        if $i0 <= 0 goto label3;
+
+        $i1 = interfaceinvoke $r0.<java.util.List: int size()>();
+
+        i2 = $i1 - 1;
+
+        $r10 = interfaceinvoke $r0.<java.util.List: java.lang.Object get(int)>(i2);
+
+        r11 = (net.sourceforge.plantuml.StringLocated) $r10;
+
+        $r12 = virtualinvoke r11.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated append(java.lang.String)>(" {");
+
+        interfaceinvoke $r0.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i2, $r12);
+
+        goto label3;
+
+     label2:
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r7);
+
+     label3:
+        goto label1;
+
+     label4:
+        $r5 = new net.sourceforge.plantuml.command.BlocLines;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.BlocLines: void <init>(java.util.List)>($r0);
+
+        return $r5;
+    }
+}

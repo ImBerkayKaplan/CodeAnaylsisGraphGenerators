@@ -1,0 +1,624 @@
+public class net.sourceforge.plantuml.activitydiagram3.InstructionList extends net.sourceforge.plantuml.activitydiagram3.WithNote implements net.sourceforge.plantuml.activitydiagram3.Instruction, net.sourceforge.plantuml.activitydiagram3.InstructionCollection
+{
+    private final java.util.List all;
+    private final net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane defaultSwimlane;
+    private net.sourceforge.plantuml.activitydiagram3.LinkRendering outlinkRendering;
+
+    public boolean containsBreak()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.activitydiagram3.Instruction r4;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.activitydiagram3.Instruction) $r3;
+
+        $z1 = interfaceinvoke r4.<net.sourceforge.plantuml.activitydiagram3.Instruction: boolean containsBreak()>();
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 0;
+    }
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(null);
+
+        return;
+    }
+
+    public boolean isEmpty()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $z0 = interfaceinvoke $r1.<java.util.List: boolean isEmpty()>();
+
+        return $z0;
+    }
+
+    public boolean isOnlySingleStopOrSpot()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1;
+        int $i0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r2, $r3, $r4;
+        boolean $z0, $z1, $z2, $z3;
+        net.sourceforge.plantuml.activitydiagram3.InstructionStop $r5;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 == 1 goto label1;
+
+        return 0;
+
+     label1:
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.Instruction getLast()>();
+
+        $z0 = $r2 instanceof net.sourceforge.plantuml.activitydiagram3.InstructionSpot;
+
+        if $z0 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.Instruction getLast()>();
+
+        $z1 = $r3 instanceof net.sourceforge.plantuml.activitydiagram3.InstructionStop;
+
+        if $z1 == 0 goto label3;
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.Instruction getLast()>();
+
+        $r5 = (net.sourceforge.plantuml.activitydiagram3.InstructionStop) $r4;
+
+        $z2 = virtualinvoke $r5.<net.sourceforge.plantuml.activitydiagram3.InstructionStop: boolean hasNotes()>();
+
+        if $z2 != 0 goto label3;
+
+        $z3 = 1;
+
+        goto label4;
+
+     label3:
+        $z3 = 0;
+
+     label4:
+        return $z3;
+    }
+
+    public void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.ArrayList $r1;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r2;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        r2 := @parameter0: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+
+        specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.WithNote: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all> = $r1;
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane defaultSwimlane> = r2;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult add(net.sourceforge.plantuml.activitydiagram3.Instruction)
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction r1;
+        java.util.List $r2;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r3;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        r1 := @parameter0: net.sourceforge.plantuml.activitydiagram3.Instruction;
+
+        $r2 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.gtile.Gtile createGtile(net.sourceforge.plantuml.ISkinParam, net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1, $r2;
+        int $i0;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.activitydiagram3.Instruction r5;
+        net.sourceforge.plantuml.ISkinParam r6;
+        net.sourceforge.plantuml.graphic.StringBounder r7;
+        net.sourceforge.plantuml.activitydiagram3.gtile.Gtile r8, r13;
+        net.sourceforge.plantuml.activitydiagram3.gtile.GtileAssembly $r9;
+        net.sourceforge.plantuml.activitydiagram3.LinkRendering $r10;
+        net.sourceforge.plantuml.activitydiagram3.gtile.GtileEmpty $r11;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r12;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        r6 := @parameter0: net.sourceforge.plantuml.ISkinParam;
+
+        r7 := @parameter1: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $r11 = new net.sourceforge.plantuml.activitydiagram3.gtile.GtileEmpty;
+
+        $r12 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane defaultSwimlane>;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.activitydiagram3.gtile.GtileEmpty: void <init>(net.sourceforge.plantuml.graphic.StringBounder,net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r7, r6, $r12);
+
+        return $r11;
+
+     label1:
+        r13 = null;
+
+        $r2 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label5;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.activitydiagram3.Instruction) $r4;
+
+        r8 = interfaceinvoke r5.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.gtile.Gtile createGtile(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.graphic.StringBounder)>(r6, r7);
+
+        if r13 != null goto label3;
+
+        r13 = r8;
+
+        goto label4;
+
+     label3:
+        $r9 = new net.sourceforge.plantuml.activitydiagram3.gtile.GtileAssembly;
+
+        $r10 = interfaceinvoke r5.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.LinkRendering getInLinkRendering()>();
+
+        specialinvoke $r9.<net.sourceforge.plantuml.activitydiagram3.gtile.GtileAssembly: void <init>(net.sourceforge.plantuml.activitydiagram3.gtile.Gtile,net.sourceforge.plantuml.activitydiagram3.gtile.Gtile,net.sourceforge.plantuml.activitydiagram3.LinkRendering)>(r13, r8, $r10);
+
+        r13 = $r9;
+
+     label4:
+        goto label2;
+
+     label5:
+        return r13;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.ftile.Ftile createFtile(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1, $r6, $r13;
+        int $i0, $i1;
+        java.util.ArrayList $r2;
+        net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory r4;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r5, $r18;
+        java.util.Iterator r7;
+        boolean $z0, $z2;
+        net.sourceforge.plantuml.activitydiagram3.LinkRendering $r8, $r10, $r14, $r15;
+        net.sourceforge.plantuml.activitydiagram3.ftile.FtileDecorateWelding $r9;
+        java.lang.Object $r11;
+        net.sourceforge.plantuml.activitydiagram3.Instruction r12;
+        net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty $r16;
+        net.sourceforge.plantuml.ISkinParam $r17;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Ftile r19, r20;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        r4 := @parameter0: net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $r16 = new net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty;
+
+        $r17 = interfaceinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory: net.sourceforge.plantuml.ISkinParam skinParam()>();
+
+        $r18 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane defaultSwimlane>;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.activitydiagram3.ftile.FtileEmpty: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>($r17, $r18);
+
+        return $r16;
+
+     label1:
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane getSwimlaneIn()>();
+
+        r19 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.ftile.Ftile eventuallyAddNote(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory,net.sourceforge.plantuml.activitydiagram3.ftile.Ftile,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r4, null, $r5);
+
+        $r6 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        r7 = interfaceinvoke $r6.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label6;
+
+        $r11 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r12 = (net.sourceforge.plantuml.activitydiagram3.Instruction) $r11;
+
+        r20 = interfaceinvoke r12.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.ftile.Ftile createFtile(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>(r4);
+
+        $r13 = interfaceinvoke r20.<net.sourceforge.plantuml.activitydiagram3.ftile.Ftile: java.util.List getWeldingPoints()>();
+
+        interfaceinvoke $r2.<java.util.List: boolean addAll(java.util.Collection)>($r13);
+
+        $r14 = interfaceinvoke r12.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.LinkRendering getInLinkRendering()>();
+
+        $z2 = virtualinvoke $r14.<net.sourceforge.plantuml.activitydiagram3.LinkRendering: boolean isNone()>();
+
+        if $z2 != 0 goto label3;
+
+        $r15 = interfaceinvoke r12.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.LinkRendering getInLinkRendering()>();
+
+        r20 = interfaceinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory: net.sourceforge.plantuml.activitydiagram3.ftile.Ftile decorateIn(net.sourceforge.plantuml.activitydiagram3.ftile.Ftile,net.sourceforge.plantuml.activitydiagram3.LinkRendering)>(r20, $r15);
+
+     label3:
+        if r19 != null goto label4;
+
+        r19 = r20;
+
+        goto label5;
+
+     label4:
+        r19 = interfaceinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory: net.sourceforge.plantuml.activitydiagram3.ftile.Ftile assembly(net.sourceforge.plantuml.activitydiagram3.ftile.Ftile,net.sourceforge.plantuml.activitydiagram3.ftile.Ftile)>(r19, r20);
+
+     label5:
+        goto label2;
+
+     label6:
+        $r8 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.LinkRendering outlinkRendering>;
+
+        if $r8 == null goto label7;
+
+        $r10 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.LinkRendering outlinkRendering>;
+
+        r19 = interfaceinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory: net.sourceforge.plantuml.activitydiagram3.ftile.Ftile decorateOut(net.sourceforge.plantuml.activitydiagram3.ftile.Ftile,net.sourceforge.plantuml.activitydiagram3.LinkRendering)>(r19, $r10);
+
+     label7:
+        $i1 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        if $i1 <= 0 goto label8;
+
+        $r9 = new net.sourceforge.plantuml.activitydiagram3.ftile.FtileDecorateWelding;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.activitydiagram3.ftile.FtileDecorateWelding: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.Ftile,java.util.List)>(r19, $r2);
+
+        r19 = $r9;
+
+     label8:
+        return r19;
+    }
+
+    public final boolean kill()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1;
+        int $i0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r2;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        return 0;
+
+     label1:
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.Instruction getLast()>();
+
+        $z0 = interfaceinvoke $r2.<net.sourceforge.plantuml.activitydiagram3.Instruction: boolean kill()>();
+
+        return $z0;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.LinkRendering getInLinkRendering()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1;
+        java.util.Iterator $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r4;
+        net.sourceforge.plantuml.activitydiagram3.LinkRendering $r5;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+        $r3 = interfaceinvoke $r2.<java.util.Iterator: java.lang.Object next()>();
+
+        $r4 = (net.sourceforge.plantuml.activitydiagram3.Instruction) $r3;
+
+        $r5 = interfaceinvoke $r4.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.LinkRendering getInLinkRendering()>();
+
+        return $r5;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.Instruction getLast()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1, $r2, $r3;
+        int $i0, $i1, $i2;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r5;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $r2 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $i1 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        $i2 = $i1 - 1;
+
+        $r4 = interfaceinvoke $r3.<java.util.List: java.lang.Object get(int)>($i2);
+
+        $r5 = (net.sourceforge.plantuml.activitydiagram3.Instruction) $r4;
+
+        return $r5;
+    }
+
+    public boolean addNote(net.sourceforge.plantuml.cucadiagram.Display, net.sourceforge.plantuml.sequencediagram.NotePosition, net.sourceforge.plantuml.sequencediagram.NoteType, net.sourceforge.plantuml.graphic.color.Colors, net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r1, $r2;
+        net.sourceforge.plantuml.cucadiagram.Display r3;
+        net.sourceforge.plantuml.sequencediagram.NotePosition r4;
+        net.sourceforge.plantuml.sequencediagram.NoteType r5;
+        net.sourceforge.plantuml.graphic.color.Colors r6;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r7;
+        boolean $z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        r3 := @parameter0: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r4 := @parameter1: net.sourceforge.plantuml.sequencediagram.NotePosition;
+
+        r5 := @parameter2: net.sourceforge.plantuml.sequencediagram.NoteType;
+
+        r6 := @parameter3: net.sourceforge.plantuml.graphic.color.Colors;
+
+        r7 := @parameter4: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.Instruction getLast()>();
+
+        if $r1 != null goto label1;
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.WithNote: boolean addNote(net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.sequencediagram.NotePosition,net.sourceforge.plantuml.sequencediagram.NoteType,net.sourceforge.plantuml.graphic.color.Colors,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r3, r4, r5, r6, r7);
+
+        return $z1;
+
+     label1:
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.Instruction getLast()>();
+
+        $z0 = interfaceinvoke $r2.<net.sourceforge.plantuml.activitydiagram3.Instruction: boolean addNote(net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.sequencediagram.NotePosition,net.sourceforge.plantuml.sequencediagram.NoteType,net.sourceforge.plantuml.graphic.color.Colors,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r3, r4, r5, r6, r7);
+
+        return $z0;
+    }
+
+    public java.util.Set getSwimlanes()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.List $r1;
+        java.util.Set $r2;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.List all>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.Set getSwimlanes2(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane getSwimlaneIn()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane defaultSwimlane>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane getSwimlaneOut()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.Set r1;
+        int $i0, $i1;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r2;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r3, $r6;
+        java.util.Iterator $r4;
+        java.lang.Object $r5;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: java.util.Set getSwimlanes()>();
+
+        $i0 = interfaceinvoke r1.<java.util.Set: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $i1 = interfaceinvoke r1.<java.util.Set: int size()>();
+
+        if $i1 != 1 goto label2;
+
+        $r4 = interfaceinvoke r1.<java.util.Set: java.util.Iterator iterator()>();
+
+        $r5 = interfaceinvoke $r4.<java.util.Iterator: java.lang.Object next()>();
+
+        $r6 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r5;
+
+        return $r6;
+
+     label2:
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.Instruction getLast()>();
+
+        $r3 = interfaceinvoke $r2.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane getSwimlaneOut()>();
+
+        return $r3;
+    }
+
+    public static java.util.Set getSwimlanes2(java.util.List)
+    {
+        java.util.HashSet $r0;
+        java.util.List r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.util.Set $r4, $r7;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.activitydiagram3.Instruction r6;
+
+        r2 := @parameter0: java.util.List;
+
+        $r0 = new java.util.HashSet;
+
+        specialinvoke $r0.<java.util.HashSet: void <init>()>();
+
+        r3 = interfaceinvoke r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.activitydiagram3.Instruction) $r5;
+
+        $r7 = interfaceinvoke r6.<net.sourceforge.plantuml.activitydiagram3.Instruction: java.util.Set getSwimlanes()>();
+
+        interfaceinvoke $r0.<java.util.Set: boolean addAll(java.util.Collection)>($r7);
+
+        goto label1;
+
+     label2:
+        $r4 = staticinvoke <java.util.Collections: java.util.Set unmodifiableSet(java.util.Set)>($r0);
+
+        return $r4;
+    }
+
+    public void setOutRendering(net.sourceforge.plantuml.activitydiagram3.LinkRendering)
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        net.sourceforge.plantuml.activitydiagram3.LinkRendering r1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        r1 := @parameter0: net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.InstructionList: net.sourceforge.plantuml.activitydiagram3.LinkRendering outlinkRendering> = r1;
+
+        return;
+    }
+
+    public volatile boolean hasNotes()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.WithNote: boolean hasNotes()>();
+
+        return $z0;
+    }
+
+    public volatile java.util.Collection getPositionedNotes()
+    {
+        net.sourceforge.plantuml.activitydiagram3.InstructionList r0;
+        java.util.Collection $r1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.WithNote: java.util.Collection getPositionedNotes()>();
+
+        return $r1;
+    }
+}

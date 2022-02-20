@@ -1,0 +1,1392 @@
+public class net.sourceforge.plantuml.security.SURL extends java.lang.Object
+{
+    public static final java.lang.String WITHOUT_AUTHENTICATION;
+    private static final java.util.regex.Pattern PATTERN_USERINFO;
+    private static final java.util.concurrent.ExecutorService EXE;
+    private static final java.util.Map BAD_HOSTS;
+    private final java.net.URL internal;
+    private final java.lang.String securityIdentifier;
+
+    private void <init>(java.net.URL, java.lang.String)
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        java.net.URL r1, $r3;
+        java.lang.Object $r2, $r5;
+        java.lang.String r4, $r6;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        r1 := @parameter0: java.net.URL;
+
+        r4 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r3 = (java.net.URL) $r2;
+
+        r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal> = $r3;
+
+        $r5 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r4);
+
+        $r6 = (java.lang.String) $r5;
+
+        r0.<net.sourceforge.plantuml.security.SURL: java.lang.String securityIdentifier> = $r6;
+
+        return;
+    }
+
+    public static net.sourceforge.plantuml.security.SURL create(java.lang.String)
+    {
+        java.lang.String r0;
+        boolean $z0, $z1;
+        java.net.URL $r1;
+        net.sourceforge.plantuml.security.SURL $r2;
+        java.net.MalformedURLException $r3;
+
+        r0 := @parameter0: java.lang.String;
+
+        if r0 != null goto label1;
+
+        return null;
+
+     label1:
+        $z0 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("http://");
+
+        if $z0 != 0 goto label2;
+
+        $z1 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("https://");
+
+        if $z1 == 0 goto label5;
+
+     label2:
+        $r1 = new java.net.URL;
+
+        specialinvoke $r1.<java.net.URL: void <init>(java.lang.String)>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.security.SURL: net.sourceforge.plantuml.security.SURL create(java.net.URL)>($r1);
+
+     label3:
+        return $r2;
+
+     label4:
+        $r3 := @caughtexception;
+
+        virtualinvoke $r3.<java.net.MalformedURLException: void printStackTrace()>();
+
+     label5:
+        return null;
+
+        catch java.net.MalformedURLException from label2 to label3 with label4;
+    }
+
+    public static net.sourceforge.plantuml.security.SURL create(java.net.URL) throws java.net.MalformedURLException
+    {
+        java.net.URL r0, $r5;
+        java.lang.String r1;
+        net.sourceforge.plantuml.security.SURL $r2, $r3, $r4;
+        int $i0;
+        boolean $z0;
+        java.net.MalformedURLException $r6;
+
+        r0 := @parameter0: java.net.URL;
+
+        if r0 != null goto label1;
+
+        $r6 = new java.net.MalformedURLException;
+
+        specialinvoke $r6.<java.net.MalformedURLException: void <init>(java.lang.String)>("URL cannot be null");
+
+        throw $r6;
+
+     label1:
+        r1 = virtualinvoke r0.<java.net.URL: java.lang.String getUserInfo()>();
+
+        if r1 == null goto label2;
+
+        $i0 = virtualinvoke r1.<java.lang.String: int indexOf(int)>(58);
+
+        if $i0 <= 0 goto label3;
+
+     label2:
+        $r2 = new net.sourceforge.plantuml.security.SURL;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.security.SURL: void <init>(java.net.URL,java.lang.String)>(r0, "<none>");
+
+        return $r2;
+
+     label3:
+        $z0 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: boolean existsSecurityCredentials(java.lang.String)>(r1);
+
+        if $z0 == 0 goto label4;
+
+        $r4 = new net.sourceforge.plantuml.security.SURL;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.net.URL removeUserInfo(java.net.URL)>(r0);
+
+        specialinvoke $r4.<net.sourceforge.plantuml.security.SURL: void <init>(java.net.URL,java.lang.String)>($r5, r1);
+
+        return $r4;
+
+     label4:
+        $r3 = new net.sourceforge.plantuml.security.SURL;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.security.SURL: void <init>(java.net.URL,java.lang.String)>(r0, "<none>");
+
+        return $r3;
+    }
+
+    static net.sourceforge.plantuml.security.SURL createWithoutUser(java.net.URL) throws java.net.MalformedURLException
+    {
+        net.sourceforge.plantuml.security.SURL $r0;
+        java.net.URL r1, $r2;
+
+        r1 := @parameter0: java.net.URL;
+
+        $r0 = new net.sourceforge.plantuml.security.SURL;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.net.URL removeUserInfo(java.net.URL)>(r1);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.security.SURL: void <init>(java.net.URL,java.lang.String)>($r2, "<none>");
+
+        return $r0;
+    }
+
+    static void resetBadHosts()
+    {
+        java.util.Map $r0;
+
+        $r0 = <net.sourceforge.plantuml.security.SURL: java.util.Map BAD_HOSTS>;
+
+        interfaceinvoke $r0.<java.util.Map: void clear()>();
+
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        java.net.URL $r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        $r1 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        $r2 = virtualinvoke $r1.<java.net.URL: java.lang.String toString()>();
+
+        return $r2;
+    }
+
+    private boolean isUrlOk()
+    {
+        net.sourceforge.plantuml.security.SecurityProfile $r0, $r1, $r2, $r3, $r4, $r5, $r7, $r8;
+        net.sourceforge.plantuml.security.SURL r6;
+        boolean $z0, $z1, $z2;
+        java.net.URL $r9, $r12;
+        java.lang.String $r10, $r11;
+        int i0;
+
+        r6 := @this: net.sourceforge.plantuml.security.SURL;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $r1 = <net.sourceforge.plantuml.security.SecurityProfile: net.sourceforge.plantuml.security.SecurityProfile SANDBOX>;
+
+        if $r0 != $r1 goto label1;
+
+        return 0;
+
+     label1:
+        $r2 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $r3 = <net.sourceforge.plantuml.security.SecurityProfile: net.sourceforge.plantuml.security.SecurityProfile LEGACY>;
+
+        if $r2 != $r3 goto label2;
+
+        return 1;
+
+     label2:
+        $r4 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $r5 = <net.sourceforge.plantuml.security.SecurityProfile: net.sourceforge.plantuml.security.SecurityProfile UNSECURE>;
+
+        if $r4 != $r5 goto label3;
+
+        return 1;
+
+     label3:
+        $z0 = specialinvoke r6.<net.sourceforge.plantuml.security.SURL: boolean isInAllowList()>();
+
+        if $z0 == 0 goto label4;
+
+        return 1;
+
+     label4:
+        $r7 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $r8 = <net.sourceforge.plantuml.security.SecurityProfile: net.sourceforge.plantuml.security.SecurityProfile INTERNET>;
+
+        if $r7 != $r8 goto label9;
+
+        $r9 = r6.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        $r10 = virtualinvoke $r9.<java.net.URL: java.lang.String toString()>();
+
+        $r11 = specialinvoke r6.<net.sourceforge.plantuml.security.SURL: java.lang.String cleanPath(java.lang.String)>($r10);
+
+        $z1 = specialinvoke r6.<net.sourceforge.plantuml.security.SURL: boolean forbiddenURL(java.lang.String)>($r11);
+
+        if $z1 == 0 goto label5;
+
+        return 0;
+
+     label5:
+        $r12 = r6.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        i0 = virtualinvoke $r12.<java.net.URL: int getPort()>();
+
+        if i0 == 80 goto label6;
+
+        if i0 == 443 goto label6;
+
+        if i0 != -1 goto label7;
+
+     label6:
+        $z2 = 1;
+
+        goto label8;
+
+     label7:
+        $z2 = 0;
+
+     label8:
+        return $z2;
+
+     label9:
+        return 0;
+    }
+
+    private boolean forbiddenURL(java.lang.String)
+    {
+        java.lang.String r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.security.SURL r1;
+
+        r1 := @this: net.sourceforge.plantuml.security.SURL;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean matches(java.lang.String)>("^https?://\\d+\\.\\d+\\.\\d+\\.\\d+.*");
+
+        if $z0 == 0 goto label1;
+
+        return 1;
+
+     label1:
+        $z1 = virtualinvoke r0.<java.lang.String: boolean matches(java.lang.String)>("^https?://[^.]+/.*");
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    private boolean isInAllowList()
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        java.net.URL $r1;
+        java.lang.String $r2, r3, r7, $r8;
+        java.util.List $r4;
+        java.util.Iterator r5;
+        boolean $z0, $z1;
+        java.lang.Object $r6;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        $r1 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        $r2 = virtualinvoke $r1.<java.net.URL: java.lang.String toString()>();
+
+        r3 = specialinvoke r0.<net.sourceforge.plantuml.security.SURL: java.lang.String cleanPath(java.lang.String)>($r2);
+
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.security.SURL: java.util.List getAllowList()>();
+
+        r5 = interfaceinvoke $r4.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (java.lang.String) $r6;
+
+        $r8 = specialinvoke r0.<net.sourceforge.plantuml.security.SURL: java.lang.String cleanPath(java.lang.String)>(r7);
+
+        $z1 = virtualinvoke r3.<java.lang.String: boolean startsWith(java.lang.String)>($r8);
+
+        if $z1 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        return 0;
+    }
+
+    private java.lang.String cleanPath(java.lang.String)
+    {
+        java.lang.String $r0, r3, r4, r5, r6, r7;
+        java.util.Locale $r1;
+        net.sourceforge.plantuml.security.SURL r2;
+
+        r2 := @this: net.sourceforge.plantuml.security.SURL;
+
+        r3 := @parameter0: java.lang.String;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.lang.String removeUserInfoFromUrlPath(java.lang.String)>(r3);
+
+        $r0 = virtualinvoke r4.<java.lang.String: java.lang.String trim()>();
+
+        $r1 = <java.util.Locale: java.util.Locale US>;
+
+        r5 = virtualinvoke $r0.<java.lang.String: java.lang.String toLowerCase(java.util.Locale)>($r1);
+
+        r6 = virtualinvoke r5.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>(":80/", "");
+
+        r7 = virtualinvoke r6.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>(":443/", "");
+
+        return r7;
+    }
+
+    private java.util.List getAllowList()
+    {
+        java.lang.String r0, $r1;
+        java.lang.String[] $r2;
+        java.util.List $r3, $r4;
+        net.sourceforge.plantuml.security.SURL r5;
+
+        r5 := @this: net.sourceforge.plantuml.security.SURL;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.lang.String getenv(java.lang.String)>("plantuml.allowlist.path");
+
+        if r0 != null goto label1;
+
+        $r4 = staticinvoke <java.util.Collections: java.util.List emptyList()>();
+
+        return $r4;
+
+     label1:
+        $r1 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String eventuallyRemoveStartingAndEndingDoubleQuote(java.lang.String)>(r0);
+
+        $r2 = virtualinvoke $r1.<java.lang.String: java.lang.String[] split(java.lang.String)>(";");
+
+        $r3 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r2);
+
+        return $r3;
+    }
+
+    public byte[] getBytes()
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        boolean $z0;
+        java.lang.String $r1, r6, $r31;
+        net.sourceforge.plantuml.security.authentication.SecurityCredentials r2;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager $r3;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r4;
+        java.net.URL $r5, $r11;
+        java.util.Map $r7, $r18, $r21;
+        java.lang.Object $r8, $r16;
+        java.lang.Long r9, $r19;
+        java.util.concurrent.ExecutorService $r10;
+        java.net.Proxy $r12;
+        java.util.concurrent.Callable $r13;
+        net.sourceforge.plantuml.security.SecurityProfile $r14;
+        long $l0, $l1, $l2, $l3, $l4;
+        java.util.concurrent.TimeUnit $r15;
+        byte[] r17;
+        byte $b5;
+        java.lang.Throwable $r22;
+        java.lang.Exception $r24;
+        java.lang.StringBuilder $r25, $r27, $r28, $r29, $r30;
+        java.io.PrintStream $r26;
+        java.util.concurrent.Future r32;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.security.SURL: boolean isUrlOk()>();
+
+        if $z0 != 0 goto label01;
+
+        return null;
+
+     label01:
+        $r1 = r0.<net.sourceforge.plantuml.security.SURL: java.lang.String securityIdentifier>;
+
+        r2 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.authentication.SecurityCredentials loadSecurityCredentials(java.lang.String)>($r1);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager getAuthenticationManager(net.sourceforge.plantuml.security.authentication.SecurityCredentials)>(r2);
+
+        r4 = interfaceinvoke $r3.<net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager: net.sourceforge.plantuml.security.authentication.SecurityAuthentication create(net.sourceforge.plantuml.security.authentication.SecurityCredentials)>(r2);
+
+     label02:
+        $r5 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        r6 = virtualinvoke $r5.<java.net.URL: java.lang.String getHost()>();
+
+        $r7 = <net.sourceforge.plantuml.security.SURL: java.util.Map BAD_HOSTS>;
+
+        $r8 = interfaceinvoke $r7.<java.util.Map: java.lang.Object get(java.lang.Object)>(r6);
+
+        r9 = (java.lang.Long) $r8;
+
+        if r9 == null goto label05;
+
+        $l2 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l3 = virtualinvoke r9.<java.lang.Long: long longValue()>();
+
+        $l4 = $l2 - $l3;
+
+        $b5 = $l4 cmp 60000L;
+
+        if $b5 >= 0 goto label04;
+
+     label03:
+        virtualinvoke r2.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: void eraseCredentials()>();
+
+        virtualinvoke r4.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: void eraseCredentials()>();
+
+        return null;
+
+     label04:
+        $r21 = <net.sourceforge.plantuml.security.SURL: java.util.Map BAD_HOSTS>;
+
+        interfaceinvoke $r21.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r6);
+
+     label05:
+        $r10 = <net.sourceforge.plantuml.security.SURL: java.util.concurrent.ExecutorService EXE>;
+
+        $r11 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        $r12 = virtualinvoke r2.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: java.net.Proxy getProxy()>();
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.util.concurrent.Callable requestWithGetAndResponse(java.net.URL,java.net.Proxy,net.sourceforge.plantuml.security.authentication.SecurityAuthentication,java.util.Map)>($r11, $r12, r4, null);
+
+        r32 = interfaceinvoke $r10.<java.util.concurrent.ExecutorService: java.util.concurrent.Future submit(java.util.concurrent.Callable)>($r13);
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $l0 = virtualinvoke $r14.<net.sourceforge.plantuml.security.SecurityProfile: long getTimeout()>();
+
+        $r15 = <java.util.concurrent.TimeUnit: java.util.concurrent.TimeUnit MILLISECONDS>;
+
+        $r16 = interfaceinvoke r32.<java.util.concurrent.Future: java.lang.Object get(long,java.util.concurrent.TimeUnit)>($l0, $r15);
+
+        r17 = (byte[]) $r16;
+
+        if r17 == null goto label07;
+
+     label06:
+        virtualinvoke r2.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: void eraseCredentials()>();
+
+        virtualinvoke r4.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: void eraseCredentials()>();
+
+        return r17;
+
+     label07:
+        goto label09;
+
+     label08:
+        $r24 := @caughtexception;
+
+        $r26 = <java.lang.System: java.io.PrintStream err>;
+
+        $r25 = new java.lang.StringBuilder;
+
+        specialinvoke $r25.<java.lang.StringBuilder: void <init>()>();
+
+        $r27 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("issue ");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r6);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r24);
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r26.<java.io.PrintStream: void println(java.lang.String)>($r31);
+
+     label09:
+        $r18 = <net.sourceforge.plantuml.security.SURL: java.util.Map BAD_HOSTS>;
+
+        $l1 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $r19 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l1);
+
+        interfaceinvoke $r18.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r6, $r19);
+
+     label10:
+        virtualinvoke r2.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: void eraseCredentials()>();
+
+        virtualinvoke r4.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: void eraseCredentials()>();
+
+        return null;
+
+     label11:
+        $r22 := @caughtexception;
+
+     label12:
+        virtualinvoke r2.<net.sourceforge.plantuml.security.authentication.SecurityCredentials: void eraseCredentials()>();
+
+        virtualinvoke r4.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: void eraseCredentials()>();
+
+        throw $r22;
+
+        catch java.lang.Exception from label05 to label06 with label08;
+        catch java.lang.Throwable from label02 to label03 with label11;
+        catch java.lang.Throwable from label04 to label06 with label11;
+        catch java.lang.Throwable from label07 to label10 with label11;
+        catch java.lang.Throwable from label11 to label12 with label11;
+    }
+
+    private byte[] getBytes(java.net.Proxy, net.sourceforge.plantuml.security.authentication.SecurityAuthentication, java.util.Map)
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        boolean $z0;
+        java.net.Proxy r1;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r2;
+        java.util.Map r3;
+        java.net.URL $r4, $r17;
+        java.util.concurrent.ExecutorService $r5;
+        java.util.concurrent.Callable $r6;
+        java.util.concurrent.Future r7;
+        net.sourceforge.plantuml.security.SecurityProfile $r8;
+        long $l0;
+        java.util.concurrent.TimeUnit $r9;
+        java.lang.Object $r10;
+        byte[] $r11;
+        java.lang.Exception $r12;
+        java.lang.StringBuilder $r14, $r16, $r19, $r20, $r21;
+        java.io.PrintStream $r15;
+        java.lang.String $r18, $r22;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        r1 := @parameter0: java.net.Proxy;
+
+        r2 := @parameter1: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        r3 := @parameter2: java.util.Map;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.security.SURL: boolean isUrlOk()>();
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r5 = <net.sourceforge.plantuml.security.SURL: java.util.concurrent.ExecutorService EXE>;
+
+        $r4 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.util.concurrent.Callable requestWithGetAndResponse(java.net.URL,java.net.Proxy,net.sourceforge.plantuml.security.authentication.SecurityAuthentication,java.util.Map)>($r4, r1, r2, r3);
+
+        r7 = interfaceinvoke $r5.<java.util.concurrent.ExecutorService: java.util.concurrent.Future submit(java.util.concurrent.Callable)>($r6);
+
+     label2:
+        $r8 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $l0 = virtualinvoke $r8.<net.sourceforge.plantuml.security.SecurityProfile: long getTimeout()>();
+
+        $r9 = <java.util.concurrent.TimeUnit: java.util.concurrent.TimeUnit MILLISECONDS>;
+
+        $r10 = interfaceinvoke r7.<java.util.concurrent.Future: java.lang.Object get(long,java.util.concurrent.TimeUnit)>($l0, $r9);
+
+        $r11 = (byte[]) $r10;
+
+     label3:
+        return $r11;
+
+     label4:
+        $r12 := @caughtexception;
+
+        $r15 = <java.lang.System: java.io.PrintStream err>;
+
+        $r14 = new java.lang.StringBuilder;
+
+        specialinvoke $r14.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("SURL response issue to ");
+
+        $r17 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        $r18 = virtualinvoke $r17.<java.net.URL: java.lang.String getHost()>();
+
+        $r19 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r18);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r12);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r15.<java.io.PrintStream: void println(java.lang.String)>($r22);
+
+        return null;
+
+        catch java.lang.Exception from label2 to label3 with label4;
+    }
+
+    public byte[] getBytesOnPost(java.net.Proxy, net.sourceforge.plantuml.security.authentication.SecurityAuthentication, java.lang.String, java.util.Map)
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        boolean $z0;
+        java.net.Proxy r1;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r2;
+        java.lang.String r3, $r19, $r23;
+        java.util.Map r4;
+        java.net.URL $r5, $r18;
+        java.util.concurrent.ExecutorService $r6;
+        java.util.concurrent.Callable $r7;
+        java.util.concurrent.Future r8;
+        net.sourceforge.plantuml.security.SecurityProfile $r9;
+        long $l0;
+        java.util.concurrent.TimeUnit $r10;
+        java.lang.Object $r11;
+        byte[] $r12;
+        java.lang.Exception $r13;
+        java.lang.StringBuilder $r15, $r17, $r20, $r21, $r22;
+        java.io.PrintStream $r16;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        r1 := @parameter0: java.net.Proxy;
+
+        r2 := @parameter1: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        r3 := @parameter2: java.lang.String;
+
+        r4 := @parameter3: java.util.Map;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.security.SURL: boolean isUrlOk()>();
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r6 = <net.sourceforge.plantuml.security.SURL: java.util.concurrent.ExecutorService EXE>;
+
+        $r5 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.util.concurrent.Callable requestWithPostAndResponse(java.net.URL,java.net.Proxy,net.sourceforge.plantuml.security.authentication.SecurityAuthentication,java.lang.String,java.util.Map)>($r5, r1, r2, r3, r4);
+
+        r8 = interfaceinvoke $r6.<java.util.concurrent.ExecutorService: java.util.concurrent.Future submit(java.util.concurrent.Callable)>($r7);
+
+     label2:
+        $r9 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $l0 = virtualinvoke $r9.<net.sourceforge.plantuml.security.SecurityProfile: long getTimeout()>();
+
+        $r10 = <java.util.concurrent.TimeUnit: java.util.concurrent.TimeUnit MILLISECONDS>;
+
+        $r11 = interfaceinvoke r8.<java.util.concurrent.Future: java.lang.Object get(long,java.util.concurrent.TimeUnit)>($l0, $r10);
+
+        $r12 = (byte[]) $r11;
+
+     label3:
+        return $r12;
+
+     label4:
+        $r13 := @caughtexception;
+
+        $r16 = <java.lang.System: java.io.PrintStream err>;
+
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("SURL response issue to ");
+
+        $r18 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        $r19 = virtualinvoke $r18.<java.net.URL: java.lang.String getHost()>();
+
+        $r20 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r19);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r13);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r16.<java.io.PrintStream: void println(java.lang.String)>($r23);
+
+        return null;
+
+        catch java.lang.Exception from label2 to label3 with label4;
+    }
+
+    private static java.util.concurrent.Callable requestWithGetAndResponse(java.net.URL, java.net.Proxy, net.sourceforge.plantuml.security.authentication.SecurityAuthentication, java.util.Map)
+    {
+        net.sourceforge.plantuml.security.SURL$2 $r0;
+        java.net.Proxy r1;
+        java.net.URL r2;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r3;
+        java.util.Map r4;
+
+        r2 := @parameter0: java.net.URL;
+
+        r1 := @parameter1: java.net.Proxy;
+
+        r3 := @parameter2: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        r4 := @parameter3: java.util.Map;
+
+        $r0 = new net.sourceforge.plantuml.security.SURL$2;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.security.SURL$2: void <init>(java.net.Proxy,java.net.URL,net.sourceforge.plantuml.security.authentication.SecurityAuthentication,java.util.Map)>(r1, r2, r3, r4);
+
+        return $r0;
+    }
+
+    private static java.util.concurrent.Callable requestWithPostAndResponse(java.net.URL, java.net.Proxy, net.sourceforge.plantuml.security.authentication.SecurityAuthentication, java.lang.String, java.util.Map)
+    {
+        net.sourceforge.plantuml.security.SURL$3 $r0;
+        java.net.Proxy r1;
+        java.net.URL r2;
+        java.lang.String r3;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r4;
+        java.util.Map r5;
+
+        r2 := @parameter0: java.net.URL;
+
+        r1 := @parameter1: java.net.Proxy;
+
+        r4 := @parameter2: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        r3 := @parameter3: java.lang.String;
+
+        r5 := @parameter4: java.util.Map;
+
+        $r0 = new net.sourceforge.plantuml.security.SURL$3;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.security.SURL$3: void <init>(java.net.Proxy,java.net.URL,java.lang.String,net.sourceforge.plantuml.security.authentication.SecurityAuthentication,java.util.Map)>(r1, r2, r3, r4, r5);
+
+        return $r0;
+    }
+
+    private static java.nio.charset.Charset extractCharset(java.lang.String)
+    {
+        java.lang.String r0, $r3;
+        boolean $z0, $z1;
+        java.util.regex.Pattern $r1;
+        java.util.regex.Matcher r2;
+        java.nio.charset.Charset $r4;
+        java.lang.Exception $r5;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.StringUtils: boolean isEmpty(java.lang.CharSequence)>(r0);
+
+        if $z0 == 0 goto label1;
+
+        return null;
+
+     label1:
+        $r1 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)");
+
+        r2 = virtualinvoke $r1.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r0);
+
+        $z1 = virtualinvoke r2.<java.util.regex.Matcher: boolean find()>();
+
+        if $z1 == 0 goto label5;
+
+     label2:
+        $r3 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        $r4 = staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>($r3);
+
+     label3:
+        return $r4;
+
+     label4:
+        $r5 := @caughtexception;
+
+        virtualinvoke $r5.<java.lang.Exception: void printStackTrace()>();
+
+     label5:
+        return null;
+
+        catch java.lang.Exception from label2 to label3 with label4;
+    }
+
+    private static byte[] retrieveResponseAsBytes(java.net.HttpURLConnection) throws java.io.IOException
+    {
+        java.net.HttpURLConnection r0;
+        int i0;
+        java.io.IOException $r1;
+        java.lang.StringBuilder $r2, $r3, $r4, $r5, $r8;
+        java.lang.String $r6, $r9;
+        java.nio.charset.Charset $r7;
+        java.lang.Throwable $r10, $r11, $r12, $r13;
+        java.io.InputStream r14, r18;
+        byte[] r15, r19;
+
+        r0 := @parameter0: java.net.HttpURLConnection;
+
+        i0 = virtualinvoke r0.<java.net.HttpURLConnection: int getResponseCode()>();
+
+        if i0 >= 400 goto label09;
+
+        r14 = virtualinvoke r0.<java.net.HttpURLConnection: java.io.InputStream getInputStream()>();
+
+     label01:
+        r15 = staticinvoke <net.sourceforge.plantuml.security.SURL: byte[] retrieveData(java.io.InputStream)>(r14);
+
+     label02:
+        if r14 == null goto label03;
+
+        virtualinvoke r14.<java.io.InputStream: void close()>();
+
+     label03:
+        return r15;
+
+     label04:
+        $r13 := @caughtexception;
+
+        if r14 == null goto label08;
+
+     label05:
+        virtualinvoke r14.<java.io.InputStream: void close()>();
+
+     label06:
+        goto label08;
+
+     label07:
+        $r12 := @caughtexception;
+
+        virtualinvoke $r13.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r12);
+
+     label08:
+        throw $r13;
+
+     label09:
+        r18 = virtualinvoke r0.<java.net.HttpURLConnection: java.io.InputStream getErrorStream()>();
+
+     label10:
+        r19 = staticinvoke <net.sourceforge.plantuml.security.SURL: byte[] retrieveData(java.io.InputStream)>(r18);
+
+        $r1 = new java.io.IOException;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("HTTP error ");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" with ");
+
+        $r6 = new java.lang.String;
+
+        $r7 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        specialinvoke $r6.<java.lang.String: void <init>(byte[],java.nio.charset.Charset)>(r19, $r7);
+
+        $r8 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r6);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r1.<java.io.IOException: void <init>(java.lang.String)>($r9);
+
+        throw $r1;
+
+     label11:
+        $r11 := @caughtexception;
+
+        if r18 == null goto label15;
+
+     label12:
+        virtualinvoke r18.<java.io.InputStream: void close()>();
+
+     label13:
+        goto label15;
+
+     label14:
+        $r10 := @caughtexception;
+
+        virtualinvoke $r11.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r10);
+
+     label15:
+        throw $r11;
+
+        catch java.lang.Throwable from label01 to label02 with label04;
+        catch java.lang.Throwable from label05 to label06 with label07;
+        catch java.lang.Throwable from label10 to label11 with label11;
+        catch java.lang.Throwable from label12 to label13 with label14;
+    }
+
+    private static byte[] retrieveData(java.io.InputStream) throws java.io.IOException
+    {
+        java.io.ByteArrayOutputStream $r0;
+        byte[] r2, $r4;
+        java.io.InputStream r3;
+        int $i0;
+
+        r3 := @parameter0: java.io.InputStream;
+
+        $r0 = new java.io.ByteArrayOutputStream;
+
+        specialinvoke $r0.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        r2 = newarray (byte)[1024];
+
+     label1:
+        $i0 = virtualinvoke r3.<java.io.InputStream: int read(byte[])>(r2);
+
+        if $i0 <= 0 goto label2;
+
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void write(byte[],int,int)>(r2, 0, $i0);
+
+        goto label1;
+
+     label2:
+        virtualinvoke $r0.<java.io.ByteArrayOutputStream: void close()>();
+
+        $r4 = virtualinvoke $r0.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        return $r4;
+    }
+
+    private static void sendRequestAsBytes(java.net.HttpURLConnection, byte[]) throws java.io.IOException
+    {
+        java.net.HttpURLConnection r0;
+        byte[] r1;
+        int $i0;
+        java.io.OutputStream r2;
+        java.lang.Throwable $r3, $r6;
+
+        r0 := @parameter0: java.net.HttpURLConnection;
+
+        r1 := @parameter1: byte[];
+
+        $i0 = lengthof r1;
+
+        virtualinvoke r0.<java.net.HttpURLConnection: void setFixedLengthStreamingMode(int)>($i0);
+
+        r2 = virtualinvoke r0.<java.net.HttpURLConnection: java.io.OutputStream getOutputStream()>();
+
+     label1:
+        virtualinvoke r2.<java.io.OutputStream: void write(byte[])>(r1);
+
+     label2:
+        if r2 == null goto label8;
+
+        virtualinvoke r2.<java.io.OutputStream: void close()>();
+
+        goto label8;
+
+     label3:
+        $r6 := @caughtexception;
+
+        if r2 == null goto label7;
+
+     label4:
+        virtualinvoke r2.<java.io.OutputStream: void close()>();
+
+     label5:
+        goto label7;
+
+     label6:
+        $r3 := @caughtexception;
+
+        virtualinvoke $r6.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r3);
+
+     label7:
+        throw $r6;
+
+     label8:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label4 to label5 with label6;
+    }
+
+    public java.io.InputStream openStream()
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        boolean $z0;
+        byte[] r1;
+        java.io.ByteArrayInputStream $r2;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.security.SURL: boolean isUrlOk()>();
+
+        if $z0 == 0 goto label1;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.security.SURL: byte[] getBytes()>();
+
+        if r1 == null goto label1;
+
+        $r2 = new java.io.ByteArrayInputStream;
+
+        specialinvoke $r2.<java.io.ByteArrayInputStream: void <init>(byte[])>(r1);
+
+        return $r2;
+
+     label1:
+        return null;
+    }
+
+    public java.awt.image.BufferedImage readRasterImageFromURL()
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        boolean $z0;
+        javax.swing.ImageIcon $r1;
+        java.net.URL $r2;
+        java.awt.image.BufferedImage $r3;
+        java.lang.Exception $r4;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.security.SURL: boolean isUrlOk()>();
+
+        if $z0 == 0 goto label4;
+
+     label1:
+        $r1 = new javax.swing.ImageIcon;
+
+        $r2 = r0.<net.sourceforge.plantuml.security.SURL: java.net.URL internal>;
+
+        specialinvoke $r1.<javax.swing.ImageIcon: void <init>(java.net.URL)>($r2);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.awt.image.BufferedImage readRasterImage(javax.swing.ImageIcon)>($r1);
+
+     label2:
+        return $r3;
+
+     label3:
+        $r4 := @caughtexception;
+
+        virtualinvoke $r4.<java.lang.Exception: void printStackTrace()>();
+
+     label4:
+        return null;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    public boolean isAuthorizationConfigured()
+    {
+        net.sourceforge.plantuml.security.SURL r0;
+        java.lang.String $r1, $r2;
+        boolean $z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.security.SURL;
+
+        $r2 = "<none>";
+
+        $r1 = r0.<net.sourceforge.plantuml.security.SURL: java.lang.String securityIdentifier>;
+
+        $z0 = virtualinvoke $r2.<java.lang.String: boolean equals(java.lang.Object)>($r1);
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        return $z1;
+    }
+
+    private static void applyEndpointAccessAuthentication(java.net.URLConnection, net.sourceforge.plantuml.security.authentication.SecurityAuthentication)
+    {
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r0;
+        boolean $z0, $z1, $z2;
+        java.net.URLConnection r1;
+        net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor r2;
+        java.lang.IllegalStateException $r3;
+
+        r1 := @parameter0: java.net.URLConnection;
+
+        r0 := @parameter1: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.security.authentication.SecurityAuthentication: boolean isPublic()>();
+
+        if $z0 == 0 goto label1;
+
+        return;
+
+     label1:
+        $z1 = r1 instanceof javax.net.ssl.HttpsURLConnection;
+
+        if $z1 != 0 goto label2;
+
+        $z2 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: boolean isNonSSLAuthenticationAllowed()>();
+
+        if $z2 == 0 goto label3;
+
+     label2:
+        r2 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor getAccessInterceptor(net.sourceforge.plantuml.security.authentication.SecurityAuthentication)>(r0);
+
+        interfaceinvoke r2.<net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor: void apply(net.sourceforge.plantuml.security.authentication.SecurityAuthentication,java.net.URLConnection)>(r0, r1);
+
+        goto label4;
+
+     label3:
+        $r3 = new java.lang.IllegalStateException;
+
+        specialinvoke $r3.<java.lang.IllegalStateException: void <init>(java.lang.String)>("The transport of authentication data over an unencrypted http connection is not allowed");
+
+        throw $r3;
+
+     label4:
+        return;
+    }
+
+    private static void applyAdditionalHeaders(java.net.URLConnection, java.util.Map)
+    {
+        java.util.Map r0;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        java.util.Set $r1;
+        java.util.Iterator r2, r7;
+        java.lang.Object $r3, r5, r8, $r10, $r13;
+        java.util.Map$Entry r4;
+        java.util.List $r6;
+        java.net.URLConnection r9;
+        java.lang.String $r11, $r12, $r14, $r15;
+
+        r9 := @parameter0: java.net.URLConnection;
+
+        r0 := @parameter1: java.util.Map;
+
+        if r0 == null goto label1;
+
+        $z0 = interfaceinvoke r0.<java.util.Map: boolean isEmpty()>();
+
+        if $z0 == 0 goto label2;
+
+     label1:
+        return;
+
+     label2:
+        $r1 = interfaceinvoke r0.<java.util.Map: java.util.Set entrySet()>();
+
+        r2 = interfaceinvoke $r1.<java.util.Set: java.util.Iterator iterator()>();
+
+     label3:
+        $z1 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label8;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (java.util.Map$Entry) $r3;
+
+        r5 = interfaceinvoke r4.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $z2 = r5 instanceof java.lang.String;
+
+        if $z2 == 0 goto label4;
+
+        $r13 = interfaceinvoke r4.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r15 = (java.lang.String) $r13;
+
+        $r14 = (java.lang.String) r5;
+
+        virtualinvoke r9.<java.net.URLConnection: void setRequestProperty(java.lang.String,java.lang.String)>($r15, $r14);
+
+        goto label7;
+
+     label4:
+        $z3 = r5 instanceof java.util.List;
+
+        if $z3 == 0 goto label7;
+
+        $r6 = (java.util.List) r5;
+
+        r7 = interfaceinvoke $r6.<java.util.List: java.util.Iterator iterator()>();
+
+     label5:
+        $z4 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z4 == 0 goto label7;
+
+        r8 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        if r8 == null goto label6;
+
+        $r10 = interfaceinvoke r4.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r11 = (java.lang.String) $r10;
+
+        $r12 = virtualinvoke r8.<java.lang.Object: java.lang.String toString()>();
+
+        virtualinvoke r9.<java.net.URLConnection: void addRequestProperty(java.lang.String,java.lang.String)>($r11, $r12);
+
+     label6:
+        goto label5;
+
+     label7:
+        goto label3;
+
+     label8:
+        return;
+    }
+
+    private static java.net.URL removeUserInfo(java.net.URL) throws java.net.MalformedURLException
+    {
+        java.net.URL $r0, r1;
+        java.lang.String $r2, $r3;
+
+        r1 := @parameter0: java.net.URL;
+
+        $r0 = new java.net.URL;
+
+        $r2 = virtualinvoke r1.<java.net.URL: java.lang.String toExternalForm()>();
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.lang.String removeUserInfoFromUrlPath(java.lang.String)>($r2);
+
+        specialinvoke $r0.<java.net.URL: void <init>(java.lang.String)>($r3);
+
+        return $r0;
+    }
+
+    private static java.lang.String removeUserInfoFromUrlPath(java.lang.String)
+    {
+        java.lang.String r0, $r3;
+        java.util.regex.Pattern $r1;
+        java.util.regex.Matcher r2;
+        boolean $z0;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.security.SURL: java.util.regex.Pattern PATTERN_USERINFO>;
+
+        r2 = virtualinvoke $r1.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r0);
+
+        $z0 = virtualinvoke r2.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label1;
+
+        $r3 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String replaceFirst(java.lang.String)>("$1$3");
+
+        return $r3;
+
+     label1:
+        return r0;
+    }
+
+    static void access$000(java.net.URLConnection, net.sourceforge.plantuml.security.authentication.SecurityAuthentication)
+    {
+        java.net.URLConnection r0;
+        net.sourceforge.plantuml.security.authentication.SecurityAuthentication r1;
+
+        r0 := @parameter0: java.net.URLConnection;
+
+        r1 := @parameter1: net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
+
+        staticinvoke <net.sourceforge.plantuml.security.SURL: void applyEndpointAccessAuthentication(java.net.URLConnection,net.sourceforge.plantuml.security.authentication.SecurityAuthentication)>(r0, r1);
+
+        return;
+    }
+
+    static void access$100(java.net.URLConnection, java.util.Map)
+    {
+        java.net.URLConnection r0;
+        java.util.Map r1;
+
+        r0 := @parameter0: java.net.URLConnection;
+
+        r1 := @parameter1: java.util.Map;
+
+        staticinvoke <net.sourceforge.plantuml.security.SURL: void applyAdditionalHeaders(java.net.URLConnection,java.util.Map)>(r0, r1);
+
+        return;
+    }
+
+    static byte[] access$200(java.net.HttpURLConnection) throws java.io.IOException
+    {
+        java.net.HttpURLConnection r0;
+        byte[] $r1;
+
+        r0 := @parameter0: java.net.HttpURLConnection;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.security.SURL: byte[] retrieveResponseAsBytes(java.net.HttpURLConnection)>(r0);
+
+        return $r1;
+    }
+
+    static java.nio.charset.Charset access$300(java.lang.String)
+    {
+        java.lang.String r0;
+        java.nio.charset.Charset $r1;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.security.SURL: java.nio.charset.Charset extractCharset(java.lang.String)>(r0);
+
+        return $r1;
+    }
+
+    static void access$400(java.net.HttpURLConnection, byte[]) throws java.io.IOException
+    {
+        java.net.HttpURLConnection r0;
+        byte[] r1;
+
+        r0 := @parameter0: java.net.HttpURLConnection;
+
+        r1 := @parameter1: byte[];
+
+        staticinvoke <net.sourceforge.plantuml.security.SURL: void sendRequestAsBytes(java.net.HttpURLConnection,byte[])>(r0, r1);
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.util.regex.Pattern $r0;
+        net.sourceforge.plantuml.security.SURL$1 $r1;
+        java.util.concurrent.ExecutorService $r2;
+        java.util.concurrent.ConcurrentHashMap $r3;
+
+        <net.sourceforge.plantuml.security.SURL: java.lang.String WITHOUT_AUTHENTICATION> = "<none>";
+
+        $r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("(^https?://)(.*@)(.*)");
+
+        <net.sourceforge.plantuml.security.SURL: java.util.regex.Pattern PATTERN_USERINFO> = $r0;
+
+        $r1 = new net.sourceforge.plantuml.security.SURL$1;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.security.SURL$1: void <init>()>();
+
+        $r2 = staticinvoke <java.util.concurrent.Executors: java.util.concurrent.ExecutorService newCachedThreadPool(java.util.concurrent.ThreadFactory)>($r1);
+
+        <net.sourceforge.plantuml.security.SURL: java.util.concurrent.ExecutorService EXE> = $r2;
+
+        $r3 = new java.util.concurrent.ConcurrentHashMap;
+
+        specialinvoke $r3.<java.util.concurrent.ConcurrentHashMap: void <init>()>();
+
+        <net.sourceforge.plantuml.security.SURL: java.util.Map BAD_HOSTS> = $r3;
+
+        return;
+    }
+}

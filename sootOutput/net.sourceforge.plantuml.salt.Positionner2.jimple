@@ -1,0 +1,245 @@
+public class net.sourceforge.plantuml.salt.Positionner2 extends java.lang.Object
+{
+    private int row;
+    private int col;
+    private int maxRow;
+    private int maxCol;
+    private final java.util.Map positions;
+    private net.sourceforge.plantuml.salt.Cell last;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        java.util.LinkedHashMap $r1;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.LinkedHashMap;
+
+        specialinvoke $r1.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: java.util.Map positions> = $r1;
+
+        return;
+    }
+
+    public void add(net.sourceforge.plantuml.salt.Terminated)
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        net.sourceforge.plantuml.salt.Terminated r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.salt.element.Element $r3;
+        net.sourceforge.plantuml.salt.Terminator r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        r1 := @parameter0: net.sourceforge.plantuml.salt.Terminated;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.salt.Terminated: java.lang.Object getElement()>();
+
+        $r3 = (net.sourceforge.plantuml.salt.element.Element) $r2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.salt.Positionner2: void addWithoutMove(net.sourceforge.plantuml.salt.element.Element)>($r3);
+
+        r4 = virtualinvoke r1.<net.sourceforge.plantuml.salt.Terminated: net.sourceforge.plantuml.salt.Terminator getTerminator()>();
+
+        $r5 = <net.sourceforge.plantuml.salt.Terminator: net.sourceforge.plantuml.salt.Terminator NEWCOL>;
+
+        if r4 != $r5 goto label1;
+
+        specialinvoke r0.<net.sourceforge.plantuml.salt.Positionner2: void moveNextColumn()>();
+
+        goto label2;
+
+     label1:
+        specialinvoke r0.<net.sourceforge.plantuml.salt.Positionner2: void moveNextRow()>();
+
+     label2:
+        return;
+    }
+
+    private void moveNextColumn()
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        $i0 = r0.<net.sourceforge.plantuml.salt.Positionner2: int col>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: int col> = $i1;
+
+        return;
+    }
+
+    private void moveNextRow()
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        $i0 = r0.<net.sourceforge.plantuml.salt.Positionner2: int row>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: int row> = $i1;
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: int col> = 0;
+
+        return;
+    }
+
+    private void addWithoutMove(net.sourceforge.plantuml.salt.element.Element)
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        net.sourceforge.plantuml.salt.Cell $r1, $r3;
+        int $i0, $i1;
+        net.sourceforge.plantuml.salt.element.Element r2;
+        java.util.Map $r4;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        r2 := @parameter0: net.sourceforge.plantuml.salt.element.Element;
+
+        $r1 = new net.sourceforge.plantuml.salt.Cell;
+
+        $i1 = r0.<net.sourceforge.plantuml.salt.Positionner2: int row>;
+
+        $i0 = r0.<net.sourceforge.plantuml.salt.Positionner2: int col>;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.salt.Cell: void <init>(int,int)>($i1, $i0);
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: net.sourceforge.plantuml.salt.Cell last> = $r1;
+
+        $r4 = r0.<net.sourceforge.plantuml.salt.Positionner2: java.util.Map positions>;
+
+        $r3 = r0.<net.sourceforge.plantuml.salt.Positionner2: net.sourceforge.plantuml.salt.Cell last>;
+
+        interfaceinvoke $r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r2, $r3);
+
+        specialinvoke r0.<net.sourceforge.plantuml.salt.Positionner2: void updateMax()>();
+
+        return;
+    }
+
+    public void mergeLeft(net.sourceforge.plantuml.salt.Terminator)
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        net.sourceforge.plantuml.salt.Terminator r1, $r2;
+        int $i0, $i1, $i2, $i3;
+        net.sourceforge.plantuml.salt.Cell $r3;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        r1 := @parameter0: net.sourceforge.plantuml.salt.Terminator;
+
+        specialinvoke r0.<net.sourceforge.plantuml.salt.Positionner2: void updateMax()>();
+
+        $r2 = <net.sourceforge.plantuml.salt.Terminator: net.sourceforge.plantuml.salt.Terminator NEWCOL>;
+
+        if r1 != $r2 goto label1;
+
+        $i2 = r0.<net.sourceforge.plantuml.salt.Positionner2: int col>;
+
+        $i3 = $i2 + 1;
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: int col> = $i3;
+
+        goto label2;
+
+     label1:
+        $i0 = r0.<net.sourceforge.plantuml.salt.Positionner2: int row>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: int row> = $i1;
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: int col> = 0;
+
+     label2:
+        $r3 = r0.<net.sourceforge.plantuml.salt.Positionner2: net.sourceforge.plantuml.salt.Cell last>;
+
+        virtualinvoke $r3.<net.sourceforge.plantuml.salt.Cell: void mergeLeft()>();
+
+        return;
+    }
+
+    private void updateMax()
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        $i1 = r0.<net.sourceforge.plantuml.salt.Positionner2: int row>;
+
+        $i0 = r0.<net.sourceforge.plantuml.salt.Positionner2: int maxRow>;
+
+        if $i1 <= $i0 goto label1;
+
+        $i5 = r0.<net.sourceforge.plantuml.salt.Positionner2: int row>;
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: int maxRow> = $i5;
+
+     label1:
+        $i3 = r0.<net.sourceforge.plantuml.salt.Positionner2: int col>;
+
+        $i2 = r0.<net.sourceforge.plantuml.salt.Positionner2: int maxCol>;
+
+        if $i3 <= $i2 goto label2;
+
+        $i4 = r0.<net.sourceforge.plantuml.salt.Positionner2: int col>;
+
+        r0.<net.sourceforge.plantuml.salt.Positionner2: int maxCol> = $i4;
+
+     label2:
+        return;
+    }
+
+    public java.util.Map getAll()
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        java.util.Map $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        $r1 = r0.<net.sourceforge.plantuml.salt.Positionner2: java.util.Map positions>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.Map unmodifiableMap(java.util.Map)>($r1);
+
+        return $r2;
+    }
+
+    public final int getNbRows()
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        $i0 = r0.<net.sourceforge.plantuml.salt.Positionner2: int maxRow>;
+
+        $i1 = $i0 + 1;
+
+        return $i1;
+    }
+
+    public final int getNbCols()
+    {
+        net.sourceforge.plantuml.salt.Positionner2 r0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.salt.Positionner2;
+
+        $i0 = r0.<net.sourceforge.plantuml.salt.Positionner2: int maxCol>;
+
+        $i1 = $i0 + 1;
+
+        return $i1;
+    }
+}

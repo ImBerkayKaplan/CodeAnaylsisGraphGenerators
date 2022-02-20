@@ -1,0 +1,112 @@
+public class net.sourceforge.plantuml.eggs.GraphicsPath extends java.lang.Object
+{
+    private final java.lang.String path;
+    private final net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper;
+
+    public void <init>(net.sourceforge.plantuml.ugraphic.color.ColorMapper, java.lang.String)
+    {
+        net.sourceforge.plantuml.eggs.GraphicsPath r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r2;
+
+        r0 := @this: net.sourceforge.plantuml.eggs.GraphicsPath;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r1 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.eggs.GraphicsPath: java.lang.String path> = r1;
+
+        r0.<net.sourceforge.plantuml.eggs.GraphicsPath: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper> = r2;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.ImageData writeImage(java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.eggs.GraphicsPath r0;
+        java.awt.image.BufferedImage r1;
+        java.io.OutputStream r2;
+        net.sourceforge.plantuml.api.ImageDataSimple $r3;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.eggs.GraphicsPath;
+
+        r2 := @parameter0: java.io.OutputStream;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.eggs.GraphicsPath: java.awt.image.BufferedImage createImage()>();
+
+        staticinvoke <net.sourceforge.plantuml.png.PngIO: void write(java.awt.image.RenderedImage,java.io.OutputStream,int)>(r1, r2, 96);
+
+        $r3 = new net.sourceforge.plantuml.api.ImageDataSimple;
+
+        $i0 = virtualinvoke r1.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i1 = virtualinvoke r1.<java.awt.image.BufferedImage: int getHeight()>();
+
+        specialinvoke $r3.<net.sourceforge.plantuml.api.ImageDataSimple: void <init>(int,int)>($i0, $i1);
+
+        return $r3;
+    }
+
+    private java.awt.image.BufferedImage createImage()
+    {
+        net.sourceforge.plantuml.FileFormat $r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.EmptyImageBuilder $r2;
+        java.awt.Color $r3;
+        java.awt.image.BufferedImage r5;
+        java.awt.Graphics2D r6;
+        net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d $r7;
+        net.sourceforge.plantuml.eggs.GraphicsPath r8;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper $r9;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r10, $r15;
+        net.sourceforge.plantuml.ugraphic.UMotif $r12;
+        java.lang.String $r13;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r16;
+
+        r8 := @this: net.sourceforge.plantuml.eggs.GraphicsPath;
+
+        $r0 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat PNG>;
+
+        r1 = virtualinvoke $r0.<net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.graphic.StringBounder getDefaultStringBounder()>();
+
+        $r2 = new net.sourceforge.plantuml.EmptyImageBuilder;
+
+        $r3 = <java.awt.Color: java.awt.Color WHITE>;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.EmptyImageBuilder: void <init>(java.lang.String,int,int,java.awt.Color,net.sourceforge.plantuml.graphic.StringBounder)>(null, 50, 50, $r3, r1);
+
+        r5 = virtualinvoke $r2.<net.sourceforge.plantuml.EmptyImageBuilder: java.awt.image.BufferedImage getBufferedImage()>();
+
+        r6 = virtualinvoke $r2.<net.sourceforge.plantuml.EmptyImageBuilder: java.awt.Graphics2D getGraphics2D()>();
+
+        $r7 = new net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d;
+
+        $r10 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple WHITE>;
+
+        $r9 = r8.<net.sourceforge.plantuml.eggs.GraphicsPath: net.sourceforge.plantuml.ugraphic.color.ColorMapper colorMapper>;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: void <init>(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.graphic.StringBounder,java.awt.Graphics2D,double)>($r10, $r9, r1, r6, 1.0);
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: void setBufferedImage(java.awt.image.BufferedImage)>(r5);
+
+        $r12 = new net.sourceforge.plantuml.ugraphic.UMotif;
+
+        $r13 = r8.<net.sourceforge.plantuml.eggs.GraphicsPath: java.lang.String path>;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.ugraphic.UMotif: void <init>(java.lang.String)>($r13);
+
+        $r15 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        $r16 = virtualinvoke $r7.<net.sourceforge.plantuml.ugraphic.g2d.UGraphicG2d: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r15);
+
+        virtualinvoke $r12.<net.sourceforge.plantuml.ugraphic.UMotif: void drawHorizontal(net.sourceforge.plantuml.ugraphic.UGraphic,double,double,int)>($r16, 20.0, 20.0, 1);
+
+        virtualinvoke r6.<java.awt.Graphics2D: void dispose()>();
+
+        return r5;
+    }
+}

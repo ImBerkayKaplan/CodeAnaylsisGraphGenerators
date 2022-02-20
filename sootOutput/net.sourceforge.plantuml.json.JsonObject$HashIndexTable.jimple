@@ -1,0 +1,201 @@
+class net.sourceforge.plantuml.json.JsonObject$HashIndexTable extends java.lang.Object
+{
+    private final byte[] hashTable;
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable r0;
+        byte[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = newarray (byte)[32];
+
+        r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable> = $r1;
+
+        return;
+    }
+
+    void <init>(net.sourceforge.plantuml.json.JsonObject$HashIndexTable)
+    {
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable r0, r2;
+        byte[] $r1, $r3, $r4, $r5;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        r2 := @parameter0: net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = newarray (byte)[32];
+
+        r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable> = $r1;
+
+        $r5 = r2.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $r4 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $i0 = lengthof $r3;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r5, 0, $r4, 0, $i0);
+
+        return;
+    }
+
+    void add(java.lang.String, int)
+    {
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable r0;
+        java.lang.String r1;
+        int i0, i1, $i2;
+        byte[] $r2, $r3;
+        byte $b3;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        r1 := @parameter0: java.lang.String;
+
+        i1 := @parameter1: int;
+
+        i0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: int hashSlotFor(java.lang.Object)>(r1);
+
+        if i1 >= 255 goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $i2 = i1 + 1;
+
+        $b3 = (byte) $i2;
+
+        $r3[i0] = $b3;
+
+        goto label2;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $r2[i0] = 0;
+
+     label2:
+        return;
+    }
+
+    void remove(int)
+    {
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable r0;
+        byte[] $r1, $r2, $r3, $r4, $r5;
+        int $i0, i2, $i3, $i4, $i6, $i7, $i9, i11;
+        byte $b1, $b5, $b8, $b10;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        i2 := @parameter0: int;
+
+        i11 = 0;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $i0 = lengthof $r1;
+
+        if i11 >= $i0 goto label4;
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $b1 = $r2[i11];
+
+        $i4 = $b1 & 255;
+
+        $i3 = i2 + 1;
+
+        if $i4 != $i3 goto label2;
+
+        $r5 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $r5[i11] = 0;
+
+        goto label3;
+
+     label2:
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $b5 = $r3[i11];
+
+        $i7 = $b5 & 255;
+
+        $i6 = i2 + 1;
+
+        if $i7 <= $i6 goto label3;
+
+        $r4 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $b8 = $r4[i11];
+
+        $i9 = $b8 - 1;
+
+        $b10 = (byte) $i9;
+
+        $r4[i11] = $b10;
+
+     label3:
+        i11 = i11 + 1;
+
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    int get(java.lang.Object)
+    {
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable r0;
+        java.lang.Object r1;
+        int i0, $i2, $i3;
+        byte[] $r2;
+        byte $b1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        r1 := @parameter0: java.lang.Object;
+
+        i0 = specialinvoke r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: int hashSlotFor(java.lang.Object)>(r1);
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $b1 = $r2[i0];
+
+        $i2 = $b1 & 255;
+
+        $i3 = $i2 - 1;
+
+        return $i3;
+    }
+
+    private int hashSlotFor(java.lang.Object)
+    {
+        java.lang.Object r0;
+        int $i0, $i1, $i2, $i3;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable r1;
+        byte[] $r2;
+
+        r1 := @this: net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        r0 := @parameter0: java.lang.Object;
+
+        $i0 = virtualinvoke r0.<java.lang.Object: int hashCode()>();
+
+        $r2 = r1.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: byte[] hashTable>;
+
+        $i1 = lengthof $r2;
+
+        $i2 = $i1 - 1;
+
+        $i3 = $i0 & $i2;
+
+        return $i3;
+    }
+}

@@ -1,0 +1,236 @@
+public class net.sourceforge.plantuml.command.CommandPragma extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.CommandPragma r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandPragma;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.CommandPragma: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2, $r9;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6, $r10, $r11, $r12;
+        net.sourceforge.plantuml.command.regex.RegexOptional $r7;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r8, $r13;
+
+        $r0 = class "Lnet/sourceforge/plantuml/command/CommandPragma;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[6];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("!pragma");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("NAME", "([A-Za-z_][A-Za-z_0-9]*)");
+
+        $r2[3] = $r6;
+
+        $r7 = new net.sourceforge.plantuml.command.regex.RegexOptional;
+
+        $r8 = new net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r9 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[2];
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r9[0] = $r10;
+
+        $r11 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("VALUE", "(.*)");
+
+        $r9[1] = $r11;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.command.regex.RegexConcat: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>($r9);
+
+        specialinvoke $r7.<net.sourceforge.plantuml.command.regex.RegexOptional: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r8);
+
+        $r2[4] = $r7;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[5] = $r12;
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r13;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.TitledDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult)
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String $r1, r2, r3, $r11, $r17, $r18;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z10;
+        net.sourceforge.plantuml.TitledDiagram r4;
+        net.sourceforge.plantuml.Pragma $r5;
+        net.sourceforge.plantuml.ISkinParam $r6, $r16;
+        java.lang.StringBuilder $r7, $r8, $r9, $r10;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r12, $r13, $r21;
+        java.util.StringTokenizer $r14;
+        net.sourceforge.plantuml.command.CommandPragma r19;
+        net.sourceforge.plantuml.LineLocation r20;
+
+        r19 := @this: net.sourceforge.plantuml.command.CommandPragma;
+
+        r4 := @parameter0: net.sourceforge.plantuml.TitledDiagram;
+
+        r20 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("NAME", 0);
+
+        r2 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goLowerCase(java.lang.String)>($r1);
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("VALUE", 0);
+
+        $z0 = virtualinvoke r2.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("svgsize");
+
+        if $z0 == 0 goto label1;
+
+        $z8 = virtualinvoke r3.<java.lang.String: boolean contains(java.lang.CharSequence)>(" ");
+
+        if $z8 == 0 goto label6;
+
+        $r14 = new java.util.StringTokenizer;
+
+        specialinvoke $r14.<java.util.StringTokenizer: void <init>(java.lang.String)>(r3);
+
+        $r16 = virtualinvoke r4.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r17 = virtualinvoke $r14.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $r18 = virtualinvoke $r14.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        interfaceinvoke $r16.<net.sourceforge.plantuml.ISkinParam: void setSvgSize(java.lang.String,java.lang.String)>($r17, $r18);
+
+        goto label6;
+
+     label1:
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.Pragma getPragma()>();
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.Pragma: void define(java.lang.String,java.lang.String)>(r2, r3);
+
+        $z1 = virtualinvoke r2.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("graphviz_dot");
+
+        if $z1 == 0 goto label2;
+
+        $z7 = virtualinvoke r3.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("jdot");
+
+        if $z7 == 0 goto label2;
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("This directive has been renamed to \'!pragma layout smetana\'. Please update your diagram.");
+
+        return $r13;
+
+     label2:
+        $z2 = virtualinvoke r2.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("graphviz_dot");
+
+        if $z2 == 0 goto label3;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("This directive has been renamed to \'!pragma layout ");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\'. Please update your diagram.");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r11);
+
+        return $r12;
+
+     label3:
+        $z3 = virtualinvoke r2.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("layout");
+
+        if $z3 == 0 goto label4;
+
+        $z6 = virtualinvoke r3.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("smetana");
+
+        if $z6 == 0 goto label4;
+
+        virtualinvoke r4.<net.sourceforge.plantuml.TitledDiagram: void setUseSmetana(boolean)>(1);
+
+     label4:
+        $z9 = virtualinvoke r2.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("layout");
+
+        if $z9 == 0 goto label5;
+
+        $z5 = virtualinvoke r3.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("elk");
+
+        if $z5 == 0 goto label5;
+
+        virtualinvoke r4.<net.sourceforge.plantuml.TitledDiagram: void setUseElk(boolean)>(1);
+
+     label5:
+        $z10 = virtualinvoke r2.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("layout");
+
+        if $z10 == 0 goto label6;
+
+        $z4 = virtualinvoke r3.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>("vizjs");
+
+        if $z4 == 0 goto label6;
+
+        $r6 = virtualinvoke r4.<net.sourceforge.plantuml.TitledDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        interfaceinvoke $r6.<net.sourceforge.plantuml.ISkinParam: void setUseVizJs(boolean)>(1);
+
+     label6:
+        $r21 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r21;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandPragma r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.TitledDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandPragma;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.TitledDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandPragma: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

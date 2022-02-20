@@ -1,0 +1,266 @@
+public class net.sourceforge.plantuml.dedication.DedicationCrypted extends java.lang.Object implements net.sourceforge.plantuml.dedication.Dedication
+{
+    private final java.lang.String argon2;
+    private final java.math.BigInteger pq;
+    private final byte[] crypted;
+    private final int tinyHash;
+    private java.lang.String solution;
+    private long next;
+
+    public void <init>(byte[], int, java.lang.String, java.math.BigInteger)
+    {
+        net.sourceforge.plantuml.dedication.DedicationCrypted r0;
+        byte[] r1;
+        java.math.BigInteger r2;
+        java.lang.String r3;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.dedication.DedicationCrypted;
+
+        r1 := @parameter0: byte[];
+
+        i0 := @parameter1: int;
+
+        r3 := @parameter2: java.lang.String;
+
+        r2 := @parameter3: java.math.BigInteger;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.dedication.DedicationCrypted: long next> = 0L;
+
+        r0.<net.sourceforge.plantuml.dedication.DedicationCrypted: byte[] crypted> = r1;
+
+        r0.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.math.BigInteger pq> = r2;
+
+        r0.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.lang.String argon2> = r3;
+
+        r0.<net.sourceforge.plantuml.dedication.DedicationCrypted: int tinyHash> = i0;
+
+        return;
+    }
+
+    public synchronized java.awt.image.BufferedImage getImage(net.sourceforge.plantuml.dedication.TinyHashableString)
+    {
+        net.sourceforge.plantuml.dedication.TinyHashableString r0;
+        java.lang.String r1, $r3, $r8, $r11, $r18, $r21, $r40, $r43, r46, $r47, $r50;
+        int $i0, $i4, $i5, $i8;
+        net.sourceforge.plantuml.dedication.DedicationCrypted r2;
+        long $l1, $l2, $l6, $l7;
+        byte $b3;
+        java.nio.charset.Charset $r4, $r12, $r14, $r22, $r32, $r44;
+        byte[] $r5, $r13, $r15, $r23, r24, $r30, $r33, $r45, r52, r53, r54, r55;
+        java.lang.StringBuilder $r6, $r9, $r10, $r16, $r19, $r20, $r38, $r41, $r42;
+        java.math.BigInteger $r7, $r17, $r26, $r35, $r36, $r39;
+        net.sourceforge.plantuml.dedication.BlumBlumShub $r25;
+        net.sourceforge.plantuml.utils.MTRandom $r28;
+        java.lang.Object $r31;
+        net.sourceforge.plantuml.dedication.RBlocks r34, r37;
+        boolean $z0, $z1;
+        java.io.ByteArrayInputStream $r48;
+        java.awt.image.BufferedImage r49;
+        java.lang.Throwable $r51;
+
+        r2 := @this: net.sourceforge.plantuml.dedication.DedicationCrypted;
+
+        r0 := @parameter0: net.sourceforge.plantuml.dedication.TinyHashableString;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.dedication.TinyHashableString: java.lang.String getSentence()>();
+
+        $i0 = virtualinvoke r1.<java.lang.String: int length()>();
+
+        if $i0 >= 40 goto label01;
+
+        return null;
+
+     label01:
+        $r3 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.lang.String solution>;
+
+        if $r3 == null goto label02;
+
+        $r50 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.lang.String solution>;
+
+        $z1 = virtualinvoke r1.<java.lang.String: boolean equals(java.lang.Object)>($r50);
+
+        if $z1 != 0 goto label07;
+
+     label02:
+        $l1 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l2 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: long next>;
+
+        $b3 = $l1 cmp $l2;
+
+        if $b3 >= 0 goto label04;
+
+     label03:
+        return null;
+
+     label04:
+        $i4 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: int tinyHash>;
+
+        $i5 = virtualinvoke r0.<net.sourceforge.plantuml.dedication.TinyHashableString: int tinyHash()>();
+
+        if $i4 == $i5 goto label06;
+
+     label05:
+        return null;
+
+     label06:
+        $l6 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l7 = $l6 + 5000L;
+
+        r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: long next> = $l7;
+
+     label07:
+        $r4 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r5 = virtualinvoke r1.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r4);
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.math.BigInteger pq>;
+
+        $r8 = virtualinvoke $r7.<java.math.BigInteger: java.lang.String toString(int)>(35);
+
+        $r9 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r12 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r13 = virtualinvoke $r11.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r12);
+
+        r52 = staticinvoke <net.sourceforge.plantuml.dedication.Noise: byte[] computeArgon2bytes(byte[],byte[])>($r5, $r13);
+
+        $r14 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r15 = virtualinvoke r1.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r14);
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.math.BigInteger pq>;
+
+        $r18 = virtualinvoke $r17.<java.math.BigInteger: java.lang.String toString(int)>(36);
+
+        $r19 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r18);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r22 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r23 = virtualinvoke $r21.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r22);
+
+        r24 = staticinvoke <net.sourceforge.plantuml.dedication.Noise: byte[] computeArgon2bytes(byte[],byte[])>($r15, $r23);
+
+        $r25 = new net.sourceforge.plantuml.dedication.BlumBlumShub;
+
+        $r26 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.math.BigInteger pq>;
+
+        specialinvoke $r25.<net.sourceforge.plantuml.dedication.BlumBlumShub: void <init>(java.math.BigInteger,byte[])>($r26, r52);
+
+        $r28 = new net.sourceforge.plantuml.utils.MTRandom;
+
+        specialinvoke $r28.<net.sourceforge.plantuml.utils.MTRandom: void <init>(byte[])>(r24);
+
+        $r30 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: byte[] crypted>;
+
+        $r31 = virtualinvoke $r30.<java.lang.Object: java.lang.Object clone()>();
+
+        r53 = (byte[]) $r31;
+
+        staticinvoke <net.sourceforge.plantuml.dedication.Noise: void shuffle(byte[],net.sourceforge.plantuml.utils.MTRandom)>(r53, $r28);
+
+        staticinvoke <net.sourceforge.plantuml.dedication.Noise: void xor(byte[],net.sourceforge.plantuml.dedication.BlumBlumShub)>(r53, $r25);
+
+        $r32 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r33 = virtualinvoke r1.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r32);
+
+        staticinvoke <net.sourceforge.plantuml.dedication.Noise: void xor(byte[],byte[])>(r53, $r33);
+
+        staticinvoke <net.sourceforge.plantuml.dedication.Noise: void shuffle(byte[],net.sourceforge.plantuml.utils.MTRandom)>(r53, $r28);
+
+        r34 = staticinvoke <net.sourceforge.plantuml.dedication.RBlocks: net.sourceforge.plantuml.dedication.RBlocks readFrom(byte[],int)>(r53, 513);
+
+        $r36 = <net.sourceforge.plantuml.dedication.DedicationCrypted: java.math.BigInteger E>;
+
+        $r35 = <net.sourceforge.plantuml.dedication.DedicationCrypted: java.math.BigInteger N>;
+
+        r37 = virtualinvoke r34.<net.sourceforge.plantuml.dedication.RBlocks: net.sourceforge.plantuml.dedication.RBlocks change(java.math.BigInteger,java.math.BigInteger)>($r36, $r35);
+
+        r54 = virtualinvoke r37.<net.sourceforge.plantuml.dedication.RBlocks: byte[] toByteArray(int)>(512);
+
+        staticinvoke <net.sourceforge.plantuml.dedication.Noise: void shuffle(byte[],net.sourceforge.plantuml.utils.MTRandom)>(r54, $r28);
+
+        staticinvoke <net.sourceforge.plantuml.dedication.Noise: void xor(byte[],net.sourceforge.plantuml.dedication.BlumBlumShub)>(r54, $r25);
+
+        $r38 = new java.lang.StringBuilder;
+
+        specialinvoke $r38.<java.lang.StringBuilder: void <init>()>();
+
+        $r39 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.math.BigInteger pq>;
+
+        $r40 = virtualinvoke $r39.<java.math.BigInteger: java.lang.String toString(int)>(34);
+
+        $r41 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r40);
+
+        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r44 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r45 = virtualinvoke $r43.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($r44);
+
+        r46 = staticinvoke <net.sourceforge.plantuml.dedication.Noise: java.lang.String computeArgon2String(byte[],byte[])>(r54, $r45);
+
+        $r47 = r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.lang.String argon2>;
+
+        $z0 = virtualinvoke $r47.<java.lang.String: boolean equals(java.lang.Object)>(r46);
+
+        if $z0 != 0 goto label09;
+
+     label08:
+        return null;
+
+     label09:
+        staticinvoke <net.sourceforge.plantuml.dedication.Noise: void shuffle(byte[],net.sourceforge.plantuml.utils.MTRandom)>(r54, $r28);
+
+        $i8 = virtualinvoke $r28.<net.sourceforge.plantuml.utils.MTRandom: int nextInt()>();
+
+        r55 = staticinvoke <net.sourceforge.plantuml.dedication.Noise: byte[] reverse(byte[],int)>(r54, $i8);
+
+        $r48 = new java.io.ByteArrayInputStream;
+
+        specialinvoke $r48.<java.io.ByteArrayInputStream: void <init>(byte[])>(r55);
+
+        r49 = staticinvoke <net.sourceforge.plantuml.dedication.PSystemDedication: java.awt.image.BufferedImage getBufferedImage(java.io.InputStream)>($r48);
+
+        r2.<net.sourceforge.plantuml.dedication.DedicationCrypted: java.lang.String solution> = r1;
+
+     label10:
+        return r49;
+
+     label11:
+        $r51 := @caughtexception;
+
+        virtualinvoke $r51.<java.lang.Throwable: void printStackTrace()>();
+
+        return null;
+
+        catch java.lang.Throwable from label01 to label03 with label11;
+        catch java.lang.Throwable from label04 to label05 with label11;
+        catch java.lang.Throwable from label06 to label08 with label11;
+        catch java.lang.Throwable from label09 to label10 with label11;
+    }
+}

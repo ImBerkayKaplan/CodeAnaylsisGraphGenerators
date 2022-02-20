@@ -1,0 +1,176 @@
+public class net.sourceforge.plantuml.version.PSystemVersionFactory extends net.sourceforge.plantuml.command.PSystemSingleLineFactory
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.version.PSystemVersionFactory r0;
+
+        r0 := @this: net.sourceforge.plantuml.version.PSystemVersionFactory;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemSingleLineFactory: void <init>()>();
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.AbstractPSystem executeLine(net.sourceforge.plantuml.core.UmlSource, java.lang.String)
+    {
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8;
+        java.util.regex.Matcher r0;
+        net.sourceforge.plantuml.version.PSystemKeycheck $r1;
+        net.sourceforge.plantuml.core.UmlSource r2;
+        java.lang.String $r3, $r4, $r5, $r6, $r18, r20, r22, r23;
+        int $i0;
+        net.sourceforge.plantuml.version.PSystemKeygen $r7, $r8;
+        net.sourceforge.plantuml.version.PSystemVersion $r9, $r10, $r11, $r12, $r13;
+        java.io.IOException $r14;
+        java.lang.StringBuilder $r15, $r16, $r17;
+        net.sourceforge.plantuml.version.PSystemVersionFactory r19;
+        java.util.regex.Pattern r24;
+
+        r19 := @this: net.sourceforge.plantuml.version.PSystemVersionFactory;
+
+        r2 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        r20 := @parameter1: java.lang.String;
+
+     label01:
+        $z0 = virtualinvoke r20.<java.lang.String: boolean matches(java.lang.String)>("(?i)^(authors?|about)\\s*$");
+
+        if $z0 == 0 goto label03;
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: net.sourceforge.plantuml.version.PSystemVersion createShowAuthors2(net.sourceforge.plantuml.core.UmlSource)>(r2);
+
+     label02:
+        return $r13;
+
+     label03:
+        $z1 = virtualinvoke r20.<java.lang.String: boolean matches(java.lang.String)>("(?i)^version\\s*$");
+
+        if $z1 == 0 goto label05;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: net.sourceforge.plantuml.version.PSystemVersion createShowVersion2(net.sourceforge.plantuml.core.UmlSource)>(r2);
+
+     label04:
+        return $r12;
+
+     label05:
+        $z2 = virtualinvoke r20.<java.lang.String: boolean matches(java.lang.String)>("(?i)^stdlib\\s*$");
+
+        if $z2 == 0 goto label07;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: net.sourceforge.plantuml.version.PSystemVersion createStdLib(net.sourceforge.plantuml.core.UmlSource)>(r2);
+
+     label06:
+        return $r11;
+
+     label07:
+        $z3 = virtualinvoke r20.<java.lang.String: boolean matches(java.lang.String)>("(?i)^testdot\\s*$");
+
+        if $z3 == 0 goto label09;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: net.sourceforge.plantuml.version.PSystemVersion createTestDot(net.sourceforge.plantuml.core.UmlSource)>(r2);
+
+     label08:
+        return $r10;
+
+     label09:
+        $z4 = virtualinvoke r20.<java.lang.String: boolean matches(java.lang.String)>("(?i)^keydistributor\\s*$");
+
+        if $z4 == 0 goto label11;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: net.sourceforge.plantuml.version.PSystemVersion createKeyDistributor(net.sourceforge.plantuml.core.UmlSource)>(r2);
+
+     label10:
+        return $r9;
+
+     label11:
+        $z5 = virtualinvoke r20.<java.lang.String: boolean matches(java.lang.String)>("(?i)^keygen\\s*$");
+
+        if $z5 == 0 goto label13;
+
+        virtualinvoke r20.<java.lang.String: java.lang.String trim()>();
+
+        $r8 = new net.sourceforge.plantuml.version.PSystemKeygen;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.version.PSystemKeygen: void <init>(net.sourceforge.plantuml.core.UmlSource,java.lang.String)>(r2, "");
+
+     label12:
+        return $r8;
+
+     label13:
+        $z6 = virtualinvoke r20.<java.lang.String: boolean matches(java.lang.String)>("(?i)^keyimport(\\s+[0-9a-z]+)?\\s*$");
+
+        if $z6 == 0 goto label15;
+
+        r22 = virtualinvoke r20.<java.lang.String: java.lang.String trim()>();
+
+        $r5 = "keyimport";
+
+        $i0 = virtualinvoke $r5.<java.lang.String: int length()>();
+
+        $r6 = virtualinvoke r22.<java.lang.String: java.lang.String substring(int)>($i0);
+
+        r23 = virtualinvoke $r6.<java.lang.String: java.lang.String trim()>();
+
+        $r7 = new net.sourceforge.plantuml.version.PSystemKeygen;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.version.PSystemKeygen: void <init>(net.sourceforge.plantuml.core.UmlSource,java.lang.String)>(r2, r23);
+
+     label14:
+        return $r7;
+
+     label15:
+        $z7 = virtualinvoke r20.<java.lang.String: boolean matches(java.lang.String)>("(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$");
+
+        if $z7 == 0 goto label17;
+
+        r24 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("(?i)^keycheck\\s+([0-9a-z]+)\\s+([0-9a-z]+)\\s*$");
+
+        r0 = virtualinvoke r24.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r20);
+
+        $z8 = virtualinvoke r0.<java.util.regex.Matcher: boolean find()>();
+
+        if $z8 == 0 goto label17;
+
+        $r1 = new net.sourceforge.plantuml.version.PSystemKeycheck;
+
+        $r3 = virtualinvoke r0.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        $r4 = virtualinvoke r0.<java.util.regex.Matcher: java.lang.String group(int)>(2);
+
+        specialinvoke $r1.<net.sourceforge.plantuml.version.PSystemKeycheck: void <init>(net.sourceforge.plantuml.core.UmlSource,java.lang.String,java.lang.String)>(r2, $r3, $r4);
+
+     label16:
+        return $r1;
+
+     label17:
+        goto label19;
+
+     label18:
+        $r14 := @caughtexception;
+
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Error ");
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r14);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r18);
+
+     label19:
+        return null;
+
+        catch java.io.IOException from label01 to label02 with label18;
+        catch java.io.IOException from label03 to label04 with label18;
+        catch java.io.IOException from label05 to label06 with label18;
+        catch java.io.IOException from label07 to label08 with label18;
+        catch java.io.IOException from label09 to label10 with label18;
+        catch java.io.IOException from label11 to label12 with label18;
+        catch java.io.IOException from label13 to label14 with label18;
+        catch java.io.IOException from label15 to label16 with label18;
+    }
+}

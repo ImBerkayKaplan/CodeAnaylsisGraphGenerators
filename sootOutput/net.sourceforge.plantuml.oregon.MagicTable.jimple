@@ -1,0 +1,714 @@
+public class net.sourceforge.plantuml.oregon.MagicTable extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.oregon.MagicTable$Oc[] number;
+    private static java.util.ArrayList neighbours;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.oregon.MagicTable r0;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.oregon.MagicTable;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = newarray (net.sourceforge.plantuml.oregon.MagicTable$Oc)[10000];
+
+        r0.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number> = $r1;
+
+        return;
+    }
+
+    public static int[] getNeighbours(int)
+    {
+        int i0;
+        java.util.ArrayList $r0, $r2, $r5;
+        java.lang.Object $r1, $r3;
+        int[] $r4, $r6;
+
+        i0 := @parameter0: int;
+
+        $r0 = <net.sourceforge.plantuml.oregon.MagicTable: java.util.ArrayList neighbours>;
+
+        $r1 = virtualinvoke $r0.<java.util.ArrayList: java.lang.Object get(int)>(i0);
+
+        if $r1 != null goto label1;
+
+        $r5 = <net.sourceforge.plantuml.oregon.MagicTable: java.util.ArrayList neighbours>;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.oregon.MagicTable: int[] getNeighboursSlow(int)>(i0);
+
+        virtualinvoke $r5.<java.util.ArrayList: java.lang.Object set(int,java.lang.Object)>(i0, $r6);
+
+     label1:
+        $r2 = <net.sourceforge.plantuml.oregon.MagicTable: java.util.ArrayList neighbours>;
+
+        $r3 = virtualinvoke $r2.<java.util.ArrayList: java.lang.Object get(int)>(i0);
+
+        $r4 = (int[]) $r3;
+
+        return $r4;
+    }
+
+    public static int[] getNeighboursSlow(int)
+    {
+        int[] r0;
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, i8, $i9, $i10, $i11, $i12, $i13, $i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29;
+
+        i0 := @parameter0: int;
+
+        r0 = newarray (int)[36];
+
+        i1 = i0 % 10;
+
+        i15 = i0 - i1;
+
+        i16 = 0;
+
+        i17 = 0;
+
+     label01:
+        if i17 >= 10 goto label04;
+
+        i18 = i15 + i17;
+
+        if i18 != i0 goto label02;
+
+        goto label03;
+
+     label02:
+        $i14 = i16;
+
+        i16 = i16 + 1;
+
+        r0[$i14] = i18;
+
+     label03:
+        i17 = i17 + 1;
+
+        goto label01;
+
+     label04:
+        $i2 = i0 / 10;
+
+        i19 = $i2 % 10;
+
+        $i3 = i19 * 10;
+
+        i20 = i0 - $i3;
+
+        i21 = 0;
+
+     label05:
+        if i21 >= 10 goto label08;
+
+        $i12 = i21 * 10;
+
+        i22 = i20 + $i12;
+
+        if i22 != i0 goto label06;
+
+        goto label07;
+
+     label06:
+        $i13 = i16;
+
+        i16 = i16 + 1;
+
+        r0[$i13] = i22;
+
+     label07:
+        i21 = i21 + 1;
+
+        goto label05;
+
+     label08:
+        $i4 = i0 / 100;
+
+        i23 = $i4 % 10;
+
+        $i5 = i23 * 100;
+
+        i24 = i0 - $i5;
+
+        i25 = 0;
+
+     label09:
+        if i25 >= 10 goto label12;
+
+        $i10 = i25 * 100;
+
+        i26 = i24 + $i10;
+
+        if i26 != i0 goto label10;
+
+        goto label11;
+
+     label10:
+        $i11 = i16;
+
+        i16 = i16 + 1;
+
+        r0[$i11] = i26;
+
+     label11:
+        i25 = i25 + 1;
+
+        goto label09;
+
+     label12:
+        i27 = i0 / 1000;
+
+        $i6 = i27 * 1000;
+
+        i28 = i0 - $i6;
+
+        i29 = 0;
+
+     label13:
+        if i29 >= 10 goto label16;
+
+        $i7 = i29 * 1000;
+
+        i8 = i28 + $i7;
+
+        if i8 != i0 goto label14;
+
+        goto label15;
+
+     label14:
+        $i9 = i16;
+
+        i16 = i16 + 1;
+
+        r0[$i9] = i8;
+
+     label15:
+        i29 = i29 + 1;
+
+        goto label13;
+
+     label16:
+        return r0;
+    }
+
+    public java.util.List getAllFree()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.oregon.MagicTable r2;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc[] $r3, $r4;
+        int $i0, i1;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc $r5;
+        java.lang.Integer $r6;
+
+        r2 := @this: net.sourceforge.plantuml.oregon.MagicTable;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(int)>(10000);
+
+        i1 = 0;
+
+     label1:
+        $r3 = r2.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $i0 = lengthof $r3;
+
+        if i1 >= $i0 goto label3;
+
+        $r4 = r2.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $r5 = $r4[i1];
+
+        if $r5 != null goto label2;
+
+        $r6 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(i1);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+     label2:
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label3:
+        return $r0;
+    }
+
+    public java.util.List getAllUsed()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.oregon.MagicTable r2;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc[] $r3, $r4;
+        int $i0, i1;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc $r5, $r6;
+        java.lang.Integer $r7;
+
+        r2 := @this: net.sourceforge.plantuml.oregon.MagicTable;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>(int)>(10000);
+
+        i1 = 0;
+
+     label1:
+        $r3 = r2.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $i0 = lengthof $r3;
+
+        if i1 >= $i0 goto label3;
+
+        $r4 = r2.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $r6 = $r4[i1];
+
+        $r5 = <net.sourceforge.plantuml.oregon.MagicTable$Oc: net.sourceforge.plantuml.oregon.MagicTable$Oc USED>;
+
+        if $r6 != $r5 goto label2;
+
+        $r7 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(i1);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r7);
+
+     label2:
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label3:
+        return $r0;
+    }
+
+    public boolean isUsuable(int)
+    {
+        net.sourceforge.plantuml.oregon.MagicTable r0;
+        int i0, i1, i2, i3;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc[] $r1, $r4;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc $r2, $r5;
+        int[] r3;
+
+        r0 := @this: net.sourceforge.plantuml.oregon.MagicTable;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $r2 = $r1[i0];
+
+        if $r2 == null goto label1;
+
+        return 0;
+
+     label1:
+        r3 = staticinvoke <net.sourceforge.plantuml.oregon.MagicTable: int[] getNeighbours(int)>(i0);
+
+        i1 = lengthof r3;
+
+        i3 = 0;
+
+     label2:
+        if i3 >= i1 goto label4;
+
+        i2 = r3[i3];
+
+        $r4 = r0.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $r5 = $r4[i2];
+
+        if $r5 == null goto label3;
+
+        return 0;
+
+     label3:
+        i3 = i3 + 1;
+
+        goto label2;
+
+     label4:
+        return 1;
+    }
+
+    public void burnNumber(int)
+    {
+        net.sourceforge.plantuml.oregon.MagicTable r0;
+        int i0, i1, i2, i3;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc[] $r1, $r4, $r7;
+        net.sourceforge.plantuml.oregon.MagicTable$Oc $r2, $r3, $r6;
+        int[] r5;
+        java.lang.IllegalArgumentException $r8;
+
+        r0 := @this: net.sourceforge.plantuml.oregon.MagicTable;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $r2 = $r1[i0];
+
+        if $r2 == null goto label1;
+
+        $r8 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r8.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r8;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $r3 = <net.sourceforge.plantuml.oregon.MagicTable$Oc: net.sourceforge.plantuml.oregon.MagicTable$Oc USED>;
+
+        $r4[i0] = $r3;
+
+        r5 = staticinvoke <net.sourceforge.plantuml.oregon.MagicTable: int[] getNeighbours(int)>(i0);
+
+        i1 = lengthof r5;
+
+        i3 = 0;
+
+     label2:
+        if i3 >= i1 goto label3;
+
+        i2 = r5[i3];
+
+        $r7 = r0.<net.sourceforge.plantuml.oregon.MagicTable: net.sourceforge.plantuml.oregon.MagicTable$Oc[] number>;
+
+        $r6 = <net.sourceforge.plantuml.oregon.MagicTable$Oc: net.sourceforge.plantuml.oregon.MagicTable$Oc NEAR>;
+
+        $r7[i2] = $r6;
+
+        i3 = i3 + 1;
+
+        goto label2;
+
+     label3:
+        return;
+    }
+
+    public int getRandomFree(java.util.Random)
+    {
+        net.sourceforge.plantuml.oregon.MagicTable r0;
+        java.util.List r1;
+        java.util.Random r2;
+        java.util.Iterator r3;
+        boolean $z0, $z1;
+        java.lang.Object $r4;
+        java.lang.Integer $r5;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.oregon.MagicTable;
+
+        r2 := @parameter0: java.util.Random;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.oregon.MagicTable: java.util.List getAllFree()>();
+
+        staticinvoke <java.util.Collections: void shuffle(java.util.List,java.util.Random)>(r1, r2);
+
+        r3 = interfaceinvoke r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        $r5 = (java.lang.Integer) $r4;
+
+        i0 = virtualinvoke $r5.<java.lang.Integer: int intValue()>();
+
+        $z1 = virtualinvoke r0.<net.sourceforge.plantuml.oregon.MagicTable: boolean isUsuable(int)>(i0);
+
+        if $z1 == 0 goto label2;
+
+        return i0;
+
+     label2:
+        goto label1;
+
+     label3:
+        return -1;
+    }
+
+    public static int size(java.util.Random, net.sourceforge.plantuml.oregon.MagicTable)
+    {
+        net.sourceforge.plantuml.oregon.MagicTable r0;
+        java.util.Random r1;
+        int i0, i1;
+
+        r1 := @parameter0: java.util.Random;
+
+        r0 := @parameter1: net.sourceforge.plantuml.oregon.MagicTable;
+
+        i1 = 0;
+
+     label1:
+        i0 = virtualinvoke r0.<net.sourceforge.plantuml.oregon.MagicTable: int getRandomFree(java.util.Random)>(r1);
+
+        if i0 != -1 goto label2;
+
+        goto label3;
+
+     label2:
+        virtualinvoke r0.<net.sourceforge.plantuml.oregon.MagicTable: void burnNumber(int)>(i0);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label3:
+        return i1;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        long l0, $l2, $l3, $l4, $l6, $l7, $l8, l11, l12, l13, l14;
+        java.util.Random $r0;
+        java.lang.StringBuilder $r2, $r3, $r4, $r7, $r8, $r9, $r11, $r12, $r14, $r16, $r17, $r18, $r19;
+        java.lang.String $r5, $r10, $r15, $r20;
+        net.sourceforge.plantuml.oregon.MagicTable $r6;
+        int i5, i9, i10;
+        java.util.List $r13;
+        java.lang.String[] r21;
+
+        r21 := @parameter0: java.lang.String[];
+
+        i9 = 0;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $r0 = new java.util.Random;
+
+        specialinvoke $r0.<java.util.Random: void <init>(long)>(49L);
+
+        i10 = 0;
+
+     label1:
+        if i10 >= 200000 goto label4;
+
+        if i10 != 100 goto label2;
+
+        $l6 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l7 = $l6 - l0;
+
+        l11 = $l7 / 1000L;
+
+        $l8 = l11 * 200000L;
+
+        l12 = $l8 / 100L;
+
+        l13 = l12 / 3600L;
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Estimated duration = ");
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>(l13);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" h");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r20);
+
+     label2:
+        $r6 = new net.sourceforge.plantuml.oregon.MagicTable;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.oregon.MagicTable: void <init>()>();
+
+        i5 = staticinvoke <net.sourceforge.plantuml.oregon.MagicTable: int size(java.util.Random,net.sourceforge.plantuml.oregon.MagicTable)>($r0, $r6);
+
+        if i5 <= i9 goto label3;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("v=");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i5);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r10);
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("mt=");
+
+        $r13 = virtualinvoke $r6.<net.sourceforge.plantuml.oregon.MagicTable: java.util.List getAllUsed()>();
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r13);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r15);
+
+        i9 = i5;
+
+     label3:
+        i10 = i10 + 1;
+
+        goto label1;
+
+     label4:
+        $l2 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        l14 = $l2 - l0;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Duration = ");
+
+        $l3 = l14 / 1000L;
+
+        $l4 = $l3 / 60L;
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l4);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r5);
+
+        return;
+    }
+
+    public static void main2(java.lang.String[])
+    {
+        long l0, $l1, $l2, $l3, $l4, l9;
+        java.lang.StringBuilder $r0, $r1, $r2, $r8, $r9, $r10, $r12, $r13, $r15;
+        java.lang.String $r3, $r11, $r16;
+        java.util.Random $r4;
+        net.sourceforge.plantuml.oregon.MagicTable $r6;
+        int i5, i6, i7, i8;
+        java.util.List $r14;
+        java.lang.String[] r17;
+
+        r17 := @parameter0: java.lang.String[];
+
+        i6 = 0;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        i7 = 1;
+
+     label1:
+        if i7 >= 100 goto label5;
+
+        $r4 = new java.util.Random;
+
+        $l4 = (long) i7;
+
+        specialinvoke $r4.<java.util.Random: void <init>(long)>($l4);
+
+        i8 = 0;
+
+     label2:
+        if i8 >= 1000 goto label4;
+
+        $r6 = new net.sourceforge.plantuml.oregon.MagicTable;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.oregon.MagicTable: void <init>()>();
+
+        i5 = staticinvoke <net.sourceforge.plantuml.oregon.MagicTable: int size(java.util.Random,net.sourceforge.plantuml.oregon.MagicTable)>($r4, $r6);
+
+        if i5 <= i6 goto label3;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("v=");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i5);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r11);
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("mt=");
+
+        $r14 = virtualinvoke $r6.<net.sourceforge.plantuml.oregon.MagicTable: java.util.List getAllUsed()>();
+
+        $r15 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r14);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r16);
+
+        i6 = i5;
+
+     label3:
+        i8 = i8 + 1;
+
+        goto label2;
+
+     label4:
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label5:
+        $l1 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        l9 = $l1 - l0;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Duration = ");
+
+        $l2 = l9 / 1000L;
+
+        $l3 = $l2 / 60L;
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l3);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void println(java.lang.Object)>($r3);
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.util.ArrayList $r0, $r1;
+        int i0;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        <net.sourceforge.plantuml.oregon.MagicTable: java.util.ArrayList neighbours> = $r0;
+
+        i0 = 0;
+
+     label1:
+        if i0 >= 10000 goto label2;
+
+        $r1 = <net.sourceforge.plantuml.oregon.MagicTable: java.util.ArrayList neighbours>;
+
+        virtualinvoke $r1.<java.util.ArrayList: boolean add(java.lang.Object)>(null);
+
+        i0 = i0 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+}

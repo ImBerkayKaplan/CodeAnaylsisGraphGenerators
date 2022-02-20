@@ -1,0 +1,503 @@
+public class net.sourceforge.plantuml.jsondiagram.JsonCurve extends java.lang.Object
+{
+    private final java.util.List points;
+    private double maxX;
+    private double maxY;
+    private final net.sourceforge.plantuml.jsondiagram.Mirror xMirror;
+    private final double veryFirstLine;
+    private final java.awt.geom.Point2D sp;
+    private final java.awt.geom.Point2D ep;
+
+    public void <init>(h.ST_Agedgeinfo_t, net.sourceforge.plantuml.jsondiagram.Mirror, double)
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonCurve r0;
+        java.util.ArrayList $r1;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14;
+        net.sourceforge.plantuml.jsondiagram.Mirror r2;
+        h.ST_Agedgeinfo_t r3;
+        h.ST_splines r4;
+        int $i0, $i1, i5;
+        smetana.core.CArray $r5;
+        java.lang.Object $r6;
+        h.ST_bezier r7;
+        h.ST_pointf $r8, $r10, $r11, $r13, $r14, $r15, $r16, $r20;
+        byte $b2, $b3, $b4, $b6;
+        java.awt.geom.Point2D$Double $r9, $r12;
+        java.awt.geom.Point2D r17;
+        java.util.List $r18;
+        java.lang.IllegalStateException $r19;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonCurve;
+
+        r3 := @parameter0: h.ST_Agedgeinfo_t;
+
+        r2 := @parameter1: net.sourceforge.plantuml.jsondiagram.Mirror;
+
+        d0 := @parameter2: double;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points> = $r1;
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: double veryFirstLine> = d0;
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror> = r2;
+
+        r4 = r3.<h.ST_Agedgeinfo_t: h.ST_splines spl>;
+
+        $i0 = r4.<h.ST_splines: int size>;
+
+        if $i0 == 1 goto label1;
+
+        $r19 = new java.lang.IllegalStateException;
+
+        specialinvoke $r19.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r19;
+
+     label1:
+        $r5 = r4.<h.ST_splines: smetana.core.CArray list>;
+
+        $r6 = virtualinvoke $r5.<smetana.core.CArray: java.lang.Object get__(int)>(0);
+
+        r7 = (h.ST_bezier) $r6;
+
+        i5 = 0;
+
+     label2:
+        $i1 = r7.<h.ST_bezier: int size>;
+
+        if i5 >= $i1 goto label3;
+
+        r17 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D getPoint(h.ST_splines,int)>(r4, i5);
+
+        $d8 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: double maxX>;
+
+        $d9 = virtualinvoke r17.<java.awt.geom.Point2D: double getX()>();
+
+        $d10 = staticinvoke <java.lang.Math: double max(double,double)>($d8, $d9);
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: double maxX> = $d10;
+
+        $d11 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: double maxY>;
+
+        $d12 = virtualinvoke r17.<java.awt.geom.Point2D: double getY()>();
+
+        $d13 = staticinvoke <java.lang.Math: double max(double,double)>($d11, $d12);
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: double maxY> = $d13;
+
+        $r18 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        interfaceinvoke $r18.<java.util.List: boolean add(java.lang.Object)>(r17);
+
+        i5 = i5 + 1;
+
+        goto label2;
+
+     label3:
+        $r8 = r7.<h.ST_bezier: h.ST_pointf sp>;
+
+        $d1 = $r8.<h.ST_pointf: double x>;
+
+        $b2 = $d1 cmpl 0.0;
+
+        if $b2 != 0 goto label4;
+
+        $r16 = r7.<h.ST_bezier: h.ST_pointf sp>;
+
+        $d7 = $r16.<h.ST_pointf: double y>;
+
+        $b4 = $d7 cmpl 0.0;
+
+        if $b4 != 0 goto label4;
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D sp> = null;
+
+        goto label5;
+
+     label4:
+        $r9 = new java.awt.geom.Point2D$Double;
+
+        $r10 = r7.<h.ST_bezier: h.ST_pointf sp>;
+
+        $d3 = $r10.<h.ST_pointf: double x>;
+
+        $r11 = r7.<h.ST_bezier: h.ST_pointf sp>;
+
+        $d2 = $r11.<h.ST_pointf: double y>;
+
+        specialinvoke $r9.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d3, $d2);
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D sp> = $r9;
+
+     label5:
+        $r20 = r7.<h.ST_bezier: h.ST_pointf ep>;
+
+        $d14 = $r20.<h.ST_pointf: double x>;
+
+        $b6 = $d14 cmpl 0.0;
+
+        if $b6 != 0 goto label6;
+
+        $r15 = r7.<h.ST_bezier: h.ST_pointf ep>;
+
+        $d6 = $r15.<h.ST_pointf: double y>;
+
+        $b3 = $d6 cmpl 0.0;
+
+        if $b3 != 0 goto label6;
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D ep> = null;
+
+        goto label7;
+
+     label6:
+        $r12 = new java.awt.geom.Point2D$Double;
+
+        $r13 = r7.<h.ST_bezier: h.ST_pointf ep>;
+
+        $d5 = $r13.<h.ST_pointf: double x>;
+
+        $r14 = r7.<h.ST_bezier: h.ST_pointf ep>;
+
+        $d4 = $r14.<h.ST_pointf: double y>;
+
+        specialinvoke $r12.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d5, $d4);
+
+        r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D ep> = $r12;
+
+     label7:
+        return;
+    }
+
+    private java.awt.geom.Point2D getPoint(h.ST_splines, int)
+    {
+        h.ST_splines r0;
+        smetana.core.CArray $r1, $r4;
+        java.lang.Object $r2, $r5;
+        h.ST_bezier r3;
+        int i0;
+        h.ST_pointf r6;
+        java.awt.geom.Point2D$Double $r7;
+        double $d0, $d1;
+        net.sourceforge.plantuml.jsondiagram.JsonCurve r8;
+
+        r8 := @this: net.sourceforge.plantuml.jsondiagram.JsonCurve;
+
+        r0 := @parameter0: h.ST_splines;
+
+        i0 := @parameter1: int;
+
+        $r1 = r0.<h.ST_splines: smetana.core.CArray list>;
+
+        $r2 = virtualinvoke $r1.<smetana.core.CArray: java.lang.Object get__(int)>(0);
+
+        r3 = (h.ST_bezier) $r2;
+
+        $r4 = r3.<h.ST_bezier: smetana.core.CArray list>;
+
+        $r5 = virtualinvoke $r4.<smetana.core.CArray: java.lang.Object get__(int)>(i0);
+
+        r6 = (h.ST_pointf) $r5;
+
+        $r7 = new java.awt.geom.Point2D$Double;
+
+        $d1 = r6.<h.ST_pointf: double x>;
+
+        $d0 = r6.<h.ST_pointf: double y>;
+
+        specialinvoke $r7.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d1, $d0);
+
+        return $r7;
+    }
+
+    public void drawCurve(net.sourceforge.plantuml.ugraphic.color.HColor, net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.UPath $r0;
+        net.sourceforge.plantuml.jsondiagram.JsonCurve r2;
+        java.awt.geom.Point2D $r3, $r7, $r8, $r11, $r16, $r17, $r26, $r30, r31, $r35, r36, r37, r38, r39;
+        java.util.List $r4, $r9, $r12, $r14, $r23, $r27, $r32;
+        net.sourceforge.plantuml.jsondiagram.Mirror $r5, $r13, $r18, $r24, $r28, $r33;
+        java.lang.Object $r6, $r15, $r25, $r29, $r34;
+        int $i0, $i1, $i2, $i3, $i4, i5;
+        net.sourceforge.plantuml.ugraphic.UGraphic r10, $r22;
+        net.sourceforge.plantuml.jsondiagram.Arrow $r19;
+        net.sourceforge.plantuml.ugraphic.color.HColor r20;
+        net.sourceforge.plantuml.ugraphic.UBackground $r21;
+
+        r2 := @this: net.sourceforge.plantuml.jsondiagram.JsonCurve;
+
+        r20 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        r10 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UPath;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UPath: void <init>()>();
+
+        $r3 = specialinvoke r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D getVeryFirst()>();
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UPath: void moveTo(java.awt.geom.Point2D)>($r3);
+
+        $r5 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $r4 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $r6 = interfaceinvoke $r4.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r7 = (java.awt.geom.Point2D) $r6;
+
+        $r8 = virtualinvoke $r5.<net.sourceforge.plantuml.jsondiagram.Mirror: java.awt.geom.Point2D invAndXYSwitch(java.awt.geom.Point2D)>($r7);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UPath: void lineTo(java.awt.geom.Point2D)>($r8);
+
+        i5 = 1;
+
+     label1:
+        $r9 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $i0 = interfaceinvoke $r9.<java.util.List: int size()>();
+
+        if i5 >= $i0 goto label2;
+
+        $r24 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $r23 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $r25 = interfaceinvoke $r23.<java.util.List: java.lang.Object get(int)>(i5);
+
+        $r26 = (java.awt.geom.Point2D) $r25;
+
+        r37 = virtualinvoke $r24.<net.sourceforge.plantuml.jsondiagram.Mirror: java.awt.geom.Point2D invAndXYSwitch(java.awt.geom.Point2D)>($r26);
+
+        $r28 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $r27 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $i3 = i5 + 1;
+
+        $r29 = interfaceinvoke $r27.<java.util.List: java.lang.Object get(int)>($i3);
+
+        $r30 = (java.awt.geom.Point2D) $r29;
+
+        r31 = virtualinvoke $r28.<net.sourceforge.plantuml.jsondiagram.Mirror: java.awt.geom.Point2D invAndXYSwitch(java.awt.geom.Point2D)>($r30);
+
+        $r33 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $r32 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $i4 = i5 + 2;
+
+        $r34 = interfaceinvoke $r32.<java.util.List: java.lang.Object get(int)>($i4);
+
+        $r35 = (java.awt.geom.Point2D) $r34;
+
+        r36 = virtualinvoke $r33.<net.sourceforge.plantuml.jsondiagram.Mirror: java.awt.geom.Point2D invAndXYSwitch(java.awt.geom.Point2D)>($r35);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UPath: void cubicTo(java.awt.geom.Point2D,java.awt.geom.Point2D,java.awt.geom.Point2D)>(r37, r31, r36);
+
+        i5 = i5 + 3;
+
+        goto label1;
+
+     label2:
+        interfaceinvoke r10.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r0);
+
+        $r11 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D ep>;
+
+        if $r11 == null goto label3;
+
+        $r13 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $r14 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $r12 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $i1 = interfaceinvoke $r12.<java.util.List: int size()>();
+
+        $i2 = $i1 - 1;
+
+        $r15 = interfaceinvoke $r14.<java.util.List: java.lang.Object get(int)>($i2);
+
+        $r16 = (java.awt.geom.Point2D) $r15;
+
+        r38 = virtualinvoke $r13.<net.sourceforge.plantuml.jsondiagram.Mirror: java.awt.geom.Point2D invAndXYSwitch(java.awt.geom.Point2D)>($r16);
+
+        $r18 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $r17 = r2.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D ep>;
+
+        r39 = virtualinvoke $r18.<net.sourceforge.plantuml.jsondiagram.Mirror: java.awt.geom.Point2D invAndXYSwitch(java.awt.geom.Point2D)>($r17);
+
+        $r19 = new net.sourceforge.plantuml.jsondiagram.Arrow;
+
+        specialinvoke $r19.<net.sourceforge.plantuml.jsondiagram.Arrow: void <init>(java.awt.geom.Point2D,java.awt.geom.Point2D)>(r38, r39);
+
+        $r21 = interfaceinvoke r20.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r22 = interfaceinvoke r10.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r21);
+
+        virtualinvoke $r19.<net.sourceforge.plantuml.jsondiagram.Arrow: void drawArrow(net.sourceforge.plantuml.ugraphic.UGraphic)>($r22);
+
+     label3:
+        return;
+    }
+
+    public void drawSpot(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.ugraphic.UTranslate $r0, $r3, $r4;
+        net.sourceforge.plantuml.jsondiagram.JsonCurve r1;
+        java.awt.geom.Point2D $r2;
+        net.sourceforge.plantuml.ugraphic.UStroke $r5;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r6, r8, r9;
+        net.sourceforge.plantuml.ugraphic.UEllipse $r7;
+
+        r1 := @this: net.sourceforge.plantuml.jsondiagram.JsonCurve;
+
+        r8 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $r2 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D getVeryFirst()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(java.awt.geom.Point2D)>($r2);
+
+        $r3 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>(-3.0, -3.0);
+
+        $r4 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate compose(net.sourceforge.plantuml.ugraphic.UTranslate)>($r3);
+
+        r9 = interfaceinvoke r8.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r4);
+
+        $r5 = new net.sourceforge.plantuml.ugraphic.UStroke;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.ugraphic.UStroke: void <init>()>();
+
+        $r6 = interfaceinvoke r9.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r5);
+
+        $r7 = new net.sourceforge.plantuml.ugraphic.UEllipse;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.ugraphic.UEllipse: void <init>(double,double)>(6.0, 6.0);
+
+        interfaceinvoke $r6.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r7);
+
+        return;
+    }
+
+    private java.awt.geom.Point2D getVeryFirst()
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonCurve r0;
+        java.util.List $r1, $r6;
+        net.sourceforge.plantuml.jsondiagram.Mirror $r2, $r7;
+        java.lang.Object $r3, $r8;
+        java.awt.geom.Point2D $r4, $r5, $r9, $r10, $r11;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonCurve;
+
+        $r2 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $r1 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $r3 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r4 = (java.awt.geom.Point2D) $r3;
+
+        $r5 = virtualinvoke $r2.<net.sourceforge.plantuml.jsondiagram.Mirror: java.awt.geom.Point2D invAndXYSwitch(java.awt.geom.Point2D)>($r4);
+
+        $r7 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $r6 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: java.util.List points>;
+
+        $r8 = interfaceinvoke $r6.<java.util.List: java.lang.Object get(int)>(1);
+
+        $r9 = (java.awt.geom.Point2D) $r8;
+
+        $r10 = virtualinvoke $r7.<net.sourceforge.plantuml.jsondiagram.Mirror: java.awt.geom.Point2D invAndXYSwitch(java.awt.geom.Point2D)>($r9);
+
+        $d0 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: double veryFirstLine>;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.jsondiagram.JsonCurve: java.awt.geom.Point2D supp(java.awt.geom.Point2D,java.awt.geom.Point2D,double)>($r5, $r10, $d0);
+
+        return $r11;
+    }
+
+    private static java.awt.geom.Point2D supp(java.awt.geom.Point2D, java.awt.geom.Point2D, double)
+    {
+        java.awt.geom.Point2D r0, r1;
+        double d0, $d1, $d2, $d3, d4, $d5, $d6, $d7, d8, $d9, d10, $d11, $d12, $d13, $d14, $d15;
+        java.awt.geom.Point2D$Double $r2;
+
+        r0 := @parameter0: java.awt.geom.Point2D;
+
+        r1 := @parameter1: java.awt.geom.Point2D;
+
+        d10 := @parameter2: double;
+
+        d0 = virtualinvoke r0.<java.awt.geom.Point2D: double distance(java.awt.geom.Point2D)>(r1);
+
+        $d1 = virtualinvoke r0.<java.awt.geom.Point2D: double getX()>();
+
+        $d2 = virtualinvoke r1.<java.awt.geom.Point2D: double getX()>();
+
+        $d3 = $d1 - $d2;
+
+        d4 = $d3 / d0;
+
+        $d5 = virtualinvoke r0.<java.awt.geom.Point2D: double getY()>();
+
+        $d6 = virtualinvoke r1.<java.awt.geom.Point2D: double getY()>();
+
+        $d7 = $d5 - $d6;
+
+        d8 = $d7 / d0;
+
+        $r2 = new java.awt.geom.Point2D$Double;
+
+        $d9 = virtualinvoke r0.<java.awt.geom.Point2D: double getX()>();
+
+        $d11 = d4 * d10;
+
+        $d12 = $d9 + $d11;
+
+        $d13 = virtualinvoke r0.<java.awt.geom.Point2D: double getY()>();
+
+        $d14 = d8 * d10;
+
+        $d15 = $d13 + $d14;
+
+        specialinvoke $r2.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d12, $d15);
+
+        return $r2;
+    }
+
+    public double getMaxX()
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonCurve r0;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonCurve;
+
+        $d0 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: double maxX>;
+
+        return $d0;
+    }
+
+    public double getMaxY()
+    {
+        net.sourceforge.plantuml.jsondiagram.JsonCurve r0;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.JsonCurve;
+
+        $d0 = r0.<net.sourceforge.plantuml.jsondiagram.JsonCurve: double maxY>;
+
+        return $d0;
+    }
+}

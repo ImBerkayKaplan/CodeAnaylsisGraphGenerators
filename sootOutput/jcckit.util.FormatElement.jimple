@@ -1,0 +1,816 @@
+class jcckit.util.FormatElement extends java.lang.Object
+{
+    static final java.lang.String DESCRIPTORS;
+    private static final java.lang.String INT_DESCRIPTORS;
+    private static final int INT_DESCRIPTOR;
+    private static final int FLOAT_DESCRIPTOR;
+    private final char _descriptor;
+    private final int _descriptorType;
+    private final double _tenToPrecision;
+    private boolean _decimalPoint;
+    private boolean _flushLeft;
+    private boolean _leadingZeros;
+    private boolean _alwaysSign;
+    private int _width;
+    private int _precision;
+
+    private static final double power(double, int)
+    {
+        int i0, $i1;
+        double d0, $d1, $d2;
+
+        d0 := @parameter0: double;
+
+        i0 := @parameter1: int;
+
+        if i0 >= 0 goto label1;
+
+        $i1 = neg i0;
+
+        $d1 = staticinvoke <jcckit.util.FormatElement: double power2(double,int)>(d0, $i1);
+
+        $d2 = 1.0 / $d1;
+
+        goto label2;
+
+     label1:
+        $d2 = staticinvoke <jcckit.util.FormatElement: double power2(double,int)>(d0, i0);
+
+     label2:
+        return $d2;
+    }
+
+    private static final double power2(double, int)
+    {
+        int i0, $i1, $i2;
+        double d0, d1, $d2, $d3, $d4;
+
+        d0 := @parameter0: double;
+
+        i0 := @parameter1: int;
+
+        lookupswitch(i0)
+        {
+            case 0: goto label1;
+            case 1: goto label2;
+            default: goto label3;
+        };
+
+     label1:
+        return 1.0;
+
+     label2:
+        return d0;
+
+     label3:
+        $i1 = i0 / 2;
+
+        d1 = staticinvoke <jcckit.util.FormatElement: double power2(double,int)>(d0, $i1);
+
+        $d2 = d1 * d1;
+
+        $i2 = i0 % 2;
+
+        $d3 = staticinvoke <jcckit.util.FormatElement: double power2(double,int)>(d0, $i2);
+
+        $d4 = $d2 * $d3;
+
+        return $d4;
+    }
+
+    void <init>(java.lang.String)
+    {
+        jcckit.util.FormatElement r0;
+        int $i0, $i3, $i5, $i6, $i9, $i10, i11, $i13, i14, i15, $i16, i17, $i18;
+        char $c1, $c2, $c4, $c7;
+        java.lang.String $r1, $r2, $r3, $r4, $r13, r14;
+        boolean $z0, $z1, $z2;
+        java.lang.IllegalArgumentException $r7;
+        java.lang.StringBuilder $r8, $r9, $r10, $r11, $r12;
+        byte $b12;
+        double $d0;
+
+        r0 := @this: jcckit.util.FormatElement;
+
+        r14 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $i0 = virtualinvoke r14.<java.lang.String: int length()>();
+
+        i11 = $i0 - 1;
+
+        $c1 = virtualinvoke r14.<java.lang.String: char charAt(int)>(i11);
+
+        r0.<jcckit.util.FormatElement: char _descriptor> = $c1;
+
+        $r1 = "doxfeEgG";
+
+        $c2 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        $i3 = virtualinvoke $r1.<java.lang.String: int indexOf(int)>($c2);
+
+        if $i3 >= 0 goto label01;
+
+        $r7 = new java.lang.IllegalArgumentException;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Format element \'");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r14);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\' does not ends with one of the following characters: ");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("doxfeEgG");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r7.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r13);
+
+        throw $r7;
+
+     label01:
+        $r2 = "dox";
+
+        $c4 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        $i5 = virtualinvoke $r2.<java.lang.String: int indexOf(int)>($c4);
+
+        if $i5 < 0 goto label02;
+
+        $b12 = 0;
+
+        goto label03;
+
+     label02:
+        $b12 = 1;
+
+     label03:
+        r0.<jcckit.util.FormatElement: int _descriptorType> = $b12;
+
+        $i6 = virtualinvoke r14.<java.lang.String: int length()>();
+
+        if $i6 <= 1 goto label13;
+
+        $c7 = virtualinvoke r14.<java.lang.String: char charAt(int)>(0);
+
+        lookupswitch($c7)
+        {
+            case 43: goto label06;
+            case 45: goto label04;
+            case 48: goto label05;
+            default: goto label07;
+        };
+
+     label04:
+        r0.<jcckit.util.FormatElement: boolean _flushLeft> = 1;
+
+        r14 = virtualinvoke r14.<java.lang.String: java.lang.String substring(int)>(1);
+
+        goto label07;
+
+     label05:
+        r0.<jcckit.util.FormatElement: boolean _leadingZeros> = 1;
+
+        r14 = virtualinvoke r14.<java.lang.String: java.lang.String substring(int)>(1);
+
+        goto label07;
+
+     label06:
+        r0.<jcckit.util.FormatElement: boolean _alwaysSign> = 1;
+
+        r14 = virtualinvoke r14.<java.lang.String: java.lang.String substring(int)>(1);
+
+     label07:
+        $i13 = virtualinvoke r14.<java.lang.String: int length()>();
+
+        i14 = $i13 - 1;
+
+        i15 = virtualinvoke r14.<java.lang.String: int indexOf(int)>(46);
+
+        if i15 < 0 goto label08;
+
+        $z2 = 1;
+
+        goto label09;
+
+     label08:
+        $z2 = 0;
+
+     label09:
+        r0.<jcckit.util.FormatElement: boolean _decimalPoint> = $z2;
+
+        $z0 = r0.<jcckit.util.FormatElement: boolean _decimalPoint>;
+
+        if $z0 == 0 goto label10;
+
+        $i16 = i15;
+
+        goto label11;
+
+     label10:
+        $i16 = i14;
+
+     label11:
+        if $i16 <= 0 goto label12;
+
+        $r4 = virtualinvoke r14.<java.lang.String: java.lang.String substring(int,int)>(0, $i16);
+
+        $i10 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r4);
+
+        r0.<jcckit.util.FormatElement: int _width> = $i10;
+
+     label12:
+        $z1 = r0.<jcckit.util.FormatElement: boolean _decimalPoint>;
+
+        if $z1 == 0 goto label13;
+
+        i17 = i15 + 1;
+
+        if i17 >= i14 goto label13;
+
+        $r3 = virtualinvoke r14.<java.lang.String: java.lang.String substring(int,int)>(i17, i14);
+
+        $i9 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>($r3);
+
+        r0.<jcckit.util.FormatElement: int _precision> = $i9;
+
+     label13:
+        $i18 = r0.<jcckit.util.FormatElement: int _precision>;
+
+        $d0 = staticinvoke <jcckit.util.FormatElement: double power(double,int)>(10.0, $i18);
+
+        r0.<jcckit.util.FormatElement: double _tenToPrecision> = $d0;
+
+        return;
+    }
+
+    public void form(java.lang.StringBuffer, long)
+    {
+        jcckit.util.FormatElement r0;
+        int $i0;
+        java.lang.StringBuffer r1;
+        long l1, $l5;
+        byte $b2, $b6;
+        char $c3, $c4;
+        double $d0;
+        boolean $z3;
+        java.lang.String $r5, $r6;
+
+        r0 := @this: jcckit.util.FormatElement;
+
+        r1 := @parameter0: java.lang.StringBuffer;
+
+        l1 := @parameter1: long;
+
+        $i0 = r0.<jcckit.util.FormatElement: int _descriptorType>;
+
+        if $i0 != 1 goto label1;
+
+        $d0 = (double) l1;
+
+        virtualinvoke r0.<jcckit.util.FormatElement: void form(java.lang.StringBuffer,double)>(r1, $d0);
+
+        goto label7;
+
+     label1:
+        $b2 = l1 cmp 0L;
+
+        if $b2 >= 0 goto label2;
+
+        $z3 = 1;
+
+        goto label3;
+
+     label2:
+        $z3 = 0;
+
+     label3:
+        $l5 = staticinvoke <java.lang.Math: long abs(long)>(l1);
+
+        $c3 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        if $c3 != 111 goto label4;
+
+        $b6 = 8;
+
+        goto label6;
+
+     label4:
+        $c4 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        if $c4 != 120 goto label5;
+
+        $b6 = 16;
+
+        goto label6;
+
+     label5:
+        $b6 = 10;
+
+     label6:
+        $r5 = staticinvoke <java.lang.Long: java.lang.String toString(long,int)>($l5, $b6);
+
+        $r6 = specialinvoke r0.<jcckit.util.FormatElement: java.lang.String form(boolean,java.lang.String,java.lang.String)>($z3, $r5, "");
+
+        virtualinvoke r1.<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>($r6);
+
+     label7:
+        return;
+    }
+
+    public void form(java.lang.StringBuffer, double)
+    {
+        jcckit.util.FormatElement r0;
+        int $i0, $i5, $i6;
+        char $c1, $c2, $c3, $c4, $c7;
+        java.lang.StringBuffer r1;
+        double d0, $d1, $d2;
+        java.lang.String $r2, r4, r5, $r8, $r10;
+        long $l8;
+
+        r0 := @this: jcckit.util.FormatElement;
+
+        r1 := @parameter0: java.lang.StringBuffer;
+
+        d0 := @parameter1: double;
+
+        $i0 = r0.<jcckit.util.FormatElement: int _descriptorType>;
+
+        if $i0 != 0 goto label1;
+
+        $d1 = d0 + 0.5;
+
+        $d2 = staticinvoke <java.lang.Math: double floor(double)>($d1);
+
+        $l8 = (long) $d2;
+
+        virtualinvoke r0.<jcckit.util.FormatElement: void form(java.lang.StringBuffer,long)>(r1, $l8);
+
+        goto label8;
+
+     label1:
+        $c1 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        if $c1 != 102 goto label2;
+
+        $r8 = specialinvoke r0.<jcckit.util.FormatElement: java.lang.String formF(double)>(d0);
+
+        virtualinvoke r1.<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>($r8);
+
+        goto label8;
+
+     label2:
+        $c2 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        if $c2 == 101 goto label3;
+
+        $c3 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        if $c3 != 69 goto label4;
+
+     label3:
+        $r2 = specialinvoke r0.<jcckit.util.FormatElement: java.lang.String formE(double)>(d0);
+
+        virtualinvoke r1.<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>($r2);
+
+        goto label8;
+
+     label4:
+        $c4 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        if $c4 == 103 goto label5;
+
+        $c7 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        if $c7 != 71 goto label8;
+
+     label5:
+        r4 = specialinvoke r0.<jcckit.util.FormatElement: java.lang.String formF(double)>(d0);
+
+        r5 = specialinvoke r0.<jcckit.util.FormatElement: java.lang.String formE(double)>(d0);
+
+        $i5 = virtualinvoke r4.<java.lang.String: int length()>();
+
+        $i6 = virtualinvoke r5.<java.lang.String: int length()>();
+
+        if $i5 <= $i6 goto label6;
+
+        $r10 = r5;
+
+        goto label7;
+
+     label6:
+        $r10 = r4;
+
+     label7:
+        virtualinvoke r1.<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>($r10);
+
+     label8:
+        return;
+    }
+
+    private java.lang.String form(boolean, java.lang.String, java.lang.String)
+    {
+        java.lang.String r0, r1, $r8;
+        int $i0, $i1, i2, $i3, $i4, $i5, i6, i8, i9;
+        java.lang.StringBuffer $r2, $r6;
+        jcckit.util.FormatElement r4;
+        boolean $z0, z1, $z2, $z3;
+        char $c7;
+
+        r4 := @this: jcckit.util.FormatElement;
+
+        z1 := @parameter0: boolean;
+
+        r0 := @parameter1: java.lang.String;
+
+        r1 := @parameter2: java.lang.String;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $i1 = virtualinvoke r1.<java.lang.String: int length()>();
+
+        i2 = $i0 + $i1;
+
+        $r2 = new java.lang.StringBuffer;
+
+        specialinvoke $r2.<java.lang.StringBuffer: void <init>()>();
+
+        i6 = 0;
+
+        $z0 = r4.<jcckit.util.FormatElement: boolean _alwaysSign>;
+
+        if $z0 != 0 goto label1;
+
+        if z1 == 0 goto label4;
+
+     label1:
+        if z1 == 0 goto label2;
+
+        $c7 = 45;
+
+        goto label3;
+
+     label2:
+        $c7 = 43;
+
+     label3:
+        virtualinvoke $r2.<java.lang.StringBuffer: java.lang.StringBuffer append(char)>($c7);
+
+        i6 = 0 + 1;
+
+     label4:
+        $z3 = r4.<jcckit.util.FormatElement: boolean _leadingZeros>;
+
+        if $z3 == 0 goto label6;
+
+        i8 = i6 + i2;
+
+     label5:
+        $i5 = r4.<jcckit.util.FormatElement: int _width>;
+
+        if i8 >= $i5 goto label6;
+
+        virtualinvoke $r2.<java.lang.StringBuffer: java.lang.StringBuffer append(char)>(48);
+
+        i6 = i6 + 1;
+
+        i8 = i8 + 1;
+
+        goto label5;
+
+     label6:
+        $r6 = virtualinvoke $r2.<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>(r0);
+
+        virtualinvoke $r6.<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>(r1);
+
+        i9 = i6 + i2;
+
+        $z2 = r4.<jcckit.util.FormatElement: boolean _flushLeft>;
+
+        if $z2 == 0 goto label8;
+
+     label7:
+        $i4 = r4.<jcckit.util.FormatElement: int _width>;
+
+        if i9 >= $i4 goto label9;
+
+        virtualinvoke $r2.<java.lang.StringBuffer: java.lang.StringBuffer append(char)>(32);
+
+        i9 = i9 + 1;
+
+        goto label7;
+
+     label8:
+        $i3 = r4.<jcckit.util.FormatElement: int _width>;
+
+        if i9 >= $i3 goto label9;
+
+        virtualinvoke $r2.<java.lang.StringBuffer: java.lang.StringBuffer insert(int,char)>(0, 32);
+
+        i9 = i9 + 1;
+
+        goto label8;
+
+     label9:
+        $r8 = new java.lang.String;
+
+        specialinvoke $r8.<java.lang.String: void <init>(java.lang.StringBuffer)>($r2);
+
+        return $r8;
+    }
+
+    private java.lang.String formE(double)
+    {
+        jcckit.util.FormatElement r0;
+        int $i0, $i1, i4, $i6, $i8, $i9, $i12, $i13, i14, i17, i18;
+        java.lang.String $r1, $r4, $r5, $r6, $r11, r13;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, d16;
+        byte $b2, $b5, $b10;
+        char $c3, $c7, $c15, $c16;
+        boolean $z0, $z1, $z2;
+        java.lang.StringBuffer $r2, $r10, $r14;
+        long $l11;
+
+        r0 := @this: jcckit.util.FormatElement;
+
+        d0 := @parameter0: double;
+
+        i14 = 0;
+
+        $r1 = "00000000000000000000000";
+
+        $i0 = r0.<jcckit.util.FormatElement: int _precision>;
+
+        $i1 = $i0 + 1;
+
+        r13 = virtualinvoke $r1.<java.lang.String: java.lang.String substring(int,int)>(0, $i1);
+
+        $b2 = d0 cmpl 0.0;
+
+        if $b2 == 0 goto label02;
+
+        $d1 = staticinvoke <java.lang.Math: double abs(double)>(d0);
+
+        $d2 = staticinvoke <java.lang.Math: double log(double)>($d1);
+
+        $d3 = staticinvoke <java.lang.Math: double log(double)>(10.0);
+
+        $d4 = $d2 / $d3;
+
+        $d5 = staticinvoke <java.lang.Math: double floor(double)>($d4);
+
+        i14 = (int) $d5;
+
+        $i8 = r0.<jcckit.util.FormatElement: int _precision>;
+
+        $i9 = $i8 - i14;
+
+        $d6 = staticinvoke <jcckit.util.FormatElement: double power(double,int)>(10.0, $i9);
+
+        $d7 = d0 * $d6;
+
+        $d8 = staticinvoke <java.lang.Math: double abs(double)>($d7);
+
+        $d9 = $d8 + 0.5;
+
+        d16 = staticinvoke <java.lang.Math: double floor(double)>($d9);
+
+        $d10 = r0.<jcckit.util.FormatElement: double _tenToPrecision>;
+
+        $d11 = 10.0 * $d10;
+
+        $b10 = d16 cmpl $d11;
+
+        if $b10 < 0 goto label01;
+
+        i14 = i14 + 1;
+
+        $i12 = r0.<jcckit.util.FormatElement: int _precision>;
+
+        $i13 = $i12 - i14;
+
+        $d12 = staticinvoke <jcckit.util.FormatElement: double power(double,int)>(10.0, $i13);
+
+        $d13 = d0 * $d12;
+
+        $d14 = staticinvoke <java.lang.Math: double abs(double)>($d13);
+
+        $d15 = $d14 + 0.5;
+
+        d16 = staticinvoke <java.lang.Math: double floor(double)>($d15);
+
+     label01:
+        $l11 = (long) d16;
+
+        r13 = staticinvoke <java.lang.Long: java.lang.String toString(long)>($l11);
+
+     label02:
+        $r14 = new java.lang.StringBuffer;
+
+        specialinvoke $r14.<java.lang.StringBuffer: void <init>()>();
+
+        $z1 = r0.<jcckit.util.FormatElement: boolean _decimalPoint>;
+
+        if $z1 == 0 goto label03;
+
+        $r10 = virtualinvoke $r14.<java.lang.StringBuffer: java.lang.StringBuffer append(char)>(46);
+
+        $r11 = virtualinvoke r13.<java.lang.String: java.lang.String substring(int)>(1);
+
+        virtualinvoke $r10.<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>($r11);
+
+     label03:
+        $c3 = r0.<jcckit.util.FormatElement: char _descriptor>;
+
+        $z0 = staticinvoke <java.lang.Character: boolean isLowerCase(char)>($c3);
+
+        if $z0 == 0 goto label04;
+
+        $c15 = 101;
+
+        goto label05;
+
+     label04:
+        $c15 = 69;
+
+     label05:
+        $r2 = virtualinvoke $r14.<java.lang.StringBuffer: java.lang.StringBuffer append(char)>($c15);
+
+        if i14 >= 0 goto label06;
+
+        $c16 = 45;
+
+        goto label07;
+
+     label06:
+        $c16 = 43;
+
+     label07:
+        virtualinvoke $r2.<java.lang.StringBuffer: java.lang.StringBuffer append(char)>($c16);
+
+        i17 = staticinvoke <java.lang.Math: int abs(int)>(i14);
+
+        i18 = 0;
+
+        i4 = virtualinvoke $r14.<java.lang.StringBuffer: int length()>();
+
+     label08:
+        if i18 >= 3 goto label09;
+
+        $i6 = i17 % 10;
+
+        $c7 = staticinvoke <java.lang.Character: char forDigit(int,int)>($i6, 10);
+
+        virtualinvoke $r14.<java.lang.StringBuffer: java.lang.StringBuffer insert(int,char)>(i4, $c7);
+
+        i17 = i17 / 10;
+
+        i18 = i18 + 1;
+
+        goto label08;
+
+     label09:
+        $b5 = d0 cmpg 0.0;
+
+        if $b5 >= 0 goto label10;
+
+        $z2 = 1;
+
+        goto label11;
+
+     label10:
+        $z2 = 0;
+
+     label11:
+        $r4 = virtualinvoke r13.<java.lang.String: java.lang.String substring(int,int)>(0, 1);
+
+        $r5 = new java.lang.String;
+
+        specialinvoke $r5.<java.lang.String: void <init>(java.lang.StringBuffer)>($r14);
+
+        $r6 = specialinvoke r0.<jcckit.util.FormatElement: java.lang.String form(boolean,java.lang.String,java.lang.String)>($z2, $r4, $r5);
+
+        return $r6;
+    }
+
+    private java.lang.String formF(double)
+    {
+        double d0, $d2, $d3, $d4, $d5, $d6;
+        byte $b0, $b6;
+        jcckit.util.FormatElement r0;
+        long $l1;
+        java.lang.String r1, $r4, $r5, $r8, r11;
+        java.lang.StringBuffer $r2, $r7;
+        boolean $z0, $z1;
+        int $i2, $i3, $i4, i5;
+
+        r0 := @this: jcckit.util.FormatElement;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpg 0.0;
+
+        if $b0 >= 0 goto label1;
+
+        $d5 = r0.<jcckit.util.FormatElement: double _tenToPrecision>;
+
+        $d6 = neg $d5;
+
+        goto label2;
+
+     label1:
+        $d6 = r0.<jcckit.util.FormatElement: double _tenToPrecision>;
+
+     label2:
+        $d2 = d0 * $d6;
+
+        $d3 = $d2 + 0.5;
+
+        $d4 = staticinvoke <java.lang.Math: double floor(double)>($d3);
+
+        $l1 = (long) $d4;
+
+        r1 = staticinvoke <java.lang.Long: java.lang.String toString(long)>($l1);
+
+        r11 = r1;
+
+        $r2 = new java.lang.StringBuffer;
+
+        specialinvoke $r2.<java.lang.StringBuffer: void <init>()>();
+
+        $z0 = r0.<jcckit.util.FormatElement: boolean _decimalPoint>;
+
+        if $z0 == 0 goto label5;
+
+        $i2 = virtualinvoke r1.<java.lang.String: int length()>();
+
+        $i3 = r0.<jcckit.util.FormatElement: int _precision>;
+
+        i5 = $i2 - $i3;
+
+        $r7 = virtualinvoke $r2.<java.lang.StringBuffer: java.lang.StringBuffer append(char)>(46);
+
+        $i4 = staticinvoke <java.lang.Math: int max(int,int)>(0, i5);
+
+        $r8 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int)>($i4);
+
+        virtualinvoke $r7.<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>($r8);
+
+        if i5 <= 0 goto label3;
+
+        r11 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int,int)>(0, i5);
+
+        goto label5;
+
+     label3:
+        r11 = "0";
+
+     label4:
+        if i5 >= 0 goto label5;
+
+        virtualinvoke $r2.<java.lang.StringBuffer: java.lang.StringBuffer insert(int,char)>(1, 48);
+
+        i5 = i5 + 1;
+
+        goto label4;
+
+     label5:
+        $b6 = d0 cmpg 0.0;
+
+        if $b6 >= 0 goto label6;
+
+        $z1 = 1;
+
+        goto label7;
+
+     label6:
+        $z1 = 0;
+
+     label7:
+        $r4 = new java.lang.String;
+
+        specialinvoke $r4.<java.lang.String: void <init>(java.lang.StringBuffer)>($r2);
+
+        $r5 = specialinvoke r0.<jcckit.util.FormatElement: java.lang.String form(boolean,java.lang.String,java.lang.String)>($z1, r11, $r4);
+
+        return $r5;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.util.FormatElement: int FLOAT_DESCRIPTOR> = 1;
+
+        <jcckit.util.FormatElement: int INT_DESCRIPTOR> = 0;
+
+        <jcckit.util.FormatElement: java.lang.String INT_DESCRIPTORS> = "dox";
+
+        <jcckit.util.FormatElement: java.lang.String DESCRIPTORS> = "doxfeEgG";
+
+        return;
+    }
+}

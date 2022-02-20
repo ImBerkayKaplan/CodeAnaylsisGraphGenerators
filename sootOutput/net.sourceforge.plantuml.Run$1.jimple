@@ -1,0 +1,95 @@
+class net.sourceforge.plantuml.Run$1 extends java.lang.Object implements java.lang.Runnable
+{
+    final net.sourceforge.plantuml.ErrorStatus val$error;
+    final net.sourceforge.plantuml.Option val$option;
+    final java.io.File val$f;
+
+    void <init>(net.sourceforge.plantuml.ErrorStatus, net.sourceforge.plantuml.Option, java.io.File)
+    {
+        net.sourceforge.plantuml.Run$1 r0;
+        net.sourceforge.plantuml.ErrorStatus r1;
+        net.sourceforge.plantuml.Option r2;
+        java.io.File r3;
+
+        r0 := @this: net.sourceforge.plantuml.Run$1;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ErrorStatus;
+
+        r2 := @parameter1: net.sourceforge.plantuml.Option;
+
+        r3 := @parameter2: java.io.File;
+
+        r0.<net.sourceforge.plantuml.Run$1: net.sourceforge.plantuml.ErrorStatus val$error> = r1;
+
+        r0.<net.sourceforge.plantuml.Run$1: net.sourceforge.plantuml.Option val$option> = r2;
+
+        r0.<net.sourceforge.plantuml.Run$1: java.io.File val$f> = r3;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void run()
+    {
+        net.sourceforge.plantuml.Run$1 r0;
+        net.sourceforge.plantuml.ErrorStatus $r1, $r2, $r10;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.Option $r3, $r5;
+        java.io.File $r4;
+        java.lang.InterruptedException $r6;
+        java.io.IOException $r7;
+
+        r0 := @this: net.sourceforge.plantuml.Run$1;
+
+        $r1 = r0.<net.sourceforge.plantuml.Run$1: net.sourceforge.plantuml.ErrorStatus val$error>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.ErrorStatus: boolean hasError()>();
+
+        if $z0 == 0 goto label1;
+
+        $r5 = r0.<net.sourceforge.plantuml.Run$1: net.sourceforge.plantuml.Option val$option>;
+
+        $z1 = virtualinvoke $r5.<net.sourceforge.plantuml.Option: boolean isFailfastOrFailfast2()>();
+
+        if $z1 == 0 goto label1;
+
+        return;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.Run$1: java.io.File val$f>;
+
+        $r3 = r0.<net.sourceforge.plantuml.Run$1: net.sourceforge.plantuml.Option val$option>;
+
+        $r2 = r0.<net.sourceforge.plantuml.Run$1: net.sourceforge.plantuml.ErrorStatus val$error>;
+
+        staticinvoke <net.sourceforge.plantuml.Run: void access$000(java.io.File,net.sourceforge.plantuml.Option,net.sourceforge.plantuml.ErrorStatus)>($r4, $r3, $r2);
+
+     label2:
+        goto label5;
+
+     label3:
+        $r7 := @caughtexception;
+
+        virtualinvoke $r7.<java.io.IOException: void printStackTrace()>();
+
+        goto label5;
+
+     label4:
+        $r6 := @caughtexception;
+
+        virtualinvoke $r6.<java.lang.InterruptedException: void printStackTrace()>();
+
+     label5:
+        $r10 = r0.<net.sourceforge.plantuml.Run$1: net.sourceforge.plantuml.ErrorStatus val$error>;
+
+        $z2 = virtualinvoke $r10.<net.sourceforge.plantuml.ErrorStatus: boolean hasError()>();
+
+        staticinvoke <net.sourceforge.plantuml.Run: void access$100(boolean)>($z2);
+
+        return;
+
+        catch java.io.IOException from label1 to label2 with label3;
+        catch java.lang.InterruptedException from label1 to label2 with label4;
+    }
+}

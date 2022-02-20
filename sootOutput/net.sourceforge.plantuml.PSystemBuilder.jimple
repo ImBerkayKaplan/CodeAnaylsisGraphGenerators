@@ -1,0 +1,962 @@
+public class net.sourceforge.plantuml.PSystemBuilder extends java.lang.Object
+{
+    public static final long startTime;
+    private static final java.util.List factories;
+    static final boolean $assertionsDisabled;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.PSystemBuilder r0;
+
+        r0 := @this: net.sourceforge.plantuml.PSystemBuilder;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.core.Diagram createPSystem(net.sourceforge.plantuml.api.ThemeStyle, net.sourceforge.plantuml.ISkinSimple, java.util.List, java.util.List)
+    {
+        long l0, $l1, $l2, $l3, $l4, $l7, $l8, $l9, $l10, $l11, $l12, $l13, $l14, $l15, $l16;
+        java.util.List r0, r7, $r10, $r34;
+        java.lang.Object $r1, $r13, $r23;
+        net.sourceforge.plantuml.StringLocated $r2, r45;
+        java.lang.String $r3, $r24, $r27, $r29, $r32, $r51, $r59, $r64, $r68;
+        net.sourceforge.plantuml.core.DiagramType r4, $r6, $r14, r52;
+        net.sourceforge.plantuml.core.UmlSource $r5;
+        java.util.ArrayList $r9;
+        net.sourceforge.plantuml.OptionFlags $r11, $r21, $r41;
+        boolean $z0, $z1, $z3, $z4, $z6, $z7, $z8, $z9;
+        java.lang.Class $r12, $r22, $r42;
+        net.sourceforge.plantuml.api.ThemeStyle r15;
+        net.sourceforge.plantuml.ISkinSimple r16;
+        net.sourceforge.plantuml.core.Diagram r17, r43, r60;
+        net.sourceforge.plantuml.PSystemBuilder r18;
+        net.sourceforge.plantuml.error.PSystemError $r19, r47;
+        java.lang.StringBuilder $r25, $r26, $r28, $r48, $r49, $r50, $r56, $r57, $r58, $r61, $r62, $r63, $r65, $r66, $r67;
+        net.sourceforge.plantuml.ErrorUml $r30;
+        net.sourceforge.plantuml.ErrorUmlType $r31;
+        net.sourceforge.plantuml.LineLocation $r33;
+        java.lang.AssertionError $r37;
+        java.lang.Throwable $r39;
+        java.util.Iterator r44, r54;
+        net.sourceforge.plantuml.api.PSystemFactory r55;
+
+        r18 := @this: net.sourceforge.plantuml.PSystemBuilder;
+
+        r15 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r16 := @parameter1: net.sourceforge.plantuml.ISkinSimple;
+
+        r0 := @parameter2: java.util.List;
+
+        r7 := @parameter3: java.util.List;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        r43 = null;
+
+     label01:
+        $r1 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r2 = (net.sourceforge.plantuml.StringLocated) $r1;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r4 = staticinvoke <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType getTypeFromArobaseStart(java.lang.String)>($r3);
+
+        $r5 = new net.sourceforge.plantuml.core.UmlSource;
+
+        $r6 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        if r4 != $r6 goto label02;
+
+        $z7 = 1;
+
+        goto label03;
+
+     label02:
+        $z7 = 0;
+
+     label03:
+        specialinvoke $r5.<net.sourceforge.plantuml.core.UmlSource: void <init>(java.util.List,boolean,java.util.List)>(r0, $z7, r7);
+
+        r44 = interfaceinvoke r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label04:
+        $z8 = interfaceinvoke r44.<java.util.Iterator: boolean hasNext()>();
+
+        if $z8 == 0 goto label09;
+
+        $r23 = interfaceinvoke r44.<java.util.Iterator: java.lang.Object next()>();
+
+        r45 = (net.sourceforge.plantuml.StringLocated) $r23;
+
+        $r24 = virtualinvoke r45.<net.sourceforge.plantuml.StringLocated: java.lang.String getPreprocessorError()>();
+
+        if $r24 == null goto label08;
+
+        $z4 = <net.sourceforge.plantuml.PSystemBuilder: boolean $assertionsDisabled>;
+
+        if $z4 != 0 goto label05;
+
+        $r37 = new java.lang.AssertionError;
+
+        specialinvoke $r37.<java.lang.AssertionError: void <init>()>();
+
+        throw $r37;
+
+     label05:
+        $r25 = new java.lang.StringBuilder;
+
+        specialinvoke $r25.<java.lang.StringBuilder: void <init>()>();
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Preprocessor Error: ");
+
+        $r27 = virtualinvoke r45.<net.sourceforge.plantuml.StringLocated: java.lang.String getPreprocessorError()>();
+
+        $r28 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r27);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r29);
+
+        $r30 = new net.sourceforge.plantuml.ErrorUml;
+
+        $r31 = <net.sourceforge.plantuml.ErrorUmlType: net.sourceforge.plantuml.ErrorUmlType SYNTAX_ERROR>;
+
+        $r32 = virtualinvoke r45.<net.sourceforge.plantuml.StringLocated: java.lang.String getPreprocessorError()>();
+
+        $r33 = virtualinvoke r45.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        specialinvoke $r30.<net.sourceforge.plantuml.ErrorUml: void <init>(net.sourceforge.plantuml.ErrorUmlType,java.lang.String,int,net.sourceforge.plantuml.LineLocation)>($r31, $r32, 0, $r33);
+
+        $r34 = staticinvoke <java.util.Collections: java.util.List emptyList()>();
+
+        r47 = staticinvoke <net.sourceforge.plantuml.error.PSystemErrorUtils: net.sourceforge.plantuml.error.PSystemError buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List)>($r5, $r30, $r34, r0);
+
+     label06:
+        goto label07;
+
+     label07:
+        $r48 = new java.lang.StringBuilder;
+
+        specialinvoke $r48.<java.lang.StringBuilder: void <init>()>();
+
+        $r49 = virtualinvoke $r48.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Compilation duration ");
+
+        $l9 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l10 = $l9 - l0;
+
+        $r50 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l10);
+
+        $r51 = virtualinvoke $r50.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r51);
+
+        staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: void printCacheInfo()>();
+
+        return r47;
+
+     label08:
+        goto label04;
+
+     label09:
+        r52 = virtualinvoke $r5.<net.sourceforge.plantuml.core.UmlSource: net.sourceforge.plantuml.core.DiagramType getDiagramType()>();
+
+        $r9 = new java.util.ArrayList;
+
+        specialinvoke $r9.<java.util.ArrayList: void <init>()>();
+
+        $r10 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        r54 = interfaceinvoke $r10.<java.util.List: java.util.Iterator iterator()>();
+
+     label10:
+        $z9 = interfaceinvoke r54.<java.util.Iterator: boolean hasNext()>();
+
+        if $z9 == 0 goto label15;
+
+        $r13 = interfaceinvoke r54.<java.util.Iterator: java.lang.Object next()>();
+
+        r55 = (net.sourceforge.plantuml.api.PSystemFactory) $r13;
+
+        $r14 = interfaceinvoke r55.<net.sourceforge.plantuml.api.PSystemFactory: net.sourceforge.plantuml.core.DiagramType getDiagramType()>();
+
+        if r52 == $r14 goto label11;
+
+        goto label10;
+
+     label11:
+        r17 = interfaceinvoke r55.<net.sourceforge.plantuml.api.PSystemFactory: net.sourceforge.plantuml.core.Diagram createSystem(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ISkinSimple)>(r15, $r5, r16);
+
+        $z1 = specialinvoke r18.<net.sourceforge.plantuml.PSystemBuilder: boolean isOk(net.sourceforge.plantuml.core.Diagram)>(r17);
+
+        if $z1 == 0 goto label14;
+
+        r43 = r17;
+
+     label12:
+        if r17 == null goto label13;
+
+        $r21 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z3 = virtualinvoke $r21.<net.sourceforge.plantuml.OptionFlags: boolean isEnableStats()>();
+
+        if $z3 == 0 goto label13;
+
+        $l3 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l4 = $l3 - l0;
+
+        $r22 = virtualinvoke r17.<java.lang.Object: java.lang.Class getClass()>();
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtilsIncrement: void onceMoreParse(long,java.lang.Class)>($l4, $r22);
+
+     label13:
+        $r56 = new java.lang.StringBuilder;
+
+        specialinvoke $r56.<java.lang.StringBuilder: void <init>()>();
+
+        $r57 = virtualinvoke $r56.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Compilation duration ");
+
+        $l11 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l12 = $l11 - l0;
+
+        $r58 = virtualinvoke $r57.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l12);
+
+        $r59 = virtualinvoke $r58.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r59);
+
+        staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: void printCacheInfo()>();
+
+        return r17;
+
+     label14:
+        $r19 = (net.sourceforge.plantuml.error.PSystemError) r17;
+
+        interfaceinvoke $r9.<java.util.List: boolean add(java.lang.Object)>($r19);
+
+        goto label10;
+
+     label15:
+        r43 = staticinvoke <net.sourceforge.plantuml.error.PSystemErrorUtils: net.sourceforge.plantuml.error.PSystemError merge(java.util.Collection)>($r9);
+
+        r60 = r43;
+
+     label16:
+        if r43 == null goto label17;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z0 = virtualinvoke $r11.<net.sourceforge.plantuml.OptionFlags: boolean isEnableStats()>();
+
+        if $z0 == 0 goto label17;
+
+        $l1 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l2 = $l1 - l0;
+
+        $r12 = virtualinvoke r43.<java.lang.Object: java.lang.Class getClass()>();
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtilsIncrement: void onceMoreParse(long,java.lang.Class)>($l2, $r12);
+
+     label17:
+        $r61 = new java.lang.StringBuilder;
+
+        specialinvoke $r61.<java.lang.StringBuilder: void <init>()>();
+
+        $r62 = virtualinvoke $r61.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Compilation duration ");
+
+        $l13 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l14 = $l13 - l0;
+
+        $r63 = virtualinvoke $r62.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l14);
+
+        $r64 = virtualinvoke $r63.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r64);
+
+        staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: void printCacheInfo()>();
+
+        return r60;
+
+     label18:
+        $r39 := @caughtexception;
+
+     label19:
+        if r43 == null goto label20;
+
+        $r41 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        $z6 = virtualinvoke $r41.<net.sourceforge.plantuml.OptionFlags: boolean isEnableStats()>();
+
+        if $z6 == 0 goto label20;
+
+        $l7 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l8 = $l7 - l0;
+
+        $r42 = virtualinvoke r43.<java.lang.Object: java.lang.Class getClass()>();
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtilsIncrement: void onceMoreParse(long,java.lang.Class)>($l8, $r42);
+
+     label20:
+        $r65 = new java.lang.StringBuilder;
+
+        specialinvoke $r65.<java.lang.StringBuilder: void <init>()>();
+
+        $r66 = virtualinvoke $r65.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Compilation duration ");
+
+        $l15 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l16 = $l15 - l0;
+
+        $r67 = virtualinvoke $r66.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l16);
+
+        $r68 = virtualinvoke $r67.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r68);
+
+        staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: void printCacheInfo()>();
+
+        throw $r39;
+
+        catch java.lang.Throwable from label01 to label06 with label18;
+        catch java.lang.Throwable from label08 to label12 with label18;
+        catch java.lang.Throwable from label14 to label16 with label18;
+        catch java.lang.Throwable from label18 to label19 with label18;
+    }
+
+    private boolean isOk(net.sourceforge.plantuml.core.Diagram)
+    {
+        net.sourceforge.plantuml.core.Diagram r0;
+        boolean $z0;
+        net.sourceforge.plantuml.PSystemBuilder r1;
+
+        r1 := @this: net.sourceforge.plantuml.PSystemBuilder;
+
+        r0 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        if r0 == null goto label1;
+
+        $z0 = r0 instanceof net.sourceforge.plantuml.error.PSystemError;
+
+        if $z0 == 0 goto label2;
+
+     label1:
+        return 0;
+
+     label2:
+        return 1;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z57;
+        long $l0;
+        java.util.ArrayList $r1;
+        net.sourceforge.plantuml.eggs.PSystemWelcomeFactory $r2;
+        java.util.List $r3, $r5, $r7, $r9, $r11, $r13, $r15, $r17, $r20, $r22, $r24, $r26, $r28, $r30, $r32, $r34, $r36, $r38, $r41, $r44, $r47, $r50, $r53, $r56, $r58, $r60, $r63, $r66, $r71, $r74, $r76, $r78, $r80, $r84, $r88, $r91, $r93, $r95, $r97, $r100, $r103, $r105, $r107, $r109, $r113, $r116, $r119, $r121, $r123, $r125, $r127, $r129, $r131, $r133, $r135, $r137;
+        net.sourceforge.plantuml.eggs.PSystemColorsFactory $r4;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory $r6;
+        net.sourceforge.plantuml.classdiagram.ClassDiagramFactory $r8;
+        net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory $r10;
+        net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory $r12;
+        net.sourceforge.plantuml.statediagram.StateDiagramFactory $r14;
+        net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3 $r16;
+        net.sourceforge.plantuml.bpm.BpmDiagramFactory $r18;
+        net.sourceforge.plantuml.core.DiagramType $r19, $r40, $r43, $r46, $r49, $r52, $r55, $r62, $r65, $r70, $r73, $r99, $r102, $r115, $r118;
+        net.sourceforge.plantuml.version.PSystemLicenseFactory $r21;
+        net.sourceforge.plantuml.version.PSystemVersionFactory $r23;
+        net.sourceforge.plantuml.donors.PSystemDonorsFactory $r25;
+        net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory $r27;
+        net.sourceforge.plantuml.font.PSystemListFontsFactory $r29;
+        net.sourceforge.plantuml.emoji.PSystemListEmojiFactory $r31;
+        net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory $r33;
+        net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory $r35;
+        net.sourceforge.plantuml.sprite.PSystemListInternalSpritesFactory $r37;
+        net.sourceforge.plantuml.salt.PSystemSaltFactory2 $r39, $r42;
+        net.sourceforge.plantuml.directdot.PSystemDotFactory $r45, $r48;
+        net.sourceforge.plantuml.nwdiag.NwDiagramFactory $r51, $r54;
+        net.sourceforge.plantuml.mindmap.MindMapDiagramFactory $r57;
+        net.sourceforge.plantuml.wbs.WBSDiagramFactory $r59;
+        net.sourceforge.plantuml.ditaa.PSystemDitaaFactory $r61, $r64;
+        net.sourceforge.plantuml.version.License $r67, $r68, $r81, $r82, $r85, $r86, $r89, $r90;
+        net.sourceforge.plantuml.jcckit.PSystemJcckitFactory $r69, $r72;
+        net.sourceforge.plantuml.sudoku.PSystemSudokuFactory $r75;
+        net.sourceforge.plantuml.oregon.PSystemOregonFactory $r77;
+        net.sourceforge.plantuml.eggs.PSystemCharlieFactory $r79;
+        net.sourceforge.plantuml.acearth.PSystemXearthFactory $r83;
+        net.sourceforge.plantuml.eggs.PSystemPathFactory $r87;
+        net.sourceforge.plantuml.definition.PSystemDefinitionFactory $r92;
+        net.sourceforge.plantuml.sprite.ListSpriteDiagramFactory $r94;
+        net.sourceforge.plantuml.sprite.StdlibDiagramFactory $r96;
+        net.sourceforge.plantuml.math.PSystemMathFactory $r98;
+        net.sourceforge.plantuml.math.PSystemLatexFactory $r101;
+        net.sourceforge.plantuml.creole.legacy.PSystemCreoleFactory $r104;
+        net.sourceforge.plantuml.eggs.PSystemEggFactory $r106;
+        net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory $r108;
+        net.sourceforge.plantuml.eggs.PSystemRIPFactory $r110;
+        net.sourceforge.plantuml.security.SecurityProfile $r111, $r112;
+        net.sourceforge.plantuml.project.GanttDiagramFactory $r114, $r117;
+        net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory $r120;
+        net.sourceforge.plantuml.dedication.PSystemDedicationFactory $r122;
+        net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory $r124;
+        net.sourceforge.plantuml.help.HelpFactory $r126;
+        net.sourceforge.plantuml.wire.WireDiagramFactory $r128;
+        net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory $r130;
+        net.sourceforge.plantuml.gitlog.GitDiagramFactory $r132;
+        net.sourceforge.plantuml.board.BoardDiagramFactory $r134;
+        net.sourceforge.plantuml.yaml.YamlDiagramFactory $r136;
+        net.sourceforge.plantuml.hcl.HclDiagramFactory $r138;
+
+        $r0 = class "Lnet/sourceforge/plantuml/PSystemBuilder;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z57 = 1;
+
+        goto label2;
+
+     label1:
+        $z57 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.PSystemBuilder: boolean $assertionsDisabled> = $z57;
+
+        $l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        <net.sourceforge.plantuml.PSystemBuilder: long startTime> = $l0;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories> = $r1;
+
+        $r3 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r2 = new net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.eggs.PSystemWelcomeFactory: void <init>()>();
+
+        interfaceinvoke $r3.<java.util.List: boolean add(java.lang.Object)>($r2);
+
+        $r5 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r4 = new net.sourceforge.plantuml.eggs.PSystemColorsFactory;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.eggs.PSystemColorsFactory: void <init>()>();
+
+        interfaceinvoke $r5.<java.util.List: boolean add(java.lang.Object)>($r4);
+
+        $r7 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r6 = new net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r7.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        $r9 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r8 = new net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.classdiagram.ClassDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r9.<java.util.List: boolean add(java.lang.Object)>($r8);
+
+        $r11 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r10 = new net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r11.<java.util.List: boolean add(java.lang.Object)>($r10);
+
+        $r13 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r12 = new net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r13.<java.util.List: boolean add(java.lang.Object)>($r12);
+
+        $r15 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r14 = new net.sourceforge.plantuml.statediagram.StateDiagramFactory;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.statediagram.StateDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r15.<java.util.List: boolean add(java.lang.Object)>($r14);
+
+        $r17 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r16 = new net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3: void <init>()>();
+
+        interfaceinvoke $r17.<java.util.List: boolean add(java.lang.Object)>($r16);
+
+        $r20 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r18 = new net.sourceforge.plantuml.bpm.BpmDiagramFactory;
+
+        $r19 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType BPM>;
+
+        specialinvoke $r18.<net.sourceforge.plantuml.bpm.BpmDiagramFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r19);
+
+        interfaceinvoke $r20.<java.util.List: boolean add(java.lang.Object)>($r18);
+
+        $r22 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r21 = new net.sourceforge.plantuml.version.PSystemLicenseFactory;
+
+        specialinvoke $r21.<net.sourceforge.plantuml.version.PSystemLicenseFactory: void <init>()>();
+
+        interfaceinvoke $r22.<java.util.List: boolean add(java.lang.Object)>($r21);
+
+        $r24 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r23 = new net.sourceforge.plantuml.version.PSystemVersionFactory;
+
+        specialinvoke $r23.<net.sourceforge.plantuml.version.PSystemVersionFactory: void <init>()>();
+
+        interfaceinvoke $r24.<java.util.List: boolean add(java.lang.Object)>($r23);
+
+        $r26 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r25 = new net.sourceforge.plantuml.donors.PSystemDonorsFactory;
+
+        specialinvoke $r25.<net.sourceforge.plantuml.donors.PSystemDonorsFactory: void <init>()>();
+
+        interfaceinvoke $r26.<java.util.List: boolean add(java.lang.Object)>($r25);
+
+        $r28 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r27 = new net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory;
+
+        specialinvoke $r27.<net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory: void <init>()>();
+
+        interfaceinvoke $r28.<java.util.List: boolean add(java.lang.Object)>($r27);
+
+        $r30 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r29 = new net.sourceforge.plantuml.font.PSystemListFontsFactory;
+
+        specialinvoke $r29.<net.sourceforge.plantuml.font.PSystemListFontsFactory: void <init>()>();
+
+        interfaceinvoke $r30.<java.util.List: boolean add(java.lang.Object)>($r29);
+
+        $r32 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r31 = new net.sourceforge.plantuml.emoji.PSystemListEmojiFactory;
+
+        specialinvoke $r31.<net.sourceforge.plantuml.emoji.PSystemListEmojiFactory: void <init>()>();
+
+        interfaceinvoke $r32.<java.util.List: boolean add(java.lang.Object)>($r31);
+
+        $r34 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r33 = new net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
+
+        specialinvoke $r33.<net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory: void <init>()>();
+
+        interfaceinvoke $r34.<java.util.List: boolean add(java.lang.Object)>($r33);
+
+        $r36 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r35 = new net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
+
+        specialinvoke $r35.<net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory: void <init>()>();
+
+        interfaceinvoke $r36.<java.util.List: boolean add(java.lang.Object)>($r35);
+
+        $r38 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r37 = new net.sourceforge.plantuml.sprite.PSystemListInternalSpritesFactory;
+
+        specialinvoke $r37.<net.sourceforge.plantuml.sprite.PSystemListInternalSpritesFactory: void <init>()>();
+
+        interfaceinvoke $r38.<java.util.List: boolean add(java.lang.Object)>($r37);
+
+        $r41 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r39 = new net.sourceforge.plantuml.salt.PSystemSaltFactory2;
+
+        $r40 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType SALT>;
+
+        specialinvoke $r39.<net.sourceforge.plantuml.salt.PSystemSaltFactory2: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r40);
+
+        interfaceinvoke $r41.<java.util.List: boolean add(java.lang.Object)>($r39);
+
+        $r44 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r42 = new net.sourceforge.plantuml.salt.PSystemSaltFactory2;
+
+        $r43 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        specialinvoke $r42.<net.sourceforge.plantuml.salt.PSystemSaltFactory2: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r43);
+
+        interfaceinvoke $r44.<java.util.List: boolean add(java.lang.Object)>($r42);
+
+        $r47 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r45 = new net.sourceforge.plantuml.directdot.PSystemDotFactory;
+
+        $r46 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType DOT>;
+
+        specialinvoke $r45.<net.sourceforge.plantuml.directdot.PSystemDotFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r46);
+
+        interfaceinvoke $r47.<java.util.List: boolean add(java.lang.Object)>($r45);
+
+        $r50 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r48 = new net.sourceforge.plantuml.directdot.PSystemDotFactory;
+
+        $r49 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        specialinvoke $r48.<net.sourceforge.plantuml.directdot.PSystemDotFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r49);
+
+        interfaceinvoke $r50.<java.util.List: boolean add(java.lang.Object)>($r48);
+
+        $r53 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r51 = new net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
+
+        $r52 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType NW>;
+
+        specialinvoke $r51.<net.sourceforge.plantuml.nwdiag.NwDiagramFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r52);
+
+        interfaceinvoke $r53.<java.util.List: boolean add(java.lang.Object)>($r51);
+
+        $r56 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r54 = new net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
+
+        $r55 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        specialinvoke $r54.<net.sourceforge.plantuml.nwdiag.NwDiagramFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r55);
+
+        interfaceinvoke $r56.<java.util.List: boolean add(java.lang.Object)>($r54);
+
+        $r58 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r57 = new net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
+
+        specialinvoke $r57.<net.sourceforge.plantuml.mindmap.MindMapDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r58.<java.util.List: boolean add(java.lang.Object)>($r57);
+
+        $r60 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r59 = new net.sourceforge.plantuml.wbs.WBSDiagramFactory;
+
+        specialinvoke $r59.<net.sourceforge.plantuml.wbs.WBSDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r60.<java.util.List: boolean add(java.lang.Object)>($r59);
+
+        $r63 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r61 = new net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
+
+        $r62 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType DITAA>;
+
+        specialinvoke $r61.<net.sourceforge.plantuml.ditaa.PSystemDitaaFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r62);
+
+        interfaceinvoke $r63.<java.util.List: boolean add(java.lang.Object)>($r61);
+
+        $r66 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r64 = new net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
+
+        $r65 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        specialinvoke $r64.<net.sourceforge.plantuml.ditaa.PSystemDitaaFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r65);
+
+        interfaceinvoke $r66.<java.util.List: boolean add(java.lang.Object)>($r64);
+
+        $r67 = staticinvoke <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License getCurrent()>();
+
+        $r68 = <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License GPL>;
+
+        if $r67 == $r68 goto label3;
+
+        $r89 = staticinvoke <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License getCurrent()>();
+
+        $r90 = <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License GPLV2>;
+
+        if $r89 != $r90 goto label4;
+
+     label3:
+        $r71 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r69 = new net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
+
+        $r70 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType JCCKIT>;
+
+        specialinvoke $r69.<net.sourceforge.plantuml.jcckit.PSystemJcckitFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r70);
+
+        interfaceinvoke $r71.<java.util.List: boolean add(java.lang.Object)>($r69);
+
+        $r74 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r72 = new net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
+
+        $r73 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        specialinvoke $r72.<net.sourceforge.plantuml.jcckit.PSystemJcckitFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r73);
+
+        interfaceinvoke $r74.<java.util.List: boolean add(java.lang.Object)>($r72);
+
+        $r76 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r75 = new net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
+
+        specialinvoke $r75.<net.sourceforge.plantuml.sudoku.PSystemSudokuFactory: void <init>()>();
+
+        interfaceinvoke $r76.<java.util.List: boolean add(java.lang.Object)>($r75);
+
+     label4:
+        $r91 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r92 = new net.sourceforge.plantuml.definition.PSystemDefinitionFactory;
+
+        specialinvoke $r92.<net.sourceforge.plantuml.definition.PSystemDefinitionFactory: void <init>()>();
+
+        interfaceinvoke $r91.<java.util.List: boolean add(java.lang.Object)>($r92);
+
+        $r93 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r94 = new net.sourceforge.plantuml.sprite.ListSpriteDiagramFactory;
+
+        specialinvoke $r94.<net.sourceforge.plantuml.sprite.ListSpriteDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r93.<java.util.List: boolean add(java.lang.Object)>($r94);
+
+        $r95 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r96 = new net.sourceforge.plantuml.sprite.StdlibDiagramFactory;
+
+        specialinvoke $r96.<net.sourceforge.plantuml.sprite.StdlibDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r95.<java.util.List: boolean add(java.lang.Object)>($r96);
+
+        $r97 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r98 = new net.sourceforge.plantuml.math.PSystemMathFactory;
+
+        $r99 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType MATH>;
+
+        specialinvoke $r98.<net.sourceforge.plantuml.math.PSystemMathFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r99);
+
+        interfaceinvoke $r97.<java.util.List: boolean add(java.lang.Object)>($r98);
+
+        $r100 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r101 = new net.sourceforge.plantuml.math.PSystemLatexFactory;
+
+        $r102 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType LATEX>;
+
+        specialinvoke $r101.<net.sourceforge.plantuml.math.PSystemLatexFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r102);
+
+        interfaceinvoke $r100.<java.util.List: boolean add(java.lang.Object)>($r101);
+
+        $r103 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r104 = new net.sourceforge.plantuml.creole.legacy.PSystemCreoleFactory;
+
+        specialinvoke $r104.<net.sourceforge.plantuml.creole.legacy.PSystemCreoleFactory: void <init>()>();
+
+        interfaceinvoke $r103.<java.util.List: boolean add(java.lang.Object)>($r104);
+
+        $r105 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r106 = new net.sourceforge.plantuml.eggs.PSystemEggFactory;
+
+        specialinvoke $r106.<net.sourceforge.plantuml.eggs.PSystemEggFactory: void <init>()>();
+
+        interfaceinvoke $r105.<java.util.List: boolean add(java.lang.Object)>($r106);
+
+        $r107 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r108 = new net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory;
+
+        specialinvoke $r108.<net.sourceforge.plantuml.eggs.PSystemAppleTwoFactory: void <init>()>();
+
+        interfaceinvoke $r107.<java.util.List: boolean add(java.lang.Object)>($r108);
+
+        $r109 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r110 = new net.sourceforge.plantuml.eggs.PSystemRIPFactory;
+
+        specialinvoke $r110.<net.sourceforge.plantuml.eggs.PSystemRIPFactory: void <init>()>();
+
+        interfaceinvoke $r109.<java.util.List: boolean add(java.lang.Object)>($r110);
+
+        $r111 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $r112 = <net.sourceforge.plantuml.security.SecurityProfile: net.sourceforge.plantuml.security.SecurityProfile UNSECURE>;
+
+        if $r111 != $r112 goto label5;
+
+        $r88 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r87 = new net.sourceforge.plantuml.eggs.PSystemPathFactory;
+
+        specialinvoke $r87.<net.sourceforge.plantuml.eggs.PSystemPathFactory: void <init>()>();
+
+        interfaceinvoke $r88.<java.util.List: boolean add(java.lang.Object)>($r87);
+
+     label5:
+        $r78 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r77 = new net.sourceforge.plantuml.oregon.PSystemOregonFactory;
+
+        specialinvoke $r77.<net.sourceforge.plantuml.oregon.PSystemOregonFactory: void <init>()>();
+
+        interfaceinvoke $r78.<java.util.List: boolean add(java.lang.Object)>($r77);
+
+        $r80 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r79 = new net.sourceforge.plantuml.eggs.PSystemCharlieFactory;
+
+        specialinvoke $r79.<net.sourceforge.plantuml.eggs.PSystemCharlieFactory: void <init>()>();
+
+        interfaceinvoke $r80.<java.util.List: boolean add(java.lang.Object)>($r79);
+
+        $r81 = staticinvoke <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License getCurrent()>();
+
+        $r82 = <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License GPL>;
+
+        if $r81 == $r82 goto label6;
+
+        $r85 = staticinvoke <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License getCurrent()>();
+
+        $r86 = <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License GPLV2>;
+
+        if $r85 != $r86 goto label7;
+
+     label6:
+        $r84 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r83 = new net.sourceforge.plantuml.acearth.PSystemXearthFactory;
+
+        specialinvoke $r83.<net.sourceforge.plantuml.acearth.PSystemXearthFactory: void <init>()>();
+
+        interfaceinvoke $r84.<java.util.List: boolean add(java.lang.Object)>($r83);
+
+     label7:
+        $r113 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r114 = new net.sourceforge.plantuml.project.GanttDiagramFactory;
+
+        $r115 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType GANTT>;
+
+        specialinvoke $r114.<net.sourceforge.plantuml.project.GanttDiagramFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r115);
+
+        interfaceinvoke $r113.<java.util.List: boolean add(java.lang.Object)>($r114);
+
+        $r116 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r117 = new net.sourceforge.plantuml.project.GanttDiagramFactory;
+
+        $r118 = <net.sourceforge.plantuml.core.DiagramType: net.sourceforge.plantuml.core.DiagramType UML>;
+
+        specialinvoke $r117.<net.sourceforge.plantuml.project.GanttDiagramFactory: void <init>(net.sourceforge.plantuml.core.DiagramType)>($r118);
+
+        interfaceinvoke $r116.<java.util.List: boolean add(java.lang.Object)>($r117);
+
+        staticinvoke <net.sourceforge.plantuml.project.GanttDiagramFactory: void clearCache()>();
+
+        $r119 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r120 = new net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
+
+        specialinvoke $r120.<net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r119.<java.util.List: boolean add(java.lang.Object)>($r120);
+
+        $r121 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r122 = new net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
+
+        specialinvoke $r122.<net.sourceforge.plantuml.dedication.PSystemDedicationFactory: void <init>()>();
+
+        interfaceinvoke $r121.<java.util.List: boolean add(java.lang.Object)>($r122);
+
+        $r123 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r124 = new net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
+
+        specialinvoke $r124.<net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r123.<java.util.List: boolean add(java.lang.Object)>($r124);
+
+        $r125 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r126 = new net.sourceforge.plantuml.help.HelpFactory;
+
+        specialinvoke $r126.<net.sourceforge.plantuml.help.HelpFactory: void <init>()>();
+
+        interfaceinvoke $r125.<java.util.List: boolean add(java.lang.Object)>($r126);
+
+        $r127 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r128 = new net.sourceforge.plantuml.wire.WireDiagramFactory;
+
+        specialinvoke $r128.<net.sourceforge.plantuml.wire.WireDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r127.<java.util.List: boolean add(java.lang.Object)>($r128);
+
+        $r129 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r130 = new net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
+
+        specialinvoke $r130.<net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r129.<java.util.List: boolean add(java.lang.Object)>($r130);
+
+        $r131 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r132 = new net.sourceforge.plantuml.gitlog.GitDiagramFactory;
+
+        specialinvoke $r132.<net.sourceforge.plantuml.gitlog.GitDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r131.<java.util.List: boolean add(java.lang.Object)>($r132);
+
+        $r133 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r134 = new net.sourceforge.plantuml.board.BoardDiagramFactory;
+
+        specialinvoke $r134.<net.sourceforge.plantuml.board.BoardDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r133.<java.util.List: boolean add(java.lang.Object)>($r134);
+
+        $r135 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r136 = new net.sourceforge.plantuml.yaml.YamlDiagramFactory;
+
+        specialinvoke $r136.<net.sourceforge.plantuml.yaml.YamlDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r135.<java.util.List: boolean add(java.lang.Object)>($r136);
+
+        $r137 = <net.sourceforge.plantuml.PSystemBuilder: java.util.List factories>;
+
+        $r138 = new net.sourceforge.plantuml.hcl.HclDiagramFactory;
+
+        specialinvoke $r138.<net.sourceforge.plantuml.hcl.HclDiagramFactory: void <init>()>();
+
+        interfaceinvoke $r137.<java.util.List: boolean add(java.lang.Object)>($r138);
+
+        return;
+    }
+}

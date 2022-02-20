@@ -1,0 +1,1555 @@
+public class net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes extends net.sourceforge.plantuml.graphic.AbstractTextBlock implements net.sourceforge.plantuml.graphic.TextBlock, net.sourceforge.plantuml.style.Styleable
+{
+    private final net.sourceforge.plantuml.ISkinParam skinParam;
+    private final net.sourceforge.plantuml.Pragma pragma;
+    private final java.util.List swimlanesRaw;
+    private final java.util.List swimlanesSpecial;
+    private final java.util.List dividers;
+    private net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane currentSwimlane;
+    private final net.sourceforge.plantuml.activitydiagram3.Instruction root;
+    private net.sourceforge.plantuml.activitydiagram3.Instruction currentInstruction;
+    private net.sourceforge.plantuml.activitydiagram3.LinkRendering nextLinkRenderer;
+    private net.sourceforge.plantuml.style.Style style;
+    private net.sourceforge.plantuml.ugraphic.MinMax cachedMinMax;
+    static final boolean $assertionsDisabled;
+
+    private java.util.List swimlanes()
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        java.util.List $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesRaw>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    private java.util.List swimlanesSpecial()
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        java.util.List $r1, $r2, $r3, $r4, $r5, $r9;
+        int $i0;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r6;
+        net.sourceforge.plantuml.ugraphic.MinMax $r8;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $r5 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial>;
+
+        $r4 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesRaw>;
+
+        interfaceinvoke $r5.<java.util.List: boolean addAll(java.util.Collection)>($r4);
+
+        $r6 = new net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: void <init>(java.lang.String)>("");
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.ugraphic.MinMax getEmpty(boolean)>(1);
+
+        virtualinvoke $r6.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: void setMinMax(net.sourceforge.plantuml.ugraphic.MinMax)>($r8);
+
+        $r9 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial>;
+
+        interfaceinvoke $r9.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial>;
+
+        $r3 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r2);
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.style.StyleSignature getStyleSignature()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r6;
+
+        r6 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName activityDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName swimlane>;
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        return $r5;
+    }
+
+    public void <init>(net.sourceforge.plantuml.ISkinParam, net.sourceforge.plantuml.Pragma)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        java.util.ArrayList $r1, $r2, $r3;
+        net.sourceforge.plantuml.activitydiagram3.InstructionList $r4;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r5;
+        net.sourceforge.plantuml.activitydiagram3.LinkRendering $r6;
+        net.sourceforge.plantuml.ISkinParam r7;
+        net.sourceforge.plantuml.Pragma r8;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r7 := @parameter0: net.sourceforge.plantuml.ISkinParam;
+
+        r8 := @parameter1: net.sourceforge.plantuml.Pragma;
+
+        specialinvoke r0.<net.sourceforge.plantuml.graphic.AbstractTextBlock: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesRaw> = $r1;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial> = $r2;
+
+        $r3 = new java.util.ArrayList;
+
+        specialinvoke $r3.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List dividers> = $r3;
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane currentSwimlane> = null;
+
+        $r4 = new net.sourceforge.plantuml.activitydiagram3.InstructionList;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.activitydiagram3.InstructionList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.Instruction root> = $r4;
+
+        $r5 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.Instruction root>;
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.Instruction currentInstruction> = $r5;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.activitydiagram3.LinkRendering: net.sourceforge.plantuml.activitydiagram3.LinkRendering none()>();
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.LinkRendering nextLinkRenderer> = $r6;
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam> = r7;
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.Pragma pragma> = r8;
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.style.Style getStyle()
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.style.Style $r1, $r2, $r6;
+        net.sourceforge.plantuml.style.StyleSignature $r3;
+        net.sourceforge.plantuml.ISkinParam $r4;
+        net.sourceforge.plantuml.style.StyleBuilder $r5;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.style.Style style>;
+
+        if $r1 != null goto label1;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r4 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r5 = interfaceinvoke $r4.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r6 = virtualinvoke $r3.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r5);
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.style.Style style> = $r6;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.style.Style style>;
+
+        return $r2;
+    }
+
+    private net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory getFtileFactory(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory $r0;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r1;
+        net.sourceforge.plantuml.graphic.StringBounder r2;
+        net.sourceforge.plantuml.ISkinParam $r3;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddUrl $r4;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAssembly $r5;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorIf $r6;
+        net.sourceforge.plantuml.Pragma $r7;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorSwitch $r8;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorWhile $r9;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorRepeat $r10;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateParallel $r11;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddNote $r12;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateGroup $r13;
+
+        r1 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r0 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory;
+
+        $r3 = r1.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.graphic.StringBounder)>($r3, r2);
+
+        $r4 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddUrl;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddUrl: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r0);
+
+        $r5 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAssembly;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAssembly: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r4);
+
+        $r6 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorIf;
+
+        $r7 = r1.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.Pragma pragma>;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorIf: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory,net.sourceforge.plantuml.Pragma)>($r5, $r7);
+
+        $r8 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorSwitch;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorSwitch: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r6);
+
+        $r9 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorWhile;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorWhile: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r8);
+
+        $r10 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorRepeat;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorRepeat: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r9);
+
+        $r11 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateParallel;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateParallel: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r10);
+
+        $r12 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddNote;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorAddNote: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r11);
+
+        $r13 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateGroup;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileFactoryDelegatorCreateGroup: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r12);
+
+        return $r13;
+    }
+
+    public void swimlane(java.lang.String, net.sourceforge.plantuml.ugraphic.color.HColor, net.sourceforge.plantuml.cucadiagram.Display)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r2, $r5, $r7;
+        net.sourceforge.plantuml.ugraphic.color.HColor r3;
+        net.sourceforge.plantuml.cucadiagram.Display r4;
+        boolean $z0;
+        net.sourceforge.plantuml.graphic.color.ColorType $r6;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r1 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        r4 := @parameter2: net.sourceforge.plantuml.cucadiagram.Display;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane getOrCreate(java.lang.String)>(r1);
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane currentSwimlane> = $r2;
+
+        if r3 == null goto label1;
+
+        $r7 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane currentSwimlane>;
+
+        $r6 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: void setSpecificColorTOBEREMOVED(net.sourceforge.plantuml.graphic.color.ColorType,net.sourceforge.plantuml.ugraphic.color.HColor)>($r6, r3);
+
+     label1:
+        $z0 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: boolean isNull(net.sourceforge.plantuml.cucadiagram.Display)>(r4);
+
+        if $z0 != 0 goto label2;
+
+        $r5 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane currentSwimlane>;
+
+        virtualinvoke $r5.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: void setDisplay(net.sourceforge.plantuml.cucadiagram.Display)>(r4);
+
+     label2:
+        return;
+    }
+
+    private net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane getOrCreate(java.lang.String)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        java.util.List $r1, $r4;
+        boolean $z0, $z2;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r2, r6;
+        java.lang.String r3, $r7;
+        java.lang.Object $r5;
+        java.util.Iterator r8;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        r8 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r8.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r5 = interfaceinvoke r8.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r5;
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: java.lang.String getName()>();
+
+        $z2 = virtualinvoke $r7.<java.lang.String: boolean equals(java.lang.Object)>(r3);
+
+        if $z2 == 0 goto label2;
+
+        return r6;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r2 = new net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: void <init>(java.lang.String)>(r3);
+
+        $r4 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesRaw>;
+
+        interfaceinvoke $r4.<java.util.List: boolean add(java.lang.Object)>($r2);
+
+        return $r2;
+    }
+
+    public final void computeSize(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.ugraphic.comp.SlotFinder $r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.ugraphic.comp.CompressionMode $r2;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r4;
+        java.util.List $r5;
+        int $i0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r6;
+        net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory $r7;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Ftile r8;
+
+        r4 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.comp.SlotFinder;
+
+        $r2 = <net.sourceforge.plantuml.ugraphic.comp.CompressionMode: net.sourceforge.plantuml.ugraphic.comp.CompressionMode ON_Y>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.comp.SlotFinder: void <init>(net.sourceforge.plantuml.ugraphic.comp.CompressionMode,net.sourceforge.plantuml.graphic.StringBounder)>($r2, r1);
+
+        $r5 = specialinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        $i0 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        if $i0 <= 1 goto label1;
+
+        $r6 = r4.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.Instruction root>;
+
+        $r7 = specialinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory getFtileFactory(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        r8 = interfaceinvoke $r6.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.ftile.Ftile createFtile(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r7);
+
+        specialinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: void computeSizeInternal(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.graphic.TextBlock)>($r0, r8);
+
+     label1:
+        return;
+    }
+
+    public final void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r1;
+        net.sourceforge.plantuml.graphic.StringBounder $r2;
+        net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory $r3;
+        net.sourceforge.plantuml.svek.UGraphicForSnake $r4;
+        java.util.List $r5;
+        int $i0;
+        net.sourceforge.plantuml.activitydiagram3.ftile.TextBlockInterceptorUDrawable $r6;
+        net.sourceforge.plantuml.ugraphic.UGraphic r7;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Ftile r8;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r7 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.Instruction root>;
+
+        $r2 = interfaceinvoke r7.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory getFtileFactory(net.sourceforge.plantuml.graphic.StringBounder)>($r2);
+
+        r8 = interfaceinvoke $r1.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.ftile.Ftile createFtile(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory)>($r3);
+
+        $r4 = new net.sourceforge.plantuml.svek.UGraphicForSnake;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.svek.UGraphicForSnake: void <init>(net.sourceforge.plantuml.ugraphic.UGraphic)>(r7);
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        $i0 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        if $i0 <= 1 goto label1;
+
+        specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: void drawWhenSwimlanes(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.graphic.TextBlock)>($r4, r8);
+
+        goto label2;
+
+     label1:
+        $r6 = new net.sourceforge.plantuml.activitydiagram3.ftile.TextBlockInterceptorUDrawable;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.activitydiagram3.ftile.TextBlockInterceptorUDrawable: void <init>(net.sourceforge.plantuml.graphic.TextBlock)>(r8);
+
+        interfaceinvoke $r6.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r4);
+
+        interfaceinvoke $r4.<net.sourceforge.plantuml.ugraphic.UGraphic: void flushUg()>();
+
+     label2:
+        return;
+    }
+
+    private void drawGtile(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r1;
+        net.sourceforge.plantuml.ISkinParam $r2;
+        net.sourceforge.plantuml.graphic.StringBounder $r3;
+        net.sourceforge.plantuml.svek.UGraphicForSnake $r4;
+        java.util.List $r5;
+        int $i0;
+        net.sourceforge.plantuml.activitydiagram3.ftile.TextBlockInterceptorUDrawable $r6;
+        net.sourceforge.plantuml.ugraphic.UGraphic r7;
+        net.sourceforge.plantuml.activitydiagram3.gtile.Gtile r8;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r7 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.Instruction root>;
+
+        $r2 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r3 = interfaceinvoke r7.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        r8 = interfaceinvoke $r1.<net.sourceforge.plantuml.activitydiagram3.Instruction: net.sourceforge.plantuml.activitydiagram3.gtile.Gtile createGtile(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.graphic.StringBounder)>($r2, $r3);
+
+        $r4 = new net.sourceforge.plantuml.svek.UGraphicForSnake;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.svek.UGraphicForSnake: void <init>(net.sourceforge.plantuml.ugraphic.UGraphic)>(r7);
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        $i0 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        if $i0 <= 1 goto label1;
+
+        specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: void drawWhenSwimlanes(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.graphic.TextBlock)>($r4, r8);
+
+        goto label2;
+
+     label1:
+        $r6 = new net.sourceforge.plantuml.activitydiagram3.ftile.TextBlockInterceptorUDrawable;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.activitydiagram3.ftile.TextBlockInterceptorUDrawable: void <init>(net.sourceforge.plantuml.graphic.TextBlock)>(r8);
+
+        interfaceinvoke $r6.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r4);
+
+        interfaceinvoke $r4.<net.sourceforge.plantuml.ugraphic.UGraphic: void flushUg()>();
+
+     label2:
+        return;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock getTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)
+    {
+        net.sourceforge.plantuml.graphic.HorizontalAlignment r0;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r1, r19;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r2;
+        net.sourceforge.plantuml.FontParam $r3;
+        net.sourceforge.plantuml.ISkinParam $r4, $r7, $r15, $r17;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r5;
+        net.sourceforge.plantuml.cucadiagram.Display $r6;
+        net.sourceforge.plantuml.graphic.TextBlock $r8;
+        net.sourceforge.plantuml.LineBreakStrategy $r9, r20;
+        java.lang.StringBuilder $r10, $r11, $r12;
+        double $d0;
+        int $i0;
+        java.lang.String $r13;
+        net.sourceforge.plantuml.style.Style $r14;
+        net.sourceforge.plantuml.api.ThemeStyle $r16;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r18;
+
+        r2 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r5 := @parameter0: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+
+        r0 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        $r1 = new net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r4 = r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r3 = <net.sourceforge.plantuml.FontParam: net.sourceforge.plantuml.FontParam SWIMLANE_TITLE>;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.graphic.FontConfiguration: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.FontParam,net.sourceforge.plantuml.cucadiagram.Stereotype)>($r4, $r3, null);
+
+        r19 = $r1;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 == 0 goto label1;
+
+        $r14 = virtualinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.style.Style getStyle()>();
+
+        $r15 = r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r16 = interfaceinvoke $r15.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r17 = r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r18 = interfaceinvoke $r17.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        r19 = virtualinvoke $r14.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.graphic.FontConfiguration getFontConfiguration(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r16, $r18);
+
+     label1:
+        r20 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.LineBreakStrategy getWrap()>();
+
+        $z1 = virtualinvoke r20.<net.sourceforge.plantuml.LineBreakStrategy: boolean isAuto()>();
+
+        if $z1 == 0 goto label2;
+
+        $r9 = new net.sourceforge.plantuml.LineBreakStrategy;
+
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>()>();
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d0 = virtualinvoke r5.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: double getActualWidth()>();
+
+        $i0 = (int) $d0;
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r9.<net.sourceforge.plantuml.LineBreakStrategy: void <init>(java.lang.String)>($r13);
+
+        r20 = $r9;
+
+     label2:
+        $r6 = virtualinvoke r5.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.cucadiagram.Display getDisplay()>();
+
+        $r7 = r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r8 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create9(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple,net.sourceforge.plantuml.LineBreakStrategy)>(r19, r0, $r7, r20);
+
+        return $r8;
+    }
+
+    private net.sourceforge.plantuml.LineBreakStrategy getWrap()
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.ISkinParam $r1, $r3;
+        net.sourceforge.plantuml.LineBreakStrategy $r2, r4;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        r4 = interfaceinvoke $r1.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.LineBreakStrategy swimlaneWrapTitleWidth()>();
+
+        $r2 = <net.sourceforge.plantuml.LineBreakStrategy: net.sourceforge.plantuml.LineBreakStrategy NONE>;
+
+        if r4 != $r2 goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        r4 = interfaceinvoke $r3.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.LineBreakStrategy wrapWidth()>();
+
+     label1:
+        return r4;
+    }
+
+    private net.sourceforge.plantuml.ugraphic.UTranslate getTitleHeightTranslate(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        double d0, $d1;
+        byte $b0;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r2;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        d0 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getTitlesHeight(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $b0 = d0 cmpl 0.0;
+
+        if $b0 <= 0 goto label1;
+
+        $d1 = d0 + 5.0;
+
+        goto label2;
+
+     label1:
+        $d1 = 0.0;
+
+     label2:
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d1);
+
+        return $r2;
+    }
+
+    private double getTitlesHeight(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r4;
+        net.sourceforge.plantuml.graphic.TextBlock r5;
+        net.sourceforge.plantuml.graphic.StringBounder r6;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r7;
+        double $d0, d1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r6 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        d1 = 0.0;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r3;
+
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.graphic.TextBlock getTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r4);
+
+        $r7 = interfaceinvoke r5.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r6);
+
+        $d0 = virtualinvoke $r7.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d1 = staticinvoke <java.lang.Math: double max(double,double)>(d1, $d0);
+
+        goto label1;
+
+     label2:
+        return d1;
+    }
+
+    private void drawWhenSwimlanes(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.graphic.TextBlock)
+    {
+        net.sourceforge.plantuml.ugraphic.UGraphic r0, $r9, $r23, $r25, $r28, $r32, $r33, r35;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r2;
+        net.sourceforge.plantuml.ugraphic.UTranslate r3, $r8, $r15, $r22, $r24, $r27, $r34;
+        net.sourceforge.plantuml.graphic.TextBlock r4;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r5, $r26;
+        boolean $z0, $z1;
+        java.util.List $r6, $r12, $r21, $r29, $r39, $r40;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes$Cross $r7;
+        java.lang.Object $r10, $r13, $r30;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r11;
+        net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider r14, r43;
+        double $d0, $d1, d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, d10, $d11, $d12, d13, d14;
+        net.sourceforge.plantuml.ugraphic.MinMax $r16;
+        net.sourceforge.plantuml.graphic.color.Colors $r17;
+        net.sourceforge.plantuml.graphic.color.ColorType $r18;
+        net.sourceforge.plantuml.ugraphic.color.HColor r19;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane $r20;
+        int $i0, $i1, $i2, $i3, i4;
+        net.sourceforge.plantuml.ugraphic.UBackground $r31;
+        net.sourceforge.plantuml.ugraphic.URectangle $r36, $r37, $r38;
+        java.lang.AssertionError $r41;
+        java.util.Iterator r42;
+
+        r2 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r4 := @parameter1: net.sourceforge.plantuml.graphic.TextBlock;
+
+        r1 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        r3 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ugraphic.UTranslate getTitleHeightTranslate(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: void drawTitlesBackground(net.sourceforge.plantuml.ugraphic.UGraphic)>(r0);
+
+        r5 = interfaceinvoke r4.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        i4 = 0;
+
+        $z0 = <net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        $r39 = r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List dividers>;
+
+        $i1 = interfaceinvoke $r39.<java.util.List: int size()>();
+
+        $r40 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        $i2 = interfaceinvoke $r40.<java.util.List: int size()>();
+
+        $i3 = $i2 + 1;
+
+        if $i1 == $i3 goto label1;
+
+        $r41 = new java.lang.AssertionError;
+
+        specialinvoke $r41.<java.lang.AssertionError: void <init>()>();
+
+        throw $r41;
+
+     label1:
+        $r6 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        r42 = interfaceinvoke $r6.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $z1 = interfaceinvoke r42.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r10 = interfaceinvoke r42.<java.util.Iterator: java.lang.Object next()>();
+
+        r11 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r10;
+
+        $r12 = r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List dividers>;
+
+        $r13 = interfaceinvoke $r12.<java.util.List: java.lang.Object get(int)>(i4);
+
+        r14 = (net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider) $r13;
+
+        $r15 = virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.ugraphic.UTranslate getTranslate()>();
+
+        $d0 = virtualinvoke $r15.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDx()>();
+
+        $r16 = virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.ugraphic.MinMax getMinMax()>();
+
+        $d1 = virtualinvoke $r16.<net.sourceforge.plantuml.ugraphic.MinMax: double getMinX()>();
+
+        d2 = $d0 + $d1;
+
+        $r17 = virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.graphic.color.Colors getColors()>();
+
+        $r18 = <net.sourceforge.plantuml.graphic.color.ColorType: net.sourceforge.plantuml.graphic.color.ColorType BACK>;
+
+        r19 = virtualinvoke $r17.<net.sourceforge.plantuml.graphic.color.Colors: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.graphic.color.ColorType)>($r18);
+
+        if r19 == null goto label3;
+
+        $r29 = r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List dividers>;
+
+        $i0 = i4 + 1;
+
+        $r30 = interfaceinvoke $r29.<java.util.List: java.lang.Object get(int)>($i0);
+
+        r43 = (net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider) $r30;
+
+        $r31 = interfaceinvoke r19.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r32 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r31);
+
+        $r33 = interfaceinvoke $r32.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r19);
+
+        $d4 = virtualinvoke r14.<net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider: double getX2()>();
+
+        $d5 = d2 - $d4;
+
+        $r34 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d5);
+
+        r35 = interfaceinvoke $r33.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r34);
+
+        $d6 = virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: double getActualWidth()>();
+
+        $d7 = virtualinvoke r14.<net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider: double getX2()>();
+
+        $d8 = $d6 + $d7;
+
+        $d9 = virtualinvoke r43.<net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider: double getX1()>();
+
+        d10 = $d8 + $d9;
+
+        $d11 = virtualinvoke r5.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d12 = virtualinvoke r3.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDy()>();
+
+        d13 = $d11 + $d12;
+
+        $r36 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        specialinvoke $r36.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>(d10, d13);
+
+        $r37 = virtualinvoke $r36.<net.sourceforge.plantuml.ugraphic.URectangle: net.sourceforge.plantuml.ugraphic.URectangle ignoreForCompressionOnX()>();
+
+        $r38 = virtualinvoke $r37.<net.sourceforge.plantuml.ugraphic.URectangle: net.sourceforge.plantuml.ugraphic.URectangle ignoreForCompressionOnY()>();
+
+        interfaceinvoke r35.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r38);
+
+     label3:
+        $r20 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
+
+        $r21 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        specialinvoke $r20.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane: void <init>(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List)>(r0, r11, $r21);
+
+        $r22 = virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.ugraphic.UTranslate getTranslate()>();
+
+        $r23 = virtualinvoke $r20.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r22);
+
+        $r24 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ugraphic.UTranslate getTitleHeightTranslate(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $r25 = interfaceinvoke $r23.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r24);
+
+        interfaceinvoke r4.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r25);
+
+        $r26 = virtualinvoke r14.<net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        d14 = virtualinvoke $r26.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d3 = d2 - d14;
+
+        $r27 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>($d3);
+
+        $r28 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r27);
+
+        virtualinvoke r14.<net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r28);
+
+        i4 = i4 + 1;
+
+        goto label2;
+
+     label4:
+        $r7 = new net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes$Cross;
+
+        $r8 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ugraphic.UTranslate getTitleHeightTranslate(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $r9 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r8);
+
+        specialinvoke $r7.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes$Cross: void <init>(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes,net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes$1)>(r2, $r9, null);
+
+        interfaceinvoke r4.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r7);
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes$Cross: void flushUg()>();
+
+        specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: void drawTitles(net.sourceforge.plantuml.ugraphic.UGraphic)>(r0);
+
+        return;
+    }
+
+    private void drawTitlesBackground(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.ColorParam $r1;
+        net.sourceforge.plantuml.ISkinParam $r2, $r21, $r23;
+        boolean $z0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r3, $r14, $r16, $r17;
+        net.sourceforge.plantuml.graphic.StringBounder $r4;
+        double d0, $d1, $d2, d3;
+        java.util.List $r5, $r6;
+        int $i0, $i1;
+        java.lang.Object $r7;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r8;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r9, $r13;
+        net.sourceforge.plantuml.ugraphic.URectangle $r10, $r11, r12;
+        net.sourceforge.plantuml.ugraphic.UBackground $r15;
+        net.sourceforge.plantuml.style.Style $r18;
+        net.sourceforge.plantuml.style.PName $r19;
+        net.sourceforge.plantuml.style.Value $r20;
+        net.sourceforge.plantuml.api.ThemeStyle $r22;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r24;
+        net.sourceforge.plantuml.ugraphic.color.HColor r25;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r3 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r2 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r1 = <net.sourceforge.plantuml.ColorParam: net.sourceforge.plantuml.ColorParam swimlaneTitleBackground>;
+
+        r25 = interfaceinvoke $r2.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColor getHtmlColor(net.sourceforge.plantuml.ColorParam,net.sourceforge.plantuml.cucadiagram.Stereotype,boolean)>($r1, null, 0);
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.UseStyle: boolean useBetaStyle()>();
+
+        if $z0 == 0 goto label1;
+
+        $r18 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.style.Style getStyle()>();
+
+        $r19 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName BackGroundColor>;
+
+        $r20 = virtualinvoke $r18.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r19);
+
+        $r21 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r22 = interfaceinvoke $r21.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r23 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r24 = interfaceinvoke $r23.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        r25 = interfaceinvoke $r20.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.ugraphic.color.HColor asColor(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r22, $r24);
+
+     label1:
+        if r25 == null goto label2;
+
+        $r4 = interfaceinvoke r3.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        d0 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getTitlesHeight(net.sourceforge.plantuml.graphic.StringBounder)>($r4);
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        $i0 = interfaceinvoke $r6.<java.util.List: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r7 = interfaceinvoke $r5.<java.util.List: java.lang.Object get(int)>($i1);
+
+        $r8 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r7;
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.ugraphic.UTranslate getTranslate()>();
+
+        $d1 = virtualinvoke $r9.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDx()>();
+
+        $d2 = $d1 - 10.0;
+
+        d3 = $d2 - 1.0;
+
+        $r10 = new net.sourceforge.plantuml.ugraphic.URectangle;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.ugraphic.URectangle: void <init>(double,double)>(d3, d0);
+
+        $r11 = virtualinvoke $r10.<net.sourceforge.plantuml.ugraphic.URectangle: net.sourceforge.plantuml.ugraphic.URectangle ignoreForCompressionOnX()>();
+
+        r12 = virtualinvoke $r11.<net.sourceforge.plantuml.ugraphic.URectangle: net.sourceforge.plantuml.ugraphic.URectangle ignoreForCompressionOnY()>();
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(5.0);
+
+        $r14 = interfaceinvoke r3.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r13);
+
+        $r15 = interfaceinvoke r25.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r16 = interfaceinvoke $r14.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r15);
+
+        $r17 = interfaceinvoke $r16.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>(r25);
+
+        interfaceinvoke $r17.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r12);
+
+     label2:
+        return;
+    }
+
+    private void drawTitles(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r4;
+        net.sourceforge.plantuml.graphic.TextBlock r5;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r6, $r11;
+        double $d0, $d1, d2, $d3;
+        net.sourceforge.plantuml.ugraphic.MinMax $r7;
+        net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText $r8;
+        net.sourceforge.plantuml.ugraphic.UGraphic r10, $r12;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r10 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r3;
+
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.graphic.TextBlock getTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r4);
+
+        $r6 = virtualinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.ugraphic.UTranslate getTranslate()>();
+
+        $d0 = virtualinvoke $r6.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDx()>();
+
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.ugraphic.MinMax getMinMax()>();
+
+        $d1 = virtualinvoke $r7.<net.sourceforge.plantuml.ugraphic.MinMax: double getMinX()>();
+
+        d2 = $d0 + $d1;
+
+        $r8 = new net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
+
+        $d3 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getWidthWithoutTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r4);
+
+        specialinvoke $r8.<net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText: void <init>(net.sourceforge.plantuml.graphic.TextBlock,double)>(r5, $d3);
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d2);
+
+        $r12 = interfaceinvoke r10.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r11);
+
+        interfaceinvoke $r12.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r8);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private void computeDrawingWidths(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.graphic.TextBlock)
+    {
+        net.sourceforge.plantuml.ugraphic.UGraphic r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r2;
+        java.util.List $r3, $r11;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r6;
+        net.sourceforge.plantuml.ugraphic.LimitFinder $r7;
+        net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane $r9;
+        net.sourceforge.plantuml.svek.UGraphicForSnake $r10;
+        net.sourceforge.plantuml.graphic.TextBlock r13;
+        net.sourceforge.plantuml.ugraphic.MinMax r14;
+
+        r2 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r13 := @parameter1: net.sourceforge.plantuml.graphic.TextBlock;
+
+        r1 = interfaceinvoke r0.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r3 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r5;
+
+        $r7 = new net.sourceforge.plantuml.ugraphic.LimitFinder;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.ugraphic.LimitFinder: void <init>(net.sourceforge.plantuml.graphic.StringBounder,boolean)>(r1, 0);
+
+        $r9 = new net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane;
+
+        $r10 = new net.sourceforge.plantuml.svek.UGraphicForSnake;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.svek.UGraphicForSnake: void <init>(net.sourceforge.plantuml.ugraphic.UGraphic)>($r7);
+
+        $r11 = specialinvoke r2.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        specialinvoke $r9.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane: void <init>(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List)>($r10, r6, $r11);
+
+        interfaceinvoke r13.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r9);
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane: void flushUg()>();
+
+        r14 = virtualinvoke $r7.<net.sourceforge.plantuml.ugraphic.LimitFinder: net.sourceforge.plantuml.ugraphic.MinMax getMinMax()>();
+
+        virtualinvoke r6.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: void setMinMax(net.sourceforge.plantuml.ugraphic.MinMax)>(r14);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private void computeSizeInternal(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.graphic.TextBlock)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+        net.sourceforge.plantuml.graphic.TextBlock r2;
+        net.sourceforge.plantuml.ISkinParam $r3, $r13;
+        int $i0, $i2, $i3, $i4, $i5, $i6, i7, $i8, i9;
+        byte $b1;
+        java.util.List $r4, $r5, $r6, $r7, $r9, $r15, $r18, $r20, $r25;
+        boolean $z0, $z2;
+        java.lang.AssertionError $r8;
+        java.lang.Object $r10, $r19, $r21;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r11, r23, r26;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, d13, $d14, $d15, $d16, $d17, $d18, d19, d20, d21;
+        net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider $r12;
+        net.sourceforge.plantuml.ugraphic.MinMax $r16;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r17, r27;
+        java.util.Iterator r22;
+        net.sourceforge.plantuml.graphic.StringBounder r24;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r28;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r2 := @parameter1: net.sourceforge.plantuml.graphic.TextBlock;
+
+        specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: void computeDrawingWidths(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.graphic.TextBlock)>(r1, r2);
+
+        $r3 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $i0 = interfaceinvoke $r3.<net.sourceforge.plantuml.ISkinParam: int swimlaneWidth()>();
+
+        d19 = (double) $i0;
+
+        $b1 = d19 cmpl -1.0;
+
+        if $b1 != 0 goto label2;
+
+        $r20 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        r22 = interfaceinvoke $r20.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z2 = interfaceinvoke r22.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label2;
+
+        $r21 = interfaceinvoke r22.<java.util.Iterator: java.lang.Object next()>();
+
+        r23 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r21;
+
+        $d18 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getWidthWithoutTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r23);
+
+        d19 = staticinvoke <java.lang.Math: double max(double,double)>(d19, $d18);
+
+        goto label1;
+
+     label2:
+        r24 = interfaceinvoke r1.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        i7 = 0;
+
+     label3:
+        $r25 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        $i8 = interfaceinvoke $r25.<java.util.List: int size()>();
+
+        if i7 >= $i8 goto label4;
+
+        $r18 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        $r19 = interfaceinvoke $r18.<java.util.List: java.lang.Object get(int)>(i7);
+
+        r26 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r19;
+
+        $d17 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getWidthWithoutTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r26);
+
+        d20 = staticinvoke <net.sourceforge.plantuml.utils.MathUtils: double max(double,double)>(d19, $d17);
+
+        virtualinvoke r26.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: void setWidth(double)>(d20);
+
+        i7 = i7 + 1;
+
+        goto label3;
+
+     label4:
+        r27 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ugraphic.UTranslate getTitleHeightTranslate(net.sourceforge.plantuml.graphic.StringBounder)>(r24);
+
+        r28 = interfaceinvoke r2.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r24);
+
+        $r4 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List dividers>;
+
+        interfaceinvoke $r4.<java.util.List: void clear()>();
+
+        d21 = 0.0;
+
+        i9 = 0;
+
+     label5:
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        $i2 = interfaceinvoke $r5.<java.util.List: int size()>();
+
+        if i9 >= $i2 goto label6;
+
+        $r9 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        $r10 = interfaceinvoke $r9.<java.util.List: java.lang.Object get(int)>(i9);
+
+        r11 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r10;
+
+        d0 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getHalfMissingSpace(net.sourceforge.plantuml.graphic.StringBounder,int,double)>(r24, i9, d19);
+
+        $i6 = i9 + 1;
+
+        d1 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getHalfMissingSpace(net.sourceforge.plantuml.graphic.StringBounder,int,double)>(r24, $i6, d19);
+
+        $r12 = new net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider;
+
+        $r13 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $d2 = virtualinvoke r28.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d3 = virtualinvoke r27.<net.sourceforge.plantuml.ugraphic.UTranslate: double getDy()>();
+
+        $d4 = $d2 + $d3;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider: void <init>(net.sourceforge.plantuml.ISkinParam,double,double,double)>($r13, d0, d1, $d4);
+
+        $r15 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List dividers>;
+
+        interfaceinvoke $r15.<java.util.List: boolean add(java.lang.Object)>($r12);
+
+        $d5 = virtualinvoke $r12.<net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider: double getWidth()>();
+
+        $d6 = d21 + $d5;
+
+        $r16 = virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.ugraphic.MinMax getMinMax()>();
+
+        $d7 = virtualinvoke $r16.<net.sourceforge.plantuml.ugraphic.MinMax: double getMinX()>();
+
+        $d8 = $d6 - $d7;
+
+        $d9 = virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: double getActualWidth()>();
+
+        $d10 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getWidthWithoutTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r11);
+
+        $d11 = $d9 - $d10;
+
+        $d12 = $d11 / 2.0;
+
+        d13 = $d8 + $d12;
+
+        $r17 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dx(double)>(d13);
+
+        virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: void setTranslate(net.sourceforge.plantuml.ugraphic.UTranslate)>($r17);
+
+        $d14 = virtualinvoke r11.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: double getActualWidth()>();
+
+        $d15 = virtualinvoke $r12.<net.sourceforge.plantuml.activitydiagram3.ftile.LaneDivider: double getWidth()>();
+
+        $d16 = $d14 + $d15;
+
+        d21 = d21 + $d16;
+
+        i9 = i9 + 1;
+
+        goto label5;
+
+     label6:
+        $z0 = <net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label7;
+
+        $r6 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List dividers>;
+
+        $i3 = interfaceinvoke $r6.<java.util.List: int size()>();
+
+        $r7 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanes()>();
+
+        $i4 = interfaceinvoke $r7.<java.util.List: int size()>();
+
+        $i5 = $i4 + 1;
+
+        if $i3 == $i5 goto label7;
+
+        $r8 = new java.lang.AssertionError;
+
+        specialinvoke $r8.<java.lang.AssertionError: void <init>()>();
+
+        throw $r8;
+
+     label7:
+        return;
+    }
+
+    public double getHalfMissingSpace(net.sourceforge.plantuml.graphic.StringBounder, int, double)
+    {
+        int i0, $i1, $i2;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        java.util.List $r1, $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r4;
+        double d0, $d1, d2, d3, $d4, $d5, $d6, $d7;
+        net.sourceforge.plantuml.graphic.TextBlock $r5;
+        net.sourceforge.plantuml.graphic.StringBounder r6;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r7;
+        byte $b3, $b4;
+        boolean $z0;
+        java.lang.AssertionError $r8;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r6 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        i0 := @parameter1: int;
+
+        d0 := @parameter2: double;
+
+        if i0 == 0 goto label1;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        $i1 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if i0 <= $i1 goto label2;
+
+     label1:
+        return 5.0;
+
+     label2:
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: java.util.List swimlanesSpecial()>();
+
+        $i2 = i0 - 1;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>($i2);
+
+        r4 = (net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane) $r3;
+
+        $d1 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: double getWidthWithoutTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r4);
+
+        d2 = staticinvoke <java.lang.Math: double max(double,double)>(d0, $d1);
+
+        $r5 = specialinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.graphic.TextBlock getTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)>(r4);
+
+        $r7 = interfaceinvoke $r5.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>(r6);
+
+        d3 = virtualinvoke $r7.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $b3 = d3 cmpg d2;
+
+        if $b3 > 0 goto label3;
+
+        return 5.0;
+
+     label3:
+        $z0 = <net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label4;
+
+        $b4 = d3 cmpl d2;
+
+        if $b4 > 0 goto label4;
+
+        $r8 = new java.lang.AssertionError;
+
+        specialinvoke $r8.<java.lang.AssertionError: void <init>()>();
+
+        throw $r8;
+
+     label4:
+        $d4 = d3 - d2;
+
+        $d5 = $d4 / 2.0;
+
+        $d6 = 5.0 + $d5;
+
+        $d7 = staticinvoke <java.lang.Math: double max(double,double)>(5.0, $d6);
+
+        return $d7;
+    }
+
+    private double getWidthWithoutTitle(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1;
+        double $d0;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r2;
+
+        r2 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r0 := @parameter0: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane: net.sourceforge.plantuml.ugraphic.MinMax getMinMax()>();
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.MinMax: double getWidth()>();
+
+        return $d0;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+        net.sourceforge.plantuml.ugraphic.MinMax $r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r3;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ugraphic.MinMax getMinMax(net.sourceforge.plantuml.graphic.StringBounder)>(r1);
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.awt.geom.Dimension2D getDimension()>();
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.Instruction getCurrent()
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction $r1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.Instruction currentInstruction>;
+
+        return $r1;
+    }
+
+    public void setCurrent(net.sourceforge.plantuml.activitydiagram3.Instruction)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.activitydiagram3.Instruction r1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r1 := @parameter0: net.sourceforge.plantuml.activitydiagram3.Instruction;
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.Instruction currentInstruction> = r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.LinkRendering nextLinkRenderer()
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.activitydiagram3.LinkRendering $r1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.LinkRendering nextLinkRenderer>;
+
+        return $r1;
+    }
+
+    public void setNextLinkRenderer(net.sourceforge.plantuml.activitydiagram3.LinkRendering)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.activitydiagram3.LinkRendering r1, $r3;
+        java.lang.Object $r2;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r1 := @parameter0: net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+
+        $r2 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r3 = (net.sourceforge.plantuml.activitydiagram3.LinkRendering) $r2;
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.LinkRendering nextLinkRenderer> = $r3;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane getCurrentSwimlane()
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane $r1;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane currentSwimlane>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.MinMax getMinMax(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1, $r2, $r4;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+
+        r0 := @this: net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        $r1 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ugraphic.MinMax cachedMinMax>;
+
+        if $r1 != null goto label1;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.ugraphic.MinMax getMinMax(net.sourceforge.plantuml.graphic.UDrawable,net.sourceforge.plantuml.graphic.StringBounder,boolean)>(r0, r3, 0);
+
+        r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ugraphic.MinMax cachedMinMax> = $r4;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: net.sourceforge.plantuml.ugraphic.MinMax cachedMinMax>;
+
+        return $r2;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/activitydiagram3/ftile/Swimlanes;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

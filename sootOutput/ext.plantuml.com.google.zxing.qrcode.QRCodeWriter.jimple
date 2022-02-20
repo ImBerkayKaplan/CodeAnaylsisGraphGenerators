@@ -1,0 +1,201 @@
+public final class ext.plantuml.com.google.zxing.qrcode.QRCodeWriter extends java.lang.Object implements ext.plantuml.com.google.zxing.Writer
+{
+    private static final int QUIET_ZONE_SIZE;
+
+    public void <init>()
+    {
+        ext.plantuml.com.google.zxing.qrcode.QRCodeWriter r0;
+
+        r0 := @this: ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public ext.plantuml.com.google.zxing.common.BitMatrix encode(java.lang.String, ext.plantuml.com.google.zxing.BarcodeFormat, int) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        ext.plantuml.com.google.zxing.qrcode.QRCodeWriter r0;
+        java.lang.String r1;
+        ext.plantuml.com.google.zxing.BarcodeFormat r2;
+        int i0;
+        ext.plantuml.com.google.zxing.common.BitMatrix $r3;
+
+        r0 := @this: ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: ext.plantuml.com.google.zxing.BarcodeFormat;
+
+        i0 := @parameter2: int;
+
+        $r3 = virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.QRCodeWriter: ext.plantuml.com.google.zxing.common.BitMatrix encode(java.lang.String,ext.plantuml.com.google.zxing.BarcodeFormat,int,java.util.Hashtable)>(r1, r2, i0, null);
+
+        return $r3;
+    }
+
+    public ext.plantuml.com.google.zxing.common.BitMatrix encode(java.lang.String, ext.plantuml.com.google.zxing.BarcodeFormat, int, java.util.Hashtable) throws ext.plantuml.com.google.zxing.WriterException
+    {
+        java.lang.String r0, $r11;
+        java.lang.IllegalArgumentException $r1, $r7;
+        int $i0, i1;
+        ext.plantuml.com.google.zxing.BarcodeFormat r2, $r3;
+        java.util.Hashtable r4;
+        ext.plantuml.com.google.zxing.EncodeHintType $r5;
+        java.lang.Object $r6;
+        java.lang.StringBuilder $r8, $r9, $r10;
+        ext.plantuml.com.google.zxing.qrcode.QRCodeWriter r12;
+        ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel r13, r14;
+        ext.plantuml.com.google.zxing.qrcode.encoder.QRCode $r15;
+        ext.plantuml.com.google.zxing.common.BitMatrix $r17;
+
+        r12 := @this: ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
+
+        r0 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: ext.plantuml.com.google.zxing.BarcodeFormat;
+
+        i1 := @parameter2: int;
+
+        r4 := @parameter3: java.util.Hashtable;
+
+        if r0 == null goto label1;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label2;
+
+     label1:
+        $r1 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r1.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>("Found empty contents");
+
+        throw $r1;
+
+     label2:
+        $r3 = <ext.plantuml.com.google.zxing.BarcodeFormat: ext.plantuml.com.google.zxing.BarcodeFormat QR_CODE>;
+
+        if r2 == $r3 goto label3;
+
+        $r7 = new java.lang.IllegalArgumentException;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Can only encode QR_CODE, but got ");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r7.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r11);
+
+        throw $r7;
+
+     label3:
+        r13 = <ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel L>;
+
+        if r4 == null goto label4;
+
+        $r5 = <ext.plantuml.com.google.zxing.EncodeHintType: ext.plantuml.com.google.zxing.EncodeHintType ERROR_CORRECTION>;
+
+        $r6 = virtualinvoke r4.<java.util.Hashtable: java.lang.Object get(java.lang.Object)>($r5);
+
+        r14 = (ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel) $r6;
+
+        if r14 == null goto label4;
+
+        r13 = r14;
+
+     label4:
+        $r15 = new ext.plantuml.com.google.zxing.qrcode.encoder.QRCode;
+
+        specialinvoke $r15.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: void <init>()>();
+
+        staticinvoke <ext.plantuml.com.google.zxing.qrcode.encoder.Encoder: void encode(java.lang.String,ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel,java.util.Hashtable,ext.plantuml.com.google.zxing.qrcode.encoder.QRCode)>(r0, r13, r4, $r15);
+
+        $r17 = staticinvoke <ext.plantuml.com.google.zxing.qrcode.QRCodeWriter: ext.plantuml.com.google.zxing.common.BitMatrix renderResult(ext.plantuml.com.google.zxing.qrcode.encoder.QRCode,int)>($r15, i1);
+
+        return $r17;
+    }
+
+    private static ext.plantuml.com.google.zxing.common.BitMatrix renderResult(ext.plantuml.com.google.zxing.qrcode.encoder.QRCode, int)
+    {
+        ext.plantuml.com.google.zxing.qrcode.encoder.QRCode r0;
+        ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix r1;
+        int i0, i1, i2, i3, i4, i5, i6, $i7, $i8, i10, i11, i12, i13;
+        ext.plantuml.com.google.zxing.common.BitMatrix $r2;
+        byte $b9;
+
+        r0 := @parameter0: ext.plantuml.com.google.zxing.qrcode.encoder.QRCode;
+
+        i4 := @parameter1: int;
+
+        r1 = virtualinvoke r0.<ext.plantuml.com.google.zxing.qrcode.encoder.QRCode: ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix getMatrix()>();
+
+        i0 = virtualinvoke r1.<ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix: int getWidth()>();
+
+        i1 = virtualinvoke r1.<ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix: int getHeight()>();
+
+        i2 = i0 + 8;
+
+        i3 = i1 + 8;
+
+        i5 = 4 * i4;
+
+        i6 = 4 * i4;
+
+        $r2 = new ext.plantuml.com.google.zxing.common.BitMatrix;
+
+        $i8 = i2 * i4;
+
+        $i7 = i3 * i4;
+
+        specialinvoke $r2.<ext.plantuml.com.google.zxing.common.BitMatrix: void <init>(int,int)>($i8, $i7);
+
+        i10 = 0;
+
+        i11 = i6;
+
+     label1:
+        if i10 >= i1 goto label5;
+
+        i12 = 0;
+
+        i13 = i5;
+
+     label2:
+        if i12 >= i0 goto label4;
+
+        $b9 = virtualinvoke r1.<ext.plantuml.com.google.zxing.qrcode.encoder.ByteMatrix: byte get(int,int)>(i12, i10);
+
+        if $b9 != 1 goto label3;
+
+        virtualinvoke $r2.<ext.plantuml.com.google.zxing.common.BitMatrix: void setRegion(int,int,int,int)>(i13, i11, i4, i4);
+
+     label3:
+        i12 = i12 + 1;
+
+        i13 = i13 + i4;
+
+        goto label2;
+
+     label4:
+        i10 = i10 + 1;
+
+        i11 = i11 + i4;
+
+        goto label1;
+
+     label5:
+        return $r2;
+    }
+
+    public static void <clinit>()
+    {
+        <ext.plantuml.com.google.zxing.qrcode.QRCodeWriter: int QUIET_ZONE_SIZE> = 4;
+
+        return;
+    }
+}

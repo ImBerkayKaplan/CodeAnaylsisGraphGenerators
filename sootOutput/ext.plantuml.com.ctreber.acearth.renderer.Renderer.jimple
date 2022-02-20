@@ -1,0 +1,224 @@
+public class ext.plantuml.com.ctreber.acearth.renderer.Renderer extends java.lang.Object
+{
+    private ext.plantuml.com.ctreber.acearth.shader.Shader fShader;
+    private ext.plantuml.com.ctreber.acearth.renderer.RenderTarget fRenderTarget;
+    private java.util.List fRowTypeRenderers;
+
+    public void <init>(ext.plantuml.com.ctreber.acearth.renderer.RenderTarget)
+    {
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer r0;
+        java.util.ArrayList $r1;
+        ext.plantuml.com.ctreber.acearth.renderer.RenderTarget r2;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        r2 := @parameter0: ext.plantuml.com.ctreber.acearth.renderer.RenderTarget;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: java.util.List fRowTypeRenderers> = $r1;
+
+        r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: ext.plantuml.com.ctreber.acearth.renderer.RenderTarget fRenderTarget> = r2;
+
+        return;
+    }
+
+    public void render()
+    {
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer r4;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: java.util.List fRowTypeRenderers>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer) $r3;
+
+        interfaceinvoke r4.<ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer: void startNewRun()>();
+
+        goto label1;
+
+     label2:
+        specialinvoke r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: void renderRows()>();
+
+        return;
+    }
+
+    private void renderRows()
+    {
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer r0;
+        ext.plantuml.com.ctreber.acearth.renderer.RenderTarget $r1;
+        int $i0, i1;
+        int[] r2;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        i1 = 0;
+
+     label1:
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: ext.plantuml.com.ctreber.acearth.renderer.RenderTarget fRenderTarget>;
+
+        $i0 = interfaceinvoke $r1.<ext.plantuml.com.ctreber.acearth.renderer.RenderTarget: int getImageHeight()>();
+
+        if i1 >= $i0 goto label2;
+
+        r2 = specialinvoke r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: int[] getPixelTypes(int)>(i1);
+
+        specialinvoke r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: void renderRow(int,int[])>(i1, r2);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private int[] getPixelTypes(int)
+    {
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer r0;
+        ext.plantuml.com.ctreber.acearth.renderer.RenderTarget $r1;
+        int $i0, i1;
+        int[] r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer r6;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        i1 := @parameter0: int;
+
+        $r1 = r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: ext.plantuml.com.ctreber.acearth.renderer.RenderTarget fRenderTarget>;
+
+        $i0 = interfaceinvoke $r1.<ext.plantuml.com.ctreber.acearth.renderer.RenderTarget: int getImageWidth()>();
+
+        r2 = newarray (int)[$i0];
+
+        $r3 = r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: java.util.List fRowTypeRenderers>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer) $r5;
+
+        interfaceinvoke r6.<ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer: void getPixelTypes(int,int[])>(i1, r2);
+
+        goto label1;
+
+     label2:
+        return r2;
+    }
+
+    private void renderRow(int, int[])
+    {
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer r0;
+        int i0, $i1, i2;
+        int[] r1;
+        ext.plantuml.com.ctreber.acearth.shader.Shader $r2;
+        java.awt.Color[] r3;
+        ext.plantuml.com.ctreber.acearth.renderer.RenderTarget $r4, $r6;
+        java.awt.Color $r5;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        i0 := @parameter0: int;
+
+        r1 := @parameter1: int[];
+
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: ext.plantuml.com.ctreber.acearth.shader.Shader fShader>;
+
+        r3 = virtualinvoke $r2.<ext.plantuml.com.ctreber.acearth.shader.Shader: java.awt.Color[] getShadedColors(int,int[])>(i0, r1);
+
+        i2 = 0;
+
+     label1:
+        $r4 = r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: ext.plantuml.com.ctreber.acearth.renderer.RenderTarget fRenderTarget>;
+
+        $i1 = interfaceinvoke $r4.<ext.plantuml.com.ctreber.acearth.renderer.RenderTarget: int getImageWidth()>();
+
+        if i2 >= $i1 goto label2;
+
+        $r6 = r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: ext.plantuml.com.ctreber.acearth.renderer.RenderTarget fRenderTarget>;
+
+        $r5 = r3[i2];
+
+        interfaceinvoke $r6.<ext.plantuml.com.ctreber.acearth.renderer.RenderTarget: void setPixel(int,int,java.awt.Color)>(i2, i0, $r5);
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void setShader(ext.plantuml.com.ctreber.acearth.shader.Shader)
+    {
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer r0;
+        ext.plantuml.com.ctreber.acearth.shader.Shader r1;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.acearth.shader.Shader;
+
+        r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: ext.plantuml.com.ctreber.acearth.shader.Shader fShader> = r1;
+
+        return;
+    }
+
+    public void setRenderTarget(ext.plantuml.com.ctreber.acearth.renderer.RenderTarget)
+    {
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer r0;
+        ext.plantuml.com.ctreber.acearth.renderer.RenderTarget r1;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.acearth.renderer.RenderTarget;
+
+        r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: ext.plantuml.com.ctreber.acearth.renderer.RenderTarget fRenderTarget> = r1;
+
+        return;
+    }
+
+    public void addRowTypeRenderer(ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer)
+    {
+        ext.plantuml.com.ctreber.acearth.renderer.Renderer r0;
+        ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer r1;
+        java.util.List $r2;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.renderer.Renderer;
+
+        r1 := @parameter0: ext.plantuml.com.ctreber.acearth.renderer.RowTypeRenderer;
+
+        $r2 = r0.<ext.plantuml.com.ctreber.acearth.renderer.Renderer: java.util.List fRowTypeRenderers>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+}

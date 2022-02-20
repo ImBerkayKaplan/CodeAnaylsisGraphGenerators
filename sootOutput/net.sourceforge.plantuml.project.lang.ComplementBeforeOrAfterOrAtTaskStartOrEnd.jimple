@@ -1,0 +1,259 @@
+public class net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd extends java.lang.Object implements net.sourceforge.plantuml.project.lang.Something
+{
+    private static final int POS_NB1;
+    private static final int POS_DAY_OR_WEEK1;
+    private static final int POS_NB2;
+    private static final int POS_DAY_OR_WEEK2;
+    private static final int POS_BEFORE_OR_AFTER;
+    private static final int POS_CODE_OTHER;
+    private static final int POS_START_OR_END;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd r0;
+
+        r0 := @this: net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.regex.IRegex toRegex(java.lang.String)
+    {
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r0;
+        java.lang.StringBuilder $r1, $r2, $r4;
+        java.lang.String r3, $r5;
+        net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd r6;
+
+        r6 := @this: net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("COMPLEMENT");
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>($r5, "(?:at|with|after|(\\d+)[%s]+(day|week)s?(?:[%s]+and[%s]+(\\d+)[%s]+(day|week)s?)?[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.project.Failable getMe(net.sourceforge.plantuml.project.GanttDiagram, net.sourceforge.plantuml.command.regex.RegexResult, java.lang.String)
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.StringBuilder $r1, $r2, $r4, $r7, $r8, $r9, $r16, $r17, $r18, $r21, $r22, $r23, $r26, $r27, $r28, $r31, $r32, $r33, $r36, $r37, $r38, $r44, $r45, $r46;
+        java.lang.String r3, $r5, r6, $r10, r11, $r19, r20, $r24, $r25, $r29, r30, $r34, $r35, $r39, $r43, $r47, $r48;
+        net.sourceforge.plantuml.project.GanttDiagram r12;
+        net.sourceforge.plantuml.project.core.Moment r13;
+        net.sourceforge.plantuml.project.core.TaskInstant $r14, r42;
+        net.sourceforge.plantuml.project.core.TaskAttribute $r15;
+        boolean $z0, $z1, $z2;
+        int $i1, i2, $i3, $i4, i5, $i6, i8;
+        net.sourceforge.plantuml.project.Failable $r40, $r49;
+        net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd r41;
+
+        r41 := @this: net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd;
+
+        r12 := @parameter0: net.sourceforge.plantuml.project.GanttDiagram;
+
+        r0 := @parameter1: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r3 := @parameter2: java.lang.String;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("COMPLEMENT");
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r6 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>($r5, 5);
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("COMPLEMENT");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r11 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>($r10, 6);
+
+        r13 = virtualinvoke r12.<net.sourceforge.plantuml.project.GanttDiagram: net.sourceforge.plantuml.project.core.Moment getExistingMoment(java.lang.String)>(r6);
+
+        if r13 != null goto label1;
+
+        $r36 = new java.lang.StringBuilder;
+
+        specialinvoke $r36.<java.lang.StringBuilder: void <init>()>();
+
+        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("No such task ");
+
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r6);
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r40 = staticinvoke <net.sourceforge.plantuml.project.Failable: net.sourceforge.plantuml.project.Failable error(java.lang.String)>($r39);
+
+        return $r40;
+
+     label1:
+        $r14 = new net.sourceforge.plantuml.project.core.TaskInstant;
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.project.core.TaskAttribute: net.sourceforge.plantuml.project.core.TaskAttribute fromString(java.lang.String)>(r11);
+
+        specialinvoke $r14.<net.sourceforge.plantuml.project.core.TaskInstant: void <init>(net.sourceforge.plantuml.project.core.Moment,net.sourceforge.plantuml.project.core.TaskAttribute)>(r13, $r15);
+
+        r42 = $r14;
+
+        $r16 = new java.lang.StringBuilder;
+
+        specialinvoke $r16.<java.lang.StringBuilder: void <init>()>();
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("COMPLEMENT");
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r20 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>($r19, 0);
+
+        if r20 == null goto label8;
+
+        $r21 = new java.lang.StringBuilder;
+
+        specialinvoke $r21.<java.lang.StringBuilder: void <init>()>();
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("COMPLEMENT");
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r25 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>($r24, 1);
+
+        $z0 = virtualinvoke $r25.<java.lang.String: boolean startsWith(java.lang.String)>("w");
+
+        if $z0 == 0 goto label2;
+
+        $i4 = virtualinvoke r12.<net.sourceforge.plantuml.project.GanttDiagram: int daysInWeek()>();
+
+        goto label3;
+
+     label2:
+        $i4 = 1;
+
+     label3:
+        $i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>(r20);
+
+        i2 = $i1 * $i4;
+
+        $r26 = new java.lang.StringBuilder;
+
+        specialinvoke $r26.<java.lang.StringBuilder: void <init>()>();
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("COMPLEMENT");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r30 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>($r29, 2);
+
+        i5 = 0;
+
+        if r30 == null goto label6;
+
+        $r31 = new java.lang.StringBuilder;
+
+        specialinvoke $r31.<java.lang.StringBuilder: void <init>()>();
+
+        $r32 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("COMPLEMENT");
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r35 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>($r34, 3);
+
+        $z1 = virtualinvoke $r35.<java.lang.String: boolean startsWith(java.lang.String)>("w");
+
+        if $z1 == 0 goto label4;
+
+        $i6 = virtualinvoke r12.<net.sourceforge.plantuml.project.GanttDiagram: int daysInWeek()>();
+
+        goto label5;
+
+     label4:
+        $i6 = 1;
+
+     label5:
+        $i3 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String)>(r30);
+
+        i5 = $i3 * $i6;
+
+     label6:
+        i8 = i2 + i5;
+
+        $r43 = "before";
+
+        $r44 = new java.lang.StringBuilder;
+
+        specialinvoke $r44.<java.lang.StringBuilder: void <init>()>();
+
+        $r45 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("COMPLEMENT");
+
+        $r46 = virtualinvoke $r45.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r47 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r48 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>($r47, 4);
+
+        $z2 = virtualinvoke $r43.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>($r48);
+
+        if $z2 == 0 goto label7;
+
+        i8 = neg i8;
+
+     label7:
+        r42 = virtualinvoke $r14.<net.sourceforge.plantuml.project.core.TaskInstant: net.sourceforge.plantuml.project.core.TaskInstant withDelta(int)>(i8);
+
+     label8:
+        $r49 = staticinvoke <net.sourceforge.plantuml.project.Failable: net.sourceforge.plantuml.project.Failable ok(java.lang.Object)>(r42);
+
+        return $r49;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd: int POS_START_OR_END> = 6;
+
+        <net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd: int POS_CODE_OTHER> = 5;
+
+        <net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd: int POS_BEFORE_OR_AFTER> = 4;
+
+        <net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd: int POS_DAY_OR_WEEK2> = 3;
+
+        <net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd: int POS_NB2> = 2;
+
+        <net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd: int POS_DAY_OR_WEEK1> = 1;
+
+        <net.sourceforge.plantuml.project.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd: int POS_NB1> = 0;
+
+        return;
+    }
+}

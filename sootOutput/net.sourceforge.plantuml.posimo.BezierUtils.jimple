@@ -1,0 +1,749 @@
+public class net.sourceforge.plantuml.posimo.BezierUtils extends java.lang.Object
+{
+    static final boolean $assertionsDisabled;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.posimo.BezierUtils r0;
+
+        r0 := @this: net.sourceforge.plantuml.posimo.BezierUtils;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static double getEndingAngle(java.awt.geom.CubicCurve2D$Double)
+    {
+        java.awt.geom.CubicCurve2D$Double r0;
+        java.awt.geom.Point2D $r1, $r2, $r3, $r4, $r5, $r6;
+        boolean $z0;
+        double $d0, $d1;
+
+        r0 := @parameter0: java.awt.geom.CubicCurve2D$Double;
+
+        $r1 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getCtrlP2()>();
+
+        $r2 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP2()>();
+
+        $z0 = virtualinvoke $r1.<java.awt.geom.Point2D: boolean equals(java.lang.Object)>($r2);
+
+        if $z0 == 0 goto label1;
+
+        $r5 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP1()>();
+
+        $r6 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP2()>();
+
+        $d1 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: double getAngle(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r5, $r6);
+
+        return $d1;
+
+     label1:
+        $r3 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getCtrlP2()>();
+
+        $r4 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP2()>();
+
+        $d0 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: double getAngle(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r3, $r4);
+
+        return $d0;
+    }
+
+    public static double getStartingAngle(java.awt.geom.CubicCurve2D$Double)
+    {
+        java.awt.geom.CubicCurve2D$Double r0;
+        java.awt.geom.Point2D $r1, $r2, $r3, $r4, $r5, $r6;
+        boolean $z0;
+        double $d0, $d1;
+
+        r0 := @parameter0: java.awt.geom.CubicCurve2D$Double;
+
+        $r1 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP1()>();
+
+        $r2 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getCtrlP1()>();
+
+        $z0 = virtualinvoke $r1.<java.awt.geom.Point2D: boolean equals(java.lang.Object)>($r2);
+
+        if $z0 == 0 goto label1;
+
+        $r5 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP1()>();
+
+        $r6 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP2()>();
+
+        $d1 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: double getAngle(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r5, $r6);
+
+        return $d1;
+
+     label1:
+        $r3 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getP1()>();
+
+        $r4 = virtualinvoke r0.<java.awt.geom.CubicCurve2D$Double: java.awt.geom.Point2D getCtrlP1()>();
+
+        $d0 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: double getAngle(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r3, $r4);
+
+        return $d0;
+    }
+
+    static double getAngle(java.awt.geom.Point2D, java.awt.geom.Point2D)
+    {
+        java.awt.geom.Point2D r0, r1;
+        boolean $z0;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6;
+        java.lang.IllegalArgumentException $r2;
+
+        r0 := @parameter0: java.awt.geom.Point2D;
+
+        r1 := @parameter1: java.awt.geom.Point2D;
+
+        $z0 = virtualinvoke r0.<java.awt.geom.Point2D: boolean equals(java.lang.Object)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        $r2 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r2;
+
+     label1:
+        $d0 = virtualinvoke r1.<java.awt.geom.Point2D: double getY()>();
+
+        $d1 = virtualinvoke r0.<java.awt.geom.Point2D: double getY()>();
+
+        $d2 = $d0 - $d1;
+
+        $d3 = virtualinvoke r1.<java.awt.geom.Point2D: double getX()>();
+
+        $d4 = virtualinvoke r0.<java.awt.geom.Point2D: double getX()>();
+
+        $d5 = $d3 - $d4;
+
+        $d6 = staticinvoke <java.lang.Math: double atan2(double,double)>($d2, $d5);
+
+        return $d6;
+    }
+
+    static boolean isCutting(java.awt.geom.CubicCurve2D$Double, java.awt.Shape)
+    {
+        java.awt.Shape r0;
+        java.awt.geom.CubicCurve2D$Double r1;
+        double $d0, $d1, $d2, $d3;
+        boolean z0, z1, $z2;
+
+        r1 := @parameter0: java.awt.geom.CubicCurve2D$Double;
+
+        r0 := @parameter1: java.awt.Shape;
+
+        $d1 = r1.<java.awt.geom.CubicCurve2D$Double: double x1>;
+
+        $d0 = r1.<java.awt.geom.CubicCurve2D$Double: double y1>;
+
+        z0 = interfaceinvoke r0.<java.awt.Shape: boolean contains(double,double)>($d1, $d0);
+
+        $d3 = r1.<java.awt.geom.CubicCurve2D$Double: double x2>;
+
+        $d2 = r1.<java.awt.geom.CubicCurve2D$Double: double y2>;
+
+        z1 = interfaceinvoke r0.<java.awt.Shape: boolean contains(double,double)>($d3, $d2);
+
+        $z2 = z0 ^ z1;
+
+        return $z2;
+    }
+
+    static void shorten(java.awt.geom.CubicCurve2D$Double, java.awt.Shape)
+    {
+        java.awt.Shape r0;
+        java.awt.geom.CubicCurve2D$Double r1, $r2, $r4;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15;
+        boolean z0, z1, $z2, $z3, $z4, $z5, $z6, $z7, $z8, $z9, $z11, $z12;
+        java.lang.IllegalArgumentException $r6, $r8;
+        java.lang.AssertionError $r7;
+
+        r1 := @parameter0: java.awt.geom.CubicCurve2D$Double;
+
+        r0 := @parameter1: java.awt.Shape;
+
+        $d1 = r1.<java.awt.geom.CubicCurve2D$Double: double x1>;
+
+        $d0 = r1.<java.awt.geom.CubicCurve2D$Double: double y1>;
+
+        z0 = interfaceinvoke r0.<java.awt.Shape: boolean contains(double,double)>($d1, $d0);
+
+        $d3 = r1.<java.awt.geom.CubicCurve2D$Double: double x2>;
+
+        $d2 = r1.<java.awt.geom.CubicCurve2D$Double: double y2>;
+
+        z1 = interfaceinvoke r0.<java.awt.Shape: boolean contains(double,double)>($d3, $d2);
+
+        if z1 != 0 goto label01;
+
+        $z11 = 1;
+
+        goto label02;
+
+     label01:
+        $z11 = 0;
+
+     label02:
+        $z2 = z0 ^ $z11;
+
+        if $z2 == 0 goto label03;
+
+        $r8 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r8.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r8;
+
+     label03:
+        if z0 != 0 goto label04;
+
+        $d15 = r1.<java.awt.geom.CubicCurve2D$Double: double x2>;
+
+        $d14 = r1.<java.awt.geom.CubicCurve2D$Double: double y2>;
+
+        $d13 = r1.<java.awt.geom.CubicCurve2D$Double: double ctrlx2>;
+
+        $d12 = r1.<java.awt.geom.CubicCurve2D$Double: double ctrly2>;
+
+        $d11 = r1.<java.awt.geom.CubicCurve2D$Double: double ctrlx1>;
+
+        $d10 = r1.<java.awt.geom.CubicCurve2D$Double: double ctrly1>;
+
+        $d9 = r1.<java.awt.geom.CubicCurve2D$Double: double x1>;
+
+        $d8 = r1.<java.awt.geom.CubicCurve2D$Double: double y1>;
+
+        virtualinvoke r1.<java.awt.geom.CubicCurve2D$Double: void setCurve(double,double,double,double,double,double,double,double)>($d15, $d14, $d13, $d12, $d11, $d10, $d9, $d8);
+
+     label04:
+        $z3 = <net.sourceforge.plantuml.posimo.BezierUtils: boolean $assertionsDisabled>;
+
+        if $z3 != 0 goto label06;
+
+        $d5 = r1.<java.awt.geom.CubicCurve2D$Double: double x1>;
+
+        $d4 = r1.<java.awt.geom.CubicCurve2D$Double: double y1>;
+
+        $z8 = interfaceinvoke r0.<java.awt.Shape: boolean contains(double,double)>($d5, $d4);
+
+        if $z8 == 0 goto label05;
+
+        $d7 = r1.<java.awt.geom.CubicCurve2D$Double: double x2>;
+
+        $d6 = r1.<java.awt.geom.CubicCurve2D$Double: double y2>;
+
+        $z9 = interfaceinvoke r0.<java.awt.Shape: boolean contains(double,double)>($d7, $d6);
+
+        if $z9 == 0 goto label06;
+
+     label05:
+        $r7 = new java.lang.AssertionError;
+
+        specialinvoke $r7.<java.lang.AssertionError: void <init>()>();
+
+        throw $r7;
+
+     label06:
+        $r2 = new java.awt.geom.CubicCurve2D$Double;
+
+        specialinvoke $r2.<java.awt.geom.CubicCurve2D$Double: void <init>()>();
+
+        $r4 = new java.awt.geom.CubicCurve2D$Double;
+
+        specialinvoke $r4.<java.awt.geom.CubicCurve2D$Double: void <init>()>();
+
+        staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: void subdivide(java.awt.geom.CubicCurve2D,java.awt.geom.CubicCurve2D,java.awt.geom.CubicCurve2D,double)>(r1, $r2, $r4, 0.5);
+
+        $z4 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: boolean isCutting(java.awt.geom.CubicCurve2D$Double,java.awt.Shape)>($r2, r0);
+
+        $z5 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: boolean isCutting(java.awt.geom.CubicCurve2D$Double,java.awt.Shape)>($r4, r0);
+
+        if $z5 != 0 goto label07;
+
+        $z12 = 1;
+
+        goto label08;
+
+     label07:
+        $z12 = 0;
+
+     label08:
+        $z6 = $z4 ^ $z12;
+
+        if $z6 == 0 goto label09;
+
+        $r6 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r6.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r6;
+
+     label09:
+        $z7 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: boolean isCutting(java.awt.geom.CubicCurve2D$Double,java.awt.Shape)>($r2, r0);
+
+        if $z7 == 0 goto label10;
+
+        virtualinvoke r1.<java.awt.geom.CubicCurve2D$Double: void setCurve(java.awt.geom.CubicCurve2D)>($r2);
+
+        goto label11;
+
+     label10:
+        virtualinvoke r1.<java.awt.geom.CubicCurve2D$Double: void setCurve(java.awt.geom.CubicCurve2D)>($r4);
+
+     label11:
+        return;
+    }
+
+    private static void subdivide(java.awt.geom.CubicCurve2D, java.awt.geom.CubicCurve2D, java.awt.geom.CubicCurve2D, double)
+    {
+        double d0, d2, $d3, $d4, $d5, $d6, d7, $d8, $d9, $d10, $d11, d12, d13, d14, d15, d16, $d17, $d18, $d19, d20, $d21, $d22, $d23, d24, $d25, $d26, $d27, d28, $d29, $d30, $d31, d32, $d33, $d34, d35, $d36, $d37, d38, $d39, $d40, d41, $d42, $d43, d44, $d45, $d46, d47, $d48, $d49, d50;
+        java.awt.geom.CubicCurve2D r0, r1, r2;
+
+        r0 := @parameter0: java.awt.geom.CubicCurve2D;
+
+        r1 := @parameter1: java.awt.geom.CubicCurve2D;
+
+        r2 := @parameter2: java.awt.geom.CubicCurve2D;
+
+        d0 := @parameter3: double;
+
+        d2 = 1.0 - d0;
+
+        $d3 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getCtrlX1()>();
+
+        $d4 = $d3 * d0;
+
+        $d5 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getCtrlX2()>();
+
+        $d6 = $d5 * d2;
+
+        d7 = $d4 + $d6;
+
+        $d8 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getCtrlY1()>();
+
+        $d9 = $d8 * d0;
+
+        $d10 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getCtrlY2()>();
+
+        $d11 = $d10 * d2;
+
+        d12 = $d9 + $d11;
+
+        d13 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getX1()>();
+
+        d14 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getY1()>();
+
+        d15 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getX2()>();
+
+        d16 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getY2()>();
+
+        $d17 = d13 * d0;
+
+        $d18 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getCtrlX1()>();
+
+        $d19 = $d18 * d0;
+
+        d20 = $d17 + $d19;
+
+        $d21 = d14 * d0;
+
+        $d22 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getCtrlY1()>();
+
+        $d23 = $d22 * d0;
+
+        d24 = $d21 + $d23;
+
+        $d25 = d15 * d0;
+
+        $d26 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getCtrlX2()>();
+
+        $d27 = $d26 * d0;
+
+        d28 = $d25 + $d27;
+
+        $d29 = d16 * d0;
+
+        $d30 = virtualinvoke r0.<java.awt.geom.CubicCurve2D: double getCtrlY2()>();
+
+        $d31 = $d30 * d0;
+
+        d32 = $d29 + $d31;
+
+        $d34 = d20 * d0;
+
+        $d33 = d7 * d0;
+
+        d35 = $d34 + $d33;
+
+        $d37 = d24 * d0;
+
+        $d36 = d12 * d0;
+
+        d38 = $d37 + $d36;
+
+        $d40 = d28 * d0;
+
+        $d39 = d7 * d0;
+
+        d41 = $d40 + $d39;
+
+        $d43 = d32 * d0;
+
+        $d42 = d12 * d0;
+
+        d44 = $d43 + $d42;
+
+        $d46 = d35 * d0;
+
+        $d45 = d41 * d0;
+
+        d47 = $d46 + $d45;
+
+        $d49 = d38 * d0;
+
+        $d48 = d44 * d0;
+
+        d50 = $d49 + $d48;
+
+        virtualinvoke r1.<java.awt.geom.CubicCurve2D: void setCurve(double,double,double,double,double,double,double,double)>(d13, d14, d20, d24, d35, d38, d47, d50);
+
+        virtualinvoke r2.<java.awt.geom.CubicCurve2D: void setCurve(double,double,double,double,double,double,double,double)>(d47, d50, d41, d44, d28, d32, d15, d16);
+
+        return;
+    }
+
+    static double dist(java.awt.geom.CubicCurve2D$Double)
+    {
+        java.awt.geom.CubicCurve2D$Double r0;
+        double $d0, $d1, $d2, $d3, $d4;
+
+        r0 := @parameter0: java.awt.geom.CubicCurve2D$Double;
+
+        $d3 = r0.<java.awt.geom.CubicCurve2D$Double: double x1>;
+
+        $d2 = r0.<java.awt.geom.CubicCurve2D$Double: double y1>;
+
+        $d1 = r0.<java.awt.geom.CubicCurve2D$Double: double x2>;
+
+        $d0 = r0.<java.awt.geom.CubicCurve2D$Double: double y2>;
+
+        $d4 = staticinvoke <java.awt.geom.Point2D: double distance(double,double,double,double)>($d3, $d2, $d1, $d0);
+
+        return $d4;
+    }
+
+    static double dist(java.awt.geom.Line2D$Double)
+    {
+        java.awt.geom.Line2D$Double r0;
+        double $d0, $d1, $d2, $d3, $d4;
+
+        r0 := @parameter0: java.awt.geom.Line2D$Double;
+
+        $d3 = r0.<java.awt.geom.Line2D$Double: double x1>;
+
+        $d2 = r0.<java.awt.geom.Line2D$Double: double y1>;
+
+        $d1 = r0.<java.awt.geom.Line2D$Double: double x2>;
+
+        $d0 = r0.<java.awt.geom.Line2D$Double: double y2>;
+
+        $d4 = staticinvoke <java.awt.geom.Point2D: double distance(double,double,double,double)>($d3, $d2, $d1, $d0);
+
+        return $d4;
+    }
+
+    public static java.awt.geom.Point2D middle(java.awt.geom.Line2D$Double)
+    {
+        java.awt.geom.Point2D$Double $r0;
+        java.awt.geom.Line2D$Double r1;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7;
+
+        r1 := @parameter0: java.awt.geom.Line2D$Double;
+
+        $r0 = new java.awt.geom.Point2D$Double;
+
+        $d1 = r1.<java.awt.geom.Line2D$Double: double x1>;
+
+        $d0 = r1.<java.awt.geom.Line2D$Double: double x2>;
+
+        $d2 = $d1 + $d0;
+
+        $d7 = $d2 / 2.0;
+
+        $d4 = r1.<java.awt.geom.Line2D$Double: double y1>;
+
+        $d3 = r1.<java.awt.geom.Line2D$Double: double y2>;
+
+        $d5 = $d4 + $d3;
+
+        $d6 = $d5 / 2.0;
+
+        specialinvoke $r0.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d7, $d6);
+
+        return $r0;
+    }
+
+    public static java.awt.geom.Point2D middle(java.awt.geom.Point2D, java.awt.geom.Point2D)
+    {
+        java.awt.geom.Point2D$Double $r0;
+        java.awt.geom.Point2D r1, r2;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7;
+
+        r1 := @parameter0: java.awt.geom.Point2D;
+
+        r2 := @parameter1: java.awt.geom.Point2D;
+
+        $r0 = new java.awt.geom.Point2D$Double;
+
+        $d0 = virtualinvoke r1.<java.awt.geom.Point2D: double getX()>();
+
+        $d1 = virtualinvoke r2.<java.awt.geom.Point2D: double getX()>();
+
+        $d2 = $d0 + $d1;
+
+        $d3 = $d2 / 2.0;
+
+        $d4 = virtualinvoke r1.<java.awt.geom.Point2D: double getY()>();
+
+        $d5 = virtualinvoke r2.<java.awt.geom.Point2D: double getY()>();
+
+        $d6 = $d4 + $d5;
+
+        $d7 = $d6 / 2.0;
+
+        specialinvoke $r0.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d3, $d7);
+
+        return $r0;
+    }
+
+    public static java.awt.geom.Point2D intersect(java.awt.geom.Line2D$Double, java.awt.Shape)
+    {
+        java.awt.geom.Line2D$Double $r0, r1;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, d11, $d12, $d13, $d14, d15, $d16, $d17, $d18, $d19, $d20;
+        java.awt.Shape r3;
+        boolean z0, z1, $z2, z3, $z5;
+        byte $b0;
+        java.lang.IllegalStateException $r4;
+        java.awt.geom.Point2D$Double $r5, $r6;
+        java.lang.IllegalArgumentException $r7;
+
+        r1 := @parameter0: java.awt.geom.Line2D$Double;
+
+        r3 := @parameter1: java.awt.Shape;
+
+        $r0 = new java.awt.geom.Line2D$Double;
+
+        $d3 = r1.<java.awt.geom.Line2D$Double: double x1>;
+
+        $d2 = r1.<java.awt.geom.Line2D$Double: double y1>;
+
+        $d1 = r1.<java.awt.geom.Line2D$Double: double x2>;
+
+        $d0 = r1.<java.awt.geom.Line2D$Double: double y2>;
+
+        specialinvoke $r0.<java.awt.geom.Line2D$Double: void <init>(double,double,double,double)>($d3, $d2, $d1, $d0);
+
+        $d5 = $r0.<java.awt.geom.Line2D$Double: double x1>;
+
+        $d4 = $r0.<java.awt.geom.Line2D$Double: double y1>;
+
+        z0 = interfaceinvoke r3.<java.awt.Shape: boolean contains(double,double)>($d5, $d4);
+
+        $d7 = $r0.<java.awt.geom.Line2D$Double: double x2>;
+
+        $d6 = $r0.<java.awt.geom.Line2D$Double: double y2>;
+
+        z1 = interfaceinvoke r3.<java.awt.Shape: boolean contains(double,double)>($d7, $d6);
+
+        if z1 != 0 goto label1;
+
+        $z5 = 1;
+
+        goto label2;
+
+     label1:
+        $z5 = 0;
+
+     label2:
+        $z2 = z0 ^ $z5;
+
+        if $z2 == 0 goto label3;
+
+        $r7 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r7.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r7;
+
+     label3:
+        $d9 = $r0.<java.awt.geom.Line2D$Double: double x1>;
+
+        $d8 = $r0.<java.awt.geom.Line2D$Double: double x2>;
+
+        $d10 = $d9 + $d8;
+
+        d11 = $d10 / 2.0;
+
+        $d13 = $r0.<java.awt.geom.Line2D$Double: double y1>;
+
+        $d12 = $r0.<java.awt.geom.Line2D$Double: double y2>;
+
+        $d14 = $d13 + $d12;
+
+        d15 = $d14 / 2.0;
+
+        z3 = interfaceinvoke r3.<java.awt.Shape: boolean contains(double,double)>(d11, d15);
+
+        if z0 != z3 goto label4;
+
+        $r0.<java.awt.geom.Line2D$Double: double x1> = d11;
+
+        $r0.<java.awt.geom.Line2D$Double: double y1> = d15;
+
+        goto label5;
+
+     label4:
+        $r0.<java.awt.geom.Line2D$Double: double x2> = d11;
+
+        $r0.<java.awt.geom.Line2D$Double: double y2> = d15;
+
+     label5:
+        $d16 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: double dist(java.awt.geom.Line2D$Double)>($r0);
+
+        $b0 = $d16 cmpg 0.1;
+
+        if $b0 >= 0 goto label8;
+
+        if z0 == 0 goto label6;
+
+        $r6 = new java.awt.geom.Point2D$Double;
+
+        $d20 = $r0.<java.awt.geom.Line2D$Double: double x2>;
+
+        $d19 = $r0.<java.awt.geom.Line2D$Double: double y2>;
+
+        specialinvoke $r6.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d20, $d19);
+
+        return $r6;
+
+     label6:
+        if z1 == 0 goto label7;
+
+        $r5 = new java.awt.geom.Point2D$Double;
+
+        $d18 = $r0.<java.awt.geom.Line2D$Double: double x1>;
+
+        $d17 = $r0.<java.awt.geom.Line2D$Double: double y1>;
+
+        specialinvoke $r5.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d18, $d17);
+
+        return $r5;
+
+     label7:
+        $r4 = new java.lang.IllegalStateException;
+
+        specialinvoke $r4.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r4;
+
+     label8:
+        goto label3;
+    }
+
+    public static java.awt.geom.Rectangle2D toRectangle(net.sourceforge.plantuml.posimo.Positionable)
+    {
+        net.sourceforge.plantuml.posimo.Positionable r0;
+        java.awt.geom.Point2D r1;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r2;
+        java.awt.geom.Rectangle2D$Double $r3;
+        double $d0, $d1, $d2, $d3;
+
+        r0 := @parameter0: net.sourceforge.plantuml.posimo.Positionable;
+
+        r1 = interfaceinvoke r0.<net.sourceforge.plantuml.posimo.Positionable: java.awt.geom.Point2D getPosition()>();
+
+        r2 = interfaceinvoke r0.<net.sourceforge.plantuml.posimo.Positionable: net.sourceforge.plantuml.awt.geom.Dimension2D getSize()>();
+
+        $r3 = new java.awt.geom.Rectangle2D$Double;
+
+        $d0 = virtualinvoke r1.<java.awt.geom.Point2D: double getX()>();
+
+        $d1 = virtualinvoke r1.<java.awt.geom.Point2D: double getY()>();
+
+        $d2 = virtualinvoke r2.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d3 = virtualinvoke r2.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        specialinvoke $r3.<java.awt.geom.Rectangle2D$Double: void <init>(double,double,double,double)>($d0, $d1, $d2, $d3);
+
+        return $r3;
+    }
+
+    public static boolean intersect(net.sourceforge.plantuml.posimo.Positionable, net.sourceforge.plantuml.posimo.Positionable)
+    {
+        net.sourceforge.plantuml.posimo.Positionable r0, r2;
+        java.awt.geom.Rectangle2D $r1, $r3;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.posimo.Positionable;
+
+        r2 := @parameter1: net.sourceforge.plantuml.posimo.Positionable;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: java.awt.geom.Rectangle2D toRectangle(net.sourceforge.plantuml.posimo.Positionable)>(r0);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: java.awt.geom.Rectangle2D toRectangle(net.sourceforge.plantuml.posimo.Positionable)>(r2);
+
+        $z0 = virtualinvoke $r1.<java.awt.geom.Rectangle2D: boolean intersects(java.awt.geom.Rectangle2D)>($r3);
+
+        return $z0;
+    }
+
+    public static java.awt.geom.Point2D$Double getCenter(net.sourceforge.plantuml.posimo.Positionable)
+    {
+        java.awt.geom.Point2D$Double $r0;
+        net.sourceforge.plantuml.posimo.Positionable r1;
+        java.awt.geom.Rectangle2D $r2, $r3;
+        double $d0, $d1;
+
+        r1 := @parameter0: net.sourceforge.plantuml.posimo.Positionable;
+
+        $r0 = new java.awt.geom.Point2D$Double;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: java.awt.geom.Rectangle2D toRectangle(net.sourceforge.plantuml.posimo.Positionable)>(r1);
+
+        $d0 = virtualinvoke $r2.<java.awt.geom.Rectangle2D: double getCenterX()>();
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.posimo.BezierUtils: java.awt.geom.Rectangle2D toRectangle(net.sourceforge.plantuml.posimo.Positionable)>(r1);
+
+        $d1 = virtualinvoke $r3.<java.awt.geom.Rectangle2D: double getCenterY()>();
+
+        specialinvoke $r0.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d0, $d1);
+
+        return $r0;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/posimo/BezierUtils;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.posimo.BezierUtils: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

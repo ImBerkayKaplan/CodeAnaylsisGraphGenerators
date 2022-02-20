@@ -1,0 +1,550 @@
+public class net.sourceforge.plantuml.command.regex.Matcher2 extends java.lang.Object
+{
+    private static final boolean INSTRUMENT;
+    private final java.util.regex.Matcher matcher;
+    private final java.lang.String id;
+    private static final java.util.Map durations;
+    private static long printed;
+
+    private void <init>(java.util.regex.Matcher, java.lang.String)
+    {
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        java.util.regex.Matcher r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        r1 := @parameter0: java.util.regex.Matcher;
+
+        r2 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.util.regex.Matcher matcher> = r1;
+
+        r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String id> = r2;
+
+        return;
+    }
+
+    public static net.sourceforge.plantuml.command.regex.Matcher2 build(java.util.regex.Pattern, java.lang.CharSequence)
+    {
+        java.util.regex.Pattern r0;
+        java.lang.String r1;
+        java.lang.CharSequence r2;
+        java.util.regex.Matcher r3;
+        net.sourceforge.plantuml.command.regex.Matcher2 $r4;
+        java.lang.Throwable $r6;
+
+        r0 := @parameter0: java.util.regex.Pattern;
+
+        r2 := @parameter1: java.lang.CharSequence;
+
+        staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        r1 = virtualinvoke r0.<java.util.regex.Pattern: java.lang.String pattern()>();
+
+     label1:
+        r3 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r2);
+
+        $r4 = new net.sourceforge.plantuml.command.regex.Matcher2;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.Matcher2: void <init>(java.util.regex.Matcher,java.lang.String)>(r3, r1);
+
+     label2:
+        return $r4;
+
+     label3:
+        $r6 := @caughtexception;
+
+     label4:
+        throw $r6;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public boolean matches()
+    {
+        long l0, $l1, $l2, $l3, $l4;
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        java.util.regex.Matcher $r1;
+        boolean z0;
+        java.lang.Throwable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.util.regex.Matcher matcher>;
+
+        z0 = virtualinvoke $r1.<java.util.regex.Matcher: boolean matches()>();
+
+     label2:
+        $l1 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l2 = $l1 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l2);
+
+        return z0;
+
+     label3:
+        $r2 := @caughtexception;
+
+     label4:
+        $l3 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l4 = $l3 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l4);
+
+        throw $r2;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    private void addTime(long)
+    {
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        long l0;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        l0 := @parameter0: long;
+
+        return;
+    }
+
+    private static synchronized void addTime(java.lang.String, long)
+    {
+        java.lang.String r0, r5, $r20;
+        java.util.Map $r1, $r3, $r6, $r13, $r17, $r21;
+        java.lang.Object $r2, $r7, $r14, $r22;
+        long $l0, l1, $l2, $l3, $l4, $l7;
+        java.lang.Long $r8, $r23, r24, r25;
+        byte $b5;
+        java.lang.StringBuilder $r9, $r10, $r11, $r12, $r15, $r16, $r18, $r19;
+        int $i6;
+
+        r0 := @parameter0: java.lang.String;
+
+        l1 := @parameter1: long;
+
+        $r1 = <net.sourceforge.plantuml.command.regex.Matcher2: java.util.Map durations>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r24 = (java.lang.Long) $r2;
+
+        if r24 != null goto label1;
+
+        r24 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>(0L);
+
+     label1:
+        $l0 = virtualinvoke r24.<java.lang.Long: long longValue()>();
+
+        $l2 = $l0 + l1;
+
+        r25 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l2);
+
+        $r3 = <net.sourceforge.plantuml.command.regex.Matcher2: java.util.Map durations>;
+
+        interfaceinvoke $r3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r0, r25);
+
+        r5 = staticinvoke <net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String getLongest()>();
+
+        if r5 != null goto label2;
+
+        return;
+
+     label2:
+        $r6 = <net.sourceforge.plantuml.command.regex.Matcher2: java.util.Map durations>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        $r8 = (java.lang.Long) $r7;
+
+        $l3 = virtualinvoke $r8.<java.lang.Long: long longValue()>();
+
+        $l4 = <net.sourceforge.plantuml.command.regex.Matcher2: long printed>;
+
+        $b5 = $l3 cmp $l4;
+
+        if $b5 <= 0 goto label3;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("---------- Regex ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r5);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r13 = <net.sourceforge.plantuml.command.regex.Matcher2: java.util.Map durations>;
+
+        $r14 = interfaceinvoke $r13.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        $r15 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r14);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("ms (");
+
+        $r17 = <net.sourceforge.plantuml.command.regex.Matcher2: java.util.Map durations>;
+
+        $i6 = interfaceinvoke $r17.<java.util.Map: int size()>();
+
+        $r18 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i6);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r20);
+
+        $r21 = <net.sourceforge.plantuml.command.regex.Matcher2: java.util.Map durations>;
+
+        $r22 = interfaceinvoke $r21.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        $r23 = (java.lang.Long) $r22;
+
+        $l7 = virtualinvoke $r23.<java.lang.Long: long longValue()>();
+
+        <net.sourceforge.plantuml.command.regex.Matcher2: long printed> = $l7;
+
+     label3:
+        return;
+    }
+
+    private static java.lang.String getLongest()
+    {
+        java.util.Map $r0;
+        java.util.Set $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3, $r5, $r7, $r9;
+        java.util.Map$Entry r4;
+        java.lang.Long $r6, $r8;
+        long $l0, l2;
+        byte $b1;
+        java.lang.String r10;
+
+        l2 = 0L;
+
+        r10 = null;
+
+        $r0 = <net.sourceforge.plantuml.command.regex.Matcher2: java.util.Map durations>;
+
+        $r1 = interfaceinvoke $r0.<java.util.Map: java.util.Set entrySet()>();
+
+        r2 = interfaceinvoke $r1.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (java.util.Map$Entry) $r3;
+
+        $r5 = interfaceinvoke r4.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r6 = (java.lang.Long) $r5;
+
+        $l0 = virtualinvoke $r6.<java.lang.Long: long longValue()>();
+
+        $b1 = $l0 cmp l2;
+
+        if $b1 <= 0 goto label2;
+
+        $r7 = interfaceinvoke r4.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r8 = (java.lang.Long) $r7;
+
+        l2 = virtualinvoke $r8.<java.lang.Long: long longValue()>();
+
+        $r9 = interfaceinvoke r4.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r10 = (java.lang.String) $r9;
+
+     label2:
+        goto label1;
+
+     label3:
+        return r10;
+    }
+
+    public java.lang.String group(int)
+    {
+        long l0, $l2, $l3, $l4, $l5;
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        int i1;
+        java.util.regex.Matcher $r1;
+        java.lang.String r2;
+        java.lang.Throwable $r3;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        i1 := @parameter0: int;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.util.regex.Matcher matcher>;
+
+        r2 = virtualinvoke $r1.<java.util.regex.Matcher: java.lang.String group(int)>(i1);
+
+     label2:
+        $l2 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l3 = $l2 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l3);
+
+        return r2;
+
+     label3:
+        $r3 := @caughtexception;
+
+     label4:
+        $l4 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l5 = $l4 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l5);
+
+        throw $r3;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public java.lang.String group()
+    {
+        long l0, $l1, $l2, $l3, $l4;
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        java.util.regex.Matcher $r1;
+        java.lang.String r2;
+        java.lang.Throwable $r3;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.util.regex.Matcher matcher>;
+
+        r2 = virtualinvoke $r1.<java.util.regex.Matcher: java.lang.String group()>();
+
+     label2:
+        $l1 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l2 = $l1 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l2);
+
+        return r2;
+
+     label3:
+        $r3 := @caughtexception;
+
+     label4:
+        $l3 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l4 = $l3 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l4);
+
+        throw $r3;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public int groupCount()
+    {
+        long l0, $l2, $l3, $l4, $l5;
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        java.util.regex.Matcher $r1;
+        int i1;
+        java.lang.Throwable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.util.regex.Matcher matcher>;
+
+        i1 = virtualinvoke $r1.<java.util.regex.Matcher: int groupCount()>();
+
+     label2:
+        $l2 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l3 = $l2 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l3);
+
+        return i1;
+
+     label3:
+        $r2 := @caughtexception;
+
+     label4:
+        $l4 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l5 = $l4 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l5);
+
+        throw $r2;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public boolean find()
+    {
+        long l0, $l1, $l2, $l3, $l4;
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        java.util.regex.Matcher $r1;
+        boolean z0;
+        java.lang.Throwable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.util.regex.Matcher matcher>;
+
+        z0 = virtualinvoke $r1.<java.util.regex.Matcher: boolean find()>();
+
+     label2:
+        $l1 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l2 = $l1 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l2);
+
+        return z0;
+
+     label3:
+        $r2 := @caughtexception;
+
+     label4:
+        $l3 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l4 = $l3 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l4);
+
+        throw $r2;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public int end()
+    {
+        long l0, $l2, $l3, $l4, $l5;
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        java.util.regex.Matcher $r1;
+        int i1;
+        java.lang.Throwable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.util.regex.Matcher matcher>;
+
+        i1 = virtualinvoke $r1.<java.util.regex.Matcher: int end()>();
+
+     label2:
+        $l2 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l3 = $l2 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l3);
+
+        return i1;
+
+     label3:
+        $r2 := @caughtexception;
+
+     label4:
+        $l4 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l5 = $l4 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l5);
+
+        throw $r2;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public int start()
+    {
+        long l0, $l2, $l3, $l4, $l5;
+        net.sourceforge.plantuml.command.regex.Matcher2 r0;
+        java.util.regex.Matcher $r1;
+        int i1;
+        java.lang.Throwable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.Matcher2;
+
+        l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.Matcher2: java.util.regex.Matcher matcher>;
+
+        i1 = virtualinvoke $r1.<java.util.regex.Matcher: int start()>();
+
+     label2:
+        $l2 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l3 = $l2 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l3);
+
+        return i1;
+
+     label3:
+        $r2 := @caughtexception;
+
+     label4:
+        $l4 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l5 = $l4 - l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.Matcher2: void addTime(long)>($l5);
+
+        throw $r2;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    static void <clinit>()
+    {
+        java.util.HashMap $r0;
+
+        <net.sourceforge.plantuml.command.regex.Matcher2: boolean INSTRUMENT> = 0;
+
+        $r0 = new java.util.HashMap;
+
+        specialinvoke $r0.<java.util.HashMap: void <init>()>();
+
+        <net.sourceforge.plantuml.command.regex.Matcher2: java.util.Map durations> = $r0;
+
+        return;
+    }
+}

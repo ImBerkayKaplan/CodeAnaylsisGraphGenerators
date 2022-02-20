@@ -1,0 +1,847 @@
+public class net.sourceforge.plantuml.api.NumberAnalyzed extends java.lang.Object implements net.sourceforge.plantuml.api.INumberAnalyzed
+{
+    private static final int SLIDING_WINDOW;
+    private long nb;
+    private long sum;
+    private long min;
+    private long max;
+    private long sumOfSquare;
+    private long sliddingSum;
+    private final java.lang.String name;
+    private final java.util.concurrent.locks.Lock saveLock;
+
+    public void <init>(java.lang.String)
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        java.util.concurrent.locks.ReentrantLock $r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        r2 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.concurrent.locks.ReentrantLock;
+
+        specialinvoke $r1.<java.util.concurrent.locks.ReentrantLock: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.util.concurrent.locks.Lock saveLock> = $r1;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String name> = r2;
+
+        return;
+    }
+
+    public synchronized void reset()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb> = 0L;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum> = 0L;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long min> = 0L;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long max> = 0L;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare> = 0L;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum> = 0L;
+
+        return;
+    }
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        specialinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: void <init>(java.lang.String)>("");
+
+        return;
+    }
+
+    public final void save(java.util.prefs.Preferences)
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        java.lang.String $r1, $r5, $r8, $r9;
+        int $i0;
+        java.util.concurrent.locks.Lock $r2, $r10, $r14;
+        boolean $z0;
+        java.util.prefs.Preferences r3;
+        java.lang.StringBuilder $r4, $r6, $r7;
+        java.lang.UnsupportedOperationException $r11;
+        java.lang.Throwable $r12;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        r3 := @parameter0: java.util.prefs.Preferences;
+
+        $r1 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String name>;
+
+        $i0 = virtualinvoke $r1.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label1;
+
+        $r11 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r11.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r11;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.util.concurrent.locks.Lock saveLock>;
+
+        $z0 = interfaceinvoke $r2.<java.util.concurrent.locks.Lock: boolean tryLock()>();
+
+        if $z0 == 0 goto label5;
+
+     label2:
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String name>;
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".saved");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r9 = specialinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String getSavedString()>();
+
+        virtualinvoke r3.<java.util.prefs.Preferences: void put(java.lang.String,java.lang.String)>($r8, $r9);
+
+     label3:
+        $r10 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.util.concurrent.locks.Lock saveLock>;
+
+        interfaceinvoke $r10.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        goto label5;
+
+     label4:
+        $r12 := @caughtexception;
+
+        $r14 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.util.concurrent.locks.Lock saveLock>;
+
+        interfaceinvoke $r14.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        throw $r12;
+
+     label5:
+        return;
+
+        catch java.lang.Throwable from label2 to label3 with label4;
+    }
+
+    private java.lang.String getSavedString()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long l0, l1, l2, l3, l4, l5;
+        java.lang.String r3, $r5, $r8, $r11, $r14, $r17, $r20, $r25;
+        java.lang.StringBuilder $r4, $r6, $r7, $r9, $r10, $r12, $r13, $r15, $r16, $r18, $r19, $r21, $r22, $r23, $r24;
+        java.lang.Throwable $r26;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        entermonitor r0;
+
+     label1:
+        l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        l1 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        l2 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long min>;
+
+        l3 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long max>;
+
+        l4 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare>;
+
+        l5 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum>;
+
+        exitmonitor r0;
+
+     label2:
+        goto label5;
+
+     label3:
+        $r26 := @caughtexception;
+
+        exitmonitor r0;
+
+     label4:
+        throw $r26;
+
+     label5:
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String getSavedSupplementatyData()>();
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String longToString(long)>(l0);
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String longToString(long)>(l1);
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r11 = virtualinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String longToString(long)>(l2);
+
+        $r12 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r14 = virtualinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String longToString(long)>(l3);
+
+        $r15 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r14);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r17 = virtualinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String longToString(long)>(l4);
+
+        $r18 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r17);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r20 = virtualinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String longToString(long)>(l5);
+
+        $r21 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r20);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";");
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r25;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    protected java.lang.String getSavedSupplementatyData()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        return "";
+    }
+
+    protected final java.lang.String longToString(long)
+    {
+        long l0;
+        java.lang.String $r0;
+        net.sourceforge.plantuml.api.NumberAnalyzed r1;
+
+        r1 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        l0 := @parameter0: long;
+
+        $r0 = staticinvoke <java.lang.Long: java.lang.String toString(long,int)>(l0, 36);
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.api.NumberAnalyzed load(java.lang.String, java.util.prefs.Preferences)
+    {
+        java.util.prefs.Preferences r0;
+        java.lang.StringBuilder $r1, $r3, $r4, $r15, $r16, $r17, $r20, $r21, $r22;
+        java.lang.String r2, $r5, r6, $r9, $r10, $r11, $r12, $r13, $r14, $r18, $r23;
+        int $i0;
+        java.util.StringTokenizer $r7;
+        net.sourceforge.plantuml.api.NumberAnalyzed $r8;
+        long $l1, $l2, $l3, $l4, $l5, $l6;
+        java.lang.Exception $r19;
+
+        r2 := @parameter0: java.lang.String;
+
+        r0 := @parameter1: java.util.prefs.Preferences;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".saved");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r6 = virtualinvoke r0.<java.util.prefs.Preferences: java.lang.String get(java.lang.String,java.lang.String)>($r5, "");
+
+        $i0 = virtualinvoke r6.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label1;
+
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot load ");
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r18);
+
+        return null;
+
+     label1:
+        $r7 = new java.util.StringTokenizer;
+
+        specialinvoke $r7.<java.util.StringTokenizer: void <init>(java.lang.String,java.lang.String)>(r6, ";");
+
+        $r8 = new net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $r9 = virtualinvoke $r7.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $l1 = staticinvoke <java.lang.Long: long parseLong(java.lang.String,int)>($r9, 36);
+
+        $r10 = virtualinvoke $r7.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $l2 = staticinvoke <java.lang.Long: long parseLong(java.lang.String,int)>($r10, 36);
+
+        $r11 = virtualinvoke $r7.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $l3 = staticinvoke <java.lang.Long: long parseLong(java.lang.String,int)>($r11, 36);
+
+        $r12 = virtualinvoke $r7.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $l4 = staticinvoke <java.lang.Long: long parseLong(java.lang.String,int)>($r12, 36);
+
+        $r13 = virtualinvoke $r7.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $l5 = staticinvoke <java.lang.Long: long parseLong(java.lang.String,int)>($r13, 36);
+
+        $r14 = virtualinvoke $r7.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $l6 = staticinvoke <java.lang.Long: long parseLong(java.lang.String,int)>($r14, 36);
+
+        specialinvoke $r8.<net.sourceforge.plantuml.api.NumberAnalyzed: void <init>(java.lang.String,long,long,long,long,long,long)>(r2, $l1, $l2, $l3, $l4, $l5, $l6);
+
+     label2:
+        return $r8;
+
+     label3:
+        $r19 := @caughtexception;
+
+        virtualinvoke $r19.<java.lang.Exception: void printStackTrace()>();
+
+        $r20 = new java.lang.StringBuilder;
+
+        specialinvoke $r20.<java.lang.StringBuilder: void <init>()>();
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Error reading ");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r6);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r23);
+
+        return null;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    public synchronized java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r1, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11;
+        net.sourceforge.plantuml.api.NumberAnalyzed r2;
+        long $l0, $l1, $l2, $l3, $l4;
+        java.lang.String $r12;
+
+        r2 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("sum=");
+
+        $l0 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" nb=");
+
+        $l1 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l1);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" min=");
+
+        $l2 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long min>;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l2);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" max=");
+
+        $l3 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long max>;
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l3);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" mean=");
+
+        $l4 = virtualinvoke r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long getMean()>();
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l4);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r12;
+    }
+
+    protected void <init>(java.lang.String, long, long, long, long, long, long)
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        java.lang.String r1;
+        long l0, l1, l2, l3, l4, l5;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        r1 := @parameter0: java.lang.String;
+
+        l0 := @parameter1: long;
+
+        l1 := @parameter2: long;
+
+        l2 := @parameter3: long;
+
+        l3 := @parameter4: long;
+
+        l4 := @parameter5: long;
+
+        l5 := @parameter6: long;
+
+        specialinvoke r0.<net.sourceforge.plantuml.api.NumberAnalyzed: void <init>(java.lang.String)>(r1);
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb> = l0;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum> = l1;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long min> = l2;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long max> = l3;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare> = l4;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum> = l5;
+
+        return;
+    }
+
+    public synchronized net.sourceforge.plantuml.api.INumberAnalyzed getCopyImmutable()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed $r0, r1;
+        long $l0, $l1, $l2, $l3, $l4, $l5;
+        java.lang.String $r2;
+
+        r1 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $r0 = new net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $r2 = r1.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String name>;
+
+        $l5 = r1.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $l4 = r1.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        $l3 = r1.<net.sourceforge.plantuml.api.NumberAnalyzed: long min>;
+
+        $l2 = r1.<net.sourceforge.plantuml.api.NumberAnalyzed: long max>;
+
+        $l1 = r1.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare>;
+
+        $l0 = r1.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.api.NumberAnalyzed: void <init>(java.lang.String,long,long,long,long,long,long)>($r2, $l5, $l4, $l3, $l2, $l1, $l0);
+
+        return $r0;
+    }
+
+    public synchronized void addValue(long)
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long $l0, $l1, $l2, l4, $l5, $l7, $l9, $l10, $l11, $l12, $l13, $l14, $l15, $l16, $l17;
+        byte $b3, $b6, $b8;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        l4 := @parameter0: long;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $l1 = $l0 + 1L;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb> = $l1;
+
+        $l2 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $b3 = $l2 cmp 1L;
+
+        if $b3 != 0 goto label1;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long min> = l4;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long max> = l4;
+
+        goto label3;
+
+     label1:
+        $l5 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long max>;
+
+        $b6 = l4 cmp $l5;
+
+        if $b6 <= 0 goto label2;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long max> = l4;
+
+        goto label3;
+
+     label2:
+        $l7 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long min>;
+
+        $b8 = l4 cmp $l7;
+
+        if $b8 >= 0 goto label3;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long min> = l4;
+
+     label3:
+        $l9 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        $l10 = $l9 + l4;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum> = $l10;
+
+        $l11 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare>;
+
+        $l12 = l4 * l4;
+
+        $l13 = $l11 + $l12;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare> = $l13;
+
+        $l14 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum>;
+
+        $l15 = $l14 * 1023L;
+
+        $l16 = $l15 / 1024L;
+
+        $l17 = $l16 + l4;
+
+        r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum> = $l17;
+
+        return;
+    }
+
+    public void add(net.sourceforge.plantuml.api.NumberAnalyzed)
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0, r2;
+        long l0, l1, l2, l3, l4, l5, $l6, $l7, $l8, $l9, $l10, $l11, $l12, $l13, $l14, $l15, $l16, $l17;
+        java.lang.Throwable $r4, $r6;
+
+        r2 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        r0 := @parameter0: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        entermonitor r0;
+
+     label01:
+        l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        l1 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        l2 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long min>;
+
+        l3 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long max>;
+
+        l4 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare>;
+
+        l5 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum>;
+
+        exitmonitor r0;
+
+     label02:
+        goto label05;
+
+     label03:
+        $r6 := @caughtexception;
+
+        exitmonitor r0;
+
+     label04:
+        throw $r6;
+
+     label05:
+        entermonitor r2;
+
+     label06:
+        $l6 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        $l7 = $l6 + l1;
+
+        r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum> = $l7;
+
+        $l8 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $l9 = $l8 + l0;
+
+        r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb> = $l9;
+
+        $l10 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long min>;
+
+        $l11 = staticinvoke <java.lang.Math: long min(long,long)>($l10, l2);
+
+        r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long min> = $l11;
+
+        $l12 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long max>;
+
+        $l13 = staticinvoke <java.lang.Math: long max(long,long)>($l12, l3);
+
+        r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long max> = $l13;
+
+        $l14 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare>;
+
+        $l15 = $l14 + l4;
+
+        r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare> = $l15;
+
+        $l16 = r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum>;
+
+        $l17 = $l16 + l5;
+
+        r2.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum> = $l17;
+
+        exitmonitor r2;
+
+     label07:
+        goto label10;
+
+     label08:
+        $r4 := @caughtexception;
+
+        exitmonitor r2;
+
+     label09:
+        throw $r4;
+
+     label10:
+        return;
+
+        catch java.lang.Throwable from label01 to label02 with label03;
+        catch java.lang.Throwable from label03 to label04 with label03;
+        catch java.lang.Throwable from label06 to label07 with label08;
+        catch java.lang.Throwable from label08 to label09 with label08;
+    }
+
+    public final synchronized long getNb()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        return $l0;
+    }
+
+    public final synchronized long getSum()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        return $l0;
+    }
+
+    public final synchronized long getMin()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long min>;
+
+        return $l0;
+    }
+
+    public final synchronized long getMax()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long max>;
+
+        return $l0;
+    }
+
+    public final synchronized long getMean()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long $l0, $l2, $l3, $l4;
+        byte $b1;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $b1 = $l0 cmp 0L;
+
+        if $b1 != 0 goto label1;
+
+        return 0L;
+
+     label1:
+        $l3 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        $l2 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $l4 = $l3 / $l2;
+
+        return $l4;
+    }
+
+    public final synchronized long getSliddingMean()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long $l0, $l2, $l4, $l5, $l6, $l7, $l8, $l9;
+        byte $b1, $b3;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $b1 = $l0 cmp 0L;
+
+        if $b1 != 0 goto label1;
+
+        return 0L;
+
+     label1:
+        $l2 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $b3 = $l2 cmp 1024L;
+
+        if $b3 >= 0 goto label2;
+
+        $l8 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        $l7 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $l9 = $l8 / $l7;
+
+        return $l9;
+
+     label2:
+        $l5 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sliddingSum>;
+
+        $l4 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        $l6 = $l5 / $l4;
+
+        return $l6;
+    }
+
+    public final long getStandardDeviation()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        long l0, l1, l2, $l4, $l5, $l6, $l7, l8;
+        byte $b3;
+        double $d0, $d1;
+        java.lang.Throwable $r2;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        entermonitor r0;
+
+     label1:
+        l0 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sum>;
+
+        l1 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long sumOfSquare>;
+
+        l2 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: long nb>;
+
+        exitmonitor r0;
+
+     label2:
+        goto label5;
+
+     label3:
+        $r2 := @caughtexception;
+
+        exitmonitor r0;
+
+     label4:
+        throw $r2;
+
+     label5:
+        $b3 = l2 cmp 0L;
+
+        if $b3 != 0 goto label6;
+
+        return 0L;
+
+     label6:
+        l8 = l0 / l2;
+
+        $l5 = l1 / l2;
+
+        $l4 = l8 * l8;
+
+        $l6 = $l5 - $l4;
+
+        $d0 = (double) $l6;
+
+        $d1 = staticinvoke <java.lang.Math: double sqrt(double)>($d0);
+
+        $l7 = staticinvoke <java.lang.Math: long round(double)>($d1);
+
+        return $l7;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public final java.lang.String getName()
+    {
+        net.sourceforge.plantuml.api.NumberAnalyzed r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.api.NumberAnalyzed;
+
+        $r1 = r0.<net.sourceforge.plantuml.api.NumberAnalyzed: java.lang.String name>;
+
+        return $r1;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.api.NumberAnalyzed: int SLIDING_WINDOW> = 1024;
+
+        return;
+    }
+}

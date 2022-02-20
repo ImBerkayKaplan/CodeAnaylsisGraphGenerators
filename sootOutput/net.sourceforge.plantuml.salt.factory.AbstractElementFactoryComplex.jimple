@@ -1,0 +1,130 @@
+public abstract class net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex extends java.lang.Object implements net.sourceforge.plantuml.salt.factory.ElementFactory
+{
+    private final net.sourceforge.plantuml.salt.DataSource dataSource;
+    private final java.util.Collection factories;
+    private final net.sourceforge.plantuml.salt.Dictionary dictionary;
+
+    public void <init>(net.sourceforge.plantuml.salt.DataSource, net.sourceforge.plantuml.salt.Dictionary)
+    {
+        net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex r0;
+        java.util.ArrayList $r1;
+        net.sourceforge.plantuml.salt.DataSource r2;
+        net.sourceforge.plantuml.salt.Dictionary r3;
+
+        r0 := @this: net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
+
+        r2 := @parameter0: net.sourceforge.plantuml.salt.DataSource;
+
+        r3 := @parameter1: net.sourceforge.plantuml.salt.Dictionary;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex: java.util.Collection factories> = $r1;
+
+        r0.<net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex: net.sourceforge.plantuml.salt.DataSource dataSource> = r2;
+
+        r0.<net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex: net.sourceforge.plantuml.salt.Dictionary dictionary> = r3;
+
+        return;
+    }
+
+    public final void addFactory(net.sourceforge.plantuml.salt.factory.ElementFactory)
+    {
+        net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex r0;
+        net.sourceforge.plantuml.salt.factory.ElementFactory r1;
+        java.util.Collection $r2;
+
+        r0 := @this: net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
+
+        r1 := @parameter0: net.sourceforge.plantuml.salt.factory.ElementFactory;
+
+        $r2 = r0.<net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex: java.util.Collection factories>;
+
+        interfaceinvoke $r2.<java.util.Collection: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.salt.Terminated getNextElement()
+    {
+        net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex r0;
+        java.util.Collection $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.IllegalStateException $r3;
+        net.sourceforge.plantuml.salt.DataSource $r4;
+        net.sourceforge.plantuml.salt.Terminated $r5, $r10;
+        java.lang.Object $r6, $r8;
+        java.lang.String $r7;
+        net.sourceforge.plantuml.salt.factory.ElementFactory r9;
+
+        r0 := @this: net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
+
+        $r1 = r0.<net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex: java.util.Collection factories>;
+
+        r2 = interfaceinvoke $r1.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r8 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r9 = (net.sourceforge.plantuml.salt.factory.ElementFactory) $r8;
+
+        $z1 = interfaceinvoke r9.<net.sourceforge.plantuml.salt.factory.ElementFactory: boolean ready()>();
+
+        if $z1 == 0 goto label2;
+
+        $r10 = interfaceinvoke r9.<net.sourceforge.plantuml.salt.factory.ElementFactory: net.sourceforge.plantuml.salt.Terminated create()>();
+
+        return $r10;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r3 = new java.lang.IllegalStateException;
+
+        $r4 = r0.<net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex: net.sourceforge.plantuml.salt.DataSource dataSource>;
+
+        $r5 = interfaceinvoke $r4.<net.sourceforge.plantuml.salt.DataSource: net.sourceforge.plantuml.salt.Terminated peek(int)>(0);
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.salt.Terminated: java.lang.Object getElement()>();
+
+        $r7 = (java.lang.String) $r6;
+
+        specialinvoke $r3.<java.lang.IllegalStateException: void <init>(java.lang.String)>($r7);
+
+        throw $r3;
+    }
+
+    protected final net.sourceforge.plantuml.salt.DataSource getDataSource()
+    {
+        net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex r0;
+        net.sourceforge.plantuml.salt.DataSource $r1;
+
+        r0 := @this: net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
+
+        $r1 = r0.<net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex: net.sourceforge.plantuml.salt.DataSource dataSource>;
+
+        return $r1;
+    }
+
+    protected final net.sourceforge.plantuml.salt.Dictionary getDictionary()
+    {
+        net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex r0;
+        net.sourceforge.plantuml.salt.Dictionary $r1;
+
+        r0 := @this: net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
+
+        $r1 = r0.<net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex: net.sourceforge.plantuml.salt.Dictionary dictionary>;
+
+        return $r1;
+    }
+}

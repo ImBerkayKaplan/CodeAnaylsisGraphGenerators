@@ -1,0 +1,520 @@
+public class net.sourceforge.plantuml.command.CommandSpriteFile extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.command.CommandSpriteFile r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandSpriteFile;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.command.CommandSpriteFile: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    private static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r11;
+
+        $r0 = class "Lnet/sourceforge/plantuml/command/CommandSpriteFile;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[8];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("sprite");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>("\\$?");
+
+        $r2[3] = $r6;
+
+        $r7 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("NAME", "([-%pLN_]+)");
+
+        $r2[4] = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[5] = $r8;
+
+        $r9 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("FILE", "(.*)");
+
+        $r2[6] = $r9;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[7] = $r10;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r11;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.TitledDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult)
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String r1, $r4, $r7, $r12, $r18, $r23, $r26, r27, $r31, $r36, $r39, $r47, $r55, $r59, r62, r67;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        net.sourceforge.plantuml.FileSystem $r2, $r25;
+        net.sourceforge.plantuml.command.CommandSpriteFile r3;
+        net.sourceforge.plantuml.sprite.SpriteImage $r5, $r42;
+        net.sourceforge.plantuml.TitledDiagram r6;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r8, $r13, $r19, $r24, $r32, $r37, $r48, $r60;
+        java.lang.StringBuilder $r9, $r10, $r11, $r15, $r16, $r17, $r20, $r21, $r22, $r28, $r29, $r30, $r33, $r34, $r35, $r38, $r40, $r41, $r44, $r45, $r46, $r50, $r51, $r52, $r53, $r54, $r56, $r57, $r58;
+        net.sourceforge.plantuml.sprite.SpriteSvg $r14;
+        int $i0, i1;
+        java.awt.image.BufferedImage $r43, r68;
+        java.io.IOException $r49;
+        net.sourceforge.plantuml.LineLocation r61;
+        java.io.InputStream r63;
+        net.sourceforge.plantuml.sprite.Sprite r64;
+        net.sourceforge.plantuml.security.SFile r65, r66;
+
+        r3 := @this: net.sourceforge.plantuml.command.CommandSpriteFile;
+
+        r6 := @parameter0: net.sourceforge.plantuml.TitledDiagram;
+
+        r61 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("FILE", 0);
+
+     label01:
+        $z0 = virtualinvoke r1.<java.lang.String: boolean startsWith(java.lang.String)>("jar:");
+
+        if $z0 == 0 goto label04;
+
+        $r38 = new java.lang.StringBuilder;
+
+        specialinvoke $r38.<java.lang.StringBuilder: void <init>()>();
+
+        $r39 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int)>(4);
+
+        $r40 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r39);
+
+        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".png");
+
+        r62 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r63 = staticinvoke <net.sourceforge.plantuml.sprite.SpriteImage: java.io.InputStream getInternalSprite(java.lang.String)>(r62);
+
+        if r63 != null goto label03;
+
+        $r44 = new java.lang.StringBuilder;
+
+        specialinvoke $r44.<java.lang.StringBuilder: void <init>()>();
+
+        $r45 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("No such internal sprite: ");
+
+        $r46 = virtualinvoke $r45.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r62);
+
+        $r47 = virtualinvoke $r46.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r48 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r47);
+
+     label02:
+        return $r48;
+
+     label03:
+        $r42 = new net.sourceforge.plantuml.sprite.SpriteImage;
+
+        $r43 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(java.io.InputStream)>(r63);
+
+        specialinvoke $r42.<net.sourceforge.plantuml.sprite.SpriteImage: void <init>(java.awt.image.BufferedImage)>($r43);
+
+        r64 = $r42;
+
+        goto label17;
+
+     label04:
+        $z1 = virtualinvoke r1.<java.lang.String: boolean contains(java.lang.CharSequence)>("~");
+
+        if $z1 == 0 goto label09;
+
+        i1 = virtualinvoke r1.<java.lang.String: int lastIndexOf(java.lang.String)>("~");
+
+        $r25 = staticinvoke <net.sourceforge.plantuml.FileSystem: net.sourceforge.plantuml.FileSystem getInstance()>();
+
+        $r26 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int,int)>(0, i1);
+
+        r65 = virtualinvoke $r25.<net.sourceforge.plantuml.FileSystem: net.sourceforge.plantuml.security.SFile getFile(java.lang.String)>($r26);
+
+        $z4 = virtualinvoke r65.<net.sourceforge.plantuml.security.SFile: boolean exists()>();
+
+        if $z4 != 0 goto label06;
+
+        $r33 = new java.lang.StringBuilder;
+
+        specialinvoke $r33.<java.lang.StringBuilder: void <init>()>();
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot read: ");
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r37 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r36);
+
+     label05:
+        return $r37;
+
+     label06:
+        $i0 = i1 + 1;
+
+        r27 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int)>($i0);
+
+        r64 = specialinvoke r3.<net.sourceforge.plantuml.command.CommandSpriteFile: net.sourceforge.plantuml.sprite.Sprite getImageFromZip(net.sourceforge.plantuml.security.SFile,java.lang.String)>(r65, r27);
+
+        if r64 != null goto label08;
+
+        $r28 = new java.lang.StringBuilder;
+
+        specialinvoke $r28.<java.lang.StringBuilder: void <init>()>();
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot read: ");
+
+        $r30 = virtualinvoke $r29.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r32 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r31);
+
+     label07:
+        return $r32;
+
+     label08:
+        goto label17;
+
+     label09:
+        $r2 = staticinvoke <net.sourceforge.plantuml.FileSystem: net.sourceforge.plantuml.FileSystem getInstance()>();
+
+        r66 = virtualinvoke $r2.<net.sourceforge.plantuml.FileSystem: net.sourceforge.plantuml.security.SFile getFile(java.lang.String)>(r1);
+
+        $z2 = virtualinvoke r66.<net.sourceforge.plantuml.security.SFile: boolean exists()>();
+
+        if $z2 != 0 goto label11;
+
+        $r20 = new java.lang.StringBuilder;
+
+        specialinvoke $r20.<java.lang.StringBuilder: void <init>()>();
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot read: ");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r24 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r23);
+
+     label10:
+        return $r24;
+
+     label11:
+        $r4 = virtualinvoke r66.<net.sourceforge.plantuml.security.SFile: java.lang.String getName()>();
+
+        $z3 = specialinvoke r3.<net.sourceforge.plantuml.command.CommandSpriteFile: boolean isSvg(java.lang.String)>($r4);
+
+        if $z3 == 0 goto label14;
+
+        r67 = staticinvoke <net.sourceforge.plantuml.FileUtils: java.lang.String readSvg(net.sourceforge.plantuml.security.SFile)>(r66);
+
+        if r67 != null goto label13;
+
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot read: ");
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r19 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r18);
+
+     label12:
+        return $r19;
+
+     label13:
+        $r14 = new net.sourceforge.plantuml.sprite.SpriteSvg;
+
+        specialinvoke $r14.<net.sourceforge.plantuml.sprite.SpriteSvg: void <init>(java.lang.String)>(r67);
+
+        r64 = $r14;
+
+        goto label17;
+
+     label14:
+        r68 = virtualinvoke r66.<net.sourceforge.plantuml.security.SFile: java.awt.image.BufferedImage readRasterImageFromFile()>();
+
+        if r68 != null goto label16;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot read: ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r12);
+
+     label15:
+        return $r13;
+
+     label16:
+        $r5 = new net.sourceforge.plantuml.sprite.SpriteImage;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.sprite.SpriteImage: void <init>(java.awt.image.BufferedImage)>(r68);
+
+        r64 = $r5;
+
+     label17:
+        goto label19;
+
+     label18:
+        $r49 := @caughtexception;
+
+        $r50 = new java.lang.StringBuilder;
+
+        specialinvoke $r50.<java.lang.StringBuilder: void <init>()>();
+
+        $r51 = virtualinvoke $r50.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Error reading ");
+
+        $r52 = virtualinvoke $r51.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r53 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r54 = virtualinvoke $r53.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r49);
+
+        $r55 = virtualinvoke $r54.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r55);
+
+        $r56 = new java.lang.StringBuilder;
+
+        specialinvoke $r56.<java.lang.StringBuilder: void <init>()>();
+
+        $r57 = virtualinvoke $r56.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot read: ");
+
+        $r58 = virtualinvoke $r57.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r59 = virtualinvoke $r58.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r60 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>($r59);
+
+        return $r60;
+
+     label19:
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("NAME", 0);
+
+        virtualinvoke r6.<net.sourceforge.plantuml.TitledDiagram: void addSprite(java.lang.String,net.sourceforge.plantuml.sprite.Sprite)>($r7, r64);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r8;
+
+        catch java.io.IOException from label01 to label02 with label18;
+        catch java.io.IOException from label03 to label05 with label18;
+        catch java.io.IOException from label06 to label07 with label18;
+        catch java.io.IOException from label08 to label10 with label18;
+        catch java.io.IOException from label11 to label12 with label18;
+        catch java.io.IOException from label13 to label15 with label18;
+        catch java.io.IOException from label16 to label17 with label18;
+    }
+
+    private net.sourceforge.plantuml.sprite.Sprite getImageFromZip(net.sourceforge.plantuml.security.SFile, java.lang.String) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.security.SFile r0;
+        java.io.InputStream r1;
+        java.util.zip.ZipInputStream $r2, r12;
+        java.lang.String r3, r4, $r9;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.command.CommandSpriteFile r5;
+        net.sourceforge.plantuml.sprite.SpriteImage $r6;
+        java.awt.image.BufferedImage $r7;
+        net.sourceforge.plantuml.sprite.SpriteSvg $r8;
+        java.lang.Throwable $r10;
+        java.util.zip.ZipEntry r13;
+
+        r5 := @this: net.sourceforge.plantuml.command.CommandSpriteFile;
+
+        r0 := @parameter0: net.sourceforge.plantuml.security.SFile;
+
+        r4 := @parameter1: java.lang.String;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.security.SFile: java.io.InputStream openFile()>();
+
+        if r1 != null goto label01;
+
+        return null;
+
+     label01:
+        r12 = null;
+
+     label02:
+        $r2 = new java.util.zip.ZipInputStream;
+
+        specialinvoke $r2.<java.util.zip.ZipInputStream: void <init>(java.io.InputStream)>(r1);
+
+        r12 = $r2;
+
+        r13 = virtualinvoke $r2.<java.util.zip.ZipInputStream: java.util.zip.ZipEntry getNextEntry()>();
+
+     label03:
+        if r13 == null goto label11;
+
+        r3 = virtualinvoke r13.<java.util.zip.ZipEntry: java.lang.String getName()>();
+
+        $z0 = virtualinvoke r13.<java.util.zip.ZipEntry: boolean isDirectory()>();
+
+        if $z0 == 0 goto label04;
+
+        goto label10;
+
+     label04:
+        $z1 = virtualinvoke r3.<java.lang.String: boolean equals(java.lang.Object)>(r4);
+
+        if $z1 == 0 goto label10;
+
+        $z2 = specialinvoke r5.<net.sourceforge.plantuml.command.CommandSpriteFile: boolean isSvg(java.lang.String)>(r4);
+
+        if $z2 == 0 goto label07;
+
+        $r8 = new net.sourceforge.plantuml.sprite.SpriteSvg;
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.FileUtils: java.lang.String readSvg(java.io.InputStream)>($r2);
+
+        specialinvoke $r8.<net.sourceforge.plantuml.sprite.SpriteSvg: void <init>(java.lang.String)>($r9);
+
+     label05:
+        if $r2 == null goto label06;
+
+        virtualinvoke $r2.<java.util.zip.ZipInputStream: void closeEntry()>();
+
+        virtualinvoke $r2.<java.util.zip.ZipInputStream: void close()>();
+
+     label06:
+        return $r8;
+
+     label07:
+        $r6 = new net.sourceforge.plantuml.sprite.SpriteImage;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(java.io.InputStream)>($r2);
+
+        specialinvoke $r6.<net.sourceforge.plantuml.sprite.SpriteImage: void <init>(java.awt.image.BufferedImage)>($r7);
+
+     label08:
+        if $r2 == null goto label09;
+
+        virtualinvoke $r2.<java.util.zip.ZipInputStream: void closeEntry()>();
+
+        virtualinvoke $r2.<java.util.zip.ZipInputStream: void close()>();
+
+     label09:
+        return $r6;
+
+     label10:
+        r13 = virtualinvoke $r2.<java.util.zip.ZipInputStream: java.util.zip.ZipEntry getNextEntry()>();
+
+        goto label03;
+
+     label11:
+        if $r2 == null goto label15;
+
+        virtualinvoke $r2.<java.util.zip.ZipInputStream: void closeEntry()>();
+
+        virtualinvoke $r2.<java.util.zip.ZipInputStream: void close()>();
+
+        goto label15;
+
+     label12:
+        $r10 := @caughtexception;
+
+     label13:
+        if r12 == null goto label14;
+
+        virtualinvoke r12.<java.util.zip.ZipInputStream: void closeEntry()>();
+
+        virtualinvoke r12.<java.util.zip.ZipInputStream: void close()>();
+
+     label14:
+        throw $r10;
+
+     label15:
+        return null;
+
+        catch java.lang.Throwable from label02 to label05 with label12;
+        catch java.lang.Throwable from label07 to label08 with label12;
+        catch java.lang.Throwable from label10 to label11 with label12;
+        catch java.lang.Throwable from label12 to label13 with label12;
+    }
+
+    private boolean isSvg(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+        boolean $z0;
+        net.sourceforge.plantuml.command.CommandSpriteFile r2;
+
+        r2 := @this: net.sourceforge.plantuml.command.CommandSpriteFile;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = virtualinvoke r0.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $z0 = virtualinvoke $r1.<java.lang.String: boolean endsWith(java.lang.String)>(".svg");
+
+        return $z0;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.CommandSpriteFile r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.TitledDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandSpriteFile;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.TitledDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.command.CommandSpriteFile: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.TitledDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

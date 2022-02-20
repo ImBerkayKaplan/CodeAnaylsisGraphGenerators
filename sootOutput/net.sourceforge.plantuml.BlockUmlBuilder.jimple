@@ -1,0 +1,444 @@
+public final class net.sourceforge.plantuml.BlockUmlBuilder extends java.lang.Object implements net.sourceforge.plantuml.DefinitionsContainer
+{
+    private final java.util.List blocks;
+    private java.util.Set usedFiles;
+    private final net.sourceforge.plantuml.preproc.UncommentReadLine reader;
+    private final net.sourceforge.plantuml.preproc.Defines defines;
+    private final net.sourceforge.plantuml.preproc.ImportedFiles importedFiles;
+    private final java.nio.charset.Charset charset;
+    private final net.sourceforge.plantuml.api.ThemeStyle style;
+
+    public void <init>(java.util.List, java.lang.String, net.sourceforge.plantuml.preproc.Defines, java.io.Reader, net.sourceforge.plantuml.security.SFile, java.lang.String) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.BlockUmlBuilder r0;
+        java.util.List r1;
+        java.lang.String r2, r8;
+        net.sourceforge.plantuml.api.ThemeStyle $r3;
+        java.nio.charset.Charset $r4;
+        net.sourceforge.plantuml.preproc.Defines r5;
+        java.io.Reader r6;
+        net.sourceforge.plantuml.security.SFile r7;
+
+        r0 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        r1 := @parameter0: java.util.List;
+
+        r2 := @parameter1: java.lang.String;
+
+        r5 := @parameter2: net.sourceforge.plantuml.preproc.Defines;
+
+        r6 := @parameter3: java.io.Reader;
+
+        r7 := @parameter4: net.sourceforge.plantuml.security.SFile;
+
+        r8 := @parameter5: java.lang.String;
+
+        $r3 = <net.sourceforge.plantuml.api.ThemeStyle: net.sourceforge.plantuml.api.ThemeStyle LIGHT_REGULAR>;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.utils.CharsetUtils: java.nio.charset.Charset charsetOrDefault(java.lang.String)>(r2);
+
+        specialinvoke r0.<net.sourceforge.plantuml.BlockUmlBuilder: void <init>(net.sourceforge.plantuml.api.ThemeStyle,java.util.List,java.nio.charset.Charset,net.sourceforge.plantuml.preproc.Defines,java.io.Reader,net.sourceforge.plantuml.security.SFile,java.lang.String)>($r3, r1, $r4, r5, r6, r7, r8);
+
+        return;
+    }
+
+    public void <init>(java.util.List, java.lang.String, net.sourceforge.plantuml.preproc.Defines, java.io.Reader) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.BlockUmlBuilder r0;
+        java.util.List r1;
+        java.lang.String r2;
+        net.sourceforge.plantuml.preproc.Defines r3;
+        java.io.Reader r4;
+
+        r0 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        r1 := @parameter0: java.util.List;
+
+        r2 := @parameter1: java.lang.String;
+
+        r3 := @parameter2: net.sourceforge.plantuml.preproc.Defines;
+
+        r4 := @parameter3: java.io.Reader;
+
+        specialinvoke r0.<net.sourceforge.plantuml.BlockUmlBuilder: void <init>(java.util.List,java.lang.String,net.sourceforge.plantuml.preproc.Defines,java.io.Reader,net.sourceforge.plantuml.security.SFile,java.lang.String)>(r1, r2, r3, r4, null, null);
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.api.ThemeStyle, java.util.List, java.nio.charset.Charset, net.sourceforge.plantuml.preproc.Defines, java.io.Reader, net.sourceforge.plantuml.security.SFile, java.lang.String) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.BlockUmlBuilder r0;
+        java.util.ArrayList $r1;
+        java.util.HashSet $r2;
+        net.sourceforge.plantuml.api.ThemeStyle r3;
+        net.sourceforge.plantuml.preproc.Defines r4;
+        java.nio.charset.Charset r5, $r7;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.preproc.UncommentReadLine $r8, $r17;
+        java.io.Reader r9;
+        java.lang.String r10;
+        net.sourceforge.plantuml.preproc.ReadLine $r11;
+        net.sourceforge.plantuml.AParentFolderRegular $r12;
+        net.sourceforge.plantuml.security.SFile r13;
+        net.sourceforge.plantuml.preproc.ImportedFiles $r14;
+        net.sourceforge.plantuml.preproc2.Preprocessor $r15;
+        java.util.List r16;
+        java.lang.Throwable $r19, $r21, $r24;
+
+        r0 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        r3 := @parameter0: net.sourceforge.plantuml.api.ThemeStyle;
+
+        r16 := @parameter1: java.util.List;
+
+        r5 := @parameter2: java.nio.charset.Charset;
+
+        r4 := @parameter3: net.sourceforge.plantuml.preproc.Defines;
+
+        r9 := @parameter4: java.io.Reader;
+
+        r13 := @parameter5: net.sourceforge.plantuml.security.SFile;
+
+        r10 := @parameter6: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.BlockUmlBuilder: java.util.List blocks> = $r1;
+
+        $r2 = new java.util.HashSet;
+
+        specialinvoke $r2.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.BlockUmlBuilder: java.util.Set usedFiles> = $r2;
+
+        r0.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.api.ThemeStyle style> = r3;
+
+        r0.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.Defines defines> = r4;
+
+        $r6 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r5);
+
+        $r7 = (java.nio.charset.Charset) $r6;
+
+        r0.<net.sourceforge.plantuml.BlockUmlBuilder: java.nio.charset.Charset charset> = $r7;
+
+        $r8 = new net.sourceforge.plantuml.preproc.UncommentReadLine;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.preproc.ReadLineReader: net.sourceforge.plantuml.preproc.ReadLine create(java.io.Reader,java.lang.String)>(r9, r10);
+
+        specialinvoke $r8.<net.sourceforge.plantuml.preproc.UncommentReadLine: void <init>(net.sourceforge.plantuml.preproc.ReadLine)>($r11);
+
+        r0.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.UncommentReadLine reader> = $r8;
+
+        $r12 = new net.sourceforge.plantuml.AParentFolderRegular;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.AParentFolderRegular: void <init>(net.sourceforge.plantuml.security.SFile)>(r13);
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.preproc.ImportedFiles: net.sourceforge.plantuml.preproc.ImportedFiles createImportedFiles(net.sourceforge.plantuml.AParentFolder)>($r12);
+
+        r0.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.ImportedFiles importedFiles> = $r14;
+
+     label01:
+        $r15 = new net.sourceforge.plantuml.preproc2.Preprocessor;
+
+        $r17 = r0.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.UncommentReadLine reader>;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.preproc2.Preprocessor: void <init>(java.util.List,net.sourceforge.plantuml.preproc.ReadLine)>(r16, $r17);
+
+     label02:
+        specialinvoke r0.<net.sourceforge.plantuml.BlockUmlBuilder: void init(net.sourceforge.plantuml.preproc.ReadLineNumbered)>($r15);
+
+     label03:
+        interfaceinvoke $r15.<net.sourceforge.plantuml.preproc.ReadLineNumbered: void close()>();
+
+        goto label09;
+
+     label04:
+        $r24 := @caughtexception;
+
+     label05:
+        interfaceinvoke $r15.<net.sourceforge.plantuml.preproc.ReadLineNumbered: void close()>();
+
+     label06:
+        goto label08;
+
+     label07:
+        $r21 := @caughtexception;
+
+        virtualinvoke $r24.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r21);
+
+     label08:
+        throw $r24;
+
+     label09:
+        virtualinvoke r9.<java.io.Reader: void close()>();
+
+        goto label12;
+
+     label10:
+        $r19 := @caughtexception;
+
+     label11:
+        virtualinvoke r9.<java.io.Reader: void close()>();
+
+        throw $r19;
+
+     label12:
+        return;
+
+        catch java.lang.Throwable from label02 to label03 with label04;
+        catch java.lang.Throwable from label05 to label06 with label07;
+        catch java.lang.Throwable from label01 to label09 with label10;
+        catch java.lang.Throwable from label10 to label11 with label10;
+    }
+
+    private void init(net.sourceforge.plantuml.preproc.ReadLineNumbered) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.preproc.ReadLineNumbered r0;
+        java.lang.String $r1, $r2, $r3, $r4, $r23;
+        boolean $z0, $z1, $z2, $z3, z4, $z5;
+        net.sourceforge.plantuml.BlockUml $r5;
+        net.sourceforge.plantuml.BlockUmlBuilder r6;
+        net.sourceforge.plantuml.preproc.Defines $r7, $r9;
+        net.sourceforge.plantuml.api.ThemeStyle $r8;
+        java.nio.charset.Charset $r10;
+        java.util.Set $r11, $r12;
+        java.util.List $r13;
+        net.sourceforge.plantuml.preproc.UncommentReadLine $r14, $r15, $r16, $r17;
+        java.util.ArrayList $r18, r19;
+        net.sourceforge.plantuml.StringLocated $r20, r22;
+
+        r6 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        r0 := @parameter0: net.sourceforge.plantuml.preproc.ReadLineNumbered;
+
+        r19 = null;
+
+        z4 = 0;
+
+     label1:
+        $r20 = interfaceinvoke r0.<net.sourceforge.plantuml.preproc.ReadLineNumbered: net.sourceforge.plantuml.StringLocated readLine()>();
+
+        if $r20 == null goto label9;
+
+        $r1 = virtualinvoke $r20.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseStartDiagram(java.lang.String)>($r1);
+
+        if $z0 == 0 goto label2;
+
+        $r18 = new java.util.ArrayList;
+
+        specialinvoke $r18.<java.util.ArrayList: void <init>()>();
+
+        r19 = $r18;
+
+        z4 = 0;
+
+     label2:
+        $r2 = virtualinvoke $r20.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z1 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobasePauseDiagram(java.lang.String)>($r2);
+
+        if $z1 == 0 goto label3;
+
+        z4 = 1;
+
+        $r17 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.UncommentReadLine reader>;
+
+        virtualinvoke $r17.<net.sourceforge.plantuml.preproc.UncommentReadLine: void setPaused(boolean)>(1);
+
+     label3:
+        $r3 = virtualinvoke $r20.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z2 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isExit(java.lang.CharSequence)>($r3);
+
+        if $z2 == 0 goto label4;
+
+        z4 = 1;
+
+        $r16 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.UncommentReadLine reader>;
+
+        virtualinvoke $r16.<net.sourceforge.plantuml.preproc.UncommentReadLine: void setPaused(boolean)>(1);
+
+     label4:
+        if r19 == null goto label5;
+
+        if z4 != 0 goto label5;
+
+        interfaceinvoke r19.<java.util.List: boolean add(java.lang.Object)>($r20);
+
+        goto label6;
+
+     label5:
+        if z4 == 0 goto label6;
+
+        r22 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: net.sourceforge.plantuml.StringLocated getPossibleAppend(net.sourceforge.plantuml.StringLocated)>($r20);
+
+        if r22 == null goto label6;
+
+        interfaceinvoke r19.<java.util.List: boolean add(java.lang.Object)>(r22);
+
+     label6:
+        $r23 = virtualinvoke $r20.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z5 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseUnpauseDiagram(java.lang.String)>($r23);
+
+        if $z5 == 0 goto label7;
+
+        z4 = 0;
+
+        $r15 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.UncommentReadLine reader>;
+
+        virtualinvoke $r15.<net.sourceforge.plantuml.preproc.UncommentReadLine: void setPaused(boolean)>(0);
+
+     label7:
+        $r4 = virtualinvoke $r20.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z3 = staticinvoke <net.sourceforge.plantuml.utils.StartUtils: boolean isArobaseEndDiagram(java.lang.String)>($r4);
+
+        if $z3 == 0 goto label1;
+
+        if r19 == null goto label1;
+
+        if z4 == 0 goto label8;
+
+        interfaceinvoke r19.<java.util.List: boolean add(java.lang.Object)>($r20);
+
+     label8:
+        $r5 = new net.sourceforge.plantuml.BlockUml;
+
+        $r8 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.api.ThemeStyle style>;
+
+        $r7 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.Defines defines>;
+
+        $r9 = virtualinvoke $r7.<net.sourceforge.plantuml.preproc.Defines: net.sourceforge.plantuml.preproc.Defines cloneMe()>();
+
+        $r10 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: java.nio.charset.Charset charset>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.BlockUml: void <init>(net.sourceforge.plantuml.api.ThemeStyle,java.util.List,net.sourceforge.plantuml.preproc.Defines,net.sourceforge.plantuml.ISkinSimple,net.sourceforge.plantuml.preproc2.PreprocessorModeSet,java.nio.charset.Charset)>($r8, r19, $r9, null, r6, $r10);
+
+        $r11 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: java.util.Set usedFiles>;
+
+        $r12 = virtualinvoke $r5.<net.sourceforge.plantuml.BlockUml: java.util.Set getIncluded()>();
+
+        interfaceinvoke $r11.<java.util.Set: boolean addAll(java.util.Collection)>($r12);
+
+        $r13 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: java.util.List blocks>;
+
+        interfaceinvoke $r13.<java.util.List: boolean add(java.lang.Object)>($r5);
+
+        r19 = null;
+
+        $r14 = r6.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.UncommentReadLine reader>;
+
+        virtualinvoke $r14.<net.sourceforge.plantuml.preproc.UncommentReadLine: void setPaused(boolean)>(0);
+
+        goto label1;
+
+     label9:
+        return;
+    }
+
+    public java.util.List getBlockUmls()
+    {
+        net.sourceforge.plantuml.BlockUmlBuilder r0;
+        java.util.List $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.BlockUmlBuilder: java.util.List blocks>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    public final java.util.Set getIncludedFiles()
+    {
+        net.sourceforge.plantuml.BlockUmlBuilder r0;
+        java.util.Set $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.BlockUmlBuilder: java.util.Set usedFiles>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.Set unmodifiableSet(java.util.Set)>($r1);
+
+        return $r2;
+    }
+
+    public java.util.List getDefinition(java.lang.String)
+    {
+        net.sourceforge.plantuml.BlockUmlBuilder r0;
+        java.util.List $r1, $r3, $r7;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.BlockUml r5;
+        java.lang.String r6;
+
+        r0 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        r6 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.BlockUmlBuilder: java.util.List blocks>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r4 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.BlockUml) $r4;
+
+        $z1 = virtualinvoke r5.<net.sourceforge.plantuml.BlockUml: boolean isStartDef(java.lang.String)>(r6);
+
+        if $z1 == 0 goto label2;
+
+        $r7 = virtualinvoke r5.<net.sourceforge.plantuml.BlockUml: java.util.List getDefinition(boolean)>(0);
+
+        return $r7;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r3 = staticinvoke <java.util.Collections: java.util.List emptyList()>();
+
+        return $r3;
+    }
+
+    public final net.sourceforge.plantuml.preproc.ImportedFiles getImportedFiles()
+    {
+        net.sourceforge.plantuml.BlockUmlBuilder r0;
+        net.sourceforge.plantuml.preproc.ImportedFiles $r1;
+
+        r0 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.BlockUmlBuilder: net.sourceforge.plantuml.preproc.ImportedFiles importedFiles>;
+
+        return $r1;
+    }
+
+    public final java.lang.String getCharset()
+    {
+        net.sourceforge.plantuml.BlockUmlBuilder r0;
+        java.nio.charset.Charset $r1;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.BlockUmlBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.BlockUmlBuilder: java.nio.charset.Charset charset>;
+
+        $r2 = virtualinvoke $r1.<java.nio.charset.Charset: java.lang.String name()>();
+
+        return $r2;
+    }
+}

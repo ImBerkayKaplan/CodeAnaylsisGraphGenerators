@@ -1,0 +1,646 @@
+class net.sourceforge.plantuml.argon2.algorithm.FillSegment extends java.lang.Object
+{
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.argon2.algorithm.FillSegment r0;
+
+        r0 := @this: net.sourceforge.plantuml.argon2.algorithm.FillSegment;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    static void fillSegment(net.sourceforge.plantuml.argon2.model.Instance, net.sourceforge.plantuml.argon2.model.Position)
+    {
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+        net.sourceforge.plantuml.argon2.model.Position r1;
+        boolean z0, z1, $z2;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, i9, $i10, i11, $i12, $i13, $i14, $i15, $i16, i18, i19, $i20, $i21, i22;
+        long l8;
+        net.sourceforge.plantuml.argon2.model.Block[] $r2, $r4, $r6;
+        net.sourceforge.plantuml.argon2.model.Block r3, r5, r7, $r11, $r12, $r13, r14, r15, r16;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r1 := @parameter1: net.sourceforge.plantuml.argon2.model.Position;
+
+        r14 = null;
+
+        r15 = null;
+
+        r16 = null;
+
+        z0 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: boolean isDataIndependentAddressing(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.model.Position)>(r0, r1);
+
+        i0 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: int getStartingIndex(net.sourceforge.plantuml.argon2.model.Position)>(r1);
+
+        $i1 = r1.<net.sourceforge.plantuml.argon2.model.Position: int lane>;
+
+        $i2 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i3 = $i1 * $i2;
+
+        $i4 = r1.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        $i5 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getSegmentLength()>();
+
+        $i6 = $i4 * $i5;
+
+        $i7 = $i3 + $i6;
+
+        i18 = $i7 + i0;
+
+        i19 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: int getPrevOffset(net.sourceforge.plantuml.argon2.model.Instance,int)>(r0, i18);
+
+        if z0 == 0 goto label1;
+
+        $r11 = new net.sourceforge.plantuml.argon2.model.Block;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.argon2.model.Block: void <init>()>();
+
+        r14 = $r11;
+
+        $r12 = new net.sourceforge.plantuml.argon2.model.Block;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.argon2.model.Block: void <init>()>();
+
+        r16 = $r12;
+
+        $r13 = new net.sourceforge.plantuml.argon2.model.Block;
+
+        specialinvoke $r13.<net.sourceforge.plantuml.argon2.model.Block: void <init>()>();
+
+        r15 = $r13;
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: void initAddressBlocks(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.model.Position,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block)>(r0, r1, $r12, $r13, $r11);
+
+     label1:
+        r1.<net.sourceforge.plantuml.argon2.model.Position: int index> = i0;
+
+     label2:
+        $i20 = r1.<net.sourceforge.plantuml.argon2.model.Position: int index>;
+
+        $i21 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getSegmentLength()>();
+
+        if $i20 >= $i21 goto label5;
+
+        i22 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: int rotatePrevOffset(net.sourceforge.plantuml.argon2.model.Instance,int,int)>(r0, i18, i19);
+
+        l8 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: long getPseudoRandom(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.model.Position,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,int,boolean)>(r0, r1, r14, r15, r16, i22, z0);
+
+        i9 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: int getRefLane(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.model.Position,long)>(r0, r1, l8);
+
+        $i10 = r1.<net.sourceforge.plantuml.argon2.model.Position: int lane>;
+
+        if i9 != $i10 goto label3;
+
+        $z2 = 1;
+
+        goto label4;
+
+     label3:
+        $z2 = 0;
+
+     label4:
+        i11 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: int getRefColumn(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.model.Position,long,boolean)>(r0, r1, l8, $z2);
+
+        $r2 = r0.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Block[] memory>;
+
+        r3 = $r2[i22];
+
+        $r4 = r0.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Block[] memory>;
+
+        $i12 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i13 = $i12 * i9;
+
+        $i14 = $i13 + i11;
+
+        r5 = $r4[$i14];
+
+        $r6 = r0.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Block[] memory>;
+
+        r7 = $r6[i18];
+
+        z1 = staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: boolean isWithXor(net.sourceforge.plantuml.argon2.model.Instance,net.sourceforge.plantuml.argon2.model.Position)>(r0, r1);
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillBlock: void fillBlock(net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,boolean)>(r3, r5, r7, z1);
+
+        $i15 = r1.<net.sourceforge.plantuml.argon2.model.Position: int index>;
+
+        $i16 = $i15 + 1;
+
+        r1.<net.sourceforge.plantuml.argon2.model.Position: int index> = $i16;
+
+        i18 = i18 + 1;
+
+        i19 = i22 + 1;
+
+        goto label2;
+
+     label5:
+        return;
+    }
+
+    private static boolean isDataIndependentAddressing(net.sourceforge.plantuml.argon2.model.Instance, net.sourceforge.plantuml.argon2.model.Position)
+    {
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+        net.sourceforge.plantuml.argon2.model.Argon2Type $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.argon2.model.Position r5;
+        int $i0, $i1;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r5 := @parameter1: net.sourceforge.plantuml.argon2.model.Position;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Argon2Type getType()>();
+
+        $r2 = <net.sourceforge.plantuml.argon2.model.Argon2Type: net.sourceforge.plantuml.argon2.model.Argon2Type Argon2i>;
+
+        if $r1 == $r2 goto label1;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Argon2Type getType()>();
+
+        $r4 = <net.sourceforge.plantuml.argon2.model.Argon2Type: net.sourceforge.plantuml.argon2.model.Argon2Type Argon2id>;
+
+        if $r3 != $r4 goto label2;
+
+        $i0 = r5.<net.sourceforge.plantuml.argon2.model.Position: int pass>;
+
+        if $i0 != 0 goto label2;
+
+        $i1 = r5.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        if $i1 >= 2 goto label2;
+
+     label1:
+        $z0 = 1;
+
+        goto label3;
+
+     label2:
+        $z0 = 0;
+
+     label3:
+        return $z0;
+    }
+
+    private static void initAddressBlocks(net.sourceforge.plantuml.argon2.model.Instance, net.sourceforge.plantuml.argon2.model.Position, net.sourceforge.plantuml.argon2.model.Block, net.sourceforge.plantuml.argon2.model.Block, net.sourceforge.plantuml.argon2.model.Block)
+    {
+        net.sourceforge.plantuml.argon2.model.Block r0, r11, r12;
+        net.sourceforge.plantuml.argon2.model.Position r1;
+        int $i0, $i2, $i4, $i6, $i8, $i10, $i12, $i13;
+        long[] $r2, $r3, $r4, $r7, $r8, $r9;
+        long $l1, $l3, $l5, $l7, $l9, $l11;
+        net.sourceforge.plantuml.argon2.model.Instance r5;
+        net.sourceforge.plantuml.argon2.model.Block[] $r6;
+        net.sourceforge.plantuml.argon2.model.Argon2Type $r10;
+
+        r5 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r1 := @parameter1: net.sourceforge.plantuml.argon2.model.Position;
+
+        r11 := @parameter2: net.sourceforge.plantuml.argon2.model.Block;
+
+        r0 := @parameter3: net.sourceforge.plantuml.argon2.model.Block;
+
+        r12 := @parameter4: net.sourceforge.plantuml.argon2.model.Block;
+
+        $r2 = r0.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $i0 = r1.<net.sourceforge.plantuml.argon2.model.Position: int pass>;
+
+        $l1 = staticinvoke <net.sourceforge.plantuml.argon2.Util: long intToLong(int)>($i0);
+
+        $r2[0] = $l1;
+
+        $r3 = r0.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $i2 = r1.<net.sourceforge.plantuml.argon2.model.Position: int lane>;
+
+        $l3 = staticinvoke <net.sourceforge.plantuml.argon2.Util: long intToLong(int)>($i2);
+
+        $r3[1] = $l3;
+
+        $r4 = r0.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $i4 = r1.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        $l5 = staticinvoke <net.sourceforge.plantuml.argon2.Util: long intToLong(int)>($i4);
+
+        $r4[2] = $l5;
+
+        $r7 = r0.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $r6 = r5.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Block[] memory>;
+
+        $i6 = lengthof $r6;
+
+        $l7 = staticinvoke <net.sourceforge.plantuml.argon2.Util: long intToLong(int)>($i6);
+
+        $r7[3] = $l7;
+
+        $r8 = r0.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $i8 = virtualinvoke r5.<net.sourceforge.plantuml.argon2.model.Instance: int getIterations()>();
+
+        $l9 = staticinvoke <net.sourceforge.plantuml.argon2.Util: long intToLong(int)>($i8);
+
+        $r8[4] = $l9;
+
+        $r9 = r0.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $r10 = virtualinvoke r5.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Argon2Type getType()>();
+
+        $i10 = virtualinvoke $r10.<net.sourceforge.plantuml.argon2.model.Argon2Type: int ordinal()>();
+
+        $l11 = staticinvoke <net.sourceforge.plantuml.argon2.Util: long intToLong(int)>($i10);
+
+        $r9[5] = $l11;
+
+        $i12 = r1.<net.sourceforge.plantuml.argon2.model.Position: int pass>;
+
+        if $i12 != 0 goto label1;
+
+        $i13 = r1.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        if $i13 != 0 goto label1;
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: void nextAddresses(net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block)>(r11, r0, r12);
+
+     label1:
+        return;
+    }
+
+    private static boolean isWithXor(net.sourceforge.plantuml.argon2.model.Instance, net.sourceforge.plantuml.argon2.model.Position)
+    {
+        net.sourceforge.plantuml.argon2.model.Position r0;
+        int $i0, $i1;
+        net.sourceforge.plantuml.argon2.model.Instance r1;
+        boolean $z0;
+
+        r1 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r0 := @parameter1: net.sourceforge.plantuml.argon2.model.Position;
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.model.Position: int pass>;
+
+        if $i0 == 0 goto label1;
+
+        $i1 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getVersion()>();
+
+        if $i1 == 16 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    private static int getPrevOffset(net.sourceforge.plantuml.argon2.model.Instance, int)
+    {
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6;
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        i0 := @parameter1: int;
+
+        $i1 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i2 = i0 % $i1;
+
+        if $i2 != 0 goto label1;
+
+        $i4 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i5 = i0 + $i4;
+
+        $i6 = $i5 - 1;
+
+        return $i6;
+
+     label1:
+        $i3 = i0 - 1;
+
+        return $i3;
+    }
+
+    private static int rotatePrevOffset(net.sourceforge.plantuml.argon2.model.Instance, int, int)
+    {
+        int i0, $i1, $i2, i3;
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        i0 := @parameter1: int;
+
+        i3 := @parameter2: int;
+
+        $i1 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i2 = i0 % $i1;
+
+        if $i2 != 1 goto label1;
+
+        i3 = i0 - 1;
+
+     label1:
+        return i3;
+    }
+
+    private static int getStartingIndex(net.sourceforge.plantuml.argon2.model.Position)
+    {
+        net.sourceforge.plantuml.argon2.model.Position r0;
+        int $i0, $i1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Position;
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.model.Position: int pass>;
+
+        if $i0 != 0 goto label1;
+
+        $i1 = r0.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        if $i1 != 0 goto label1;
+
+        return 2;
+
+     label1:
+        return 0;
+    }
+
+    private static void nextAddresses(net.sourceforge.plantuml.argon2.model.Block, net.sourceforge.plantuml.argon2.model.Block, net.sourceforge.plantuml.argon2.model.Block)
+    {
+        net.sourceforge.plantuml.argon2.model.Block r0, r2, r3;
+        long[] $r1;
+        long $l0, $l1;
+
+        r2 := @parameter0: net.sourceforge.plantuml.argon2.model.Block;
+
+        r0 := @parameter1: net.sourceforge.plantuml.argon2.model.Block;
+
+        r3 := @parameter2: net.sourceforge.plantuml.argon2.model.Block;
+
+        $r1 = r0.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $l0 = $r1[6];
+
+        $l1 = $l0 + 1L;
+
+        $r1[6] = $l1;
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillBlock: void fillBlock(net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,boolean)>(r2, r0, r3, 0);
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillBlock: void fillBlock(net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,boolean)>(r2, r3, r3, 0);
+
+        return;
+    }
+
+    private static long getPseudoRandom(net.sourceforge.plantuml.argon2.model.Instance, net.sourceforge.plantuml.argon2.model.Position, net.sourceforge.plantuml.argon2.model.Block, net.sourceforge.plantuml.argon2.model.Block, net.sourceforge.plantuml.argon2.model.Block, int, boolean)
+    {
+        boolean z0;
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+        int i0, $i2, $i3, $i4, $i5;
+        net.sourceforge.plantuml.argon2.model.Block[] $r1;
+        net.sourceforge.plantuml.argon2.model.Block $r2, r5, r7, r8;
+        long[] $r3, $r6;
+        long $l1, $l6;
+        net.sourceforge.plantuml.argon2.model.Position r4;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r4 := @parameter1: net.sourceforge.plantuml.argon2.model.Position;
+
+        r5 := @parameter2: net.sourceforge.plantuml.argon2.model.Block;
+
+        r8 := @parameter3: net.sourceforge.plantuml.argon2.model.Block;
+
+        r7 := @parameter4: net.sourceforge.plantuml.argon2.model.Block;
+
+        i0 := @parameter5: int;
+
+        z0 := @parameter6: boolean;
+
+        if z0 == 0 goto label2;
+
+        $i2 = r4.<net.sourceforge.plantuml.argon2.model.Position: int index>;
+
+        $i3 = $i2 % 128;
+
+        if $i3 != 0 goto label1;
+
+        staticinvoke <net.sourceforge.plantuml.argon2.algorithm.FillSegment: void nextAddresses(net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block,net.sourceforge.plantuml.argon2.model.Block)>(r7, r8, r5);
+
+     label1:
+        $r6 = r5.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $i4 = r4.<net.sourceforge.plantuml.argon2.model.Position: int index>;
+
+        $i5 = $i4 % 128;
+
+        $l6 = $r6[$i5];
+
+        return $l6;
+
+     label2:
+        $r1 = r0.<net.sourceforge.plantuml.argon2.model.Instance: net.sourceforge.plantuml.argon2.model.Block[] memory>;
+
+        $r2 = $r1[i0];
+
+        $r3 = $r2.<net.sourceforge.plantuml.argon2.model.Block: long[] v>;
+
+        $l1 = $r3[0];
+
+        return $l1;
+    }
+
+    private static int getRefLane(net.sourceforge.plantuml.argon2.model.Instance, net.sourceforge.plantuml.argon2.model.Position, long)
+    {
+        long l0, $l1, $l3, $l4;
+        net.sourceforge.plantuml.argon2.model.Instance r0;
+        int $i2, $i5, $i6, i7;
+        net.sourceforge.plantuml.argon2.model.Position r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r1 := @parameter1: net.sourceforge.plantuml.argon2.model.Position;
+
+        l0 := @parameter2: long;
+
+        $l1 = l0 >>> 32;
+
+        $i2 = virtualinvoke r0.<net.sourceforge.plantuml.argon2.model.Instance: int getLanes()>();
+
+        $l3 = (long) $i2;
+
+        $l4 = $l1 % $l3;
+
+        i7 = (int) $l4;
+
+        $i5 = r1.<net.sourceforge.plantuml.argon2.model.Position: int pass>;
+
+        if $i5 != 0 goto label1;
+
+        $i6 = r1.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        if $i6 != 0 goto label1;
+
+        i7 = r1.<net.sourceforge.plantuml.argon2.model.Position: int lane>;
+
+     label1:
+        return i7;
+    }
+
+    private static int getRefColumn(net.sourceforge.plantuml.argon2.model.Instance, net.sourceforge.plantuml.argon2.model.Position, long, boolean)
+    {
+        net.sourceforge.plantuml.argon2.model.Position r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, i25, i26, $i32, $i40, $i41, $i42;
+        net.sourceforge.plantuml.argon2.model.Instance r1;
+        boolean z0;
+        long l10, l29, $l30, l31, $l33, $l34, $l35, $l36, l37, $l38, $l39;
+        byte $b27, $b28;
+
+        r1 := @parameter0: net.sourceforge.plantuml.argon2.model.Instance;
+
+        r0 := @parameter1: net.sourceforge.plantuml.argon2.model.Position;
+
+        l10 := @parameter2: long;
+
+        z0 := @parameter3: boolean;
+
+        $i0 = r0.<net.sourceforge.plantuml.argon2.model.Position: int pass>;
+
+        if $i0 != 0 goto label4;
+
+        i25 = 0;
+
+        if z0 == 0 goto label1;
+
+        $i20 = r0.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        $i21 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getSegmentLength()>();
+
+        $i23 = $i20 * $i21;
+
+        $i22 = r0.<net.sourceforge.plantuml.argon2.model.Position: int index>;
+
+        $i24 = $i23 + $i22;
+
+        i26 = $i24 - 1;
+
+        goto label8;
+
+     label1:
+        $i16 = r0.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        $i17 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getSegmentLength()>();
+
+        $i19 = $i16 * $i17;
+
+        $i18 = r0.<net.sourceforge.plantuml.argon2.model.Position: int index>;
+
+        if $i18 != 0 goto label2;
+
+        $b27 = -1;
+
+        goto label3;
+
+     label2:
+        $b27 = 0;
+
+     label3:
+        i26 = $i19 + $b27;
+
+        goto label8;
+
+     label4:
+        $i1 = r0.<net.sourceforge.plantuml.argon2.model.Position: int slice>;
+
+        $i2 = $i1 + 1;
+
+        $i3 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getSegmentLength()>();
+
+        $i4 = $i2 * $i3;
+
+        $i5 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        i25 = $i4 % $i5;
+
+        if z0 == 0 goto label5;
+
+        $i11 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i12 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getSegmentLength()>();
+
+        $i14 = $i11 - $i12;
+
+        $i13 = r0.<net.sourceforge.plantuml.argon2.model.Position: int index>;
+
+        $i15 = $i14 + $i13;
+
+        i26 = $i15 - 1;
+
+        goto label8;
+
+     label5:
+        $i6 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i7 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getSegmentLength()>();
+
+        $i9 = $i6 - $i7;
+
+        $i8 = r0.<net.sourceforge.plantuml.argon2.model.Position: int index>;
+
+        if $i8 != 0 goto label6;
+
+        $b28 = -1;
+
+        goto label7;
+
+     label6:
+        $b28 = 0;
+
+     label7:
+        i26 = $i9 + $b28;
+
+     label8:
+        l29 = l10 & 4294967295L;
+
+        $l30 = l29 * l29;
+
+        l31 = $l30 >>> 32;
+
+        $i32 = i26 - 1;
+
+        $l33 = (long) $i32;
+
+        $l34 = (long) i26;
+
+        $l35 = $l34 * l31;
+
+        $l36 = $l35 >>> 32;
+
+        l37 = $l33 - $l36;
+
+        $l38 = (long) i25;
+
+        $l39 = $l38 + l37;
+
+        $i40 = (int) $l39;
+
+        $i41 = virtualinvoke r1.<net.sourceforge.plantuml.argon2.model.Instance: int getLaneLength()>();
+
+        $i42 = $i40 % $i41;
+
+        return $i42;
+    }
+}

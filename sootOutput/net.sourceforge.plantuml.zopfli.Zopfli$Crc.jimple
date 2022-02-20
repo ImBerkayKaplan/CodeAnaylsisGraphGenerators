@@ -1,0 +1,116 @@
+class net.sourceforge.plantuml.zopfli.Zopfli$Crc extends java.lang.Object
+{
+    private static final int[] table;
+
+    private void <init>()
+    {
+        net.sourceforge.plantuml.zopfli.Zopfli$Crc r0;
+
+        r0 := @this: net.sourceforge.plantuml.zopfli.Zopfli$Crc;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static int[] makeTable()
+    {
+        int[] r0;
+        int $i0, $i1, i2, i3, i4;
+
+        r0 = newarray (int)[256];
+
+        i2 = 0;
+
+     label1:
+        if i2 >= 256 goto label6;
+
+        i3 = i2;
+
+        i4 = 0;
+
+     label2:
+        if i4 >= 8 goto label5;
+
+        $i0 = i3 & 1;
+
+        if $i0 != 1 goto label3;
+
+        $i1 = i3 >>> 1;
+
+        i3 = -306674912 ^ $i1;
+
+        goto label4;
+
+     label3:
+        i3 = i3 >>> 1;
+
+     label4:
+        i4 = i4 + 1;
+
+        goto label2;
+
+     label5:
+        r0[i2] = i3;
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label6:
+        return r0;
+    }
+
+    public static int calculate(byte[])
+    {
+        byte[] r0;
+        int i0, $i1, $i3, $i4, $i5, $i6, i7, i8;
+        byte $b2;
+        int[] $r1;
+
+        r0 := @parameter0: byte[];
+
+        i7 = -1;
+
+        i8 = 0;
+
+        i0 = lengthof r0;
+
+     label1:
+        if i8 >= i0 goto label2;
+
+        $r1 = <net.sourceforge.plantuml.zopfli.Zopfli$Crc: int[] table>;
+
+        $b2 = r0[i8];
+
+        $i3 = i7 ^ $b2;
+
+        $i4 = $i3 & 255;
+
+        $i6 = $r1[$i4];
+
+        $i5 = i7 >>> 8;
+
+        i7 = $i6 ^ $i5;
+
+        i8 = i8 + 1;
+
+        goto label1;
+
+     label2:
+        $i1 = i7 ^ -1;
+
+        return $i1;
+    }
+
+    static void <clinit>()
+    {
+        int[] $r0;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.zopfli.Zopfli$Crc: int[] makeTable()>();
+
+        <net.sourceforge.plantuml.zopfli.Zopfli$Crc: int[] table> = $r0;
+
+        return;
+    }
+}

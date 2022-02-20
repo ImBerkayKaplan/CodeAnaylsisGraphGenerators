@@ -1,0 +1,175 @@
+public class net.sourceforge.plantuml.mindmap.CommandMindMapPlus extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.mindmap.CommandMindMapPlus r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.mindmap.CommandMindMapPlus;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.mindmap.CommandMindMapPlus: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(boolean,net.sourceforge.plantuml.command.regex.IRegex)>(0, $r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r6, $r7, $r8, $r9, $r10;
+        net.sourceforge.plantuml.command.regex.RegexOptional $r5;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r11;
+
+        $r0 = class "Lnet/sourceforge/plantuml/mindmap/CommandMindMapPlus;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[7];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("TYPE", "([+-]+)");
+
+        $r2[1] = $r4;
+
+        $r5 = new net.sourceforge.plantuml.command.regex.RegexOptional;
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("BACKCOLOR", "\\[(#\\w+)\\]");
+
+        specialinvoke $r5.<net.sourceforge.plantuml.command.regex.RegexOptional: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r6);
+
+        $r2[2] = $r5;
+
+        $r7 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("SHAPE", "(_)?");
+
+        $r2[3] = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceOneOrMore()>();
+
+        $r2[4] = $r8;
+
+        $r9 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("LABEL", "([^%s].*)");
+
+        $r2[5] = $r9;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[6] = $r10;
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r11;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.mindmap.MindMapDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String r1, r2, r3, $r7;
+        boolean $z0;
+        net.sourceforge.plantuml.mindmap.MindMapDiagram r5;
+        int $i0, $i1;
+        net.sourceforge.plantuml.cucadiagram.Display $r6;
+        net.sourceforge.plantuml.mindmap.IdeaShape $r8;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r9;
+        net.sourceforge.plantuml.ISkinParam $r10, $r12;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r11;
+        net.sourceforge.plantuml.api.ThemeStyle $r13;
+        net.sourceforge.plantuml.mindmap.CommandMindMapPlus r14;
+        net.sourceforge.plantuml.LineLocation r15;
+        net.sourceforge.plantuml.ugraphic.color.HColor r16;
+        net.sourceforge.plantuml.Direction $r17;
+
+        r14 := @this: net.sourceforge.plantuml.mindmap.CommandMindMapPlus;
+
+        r5 := @parameter0: net.sourceforge.plantuml.mindmap.MindMapDiagram;
+
+        r15 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("TYPE", 0);
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("LABEL", 0);
+
+        r3 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("BACKCOLOR", 0);
+
+        r16 = null;
+
+        if r3 == null goto label1;
+
+        $r10 = virtualinvoke r5.<net.sourceforge.plantuml.mindmap.MindMapDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r11 = interfaceinvoke $r10.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r12 = virtualinvoke r5.<net.sourceforge.plantuml.mindmap.MindMapDiagram: net.sourceforge.plantuml.ISkinParam getSkinParam()>();
+
+        $r13 = interfaceinvoke $r12.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        r16 = virtualinvoke $r11.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColor(net.sourceforge.plantuml.api.ThemeStyle,java.lang.String)>($r13, r3);
+
+     label1:
+        $z0 = virtualinvoke r1.<java.lang.String: boolean contains(java.lang.CharSequence)>("-");
+
+        if $z0 == 0 goto label2;
+
+        $r17 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction LEFT>;
+
+        goto label3;
+
+     label2:
+        $r17 = <net.sourceforge.plantuml.Direction: net.sourceforge.plantuml.Direction RIGHT>;
+
+     label3:
+        $i0 = virtualinvoke r1.<java.lang.String: int length()>();
+
+        $i1 = $i0 - 1;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display getWithNewlines(java.lang.String)>(r2);
+
+        $r7 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("SHAPE", 0);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.mindmap.IdeaShape: net.sourceforge.plantuml.mindmap.IdeaShape fromDesc(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke r5.<net.sourceforge.plantuml.mindmap.MindMapDiagram: net.sourceforge.plantuml.command.CommandExecutionResult addIdea(net.sourceforge.plantuml.ugraphic.color.HColor,int,net.sourceforge.plantuml.cucadiagram.Display,net.sourceforge.plantuml.mindmap.IdeaShape,net.sourceforge.plantuml.Direction)>(r16, $i1, $r6, $r8, $r17);
+
+        return $r9;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.mindmap.CommandMindMapPlus r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.mindmap.MindMapDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.mindmap.CommandMindMapPlus;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.mindmap.MindMapDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.mindmap.CommandMindMapPlus: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.mindmap.MindMapDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

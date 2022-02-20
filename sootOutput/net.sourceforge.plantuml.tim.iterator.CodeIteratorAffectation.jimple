@@ -1,0 +1,167 @@
+public class net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation extends net.sourceforge.plantuml.tim.iterator.AbstractCodeIterator
+{
+    private final net.sourceforge.plantuml.tim.TContext context;
+    private final net.sourceforge.plantuml.tim.TMemory memory;
+    private final java.util.List logs;
+
+    public void <init>(net.sourceforge.plantuml.tim.iterator.CodeIterator, net.sourceforge.plantuml.tim.TContext, net.sourceforge.plantuml.tim.TMemory, java.util.List)
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation r0;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator r1;
+        net.sourceforge.plantuml.tim.TContext r2;
+        net.sourceforge.plantuml.tim.TMemory r3;
+        java.util.List r4;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation;
+
+        r1 := @parameter0: net.sourceforge.plantuml.tim.iterator.CodeIterator;
+
+        r2 := @parameter1: net.sourceforge.plantuml.tim.TContext;
+
+        r3 := @parameter2: net.sourceforge.plantuml.tim.TMemory;
+
+        r4 := @parameter3: java.util.List;
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.iterator.AbstractCodeIterator: void <init>(net.sourceforge.plantuml.tim.iterator.CodeIterator)>(r1);
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: net.sourceforge.plantuml.tim.TContext context> = r2;
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: net.sourceforge.plantuml.tim.TMemory memory> = r3;
+
+        r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: java.util.List logs> = r4;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.StringLocated peek() throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation r0;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator $r1;
+        net.sourceforge.plantuml.StringLocated r2;
+        net.sourceforge.plantuml.tim.TLineType $r3, $r4;
+        java.util.List $r5;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        r2 = interfaceinvoke $r1.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.StringLocated peek()>();
+
+        if r2 != null goto label2;
+
+        return null;
+
+     label2:
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.tim.TLineType getType()>();
+
+        $r4 = <net.sourceforge.plantuml.tim.TLineType: net.sourceforge.plantuml.tim.TLineType AFFECTATION>;
+
+        if $r3 != $r4 goto label3;
+
+        $r5 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: java.util.List logs>;
+
+        interfaceinvoke $r5.<java.util.List: boolean add(java.lang.Object)>(r2);
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: void doAffectation(net.sourceforge.plantuml.StringLocated)>(r2);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: void next()>();
+
+        goto label1;
+
+     label3:
+        return r2;
+    }
+
+    private void doAffectation(net.sourceforge.plantuml.StringLocated) throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation r0;
+        net.sourceforge.plantuml.tim.TMemory $r1;
+        net.sourceforge.plantuml.tim.TContext $r2;
+        net.sourceforge.plantuml.json.ParseException $r3;
+        int $i0, i1, i2;
+        net.sourceforge.plantuml.tim.iterator.CodeIterator $r5;
+        net.sourceforge.plantuml.StringLocated r6, r9;
+        java.lang.String $r7;
+        net.sourceforge.plantuml.tim.EaterException $r8;
+
+        r0 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation;
+
+        r9 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        i1 = -1;
+
+        i2 = 0;
+
+     label1:
+        if i2 >= 9999 goto label6;
+
+     label2:
+        $r2 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: net.sourceforge.plantuml.tim.TContext context>;
+
+        $r1 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: net.sourceforge.plantuml.tim.TMemory memory>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: void executeAffectation(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory,net.sourceforge.plantuml.StringLocated)>($r2, $r1, r9);
+
+     label3:
+        return;
+
+     label4:
+        $r3 := @caughtexception;
+
+        $i0 = virtualinvoke $r3.<net.sourceforge.plantuml.json.ParseException: int getColumn()>();
+
+        if $i0 > i1 goto label5;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.tim.EaterException: net.sourceforge.plantuml.tim.EaterException located(java.lang.String)>("Error in JSON format");
+
+        throw $r8;
+
+     label5:
+        i1 = virtualinvoke $r3.<net.sourceforge.plantuml.json.ParseException: int getColumn()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: void next()>();
+
+        $r5 = r0.<net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation: net.sourceforge.plantuml.tim.iterator.CodeIterator source>;
+
+        r6 = interfaceinvoke $r5.<net.sourceforge.plantuml.tim.iterator.CodeIterator: net.sourceforge.plantuml.StringLocated peek()>();
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        r9 = virtualinvoke r9.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.StringLocated append(java.lang.String)>($r7);
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label6:
+        return;
+
+        catch net.sourceforge.plantuml.json.ParseException from label2 to label3 with label4;
+    }
+
+    private void executeAffectation(net.sourceforge.plantuml.tim.TContext, net.sourceforge.plantuml.tim.TMemory, net.sourceforge.plantuml.StringLocated) throws net.sourceforge.plantuml.tim.EaterException, net.sourceforge.plantuml.tim.EaterExceptionLocated
+    {
+        net.sourceforge.plantuml.tim.EaterAffectation $r0;
+        net.sourceforge.plantuml.StringLocated r1;
+        net.sourceforge.plantuml.tim.TContext r2;
+        net.sourceforge.plantuml.tim.TMemory r3;
+        net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation r4;
+
+        r4 := @this: net.sourceforge.plantuml.tim.iterator.CodeIteratorAffectation;
+
+        r2 := @parameter0: net.sourceforge.plantuml.tim.TContext;
+
+        r3 := @parameter1: net.sourceforge.plantuml.tim.TMemory;
+
+        r1 := @parameter2: net.sourceforge.plantuml.StringLocated;
+
+        $r0 = new net.sourceforge.plantuml.tim.EaterAffectation;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.tim.EaterAffectation: void <init>(net.sourceforge.plantuml.StringLocated)>(r1);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.tim.EaterAffectation: void analyze(net.sourceforge.plantuml.tim.TContext,net.sourceforge.plantuml.tim.TMemory)>(r2, r3);
+
+        return;
+    }
+}

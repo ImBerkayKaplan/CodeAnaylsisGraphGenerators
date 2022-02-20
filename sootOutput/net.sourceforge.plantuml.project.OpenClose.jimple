@@ -1,0 +1,566 @@
+public class net.sourceforge.plantuml.project.OpenClose extends java.lang.Object implements net.sourceforge.plantuml.project.core3.Histogram, net.sourceforge.plantuml.project.LoadPlanable
+{
+    private final java.util.Collection closedDayOfWeek;
+    private final java.util.Collection closedDays;
+    private final java.util.Collection openedDays;
+    private net.sourceforge.plantuml.project.time.Day calendar;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        java.util.EnumSet $r1;
+        java.util.HashSet $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = staticinvoke <java.util.EnumSet: java.util.EnumSet noneOf(java.lang.Class)>(class "Lnet/sourceforge/plantuml/project/time/DayOfWeek;");
+
+        r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDayOfWeek> = $r1;
+
+        $r2 = new java.util.HashSet;
+
+        specialinvoke $r2.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDays> = $r2;
+
+        $r3 = new java.util.HashSet;
+
+        specialinvoke $r3.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection openedDays> = $r3;
+
+        return;
+    }
+
+    public int daysInWeek()
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        java.util.Collection $r1;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDayOfWeek>;
+
+        $i0 = interfaceinvoke $r1.<java.util.Collection: int size()>();
+
+        $i1 = 7 - $i0;
+
+        return $i1;
+    }
+
+    private boolean isThereSomeChangeAfter(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        java.util.Collection $r1, $r2, $r3;
+        int $i0, $i1, $i2;
+        boolean $z0, $z1;
+        java.lang.Object $r4, $r6;
+        net.sourceforge.plantuml.project.time.Day r5, r8, r10;
+        java.util.Iterator r7, r9;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r5 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDayOfWeek>;
+
+        $i0 = interfaceinvoke $r1.<java.util.Collection: int size()>();
+
+        if $i0 <= 0 goto label1;
+
+        return 1;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDays>;
+
+        r7 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r6 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (net.sourceforge.plantuml.project.time.Day) $r6;
+
+        $i2 = virtualinvoke r8.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r5);
+
+        if $i2 < 0 goto label3;
+
+        return 1;
+
+     label3:
+        goto label2;
+
+     label4:
+        $r3 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection openedDays>;
+
+        r9 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label5:
+        $z1 = interfaceinvoke r9.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label7;
+
+        $r4 = interfaceinvoke r9.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (net.sourceforge.plantuml.project.time.Day) $r4;
+
+        $i1 = virtualinvoke r10.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r5);
+
+        if $i1 < 0 goto label6;
+
+        return 1;
+
+     label6:
+        goto label5;
+
+     label7:
+        return 0;
+    }
+
+    private boolean isThereSomeChangeBefore(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        java.util.Collection $r1, $r2, $r3;
+        int $i0, $i1, $i2;
+        boolean $z0, $z1;
+        java.lang.Object $r4, $r6;
+        net.sourceforge.plantuml.project.time.Day r5, r8, r10;
+        java.util.Iterator r7, r9;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r5 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDayOfWeek>;
+
+        $i0 = interfaceinvoke $r1.<java.util.Collection: int size()>();
+
+        if $i0 <= 0 goto label1;
+
+        return 1;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDays>;
+
+        r7 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r7.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r6 = interfaceinvoke r7.<java.util.Iterator: java.lang.Object next()>();
+
+        r8 = (net.sourceforge.plantuml.project.time.Day) $r6;
+
+        $i2 = virtualinvoke r8.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r5);
+
+        if $i2 > 0 goto label3;
+
+        return 1;
+
+     label3:
+        goto label2;
+
+     label4:
+        $r3 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection openedDays>;
+
+        r9 = interfaceinvoke $r3.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label5:
+        $z1 = interfaceinvoke r9.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label7;
+
+        $r4 = interfaceinvoke r9.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (net.sourceforge.plantuml.project.time.Day) $r4;
+
+        $i1 = virtualinvoke r10.<net.sourceforge.plantuml.project.time.Day: int compareTo(net.sourceforge.plantuml.project.time.Day)>(r5);
+
+        if $i1 > 0 goto label6;
+
+        return 1;
+
+     label6:
+        goto label5;
+
+     label7:
+        return 0;
+    }
+
+    public boolean isClosed(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        java.util.Collection $r2, $r4, $r5;
+        boolean $z0, $z1, $z2, $z3;
+        net.sourceforge.plantuml.project.time.DayOfWeek r3;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection openedDays>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Collection: boolean contains(java.lang.Object)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        return 0;
+
+     label1:
+        r3 = virtualinvoke r1.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.DayOfWeek getDayOfWeek()>();
+
+        $r4 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDayOfWeek>;
+
+        $z1 = interfaceinvoke $r4.<java.util.Collection: boolean contains(java.lang.Object)>(r3);
+
+        if $z1 != 0 goto label2;
+
+        $r5 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDays>;
+
+        $z2 = interfaceinvoke $r5.<java.util.Collection: boolean contains(java.lang.Object)>(r1);
+
+        if $z2 == 0 goto label3;
+
+     label2:
+        $z3 = 1;
+
+        goto label4;
+
+     label3:
+        $z3 = 0;
+
+     label4:
+        return $z3;
+    }
+
+    public void close(net.sourceforge.plantuml.project.time.DayOfWeek)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        net.sourceforge.plantuml.project.time.DayOfWeek r1;
+        java.util.Collection $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.DayOfWeek;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDayOfWeek>;
+
+        interfaceinvoke $r2.<java.util.Collection: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public void close(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        java.util.Collection $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection closedDays>;
+
+        interfaceinvoke $r2.<java.util.Collection: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public void open(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        java.util.Collection $r2;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r2 = r0.<net.sourceforge.plantuml.project.OpenClose: java.util.Collection openedDays>;
+
+        interfaceinvoke $r2.<java.util.Collection: boolean add(java.lang.Object)>(r1);
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.project.time.Day getCalendar()
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        net.sourceforge.plantuml.project.time.Day $r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        $r1 = r0.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day calendar>;
+
+        return $r1;
+    }
+
+    public final void setCalendar(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        r0.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day calendar> = r1;
+
+        return;
+    }
+
+    public long getNext(long)
+    {
+        long l0, l2, $l4, $l6, $l7;
+        net.sourceforge.plantuml.project.OpenClose r0;
+        boolean $z0;
+        int $i1, i3;
+        java.lang.StringBuilder $r1, $r3, $r4, $r5, $r6, $r8, $r10, $r11, $r12, $r13;
+        java.io.PrintStream $r2, $r9;
+        java.lang.String $r7, $r14;
+        byte $b5;
+        java.lang.Long $r15;
+        net.sourceforge.plantuml.project.time.Day r16;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        l0 := @parameter0: long;
+
+        r16 = staticinvoke <net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day create(long)>(l0);
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.project.OpenClose: boolean isThereSomeChangeAfter(net.sourceforge.plantuml.project.time.Day)>(r16);
+
+        if $z0 != 0 goto label1;
+
+        $r15 = <net.sourceforge.plantuml.project.core3.TimeLine: java.lang.Long MAX_TIME>;
+
+        $l7 = virtualinvoke $r15.<java.lang.Long: long longValue()>();
+
+        return $l7;
+
+     label1:
+        $i1 = specialinvoke r0.<net.sourceforge.plantuml.project.OpenClose: int getLoatAtInternal(net.sourceforge.plantuml.project.time.Day)>(r16);
+
+        l2 = (long) $i1;
+
+        $r2 = <java.lang.System: java.io.PrintStream err>;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("getNext:day=");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r16);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" current=");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>(l2);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>($r7);
+
+     label2:
+        r16 = virtualinvoke r16.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day increment()>();
+
+        i3 = specialinvoke r0.<net.sourceforge.plantuml.project.OpenClose: int getLoatAtInternal(net.sourceforge.plantuml.project.time.Day)>(r16);
+
+        $r9 = <java.lang.System: java.io.PrintStream err>;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("..day=");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r16);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r9.<java.io.PrintStream: void println(java.lang.String)>($r14);
+
+        $l4 = (long) i3;
+
+        $b5 = $l4 cmp l2;
+
+        if $b5 == 0 goto label3;
+
+        $l6 = virtualinvoke r16.<net.sourceforge.plantuml.project.time.Day: long getMillis()>();
+
+        return $l6;
+
+     label3:
+        goto label2;
+    }
+
+    public long getPrevious(long)
+    {
+        long l0, l2, $l4, $l6, $l7, $l8;
+        net.sourceforge.plantuml.project.OpenClose r0;
+        boolean $z0;
+        int $i1, i3;
+        java.lang.StringBuilder $r1, $r3, $r4, $r5, $r6, $r8, $r10, $r11, $r12, $r13;
+        java.io.PrintStream $r2, $r9;
+        java.lang.String $r7, $r14;
+        byte $b5;
+        java.lang.Long $r15;
+        net.sourceforge.plantuml.project.time.Day r16;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        l0 := @parameter0: long;
+
+        r16 = staticinvoke <net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day create(long)>(l0);
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.project.OpenClose: boolean isThereSomeChangeBefore(net.sourceforge.plantuml.project.time.Day)>(r16);
+
+        if $z0 != 0 goto label1;
+
+        $r15 = <net.sourceforge.plantuml.project.core3.TimeLine: java.lang.Long MAX_TIME>;
+
+        $l7 = virtualinvoke $r15.<java.lang.Long: long longValue()>();
+
+        $l8 = neg $l7;
+
+        return $l8;
+
+     label1:
+        $i1 = specialinvoke r0.<net.sourceforge.plantuml.project.OpenClose: int getLoatAtInternal(net.sourceforge.plantuml.project.time.Day)>(r16);
+
+        l2 = (long) $i1;
+
+        $r2 = <java.lang.System: java.io.PrintStream err>;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("getPrevious=");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r16);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" current=");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>(l2);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>($r7);
+
+     label2:
+        r16 = virtualinvoke r16.<net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day decrement()>();
+
+        i3 = specialinvoke r0.<net.sourceforge.plantuml.project.OpenClose: int getLoatAtInternal(net.sourceforge.plantuml.project.time.Day)>(r16);
+
+        $r9 = <java.lang.System: java.io.PrintStream err>;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("..day=");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r16);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r9.<java.io.PrintStream: void println(java.lang.String)>($r14);
+
+        $l4 = (long) i3;
+
+        $b5 = $l4 cmp l2;
+
+        if $b5 == 0 goto label3;
+
+        $l6 = virtualinvoke r16.<net.sourceforge.plantuml.project.time.Day: long getMillis()>();
+
+        return $l6;
+
+     label3:
+        goto label2;
+    }
+
+    public long getValueAt(long)
+    {
+        long l0;
+        net.sourceforge.plantuml.project.time.Day r0;
+        net.sourceforge.plantuml.project.OpenClose r1;
+        boolean $z0;
+
+        r1 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        l0 := @parameter0: long;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.project.time.Day: net.sourceforge.plantuml.project.time.Day create(long)>(l0);
+
+        $z0 = virtualinvoke r1.<net.sourceforge.plantuml.project.OpenClose: boolean isClosed(net.sourceforge.plantuml.project.time.Day)>(r0);
+
+        if $z0 == 0 goto label1;
+
+        return 0L;
+
+     label1:
+        return 100L;
+    }
+
+    public int getLoadAt(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        net.sourceforge.plantuml.project.time.Day $r1, r2;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r2 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.project.OpenClose: net.sourceforge.plantuml.project.time.Day getCalendar()>();
+
+        if $r1 != null goto label1;
+
+        return 100;
+
+     label1:
+        $i0 = specialinvoke r0.<net.sourceforge.plantuml.project.OpenClose: int getLoatAtInternal(net.sourceforge.plantuml.project.time.Day)>(r2);
+
+        return $i0;
+    }
+
+    private int getLoatAtInternal(net.sourceforge.plantuml.project.time.Day)
+    {
+        net.sourceforge.plantuml.project.OpenClose r0;
+        net.sourceforge.plantuml.project.time.Day r1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.project.OpenClose;
+
+        r1 := @parameter0: net.sourceforge.plantuml.project.time.Day;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.project.OpenClose: boolean isClosed(net.sourceforge.plantuml.project.time.Day)>(r1);
+
+        if $z0 == 0 goto label1;
+
+        return 0;
+
+     label1:
+        return 100;
+    }
+}

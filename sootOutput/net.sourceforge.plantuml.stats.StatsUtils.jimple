@@ -1,0 +1,634 @@
+public class net.sourceforge.plantuml.stats.StatsUtils extends java.lang.Object
+{
+    static final java.util.prefs.Preferences prefs;
+    static net.sourceforge.plantuml.stats.ParsedGenerated fullEver;
+    static java.util.concurrent.ConcurrentMap byTypeEver;
+    static java.util.concurrent.ConcurrentMap byTypeCurrent;
+    static net.sourceforge.plantuml.stats.FormatCounter formatCounterCurrent;
+    static net.sourceforge.plantuml.stats.FormatCounter formatCounterEver;
+    static net.sourceforge.plantuml.stats.HistoricalData historicalData;
+    static boolean xmlStats;
+    static boolean htmlStats;
+    static boolean realTimeStats;
+    private static final int VERSION;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.stats.StatsUtils r0;
+
+        r0 := @this: net.sourceforge.plantuml.stats.StatsUtils;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static net.sourceforge.plantuml.stats.api.Stats getStats()
+    {
+        net.sourceforge.plantuml.stats.StatsImpl $r0;
+        net.sourceforge.plantuml.stats.ParsedGenerated $r1;
+        net.sourceforge.plantuml.stats.HistoricalData $r2;
+        net.sourceforge.plantuml.stats.FormatCounter $r3, $r4;
+        java.util.concurrent.ConcurrentMap $r5, $r6;
+
+        $r0 = new net.sourceforge.plantuml.stats.StatsImpl;
+
+        $r6 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.concurrent.ConcurrentMap byTypeEver>;
+
+        $r5 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.concurrent.ConcurrentMap byTypeCurrent>;
+
+        $r4 = <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.FormatCounter formatCounterCurrent>;
+
+        $r3 = <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.FormatCounter formatCounterEver>;
+
+        $r2 = <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.HistoricalData historicalData>;
+
+        $r1 = <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.ParsedGenerated fullEver>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.stats.StatsImpl: void <init>(java.util.Map,java.util.Map,net.sourceforge.plantuml.stats.FormatCounter,net.sourceforge.plantuml.stats.FormatCounter,net.sourceforge.plantuml.stats.HistoricalData,net.sourceforge.plantuml.stats.ParsedGenerated)>($r6, $r5, $r4, $r3, $r2, $r1);
+
+        return $r0;
+    }
+
+    private static void restoreNow()
+    {
+        java.util.prefs.Preferences $r0, $r1, $r4, $r5;
+        net.sourceforge.plantuml.stats.ParsedGenerated $r2;
+        net.sourceforge.plantuml.stats.HistoricalData $r3;
+        net.sourceforge.plantuml.stats.FormatCounter $r6;
+        java.util.prefs.BackingStoreException $r7;
+        java.lang.StringBuilder $r9, $r10, $r11;
+        java.lang.String $r12;
+        java.util.concurrent.ConcurrentMap $r13;
+
+     label1:
+        $r0 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        virtualinvoke $r0.<java.util.prefs.Preferences: void sync()>();
+
+        $r1 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.stats.ParsedGenerated loadDated(java.util.prefs.Preferences,java.lang.String)>($r1, "full");
+
+        <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.ParsedGenerated fullEver> = $r2;
+
+        $r3 = new net.sourceforge.plantuml.stats.HistoricalData;
+
+        $r4 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.stats.HistoricalData: void <init>(java.util.prefs.Preferences)>($r4);
+
+        <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.HistoricalData historicalData> = $r3;
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void reload()>();
+
+        $r6 = <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.FormatCounter formatCounterEver>;
+
+        $r5 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        virtualinvoke $r6.<net.sourceforge.plantuml.stats.FormatCounter: void reload(java.lang.String,java.util.prefs.Preferences)>("format.", $r5);
+
+     label2:
+        goto label4;
+
+     label3:
+        $r7 := @caughtexception;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Error reloading stats ");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r7);
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r12);
+
+        $r13 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.concurrent.ConcurrentMap byTypeEver>;
+
+        interfaceinvoke $r13.<java.util.concurrent.ConcurrentMap: void clear()>();
+
+     label4:
+        return;
+
+        catch java.util.prefs.BackingStoreException from label1 to label2 with label3;
+    }
+
+    private static void reload() throws java.util.prefs.BackingStoreException
+    {
+        java.util.prefs.Preferences $r0, $r4;
+        java.lang.String[] r1;
+        int i0, $i1, i2;
+        java.lang.String r2, r3, $r6, $r8;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.stats.ParsedGenerated r5;
+        java.util.concurrent.ConcurrentMap $r7;
+
+        $r0 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        r1 = virtualinvoke $r0.<java.util.prefs.Preferences: java.lang.String[] keys()>();
+
+        i0 = lengthof r1;
+
+        i2 = 0;
+
+     label1:
+        if i2 >= i0 goto label3;
+
+        r2 = r1[i2];
+
+        $z0 = virtualinvoke r2.<java.lang.String: boolean startsWith(java.lang.String)>("type.");
+
+        if $z0 == 0 goto label2;
+
+        $z1 = virtualinvoke r2.<java.lang.String: boolean endsWith(java.lang.String)>(".p.saved");
+
+        if $z1 == 0 goto label2;
+
+        r3 = staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: java.lang.String removeDotPSaved(java.lang.String)>(r2);
+
+        $r4 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        r5 = staticinvoke <net.sourceforge.plantuml.stats.ParsedGenerated: net.sourceforge.plantuml.stats.ParsedGenerated loadDated(java.util.prefs.Preferences,java.lang.String)>($r4, r3);
+
+        if r5 == null goto label2;
+
+        $r7 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.concurrent.ConcurrentMap byTypeEver>;
+
+        $r6 = "type.";
+
+        $i1 = virtualinvoke $r6.<java.lang.String: int length()>();
+
+        $r8 = virtualinvoke r3.<java.lang.String: java.lang.String substring(int)>($i1);
+
+        interfaceinvoke $r7.<java.util.concurrent.ConcurrentMap: java.lang.Object put(java.lang.Object,java.lang.Object)>($r8, r5);
+
+     label2:
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    static java.lang.String removeDotPSaved(java.lang.String)
+    {
+        java.lang.String r0, $r1, $r2;
+        int $i0, $i1, $i2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $i0 = virtualinvoke r0.<java.lang.String: int length()>();
+
+        $r1 = ".p.saved";
+
+        $i1 = virtualinvoke $r1.<java.lang.String: int length()>();
+
+        $i2 = $i0 - $i1;
+
+        $r2 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>(0, $i2);
+
+        return $r2;
+    }
+
+    private static void endingHook()
+    {
+        boolean $z0, $z1;
+        java.lang.Exception $r0;
+        net.sourceforge.plantuml.stats.api.Stats r1;
+
+     label1:
+        r1 = staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.api.Stats getStatsLazzy()>();
+
+        $z0 = <net.sourceforge.plantuml.stats.StatsUtils: boolean xmlStats>;
+
+        if $z0 == 0 goto label2;
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void xmlOutput(net.sourceforge.plantuml.stats.api.Stats)>(r1);
+
+     label2:
+        $z1 = <net.sourceforge.plantuml.stats.StatsUtils: boolean htmlStats>;
+
+        if $z1 == 0 goto label3;
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void htmlOutput(net.sourceforge.plantuml.stats.api.Stats)>(r1);
+
+     label3:
+        goto label5;
+
+     label4:
+        $r0 := @caughtexception;
+
+        virtualinvoke $r0.<java.lang.Exception: void printStackTrace()>();
+
+     label5:
+        return;
+
+        catch java.lang.Exception from label1 to label3 with label4;
+    }
+
+    static net.sourceforge.plantuml.stats.api.Stats getStatsLazzy()
+    {
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.stats.api.Stats $r0;
+
+        $z0 = <net.sourceforge.plantuml.stats.StatsUtils: boolean xmlStats>;
+
+        if $z0 != 0 goto label1;
+
+        $z1 = <net.sourceforge.plantuml.stats.StatsUtils: boolean htmlStats>;
+
+        if $z1 == 0 goto label2;
+
+     label1:
+        $r0 = staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.api.Stats getStats()>();
+
+        return $r0;
+
+     label2:
+        return null;
+    }
+
+    static void htmlOutput(net.sourceforge.plantuml.stats.api.Stats) throws java.io.FileNotFoundException
+    {
+        java.io.PrintWriter r0;
+        net.sourceforge.plantuml.stats.HtmlConverter $r1;
+        net.sourceforge.plantuml.stats.api.Stats r2;
+        java.lang.String $r3;
+        java.lang.Throwable $r4, $r7;
+
+        r2 := @parameter0: net.sourceforge.plantuml.stats.api.Stats;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.io.PrintWriter createPrintWriter(java.lang.String)>("plantuml-stats.html");
+
+     label1:
+        $r1 = new net.sourceforge.plantuml.stats.HtmlConverter;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.stats.HtmlConverter: void <init>(net.sourceforge.plantuml.stats.api.Stats)>(r2);
+
+        $r3 = virtualinvoke $r1.<net.sourceforge.plantuml.stats.HtmlConverter: java.lang.String toHtml()>();
+
+        virtualinvoke r0.<java.io.PrintWriter: void print(java.lang.String)>($r3);
+
+     label2:
+        if r0 == null goto label8;
+
+        virtualinvoke r0.<java.io.PrintWriter: void close()>();
+
+        goto label8;
+
+     label3:
+        $r7 := @caughtexception;
+
+        if r0 == null goto label7;
+
+     label4:
+        virtualinvoke r0.<java.io.PrintWriter: void close()>();
+
+     label5:
+        goto label7;
+
+     label6:
+        $r4 := @caughtexception;
+
+        virtualinvoke $r7.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r4);
+
+     label7:
+        throw $r7;
+
+     label8:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label4 to label5 with label6;
+    }
+
+    static void xmlOutput(net.sourceforge.plantuml.stats.api.Stats) throws javax.xml.transform.TransformerException, javax.xml.parsers.ParserConfigurationException, java.io.IOException
+    {
+        java.io.FileOutputStream r0;
+        net.sourceforge.plantuml.stats.XmlConverter $r1;
+        net.sourceforge.plantuml.stats.api.Stats r2;
+        java.lang.Throwable $r3, $r6;
+
+        r2 := @parameter0: net.sourceforge.plantuml.stats.api.Stats;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.io.FileOutputStream createFileOutputStream(java.lang.String)>("plantuml-stats.xml");
+
+     label1:
+        $r1 = new net.sourceforge.plantuml.stats.XmlConverter;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.stats.XmlConverter: void <init>(net.sourceforge.plantuml.stats.api.Stats)>(r2);
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.stats.XmlConverter: void createXml(java.io.OutputStream)>(r0);
+
+     label2:
+        if r0 == null goto label8;
+
+        virtualinvoke r0.<java.io.OutputStream: void close()>();
+
+        goto label8;
+
+     label3:
+        $r6 := @caughtexception;
+
+        if r0 == null goto label7;
+
+     label4:
+        virtualinvoke r0.<java.io.OutputStream: void close()>();
+
+     label5:
+        goto label7;
+
+     label6:
+        $r3 := @caughtexception;
+
+        virtualinvoke $r6.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($r3);
+
+     label7:
+        throw $r6;
+
+     label8:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label4 to label5 with label6;
+    }
+
+    public static void setXmlStats(boolean)
+    {
+        boolean z0;
+
+        z0 := @parameter0: boolean;
+
+        <net.sourceforge.plantuml.stats.StatsUtils: boolean xmlStats> = z0;
+
+        return;
+    }
+
+    public static void setHtmlStats(boolean)
+    {
+        boolean z0;
+
+        z0 := @parameter0: boolean;
+
+        <net.sourceforge.plantuml.stats.StatsUtils: boolean htmlStats> = z0;
+
+        return;
+    }
+
+    public static void setRealTimeStats(boolean)
+    {
+        boolean z0;
+
+        z0 := @parameter0: boolean;
+
+        <net.sourceforge.plantuml.stats.StatsUtils: boolean realTimeStats> = z0;
+
+        return;
+    }
+
+    public static void outHtml() throws java.io.FileNotFoundException
+    {
+        net.sourceforge.plantuml.stats.api.Stats $r0;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.api.Stats getStats()>();
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void htmlOutput(net.sourceforge.plantuml.stats.api.Stats)>($r0);
+
+        return;
+    }
+
+    public static void dumpStats()
+    {
+        net.sourceforge.plantuml.stats.TextConverter $r0;
+        net.sourceforge.plantuml.stats.api.Stats $r1;
+        java.io.PrintStream $r2;
+
+        $r0 = new net.sourceforge.plantuml.stats.TextConverter;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.api.Stats getStats()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.stats.TextConverter: void <init>(net.sourceforge.plantuml.stats.api.Stats)>($r1);
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.stats.TextConverter: void printMe(java.io.PrintStream)>($r2);
+
+        return;
+    }
+
+    public static void loopStats() throws java.lang.InterruptedException
+    {
+        java.io.PrintStream $r0, $r4;
+        net.sourceforge.plantuml.stats.TextConverter $r1;
+        net.sourceforge.plantuml.stats.api.Stats $r2;
+        int i0;
+
+        i0 = 0;
+
+     label1:
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void restoreNow()>();
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void clearScreen(java.io.PrintStream,int)>($r0, i0);
+
+        $r1 = new net.sourceforge.plantuml.stats.TextConverter;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.api.Stats getStats()>();
+
+        specialinvoke $r1.<net.sourceforge.plantuml.stats.TextConverter: void <init>(net.sourceforge.plantuml.stats.api.Stats)>($r2);
+
+        $r4 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r1.<net.sourceforge.plantuml.stats.TextConverter: void printMe(java.io.PrintStream)>($r4);
+
+        i0 = virtualinvoke $r1.<net.sourceforge.plantuml.stats.TextConverter: int getLinesUsed()>();
+
+        staticinvoke <java.lang.Thread: void sleep(long)>(3000L);
+
+        goto label1;
+    }
+
+    private static void clearScreen(java.io.PrintStream, int)
+    {
+        int i0, $i2, i3;
+        char $c1;
+        java.io.PrintStream r0, $r2;
+        java.lang.Object[] $r1;
+        java.lang.Integer $r3;
+        java.lang.String $r4;
+
+        r0 := @parameter0: java.io.PrintStream;
+
+        i0 := @parameter1: int;
+
+        if i0 != 0 goto label1;
+
+        return;
+
+     label1:
+        $c1 = <net.sourceforge.plantuml.security.SFile: char separatorChar>;
+
+        if $c1 != 47 goto label2;
+
+        $r2 = <java.lang.System: java.io.PrintStream out>;
+
+        $r1 = newarray (java.lang.Object)[1];
+
+        $i2 = i0 + 1;
+
+        $r3 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i2);
+
+        $r1[0] = $r3;
+
+        $r4 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("\u001b[%dA", $r1);
+
+        virtualinvoke $r2.<java.io.PrintStream: void println(java.lang.String)>($r4);
+
+        goto label4;
+
+     label2:
+        i3 = 0;
+
+     label3:
+        if i3 >= 20 goto label4;
+
+        virtualinvoke r0.<java.io.PrintStream: void println()>();
+
+        i3 = i3 + 1;
+
+        goto label3;
+
+     label4:
+        return;
+    }
+
+    static void access$000()
+    {
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void endingHook()>();
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.util.prefs.Preferences $r0, $r7, $r11, $r12;
+        java.util.concurrent.ConcurrentHashMap $r1, $r2;
+        net.sourceforge.plantuml.stats.FormatCounter $r3, $r4;
+        java.util.logging.Logger $r5;
+        net.sourceforge.plantuml.stats.StatsUtils$1 $r6;
+        int $i0;
+        java.lang.Runtime $r8;
+        net.sourceforge.plantuml.stats.StatsUtils$2 $r9;
+        net.sourceforge.plantuml.stats.HistoricalData $r10, $r17;
+        java.util.prefs.BackingStoreException $r13;
+        java.lang.Exception $r14;
+
+        <net.sourceforge.plantuml.stats.StatsUtils: int VERSION> = 14;
+
+        $r0 = staticinvoke <java.util.prefs.Preferences: java.util.prefs.Preferences userNodeForPackage(java.lang.Class)>(class "Lnet/sourceforge/plantuml/stats/StatsUtils;");
+
+        <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs> = $r0;
+
+        $r1 = new java.util.concurrent.ConcurrentHashMap;
+
+        specialinvoke $r1.<java.util.concurrent.ConcurrentHashMap: void <init>()>();
+
+        <net.sourceforge.plantuml.stats.StatsUtils: java.util.concurrent.ConcurrentMap byTypeEver> = $r1;
+
+        $r2 = new java.util.concurrent.ConcurrentHashMap;
+
+        specialinvoke $r2.<java.util.concurrent.ConcurrentHashMap: void <init>()>();
+
+        <net.sourceforge.plantuml.stats.StatsUtils: java.util.concurrent.ConcurrentMap byTypeCurrent> = $r2;
+
+        $r3 = new net.sourceforge.plantuml.stats.FormatCounter;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.stats.FormatCounter: void <init>(java.lang.String)>("currentformat.");
+
+        <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.FormatCounter formatCounterCurrent> = $r3;
+
+        $r4 = new net.sourceforge.plantuml.stats.FormatCounter;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.stats.FormatCounter: void <init>(java.lang.String)>("format.");
+
+        <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.FormatCounter formatCounterEver> = $r4;
+
+        <net.sourceforge.plantuml.stats.StatsUtils: boolean xmlStats> = 0;
+
+        <net.sourceforge.plantuml.stats.StatsUtils: boolean htmlStats> = 0;
+
+        <net.sourceforge.plantuml.stats.StatsUtils: boolean realTimeStats> = 0;
+
+     label01:
+        $r5 = staticinvoke <java.util.logging.Logger: java.util.logging.Logger getLogger(java.lang.String)>("java.util.prefs");
+
+        $r6 = new net.sourceforge.plantuml.stats.StatsUtils$1;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.stats.StatsUtils$1: void <init>()>();
+
+        virtualinvoke $r5.<java.util.logging.Logger: void setFilter(java.util.logging.Filter)>($r6);
+
+     label02:
+        goto label04;
+
+     label03:
+        $r14 := @caughtexception;
+
+        virtualinvoke $r14.<java.lang.Exception: void printStackTrace()>();
+
+     label04:
+        $r7 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        $i0 = virtualinvoke $r7.<java.util.prefs.Preferences: int getInt(java.lang.String,int)>("VERSION", 0);
+
+        if $i0 == 14 goto label09;
+
+     label05:
+        $r11 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        virtualinvoke $r11.<java.util.prefs.Preferences: void clear()>();
+
+     label06:
+        goto label08;
+
+     label07:
+        $r13 := @caughtexception;
+
+        virtualinvoke $r13.<java.util.prefs.BackingStoreException: void printStackTrace()>();
+
+     label08:
+        $r12 = <net.sourceforge.plantuml.stats.StatsUtils: java.util.prefs.Preferences prefs>;
+
+        virtualinvoke $r12.<java.util.prefs.Preferences: void putInt(java.lang.String,int)>("VERSION", 14);
+
+     label09:
+        staticinvoke <net.sourceforge.plantuml.stats.StatsUtils: void restoreNow()>();
+
+        $r17 = <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.HistoricalData historicalData>;
+
+        if $r17 == null goto label10;
+
+        $r10 = <net.sourceforge.plantuml.stats.StatsUtils: net.sourceforge.plantuml.stats.HistoricalData historicalData>;
+
+        virtualinvoke $r10.<net.sourceforge.plantuml.stats.HistoricalData: void reset()>();
+
+     label10:
+        $r8 = staticinvoke <java.lang.Runtime: java.lang.Runtime getRuntime()>();
+
+        $r9 = new net.sourceforge.plantuml.stats.StatsUtils$2;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.stats.StatsUtils$2: void <init>()>();
+
+        virtualinvoke $r8.<java.lang.Runtime: void addShutdownHook(java.lang.Thread)>($r9);
+
+        return;
+
+        catch java.lang.Exception from label01 to label02 with label03;
+        catch java.util.prefs.BackingStoreException from label05 to label06 with label07;
+    }
+}

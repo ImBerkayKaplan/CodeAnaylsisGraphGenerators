@@ -1,0 +1,116 @@
+public class net.sourceforge.plantuml.cucadiagram.dot.DebugTrace extends java.lang.Object
+{
+    private static final net.sourceforge.plantuml.security.SFile out;
+    private static java.io.PrintWriter pw;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.DebugTrace r0;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.DebugTrace;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static synchronized java.io.PrintWriter getPrintWriter()
+    {
+        java.io.PrintWriter $r0, $r2, $r5;
+        net.sourceforge.plantuml.security.SFile $r1;
+        java.io.FileNotFoundException $r3;
+
+        $r0 = <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: java.io.PrintWriter pw>;
+
+        if $r0 != null goto label4;
+
+     label1:
+        $r1 = <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: net.sourceforge.plantuml.security.SFile out>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.security.SFile: java.io.PrintWriter createPrintWriter()>();
+
+        <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: java.io.PrintWriter pw> = $r2;
+
+     label2:
+        goto label4;
+
+     label3:
+        $r3 := @caughtexception;
+
+     label4:
+        $r5 = <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: java.io.PrintWriter pw>;
+
+        return $r5;
+
+        catch java.io.FileNotFoundException from label1 to label2 with label3;
+    }
+
+    public static synchronized void DEBUG(java.lang.String)
+    {
+        java.io.PrintWriter r0;
+        java.lang.String r1;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: java.io.PrintWriter getPrintWriter()>();
+
+        virtualinvoke r0.<java.io.PrintWriter: void println(java.lang.String)>(r1);
+
+        virtualinvoke r0.<java.io.PrintWriter: void flush()>();
+
+        return;
+    }
+
+    public static synchronized void DEBUG(java.lang.String, java.lang.Throwable)
+    {
+        java.lang.String r0;
+        java.lang.Throwable r1;
+        java.io.PrintWriter $r2, $r3;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: java.lang.Throwable;
+
+        staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: void DEBUG(java.lang.String)>(r0);
+
+        $r2 = <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: java.io.PrintWriter pw>;
+
+        virtualinvoke r1.<java.lang.Throwable: void printStackTrace(java.io.PrintWriter)>($r2);
+
+        $r3 = <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: java.io.PrintWriter pw>;
+
+        virtualinvoke $r3.<java.io.PrintWriter: void flush()>();
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.security.SFile $r0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r4;
+        long $l0;
+        java.lang.String $r5;
+
+        $r0 = new net.sourceforge.plantuml.security.SFile;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("debug");
+
+        $l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(long)>($l0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".txt");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.security.SFile: void <init>(java.lang.String)>($r5);
+
+        <net.sourceforge.plantuml.cucadiagram.dot.DebugTrace: net.sourceforge.plantuml.security.SFile out> = $r0;
+
+        return;
+    }
+}

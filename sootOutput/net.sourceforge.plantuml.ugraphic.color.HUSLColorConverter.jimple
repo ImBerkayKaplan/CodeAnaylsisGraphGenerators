@@ -1,0 +1,1525 @@
+public class net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter extends java.lang.Object
+{
+    private static double[][] m;
+    private static double[][] minv;
+    private static double refY;
+    private static double refU;
+    private static double refV;
+    private static double kappa;
+    private static double epsilon;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter r0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static java.util.List getBounds(double)
+    {
+        java.util.ArrayList $r0;
+        double d0, $d1, $d2, d3, $d4, $d5, d6, d7, d8, d9, $d10, $d11, $d12, d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, $d21, $d22, d23, $d24, $d25, $d26, $d27, $d28, d29, $d30, $d31, $d32;
+        byte $b0;
+        double[][] $r2, $r4, $r6;
+        double[] $r3, $r5, $r7, $r8;
+        int $i1, $i2, i3, i4;
+
+        d0 := @parameter0: double;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $d1 = d0 + 16.0;
+
+        $d2 = staticinvoke <java.lang.Math: double pow(double,double)>($d1, 3.0);
+
+        d3 = $d2 / 1560896.0;
+
+        $d4 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double epsilon>;
+
+        $b0 = d3 cmpl $d4;
+
+        if $b0 <= 0 goto label1;
+
+        $d32 = d3;
+
+        goto label2;
+
+     label1:
+        $d5 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double kappa>;
+
+        $d32 = d0 / $d5;
+
+     label2:
+        d6 = $d32;
+
+        i3 = 0;
+
+     label3:
+        if i3 >= 3 goto label6;
+
+        $r2 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] m>;
+
+        $r3 = $r2[i3];
+
+        d7 = $r3[0];
+
+        $r4 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] m>;
+
+        $r5 = $r4[i3];
+
+        d8 = $r5[1];
+
+        $r6 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] m>;
+
+        $r7 = $r6[i3];
+
+        d9 = $r7[2];
+
+        i4 = 0;
+
+     label4:
+        if i4 >= 2 goto label5;
+
+        $d11 = 284517.0 * d7;
+
+        $d10 = 94839.0 * d9;
+
+        $d12 = $d11 - $d10;
+
+        d13 = $d12 * d6;
+
+        $d15 = 838422.0 * d9;
+
+        $d14 = 769860.0 * d8;
+
+        $d17 = $d15 + $d14;
+
+        $d16 = 731718.0 * d7;
+
+        $d18 = $d17 + $d16;
+
+        $d19 = $d18 * d0;
+
+        $d22 = $d19 * d6;
+
+        $i1 = 769860 * i4;
+
+        $d20 = (double) $i1;
+
+        $d21 = $d20 * d0;
+
+        d23 = $d22 - $d21;
+
+        $d25 = 632260.0 * d9;
+
+        $d24 = 126452.0 * d8;
+
+        $d26 = $d25 - $d24;
+
+        $d28 = $d26 * d6;
+
+        $i2 = 126452 * i4;
+
+        $d27 = (double) $i2;
+
+        d29 = $d28 + $d27;
+
+        $r8 = newarray (double)[2];
+
+        $d30 = d13 / d29;
+
+        $r8[0] = $d30;
+
+        $d31 = d23 / d29;
+
+        $r8[1] = $d31;
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r8);
+
+        i4 = i4 + 1;
+
+        goto label4;
+
+     label5:
+        i3 = i3 + 1;
+
+        goto label3;
+
+     label6:
+        return $r0;
+    }
+
+    private static double intersectLineLine(double[], double[])
+    {
+        double[] r0, r1;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6;
+
+        r0 := @parameter0: double[];
+
+        r1 := @parameter1: double[];
+
+        $d1 = r0[1];
+
+        $d0 = r1[1];
+
+        $d5 = $d1 - $d0;
+
+        $d3 = r1[0];
+
+        $d2 = r0[0];
+
+        $d4 = $d3 - $d2;
+
+        $d6 = $d5 / $d4;
+
+        return $d6;
+    }
+
+    private static double distanceFromPole(double[])
+    {
+        double[] r0;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        r0 := @parameter0: double[];
+
+        $d0 = r0[0];
+
+        $d1 = staticinvoke <java.lang.Math: double pow(double,double)>($d0, 2.0);
+
+        $d2 = r0[1];
+
+        $d3 = staticinvoke <java.lang.Math: double pow(double,double)>($d2, 2.0);
+
+        $d4 = $d1 + $d3;
+
+        $d5 = staticinvoke <java.lang.Math: double sqrt(double)>($d4);
+
+        return $d5;
+    }
+
+    private static net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$Length lengthOfRayUntilIntersect(double, double[])
+    {
+        double[] r0;
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, d7;
+        net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$Length $r1;
+
+        d0 := @parameter0: double;
+
+        r0 := @parameter1: double[];
+
+        $d1 = r0[1];
+
+        $d2 = staticinvoke <java.lang.Math: double sin(double)>(d0);
+
+        $d3 = r0[0];
+
+        $d4 = staticinvoke <java.lang.Math: double cos(double)>(d0);
+
+        $d5 = $d3 * $d4;
+
+        $d6 = $d2 - $d5;
+
+        d7 = $d1 / $d6;
+
+        $r1 = new net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$Length;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$Length: void <init>(double,net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$1)>(d7, null);
+
+        return $r1;
+    }
+
+    private static double maxSafeChromaForL(double)
+    {
+        double d0, d1, d2, $d3, d4, $d5, $d6, d7, d8;
+        java.util.List r0;
+        java.lang.Object $r1, $r3;
+        double[] $r2, $r4, $r5, $r7, $r8;
+        int i0;
+
+        d0 := @parameter0: double;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: java.util.List getBounds(double)>(d0);
+
+        d8 = 1.7976931348623157E308;
+
+        i0 = 0;
+
+     label1:
+        if i0 >= 2 goto label2;
+
+        $r1 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i0);
+
+        $r2 = (double[]) $r1;
+
+        d1 = $r2[0];
+
+        $r3 = interfaceinvoke r0.<java.util.List: java.lang.Object get(int)>(i0);
+
+        $r4 = (double[]) $r3;
+
+        d2 = $r4[1];
+
+        $r5 = newarray (double)[2];
+
+        $r5[0] = d1;
+
+        $r5[1] = d2;
+
+        $r7 = newarray (double)[2];
+
+        $d3 = -1.0 / d1;
+
+        $r7[0] = $d3;
+
+        $r7[1] = 0.0;
+
+        d4 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double intersectLineLine(double[],double[])>($r5, $r7);
+
+        $r8 = newarray (double)[2];
+
+        $r8[0] = d4;
+
+        $d5 = d4 * d1;
+
+        $d6 = d2 + $d5;
+
+        $r8[1] = $d6;
+
+        d7 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double distanceFromPole(double[])>($r8);
+
+        d8 = staticinvoke <java.lang.Math: double min(double,double)>(d8, d7);
+
+        i0 = i0 + 1;
+
+        goto label1;
+
+     label2:
+        return d8;
+    }
+
+    private static double maxChromaForLH(double, double)
+    {
+        double d0, $d1, $d2, d3, d4, $d5, d6;
+        java.util.List r0;
+        java.util.Iterator r1;
+        boolean $z0, $z1;
+        java.lang.Object $r2;
+        double[] r3;
+        net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$Length r4;
+
+        d4 := @parameter0: double;
+
+        d0 := @parameter1: double;
+
+        $d1 = d0 / 360.0;
+
+        $d2 = $d1 * 3.141592653589793;
+
+        d3 = $d2 * 2.0;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: java.util.List getBounds(double)>(d4);
+
+        d6 = 1.7976931348623157E308;
+
+        r1 = interfaceinvoke r0.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r2 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r3 = (double[]) $r2;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$Length lengthOfRayUntilIntersect(double,double[])>(d3, r3);
+
+        $z1 = r4.<net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$Length: boolean greaterEqualZero>;
+
+        if $z1 == 0 goto label2;
+
+        $d5 = r4.<net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter$Length: double length>;
+
+        d6 = staticinvoke <java.lang.Math: double min(double,double)>(d6, $d5);
+
+     label2:
+        goto label1;
+
+     label3:
+        return d6;
+    }
+
+    private static double dotProduct(double[], double[])
+    {
+        double[] r0, r1;
+        int $i0, i1;
+        double $d0, $d1, $d2, d3;
+
+        r0 := @parameter0: double[];
+
+        r1 := @parameter1: double[];
+
+        d3 = 0.0;
+
+        i1 = 0;
+
+     label1:
+        $i0 = lengthof r0;
+
+        if i1 >= $i0 goto label2;
+
+        $d1 = r0[i1];
+
+        $d0 = r1[i1];
+
+        $d2 = $d1 * $d0;
+
+        d3 = d3 + $d2;
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return d3;
+    }
+
+    private static double round(double, int)
+    {
+        int i0;
+        double $d0, d1, d2, $d3, $d4, $d5;
+        long $l1;
+
+        d2 := @parameter0: double;
+
+        i0 := @parameter1: int;
+
+        $d0 = (double) i0;
+
+        d1 = staticinvoke <java.lang.Math: double pow(double,double)>(10.0, $d0);
+
+        $d3 = d2 * d1;
+
+        $l1 = staticinvoke <java.lang.Math: long round(double)>($d3);
+
+        $d4 = (double) $l1;
+
+        $d5 = $d4 / d1;
+
+        return $d5;
+    }
+
+    private static double fromLinear(double)
+    {
+        double d0, $d1, $d2, $d3, $d4;
+        byte $b0;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpg 0.0031308;
+
+        if $b0 > 0 goto label1;
+
+        $d4 = 12.92 * d0;
+
+        return $d4;
+
+     label1:
+        $d1 = staticinvoke <java.lang.Math: double pow(double,double)>(d0, 0.4166666666666667);
+
+        $d2 = 1.055 * $d1;
+
+        $d3 = $d2 - 0.055;
+
+        return $d3;
+    }
+
+    private static double toLinear(double)
+    {
+        double d0, $d1, $d2, $d3, $d4;
+        byte $b0;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpl 0.04045;
+
+        if $b0 <= 0 goto label1;
+
+        $d2 = d0 + 0.055;
+
+        $d3 = $d2 / 1.055;
+
+        $d4 = staticinvoke <java.lang.Math: double pow(double,double)>($d3, 2.4);
+
+        return $d4;
+
+     label1:
+        $d1 = d0 / 12.92;
+
+        return $d1;
+    }
+
+    private static int[] rgbPrepare(double[])
+    {
+        double[] r0;
+        int $i0, $i1, $i5, i6;
+        int[] r1;
+        double d0, d1, $d2;
+        byte $b2, $b3;
+        java.lang.IllegalArgumentException $r2;
+        java.lang.StringBuilder $r3, $r4, $r5;
+        java.lang.String $r6;
+        long $l4;
+
+        r0 := @parameter0: double[];
+
+        $i0 = lengthof r0;
+
+        r1 = newarray (int)[$i0];
+
+        i6 = 0;
+
+     label1:
+        $i1 = lengthof r0;
+
+        if i6 >= $i1 goto label4;
+
+        d0 = r0[i6];
+
+        d1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double round(double,int)>(d0, 3);
+
+        $b2 = d1 cmpg -1.0E-4;
+
+        if $b2 < 0 goto label2;
+
+        $b3 = d1 cmpl 1.0001;
+
+        if $b3 <= 0 goto label3;
+
+     label2:
+        $r2 = new java.lang.IllegalArgumentException;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Illegal rgb value: ");
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>(d1);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>($r6);
+
+        throw $r2;
+
+     label3:
+        $d2 = d1 * 255.0;
+
+        $l4 = staticinvoke <java.lang.Math: long round(double)>($d2);
+
+        $i5 = (int) $l4;
+
+        r1[i6] = $i5;
+
+        i6 = i6 + 1;
+
+        goto label1;
+
+     label4:
+        return r1;
+    }
+
+    public static double[] xyzToRgb(double[])
+    {
+        double[] $r0, r2, $r3, $r5, $r7;
+        double[][] $r1, $r4, $r6;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        r2 := @parameter0: double[];
+
+        $r0 = newarray (double)[3];
+
+        $r1 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] m>;
+
+        $r3 = $r1[0];
+
+        $d0 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double dotProduct(double[],double[])>($r3, r2);
+
+        $d1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double fromLinear(double)>($d0);
+
+        $r0[0] = $d1;
+
+        $r4 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] m>;
+
+        $r5 = $r4[1];
+
+        $d2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double dotProduct(double[],double[])>($r5, r2);
+
+        $d3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double fromLinear(double)>($d2);
+
+        $r0[1] = $d3;
+
+        $r6 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] m>;
+
+        $r7 = $r6[2];
+
+        $d4 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double dotProduct(double[],double[])>($r7, r2);
+
+        $d5 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double fromLinear(double)>($d4);
+
+        $r0[2] = $d5;
+
+        return $r0;
+    }
+
+    public static double[] rgbToXyz(double[])
+    {
+        double[] $r0, r1, $r3, $r5, $r7, $r9;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8;
+        double[][] $r4, $r6, $r8;
+
+        r1 := @parameter0: double[];
+
+        $r0 = newarray (double)[3];
+
+        $d0 = r1[0];
+
+        $d1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double toLinear(double)>($d0);
+
+        $r0[0] = $d1;
+
+        $d2 = r1[1];
+
+        $d3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double toLinear(double)>($d2);
+
+        $r0[1] = $d3;
+
+        $d4 = r1[2];
+
+        $d5 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double toLinear(double)>($d4);
+
+        $r0[2] = $d5;
+
+        $r3 = newarray (double)[3];
+
+        $r4 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] minv>;
+
+        $r5 = $r4[0];
+
+        $d6 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double dotProduct(double[],double[])>($r5, $r0);
+
+        $r3[0] = $d6;
+
+        $r6 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] minv>;
+
+        $r7 = $r6[1];
+
+        $d7 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double dotProduct(double[],double[])>($r7, $r0);
+
+        $r3[1] = $d7;
+
+        $r8 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] minv>;
+
+        $r9 = $r8[2];
+
+        $d8 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double dotProduct(double[],double[])>($r9, $r0);
+
+        $r3[2] = $d8;
+
+        return $r3;
+    }
+
+    private static double yToL(double)
+    {
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10;
+        byte $b0;
+
+        d0 := @parameter0: double;
+
+        $d1 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double epsilon>;
+
+        $b0 = d0 cmpg $d1;
+
+        if $b0 > 0 goto label1;
+
+        $d7 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refY>;
+
+        $d9 = d0 / $d7;
+
+        $d8 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double kappa>;
+
+        $d10 = $d9 * $d8;
+
+        return $d10;
+
+     label1:
+        $d2 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refY>;
+
+        $d3 = d0 / $d2;
+
+        $d4 = staticinvoke <java.lang.Math: double pow(double,double)>($d3, 0.3333333333333333);
+
+        $d5 = 116.0 * $d4;
+
+        $d6 = $d5 - 16.0;
+
+        return $d6;
+    }
+
+    private static double lToY(double)
+    {
+        double d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9;
+        byte $b0;
+
+        d0 := @parameter0: double;
+
+        $b0 = d0 cmpg 8.0;
+
+        if $b0 > 0 goto label1;
+
+        $d6 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refY>;
+
+        $d8 = $d6 * d0;
+
+        $d7 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double kappa>;
+
+        $d9 = $d8 / $d7;
+
+        return $d9;
+
+     label1:
+        $d3 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refY>;
+
+        $d1 = d0 + 16.0;
+
+        $d2 = $d1 / 116.0;
+
+        $d4 = staticinvoke <java.lang.Math: double pow(double,double)>($d2, 3.0);
+
+        $d5 = $d3 * $d4;
+
+        return $d5;
+    }
+
+    public static double[] xyzToLuv(double[])
+    {
+        double[] r0, $r1, $r2;
+        double d0, d1, d2, $d3, $d4, $d5, $d6, $d7, d8, $d9, $d10, $d11, $d12, $d13, d14, d15, $d16, $d17, $d18, d19, $d20, $d21, $d22, d23;
+        byte $b0;
+
+        r0 := @parameter0: double[];
+
+        d0 = r0[0];
+
+        d1 = r0[1];
+
+        d2 = r0[2];
+
+        $d7 = 4.0 * d0;
+
+        $d3 = 15.0 * d1;
+
+        $d5 = d0 + $d3;
+
+        $d4 = 3.0 * d2;
+
+        $d6 = $d5 + $d4;
+
+        d8 = $d7 / $d6;
+
+        $d13 = 9.0 * d1;
+
+        $d9 = 15.0 * d1;
+
+        $d11 = d0 + $d9;
+
+        $d10 = 3.0 * d2;
+
+        $d12 = $d11 + $d10;
+
+        d14 = $d13 / $d12;
+
+        d15 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double yToL(double)>(d1);
+
+        $b0 = d15 cmpl 0.0;
+
+        if $b0 != 0 goto label1;
+
+        $r2 = newarray (double)[3];
+
+        $r2[0] = 0.0;
+
+        $r2[1] = 0.0;
+
+        $r2[2] = 0.0;
+
+        return $r2;
+
+     label1:
+        $d18 = 13.0 * d15;
+
+        $d16 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refU>;
+
+        $d17 = d8 - $d16;
+
+        d19 = $d18 * $d17;
+
+        $d22 = 13.0 * d15;
+
+        $d20 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refV>;
+
+        $d21 = d14 - $d20;
+
+        d23 = $d22 * $d21;
+
+        $r1 = newarray (double)[3];
+
+        $r1[0] = d15;
+
+        $r1[1] = d19;
+
+        $r1[2] = d23;
+
+        return $r1;
+    }
+
+    public static double[] luvToXyz(double[])
+    {
+        double[] r0, $r1, $r2;
+        double d0, d1, d2, $d3, $d4, $d5, d6, $d7, $d8, $d9, d10, d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, d19, $d20, $d21, $d22, $d23, $d24, $d25, $d26, d27;
+        byte $b0;
+
+        r0 := @parameter0: double[];
+
+        d0 = r0[0];
+
+        d1 = r0[1];
+
+        d2 = r0[2];
+
+        $b0 = d0 cmpl 0.0;
+
+        if $b0 != 0 goto label1;
+
+        $r2 = newarray (double)[3];
+
+        $r2[0] = 0.0;
+
+        $r2[1] = 0.0;
+
+        $r2[2] = 0.0;
+
+        return $r2;
+
+     label1:
+        $d3 = 13.0 * d0;
+
+        $d5 = d1 / $d3;
+
+        $d4 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refU>;
+
+        d6 = $d5 + $d4;
+
+        $d7 = 13.0 * d0;
+
+        $d9 = d2 / $d7;
+
+        $d8 = <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refV>;
+
+        d10 = $d9 + $d8;
+
+        d11 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double lToY(double)>(d0);
+
+        $d12 = 9.0 * d11;
+
+        $d17 = $d12 * d6;
+
+        $d13 = d6 - 4.0;
+
+        $d15 = $d13 * d10;
+
+        $d14 = d6 * d10;
+
+        $d16 = $d15 - $d14;
+
+        $d18 = $d17 / $d16;
+
+        d19 = 0.0 - $d18;
+
+        $d22 = 9.0 * d11;
+
+        $d20 = 15.0 * d10;
+
+        $d21 = $d20 * d11;
+
+        $d24 = $d22 - $d21;
+
+        $d23 = d10 * d19;
+
+        $d26 = $d24 - $d23;
+
+        $d25 = 3.0 * d10;
+
+        d27 = $d26 / $d25;
+
+        $r1 = newarray (double)[3];
+
+        $r1[0] = d19;
+
+        $r1[1] = d11;
+
+        $r1[2] = d27;
+
+        return $r1;
+    }
+
+    public static double[] luvToLch(double[])
+    {
+        double[] r0, $r1;
+        double d0, d1, d2, $d3, $d4, $d5, d6, d7, $d8, d9;
+        byte $b0, $b1;
+
+        r0 := @parameter0: double[];
+
+        d0 = r0[0];
+
+        d1 = r0[1];
+
+        d2 = r0[2];
+
+        $d4 = d1 * d1;
+
+        $d3 = d2 * d2;
+
+        $d5 = $d4 + $d3;
+
+        d6 = staticinvoke <java.lang.Math: double sqrt(double)>($d5);
+
+        $b0 = d6 cmpg 1.0E-8;
+
+        if $b0 >= 0 goto label1;
+
+        d9 = 0.0;
+
+        goto label2;
+
+     label1:
+        d7 = staticinvoke <java.lang.Math: double atan2(double,double)>(d2, d1);
+
+        $d8 = d7 * 180.0;
+
+        d9 = $d8 / 3.141592653589793;
+
+        $b1 = d9 cmpg 0.0;
+
+        if $b1 >= 0 goto label2;
+
+        d9 = 360.0 + d9;
+
+     label2:
+        $r1 = newarray (double)[3];
+
+        $r1[0] = d0;
+
+        $r1[1] = d6;
+
+        $r1[2] = d9;
+
+        return $r1;
+    }
+
+    public static double[] lchToLuv(double[])
+    {
+        double[] r0, $r1;
+        double d0, d1, d2, $d3, $d4, d5, $d6, d7, $d8, d9;
+
+        r0 := @parameter0: double[];
+
+        d0 = r0[0];
+
+        d1 = r0[1];
+
+        d2 = r0[2];
+
+        $d3 = d2 / 360.0;
+
+        $d4 = $d3 * 2.0;
+
+        d5 = $d4 * 3.141592653589793;
+
+        $d6 = staticinvoke <java.lang.Math: double cos(double)>(d5);
+
+        d7 = $d6 * d1;
+
+        $d8 = staticinvoke <java.lang.Math: double sin(double)>(d5);
+
+        d9 = $d8 * d1;
+
+        $r1 = newarray (double)[3];
+
+        $r1[0] = d0;
+
+        $r1[1] = d7;
+
+        $r1[2] = d9;
+
+        return $r1;
+    }
+
+    public static double[] hsluvToLch(double[])
+    {
+        double[] r0, $r1, $r2, $r3;
+        double d0, d1, d2, d3, $d4, d5;
+        byte $b0, $b1;
+
+        r0 := @parameter0: double[];
+
+        d0 = r0[0];
+
+        d1 = r0[1];
+
+        d2 = r0[2];
+
+        $b0 = d2 cmpl 99.9999999;
+
+        if $b0 <= 0 goto label1;
+
+        $r3 = newarray (double)[3];
+
+        $r3[0] = 100.0;
+
+        $r3[1] = 0.0;
+
+        $r3[2] = d0;
+
+        return $r3;
+
+     label1:
+        $b1 = d2 cmpg 1.0E-8;
+
+        if $b1 >= 0 goto label2;
+
+        $r2 = newarray (double)[3];
+
+        $r2[0] = 0.0;
+
+        $r2[1] = 0.0;
+
+        $r2[2] = d0;
+
+        return $r2;
+
+     label2:
+        d3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double maxChromaForLH(double,double)>(d2, d0);
+
+        $d4 = d3 / 100.0;
+
+        d5 = $d4 * d1;
+
+        $r1 = newarray (double)[3];
+
+        $r1[0] = d2;
+
+        $r1[1] = d5;
+
+        $r1[2] = d0;
+
+        return $r1;
+    }
+
+    public static double[] lchToHsluv(double[])
+    {
+        double[] r0, $r1, $r2, $r3;
+        double d0, d1, d2, d3, $d4, d5;
+        byte $b0, $b1;
+
+        r0 := @parameter0: double[];
+
+        d0 = r0[0];
+
+        d1 = r0[1];
+
+        d2 = r0[2];
+
+        $b0 = d0 cmpl 99.9999999;
+
+        if $b0 <= 0 goto label1;
+
+        $r3 = newarray (double)[3];
+
+        $r3[0] = d2;
+
+        $r3[1] = 0.0;
+
+        $r3[2] = 100.0;
+
+        return $r3;
+
+     label1:
+        $b1 = d0 cmpg 1.0E-8;
+
+        if $b1 >= 0 goto label2;
+
+        $r2 = newarray (double)[3];
+
+        $r2[0] = d2;
+
+        $r2[1] = 0.0;
+
+        $r2[2] = 0.0;
+
+        return $r2;
+
+     label2:
+        d3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double maxChromaForLH(double,double)>(d0, d2);
+
+        $d4 = d1 / d3;
+
+        d5 = $d4 * 100.0;
+
+        $r1 = newarray (double)[3];
+
+        $r1[0] = d2;
+
+        $r1[1] = d5;
+
+        $r1[2] = d0;
+
+        return $r1;
+    }
+
+    public static double[] hpluvToLch(double[])
+    {
+        double[] r0, $r1, $r2, $r3;
+        double d0, d1, d2, d3, $d4, d5;
+        byte $b0, $b1;
+
+        r0 := @parameter0: double[];
+
+        d0 = r0[0];
+
+        d1 = r0[1];
+
+        d2 = r0[2];
+
+        $b0 = d2 cmpl 99.9999999;
+
+        if $b0 <= 0 goto label1;
+
+        $r3 = newarray (double)[3];
+
+        $r3[0] = 100.0;
+
+        $r3[1] = 0.0;
+
+        $r3[2] = d0;
+
+        return $r3;
+
+     label1:
+        $b1 = d2 cmpg 1.0E-8;
+
+        if $b1 >= 0 goto label2;
+
+        $r2 = newarray (double)[3];
+
+        $r2[0] = 0.0;
+
+        $r2[1] = 0.0;
+
+        $r2[2] = d0;
+
+        return $r2;
+
+     label2:
+        d3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double maxSafeChromaForL(double)>(d2);
+
+        $d4 = d3 / 100.0;
+
+        d5 = $d4 * d1;
+
+        $r1 = newarray (double)[3];
+
+        $r1[0] = d2;
+
+        $r1[1] = d5;
+
+        $r1[2] = d0;
+
+        return $r1;
+    }
+
+    public static double[] lchToHpluv(double[])
+    {
+        double[] r0, $r1, $r2, $r3;
+        double d0, d1, d2, d3, $d4, d5;
+        byte $b0, $b1;
+
+        r0 := @parameter0: double[];
+
+        d0 = r0[0];
+
+        d1 = r0[1];
+
+        d2 = r0[2];
+
+        $b0 = d0 cmpl 99.9999999;
+
+        if $b0 <= 0 goto label1;
+
+        $r3 = newarray (double)[3];
+
+        $r3[0] = d2;
+
+        $r3[1] = 0.0;
+
+        $r3[2] = 100.0;
+
+        return $r3;
+
+     label1:
+        $b1 = d0 cmpg 1.0E-8;
+
+        if $b1 >= 0 goto label2;
+
+        $r2 = newarray (double)[3];
+
+        $r2[0] = d2;
+
+        $r2[1] = 0.0;
+
+        $r2[2] = 0.0;
+
+        return $r2;
+
+     label2:
+        d3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double maxSafeChromaForL(double)>(d0);
+
+        $d4 = d1 / d3;
+
+        d5 = $d4 * 100.0;
+
+        $r1 = newarray (double)[3];
+
+        $r1[0] = d2;
+
+        $r1[1] = d5;
+
+        $r1[2] = d0;
+
+        return $r1;
+    }
+
+    public static java.lang.String rgbToHex(double[])
+    {
+        double[] r0;
+        int[] r1;
+        java.lang.Object[] $r2;
+        int $i0, $i1, $i2;
+        java.lang.Integer $r3, $r4, $r5;
+        java.lang.String $r6;
+
+        r0 := @parameter0: double[];
+
+        r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: int[] rgbPrepare(double[])>(r0);
+
+        $r2 = newarray (java.lang.Object)[3];
+
+        $i0 = r1[0];
+
+        $r3 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i0);
+
+        $r2[0] = $r3;
+
+        $i1 = r1[1];
+
+        $r4 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i1);
+
+        $r2[1] = $r4;
+
+        $i2 = r1[2];
+
+        $r5 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i2);
+
+        $r2[2] = $r5;
+
+        $r6 = staticinvoke <java.lang.String: java.lang.String format(java.lang.String,java.lang.Object[])>("#%02x%02x%02x", $r2);
+
+        return $r6;
+    }
+
+    public static double[] hexToRgb(java.lang.String)
+    {
+        double[] $r0;
+        java.lang.String r1, $r2, $r3, $r4;
+        int $i0, $i1, $i2;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = newarray (double)[3];
+
+        $r2 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int,int)>(1, 3);
+
+        $i0 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String,int)>($r2, 16);
+
+        $d0 = (double) $i0;
+
+        $d1 = $d0 / 255.0;
+
+        $r0[0] = $d1;
+
+        $r3 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int,int)>(3, 5);
+
+        $i1 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String,int)>($r3, 16);
+
+        $d2 = (double) $i1;
+
+        $d3 = $d2 / 255.0;
+
+        $r0[1] = $d3;
+
+        $r4 = virtualinvoke r1.<java.lang.String: java.lang.String substring(int,int)>(5, 7);
+
+        $i2 = staticinvoke <java.lang.Integer: int parseInt(java.lang.String,int)>($r4, 16);
+
+        $d4 = (double) $i2;
+
+        $d5 = $d4 / 255.0;
+
+        $r0[2] = $d5;
+
+        return $r0;
+    }
+
+    public static double[] lchToRgb(double[])
+    {
+        double[] r0, $r1, $r2, $r3;
+
+        r0 := @parameter0: double[];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] lchToLuv(double[])>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] luvToXyz(double[])>($r1);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] xyzToRgb(double[])>($r2);
+
+        return $r3;
+    }
+
+    public static double[] rgbToLch(double[])
+    {
+        double[] r0, $r1, $r2, $r3;
+
+        r0 := @parameter0: double[];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] rgbToXyz(double[])>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] xyzToLuv(double[])>($r1);
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] luvToLch(double[])>($r2);
+
+        return $r3;
+    }
+
+    public static double[] hsluvToRgb(double[])
+    {
+        double[] r0, $r1, $r2;
+
+        r0 := @parameter0: double[];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] hsluvToLch(double[])>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] lchToRgb(double[])>($r1);
+
+        return $r2;
+    }
+
+    public static double[] rgbToHsluv(double[])
+    {
+        double[] r0, $r1, $r2;
+
+        r0 := @parameter0: double[];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] rgbToLch(double[])>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] lchToHsluv(double[])>($r1);
+
+        return $r2;
+    }
+
+    public static double[] hpluvToRgb(double[])
+    {
+        double[] r0, $r1, $r2;
+
+        r0 := @parameter0: double[];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] hpluvToLch(double[])>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] lchToRgb(double[])>($r1);
+
+        return $r2;
+    }
+
+    public static double[] rgbToHpluv(double[])
+    {
+        double[] r0, $r1, $r2;
+
+        r0 := @parameter0: double[];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] rgbToLch(double[])>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] lchToHpluv(double[])>($r1);
+
+        return $r2;
+    }
+
+    public static java.lang.String hsluvToHex(double[])
+    {
+        double[] r0, $r1;
+        java.lang.String $r2;
+
+        r0 := @parameter0: double[];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] hsluvToRgb(double[])>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: java.lang.String rgbToHex(double[])>($r1);
+
+        return $r2;
+    }
+
+    public static java.lang.String hpluvToHex(double[])
+    {
+        double[] r0, $r1;
+        java.lang.String $r2;
+
+        r0 := @parameter0: double[];
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] hpluvToRgb(double[])>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: java.lang.String rgbToHex(double[])>($r1);
+
+        return $r2;
+    }
+
+    public static double[] hexToHsluv(java.lang.String)
+    {
+        java.lang.String r0;
+        double[] $r1, $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] hexToRgb(java.lang.String)>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] rgbToHsluv(double[])>($r1);
+
+        return $r2;
+    }
+
+    public static double[] hexToHpluv(java.lang.String)
+    {
+        java.lang.String r0;
+        double[] $r1, $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] hexToRgb(java.lang.String)>(r0);
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[] rgbToHpluv(double[])>($r1);
+
+        return $r2;
+    }
+
+    static void <clinit>()
+    {
+        double[][] $r0, $r4;
+        double[] $r1, $r2, $r3, $r5, $r6, $r7;
+
+        $r0 = newarray (double[])[3];
+
+        $r1 = newarray (double)[3];
+
+        $r1[0] = 3.240969941904521;
+
+        $r1[1] = -1.537383177570093;
+
+        $r1[2] = -0.498610760293;
+
+        $r0[0] = $r1;
+
+        $r2 = newarray (double)[3];
+
+        $r2[0] = -0.96924363628087;
+
+        $r2[1] = 1.87596750150772;
+
+        $r2[2] = 0.041555057407175;
+
+        $r0[1] = $r2;
+
+        $r3 = newarray (double)[3];
+
+        $r3[0] = 0.055630079696993;
+
+        $r3[1] = -0.20397695888897;
+
+        $r3[2] = 1.056971514242878;
+
+        $r0[2] = $r3;
+
+        <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] m> = $r0;
+
+        $r4 = newarray (double[])[3];
+
+        $r5 = newarray (double)[3];
+
+        $r5[0] = 0.41239079926595;
+
+        $r5[1] = 0.35758433938387;
+
+        $r5[2] = 0.18048078840183;
+
+        $r4[0] = $r5;
+
+        $r6 = newarray (double)[3];
+
+        $r6[0] = 0.21263900587151;
+
+        $r6[1] = 0.71516867876775;
+
+        $r6[2] = 0.072192315360733;
+
+        $r4[1] = $r6;
+
+        $r7 = newarray (double)[3];
+
+        $r7[0] = 0.019330818715591;
+
+        $r7[1] = 0.11919477979462;
+
+        $r7[2] = 0.95053215224966;
+
+        $r4[2] = $r7;
+
+        <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double[][] minv> = $r4;
+
+        <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refY> = 1.0;
+
+        <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refU> = 0.19783000664283;
+
+        <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double refV> = 0.46831999493879;
+
+        <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double kappa> = 903.2962962;
+
+        <net.sourceforge.plantuml.ugraphic.color.HUSLColorConverter: double epsilon> = 0.0088564516;
+
+        return;
+    }
+}

@@ -1,0 +1,149 @@
+public class net.sourceforge.plantuml.directdot.PSystemDot extends net.sourceforge.plantuml.AbstractPSystem
+{
+    private final java.lang.String data;
+
+    public void <init>(net.sourceforge.plantuml.core.UmlSource, java.lang.String)
+    {
+        net.sourceforge.plantuml.directdot.PSystemDot r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.directdot.PSystemDot;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        r2 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<net.sourceforge.plantuml.AbstractPSystem: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        r0.<net.sourceforge.plantuml.directdot.PSystemDot: java.lang.String data> = r2;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.directdot.PSystemDot r1;
+
+        r1 := @this: net.sourceforge.plantuml.directdot.PSystemDot;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Dot)");
+
+        return $r0;
+    }
+
+    protected final net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.directdot.PSystemDot r0;
+        java.lang.String[] $r1, $r13, $r22;
+        net.sourceforge.plantuml.FileFormatOption r2;
+        java.lang.String $r3, $r5, $r6;
+        net.sourceforge.plantuml.FileFormat $r4;
+        net.sourceforge.plantuml.cucadiagram.dot.Graphviz r7;
+        net.sourceforge.plantuml.cucadiagram.dot.ExeState $r8, $r9;
+        net.sourceforge.plantuml.CounterOutputStream $r10;
+        java.io.OutputStream r11;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessState r12, $r20;
+        int $i0, i3;
+        java.util.List $r14, $r23;
+        net.sourceforge.plantuml.svek.IEntityImage r15, r28;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r16, $r17, $r18, $r24, $r25, $r26;
+        long $l1, $l2;
+        net.sourceforge.plantuml.core.ImageData $r19, $r21, $r27;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.directdot.PSystemDot;
+
+        r11 := @parameter0: java.io.OutputStream;
+
+        i3 := @parameter1: int;
+
+        r2 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r3 = r0.<net.sourceforge.plantuml.directdot.PSystemDot: java.lang.String data>;
+
+        $r1 = newarray (java.lang.String)[1];
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.FileFormat: java.lang.String name()>();
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goLowerCase(java.lang.String)>($r5);
+
+        $r1[0] = $r6;
+
+        r7 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.GraphvizUtils: net.sourceforge.plantuml.cucadiagram.dot.Graphviz createForSystemDot(net.sourceforge.plantuml.ISkinParam,java.lang.String,java.lang.String[])>(null, $r3, $r1);
+
+        $r8 = interfaceinvoke r7.<net.sourceforge.plantuml.cucadiagram.dot.Graphviz: net.sourceforge.plantuml.cucadiagram.dot.ExeState getExeState()>();
+
+        $r9 = <net.sourceforge.plantuml.cucadiagram.dot.ExeState: net.sourceforge.plantuml.cucadiagram.dot.ExeState OK>;
+
+        if $r8 == $r9 goto label1;
+
+        $r22 = newarray (java.lang.String)[1];
+
+        $r22[0] = "There is an issue with your Dot/Graphviz installation";
+
+        $r23 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r22);
+
+        r28 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.svek.IEntityImage createForError(java.util.List,boolean)>($r23, 0);
+
+        $r24 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder plainImageBuilder(net.sourceforge.plantuml.graphic.UDrawable,net.sourceforge.plantuml.FileFormatOption)>(r28, r2);
+
+        $l2 = virtualinvoke r0.<net.sourceforge.plantuml.directdot.PSystemDot: long seed()>();
+
+        $r25 = virtualinvoke $r24.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder seed(long)>($l2);
+
+        $r26 = virtualinvoke $r25.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder status(int)>(503);
+
+        $r27 = virtualinvoke $r26.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r11);
+
+        return $r27;
+
+     label1:
+        $r10 = new net.sourceforge.plantuml.CounterOutputStream;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.CounterOutputStream: void <init>(java.io.OutputStream)>(r11);
+
+        r12 = interfaceinvoke r7.<net.sourceforge.plantuml.cucadiagram.dot.Graphviz: net.sourceforge.plantuml.cucadiagram.dot.ProcessState createFile3(java.io.OutputStream)>($r10);
+
+        $i0 = virtualinvoke $r10.<net.sourceforge.plantuml.CounterOutputStream: int getLength()>();
+
+        if $i0 == 0 goto label2;
+
+        $r20 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState TERMINATED_OK()>();
+
+        $z0 = virtualinvoke r12.<net.sourceforge.plantuml.cucadiagram.dot.ProcessState: boolean differs(net.sourceforge.plantuml.cucadiagram.dot.ProcessState)>($r20);
+
+        if $z0 == 0 goto label3;
+
+     label2:
+        $r13 = newarray (java.lang.String)[1];
+
+        $r13[0] = "GraphViz has crashed";
+
+        $r14 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r13);
+
+        r15 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.svek.IEntityImage createForError(java.util.List,boolean)>($r14, 0);
+
+        $r16 = staticinvoke <net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder plainImageBuilder(net.sourceforge.plantuml.graphic.UDrawable,net.sourceforge.plantuml.FileFormatOption)>(r15, r2);
+
+        $l1 = virtualinvoke r0.<net.sourceforge.plantuml.directdot.PSystemDot: long seed()>();
+
+        $r17 = virtualinvoke $r16.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder seed(long)>($l1);
+
+        $r18 = virtualinvoke $r17.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder status(int)>(503);
+
+        $r19 = virtualinvoke $r18.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.core.ImageData write(java.io.OutputStream)>(r11);
+
+        return $r19;
+
+     label3:
+        $r21 = staticinvoke <net.sourceforge.plantuml.api.ImageDataSimple: net.sourceforge.plantuml.core.ImageData ok()>();
+
+        return $r21;
+    }
+}

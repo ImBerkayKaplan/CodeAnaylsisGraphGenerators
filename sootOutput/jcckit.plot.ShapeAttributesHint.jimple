@@ -1,0 +1,274 @@
+public class jcckit.plot.ShapeAttributesHint extends java.lang.Object implements jcckit.plot.AttributesHint, java.lang.Cloneable
+{
+    public static final java.lang.String INITIAL_ATTRIBUTES_KEY;
+    public static final java.lang.String FILL_COLOR_HSB_INCREMENT_KEY;
+    public static final java.lang.String LINE_COLOR_HSB_INCREMENT_KEY;
+    public static final java.lang.String LINE_THICKNESS_INCREMENT_KEY;
+    private float[] _fillColorHSB;
+    private float[] _lineColorHSB;
+    private double _lineThickness;
+    private double[] _linePattern;
+    private double[] _fillColorHSBIncrement;
+    private double[] _lineColorHSBIncrement;
+    private double _lineThicknessIncrement;
+
+    private static float[] extractHSB(java.awt.Color)
+    {
+        java.awt.Color r0;
+        int $i0, $i1, $i2;
+        float[] $r1;
+
+        r0 := @parameter0: java.awt.Color;
+
+        if r0 != null goto label1;
+
+        $r1 = null;
+
+        goto label2;
+
+     label1:
+        $i0 = virtualinvoke r0.<java.awt.Color: int getRed()>();
+
+        $i1 = virtualinvoke r0.<java.awt.Color: int getGreen()>();
+
+        $i2 = virtualinvoke r0.<java.awt.Color: int getBlue()>();
+
+        $r1 = staticinvoke <java.awt.Color: float[] RGBtoHSB(int,int,int,float[])>($i0, $i1, $i2, null);
+
+     label2:
+        return $r1;
+    }
+
+    private static java.awt.Color createColor(float[])
+    {
+        float[] r0;
+        float $f0, $f1, $f2;
+        java.awt.Color $r1;
+
+        r0 := @parameter0: float[];
+
+        if r0 != null goto label1;
+
+        $r1 = null;
+
+        goto label2;
+
+     label1:
+        $f2 = r0[0];
+
+        $f1 = r0[1];
+
+        $f0 = r0[2];
+
+        $r1 = staticinvoke <java.awt.Color: java.awt.Color getHSBColor(float,float,float)>($f2, $f1, $f0);
+
+     label2:
+        return $r1;
+    }
+
+    private static float[] incrementColor(float[], double[])
+    {
+        float[] r0, r3;
+        java.lang.Object $r1;
+        float $f0, $f1;
+        double[] r2;
+        double $d0, $d1, $d2;
+        int i0;
+
+        r0 := @parameter0: float[];
+
+        r2 := @parameter1: double[];
+
+        r3 = null;
+
+        if r0 == null goto label2;
+
+        $r1 = virtualinvoke r0.<java.lang.Object: java.lang.Object clone()>();
+
+        r3 = (float[]) $r1;
+
+        i0 = 0;
+
+     label1:
+        if i0 >= 3 goto label2;
+
+        $f0 = r3[i0];
+
+        $d1 = (double) $f0;
+
+        $d0 = r2[i0];
+
+        $d2 = $d1 + $d0;
+
+        $f1 = (float) $d2;
+
+        r3[i0] = $f1;
+
+        i0 = i0 + 1;
+
+        goto label1;
+
+     label2:
+        return r3;
+    }
+
+    public void <init>(jcckit.util.ConfigParameters)
+    {
+        jcckit.plot.ShapeAttributesHint r0;
+        jcckit.graphic.ShapeAttributes $r1;
+        jcckit.util.ConfigParameters r2, $r3;
+        java.awt.Color $r5, $r7;
+        float[] $r6, $r8;
+        double $d0, $d1;
+        double[] $r9, $r10, $r11, $r12, $r13;
+
+        r0 := @this: jcckit.plot.ShapeAttributesHint;
+
+        r2 := @parameter0: jcckit.util.ConfigParameters;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new jcckit.graphic.ShapeAttributes;
+
+        $r3 = virtualinvoke r2.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("initialAttributes");
+
+        specialinvoke $r1.<jcckit.graphic.ShapeAttributes: void <init>(jcckit.util.ConfigParameters)>($r3);
+
+        $r5 = virtualinvoke $r1.<jcckit.graphic.ShapeAttributes: java.awt.Color getFillColor()>();
+
+        $r6 = staticinvoke <jcckit.plot.ShapeAttributesHint: float[] extractHSB(java.awt.Color)>($r5);
+
+        r0.<jcckit.plot.ShapeAttributesHint: float[] _fillColorHSB> = $r6;
+
+        $r7 = virtualinvoke $r1.<jcckit.graphic.ShapeAttributes: java.awt.Color getLineColor()>();
+
+        $r8 = staticinvoke <jcckit.plot.ShapeAttributesHint: float[] extractHSB(java.awt.Color)>($r7);
+
+        r0.<jcckit.plot.ShapeAttributesHint: float[] _lineColorHSB> = $r8;
+
+        $d0 = virtualinvoke $r1.<jcckit.graphic.ShapeAttributes: double getLineThickness()>();
+
+        r0.<jcckit.plot.ShapeAttributesHint: double _lineThickness> = $d0;
+
+        $r9 = virtualinvoke $r1.<jcckit.graphic.ShapeAttributes: double[] getLinePattern()>();
+
+        r0.<jcckit.plot.ShapeAttributesHint: double[] _linePattern> = $r9;
+
+        $r10 = newarray (double)[3];
+
+        $r11 = virtualinvoke r2.<jcckit.util.ConfigParameters: double[] getDoubleArray(java.lang.String,double[])>("fillColorHSBIncrement", $r10);
+
+        r0.<jcckit.plot.ShapeAttributesHint: double[] _fillColorHSBIncrement> = $r11;
+
+        $r12 = newarray (double)[3];
+
+        $r13 = virtualinvoke r2.<jcckit.util.ConfigParameters: double[] getDoubleArray(java.lang.String,double[])>("lineColorHSBIncrement", $r12);
+
+        r0.<jcckit.plot.ShapeAttributesHint: double[] _lineColorHSBIncrement> = $r13;
+
+        $d1 = virtualinvoke r2.<jcckit.util.ConfigParameters: double getDouble(java.lang.String,double)>("lineThicknessIncrement", 0.0);
+
+        r0.<jcckit.plot.ShapeAttributesHint: double _lineThicknessIncrement> = $d1;
+
+        return;
+    }
+
+    public jcckit.plot.AttributesHint getNextHint()
+    {
+        jcckit.plot.ShapeAttributesHint r0, r10;
+        java.lang.Object $r1;
+        double[] $r2, $r5;
+        float[] $r3, $r4, $r6, $r7;
+        double $d0, $d1, $d2, $d3;
+        java.lang.CloneNotSupportedException $r8;
+
+        r0 := @this: jcckit.plot.ShapeAttributesHint;
+
+        r10 = null;
+
+     label1:
+        $r1 = virtualinvoke r0.<java.lang.Object: java.lang.Object clone()>();
+
+        r10 = (jcckit.plot.ShapeAttributesHint) $r1;
+
+     label2:
+        goto label4;
+
+     label3:
+        $r8 := @caughtexception;
+
+     label4:
+        $r3 = r0.<jcckit.plot.ShapeAttributesHint: float[] _fillColorHSB>;
+
+        $r2 = r0.<jcckit.plot.ShapeAttributesHint: double[] _fillColorHSBIncrement>;
+
+        $r4 = staticinvoke <jcckit.plot.ShapeAttributesHint: float[] incrementColor(float[],double[])>($r3, $r2);
+
+        r10.<jcckit.plot.ShapeAttributesHint: float[] _fillColorHSB> = $r4;
+
+        $r6 = r0.<jcckit.plot.ShapeAttributesHint: float[] _lineColorHSB>;
+
+        $r5 = r0.<jcckit.plot.ShapeAttributesHint: double[] _lineColorHSBIncrement>;
+
+        $r7 = staticinvoke <jcckit.plot.ShapeAttributesHint: float[] incrementColor(float[],double[])>($r6, $r5);
+
+        r10.<jcckit.plot.ShapeAttributesHint: float[] _lineColorHSB> = $r7;
+
+        $d1 = r0.<jcckit.plot.ShapeAttributesHint: double _lineThickness>;
+
+        $d0 = r0.<jcckit.plot.ShapeAttributesHint: double _lineThicknessIncrement>;
+
+        $d2 = $d1 + $d0;
+
+        $d3 = staticinvoke <java.lang.Math: double max(double,double)>(0.0, $d2);
+
+        r10.<jcckit.plot.ShapeAttributesHint: double _lineThickness> = $d3;
+
+        return r10;
+
+        catch java.lang.CloneNotSupportedException from label1 to label2 with label3;
+    }
+
+    public jcckit.graphic.GraphicAttributes getAttributes()
+    {
+        jcckit.graphic.ShapeAttributes $r0;
+        jcckit.plot.ShapeAttributesHint r1;
+        float[] $r2, $r4;
+        java.awt.Color $r3, $r5;
+        double[] $r6;
+        double $d0;
+
+        r1 := @this: jcckit.plot.ShapeAttributesHint;
+
+        $r0 = new jcckit.graphic.ShapeAttributes;
+
+        $r2 = r1.<jcckit.plot.ShapeAttributesHint: float[] _fillColorHSB>;
+
+        $r3 = staticinvoke <jcckit.plot.ShapeAttributesHint: java.awt.Color createColor(float[])>($r2);
+
+        $r4 = r1.<jcckit.plot.ShapeAttributesHint: float[] _lineColorHSB>;
+
+        $r5 = staticinvoke <jcckit.plot.ShapeAttributesHint: java.awt.Color createColor(float[])>($r4);
+
+        $d0 = r1.<jcckit.plot.ShapeAttributesHint: double _lineThickness>;
+
+        $r6 = r1.<jcckit.plot.ShapeAttributesHint: double[] _linePattern>;
+
+        specialinvoke $r0.<jcckit.graphic.ShapeAttributes: void <init>(java.awt.Color,java.awt.Color,double,double[])>($r3, $r5, $d0, $r6);
+
+        return $r0;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.plot.ShapeAttributesHint: java.lang.String LINE_THICKNESS_INCREMENT_KEY> = "lineThicknessIncrement";
+
+        <jcckit.plot.ShapeAttributesHint: java.lang.String LINE_COLOR_HSB_INCREMENT_KEY> = "lineColorHSBIncrement";
+
+        <jcckit.plot.ShapeAttributesHint: java.lang.String FILL_COLOR_HSB_INCREMENT_KEY> = "fillColorHSBIncrement";
+
+        <jcckit.plot.ShapeAttributesHint: java.lang.String INITIAL_ATTRIBUTES_KEY> = "initialAttributes";
+
+        return;
+    }
+}

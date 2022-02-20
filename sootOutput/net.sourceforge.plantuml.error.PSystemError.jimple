@@ -1,0 +1,1424 @@
+public abstract class net.sourceforge.plantuml.error.PSystemError extends net.sourceforge.plantuml.PlainDiagram
+{
+    private static boolean disableTimeBasedErrorDecorations;
+    protected java.util.List trace;
+    protected net.sourceforge.plantuml.ErrorUml singleError;
+
+    public static void disableTimeBasedErrorDecorations()
+    {
+        <net.sourceforge.plantuml.error.PSystemError: boolean disableTimeBasedErrorDecorations> = 1;
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.core.UmlSource)
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        specialinvoke r0.<net.sourceforge.plantuml.PlainDiagram: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.FileFormatOption r1;
+        net.sourceforge.plantuml.ugraphic.ImageBuilder $r2, $r3, $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r1 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.PlainDiagram: net.sourceforge.plantuml.ugraphic.ImageBuilder createImageBuilder(net.sourceforge.plantuml.FileFormatOption)>(r1);
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder blackBackcolor()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder randomPixel()>();
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.ugraphic.ImageBuilder: net.sourceforge.plantuml.ugraphic.ImageBuilder status(int)>(400);
+
+        return $r5;
+    }
+
+    protected final net.sourceforge.plantuml.StringLocated getLastLine()
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        java.util.List $r1, $r2;
+        int $i0, $i1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.StringLocated $r4;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r2 = r0.<net.sourceforge.plantuml.error.PSystemError: java.util.List trace>;
+
+        $r1 = r0.<net.sourceforge.plantuml.error.PSystemError: java.util.List trace>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>($i1);
+
+        $r4 = (net.sourceforge.plantuml.StringLocated) $r3;
+
+        return $r4;
+    }
+
+    public final net.sourceforge.plantuml.LineLocation getLineLocation()
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.StringLocated $r1;
+        net.sourceforge.plantuml.LineLocation $r2;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.StringLocated getLastLine()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.StringLocated: net.sourceforge.plantuml.LineLocation getLocation()>();
+
+        return $r2;
+    }
+
+    public final java.util.Collection getErrorsUml()
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.ErrorUml $r1;
+        java.util.Set $r2;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r1 = r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.ErrorUml singleError>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.Set singleton(java.lang.Object)>($r1);
+
+        return $r2;
+    }
+
+    public final net.sourceforge.plantuml.ErrorUml getFirstError()
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.ErrorUml $r1;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r1 = r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.ErrorUml singleError>;
+
+        return $r1;
+    }
+
+    public final java.lang.String getWarningOrError()
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.error.PSystemError r2;
+        net.sourceforge.plantuml.core.DiagramDescription $r3;
+        net.sourceforge.plantuml.cucadiagram.DisplayPositionned $r6;
+        net.sourceforge.plantuml.cucadiagram.Display $r7;
+        java.util.ListIterator r8;
+        boolean $z0;
+        java.lang.String $r10;
+        java.lang.Object $r11;
+        java.lang.CharSequence r12;
+
+        r2 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.core.DiagramDescription getDescription()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r3);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+        $r6 = virtualinvoke r2.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.cucadiagram.DisplayPositionned getTitle()>();
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.cucadiagram.DisplayPositionned: net.sourceforge.plantuml.cucadiagram.Display getDisplay()>();
+
+        r8 = virtualinvoke $r7.<net.sourceforge.plantuml.cucadiagram.Display: java.util.ListIterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r8.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r11 = interfaceinvoke r8.<java.util.Iterator: java.lang.Object next()>();
+
+        r12 = (java.lang.CharSequence) $r11;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.CharSequence)>(r12);
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+        goto label1;
+
+     label2:
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(10);
+
+        $r10 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r10;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getGraphicalFormatted()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r0, $r38;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r1, r2, $r4, r5, $r7, r8, $r10, $r11, r12, $r26;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r3, $r6, $r9, $r18, $r25;
+        net.sourceforge.plantuml.error.PSystemError r13;
+        java.util.List r14, $r16, $r21, $r24, $r29, $r32;
+        net.sourceforge.plantuml.graphic.TextBlockRaw $r15, $r20, $r23, $r28, $r31;
+        net.sourceforge.plantuml.graphic.TextBlock $r17, r33, r41, r42, r43, r44, r45;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r19, $r39;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r34, $r35, $r36, $r37;
+
+        r13 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.graphic.FontConfiguration sansSerif14(net.sourceforge.plantuml.ugraphic.color.HColor)>($r0);
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration bold()>();
+
+        $r3 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor MY_GREEN>;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.graphic.FontConfiguration sansSerif14(net.sourceforge.plantuml.ugraphic.color.HColor)>($r3);
+
+        r5 = virtualinvoke $r4.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration bold()>();
+
+        $r6 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor RED>;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.graphic.FontConfiguration sansSerif14(net.sourceforge.plantuml.ugraphic.color.HColor)>($r6);
+
+        r8 = virtualinvoke $r7.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration bold()>();
+
+        $r9 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor MY_GREEN>;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.graphic.FontConfiguration sansSerif12(net.sourceforge.plantuml.ugraphic.color.HColor)>($r9);
+
+        $r11 = virtualinvoke $r10.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration bold()>();
+
+        r12 = virtualinvoke $r11.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration italic()>();
+
+        r14 = virtualinvoke r13.<net.sourceforge.plantuml.error.PSystemError: java.util.List getTextFullBody()>();
+
+        $r15 = new net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        $r16 = specialinvoke r13.<net.sourceforge.plantuml.error.PSystemError: java.util.List getTextFromStack()>();
+
+        specialinvoke $r15.<net.sourceforge.plantuml.graphic.TextBlockRaw: void <init>(java.util.List,net.sourceforge.plantuml.graphic.FontConfiguration)>($r16, r2);
+
+        $r17 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double,double,double)>($r15, 1.0, 1.0, 1.0, 4.0);
+
+        $r18 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor MY_GREEN>;
+
+        r19 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.svek.TextBlockBackcolored addBackcolor(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.ugraphic.color.HColor)>($r17, $r18);
+
+        $r20 = new net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        $r21 = specialinvoke r13.<net.sourceforge.plantuml.error.PSystemError: java.util.List allButLast(java.util.List)>(r14);
+
+        specialinvoke $r20.<net.sourceforge.plantuml.graphic.TextBlockRaw: void <init>(java.util.List,net.sourceforge.plantuml.graphic.FontConfiguration)>($r21, r5);
+
+        $r23 = new net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        $r24 = specialinvoke r13.<net.sourceforge.plantuml.error.PSystemError: java.util.List onlyLast(java.util.List)>(r14);
+
+        $r25 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColor RED>;
+
+        $r26 = virtualinvoke r5.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.graphic.FontConfiguration wave(net.sourceforge.plantuml.ugraphic.color.HColor)>($r25);
+
+        specialinvoke $r23.<net.sourceforge.plantuml.graphic.TextBlockRaw: void <init>(java.util.List,net.sourceforge.plantuml.graphic.FontConfiguration)>($r24, $r26);
+
+        $r28 = new net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        $r29 = specialinvoke r13.<net.sourceforge.plantuml.error.PSystemError: java.util.List getTextError()>();
+
+        specialinvoke $r28.<net.sourceforge.plantuml.graphic.TextBlockRaw: void <init>(java.util.List,net.sourceforge.plantuml.graphic.FontConfiguration)>($r29, r8);
+
+        $r31 = new net.sourceforge.plantuml.graphic.TextBlockRaw;
+
+        $r32 = specialinvoke r13.<net.sourceforge.plantuml.error.PSystemError: java.util.List header()>();
+
+        specialinvoke $r31.<net.sourceforge.plantuml.graphic.TextBlockRaw: void <init>(java.util.List,net.sourceforge.plantuml.graphic.FontConfiguration)>($r32, r12);
+
+        r33 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double,double,double)>($r31, 0.0, 2.0, 0.0, 8.0);
+
+        $r34 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r41 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r19, $r20, $r34);
+
+        $r35 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r42 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r41, $r23, $r35);
+
+        $r36 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r43 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r42, $r28, $r36);
+
+        $r37 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r44 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r33, r43, $r37);
+
+        r45 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double)>(r44, 5.0, 5.0);
+
+        $r38 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        $r39 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.svek.TextBlockBackcolored addBackcolor(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.ugraphic.color.HColor)>(r45, $r38);
+
+        return $r39;
+    }
+
+    private java.util.List header()
+    {
+        java.util.ArrayList $r0;
+        java.lang.StringBuilder $r2, $r3, $r5;
+        java.lang.String $r4, $r6;
+        net.sourceforge.plantuml.error.PSystemError r7;
+
+        r7 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("PlantUML ");
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.version.Version: java.lang.String versionString()>();
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        staticinvoke <net.sourceforge.plantuml.svek.GraphvizCrash: void checkOldVersionWarning(java.util.List)>($r0);
+
+        return $r0;
+    }
+
+    public java.util.List getPureAsciiFormatted()
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        java.util.List r1, $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: java.util.List getTextFromStack()>();
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.error.PSystemError: java.util.List getTextFullBody()>();
+
+        interfaceinvoke r1.<java.util.List: boolean addAll(java.util.Collection)>($r2);
+
+        interfaceinvoke r1.<java.util.List: boolean add(java.lang.Object)>("^^^^^");
+
+        $r3 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: java.util.List getTextError()>();
+
+        interfaceinvoke r1.<java.util.List: boolean addAll(java.util.Collection)>($r3);
+
+        return r1;
+    }
+
+    private java.util.List getTextFromStack()
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        java.util.ArrayList $r1;
+        net.sourceforge.plantuml.LineLocation $r3, r4;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.LineLocation getLineLocation()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        if r4 == null goto label2;
+
+        specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: void append(java.util.List,net.sourceforge.plantuml.LineLocation)>($r1, r4);
+
+     label1:
+        $r3 = interfaceinvoke r4.<net.sourceforge.plantuml.LineLocation: net.sourceforge.plantuml.LineLocation getParent()>();
+
+        if $r3 == null goto label2;
+
+        r4 = interfaceinvoke r4.<net.sourceforge.plantuml.LineLocation: net.sourceforge.plantuml.LineLocation getParent()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: void append(java.util.List,net.sourceforge.plantuml.LineLocation)>($r1, r4);
+
+        goto label1;
+
+     label2:
+        return $r1;
+    }
+
+    protected java.util.List getTextFullBody()
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.error.PSystemError r2;
+        java.util.List $r3, $r4, $r6, $r7, $r13, $r14;
+        int i0, $i1, $i2, i3;
+        boolean $z1, $z2, $z6;
+        java.lang.Object $r5, $r15, $r17;
+        java.lang.StringBuilder $r8, $r9, $r10, $r11;
+        java.lang.String $r12;
+        net.sourceforge.plantuml.StringLocated r16, r19, r22;
+        java.util.Iterator r18, r20, r21;
+
+        r2 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        $r3 = r2.<net.sourceforge.plantuml.error.PSystemError: java.util.List trace>;
+
+        i0 = interfaceinvoke $r3.<java.util.List: int size()>();
+
+        if i0 <= 40 goto label5;
+
+        $r6 = r2.<net.sourceforge.plantuml.error.PSystemError: java.util.List trace>;
+
+        $r7 = interfaceinvoke $r6.<java.util.List: java.util.List subList(int,int)>(0, 5);
+
+        r18 = interfaceinvoke $r7.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z2 = interfaceinvoke r18.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label2;
+
+        $r17 = interfaceinvoke r18.<java.util.Iterator: java.lang.Object next()>();
+
+        r19 = (net.sourceforge.plantuml.StringLocated) $r17;
+
+        specialinvoke r2.<net.sourceforge.plantuml.error.PSystemError: void addToResult(java.util.List,net.sourceforge.plantuml.StringLocated)>($r0, r19);
+
+        goto label1;
+
+     label2:
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>("...");
+
+        $i1 = i0 - 5;
+
+        i3 = $i1 - 20;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("... ( skipping ");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" lines )");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r12);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>("...");
+
+        $r13 = r2.<net.sourceforge.plantuml.error.PSystemError: java.util.List trace>;
+
+        $i2 = i0 - 20;
+
+        $r14 = interfaceinvoke $r13.<java.util.List: java.util.List subList(int,int)>($i2, i0);
+
+        r20 = interfaceinvoke $r14.<java.util.List: java.util.Iterator iterator()>();
+
+     label3:
+        $z6 = interfaceinvoke r20.<java.util.Iterator: boolean hasNext()>();
+
+        if $z6 == 0 goto label4;
+
+        $r15 = interfaceinvoke r20.<java.util.Iterator: java.lang.Object next()>();
+
+        r16 = (net.sourceforge.plantuml.StringLocated) $r15;
+
+        specialinvoke r2.<net.sourceforge.plantuml.error.PSystemError: void addToResult(java.util.List,net.sourceforge.plantuml.StringLocated)>($r0, r16);
+
+        goto label3;
+
+     label4:
+        goto label7;
+
+     label5:
+        $r4 = r2.<net.sourceforge.plantuml.error.PSystemError: java.util.List trace>;
+
+        r21 = interfaceinvoke $r4.<java.util.List: java.util.Iterator iterator()>();
+
+     label6:
+        $z1 = interfaceinvoke r21.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label7;
+
+        $r5 = interfaceinvoke r21.<java.util.Iterator: java.lang.Object next()>();
+
+        r22 = (net.sourceforge.plantuml.StringLocated) $r5;
+
+        specialinvoke r2.<net.sourceforge.plantuml.error.PSystemError: void addToResult(java.util.List,net.sourceforge.plantuml.StringLocated)>($r0, r22);
+
+        goto label6;
+
+     label7:
+        return $r0;
+    }
+
+    private void addToResult(java.util.List, net.sourceforge.plantuml.StringLocated)
+    {
+        net.sourceforge.plantuml.StringLocated r0;
+        int $i0;
+        java.util.List r1;
+        java.lang.StringBuilder $r2, $r4, $r5;
+        java.lang.String $r3, r7;
+        net.sourceforge.plantuml.error.PSystemError r6;
+
+        r6 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r1 := @parameter0: java.util.List;
+
+        r0 := @parameter1: net.sourceforge.plantuml.StringLocated;
+
+        r7 = virtualinvoke r0.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i0 = virtualinvoke r7.<java.lang.String: int length()>();
+
+        if $i0 <= 120 goto label1;
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke r7.<java.lang.String: java.lang.String substring(int,int)>(0, 120);
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ...");
+
+        r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label1:
+        interfaceinvoke r1.<java.util.List: boolean add(java.lang.Object)>(r7);
+
+        return;
+    }
+
+    private java.util.List getTextError()
+    {
+        java.lang.String[] $r0;
+        java.lang.StringBuilder $r1, $r2, $r6;
+        net.sourceforge.plantuml.error.PSystemError r3;
+        net.sourceforge.plantuml.ErrorUml $r4;
+        java.lang.String $r5, $r7;
+        java.util.List $r8;
+
+        r3 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = newarray (java.lang.String)[1];
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r4 = r3.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.ErrorUml singleError>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.ErrorUml: java.lang.String getError()>();
+
+        $r6 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r0[0] = $r7;
+
+        $r8 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r0);
+
+        return $r8;
+    }
+
+    protected final net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream, int, net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.FileFormatOption r0;
+        net.sourceforge.plantuml.FileFormat $r1, $r2, $r11, $r12;
+        net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt $r3;
+        net.sourceforge.plantuml.asciiart.UmlCharArea r5;
+        net.sourceforge.plantuml.error.PSystemError r6;
+        java.util.List $r7;
+        java.io.OutputStream r8;
+        java.io.PrintStream $r9;
+        net.sourceforge.plantuml.api.ImageDataSimple $r10;
+        int i0;
+        net.sourceforge.plantuml.core.ImageData $r13;
+
+        r6 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r8 := @parameter0: java.io.OutputStream;
+
+        i0 := @parameter1: int;
+
+        r0 := @parameter2: net.sourceforge.plantuml.FileFormatOption;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r2 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat ATXT>;
+
+        if $r1 == $r2 goto label1;
+
+        $r11 = virtualinvoke r0.<net.sourceforge.plantuml.FileFormatOption: net.sourceforge.plantuml.FileFormat getFileFormat()>();
+
+        $r12 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat UTXT>;
+
+        if $r11 != $r12 goto label2;
+
+     label1:
+        $r3 = new net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: void <init>()>();
+
+        r5 = virtualinvoke $r3.<net.sourceforge.plantuml.ugraphic.txt.UGraphicTxt: net.sourceforge.plantuml.asciiart.UmlCharArea getCharArea()>();
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.error.PSystemError: java.util.List getPureAsciiFormatted()>();
+
+        interfaceinvoke r5.<net.sourceforge.plantuml.asciiart.UmlCharArea: void drawStringsLRSimple(java.util.Collection,int,int)>($r7, 0, 0);
+
+        $r9 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: java.io.PrintStream createPrintStream(java.io.OutputStream)>(r8);
+
+        interfaceinvoke r5.<net.sourceforge.plantuml.asciiart.UmlCharArea: void print(java.io.PrintStream)>($r9);
+
+        $r10 = new net.sourceforge.plantuml.api.ImageDataSimple;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.api.ImageDataSimple: void <init>(int,int)>(1, 1);
+
+        return $r10;
+
+     label2:
+        $r13 = specialinvoke r6.<net.sourceforge.plantuml.PlainDiagram: net.sourceforge.plantuml.core.ImageData exportDiagramNow(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)>(r8, i0, r0);
+
+        return $r13;
+    }
+
+    protected net.sourceforge.plantuml.graphic.UDrawable getRootDrawable(net.sourceforge.plantuml.FileFormatOption) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r1;
+        net.sourceforge.plantuml.core.UmlSource $r2, $r3;
+        boolean $z0, $z1, $z2;
+        long $l0, $l1;
+        int $i2, i3;
+        net.sourceforge.plantuml.FileFormatOption r4;
+        net.sourceforge.plantuml.graphic.TextBlock r5;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r4 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.svek.TextBlockBackcolored getGraphicalFormatted()>();
+
+        $r2 = virtualinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.core.UmlSource getSource()>();
+
+        $z0 = virtualinvoke $r2.<net.sourceforge.plantuml.core.UmlSource: boolean getTotalLineCountLessThan5()>();
+
+        if $z0 == 0 goto label1;
+
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.graphic.TextBlock addWelcome(net.sourceforge.plantuml.svek.TextBlockBackcolored)>(r1);
+
+        goto label2;
+
+     label1:
+        r5 = r1;
+
+     label2:
+        $l0 = staticinvoke <java.lang.System: long currentTimeMillis()>();
+
+        $l1 = $l0 / 60000L;
+
+        $i2 = (int) $l1;
+
+        i3 = $i2 % 60;
+
+        $z1 = <net.sourceforge.plantuml.error.PSystemError: boolean disableTimeBasedErrorDecorations>;
+
+        if $z1 == 0 goto label3;
+
+        goto label9;
+
+     label3:
+        if i3 == 1 goto label4;
+
+        if i3 == 8 goto label4;
+
+        if i3 == 13 goto label4;
+
+        if i3 != 55 goto label5;
+
+     label4:
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.graphic.TextBlock addMessagePatreon(net.sourceforge.plantuml.graphic.TextBlock)>(r5);
+
+        goto label9;
+
+     label5:
+        if i3 != 15 goto label6;
+
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.graphic.TextBlock addMessageLiberapay(net.sourceforge.plantuml.graphic.TextBlock)>(r5);
+
+        goto label9;
+
+     label6:
+        if i3 == 30 goto label7;
+
+        if i3 == 39 goto label7;
+
+        if i3 != 48 goto label8;
+
+     label7:
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.graphic.TextBlock addMessageDedication(net.sourceforge.plantuml.graphic.TextBlock)>(r5);
+
+        goto label9;
+
+     label8:
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.core.UmlSource getSource()>();
+
+        $z2 = virtualinvoke $r3.<net.sourceforge.plantuml.core.UmlSource: boolean containsIgnoreCase(java.lang.String)>("arecibo");
+
+        if $z2 == 0 goto label9;
+
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.graphic.TextBlock addMessageArecibo(net.sourceforge.plantuml.graphic.TextBlock)>(r5);
+
+     label9:
+        return r5;
+    }
+
+    private void append(java.util.List, net.sourceforge.plantuml.LineLocation)
+    {
+        net.sourceforge.plantuml.LineLocation r0;
+        java.lang.String $r1, $r5, $r10;
+        java.util.List r2;
+        java.lang.StringBuilder $r3, $r4, $r6, $r7, $r8, $r9;
+        int $i0, $i1;
+        net.sourceforge.plantuml.error.PSystemError r11;
+
+        r11 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r2 := @parameter0: java.util.List;
+
+        r0 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        $r1 = interfaceinvoke r0.<net.sourceforge.plantuml.LineLocation: java.lang.String getDescription()>();
+
+        if $r1 == null goto label1;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("[From ");
+
+        $r5 = interfaceinvoke r0.<net.sourceforge.plantuml.LineLocation: java.lang.String getDescription()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" (line ");
+
+        $i0 = interfaceinvoke r0.<net.sourceforge.plantuml.LineLocation: int getPosition()>();
+
+        $i1 = $i0 + 1;
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(") ]");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke r2.<java.util.List: boolean add(java.lang.Object)>($r10);
+
+     label1:
+        return;
+    }
+
+    public final net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.error.PSystemError r1;
+
+        r1 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Error)");
+
+        return $r0;
+    }
+
+    private java.util.List allButLast(java.util.List)
+    {
+        java.util.List r0, $r1;
+        int $i0, $i1;
+        net.sourceforge.plantuml.error.PSystemError r2;
+
+        r2 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r0 := @parameter0: java.util.List;
+
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $r1 = interfaceinvoke r0.<java.util.List: java.util.List subList(int,int)>(0, $i1);
+
+        return $r1;
+    }
+
+    private java.util.List onlyLast(java.util.List)
+    {
+        java.util.List r0, $r1;
+        int $i0, $i1, $i2;
+        net.sourceforge.plantuml.error.PSystemError r2;
+
+        r2 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r0 := @parameter0: java.util.List;
+
+        $i0 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        $i1 = $i0 - 1;
+
+        $i2 = interfaceinvoke r0.<java.util.List: int size()>();
+
+        $r1 = interfaceinvoke r0.<java.util.List: java.util.List subList(int,int)>($i1, $i2);
+
+        return $r1;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getWelcome() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.eggs.PSystemWelcome $r0;
+        net.sourceforge.plantuml.error.PSystemError r1;
+        net.sourceforge.plantuml.core.UmlSource $r2;
+        net.sourceforge.plantuml.graphic.GraphicPosition $r3;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r4;
+
+        r1 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = new net.sourceforge.plantuml.eggs.PSystemWelcome;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.core.UmlSource getSource()>();
+
+        $r3 = <net.sourceforge.plantuml.graphic.GraphicPosition: net.sourceforge.plantuml.graphic.GraphicPosition BACKGROUND_CORNER_TOP_RIGHT>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.eggs.PSystemWelcome: void <init>(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.graphic.GraphicPosition)>($r2, $r3);
+
+        $r4 = virtualinvoke $r0.<net.sourceforge.plantuml.eggs.PSystemWelcome: net.sourceforge.plantuml.svek.TextBlockBackcolored getGraphicStrings()>();
+
+        return $r4;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock addWelcome(net.sourceforge.plantuml.svek.TextBlockBackcolored) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r1, r2;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r3;
+        net.sourceforge.plantuml.graphic.TextBlock $r4;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r2 := @parameter0: net.sourceforge.plantuml.svek.TextBlockBackcolored;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.svek.TextBlockBackcolored getWelcome()>();
+
+        $r3 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r1, r2, $r3);
+
+        return $r4;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock addMessageLiberapay(net.sourceforge.plantuml.graphic.TextBlock) throws java.io.IOException
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r1;
+        net.sourceforge.plantuml.graphic.TextBlock r2, r5, r6;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.TextBlock;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.version.LicenseInfo: boolean retrieveNamedOrDistributorQuickIsValid()>();
+
+        if $z0 == 0 goto label1;
+
+        return r2;
+
+     label1:
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.svek.TextBlockBackcolored getMessageLiberapay()>();
+
+        $r3 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r5 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r1, r2, $r3);
+
+        $r4 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r6 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r5, r1, $r4);
+
+        return r6;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock addMessagePatreon(net.sourceforge.plantuml.graphic.TextBlock) throws java.io.IOException
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r1;
+        net.sourceforge.plantuml.graphic.TextBlock r2, r5, r6;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r3, $r4;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.TextBlock;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.version.LicenseInfo: boolean retrieveNamedOrDistributorQuickIsValid()>();
+
+        if $z0 == 0 goto label1;
+
+        return r2;
+
+     label1:
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.svek.TextBlockBackcolored getMessagePatreon()>();
+
+        $r3 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r5 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r1, r2, $r3);
+
+        $r4 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r6 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r5, r1, $r4);
+
+        return r6;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock addMessageDedication(net.sourceforge.plantuml.graphic.TextBlock) throws java.io.IOException
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r1;
+        net.sourceforge.plantuml.graphic.TextBlock r2, r4;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r3;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.TextBlock;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.version.LicenseInfo: boolean retrieveNamedOrDistributorQuickIsValid()>();
+
+        if $z0 == 0 goto label1;
+
+        return r2;
+
+     label1:
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.svek.TextBlockBackcolored getMessageDedication()>();
+
+        $r3 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r1, r2, $r3);
+
+        return r4;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock addMessageAdopt(net.sourceforge.plantuml.graphic.TextBlock) throws java.io.IOException
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.error.PSystemError r0;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r1;
+        net.sourceforge.plantuml.graphic.TextBlock r2, r4;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r3;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.TextBlock;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.version.LicenseInfo: boolean retrieveNamedOrDistributorQuickIsValid()>();
+
+        if $z0 == 0 goto label1;
+
+        return r2;
+
+     label1:
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.svek.TextBlockBackcolored getMessageAdopt()>();
+
+        $r3 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeTB(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.HorizontalAlignment)>(r1, r2, $r3);
+
+        return r4;
+    }
+
+    private net.sourceforge.plantuml.graphic.TextBlock addMessageArecibo(net.sourceforge.plantuml.graphic.TextBlock) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.ugraphic.UImage $r0;
+        net.sourceforge.plantuml.ugraphic.PixelImage $r1;
+        java.awt.image.BufferedImage $r2;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r3;
+        net.sourceforge.plantuml.graphic.TextBlock r5, $r6, r8;
+        net.sourceforge.plantuml.graphic.VerticalAlignment $r7;
+        net.sourceforge.plantuml.error.PSystemError r9;
+
+        r9 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r5 := @parameter0: net.sourceforge.plantuml.graphic.TextBlock;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UImage;
+
+        $r1 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: java.awt.image.BufferedImage getArecibo()>();
+
+        $r3 = <net.sourceforge.plantuml.ugraphic.AffineTransformType: net.sourceforge.plantuml.ugraphic.AffineTransformType TYPE_BILINEAR>;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType)>($r2, $r3);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: void <init>(net.sourceforge.plantuml.ugraphic.MutableImage)>($r1);
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock fromUImage(net.sourceforge.plantuml.ugraphic.UImage)>($r0);
+
+        $r7 = <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment TOP>;
+
+        r8 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeLR(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.VerticalAlignment)>(r5, $r6, $r7);
+
+        return r8;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getMessageDedication()
+    {
+        net.sourceforge.plantuml.flashcode.FlashCodeUtils r0;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r2;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r3, $r13, $r14;
+        net.sourceforge.plantuml.error.PSystemError r4;
+        java.awt.Color $r5, $r6;
+        java.awt.image.BufferedImage $r7, r8;
+        java.lang.CharSequence[] $r9;
+        net.sourceforge.plantuml.cucadiagram.Display r10;
+        net.sourceforge.plantuml.ugraphic.UFont r11;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r12;
+        net.sourceforge.plantuml.SpriteContainerEmpty $r16;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r17;
+        net.sourceforge.plantuml.graphic.TextBlock $r18, r19, $r24, r27;
+        net.sourceforge.plantuml.ugraphic.UImage $r20, r23;
+        net.sourceforge.plantuml.ugraphic.PixelImage $r21;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r22;
+        net.sourceforge.plantuml.graphic.VerticalAlignment $r25;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r26;
+
+        r4 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.flashcode.FlashCodeFactory: net.sourceforge.plantuml.flashcode.FlashCodeUtils getFlashCodeUtils()>();
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColorSet instance()>();
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColorOrWhite(java.lang.String)>("#eae2c9");
+
+        r3 = (net.sourceforge.plantuml.ugraphic.color.HColorSimple) $r2;
+
+        $r5 = <java.awt.Color: java.awt.Color BLACK>;
+
+        $r6 = virtualinvoke r3.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: java.awt.Color getColor999()>();
+
+        $r7 = interfaceinvoke r0.<net.sourceforge.plantuml.flashcode.FlashCodeUtils: java.awt.image.BufferedImage exportFlashcode(java.lang.String,java.awt.Color,java.awt.Color)>("http://plantuml.com/dedication", $r5, $r6);
+
+        r8 = specialinvoke r4.<net.sourceforge.plantuml.error.PSystemError: java.awt.image.BufferedImage smaller(java.awt.image.BufferedImage)>($r7);
+
+        $r9 = newarray (java.lang.CharSequence)[4];
+
+        $r9[0] = "<b>Add your own dedication into PlantUML";
+
+        $r9[1] = " ";
+
+        $r9[2] = "For just $5 per month!";
+
+        $r9[3] = "Details on <i>[[https://plantuml.com/dedication]]";
+
+        r10 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display create(java.lang.CharSequence[])>($r9);
+
+        r11 = staticinvoke <net.sourceforge.plantuml.ugraphic.UFont: net.sourceforge.plantuml.ugraphic.UFont sansSerif(int)>(14);
+
+        $r12 = new net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r14 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        $r13 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        specialinvoke $r12.<net.sourceforge.plantuml.graphic.FontConfiguration: void <init>(net.sourceforge.plantuml.ugraphic.UFont,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.HColor,boolean)>(r11, $r14, $r13, 0);
+
+        $r17 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        $r16 = new net.sourceforge.plantuml.SpriteContainerEmpty;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.SpriteContainerEmpty: void <init>()>();
+
+        $r18 = virtualinvoke r10.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>($r12, $r17, $r16);
+
+        r19 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double)>($r18, 10.0, 0.0);
+
+        if r8 != null goto label1;
+
+        r27 = r19;
+
+        goto label2;
+
+     label1:
+        $r20 = new net.sourceforge.plantuml.ugraphic.UImage;
+
+        $r21 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r22 = <net.sourceforge.plantuml.ugraphic.AffineTransformType: net.sourceforge.plantuml.ugraphic.AffineTransformType TYPE_NEAREST_NEIGHBOR>;
+
+        specialinvoke $r21.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType)>(r8, $r22);
+
+        specialinvoke $r20.<net.sourceforge.plantuml.ugraphic.UImage: void <init>(net.sourceforge.plantuml.ugraphic.MutableImage)>($r21);
+
+        r23 = virtualinvoke $r20.<net.sourceforge.plantuml.ugraphic.UImage: net.sourceforge.plantuml.ugraphic.UImage scale(double)>(3.0);
+
+        $r24 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock fromUImage(net.sourceforge.plantuml.ugraphic.UImage)>(r23);
+
+        $r25 = <net.sourceforge.plantuml.graphic.VerticalAlignment: net.sourceforge.plantuml.graphic.VerticalAlignment CENTER>;
+
+        r27 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock mergeLR(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.graphic.VerticalAlignment)>(r19, $r24, $r25);
+
+     label2:
+        $r26 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.svek.TextBlockBackcolored addBackcolor(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.ugraphic.color.HColor)>(r27, r3);
+
+        return $r26;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getMessageAdopt()
+    {
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r0;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r1;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple r2, $r7, $r8;
+        java.lang.CharSequence[] $r3;
+        net.sourceforge.plantuml.cucadiagram.Display r4;
+        net.sourceforge.plantuml.ugraphic.UFont r5;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r6;
+        net.sourceforge.plantuml.SpriteContainerEmpty $r10;
+        net.sourceforge.plantuml.graphic.HorizontalAlignment $r11;
+        net.sourceforge.plantuml.graphic.TextBlock $r12, r13;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored $r15;
+        net.sourceforge.plantuml.error.PSystemError r16;
+
+        r16 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColorSet instance()>();
+
+        $r1 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.color.HColorSet: net.sourceforge.plantuml.ugraphic.color.HColor getColorOrWhite(java.lang.String)>("#eff4d2");
+
+        r2 = (net.sourceforge.plantuml.ugraphic.color.HColorSimple) $r1;
+
+        $r3 = newarray (java.lang.CharSequence)[4];
+
+        $r3[0] = "<b>Adopt-a-Word and put your message here!";
+
+        $r3[1] = " ";
+
+        $r3[2] = "Details on <i>[[http://plantuml.com/adopt]]";
+
+        $r3[3] = " ";
+
+        r4 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display create(java.lang.CharSequence[])>($r3);
+
+        r5 = staticinvoke <net.sourceforge.plantuml.ugraphic.UFont: net.sourceforge.plantuml.ugraphic.UFont sansSerif(int)>(14);
+
+        $r6 = new net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        $r8 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        $r7 = <net.sourceforge.plantuml.ugraphic.color.HColorUtils: net.sourceforge.plantuml.ugraphic.color.HColorSimple BLACK>;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.graphic.FontConfiguration: void <init>(net.sourceforge.plantuml.ugraphic.UFont,net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.color.HColor,boolean)>(r5, $r8, $r7, 0);
+
+        $r11 = <net.sourceforge.plantuml.graphic.HorizontalAlignment: net.sourceforge.plantuml.graphic.HorizontalAlignment LEFT>;
+
+        $r10 = new net.sourceforge.plantuml.SpriteContainerEmpty;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.SpriteContainerEmpty: void <init>()>();
+
+        $r12 = virtualinvoke r4.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.graphic.TextBlock create(net.sourceforge.plantuml.graphic.FontConfiguration,net.sourceforge.plantuml.graphic.HorizontalAlignment,net.sourceforge.plantuml.ISkinSimple)>($r6, $r11, $r10);
+
+        r13 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.graphic.TextBlock withMargin(net.sourceforge.plantuml.graphic.TextBlock,double,double)>($r12, 10.0, 0.0);
+
+        $r15 = staticinvoke <net.sourceforge.plantuml.graphic.TextBlockUtils: net.sourceforge.plantuml.svek.TextBlockBackcolored addBackcolor(net.sourceforge.plantuml.graphic.TextBlock,net.sourceforge.plantuml.ugraphic.color.HColor)>(r13, r2);
+
+        return $r15;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getMessagePatreon()
+    {
+        net.sourceforge.plantuml.ugraphic.UImage $r0;
+        net.sourceforge.plantuml.ugraphic.PixelImage $r1;
+        java.awt.image.BufferedImage $r2, $r6, $r14, r15;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r3;
+        java.awt.Color $r5, $r12, $r13;
+        int $i0, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r8;
+        net.sourceforge.plantuml.flashcode.FlashCodeUtils r10;
+        net.sourceforge.plantuml.error.PSystemError r11;
+        double d0, $d2;
+        net.sourceforge.plantuml.error.PSystemError$1 $r16;
+
+        r11 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UImage;
+
+        $r1 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: java.awt.image.BufferedImage getTime01()>();
+
+        $r3 = <net.sourceforge.plantuml.ugraphic.AffineTransformType: net.sourceforge.plantuml.ugraphic.AffineTransformType TYPE_BILINEAR>;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType)>($r2, $r3);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: void <init>(net.sourceforge.plantuml.ugraphic.MutableImage)>($r1);
+
+        $r5 = new java.awt.Color;
+
+        $r6 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: java.awt.image.BufferedImage getImage(double)>(1.0);
+
+        $i0 = virtualinvoke $r6.<java.awt.image.BufferedImage: int getRGB(int,int)>(0, 0);
+
+        specialinvoke $r5.<java.awt.Color: void <init>(int)>($i0);
+
+        $r8 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r5, 0);
+
+        r10 = staticinvoke <net.sourceforge.plantuml.flashcode.FlashCodeFactory: net.sourceforge.plantuml.flashcode.FlashCodeUtils getFlashCodeUtils()>();
+
+        $r13 = <java.awt.Color: java.awt.Color BLACK>;
+
+        $r12 = <java.awt.Color: java.awt.Color WHITE>;
+
+        $r14 = interfaceinvoke r10.<net.sourceforge.plantuml.flashcode.FlashCodeUtils: java.awt.image.BufferedImage exportFlashcode(java.lang.String,java.awt.Color,java.awt.Color)>("http://plantuml.com/patreon", $r13, $r12);
+
+        r15 = specialinvoke r11.<net.sourceforge.plantuml.error.PSystemError: java.awt.image.BufferedImage smaller(java.awt.image.BufferedImage)>($r14);
+
+        $i2 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: int getWidth()>();
+
+        if r15 != null goto label1;
+
+        $i12 = 0;
+
+        goto label2;
+
+     label1:
+        $i3 = virtualinvoke r15.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i4 = $i3 * 2;
+
+        $i12 = $i4 + 20;
+
+     label2:
+        $i5 = $i2 + $i12;
+
+        d0 = (double) $i5;
+
+        if r15 != null goto label3;
+
+        $i11 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: int getHeight()>();
+
+        $d2 = (double) $i11;
+
+        goto label4;
+
+     label3:
+        $i6 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: int getHeight()>();
+
+        $i7 = virtualinvoke r15.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $i8 = $i7 * 2;
+
+        $i9 = $i8 + 10;
+
+        $i10 = staticinvoke <java.lang.Math: int max(int,int)>($i6, $i9);
+
+        $d2 = (double) $i10;
+
+     label4:
+        $r16 = new net.sourceforge.plantuml.error.PSystemError$1;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.error.PSystemError$1: void <init>(net.sourceforge.plantuml.error.PSystemError,java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.UImage,double,double,net.sourceforge.plantuml.ugraphic.color.HColor)>(r11, r15, $r0, $d2, d0, $r8);
+
+        return $r16;
+    }
+
+    private net.sourceforge.plantuml.svek.TextBlockBackcolored getMessageLiberapay()
+    {
+        net.sourceforge.plantuml.ugraphic.UImage $r0;
+        net.sourceforge.plantuml.ugraphic.PixelImage $r1;
+        java.awt.image.BufferedImage $r2, $r6, $r14, r15;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r3;
+        java.awt.Color $r5, $r12, $r13;
+        int $i0, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12;
+        net.sourceforge.plantuml.ugraphic.color.HColorSimple $r8;
+        net.sourceforge.plantuml.flashcode.FlashCodeUtils r10;
+        net.sourceforge.plantuml.error.PSystemError r11;
+        double d0, $d2;
+        net.sourceforge.plantuml.error.PSystemError$2 $r16;
+
+        r11 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UImage;
+
+        $r1 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: java.awt.image.BufferedImage getTime15()>();
+
+        $r3 = <net.sourceforge.plantuml.ugraphic.AffineTransformType: net.sourceforge.plantuml.ugraphic.AffineTransformType TYPE_BILINEAR>;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType)>($r2, $r3);
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: void <init>(net.sourceforge.plantuml.ugraphic.MutableImage)>($r1);
+
+        $r5 = new java.awt.Color;
+
+        $r6 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: java.awt.image.BufferedImage getImage(double)>(1.0);
+
+        $i0 = virtualinvoke $r6.<java.awt.image.BufferedImage: int getRGB(int,int)>(0, 0);
+
+        specialinvoke $r5.<java.awt.Color: void <init>(int)>($i0);
+
+        $r8 = new net.sourceforge.plantuml.ugraphic.color.HColorSimple;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.ugraphic.color.HColorSimple: void <init>(java.awt.Color,boolean)>($r5, 0);
+
+        r10 = staticinvoke <net.sourceforge.plantuml.flashcode.FlashCodeFactory: net.sourceforge.plantuml.flashcode.FlashCodeUtils getFlashCodeUtils()>();
+
+        $r13 = <java.awt.Color: java.awt.Color BLACK>;
+
+        $r12 = <java.awt.Color: java.awt.Color WHITE>;
+
+        $r14 = interfaceinvoke r10.<net.sourceforge.plantuml.flashcode.FlashCodeUtils: java.awt.image.BufferedImage exportFlashcode(java.lang.String,java.awt.Color,java.awt.Color)>("http://plantuml.com/lp", $r13, $r12);
+
+        r15 = specialinvoke r11.<net.sourceforge.plantuml.error.PSystemError: java.awt.image.BufferedImage smaller(java.awt.image.BufferedImage)>($r14);
+
+        $i2 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: int getWidth()>();
+
+        if r15 != null goto label1;
+
+        $i12 = 0;
+
+        goto label2;
+
+     label1:
+        $i3 = virtualinvoke r15.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i4 = $i3 * 2;
+
+        $i12 = $i4 + 20;
+
+     label2:
+        $i5 = $i2 + $i12;
+
+        d0 = (double) $i5;
+
+        if r15 != null goto label3;
+
+        $i11 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: int getHeight()>();
+
+        $d2 = (double) $i11;
+
+        goto label4;
+
+     label3:
+        $i6 = virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UImage: int getHeight()>();
+
+        $i7 = virtualinvoke r15.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $i8 = $i7 * 2;
+
+        $i9 = $i8 + 10;
+
+        $i10 = staticinvoke <java.lang.Math: int max(int,int)>($i6, $i9);
+
+        $d2 = (double) $i10;
+
+     label4:
+        $r16 = new net.sourceforge.plantuml.error.PSystemError$2;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.error.PSystemError$2: void <init>(net.sourceforge.plantuml.error.PSystemError,java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.UImage,double,double,net.sourceforge.plantuml.ugraphic.color.HColor)>(r11, r15, $r0, $d2, d0, $r8);
+
+        return $r16;
+    }
+
+    public int score()
+    {
+        net.sourceforge.plantuml.error.PSystemError r0;
+        java.util.List $r1;
+        int $i0, $i1, $i2, i3;
+        net.sourceforge.plantuml.ErrorUml $r2;
+
+        r0 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        $r1 = r0.<net.sourceforge.plantuml.error.PSystemError: java.util.List trace>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        $i1 = $i0 * 10;
+
+        $r2 = r0.<net.sourceforge.plantuml.error.PSystemError: net.sourceforge.plantuml.ErrorUml singleError>;
+
+        $i2 = virtualinvoke $r2.<net.sourceforge.plantuml.ErrorUml: int score()>();
+
+        i3 = $i1 + $i2;
+
+        return i3;
+    }
+
+    private java.awt.image.BufferedImage smaller(java.awt.image.BufferedImage)
+    {
+        java.awt.image.BufferedImage r0, $r1;
+        int $i0, $i1, $i2, $i3;
+        net.sourceforge.plantuml.error.PSystemError r2;
+
+        r2 := @this: net.sourceforge.plantuml.error.PSystemError;
+
+        r0 := @parameter0: java.awt.image.BufferedImage;
+
+        if r0 != null goto label1;
+
+        return null;
+
+     label1:
+        $i0 = virtualinvoke r0.<java.awt.image.BufferedImage: int getWidth()>();
+
+        $i1 = $i0 - 2;
+
+        $i2 = virtualinvoke r0.<java.awt.image.BufferedImage: int getHeight()>();
+
+        $i3 = $i2 - 2;
+
+        $r1 = virtualinvoke r0.<java.awt.image.BufferedImage: java.awt.image.BufferedImage getSubimage(int,int,int,int)>(1, 1, $i1, $i3);
+
+        return $r1;
+    }
+
+    static void <clinit>()
+    {
+        <net.sourceforge.plantuml.error.PSystemError: boolean disableTimeBasedErrorDecorations> = 0;
+
+        return;
+    }
+}

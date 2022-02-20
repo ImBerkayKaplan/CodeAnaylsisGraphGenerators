@@ -1,0 +1,247 @@
+public class net.sourceforge.plantuml.board.BNode extends java.lang.Object
+{
+    private final java.lang.String name;
+    private final int stage;
+    private int x;
+    private net.sourceforge.plantuml.board.BNode parent;
+    private final java.util.List children;
+
+    public void <init>(int, java.lang.String)
+    {
+        net.sourceforge.plantuml.board.BNode r0;
+        java.util.ArrayList $r1;
+        java.lang.String r2;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.board.BNode;
+
+        i0 := @parameter0: int;
+
+        r2 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.board.BNode: int x> = -1;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.board.BNode: java.util.List children> = $r1;
+
+        r0.<net.sourceforge.plantuml.board.BNode: java.lang.String name> = r2;
+
+        r0.<net.sourceforge.plantuml.board.BNode: int stage> = i0;
+
+        return;
+    }
+
+    public void addChild(net.sourceforge.plantuml.board.BNode)
+    {
+        net.sourceforge.plantuml.board.BNode r0, r1, $r3;
+        int $i0, $i1;
+        java.util.List $r2;
+        java.lang.IllegalArgumentException $r4, $r5;
+
+        r1 := @this: net.sourceforge.plantuml.board.BNode;
+
+        r0 := @parameter0: net.sourceforge.plantuml.board.BNode;
+
+        $i1 = r0.<net.sourceforge.plantuml.board.BNode: int stage>;
+
+        $i0 = r1.<net.sourceforge.plantuml.board.BNode: int stage>;
+
+        if $i1 > $i0 goto label1;
+
+        $r5 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r5.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r5;
+
+     label1:
+        $r2 = r1.<net.sourceforge.plantuml.board.BNode: java.util.List children>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r0);
+
+        $r3 = r0.<net.sourceforge.plantuml.board.BNode: net.sourceforge.plantuml.board.BNode parent>;
+
+        if $r3 == null goto label2;
+
+        $r4 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r4.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r4;
+
+     label2:
+        r0.<net.sourceforge.plantuml.board.BNode: net.sourceforge.plantuml.board.BNode parent> = r1;
+
+        return;
+    }
+
+    public final java.lang.String getName()
+    {
+        net.sourceforge.plantuml.board.BNode r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.board.BNode;
+
+        $r1 = r0.<net.sourceforge.plantuml.board.BNode: java.lang.String name>;
+
+        return $r1;
+    }
+
+    public final int getStage()
+    {
+        net.sourceforge.plantuml.board.BNode r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.board.BNode;
+
+        $i0 = r0.<net.sourceforge.plantuml.board.BNode: int stage>;
+
+        return $i0;
+    }
+
+    public final net.sourceforge.plantuml.board.BNode getParent()
+    {
+        net.sourceforge.plantuml.board.BNode r0, $r1;
+
+        r0 := @this: net.sourceforge.plantuml.board.BNode;
+
+        $r1 = r0.<net.sourceforge.plantuml.board.BNode: net.sourceforge.plantuml.board.BNode parent>;
+
+        return $r1;
+    }
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r3, $r4, $r5, $r6, $r7, $r8;
+        net.sourceforge.plantuml.board.BNode r1;
+        java.lang.String $r2, $r9;
+        int $i0, $i1;
+
+        r1 := @this: net.sourceforge.plantuml.board.BNode;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = r1.<net.sourceforge.plantuml.board.BNode: java.lang.String name>;
+
+        $r3 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r2);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(");
+
+        $i0 = r1.<net.sourceforge.plantuml.board.BNode: int stage>;
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(") [");
+
+        $i1 = r1.<net.sourceforge.plantuml.board.BNode: int x>;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("]");
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r9;
+    }
+
+    public void computeX(java.util.concurrent.atomic.AtomicInteger)
+    {
+        net.sourceforge.plantuml.board.BNode r0, r5;
+        java.util.concurrent.atomic.AtomicInteger r1;
+        int $i0, $i1, i3;
+        java.util.List $r2, $r3;
+        java.lang.Object $r4;
+
+        r0 := @this: net.sourceforge.plantuml.board.BNode;
+
+        r1 := @parameter0: java.util.concurrent.atomic.AtomicInteger;
+
+        $i0 = virtualinvoke r1.<java.util.concurrent.atomic.AtomicInteger: int intValue()>();
+
+        r0.<net.sourceforge.plantuml.board.BNode: int x> = $i0;
+
+        i3 = 0;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.board.BNode: java.util.List children>;
+
+        $i1 = interfaceinvoke $r2.<java.util.List: int size()>();
+
+        if i3 >= $i1 goto label3;
+
+        $r3 = r0.<net.sourceforge.plantuml.board.BNode: java.util.List children>;
+
+        $r4 = interfaceinvoke $r3.<java.util.List: java.lang.Object get(int)>(i3);
+
+        r5 = (net.sourceforge.plantuml.board.BNode) $r4;
+
+        if i3 <= 0 goto label2;
+
+        virtualinvoke r1.<java.util.concurrent.atomic.AtomicInteger: int addAndGet(int)>(1);
+
+     label2:
+        virtualinvoke r5.<net.sourceforge.plantuml.board.BNode: void computeX(java.util.concurrent.atomic.AtomicInteger)>(r1);
+
+        i3 = i3 + 1;
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    public void initBarray(net.sourceforge.plantuml.board.BArray)
+    {
+        net.sourceforge.plantuml.board.BArray r0;
+        net.sourceforge.plantuml.board.BNode r1, r5;
+        java.util.List $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+
+        r1 := @this: net.sourceforge.plantuml.board.BNode;
+
+        r0 := @parameter0: net.sourceforge.plantuml.board.BArray;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.board.BArray: void put(net.sourceforge.plantuml.board.BNode)>(r1);
+
+        $r2 = r1.<net.sourceforge.plantuml.board.BNode: java.util.List children>;
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.board.BNode) $r4;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.board.BNode: void initBarray(net.sourceforge.plantuml.board.BArray)>(r0);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public final int getX()
+    {
+        net.sourceforge.plantuml.board.BNode r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.board.BNode;
+
+        $i0 = r0.<net.sourceforge.plantuml.board.BNode: int x>;
+
+        return $i0;
+    }
+}

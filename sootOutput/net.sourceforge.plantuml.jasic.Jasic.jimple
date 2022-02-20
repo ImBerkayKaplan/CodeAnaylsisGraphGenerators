@@ -1,0 +1,443 @@
+public class net.sourceforge.plantuml.jasic.Jasic extends java.lang.Object
+{
+    private final java.util.Map variables;
+    private final java.util.Map labels;
+    private final java.io.BufferedReader lineIn;
+    private int currentStatement;
+
+    private static java.util.List tokenize(java.lang.String)
+    {
+        java.util.ArrayList $r0;
+        java.lang.String r2, r15, $r41, r43;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType[] $r3;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r12, $r13, $r21, $r23, $r28, $r30, $r42;
+        int $i0, $i2, $i3, $i4, $i5, i6;
+        char c1;
+        int[] $r16;
+        java.lang.StringBuilder $r17, $r18, $r19, $r24, $r25, $r26, $r31, $r32, $r33, $r34, $r35, $r36, $r37, $r38, $r39;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r20, $r22, $r27, $r29, $r40;
+        boolean $z1, $z3, $z6, $z7;
+        net.sourceforge.plantuml.jasic.Jasic$TokenizeState r44;
+
+        r15 := @parameter0: java.lang.String;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        r43 = "";
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState DEFAULT>;
+
+        r2 = "\n=+-*/<>()";
+
+        $r3 = newarray (net.sourceforge.plantuml.jasic.Jasic$TokenType)[10];
+
+        $r4 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType LINE>;
+
+        $r3[0] = $r4;
+
+        $r5 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType EQUALS>;
+
+        $r3[1] = $r5;
+
+        $r6 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType OPERATOR>;
+
+        $r3[2] = $r6;
+
+        $r7 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType OPERATOR>;
+
+        $r3[3] = $r7;
+
+        $r8 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType OPERATOR>;
+
+        $r3[4] = $r8;
+
+        $r9 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType OPERATOR>;
+
+        $r3[5] = $r9;
+
+        $r10 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType OPERATOR>;
+
+        $r3[6] = $r10;
+
+        $r11 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType OPERATOR>;
+
+        $r3[7] = $r11;
+
+        $r12 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType LEFT_PAREN>;
+
+        $r3[8] = $r12;
+
+        $r13 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType RIGHT_PAREN>;
+
+        $r3[9] = $r13;
+
+        i6 = 0;
+
+     label01:
+        $i0 = virtualinvoke r15.<java.lang.String: int length()>();
+
+        if i6 >= $i0 goto label16;
+
+        c1 = virtualinvoke r15.<java.lang.String: char charAt(int)>(i6);
+
+        $r16 = <net.sourceforge.plantuml.jasic.Jasic$1: int[] $SwitchMap$net$sourceforge$plantuml$jasic$Jasic$TokenizeState>;
+
+        $i2 = virtualinvoke r44.<net.sourceforge.plantuml.jasic.Jasic$TokenizeState: int ordinal()>();
+
+        $i3 = $r16[$i2];
+
+        tableswitch($i3)
+        {
+            case 1: goto label02;
+            case 2: goto label07;
+            case 3: goto label10;
+            case 4: goto label12;
+            case 5: goto label14;
+            default: goto label15;
+        };
+
+     label02:
+        $i4 = virtualinvoke r2.<java.lang.String: int indexOf(int)>(c1);
+
+        if $i4 == -1 goto label03;
+
+        $r40 = new net.sourceforge.plantuml.jasic.Jasic$Token;
+
+        $r41 = staticinvoke <java.lang.Character: java.lang.String toString(char)>(c1);
+
+        $i5 = virtualinvoke r2.<java.lang.String: int indexOf(int)>(c1);
+
+        $r42 = $r3[$i5];
+
+        specialinvoke $r40.<net.sourceforge.plantuml.jasic.Jasic$Token: void <init>(java.lang.String,net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r41, $r42);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r40);
+
+        goto label15;
+
+     label03:
+        $z6 = staticinvoke <java.lang.Character: boolean isLetter(char)>(c1);
+
+        if $z6 == 0 goto label04;
+
+        $r37 = new java.lang.StringBuilder;
+
+        specialinvoke $r37.<java.lang.StringBuilder: void <init>()>();
+
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r43);
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+        r43 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState WORD>;
+
+        goto label15;
+
+     label04:
+        $z7 = staticinvoke <java.lang.Character: boolean isDigit(char)>(c1);
+
+        if $z7 == 0 goto label05;
+
+        $r34 = new java.lang.StringBuilder;
+
+        specialinvoke $r34.<java.lang.StringBuilder: void <init>()>();
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r43);
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+        r43 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState NUMBER>;
+
+        goto label15;
+
+     label05:
+        if c1 != 34 goto label06;
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState STRING>;
+
+        goto label15;
+
+     label06:
+        if c1 != 39 goto label15;
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState COMMENT>;
+
+        goto label15;
+
+     label07:
+        $z3 = staticinvoke <java.lang.Character: boolean isLetterOrDigit(char)>(c1);
+
+        if $z3 == 0 goto label08;
+
+        $r31 = new java.lang.StringBuilder;
+
+        specialinvoke $r31.<java.lang.StringBuilder: void <init>()>();
+
+        $r32 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r43);
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+        r43 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        goto label15;
+
+     label08:
+        if c1 != 58 goto label09;
+
+        $r29 = new net.sourceforge.plantuml.jasic.Jasic$Token;
+
+        $r30 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType LABEL>;
+
+        specialinvoke $r29.<net.sourceforge.plantuml.jasic.Jasic$Token: void <init>(java.lang.String,net.sourceforge.plantuml.jasic.Jasic$TokenType)>(r43, $r30);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r29);
+
+        r43 = "";
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState DEFAULT>;
+
+        goto label15;
+
+     label09:
+        $r27 = new net.sourceforge.plantuml.jasic.Jasic$Token;
+
+        $r28 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType WORD>;
+
+        specialinvoke $r27.<net.sourceforge.plantuml.jasic.Jasic$Token: void <init>(java.lang.String,net.sourceforge.plantuml.jasic.Jasic$TokenType)>(r43, $r28);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r27);
+
+        r43 = "";
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState DEFAULT>;
+
+        i6 = i6 + -1;
+
+        goto label15;
+
+     label10:
+        $z1 = staticinvoke <java.lang.Character: boolean isDigit(char)>(c1);
+
+        if $z1 == 0 goto label11;
+
+        $r24 = new java.lang.StringBuilder;
+
+        specialinvoke $r24.<java.lang.StringBuilder: void <init>()>();
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r43);
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+        r43 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        goto label15;
+
+     label11:
+        $r22 = new net.sourceforge.plantuml.jasic.Jasic$Token;
+
+        $r23 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType NUMBER>;
+
+        specialinvoke $r22.<net.sourceforge.plantuml.jasic.Jasic$Token: void <init>(java.lang.String,net.sourceforge.plantuml.jasic.Jasic$TokenType)>(r43, $r23);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r22);
+
+        r43 = "";
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState DEFAULT>;
+
+        i6 = i6 + -1;
+
+        goto label15;
+
+     label12:
+        if c1 != 34 goto label13;
+
+        $r20 = new net.sourceforge.plantuml.jasic.Jasic$Token;
+
+        $r21 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType STRING>;
+
+        specialinvoke $r20.<net.sourceforge.plantuml.jasic.Jasic$Token: void <init>(java.lang.String,net.sourceforge.plantuml.jasic.Jasic$TokenType)>(r43, $r21);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r20);
+
+        r43 = "";
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState DEFAULT>;
+
+        goto label15;
+
+     label13:
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>()>();
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r43);
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>(c1);
+
+        r43 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        goto label15;
+
+     label14:
+        if c1 != 10 goto label15;
+
+        r44 = <net.sourceforge.plantuml.jasic.Jasic$TokenizeState: net.sourceforge.plantuml.jasic.Jasic$TokenizeState DEFAULT>;
+
+     label15:
+        i6 = i6 + 1;
+
+        goto label01;
+
+     label16:
+        return $r0;
+    }
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.jasic.Jasic r0;
+        java.util.HashMap $r1, $r2;
+        java.io.InputStreamReader $r3;
+        java.io.InputStream $r4;
+        java.io.BufferedReader $r6;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic: java.util.Map variables> = $r1;
+
+        $r2 = new java.util.HashMap;
+
+        specialinvoke $r2.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic: java.util.Map labels> = $r2;
+
+        $r3 = new java.io.InputStreamReader;
+
+        $r4 = <java.lang.System: java.io.InputStream in>;
+
+        specialinvoke $r3.<java.io.InputStreamReader: void <init>(java.io.InputStream)>($r4);
+
+        $r6 = new java.io.BufferedReader;
+
+        specialinvoke $r6.<java.io.BufferedReader: void <init>(java.io.Reader)>($r3);
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic: java.io.BufferedReader lineIn> = $r6;
+
+        return;
+    }
+
+    public void interpret(java.lang.String)
+    {
+        java.lang.String r0;
+        java.util.List r1, r6;
+        net.sourceforge.plantuml.jasic.Jasic$Parser $r2;
+        net.sourceforge.plantuml.jasic.Jasic r3;
+        java.util.Map $r5;
+        int $i0, $i1, i2, $i3, $i4;
+        java.lang.Object $r7;
+        net.sourceforge.plantuml.jasic.Jasic$Statement $r8;
+
+        r3 := @this: net.sourceforge.plantuml.jasic.Jasic;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 = staticinvoke <net.sourceforge.plantuml.jasic.Jasic: java.util.List tokenize(java.lang.String)>(r0);
+
+        $r2 = new net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: void <init>(net.sourceforge.plantuml.jasic.Jasic,java.util.List)>(r3, r1);
+
+        $r5 = r3.<net.sourceforge.plantuml.jasic.Jasic: java.util.Map labels>;
+
+        r6 = virtualinvoke $r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: java.util.List parse(java.util.Map)>($r5);
+
+        r3.<net.sourceforge.plantuml.jasic.Jasic: int currentStatement> = 0;
+
+     label1:
+        $i0 = r3.<net.sourceforge.plantuml.jasic.Jasic: int currentStatement>;
+
+        $i1 = interfaceinvoke r6.<java.util.List: int size()>();
+
+        if $i0 >= $i1 goto label2;
+
+        i2 = r3.<net.sourceforge.plantuml.jasic.Jasic: int currentStatement>;
+
+        $i3 = r3.<net.sourceforge.plantuml.jasic.Jasic: int currentStatement>;
+
+        $i4 = $i3 + 1;
+
+        r3.<net.sourceforge.plantuml.jasic.Jasic: int currentStatement> = $i4;
+
+        $r7 = interfaceinvoke r6.<java.util.List: java.lang.Object get(int)>(i2);
+
+        $r8 = (net.sourceforge.plantuml.jasic.Jasic$Statement) $r7;
+
+        interfaceinvoke $r8.<net.sourceforge.plantuml.jasic.Jasic$Statement: void execute()>();
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    static java.io.BufferedReader access$000(net.sourceforge.plantuml.jasic.Jasic)
+    {
+        net.sourceforge.plantuml.jasic.Jasic r0;
+        java.io.BufferedReader $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.jasic.Jasic;
+
+        $r1 = r0.<net.sourceforge.plantuml.jasic.Jasic: java.io.BufferedReader lineIn>;
+
+        return $r1;
+    }
+
+    static java.util.Map access$100(net.sourceforge.plantuml.jasic.Jasic)
+    {
+        net.sourceforge.plantuml.jasic.Jasic r0;
+        java.util.Map $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.jasic.Jasic;
+
+        $r1 = r0.<net.sourceforge.plantuml.jasic.Jasic: java.util.Map variables>;
+
+        return $r1;
+    }
+
+    static java.util.Map access$200(net.sourceforge.plantuml.jasic.Jasic)
+    {
+        net.sourceforge.plantuml.jasic.Jasic r0;
+        java.util.Map $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.jasic.Jasic;
+
+        $r1 = r0.<net.sourceforge.plantuml.jasic.Jasic: java.util.Map labels>;
+
+        return $r1;
+    }
+
+    static int access$302(net.sourceforge.plantuml.jasic.Jasic, int)
+    {
+        net.sourceforge.plantuml.jasic.Jasic r0;
+        int i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.jasic.Jasic;
+
+        i0 := @parameter1: int;
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic: int currentStatement> = i0;
+
+        return i0;
+    }
+}

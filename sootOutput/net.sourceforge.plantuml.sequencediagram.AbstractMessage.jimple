@@ -1,0 +1,814 @@
+public abstract class net.sourceforge.plantuml.sequencediagram.AbstractMessage extends java.lang.Object implements net.sourceforge.plantuml.sequencediagram.EventWithDeactivate, net.sourceforge.plantuml.style.WithStyle
+{
+    private final net.sourceforge.plantuml.cucadiagram.Display label;
+    private final net.sourceforge.plantuml.skin.ArrowConfiguration arrowConfiguration;
+    private final java.util.Set lifeEventsType;
+    private net.sourceforge.plantuml.Url url;
+    private final java.lang.String messageNumber;
+    private boolean parallel;
+    private net.sourceforge.plantuml.sequencediagram.AbstractMessage parallelBrother;
+    private final net.sourceforge.plantuml.style.StyleBuilder styleBuilder;
+    private java.util.List noteOnMessages;
+    private boolean firstIsActivate;
+    private final java.util.Set noActivationAuthorized2;
+    private double posYendLevel;
+    private double posYstartLevel;
+    private java.lang.String anchor;
+    private java.lang.String anchor1;
+    private java.lang.String anchor2;
+
+    public net.sourceforge.plantuml.style.Style[] getUsedStyles()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.style.StyleSignature $r1;
+        net.sourceforge.plantuml.style.StyleBuilder $r2;
+        net.sourceforge.plantuml.skin.ArrowConfiguration $r3, $r5;
+        net.sourceforge.plantuml.ugraphic.color.HColor $r4, $r7;
+        net.sourceforge.plantuml.style.PName $r6;
+        net.sourceforge.plantuml.style.Style r8;
+        net.sourceforge.plantuml.style.Style[] $r9;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.style.StyleSignature getStyleSignature()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.style.StyleBuilder styleBuilder>;
+
+        r8 = virtualinvoke $r1.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r2);
+
+        if r8 == null goto label1;
+
+        $r3 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.skin.ArrowConfiguration arrowConfiguration>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.skin.ArrowConfiguration: net.sourceforge.plantuml.ugraphic.color.HColor getColor()>();
+
+        if $r4 == null goto label1;
+
+        $r6 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName LineColor>;
+
+        $r5 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.skin.ArrowConfiguration arrowConfiguration>;
+
+        $r7 = virtualinvoke $r5.<net.sourceforge.plantuml.skin.ArrowConfiguration: net.sourceforge.plantuml.ugraphic.color.HColor getColor()>();
+
+        r8 = virtualinvoke r8.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Style eventuallyOverride(net.sourceforge.plantuml.style.PName,net.sourceforge.plantuml.ugraphic.color.HColor)>($r6, $r7);
+
+     label1:
+        $r9 = newarray (net.sourceforge.plantuml.style.Style)[1];
+
+        $r9[0] = r8;
+
+        return $r9;
+    }
+
+    public net.sourceforge.plantuml.style.StyleSignature getStyleSignature()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r3, $r4;
+        net.sourceforge.plantuml.style.StyleSignature $r5;
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r6;
+
+        r6 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r3 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName sequenceDiagram>;
+
+        $r0[2] = $r3;
+
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName arrow>;
+
+        $r0[3] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        return $r5;
+    }
+
+    public void <init>(net.sourceforge.plantuml.style.StyleBuilder, net.sourceforge.plantuml.cucadiagram.Display, net.sourceforge.plantuml.skin.ArrowConfiguration, java.lang.String)
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.util.EnumSet $r1;
+        java.util.ArrayList $r2;
+        java.util.HashSet $r3;
+        net.sourceforge.plantuml.style.StyleBuilder r4;
+        net.sourceforge.plantuml.cucadiagram.Display r5;
+        net.sourceforge.plantuml.skin.ArrowConfiguration r6;
+        java.lang.String r7;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r4 := @parameter0: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r5 := @parameter1: net.sourceforge.plantuml.cucadiagram.Display;
+
+        r6 := @parameter2: net.sourceforge.plantuml.skin.ArrowConfiguration;
+
+        r7 := @parameter3: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = staticinvoke <java.util.EnumSet: java.util.EnumSet noneOf(java.lang.Class)>(class "Lnet/sourceforge/plantuml/sequencediagram/LifeEventType;");
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set lifeEventsType> = $r1;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean parallel> = 0;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.List noteOnMessages> = $r2;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean firstIsActivate> = 0;
+
+        $r3 = new java.util.HashSet;
+
+        specialinvoke $r3.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set noActivationAuthorized2> = $r3;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.style.StyleBuilder styleBuilder> = r4;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.Url url> = null;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.cucadiagram.Display label> = r5;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.skin.ArrowConfiguration arrowConfiguration> = r6;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String messageNumber> = r7;
+
+        return;
+    }
+
+    public final void setUrl(net.sourceforge.plantuml.Url)
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.Url r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r1 := @parameter0: net.sourceforge.plantuml.Url;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.Url url> = r1;
+
+        return;
+    }
+
+    public void goParallel()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean parallel> = 1;
+
+        return;
+    }
+
+    public void setParallelBrother(net.sourceforge.plantuml.sequencediagram.AbstractMessage)
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0, r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r1 := @parameter0: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.sequencediagram.AbstractMessage parallelBrother> = r1;
+
+        return;
+    }
+
+    public boolean isParallel()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $z0 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean parallel>;
+
+        return $z0;
+    }
+
+    public final net.sourceforge.plantuml.Url getUrl()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.Url $r1, $r2, $r7, $r8;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.sequencediagram.Note r6;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.Url url>;
+
+        if $r1 != null goto label3;
+
+        $r3 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.List noteOnMessages>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (net.sourceforge.plantuml.sequencediagram.Note) $r5;
+
+        $r7 = virtualinvoke r6.<net.sourceforge.plantuml.sequencediagram.Note: net.sourceforge.plantuml.Url getUrl()>();
+
+        if $r7 == null goto label2;
+
+        $r8 = virtualinvoke r6.<net.sourceforge.plantuml.sequencediagram.Note: net.sourceforge.plantuml.Url getUrl()>();
+
+        return $r8;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r2 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.Url url>;
+
+        return $r2;
+    }
+
+    public boolean hasUrl()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1, $z2, $z3;
+        net.sourceforge.plantuml.cucadiagram.Display $r3, $r5;
+        net.sourceforge.plantuml.Url $r4;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.sequencediagram.Note r7;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.List noteOnMessages>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.sequencediagram.Note) $r6;
+
+        $z2 = virtualinvoke r7.<net.sourceforge.plantuml.sequencediagram.Note: boolean hasUrl()>();
+
+        if $z2 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r3 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.cucadiagram.Display label>;
+
+        if $r3 == null goto label4;
+
+        $r5 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.cucadiagram.Display label>;
+
+        $z1 = virtualinvoke $r5.<net.sourceforge.plantuml.cucadiagram.Display: boolean hasUrl()>();
+
+        if $z1 == 0 goto label4;
+
+        return 1;
+
+     label4:
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.Url getUrl()>();
+
+        if $r4 == null goto label5;
+
+        $z3 = 1;
+
+        goto label6;
+
+     label5:
+        $z3 = 0;
+
+     label6:
+        return $z3;
+    }
+
+    public final boolean addLifeEvent(net.sourceforge.plantuml.sequencediagram.LifeEvent)
+    {
+        net.sourceforge.plantuml.sequencediagram.LifeEvent r0;
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r1;
+        java.util.Set $r2, $r4, $r7, $r11;
+        net.sourceforge.plantuml.sequencediagram.LifeEventType $r3, $r5, $r6, $r9, $r10, $r13, $r14;
+        int $i0;
+        net.sourceforge.plantuml.sequencediagram.Participant $r8, $r12;
+        boolean $z2, $z3;
+
+        r1 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sequencediagram.LifeEvent;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.LifeEvent: void setMessage(net.sourceforge.plantuml.sequencediagram.AbstractMessage)>(r1);
+
+        $r2 = r1.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set lifeEventsType>;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.LifeEvent: net.sourceforge.plantuml.sequencediagram.LifeEventType getType()>();
+
+        interfaceinvoke $r2.<java.util.Set: boolean add(java.lang.Object)>($r3);
+
+        $r4 = r1.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set lifeEventsType>;
+
+        $i0 = interfaceinvoke $r4.<java.util.Set: int size()>();
+
+        if $i0 != 1 goto label1;
+
+        $z3 = virtualinvoke r1.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean isActivate()>();
+
+        if $z3 == 0 goto label1;
+
+        r1.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean firstIsActivate> = 1;
+
+     label1:
+        $r13 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.LifeEvent: net.sourceforge.plantuml.sequencediagram.LifeEventType getType()>();
+
+        $r14 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType ACTIVATE>;
+
+        if $r13 != $r14 goto label2;
+
+        $r11 = r1.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set noActivationAuthorized2>;
+
+        $r12 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.LifeEvent: net.sourceforge.plantuml.sequencediagram.Participant getParticipant()>();
+
+        $z2 = interfaceinvoke $r11.<java.util.Set: boolean contains(java.lang.Object)>($r12);
+
+        if $z2 == 0 goto label2;
+
+        return 0;
+
+     label2:
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.LifeEvent: net.sourceforge.plantuml.sequencediagram.LifeEventType getType()>();
+
+        $r6 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType DEACTIVATE>;
+
+        if $r5 == $r6 goto label3;
+
+        $r9 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.LifeEvent: net.sourceforge.plantuml.sequencediagram.LifeEventType getType()>();
+
+        $r10 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType DESTROY>;
+
+        if $r9 != $r10 goto label4;
+
+     label3:
+        $r7 = r1.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set noActivationAuthorized2>;
+
+        $r8 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.LifeEvent: net.sourceforge.plantuml.sequencediagram.Participant getParticipant()>();
+
+        interfaceinvoke $r7.<java.util.Set: boolean add(java.lang.Object)>($r8);
+
+     label4:
+        return 1;
+    }
+
+    public final boolean isCreate()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.sequencediagram.LifeEventType $r1;
+        java.util.Set $r2;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r2 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set lifeEventsType>;
+
+        $r1 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType CREATE>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Set: boolean contains(java.lang.Object)>($r1);
+
+        return $z0;
+    }
+
+    public boolean isActivate()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.sequencediagram.LifeEventType $r1;
+        java.util.Set $r2;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r2 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set lifeEventsType>;
+
+        $r1 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType ACTIVATE>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Set: boolean contains(java.lang.Object)>($r1);
+
+        return $z0;
+    }
+
+    public boolean isDeactivate()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.sequencediagram.LifeEventType $r1;
+        java.util.Set $r2;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r2 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set lifeEventsType>;
+
+        $r1 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType DEACTIVATE>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Set: boolean contains(java.lang.Object)>($r1);
+
+        return $z0;
+    }
+
+    public boolean isDestroy()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.sequencediagram.LifeEventType $r1;
+        java.util.Set $r2;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r2 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.Set lifeEventsType>;
+
+        $r1 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType DESTROY>;
+
+        $z0 = interfaceinvoke $r2.<java.util.Set: boolean contains(java.lang.Object)>($r1);
+
+        return $z0;
+    }
+
+    private boolean isDeactivateOrDestroy()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        boolean $z0, $z1, $z2;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean isDeactivate()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean isDestroy()>();
+
+        if $z1 == 0 goto label2;
+
+     label1:
+        $z2 = 1;
+
+        goto label3;
+
+     label2:
+        $z2 = 0;
+
+     label3:
+        return $z2;
+    }
+
+    public final boolean isActivateAndDeactive()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        boolean $z0, $z1, $z2;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $z0 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean firstIsActivate>;
+
+        if $z0 == 0 goto label1;
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: boolean isDeactivateOrDestroy()>();
+
+        if $z1 == 0 goto label1;
+
+        $z2 = 1;
+
+        goto label2;
+
+     label1:
+        $z2 = 0;
+
+     label2:
+        return $z2;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.Display getLabel()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.cucadiagram.Display $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.cucadiagram.Display label>;
+
+        return $r1;
+    }
+
+    public final net.sourceforge.plantuml.cucadiagram.Display getLabelNumbered()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.lang.String $r1, $r3;
+        net.sourceforge.plantuml.sequencediagram.MessageNumber $r2;
+        net.sourceforge.plantuml.cucadiagram.Display $r4, $r5, r6, r7, r8;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String getMessageNumber()>();
+
+        if $r1 != null goto label1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        return $r5;
+
+     label1:
+        r6 = staticinvoke <net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display empty()>();
+
+        $r2 = new net.sourceforge.plantuml.sequencediagram.MessageNumber;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String getMessageNumber()>();
+
+        specialinvoke $r2.<net.sourceforge.plantuml.sequencediagram.MessageNumber: void <init>(java.lang.String)>($r3);
+
+        r7 = virtualinvoke r6.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display add(java.lang.CharSequence)>($r2);
+
+        $r4 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.cucadiagram.Display getLabel()>();
+
+        r8 = virtualinvoke r7.<net.sourceforge.plantuml.cucadiagram.Display: net.sourceforge.plantuml.cucadiagram.Display addAll(net.sourceforge.plantuml.cucadiagram.Display)>($r4);
+
+        return r8;
+    }
+
+    public final net.sourceforge.plantuml.skin.ArrowConfiguration getArrowConfiguration()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        net.sourceforge.plantuml.skin.ArrowConfiguration $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.skin.ArrowConfiguration arrowConfiguration>;
+
+        return $r1;
+    }
+
+    public final java.util.List getNoteOnMessages()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.util.List $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.List noteOnMessages>;
+
+        return $r1;
+    }
+
+    public final void setNote(net.sourceforge.plantuml.sequencediagram.Note)
+    {
+        net.sourceforge.plantuml.sequencediagram.NotePosition $r0, $r1, $r3, $r4, $r5, $r6, $r7, $r8, $r11, $r12;
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r2;
+        java.lang.IllegalArgumentException $r9;
+        net.sourceforge.plantuml.sequencediagram.Note r10, r13;
+        java.util.List $r14;
+
+        r2 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r10 := @parameter0: net.sourceforge.plantuml.sequencediagram.Note;
+
+        $r0 = virtualinvoke r10.<net.sourceforge.plantuml.sequencediagram.Note: net.sourceforge.plantuml.sequencediagram.NotePosition getPosition()>();
+
+        $r1 = <net.sourceforge.plantuml.sequencediagram.NotePosition: net.sourceforge.plantuml.sequencediagram.NotePosition LEFT>;
+
+        if $r0 == $r1 goto label1;
+
+        $r3 = virtualinvoke r10.<net.sourceforge.plantuml.sequencediagram.Note: net.sourceforge.plantuml.sequencediagram.NotePosition getPosition()>();
+
+        $r4 = <net.sourceforge.plantuml.sequencediagram.NotePosition: net.sourceforge.plantuml.sequencediagram.NotePosition RIGHT>;
+
+        if $r3 == $r4 goto label1;
+
+        $r5 = virtualinvoke r10.<net.sourceforge.plantuml.sequencediagram.Note: net.sourceforge.plantuml.sequencediagram.NotePosition getPosition()>();
+
+        $r6 = <net.sourceforge.plantuml.sequencediagram.NotePosition: net.sourceforge.plantuml.sequencediagram.NotePosition BOTTOM>;
+
+        if $r5 == $r6 goto label1;
+
+        $r7 = virtualinvoke r10.<net.sourceforge.plantuml.sequencediagram.Note: net.sourceforge.plantuml.sequencediagram.NotePosition getPosition()>();
+
+        $r8 = <net.sourceforge.plantuml.sequencediagram.NotePosition: net.sourceforge.plantuml.sequencediagram.NotePosition TOP>;
+
+        if $r7 == $r8 goto label1;
+
+        $r9 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r9.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r9;
+
+     label1:
+        $r11 = virtualinvoke r10.<net.sourceforge.plantuml.sequencediagram.Note: net.sourceforge.plantuml.sequencediagram.NotePosition getPosition()>();
+
+        $r12 = virtualinvoke r2.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.sequencediagram.NotePosition overrideNotePosition(net.sourceforge.plantuml.sequencediagram.NotePosition)>($r11);
+
+        r13 = virtualinvoke r10.<net.sourceforge.plantuml.sequencediagram.Note: net.sourceforge.plantuml.sequencediagram.Note withPosition(net.sourceforge.plantuml.sequencediagram.NotePosition)>($r12);
+
+        $r14 = r2.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.util.List noteOnMessages>;
+
+        interfaceinvoke $r14.<java.util.List: boolean add(java.lang.Object)>(r13);
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.sequencediagram.NotePosition overrideNotePosition(net.sourceforge.plantuml.sequencediagram.NotePosition)
+    {
+        net.sourceforge.plantuml.sequencediagram.NotePosition r0;
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r1;
+
+        r1 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sequencediagram.NotePosition;
+
+        return r0;
+    }
+
+    public final java.lang.String getMessageNumber()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String messageNumber>;
+
+        return $r1;
+    }
+
+    public abstract boolean compatibleForCreate(net.sourceforge.plantuml.sequencediagram.Participant);
+
+    public abstract boolean isSelfMessage();
+
+    public double getPosYstartLevel()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $d0 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: double posYstartLevel>;
+
+        return $d0;
+    }
+
+    public void setPosYstartLevel(double)
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        double d0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        d0 := @parameter0: double;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: double posYstartLevel> = d0;
+
+        return;
+    }
+
+    public void setPosYendLevel(double)
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        double d0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        d0 := @parameter0: double;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: double posYendLevel> = d0;
+
+        return;
+    }
+
+    public double getPosYendLevel()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $d0 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: double posYendLevel>;
+
+        return $d0;
+    }
+
+    public void setAnchor(java.lang.String)
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.lang.String r1;
+        boolean $z0;
+        java.lang.IllegalArgumentException $r2;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String anchor> = r1;
+
+        if r1 == null goto label1;
+
+        $z0 = virtualinvoke r1.<java.lang.String: boolean startsWith(java.lang.String)>("{");
+
+        if $z0 == 0 goto label1;
+
+        $r2 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r2.<java.lang.IllegalArgumentException: void <init>(java.lang.String)>(r1);
+
+        throw $r2;
+
+     label1:
+        return;
+    }
+
+    public void setPart1Anchor(java.lang.String)
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.lang.String r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String anchor1> = r1;
+
+        return;
+    }
+
+    public void setPart2Anchor(java.lang.String)
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.lang.String r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String anchor2> = r1;
+
+        return;
+    }
+
+    public java.lang.String getAnchor()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String anchor>;
+
+        return $r1;
+    }
+
+    public java.lang.String getPart1Anchor()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String anchor1>;
+
+        return $r1;
+    }
+
+    public java.lang.String getPart2Anchor()
+    {
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.AbstractMessage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: java.lang.String anchor2>;
+
+        return $r1;
+    }
+
+    public abstract net.sourceforge.plantuml.sequencediagram.Participant getParticipant1();
+
+    public abstract net.sourceforge.plantuml.sequencediagram.Participant getParticipant2();
+}

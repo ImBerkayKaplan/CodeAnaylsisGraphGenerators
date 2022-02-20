@@ -1,0 +1,621 @@
+public class net.sourceforge.plantuml.ugraphic.UPolygon extends net.sourceforge.plantuml.ugraphic.AbstractShadowable
+{
+    private final java.util.List all;
+    private final java.lang.String name;
+    private net.sourceforge.plantuml.ugraphic.MinMax minmax;
+    private net.sourceforge.plantuml.ugraphic.comp.CompressionMode compressionMode;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = (java.lang.String) null;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: void <init>(java.lang.String)>($r1);
+
+        return;
+    }
+
+    public void <init>(java.util.List)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.lang.String $r1;
+        java.util.List r2, $r3, $r4;
+        java.util.Iterator r5;
+        boolean $z1;
+        java.lang.Object $r6;
+        java.awt.geom.Point2D$Double r7;
+        double $d0, $d1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        r2 := @parameter0: java.util.List;
+
+        $r1 = (java.lang.String) null;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: void <init>(java.lang.String)>($r1);
+
+        $r3 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        interfaceinvoke $r3.<java.util.List: boolean addAll(java.util.Collection)>(r2);
+
+        $r4 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        r5 = interfaceinvoke $r4.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label2;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (java.awt.geom.Point2D$Double) $r6;
+
+        $d0 = virtualinvoke r7.<java.awt.geom.Point2D$Double: double getX()>();
+
+        $d1 = virtualinvoke r7.<java.awt.geom.Point2D$Double: double getY()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: void manageMinMax(double,double)>($d0, $d1);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void <init>(java.lang.String)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.util.ArrayList $r1;
+        net.sourceforge.plantuml.ugraphic.MinMax $r2;
+        java.lang.String r3;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        r3 := @parameter0: java.lang.String;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.AbstractShadowable: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all> = $r1;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.ugraphic.MinMax getEmpty(boolean)>(0);
+
+        r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax> = $r2;
+
+        r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.lang.String name> = r3;
+
+        return;
+    }
+
+    public java.awt.geom.Point2D checkMiddleContactForSpecificTriangle(java.awt.geom.Point2D)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.util.List $r1, $r2, $r5, $r11, $r12;
+        int $i0, $i1, $i2, $i4, $i5, $i6, i7;
+        java.lang.Object $r3, $r6, $r13;
+        java.awt.geom.Point2D$Double r4, r7, $r8;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, d8;
+        java.awt.geom.Point2D r10, $r14;
+        byte $b3;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        r10 := @parameter0: java.awt.geom.Point2D;
+
+        i7 = 0;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        $i1 = $i0 - 1;
+
+        if i7 >= $i1 goto label3;
+
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i7);
+
+        r4 = (java.awt.geom.Point2D$Double) $r3;
+
+        $r5 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        $i2 = i7 + 1;
+
+        $r6 = interfaceinvoke $r5.<java.util.List: java.lang.Object get(int)>($i2);
+
+        r7 = (java.awt.geom.Point2D$Double) $r6;
+
+        $r8 = new java.awt.geom.Point2D$Double;
+
+        $d0 = virtualinvoke r4.<java.awt.geom.Point2D$Double: double getX()>();
+
+        $d1 = virtualinvoke r7.<java.awt.geom.Point2D$Double: double getX()>();
+
+        $d2 = $d0 + $d1;
+
+        $d3 = $d2 / 2.0;
+
+        $d4 = virtualinvoke r4.<java.awt.geom.Point2D$Double: double getY()>();
+
+        $d5 = virtualinvoke r7.<java.awt.geom.Point2D$Double: double getY()>();
+
+        $d6 = $d4 + $d5;
+
+        $d7 = $d6 / 2.0;
+
+        specialinvoke $r8.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d3, $d7);
+
+        d8 = virtualinvoke $r8.<java.awt.geom.Point2D$Double: double distance(java.awt.geom.Point2D)>(r10);
+
+        $b3 = d8 cmpg 1.0;
+
+        if $b3 >= 0 goto label2;
+
+        $r12 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        $i4 = i7 - 1;
+
+        $r11 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        $i5 = interfaceinvoke $r11.<java.util.List: int size()>();
+
+        $i6 = $i4 % $i5;
+
+        $r13 = interfaceinvoke $r12.<java.util.List: java.lang.Object get(int)>($i6);
+
+        $r14 = (java.awt.geom.Point2D) $r13;
+
+        return $r14;
+
+     label2:
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label3:
+        return null;
+    }
+
+    public void addPoint(double, double)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.awt.geom.Point2D$Double $r1;
+        double d0, d1;
+        java.util.List $r2;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        $r2 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        $r1 = new java.awt.geom.Point2D$Double;
+
+        specialinvoke $r1.<java.awt.geom.Point2D$Double: void <init>(double,double)>(d0, d1);
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>($r1);
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: void manageMinMax(double,double)>(d0, d1);
+
+        return;
+    }
+
+    public void addPoint(java.awt.geom.Point2D)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.awt.geom.Point2D r1;
+        double $d0, $d1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        r1 := @parameter0: java.awt.geom.Point2D;
+
+        $d0 = virtualinvoke r1.<java.awt.geom.Point2D: double getX()>();
+
+        $d1 = virtualinvoke r1.<java.awt.geom.Point2D: double getY()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: void addPoint(double,double)>($d0, $d1);
+
+        return;
+    }
+
+    private void manageMinMax(double, double)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        double d0, d1;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        d0 := @parameter0: double;
+
+        d1 := @parameter1: double;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.ugraphic.MinMax addPoint(double,double)>(d0, d1);
+
+        r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax> = $r2;
+
+        return;
+    }
+
+    public java.util.List getPoints()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.util.List $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.UPolygon translate(double, double)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon $r0, r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        java.awt.geom.Point2D$Double r6;
+        double d0, $d1, d2, $d3, $d4, $d5;
+
+        r2 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        d0 := @parameter0: double;
+
+        d2 := @parameter1: double;
+
+        $r0 = new net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.ugraphic.UPolygon: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (java.awt.geom.Point2D$Double) $r5;
+
+        $d1 = r6.<java.awt.geom.Point2D$Double: double x>;
+
+        $d5 = $d1 + d0;
+
+        $d3 = r6.<java.awt.geom.Point2D$Double: double y>;
+
+        $d4 = $d3 + d2;
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.ugraphic.UPolygon: void addPoint(double,double)>($d5, $d4);
+
+        goto label1;
+
+     label2:
+        return $r0;
+    }
+
+    public void rotate(double)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        double d0;
+        java.awt.geom.AffineTransform $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        d0 := @parameter0: double;
+
+        $r1 = staticinvoke <java.awt.geom.AffineTransform: java.awt.geom.AffineTransform getRotateInstance(double)>(d0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: void affine(java.awt.geom.AffineTransform)>($r1);
+
+        return;
+    }
+
+    public void affine(java.awt.geom.AffineTransform)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        java.awt.geom.Point2D$Double r4;
+        java.awt.geom.AffineTransform r5;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        r5 := @parameter0: java.awt.geom.AffineTransform;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (java.awt.geom.Point2D$Double) $r3;
+
+        virtualinvoke r5.<java.awt.geom.AffineTransform: java.awt.geom.Point2D transform(java.awt.geom.Point2D,java.awt.geom.Point2D)>(r4, r4);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.lang.String $r1, $r3, $r8, $r9;
+        java.lang.StringBuilder $r2, $r4, $r5, $r7;
+        java.util.List $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.lang.String name>;
+
+        if $r1 == null goto label1;
+
+        $r9 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.lang.String name>;
+
+        return $r9;
+
+     label1:
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = specialinvoke r0.<java.lang.Object: java.lang.String toString()>();
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r6 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List all>;
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r8;
+    }
+
+    public double getHeight()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.MinMax: double getHeight()>();
+
+        return $d0;
+    }
+
+    public double getWidth()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.MinMax: double getWidth()>();
+
+        return $d0;
+    }
+
+    public double getMinX()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.MinMax: double getMinX()>();
+
+        return $d0;
+    }
+
+    public double getMinY()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.MinMax: double getMinY()>();
+
+        return $d0;
+    }
+
+    public double getMaxX()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.MinMax: double getMaxX()>();
+
+        return $d0;
+    }
+
+    public double getMaxY()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax>;
+
+        $d0 = virtualinvoke $r1.<net.sourceforge.plantuml.ugraphic.MinMax: double getMaxY()>();
+
+        return $d0;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.MinMax getMinMax()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.MinMax $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.MinMax minmax>;
+
+        return $r1;
+    }
+
+    public double[] getPointArray(double, double)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        java.util.List $r1, $r3;
+        int $i0, $i1, i2, i3;
+        double[] r2;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.Object $r5;
+        java.awt.geom.Point2D r6;
+        double $d0, d1, $d2, $d3, d4, $d5;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        d1 := @parameter0: double;
+
+        d4 := @parameter1: double;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List getPoints()>();
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        $i1 = $i0 * 2;
+
+        r2 = newarray (double)[$i1];
+
+        i2 = 0;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: java.util.List getPoints()>();
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r5 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r6 = (java.awt.geom.Point2D) $r5;
+
+        i3 = i2 + 1;
+
+        $d0 = virtualinvoke r6.<java.awt.geom.Point2D: double getX()>();
+
+        $d2 = $d0 + d1;
+
+        r2[i2] = $d2;
+
+        i2 = i3 + 1;
+
+        $d3 = virtualinvoke r6.<java.awt.geom.Point2D: double getY()>();
+
+        $d5 = $d3 + d4;
+
+        r2[i3] = $d5;
+
+        goto label1;
+
+     label2:
+        return r2;
+    }
+
+    public final net.sourceforge.plantuml.ugraphic.comp.CompressionMode getCompressionMode()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.comp.CompressionMode $r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $r1 = r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.comp.CompressionMode compressionMode>;
+
+        return $r1;
+    }
+
+    public final void setCompressionMode(net.sourceforge.plantuml.ugraphic.comp.CompressionMode)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        net.sourceforge.plantuml.ugraphic.comp.CompressionMode r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.comp.CompressionMode;
+
+        r0.<net.sourceforge.plantuml.ugraphic.UPolygon: net.sourceforge.plantuml.ugraphic.comp.CompressionMode compressionMode> = r1;
+
+        return;
+    }
+
+    public volatile void setDeltaShadow(double)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        double d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        d0 := @parameter0: double;
+
+        specialinvoke r0.<net.sourceforge.plantuml.ugraphic.AbstractShadowable: void setDeltaShadow(double)>(d0);
+
+        return;
+    }
+
+    public volatile double getDeltaShadow()
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        double $d0;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        $d0 = specialinvoke r0.<net.sourceforge.plantuml.ugraphic.AbstractShadowable: double getDeltaShadow()>();
+
+        return $d0;
+    }
+}

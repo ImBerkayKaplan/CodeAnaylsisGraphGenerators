@@ -1,0 +1,175 @@
+public class net.sourceforge.plantuml.statediagram.command.CommandAddField extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.statediagram.command.CommandAddField r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.statediagram.command.CommandAddField;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.statediagram.command.CommandAddField: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    private static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2, $r5;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r6, $r7, $r8, $r9, $r10, $r11, $r12;
+        net.sourceforge.plantuml.command.regex.RegexOr $r4;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r13;
+
+        $r0 = class "Lnet/sourceforge/plantuml/statediagram/command/CommandAddField;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[7];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexOr;
+
+        $r5 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[2];
+
+        $r6 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("CODE3", "([%pLN_.]+)");
+
+        $r5[0] = $r6;
+
+        $r7 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("CODE4", "[%g]([^%g]+)[%g]");
+
+        $r5[1] = $r7;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexOr: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>($r5);
+
+        $r2[1] = $r4;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[2] = $r8;
+
+        $r9 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String)>(":");
+
+        $r2[3] = $r9;
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[4] = $r10;
+
+        $r11 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("FIELD", "(.*)");
+
+        $r2[5] = $r11;
+
+        $r12 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[6] = $r12;
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r13;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.statediagram.StateDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.command.regex.RegexResult r0;
+        java.lang.String r1, r2, $r9;
+        net.sourceforge.plantuml.statediagram.StateDiagram r3;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.cucadiagram.IEntity r5;
+        net.sourceforge.plantuml.cucadiagram.Bodier $r6;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r7;
+        net.sourceforge.plantuml.cucadiagram.Ident $r8, r12;
+        net.sourceforge.plantuml.statediagram.command.CommandAddField r10;
+        net.sourceforge.plantuml.LineLocation r11;
+        net.sourceforge.plantuml.cucadiagram.Code $r13;
+
+        r10 := @this: net.sourceforge.plantuml.statediagram.command.CommandAddField;
+
+        r3 := @parameter0: net.sourceforge.plantuml.statediagram.StateDiagram;
+
+        r11 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r0 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String getLazzy(java.lang.String,int)>("CODE", 0);
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexResult: java.lang.String get(java.lang.String,int)>("FIELD", 0);
+
+        r12 = virtualinvoke r3.<net.sourceforge.plantuml.statediagram.StateDiagram: net.sourceforge.plantuml.cucadiagram.Ident buildLeafIdent(java.lang.String)>(r1);
+
+        $z0 = virtualinvoke r3.<net.sourceforge.plantuml.statediagram.StateDiagram: boolean V1972()>();
+
+        if $z0 == 0 goto label1;
+
+        $r8 = virtualinvoke r12.<net.sourceforge.plantuml.cucadiagram.Ident: net.sourceforge.plantuml.cucadiagram.Ident parent()>();
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.cucadiagram.Ident: java.lang.String getLast()>();
+
+        $z1 = virtualinvoke $r9.<java.lang.String: boolean equals(java.lang.Object)>(r1);
+
+        if $z1 == 0 goto label1;
+
+        r12 = virtualinvoke r12.<net.sourceforge.plantuml.cucadiagram.Ident: net.sourceforge.plantuml.cucadiagram.Ident parent()>();
+
+     label1:
+        $z2 = virtualinvoke r3.<net.sourceforge.plantuml.statediagram.StateDiagram: boolean V1972()>();
+
+        if $z2 == 0 goto label2;
+
+        $r13 = r12;
+
+        goto label3;
+
+     label2:
+        $r13 = virtualinvoke r3.<net.sourceforge.plantuml.statediagram.StateDiagram: net.sourceforge.plantuml.cucadiagram.Code buildCode(java.lang.String)>(r1);
+
+     label3:
+        r5 = virtualinvoke r3.<net.sourceforge.plantuml.statediagram.StateDiagram: net.sourceforge.plantuml.cucadiagram.IEntity getOrCreateLeaf(net.sourceforge.plantuml.cucadiagram.Ident,net.sourceforge.plantuml.cucadiagram.Code,net.sourceforge.plantuml.cucadiagram.LeafType,net.sourceforge.plantuml.graphic.USymbol)>(r12, $r13, null, null);
+
+        $r6 = interfaceinvoke r5.<net.sourceforge.plantuml.cucadiagram.IEntity: net.sourceforge.plantuml.cucadiagram.Bodier getBodier()>();
+
+        interfaceinvoke $r6.<net.sourceforge.plantuml.cucadiagram.Bodier: void addFieldOrMethod(java.lang.String)>(r2);
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r7;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.statediagram.command.CommandAddField r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.statediagram.StateDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.statediagram.command.CommandAddField;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.statediagram.StateDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.statediagram.command.CommandAddField: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.statediagram.StateDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

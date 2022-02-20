@@ -1,0 +1,151 @@
+public class gen.lib.cdt.dtsize__c extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        gen.lib.cdt.dtsize__c r0;
+
+        r0 := @this: gen.lib.cdt.dtsize__c;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static int treecount(h.ST_dtlink_s)
+    {
+        h.ST_dtlink_s r0, $r1, $r2;
+        int $i1, $i2, $i3, $i4;
+        java.lang.Throwable $r3;
+
+        r0 := @parameter0: h.ST_dtlink_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("6j49zum5hqto1t7fyrz8qjv1u", "treecount");
+
+     label1:
+        if r0 == null goto label2;
+
+        $r1 = r0.<h.ST_dtlink_s: h.ST_dtlink_s _left>;
+
+        $i1 = staticinvoke <gen.lib.cdt.dtsize__c: int treecount(h.ST_dtlink_s)>($r1);
+
+        $r2 = r0.<h.ST_dtlink_s: h.ST_dtlink_s right>;
+
+        $i2 = staticinvoke <gen.lib.cdt.dtsize__c: int treecount(h.ST_dtlink_s)>($r2);
+
+        $i3 = $i1 + $i2;
+
+        $i4 = $i3 + 1;
+
+        goto label3;
+
+     label2:
+        $i4 = 0;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6j49zum5hqto1t7fyrz8qjv1u", "treecount");
+
+        return $i4;
+
+     label4:
+        $r3 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("6j49zum5hqto1t7fyrz8qjv1u", "treecount");
+
+        throw $r3;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static int dtsize_(h.ST_dt_s)
+    {
+        h.ST_dt_s r0;
+        h.ST_dtdata_s $r1, $r2, $r3, $r4, $r5, $r6, $r8, $r12;
+        int $i0, i1, $i2, $i3, $i4, $i5, $i6, i7;
+        h.ST_dtlink_s $r7, r11;
+        java.lang.Throwable $r9;
+
+        r0 := @parameter0: h.ST_dt_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("bci0ea1fa7egf4aads6gdgvsq", "dtsize_");
+
+     label1:
+        staticinvoke <smetana.core.Macro: void UNFLATTEN(h.ST_dt_s)>(r0);
+
+        $r1 = r0.<h.ST_dt_s: h.ST_dtdata_s data>;
+
+        $i0 = $r1.<h.ST_dtdata_s: int size>;
+
+        if $i0 >= 0 goto label5;
+
+        $r2 = r0.<h.ST_dt_s: h.ST_dtdata_s data>;
+
+        $i2 = $r2.<h.ST_dtdata_s: int type>;
+
+        $i3 = $i2 & 12;
+
+        if $i3 == 0 goto label2;
+
+        $r8 = r0.<h.ST_dt_s: h.ST_dtdata_s data>;
+
+        $r6 = r0.<h.ST_dt_s: h.ST_dtdata_s data>;
+
+        $r7 = $r6.<h.ST_dtdata_s: h.ST_dtlink_s here>;
+
+        $i6 = staticinvoke <gen.lib.cdt.dtsize__c: int treecount(h.ST_dtlink_s)>($r7);
+
+        $r8.<h.ST_dtdata_s: int size> = $i6;
+
+        goto label5;
+
+     label2:
+        $r3 = r0.<h.ST_dt_s: h.ST_dtdata_s data>;
+
+        $i4 = $r3.<h.ST_dtdata_s: int type>;
+
+        $i5 = $i4 & 112;
+
+        if $i5 == 0 goto label5;
+
+        i7 = 0;
+
+        $r4 = r0.<h.ST_dt_s: h.ST_dtdata_s data>;
+
+        r11 = $r4.<h.ST_dtdata_s: h.ST_dtlink_s _head>;
+
+     label3:
+        if r11 == null goto label4;
+
+        i7 = i7 + 1;
+
+        r11 = r11.<h.ST_dtlink_s: h.ST_dtlink_s right>;
+
+        goto label3;
+
+     label4:
+        $r5 = r0.<h.ST_dt_s: h.ST_dtdata_s data>;
+
+        $r5.<h.ST_dtdata_s: int size> = i7;
+
+     label5:
+        $r12 = r0.<h.ST_dt_s: h.ST_dtdata_s data>;
+
+        i1 = $r12.<h.ST_dtdata_s: int size>;
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("bci0ea1fa7egf4aads6gdgvsq", "dtsize_");
+
+        return i1;
+
+     label7:
+        $r9 := @caughtexception;
+
+     label8:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("bci0ea1fa7egf4aads6gdgvsq", "dtsize_");
+
+        throw $r9;
+
+        catch java.lang.Throwable from label1 to label6 with label7;
+        catch java.lang.Throwable from label7 to label8 with label7;
+    }
+}

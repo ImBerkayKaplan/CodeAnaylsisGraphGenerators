@@ -1,0 +1,704 @@
+class net.sourceforge.plantuml.LZWEncoder extends java.lang.Object
+{
+    private static final int EOF;
+    private int imgW;
+    private int imgH;
+    private byte[] pixAry;
+    private int initCodeSize;
+    private int remaining;
+    private int curPixel;
+    static final int BITS;
+    static final int HSIZE;
+    int n_bits;
+    int maxbits;
+    int maxcode;
+    int maxmaxcode;
+    int[] htab;
+    int[] codetab;
+    int hsize;
+    int free_ent;
+    boolean clear_flg;
+    int g_init_bits;
+    int ClearCode;
+    int EOFCode;
+    int cur_accum;
+    int cur_bits;
+    int[] masks;
+    int a_count;
+    byte[] accum;
+
+    void <init>(int, int, byte[], int)
+    {
+        net.sourceforge.plantuml.LZWEncoder r0;
+        int[] $r1, $r2, $r3;
+        byte[] $r4, r5;
+        int i0, i1, i2, $i3;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        r5 := @parameter2: byte[];
+
+        i2 := @parameter3: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int maxbits> = 12;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int maxmaxcode> = 4096;
+
+        $r1 = newarray (int)[5003];
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int[] htab> = $r1;
+
+        $r2 = newarray (int)[5003];
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int[] codetab> = $r2;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int hsize> = 5003;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int free_ent> = 0;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: boolean clear_flg> = 0;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum> = 0;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits> = 0;
+
+        $r3 = newarray (int)[17];
+
+        $r3[0] = 0;
+
+        $r3[1] = 1;
+
+        $r3[2] = 3;
+
+        $r3[3] = 7;
+
+        $r3[4] = 15;
+
+        $r3[5] = 31;
+
+        $r3[6] = 63;
+
+        $r3[7] = 127;
+
+        $r3[8] = 255;
+
+        $r3[9] = 511;
+
+        $r3[10] = 1023;
+
+        $r3[11] = 2047;
+
+        $r3[12] = 4095;
+
+        $r3[13] = 8191;
+
+        $r3[14] = 16383;
+
+        $r3[15] = 32767;
+
+        $r3[16] = 65535;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int[] masks> = $r3;
+
+        $r4 = newarray (byte)[256];
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: byte[] accum> = $r4;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int imgW> = i0;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int imgH> = i1;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: byte[] pixAry> = r5;
+
+        $i3 = staticinvoke <java.lang.Math: int max(int,int)>(2, i2);
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int initCodeSize> = $i3;
+
+        return;
+    }
+
+    void char_out(byte, java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.LZWEncoder r0;
+        int $i0, $i1, $i3;
+        byte[] $r1;
+        byte b2;
+        java.io.OutputStream r2;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        b2 := @parameter0: byte;
+
+        r2 := @parameter1: java.io.OutputStream;
+
+        $r1 = r0.<net.sourceforge.plantuml.LZWEncoder: byte[] accum>;
+
+        $i0 = r0.<net.sourceforge.plantuml.LZWEncoder: int a_count>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int a_count> = $i1;
+
+        $r1[$i0] = b2;
+
+        $i3 = r0.<net.sourceforge.plantuml.LZWEncoder: int a_count>;
+
+        if $i3 < 254 goto label1;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void flush_char(java.io.OutputStream)>(r2);
+
+     label1:
+        return;
+    }
+
+    void cl_block(java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.LZWEncoder r0;
+        int $i0, $i1, $i2, $i3;
+        java.io.OutputStream r1;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        r1 := @parameter0: java.io.OutputStream;
+
+        $i0 = r0.<net.sourceforge.plantuml.LZWEncoder: int hsize>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void cl_hash(int)>($i0);
+
+        $i1 = r0.<net.sourceforge.plantuml.LZWEncoder: int ClearCode>;
+
+        $i2 = $i1 + 2;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int free_ent> = $i2;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: boolean clear_flg> = 1;
+
+        $i3 = r0.<net.sourceforge.plantuml.LZWEncoder: int ClearCode>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void output(int,java.io.OutputStream)>($i3, r1);
+
+        return;
+    }
+
+    void cl_hash(int)
+    {
+        int i0, i1;
+        net.sourceforge.plantuml.LZWEncoder r0;
+        int[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        i0 := @parameter0: int;
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        $r1 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] htab>;
+
+        $r1[i1] = -1;
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    void compress(int, java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.LZWEncoder r0;
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, i10, $i11, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, i25, i26, i27, i28, $i29, i30, i31, i32, $i33;
+        java.io.OutputStream r1;
+        int[] $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        i0 := @parameter0: int;
+
+        r1 := @parameter1: java.io.OutputStream;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int g_init_bits> = i0;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: boolean clear_flg> = 0;
+
+        $i1 = r0.<net.sourceforge.plantuml.LZWEncoder: int g_init_bits>;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int n_bits> = $i1;
+
+        $i2 = r0.<net.sourceforge.plantuml.LZWEncoder: int n_bits>;
+
+        $i3 = virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: int MAXCODE(int)>($i2);
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int maxcode> = $i3;
+
+        $i4 = i0 - 1;
+
+        $i5 = 1 << $i4;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int ClearCode> = $i5;
+
+        $i6 = r0.<net.sourceforge.plantuml.LZWEncoder: int ClearCode>;
+
+        $i7 = $i6 + 1;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int EOFCode> = $i7;
+
+        $i8 = r0.<net.sourceforge.plantuml.LZWEncoder: int ClearCode>;
+
+        $i9 = $i8 + 2;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int free_ent> = $i9;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int a_count> = 0;
+
+        i25 = specialinvoke r0.<net.sourceforge.plantuml.LZWEncoder: int nextPixel()>();
+
+        i26 = 0;
+
+        i27 = r0.<net.sourceforge.plantuml.LZWEncoder: int hsize>;
+
+     label01:
+        if i27 >= 65536 goto label02;
+
+        i26 = i26 + 1;
+
+        i27 = i27 * 2;
+
+        goto label01;
+
+     label02:
+        i28 = 8 - i26;
+
+        i10 = r0.<net.sourceforge.plantuml.LZWEncoder: int hsize>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void cl_hash(int)>(i10);
+
+        $i11 = r0.<net.sourceforge.plantuml.LZWEncoder: int ClearCode>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void output(int,java.io.OutputStream)>($i11, r1);
+
+     label03:
+        $i29 = specialinvoke r0.<net.sourceforge.plantuml.LZWEncoder: int nextPixel()>();
+
+        if $i29 == -1 goto label10;
+
+        $i14 = r0.<net.sourceforge.plantuml.LZWEncoder: int maxbits>;
+
+        $i15 = $i29 << $i14;
+
+        i30 = $i15 + i25;
+
+        $i16 = $i29 << i28;
+
+        i31 = $i16 ^ i25;
+
+        $r2 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] htab>;
+
+        $i17 = $r2[i31];
+
+        if $i17 != i30 goto label04;
+
+        $r9 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] codetab>;
+
+        i25 = $r9[i31];
+
+        goto label03;
+
+     label04:
+        $r3 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] htab>;
+
+        $i18 = $r3[i31];
+
+        if $i18 < 0 goto label08;
+
+        i32 = i10 - i31;
+
+        if i31 != 0 goto label05;
+
+        i32 = 1;
+
+     label05:
+        $i33 = i31 - i32;
+
+        i31 = $i33;
+
+        if $i33 >= 0 goto label06;
+
+        i31 = $i33 + i10;
+
+     label06:
+        $r6 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] htab>;
+
+        $i23 = $r6[i31];
+
+        if $i23 != i30 goto label07;
+
+        $r8 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] codetab>;
+
+        i25 = $r8[i31];
+
+        goto label03;
+
+     label07:
+        $r7 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] htab>;
+
+        $i24 = $r7[i31];
+
+        if $i24 >= 0 goto label05;
+
+     label08:
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void output(int,java.io.OutputStream)>(i25, r1);
+
+        i25 = $i29;
+
+        $i20 = r0.<net.sourceforge.plantuml.LZWEncoder: int free_ent>;
+
+        $i19 = r0.<net.sourceforge.plantuml.LZWEncoder: int maxmaxcode>;
+
+        if $i20 >= $i19 goto label09;
+
+        $r4 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] codetab>;
+
+        $i21 = r0.<net.sourceforge.plantuml.LZWEncoder: int free_ent>;
+
+        $i22 = $i21 + 1;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int free_ent> = $i22;
+
+        $r4[i31] = $i21;
+
+        $r5 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] htab>;
+
+        $r5[i31] = i30;
+
+        goto label03;
+
+     label09:
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void cl_block(java.io.OutputStream)>(r1);
+
+        goto label03;
+
+     label10:
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void output(int,java.io.OutputStream)>(i25, r1);
+
+        $i13 = r0.<net.sourceforge.plantuml.LZWEncoder: int EOFCode>;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void output(int,java.io.OutputStream)>($i13, r1);
+
+        return;
+    }
+
+    void encode(java.io.OutputStream) throws java.io.IOException
+    {
+        java.io.OutputStream r0;
+        net.sourceforge.plantuml.LZWEncoder r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+
+        r1 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        r0 := @parameter0: java.io.OutputStream;
+
+        $i0 = r1.<net.sourceforge.plantuml.LZWEncoder: int initCodeSize>;
+
+        virtualinvoke r0.<java.io.OutputStream: void write(int)>($i0);
+
+        $i2 = r1.<net.sourceforge.plantuml.LZWEncoder: int imgW>;
+
+        $i1 = r1.<net.sourceforge.plantuml.LZWEncoder: int imgH>;
+
+        $i3 = $i2 * $i1;
+
+        r1.<net.sourceforge.plantuml.LZWEncoder: int remaining> = $i3;
+
+        r1.<net.sourceforge.plantuml.LZWEncoder: int curPixel> = 0;
+
+        $i4 = r1.<net.sourceforge.plantuml.LZWEncoder: int initCodeSize>;
+
+        $i5 = $i4 + 1;
+
+        virtualinvoke r1.<net.sourceforge.plantuml.LZWEncoder: void compress(int,java.io.OutputStream)>($i5, r0);
+
+        virtualinvoke r0.<java.io.OutputStream: void write(int)>(0);
+
+        return;
+    }
+
+    void flush_char(java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.LZWEncoder r0;
+        int $i0, $i1, $i2;
+        java.io.OutputStream r1;
+        byte[] $r2;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        r1 := @parameter0: java.io.OutputStream;
+
+        $i0 = r0.<net.sourceforge.plantuml.LZWEncoder: int a_count>;
+
+        if $i0 <= 0 goto label1;
+
+        $i1 = r0.<net.sourceforge.plantuml.LZWEncoder: int a_count>;
+
+        virtualinvoke r1.<java.io.OutputStream: void write(int)>($i1);
+
+        $r2 = r0.<net.sourceforge.plantuml.LZWEncoder: byte[] accum>;
+
+        $i2 = r0.<net.sourceforge.plantuml.LZWEncoder: int a_count>;
+
+        virtualinvoke r1.<java.io.OutputStream: void write(byte[],int,int)>($r2, 0, $i2);
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int a_count> = 0;
+
+     label1:
+        return;
+    }
+
+    final int MAXCODE(int)
+    {
+        int i0, $i1, $i2;
+        net.sourceforge.plantuml.LZWEncoder r0;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        i0 := @parameter0: int;
+
+        $i1 = 1 << i0;
+
+        $i2 = $i1 - 1;
+
+        return $i2;
+    }
+
+    private int nextPixel()
+    {
+        net.sourceforge.plantuml.LZWEncoder r0;
+        int $i0, $i1, $i2, $i3, $i4, $i6;
+        byte[] $r1;
+        byte b5;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        $i0 = r0.<net.sourceforge.plantuml.LZWEncoder: int remaining>;
+
+        if $i0 != 0 goto label1;
+
+        return -1;
+
+     label1:
+        $i1 = r0.<net.sourceforge.plantuml.LZWEncoder: int remaining>;
+
+        $i2 = $i1 - 1;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int remaining> = $i2;
+
+        $r1 = r0.<net.sourceforge.plantuml.LZWEncoder: byte[] pixAry>;
+
+        $i3 = r0.<net.sourceforge.plantuml.LZWEncoder: int curPixel>;
+
+        $i4 = $i3 + 1;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int curPixel> = $i4;
+
+        b5 = $r1[$i3];
+
+        $i6 = b5 & 255;
+
+        return $i6;
+    }
+
+    void output(int, java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.LZWEncoder r0;
+        int $i0, $i1, $i2, $i3, $i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i21, $i22, $i23, $i24, $i25, $i26, $i27, $i28, $i29, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, $i39, $i40;
+        int[] $r1;
+        boolean $z0, $z1;
+        java.io.OutputStream r2;
+        byte $b20, $b30;
+
+        r0 := @this: net.sourceforge.plantuml.LZWEncoder;
+
+        i5 := @parameter0: int;
+
+        r2 := @parameter1: java.io.OutputStream;
+
+        $i2 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum>;
+
+        $r1 = r0.<net.sourceforge.plantuml.LZWEncoder: int[] masks>;
+
+        $i0 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits>;
+
+        $i1 = $r1[$i0];
+
+        $i3 = $i2 & $i1;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum> = $i3;
+
+        $i4 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits>;
+
+        if $i4 <= 0 goto label01;
+
+        $i37 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum>;
+
+        $i35 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits>;
+
+        $i36 = i5 << $i35;
+
+        $i38 = $i37 | $i36;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum> = $i38;
+
+        goto label02;
+
+     label01:
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum> = i5;
+
+     label02:
+        $i7 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits>;
+
+        $i6 = r0.<net.sourceforge.plantuml.LZWEncoder: int n_bits>;
+
+        $i8 = $i7 + $i6;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits> = $i8;
+
+     label03:
+        $i39 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits>;
+
+        if $i39 < 8 goto label04;
+
+        $i28 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum>;
+
+        $i29 = $i28 & 255;
+
+        $b30 = (byte) $i29;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void char_out(byte,java.io.OutputStream)>($b30, r2);
+
+        $i31 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum>;
+
+        $i32 = $i31 >> 8;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum> = $i32;
+
+        $i33 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits>;
+
+        $i34 = $i33 - 8;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits> = $i34;
+
+        goto label03;
+
+     label04:
+        $i10 = r0.<net.sourceforge.plantuml.LZWEncoder: int free_ent>;
+
+        $i9 = r0.<net.sourceforge.plantuml.LZWEncoder: int maxcode>;
+
+        if $i10 > $i9 goto label05;
+
+        $z1 = r0.<net.sourceforge.plantuml.LZWEncoder: boolean clear_flg>;
+
+        if $z1 == 0 goto label08;
+
+     label05:
+        $z0 = r0.<net.sourceforge.plantuml.LZWEncoder: boolean clear_flg>;
+
+        if $z0 == 0 goto label06;
+
+        $i26 = r0.<net.sourceforge.plantuml.LZWEncoder: int g_init_bits>;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int n_bits> = $i26;
+
+        $i27 = virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: int MAXCODE(int)>($i26);
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int maxcode> = $i27;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: boolean clear_flg> = 0;
+
+        goto label08;
+
+     label06:
+        $i11 = r0.<net.sourceforge.plantuml.LZWEncoder: int n_bits>;
+
+        $i12 = $i11 + 1;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int n_bits> = $i12;
+
+        $i14 = r0.<net.sourceforge.plantuml.LZWEncoder: int n_bits>;
+
+        $i13 = r0.<net.sourceforge.plantuml.LZWEncoder: int maxbits>;
+
+        if $i14 != $i13 goto label07;
+
+        $i25 = r0.<net.sourceforge.plantuml.LZWEncoder: int maxmaxcode>;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int maxcode> = $i25;
+
+        goto label08;
+
+     label07:
+        $i15 = r0.<net.sourceforge.plantuml.LZWEncoder: int n_bits>;
+
+        $i16 = virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: int MAXCODE(int)>($i15);
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int maxcode> = $i16;
+
+     label08:
+        $i40 = r0.<net.sourceforge.plantuml.LZWEncoder: int EOFCode>;
+
+        if i5 != $i40 goto label11;
+
+     label09:
+        $i17 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits>;
+
+        if $i17 <= 0 goto label10;
+
+        $i18 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum>;
+
+        $i19 = $i18 & 255;
+
+        $b20 = (byte) $i19;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void char_out(byte,java.io.OutputStream)>($b20, r2);
+
+        $i21 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum>;
+
+        $i22 = $i21 >> 8;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_accum> = $i22;
+
+        $i23 = r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits>;
+
+        $i24 = $i23 - 8;
+
+        r0.<net.sourceforge.plantuml.LZWEncoder: int cur_bits> = $i24;
+
+        goto label09;
+
+     label10:
+        virtualinvoke r0.<net.sourceforge.plantuml.LZWEncoder: void flush_char(java.io.OutputStream)>(r2);
+
+     label11:
+        return;
+    }
+
+    public static void <clinit>()
+    {
+        <net.sourceforge.plantuml.LZWEncoder: int HSIZE> = 5003;
+
+        <net.sourceforge.plantuml.LZWEncoder: int BITS> = 12;
+
+        <net.sourceforge.plantuml.LZWEncoder: int EOF> = -1;
+
+        return;
+    }
+}

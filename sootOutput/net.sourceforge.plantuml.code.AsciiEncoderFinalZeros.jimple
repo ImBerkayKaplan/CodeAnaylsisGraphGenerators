@@ -1,0 +1,198 @@
+public class net.sourceforge.plantuml.code.AsciiEncoderFinalZeros extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.code.AsciiEncoderFinalZeros r0;
+
+        r0 := @this: net.sourceforge.plantuml.code.AsciiEncoderFinalZeros;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.String encode(byte[])
+    {
+        byte[] r0;
+        java.lang.StringBuilder $r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i9, $i10, $i12, $i13, $i14, $i15, $i16, $i18, i20, $i21, $i22, $i23;
+        java.lang.String $r3;
+        char $c8;
+        net.sourceforge.plantuml.code.AsciiEncoderFinalZeros r4;
+        byte $b11, $b17, $b19;
+
+        r4 := @this: net.sourceforge.plantuml.code.AsciiEncoderFinalZeros;
+
+        r0 := @parameter0: byte[];
+
+        if r0 != null goto label1;
+
+        return "";
+
+     label1:
+        $r1 = new java.lang.StringBuilder;
+
+        $i0 = lengthof r0;
+
+        $i1 = $i0 * 4;
+
+        $i2 = $i1 + 2;
+
+        $i3 = $i2 / 3;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>(int)>($i3);
+
+        i20 = 0;
+
+     label2:
+        $i4 = lengthof r0;
+
+        if i20 >= $i4 goto label7;
+
+        $b11 = r0[i20];
+
+        $i21 = $b11 & 255;
+
+        $i13 = i20 + 1;
+
+        $i12 = lengthof r0;
+
+        if $i13 >= $i12 goto label3;
+
+        $i18 = i20 + 1;
+
+        $b19 = r0[$i18];
+
+        $i22 = $b19 & 255;
+
+        goto label4;
+
+     label3:
+        $i22 = 0;
+
+     label4:
+        $i15 = i20 + 2;
+
+        $i14 = lengthof r0;
+
+        if $i15 >= $i14 goto label5;
+
+        $i16 = i20 + 2;
+
+        $b17 = r0[$i16];
+
+        $i23 = $b17 & 255;
+
+        goto label6;
+
+     label5:
+        $i23 = 0;
+
+     label6:
+        specialinvoke r4.<net.sourceforge.plantuml.code.AsciiEncoderFinalZeros: void append3bytes(java.lang.StringBuilder,int,int,int)>($r1, $i21, $i22, $i23);
+
+        i20 = i20 + 3;
+
+        goto label2;
+
+     label7:
+        $i5 = virtualinvoke $r1.<java.lang.StringBuilder: int length()>();
+
+        if $i5 <= 0 goto label8;
+
+        $i6 = virtualinvoke $r1.<java.lang.StringBuilder: int length()>();
+
+        $i7 = $i6 - 1;
+
+        $c8 = virtualinvoke $r1.<java.lang.StringBuilder: char charAt(int)>($i7);
+
+        if $c8 != 48 goto label8;
+
+        $i9 = virtualinvoke $r1.<java.lang.StringBuilder: int length()>();
+
+        $i10 = $i9 - 1;
+
+        virtualinvoke $r1.<java.lang.StringBuilder: void setLength(int)>($i10);
+
+        goto label7;
+
+     label8:
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+    }
+
+    private void append3bytes(java.lang.StringBuilder, int, int, int)
+    {
+        int i0, i1, $i2, i3, $i4, $i5, i6, $i7, i8, $i9, $i10, i11, i12, $i13, $i15, $i17, $i19;
+        java.lang.StringBuilder r0;
+        char[] $r1, $r3, $r5, $r7;
+        char $c14, $c16, $c18, $c20;
+        net.sourceforge.plantuml.code.AsciiEncoderFinalZeros r9;
+
+        r9 := @this: net.sourceforge.plantuml.code.AsciiEncoderFinalZeros;
+
+        r0 := @parameter0: java.lang.StringBuilder;
+
+        i0 := @parameter1: int;
+
+        i3 := @parameter2: int;
+
+        i8 := @parameter3: int;
+
+        i1 = i0 >> 2;
+
+        $i2 = i0 & 3;
+
+        $i5 = $i2 << 4;
+
+        $i4 = i3 >> 4;
+
+        i6 = $i5 | $i4;
+
+        $i7 = i3 & 15;
+
+        $i10 = $i7 << 2;
+
+        $i9 = i8 >> 6;
+
+        i11 = $i10 | $i9;
+
+        i12 = i8 & 63;
+
+        $r1 = <net.sourceforge.plantuml.code.AsciiEncoder: char[] encode6bit>;
+
+        $i13 = i1 & 63;
+
+        $c14 = $r1[$i13];
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c14);
+
+        $r3 = <net.sourceforge.plantuml.code.AsciiEncoder: char[] encode6bit>;
+
+        $i15 = i6 & 63;
+
+        $c16 = $r3[$i15];
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c16);
+
+        $r5 = <net.sourceforge.plantuml.code.AsciiEncoder: char[] encode6bit>;
+
+        $i17 = i11 & 63;
+
+        $c18 = $r5[$i17];
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c18);
+
+        $r7 = <net.sourceforge.plantuml.code.AsciiEncoder: char[] encode6bit>;
+
+        $i19 = i12 & 63;
+
+        $c20 = $r7[$i19];
+
+        virtualinvoke r0.<java.lang.StringBuilder: java.lang.StringBuilder append(char)>($c20);
+
+        return;
+    }
+}

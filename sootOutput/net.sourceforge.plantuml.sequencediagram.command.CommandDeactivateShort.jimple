@@ -1,0 +1,125 @@
+public class net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort extends net.sourceforge.plantuml.command.SingleLineCommand2
+{
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort r0;
+        net.sourceforge.plantuml.command.regex.IRegex $r1;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort: net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.SingleLineCommand2: void <init>(net.sourceforge.plantuml.command.regex.IRegex)>($r1);
+
+        return;
+    }
+
+    static net.sourceforge.plantuml.command.regex.IRegex getRegexConcat()
+    {
+        java.lang.Class $r0;
+        java.lang.String $r1;
+        net.sourceforge.plantuml.command.regex.IRegex[] $r2;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r3, $r4, $r5, $r6;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r7;
+
+        $r0 = class "Lnet/sourceforge/plantuml/sequencediagram/command/CommandDeactivateShort;";
+
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.String getName()>();
+
+        $r2 = newarray (net.sourceforge.plantuml.command.regex.IRegex)[4];
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        $r2[0] = $r3;
+
+        $r4 = new net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.command.regex.RegexLeaf: void <init>(java.lang.String,java.lang.String)>("TYPE", "deactivate");
+
+        $r2[1] = $r4;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf spaceZeroOrMore()>();
+
+        $r2[2] = $r5;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        $r2[3] = $r6;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String,net.sourceforge.plantuml.command.regex.IRegex[])>($r1, $r2);
+
+        return $r7;
+    }
+
+    protected net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.sequencediagram.SequenceDiagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult)
+    {
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram r0;
+        net.sourceforge.plantuml.sequencediagram.AbstractMessage r1;
+        net.sourceforge.plantuml.sequencediagram.Participant $r2;
+        net.sourceforge.plantuml.sequencediagram.LifeEventType $r3;
+        java.lang.String r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5, $r6, $r7;
+        net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort r8;
+        net.sourceforge.plantuml.LineLocation r9;
+        net.sourceforge.plantuml.command.regex.RegexResult r10;
+
+        r8 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
+
+        r9 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r10 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: net.sourceforge.plantuml.sequencediagram.AbstractMessage getActivatingMessage()>();
+
+        if r1 != null goto label1;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>("Nothing to deactivate.");
+
+        return $r7;
+
+     label1:
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.sequencediagram.AbstractMessage: net.sourceforge.plantuml.sequencediagram.Participant getParticipant2()>();
+
+        $r3 = <net.sourceforge.plantuml.sequencediagram.LifeEventType: net.sourceforge.plantuml.sequencediagram.LifeEventType DEACTIVATE>;
+
+        r4 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.SequenceDiagram: java.lang.String activate(net.sourceforge.plantuml.sequencediagram.Participant,net.sourceforge.plantuml.sequencediagram.LifeEventType,net.sourceforge.plantuml.ugraphic.color.HColor)>($r2, $r3, null);
+
+        if r4 == null goto label2;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult error(java.lang.String)>(r4);
+
+        return $r6;
+
+     label2:
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.CommandExecutionResult: net.sourceforge.plantuml.command.CommandExecutionResult ok()>();
+
+        return $r5;
+    }
+
+    protected volatile net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.LineLocation, net.sourceforge.plantuml.command.regex.RegexResult) throws net.sourceforge.plantuml.ugraphic.color.NoSuchColorException
+    {
+        net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort r0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.LineLocation r2;
+        net.sourceforge.plantuml.command.regex.RegexResult r3;
+        net.sourceforge.plantuml.sequencediagram.SequenceDiagram $r4;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r5;
+
+        r0 := @this: net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r2 := @parameter1: net.sourceforge.plantuml.LineLocation;
+
+        r3 := @parameter2: net.sourceforge.plantuml.command.regex.RegexResult;
+
+        $r4 = (net.sourceforge.plantuml.sequencediagram.SequenceDiagram) r1;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.sequencediagram.command.CommandDeactivateShort: net.sourceforge.plantuml.command.CommandExecutionResult executeArg(net.sourceforge.plantuml.sequencediagram.SequenceDiagram,net.sourceforge.plantuml.LineLocation,net.sourceforge.plantuml.command.regex.RegexResult)>($r4, r2, r3);
+
+        return $r5;
+    }
+}

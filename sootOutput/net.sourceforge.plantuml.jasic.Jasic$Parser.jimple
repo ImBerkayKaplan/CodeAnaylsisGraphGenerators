@@ -1,0 +1,639 @@
+class net.sourceforge.plantuml.jasic.Jasic$Parser extends java.lang.Object
+{
+    private final java.util.List tokens;
+    private int position;
+    final net.sourceforge.plantuml.jasic.Jasic this$0;
+
+    public void <init>(net.sourceforge.plantuml.jasic.Jasic, java.util.List)
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        net.sourceforge.plantuml.jasic.Jasic r1;
+        java.util.List r2;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        r1 := @parameter0: net.sourceforge.plantuml.jasic.Jasic;
+
+        r2 := @parameter1: java.util.List;
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0> = r1;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: java.util.List tokens> = r2;
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position> = 0;
+
+        return;
+    }
+
+    public java.util.List parse(java.util.Map)
+    {
+        java.util.ArrayList $r0;
+        net.sourceforge.plantuml.jasic.Jasic$Parser r2;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType $r3, $r4, $r5, $r7, $r12, $r17, $r32;
+        boolean $z0, $z1, $z2, $z3, $z4, $z5, $z11;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r8, $r14, $r19, $r24, $r28;
+        net.sourceforge.plantuml.jasic.Jasic$IfThenStatement $r9;
+        net.sourceforge.plantuml.jasic.Jasic $r10, $r13, $r18, $r22, $r26;
+        net.sourceforge.plantuml.jasic.Jasic$GotoStatement $r11;
+        java.lang.String $r15, $r20, $r29, r33, r36;
+        net.sourceforge.plantuml.jasic.Jasic$InputStatement $r16;
+        net.sourceforge.plantuml.jasic.Jasic$PrintStatement $r21;
+        net.sourceforge.plantuml.jasic.Jasic$Expression $r23, r34, r35;
+        net.sourceforge.plantuml.jasic.Jasic$AssignStatement $r25;
+        java.util.Map r27;
+        int $i0;
+        java.lang.Integer $r30;
+
+        r2 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        r27 := @parameter0: java.util.Map;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+     label1:
+        $r32 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType LINE>;
+
+        $z11 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r32);
+
+        if $z11 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r3 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType LABEL>;
+
+        $z0 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r3);
+
+        if $z0 == 0 goto label3;
+
+        $r28 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token last(int)>(1);
+
+        $r29 = $r28.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        $i0 = interfaceinvoke $r0.<java.util.List: int size()>();
+
+        $r30 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($i0);
+
+        interfaceinvoke r27.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r29, $r30);
+
+        goto label1;
+
+     label3:
+        $r5 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType WORD>;
+
+        $r4 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType EQUALS>;
+
+        $z1 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType,net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r5, $r4);
+
+        if $z1 == 0 goto label4;
+
+        $r24 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token last(int)>(2);
+
+        r33 = $r24.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        r34 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Expression expression()>();
+
+        $r25 = new net.sourceforge.plantuml.jasic.Jasic$AssignStatement;
+
+        $r26 = r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        specialinvoke $r25.<net.sourceforge.plantuml.jasic.Jasic$AssignStatement: void <init>(net.sourceforge.plantuml.jasic.Jasic,java.lang.String,net.sourceforge.plantuml.jasic.Jasic$Expression)>($r26, r33, r34);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r25);
+
+        goto label1;
+
+     label4:
+        $z2 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(java.lang.String)>("print");
+
+        if $z2 == 0 goto label5;
+
+        $r21 = new net.sourceforge.plantuml.jasic.Jasic$PrintStatement;
+
+        $r22 = r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        $r23 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Expression expression()>();
+
+        specialinvoke $r21.<net.sourceforge.plantuml.jasic.Jasic$PrintStatement: void <init>(net.sourceforge.plantuml.jasic.Jasic,net.sourceforge.plantuml.jasic.Jasic$Expression)>($r22, $r23);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r21);
+
+        goto label1;
+
+     label5:
+        $z3 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(java.lang.String)>("input");
+
+        if $z3 == 0 goto label6;
+
+        $r16 = new net.sourceforge.plantuml.jasic.Jasic$InputStatement;
+
+        $r18 = r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        $r17 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType WORD>;
+
+        $r19 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token consume(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r17);
+
+        $r20 = $r19.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        specialinvoke $r16.<net.sourceforge.plantuml.jasic.Jasic$InputStatement: void <init>(net.sourceforge.plantuml.jasic.Jasic,java.lang.String)>($r18, $r20);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r16);
+
+        goto label1;
+
+     label6:
+        $z4 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(java.lang.String)>("goto");
+
+        if $z4 == 0 goto label7;
+
+        $r11 = new net.sourceforge.plantuml.jasic.Jasic$GotoStatement;
+
+        $r13 = r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        $r12 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType WORD>;
+
+        $r14 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token consume(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r12);
+
+        $r15 = $r14.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.jasic.Jasic$GotoStatement: void <init>(net.sourceforge.plantuml.jasic.Jasic,java.lang.String)>($r13, $r15);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r11);
+
+        goto label1;
+
+     label7:
+        $z5 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(java.lang.String)>("if");
+
+        if $z5 == 0 goto label8;
+
+        r35 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Expression expression()>();
+
+        specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token consume(java.lang.String)>("then");
+
+        $r7 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType WORD>;
+
+        $r8 = specialinvoke r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token consume(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r7);
+
+        r36 = $r8.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        $r9 = new net.sourceforge.plantuml.jasic.Jasic$IfThenStatement;
+
+        $r10 = r2.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.jasic.Jasic$IfThenStatement: void <init>(net.sourceforge.plantuml.jasic.Jasic,net.sourceforge.plantuml.jasic.Jasic$Expression,java.lang.String)>($r10, r35, r36);
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>($r9);
+
+        goto label1;
+
+     label8:
+        return $r0;
+    }
+
+    private net.sourceforge.plantuml.jasic.Jasic$Expression expression()
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        net.sourceforge.plantuml.jasic.Jasic$Expression $r1;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Expression operator()>();
+
+        return $r1;
+    }
+
+    private net.sourceforge.plantuml.jasic.Jasic$Expression operator()
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType $r1, $r7;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r2;
+        java.lang.String $r3;
+        char c0;
+        net.sourceforge.plantuml.jasic.Jasic$Expression r4, r8;
+        net.sourceforge.plantuml.jasic.Jasic$OperatorExpression $r5;
+        net.sourceforge.plantuml.jasic.Jasic $r6;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        r8 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Expression atomic()>();
+
+     label1:
+        $r1 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType OPERATOR>;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r1);
+
+        if $z0 != 0 goto label2;
+
+        $r7 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType EQUALS>;
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r7);
+
+        if $z1 == 0 goto label3;
+
+     label2:
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token last(int)>(1);
+
+        $r3 = $r2.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        c0 = virtualinvoke $r3.<java.lang.String: char charAt(int)>(0);
+
+        r4 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Expression atomic()>();
+
+        $r5 = new net.sourceforge.plantuml.jasic.Jasic$OperatorExpression;
+
+        $r6 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.jasic.Jasic$OperatorExpression: void <init>(net.sourceforge.plantuml.jasic.Jasic,net.sourceforge.plantuml.jasic.Jasic$Expression,char,net.sourceforge.plantuml.jasic.Jasic$Expression)>($r6, r8, c0, r4);
+
+        r8 = $r5;
+
+        goto label1;
+
+     label3:
+        return r8;
+    }
+
+    private net.sourceforge.plantuml.jasic.Jasic$Expression atomic()
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType $r1, $r2, $r3, $r4, $r7;
+        boolean $z0, $z1, $z2, $z3;
+        java.lang.Error $r5;
+        net.sourceforge.plantuml.jasic.Jasic$Expression r6;
+        net.sourceforge.plantuml.jasic.Jasic$StringValue $r9;
+        net.sourceforge.plantuml.jasic.Jasic $r10, $r14, $r18;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r11, $r15, $r19;
+        java.lang.String $r12, $r16, $r20;
+        net.sourceforge.plantuml.jasic.Jasic$NumberValue $r13;
+        double $d0;
+        net.sourceforge.plantuml.jasic.Jasic$VariableExpression $r17;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        $r1 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType WORD>;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r1);
+
+        if $z0 == 0 goto label1;
+
+        $r17 = new net.sourceforge.plantuml.jasic.Jasic$VariableExpression;
+
+        $r18 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        $r19 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token last(int)>(1);
+
+        $r20 = $r19.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        specialinvoke $r17.<net.sourceforge.plantuml.jasic.Jasic$VariableExpression: void <init>(net.sourceforge.plantuml.jasic.Jasic,java.lang.String)>($r18, $r20);
+
+        return $r17;
+
+     label1:
+        $r2 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType NUMBER>;
+
+        $z1 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r2);
+
+        if $z1 == 0 goto label2;
+
+        $r13 = new net.sourceforge.plantuml.jasic.Jasic$NumberValue;
+
+        $r14 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        $r15 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token last(int)>(1);
+
+        $r16 = $r15.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        $d0 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r16);
+
+        specialinvoke $r13.<net.sourceforge.plantuml.jasic.Jasic$NumberValue: void <init>(net.sourceforge.plantuml.jasic.Jasic,double)>($r14, $d0);
+
+        return $r13;
+
+     label2:
+        $r3 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType STRING>;
+
+        $z2 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r3);
+
+        if $z2 == 0 goto label3;
+
+        $r9 = new net.sourceforge.plantuml.jasic.Jasic$StringValue;
+
+        $r10 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic this$0>;
+
+        $r11 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token last(int)>(1);
+
+        $r12 = $r11.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.jasic.Jasic$StringValue: void <init>(net.sourceforge.plantuml.jasic.Jasic,java.lang.String)>($r10, $r12);
+
+        return $r9;
+
+     label3:
+        $r4 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType LEFT_PAREN>;
+
+        $z3 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r4);
+
+        if $z3 == 0 goto label4;
+
+        r6 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Expression expression()>();
+
+        $r7 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType RIGHT_PAREN>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token consume(net.sourceforge.plantuml.jasic.Jasic$TokenType)>($r7);
+
+        return r6;
+
+     label4:
+        $r5 = new java.lang.Error;
+
+        specialinvoke $r5.<java.lang.Error: void <init>(java.lang.String)>("Couldn\'t parse :(");
+
+        throw $r5;
+    }
+
+    private boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType, net.sourceforge.plantuml.jasic.Jasic$TokenType)
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r1, $r4;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType r2, $r3, r5, $r6;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        r2 := @parameter0: net.sourceforge.plantuml.jasic.Jasic$TokenType;
+
+        r5 := @parameter1: net.sourceforge.plantuml.jasic.Jasic$TokenType;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token get(int)>(0);
+
+        $r3 = $r1.<net.sourceforge.plantuml.jasic.Jasic$Token: net.sourceforge.plantuml.jasic.Jasic$TokenType type>;
+
+        if $r3 == r2 goto label1;
+
+        return 0;
+
+     label1:
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token get(int)>(1);
+
+        $r6 = $r4.<net.sourceforge.plantuml.jasic.Jasic$Token: net.sourceforge.plantuml.jasic.Jasic$TokenType type>;
+
+        if $r6 == r5 goto label2;
+
+        return 0;
+
+     label2:
+        $i0 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position>;
+
+        $i1 = $i0 + 2;
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position> = $i1;
+
+        return 1;
+    }
+
+    private boolean match(net.sourceforge.plantuml.jasic.Jasic$TokenType)
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r1;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType r2, $r3;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        r2 := @parameter0: net.sourceforge.plantuml.jasic.Jasic$TokenType;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token get(int)>(0);
+
+        $r3 = $r1.<net.sourceforge.plantuml.jasic.Jasic$Token: net.sourceforge.plantuml.jasic.Jasic$TokenType type>;
+
+        if $r3 == r2 goto label1;
+
+        return 0;
+
+     label1:
+        $i0 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position> = $i1;
+
+        return 1;
+    }
+
+    private boolean match(java.lang.String)
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r1, $r4;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType $r2, $r3;
+        java.lang.String r5, $r6;
+        boolean $z0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        r5 := @parameter0: java.lang.String;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token get(int)>(0);
+
+        $r3 = $r1.<net.sourceforge.plantuml.jasic.Jasic$Token: net.sourceforge.plantuml.jasic.Jasic$TokenType type>;
+
+        $r2 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType WORD>;
+
+        if $r3 == $r2 goto label1;
+
+        return 0;
+
+     label1:
+        $r4 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token get(int)>(0);
+
+        $r6 = $r4.<net.sourceforge.plantuml.jasic.Jasic$Token: java.lang.String text>;
+
+        $z0 = virtualinvoke $r6.<java.lang.String: boolean equals(java.lang.Object)>(r5);
+
+        if $z0 != 0 goto label2;
+
+        return 0;
+
+     label2:
+        $i0 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position> = $i1;
+
+        return 1;
+    }
+
+    private net.sourceforge.plantuml.jasic.Jasic$Token consume(net.sourceforge.plantuml.jasic.Jasic$TokenType)
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r1, $r6;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType r2, $r3;
+        int $i0, $i1;
+        java.util.List $r4;
+        java.lang.Object $r5;
+        java.lang.Error $r7;
+        java.lang.StringBuilder $r8, $r9, $r10, $r11;
+        java.lang.String $r12;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        r2 := @parameter0: net.sourceforge.plantuml.jasic.Jasic$TokenType;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token get(int)>(0);
+
+        $r3 = $r1.<net.sourceforge.plantuml.jasic.Jasic$Token: net.sourceforge.plantuml.jasic.Jasic$TokenType type>;
+
+        if $r3 == r2 goto label1;
+
+        $r7 = new java.lang.Error;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Expected ");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r2);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r7.<java.lang.Error: void <init>(java.lang.String)>($r12);
+
+        throw $r7;
+
+     label1:
+        $r4 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: java.util.List tokens>;
+
+        $i0 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position> = $i1;
+
+        $r5 = interfaceinvoke $r4.<java.util.List: java.lang.Object get(int)>($i0);
+
+        $r6 = (net.sourceforge.plantuml.jasic.Jasic$Token) $r5;
+
+        return $r6;
+    }
+
+    private net.sourceforge.plantuml.jasic.Jasic$Token consume(java.lang.String)
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        java.lang.String r1, $r8;
+        boolean $z0;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r2;
+        java.lang.Error $r3;
+        java.lang.StringBuilder $r4, $r5, $r6, $r7;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        r1 := @parameter0: java.lang.String;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: boolean match(java.lang.String)>(r1);
+
+        if $z0 != 0 goto label1;
+
+        $r3 = new java.lang.Error;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Expected ");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r3.<java.lang.Error: void <init>(java.lang.String)>($r8);
+
+        throw $r3;
+
+     label1:
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: net.sourceforge.plantuml.jasic.Jasic$Token last(int)>(1);
+
+        return $r2;
+    }
+
+    private net.sourceforge.plantuml.jasic.Jasic$Token last(int)
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        int i0, $i1, $i2;
+        java.util.List $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r3;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: java.util.List tokens>;
+
+        $i1 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position>;
+
+        $i2 = $i1 - i0;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>($i2);
+
+        $r3 = (net.sourceforge.plantuml.jasic.Jasic$Token) $r2;
+
+        return $r3;
+    }
+
+    private net.sourceforge.plantuml.jasic.Jasic$Token get(int)
+    {
+        net.sourceforge.plantuml.jasic.Jasic$Parser r0;
+        int i0, $i1, $i2, $i3, $i4, $i5;
+        java.util.List $r1, $r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.jasic.Jasic$Token $r4, $r5;
+        net.sourceforge.plantuml.jasic.Jasic$TokenType $r6;
+
+        r0 := @this: net.sourceforge.plantuml.jasic.Jasic$Parser;
+
+        i0 := @parameter0: int;
+
+        $i1 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position>;
+
+        $i2 = $i1 + i0;
+
+        $r1 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: java.util.List tokens>;
+
+        $i3 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        if $i2 < $i3 goto label1;
+
+        $r5 = new net.sourceforge.plantuml.jasic.Jasic$Token;
+
+        $r6 = <net.sourceforge.plantuml.jasic.Jasic$TokenType: net.sourceforge.plantuml.jasic.Jasic$TokenType EOF>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.jasic.Jasic$Token: void <init>(java.lang.String,net.sourceforge.plantuml.jasic.Jasic$TokenType)>("", $r6);
+
+        return $r5;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: java.util.List tokens>;
+
+        $i4 = r0.<net.sourceforge.plantuml.jasic.Jasic$Parser: int position>;
+
+        $i5 = $i4 + i0;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>($i5);
+
+        $r4 = (net.sourceforge.plantuml.jasic.Jasic$Token) $r3;
+
+        return $r4;
+    }
+}

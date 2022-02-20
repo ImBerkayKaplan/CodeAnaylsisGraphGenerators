@@ -1,0 +1,784 @@
+public class net.sourceforge.plantuml.Pipe extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.Option option;
+    private final java.io.BufferedReader br;
+    private final java.io.PrintStream ps;
+    private final net.sourceforge.plantuml.Stdrpt stdrpt;
+
+    public void <init>(net.sourceforge.plantuml.Option, java.io.PrintStream, java.io.InputStream, java.lang.String)
+    {
+        net.sourceforge.plantuml.Pipe r0;
+        net.sourceforge.plantuml.Option r1;
+        java.io.BufferedReader $r2;
+        java.io.InputStreamReader $r3;
+        java.io.InputStream r4;
+        java.lang.String r5, $r14;
+        java.nio.charset.Charset $r6;
+        java.io.PrintStream r7;
+        net.sourceforge.plantuml.Stdrpt $r8;
+        java.io.UnsupportedEncodingException $r11;
+        java.lang.RuntimeException $r13;
+
+        r0 := @this: net.sourceforge.plantuml.Pipe;
+
+        r1 := @parameter0: net.sourceforge.plantuml.Option;
+
+        r7 := @parameter1: java.io.PrintStream;
+
+        r4 := @parameter2: java.io.InputStream;
+
+        r5 := @parameter3: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option> = r1;
+
+     label1:
+        $r2 = new java.io.BufferedReader;
+
+        $r3 = new java.io.InputStreamReader;
+
+        if r5 == null goto label2;
+
+        $r14 = r5;
+
+        goto label3;
+
+     label2:
+        $r6 = staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset defaultCharset()>();
+
+        $r14 = virtualinvoke $r6.<java.nio.charset.Charset: java.lang.String name()>();
+
+     label3:
+        specialinvoke $r3.<java.io.InputStreamReader: void <init>(java.io.InputStream,java.lang.String)>(r4, $r14);
+
+        specialinvoke $r2.<java.io.BufferedReader: void <init>(java.io.Reader)>($r3);
+
+        r0.<net.sourceforge.plantuml.Pipe: java.io.BufferedReader br> = $r2;
+
+     label4:
+        goto label6;
+
+     label5:
+        $r11 := @caughtexception;
+
+        $r13 = new java.lang.RuntimeException;
+
+        specialinvoke $r13.<java.lang.RuntimeException: void <init>(java.lang.String,java.lang.Throwable)>("Invalid charset provided", $r11);
+
+        throw $r13;
+
+     label6:
+        r0.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps> = r7;
+
+        $r8 = virtualinvoke r1.<net.sourceforge.plantuml.Option: net.sourceforge.plantuml.Stdrpt getStdrpt()>();
+
+        r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Stdrpt stdrpt> = $r8;
+
+        return;
+
+        catch java.io.UnsupportedEncodingException from label1 to label4 with label5;
+    }
+
+    public void managePipe(net.sourceforge.plantuml.ErrorStatus) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.Pipe r0;
+        net.sourceforge.plantuml.Option $r1, $r2, $r4, $r6, $r10, $r14, $r15, $r16;
+        boolean z0, $z1, $z2, $z3;
+        net.sourceforge.plantuml.preproc.Defines r3;
+        java.lang.String $r5, $r7, r18;
+        net.sourceforge.plantuml.SourceStringReader $r9;
+        java.nio.charset.Charset $r11;
+        java.util.List $r12;
+        net.sourceforge.plantuml.ErrorStatus r17;
+        net.sourceforge.plantuml.security.SFile $r19;
+        java.io.PrintStream $r20;
+
+        r0 := @this: net.sourceforge.plantuml.Pipe;
+
+        r17 := @parameter0: net.sourceforge.plantuml.ErrorStatus;
+
+        $r1 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        z0 = virtualinvoke $r1.<net.sourceforge.plantuml.Option: boolean isPipeNoStdErr()>();
+
+        r18 = virtualinvoke r0.<net.sourceforge.plantuml.Pipe: java.lang.String readFirstDiagram()>();
+
+     label1:
+        if r18 == null goto label8;
+
+        $r2 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        r3 = virtualinvoke $r2.<net.sourceforge.plantuml.Option: net.sourceforge.plantuml.preproc.Defines getDefaultDefines()>();
+
+        $r4 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.Option: java.lang.String getFileDir()>();
+
+        if $r5 != null goto label2;
+
+        $r19 = null;
+
+        goto label3;
+
+     label2:
+        $r19 = new net.sourceforge.plantuml.security.SFile;
+
+        $r6 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.Option: java.lang.String getFileDir()>();
+
+        specialinvoke $r19.<net.sourceforge.plantuml.security.SFile: void <init>(java.lang.String)>($r7);
+
+     label3:
+        $r9 = new net.sourceforge.plantuml.SourceStringReader;
+
+        $r11 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $r10 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r12 = virtualinvoke $r10.<net.sourceforge.plantuml.Option: java.util.List getConfig()>();
+
+        specialinvoke $r9.<net.sourceforge.plantuml.SourceStringReader: void <init>(net.sourceforge.plantuml.preproc.Defines,java.lang.String,java.nio.charset.Charset,java.util.List,net.sourceforge.plantuml.security.SFile)>(r3, r18, $r11, $r12, $r19);
+
+        $r14 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $z1 = virtualinvoke $r14.<net.sourceforge.plantuml.Option: boolean isComputeurl()>();
+
+        if $z1 == 0 goto label4;
+
+        specialinvoke r0.<net.sourceforge.plantuml.Pipe: void computeUrlForDiagram(net.sourceforge.plantuml.SourceStringReader)>($r9);
+
+        goto label7;
+
+     label4:
+        $r15 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $z2 = virtualinvoke $r15.<net.sourceforge.plantuml.Option: boolean isSyntax()>();
+
+        if $z2 == 0 goto label5;
+
+        specialinvoke r0.<net.sourceforge.plantuml.Pipe: void syntaxCheckDiagram(net.sourceforge.plantuml.SourceStringReader,net.sourceforge.plantuml.ErrorStatus)>($r9, r17);
+
+        goto label7;
+
+     label5:
+        $r16 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $z3 = virtualinvoke $r16.<net.sourceforge.plantuml.Option: boolean isPipeMap()>();
+
+        if $z3 == 0 goto label6;
+
+        specialinvoke r0.<net.sourceforge.plantuml.Pipe: void createPipeMapForDiagram(net.sourceforge.plantuml.SourceStringReader,net.sourceforge.plantuml.ErrorStatus)>($r9, r17);
+
+        goto label7;
+
+     label6:
+        specialinvoke r0.<net.sourceforge.plantuml.Pipe: void generateDiagram(net.sourceforge.plantuml.SourceStringReader,net.sourceforge.plantuml.ErrorStatus,boolean)>($r9, r17, z0);
+
+     label7:
+        $r20 = r0.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        virtualinvoke $r20.<java.io.PrintStream: void flush()>();
+
+        r18 = virtualinvoke r0.<net.sourceforge.plantuml.Pipe: java.lang.String readSubsequentDiagram()>();
+
+        goto label1;
+
+     label8:
+        return;
+    }
+
+    private void generateDiagram(net.sourceforge.plantuml.SourceStringReader, net.sourceforge.plantuml.ErrorStatus, boolean) throws java.io.IOException
+    {
+        boolean z0, $z1;
+        net.sourceforge.plantuml.Pipe r0;
+        java.io.OutputStream r1, $r17;
+        net.sourceforge.plantuml.SourceStringReader r2;
+        net.sourceforge.plantuml.Option $r3, $r4, $r8, $r19;
+        int $i0;
+        net.sourceforge.plantuml.FileFormatOption $r5;
+        net.sourceforge.plantuml.core.DiagramDescription r6;
+        net.sourceforge.plantuml.ErrorStatus r7;
+        java.io.PrintStream $r9, $r12, $r18;
+        java.lang.String $r10, $r14, $r15, $r20;
+        java.io.ByteArrayOutputStream r11, $r21;
+        byte[] $r13;
+
+        r0 := @this: net.sourceforge.plantuml.Pipe;
+
+        r2 := @parameter0: net.sourceforge.plantuml.SourceStringReader;
+
+        r7 := @parameter1: net.sourceforge.plantuml.ErrorStatus;
+
+        z0 := @parameter2: boolean;
+
+        if z0 == 0 goto label1;
+
+        $r21 = new java.io.ByteArrayOutputStream;
+
+        $r17 = $r21;
+
+        specialinvoke $r21.<java.io.ByteArrayOutputStream: void <init>()>();
+
+        goto label2;
+
+     label1:
+        $r17 = r0.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+     label2:
+        r1 = $r17;
+
+        $r3 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $i0 = virtualinvoke $r3.<net.sourceforge.plantuml.Option: int getImageIndex()>();
+
+        $r4 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.Option: net.sourceforge.plantuml.FileFormatOption getFileFormatOption()>();
+
+        r6 = virtualinvoke r2.<net.sourceforge.plantuml.SourceStringReader: net.sourceforge.plantuml.core.DiagramDescription outputImage(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)>($r17, $i0, $r5);
+
+        if z0 == 0 goto label3;
+
+        $r18 = r0.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        goto label4;
+
+     label3:
+        $r18 = <java.lang.System: java.io.PrintStream err>;
+
+     label4:
+        specialinvoke r0.<net.sourceforge.plantuml.Pipe: void printInfo(java.io.PrintStream,net.sourceforge.plantuml.SourceStringReader)>($r18, r2);
+
+        if r6 == null goto label5;
+
+        $r14 = "(error)";
+
+        $r15 = virtualinvoke r6.<net.sourceforge.plantuml.core.DiagramDescription: java.lang.String getDescription()>();
+
+        $z1 = virtualinvoke $r14.<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>($r15);
+
+        if $z1 == 0 goto label5;
+
+        virtualinvoke r7.<net.sourceforge.plantuml.ErrorStatus: void goWithError()>();
+
+        goto label6;
+
+     label5:
+        virtualinvoke r7.<net.sourceforge.plantuml.ErrorStatus: void goOk()>();
+
+        if z0 == 0 goto label6;
+
+        r11 = (java.io.ByteArrayOutputStream) r1;
+
+        virtualinvoke r11.<java.io.ByteArrayOutputStream: void close()>();
+
+        $r12 = r0.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        $r13 = virtualinvoke r11.<java.io.ByteArrayOutputStream: byte[] toByteArray()>();
+
+        virtualinvoke $r12.<java.io.PrintStream: void write(byte[])>($r13);
+
+     label6:
+        $r19 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r20 = virtualinvoke $r19.<net.sourceforge.plantuml.Option: java.lang.String getPipeDelimitor()>();
+
+        if $r20 == null goto label7;
+
+        $r9 = r0.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        $r8 = r0.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r10 = virtualinvoke $r8.<net.sourceforge.plantuml.Option: java.lang.String getPipeDelimitor()>();
+
+        virtualinvoke $r9.<java.io.PrintStream: void println(java.lang.String)>($r10);
+
+     label7:
+        return;
+    }
+
+    private void createPipeMapForDiagram(net.sourceforge.plantuml.SourceStringReader, net.sourceforge.plantuml.ErrorStatus) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.SourceStringReader r0;
+        net.sourceforge.plantuml.Pipe r1;
+        net.sourceforge.plantuml.Option $r2, $r3;
+        int $i0;
+        net.sourceforge.plantuml.FileFormatOption $r4;
+        java.lang.String r5;
+        net.sourceforge.plantuml.ErrorStatus r6;
+        java.io.PrintStream $r7, $r8;
+
+        r1 := @this: net.sourceforge.plantuml.Pipe;
+
+        r0 := @parameter0: net.sourceforge.plantuml.SourceStringReader;
+
+        r6 := @parameter1: net.sourceforge.plantuml.ErrorStatus;
+
+        $r2 = r1.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $i0 = virtualinvoke $r2.<net.sourceforge.plantuml.Option: int getImageIndex()>();
+
+        $r3 = r1.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.Option: net.sourceforge.plantuml.FileFormatOption getFileFormatOption()>();
+
+        r5 = virtualinvoke r0.<net.sourceforge.plantuml.SourceStringReader: java.lang.String getCMapData(int,net.sourceforge.plantuml.FileFormatOption)>($i0, $r4);
+
+        virtualinvoke r6.<net.sourceforge.plantuml.ErrorStatus: void goOk()>();
+
+        if r5 != null goto label1;
+
+        $r8 = r1.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        virtualinvoke $r8.<java.io.PrintStream: void println()>();
+
+        goto label2;
+
+     label1:
+        $r7 = r1.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        virtualinvoke $r7.<java.io.PrintStream: void println(java.lang.String)>(r5);
+
+     label2:
+        return;
+    }
+
+    private void computeUrlForDiagram(net.sourceforge.plantuml.SourceStringReader) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.SourceStringReader r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.BlockUml r4;
+        net.sourceforge.plantuml.Pipe r5;
+        java.io.PrintStream $r6;
+        java.lang.String $r7;
+
+        r5 := @this: net.sourceforge.plantuml.Pipe;
+
+        r0 := @parameter0: net.sourceforge.plantuml.SourceStringReader;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.SourceStringReader: java.util.List getBlocks()>();
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.BlockUml) $r3;
+
+        $r6 = r5.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        $r7 = virtualinvoke r4.<net.sourceforge.plantuml.BlockUml: java.lang.String getEncodedUrl()>();
+
+        virtualinvoke $r6.<java.io.PrintStream: void println(java.lang.String)>($r7);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private void syntaxCheckDiagram(net.sourceforge.plantuml.SourceStringReader, net.sourceforge.plantuml.ErrorStatus)
+    {
+        net.sourceforge.plantuml.SourceStringReader r0;
+        java.util.List $r1;
+        java.lang.Object $r2;
+        net.sourceforge.plantuml.BlockUml $r3;
+        net.sourceforge.plantuml.core.Diagram r4;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.ErrorStatus r5;
+        net.sourceforge.plantuml.Pipe r6;
+        java.io.PrintStream $r7, $r8, $r10, $r13, $r16;
+        net.sourceforge.plantuml.core.DiagramDescription $r9, $r17;
+        net.sourceforge.plantuml.Stdrpt $r11;
+        net.sourceforge.plantuml.UmlDiagram $r12;
+        net.sourceforge.plantuml.UmlDiagramType $r14;
+        java.lang.String $r15;
+
+        r6 := @this: net.sourceforge.plantuml.Pipe;
+
+        r0 := @parameter0: net.sourceforge.plantuml.SourceStringReader;
+
+        r5 := @parameter1: net.sourceforge.plantuml.ErrorStatus;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.SourceStringReader: java.util.List getBlocks()>();
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r3 = (net.sourceforge.plantuml.BlockUml) $r2;
+
+        r4 = virtualinvoke $r3.<net.sourceforge.plantuml.BlockUml: net.sourceforge.plantuml.core.Diagram getDiagram()>();
+
+        $z0 = r4 instanceof net.sourceforge.plantuml.UmlDiagram;
+
+        if $z0 == 0 goto label1;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.ErrorStatus: void goOk()>();
+
+        $r13 = r6.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        $r12 = (net.sourceforge.plantuml.UmlDiagram) r4;
+
+        $r14 = virtualinvoke $r12.<net.sourceforge.plantuml.UmlDiagram: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        $r15 = virtualinvoke $r14.<net.sourceforge.plantuml.UmlDiagramType: java.lang.String name()>();
+
+        virtualinvoke $r13.<java.io.PrintStream: void println(java.lang.String)>($r15);
+
+        $r16 = r6.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        $r17 = interfaceinvoke r4.<net.sourceforge.plantuml.core.Diagram: net.sourceforge.plantuml.core.DiagramDescription getDescription()>();
+
+        virtualinvoke $r16.<java.io.PrintStream: void println(java.lang.Object)>($r17);
+
+        goto label3;
+
+     label1:
+        $z1 = r4 instanceof net.sourceforge.plantuml.error.PSystemError;
+
+        if $z1 == 0 goto label2;
+
+        virtualinvoke r5.<net.sourceforge.plantuml.ErrorStatus: void goWithError()>();
+
+        $r11 = r6.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Stdrpt stdrpt>;
+
+        $r10 = r6.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        interfaceinvoke $r11.<net.sourceforge.plantuml.Stdrpt: void printInfo(java.io.PrintStream,net.sourceforge.plantuml.core.Diagram)>($r10, r4);
+
+        goto label3;
+
+     label2:
+        virtualinvoke r5.<net.sourceforge.plantuml.ErrorStatus: void goOk()>();
+
+        $r7 = r6.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        virtualinvoke $r7.<java.io.PrintStream: void println(java.lang.String)>("OTHER");
+
+        $r8 = r6.<net.sourceforge.plantuml.Pipe: java.io.PrintStream ps>;
+
+        $r9 = interfaceinvoke r4.<net.sourceforge.plantuml.core.Diagram: net.sourceforge.plantuml.core.DiagramDescription getDescription()>();
+
+        virtualinvoke $r8.<java.io.PrintStream: void println(java.lang.Object)>($r9);
+
+     label3:
+        return;
+    }
+
+    private void printInfo(java.io.PrintStream, net.sourceforge.plantuml.SourceStringReader)
+    {
+        net.sourceforge.plantuml.SourceStringReader r0;
+        java.util.List r1;
+        int $i0;
+        net.sourceforge.plantuml.Pipe r2;
+        java.io.PrintStream r3;
+        net.sourceforge.plantuml.Stdrpt $r4, $r8;
+        java.lang.Object $r5;
+        net.sourceforge.plantuml.BlockUml $r6;
+        net.sourceforge.plantuml.core.Diagram $r7;
+
+        r2 := @this: net.sourceforge.plantuml.Pipe;
+
+        r3 := @parameter0: java.io.PrintStream;
+
+        r0 := @parameter1: net.sourceforge.plantuml.SourceStringReader;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.SourceStringReader: java.util.List getBlocks()>();
+
+        $i0 = interfaceinvoke r1.<java.util.List: int size()>();
+
+        if $i0 != 0 goto label1;
+
+        $r8 = r2.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Stdrpt stdrpt>;
+
+        interfaceinvoke $r8.<net.sourceforge.plantuml.Stdrpt: void printInfo(java.io.PrintStream,net.sourceforge.plantuml.core.Diagram)>(r3, null);
+
+        goto label2;
+
+     label1:
+        $r4 = r2.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Stdrpt stdrpt>;
+
+        $r5 = interfaceinvoke r1.<java.util.List: java.lang.Object get(int)>(0);
+
+        $r6 = (net.sourceforge.plantuml.BlockUml) $r5;
+
+        $r7 = virtualinvoke $r6.<net.sourceforge.plantuml.BlockUml: net.sourceforge.plantuml.core.Diagram getDiagram()>();
+
+        interfaceinvoke $r4.<net.sourceforge.plantuml.Stdrpt: void printInfo(java.io.PrintStream,net.sourceforge.plantuml.core.Diagram)>(r3, $r7);
+
+     label2:
+        return;
+    }
+
+    java.lang.String readFirstDiagram() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.Pipe r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.Pipe;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.Pipe: java.lang.String readSingleDiagram(boolean)>(1);
+
+        return $r1;
+    }
+
+    java.lang.String readSubsequentDiagram() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.Pipe r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.Pipe;
+
+        $r1 = virtualinvoke r0.<net.sourceforge.plantuml.Pipe: java.lang.String readSingleDiagram(boolean)>(0);
+
+        return $r1;
+    }
+
+    java.lang.String readSingleDiagram(boolean) throws java.io.IOException
+    {
+        java.lang.StringBuilder $r0, $r4, $r6, $r7, $r9, $r10, $r12, $r13, $r15, $r16, $r17, $r25, $r27, $r28, $r32;
+        int[] $r2;
+        int $i0, $i1, $i2;
+        java.lang.String $r3, $r5, $r8, $r11, $r18, $r21, $r29, $r31, $r33, r35, $r39;
+        boolean z0, $z1, $z2, $z3;
+        java.lang.IllegalStateException $r14;
+        net.sourceforge.plantuml.Pipe r19;
+        java.io.BufferedReader $r20;
+        net.sourceforge.plantuml.Pipe$State $r23, $r24, r34, $r36, $r37, $r38;
+        java.lang.String[] $r30;
+
+        r19 := @this: net.sourceforge.plantuml.Pipe;
+
+        z0 := @parameter0: boolean;
+
+        r34 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State NO_CONTENT>;
+
+        r35 = null;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+     label01:
+        $r36 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State COMPLETE>;
+
+        if r34 == $r36 goto label06;
+
+        $r20 = r19.<net.sourceforge.plantuml.Pipe: java.io.BufferedReader br>;
+
+        $r21 = virtualinvoke $r20.<java.io.BufferedReader: java.lang.String readLine()>();
+
+        if $r21 == null goto label06;
+
+        $z1 = virtualinvoke $r21.<java.lang.String: boolean startsWith(java.lang.String)>("@@@format ");
+
+        if $z1 == 0 goto label02;
+
+        virtualinvoke r19.<net.sourceforge.plantuml.Pipe: void manageFormat(java.lang.String)>($r21);
+
+        goto label01;
+
+     label02:
+        $r23 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State NO_CONTENT>;
+
+        if r34 != $r23 goto label03;
+
+        $r33 = virtualinvoke $r21.<java.lang.String: java.lang.String trim()>();
+
+        $i2 = virtualinvoke $r33.<java.lang.String: int length()>();
+
+        if $i2 <= 0 goto label03;
+
+        r34 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State START_MARK_NOT_FOUND>;
+
+     label03:
+        $r37 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State START_MARK_NOT_FOUND>;
+
+        if r34 != $r37 goto label04;
+
+        $z3 = virtualinvoke $r21.<java.lang.String: boolean startsWith(java.lang.String)>("@start");
+
+        if $z3 == 0 goto label04;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: void setLength(int)>(0);
+
+        r34 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State START_MARK_FOUND>;
+
+        $r27 = new java.lang.StringBuilder;
+
+        specialinvoke $r27.<java.lang.StringBuilder: void <init>()>();
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("@end");
+
+        $r29 = virtualinvoke $r21.<java.lang.String: java.lang.String substring(int)>(6);
+
+        $r30 = virtualinvoke $r29.<java.lang.String: java.lang.String[] split(java.lang.String)>("^[A-Za-z]");
+
+        $r31 = $r30[0];
+
+        $r32 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r31);
+
+        r35 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        goto label05;
+
+     label04:
+        $r24 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State START_MARK_FOUND>;
+
+        if r34 != $r24 goto label05;
+
+        $z2 = virtualinvoke $r21.<java.lang.String: boolean startsWith(java.lang.String)>(r35);
+
+        if $z2 == 0 goto label05;
+
+        r34 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State COMPLETE>;
+
+     label05:
+        $r38 = <net.sourceforge.plantuml.Pipe$State: net.sourceforge.plantuml.Pipe$State NO_CONTENT>;
+
+        if r34 == $r38 goto label01;
+
+        $r25 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r21);
+
+        virtualinvoke $r25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n");
+
+        goto label01;
+
+     label06:
+        $r2 = <net.sourceforge.plantuml.Pipe$1: int[] $SwitchMap$net$sourceforge$plantuml$Pipe$State>;
+
+        $i0 = virtualinvoke r34.<net.sourceforge.plantuml.Pipe$State: int ordinal()>();
+
+        $i1 = $r2[$i0];
+
+        tableswitch($i1)
+        {
+            case 1: goto label07;
+            case 2: goto label08;
+            case 3: goto label11;
+            case 4: goto label12;
+            default: goto label13;
+        };
+
+     label07:
+        return null;
+
+     label08:
+        if z0 == 0 goto label09;
+
+        $r9 = new java.lang.StringBuilder;
+
+        specialinvoke $r9.<java.lang.StringBuilder: void <init>()>();
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("@startuml\n");
+
+        $r11 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r12 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("@enduml\n");
+
+        $r39 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        goto label10;
+
+     label09:
+        $r39 = null;
+
+     label10:
+        return $r39;
+
+     label11:
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r35);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r8;
+
+     label12:
+        $r3 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r3;
+
+     label13:
+        $r14 = new java.lang.IllegalStateException;
+
+        $r15 = new java.lang.StringBuilder;
+
+        specialinvoke $r15.<java.lang.StringBuilder: void <init>()>();
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Unexpected value: ");
+
+        $r17 = virtualinvoke $r16.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r34);
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r14.<java.lang.IllegalStateException: void <init>(java.lang.String)>($r18);
+
+        throw $r14;
+    }
+
+    void manageFormat(java.lang.String)
+    {
+        java.lang.String r0;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.Pipe r1;
+        net.sourceforge.plantuml.FileFormatOption $r2, $r5;
+        net.sourceforge.plantuml.FileFormat $r3, $r6;
+        net.sourceforge.plantuml.Option $r4, $r7;
+
+        r1 := @this: net.sourceforge.plantuml.Pipe;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean contains(java.lang.CharSequence)>("png");
+
+        if $z0 == 0 goto label1;
+
+        $r7 = r1.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r5 = new net.sourceforge.plantuml.FileFormatOption;
+
+        $r6 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat PNG>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>($r6);
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.Option: void setFileFormatOption(net.sourceforge.plantuml.FileFormatOption)>($r5);
+
+        goto label2;
+
+     label1:
+        $z1 = virtualinvoke r0.<java.lang.String: boolean contains(java.lang.CharSequence)>("svg");
+
+        if $z1 == 0 goto label2;
+
+        $r4 = r1.<net.sourceforge.plantuml.Pipe: net.sourceforge.plantuml.Option option>;
+
+        $r2 = new net.sourceforge.plantuml.FileFormatOption;
+
+        $r3 = <net.sourceforge.plantuml.FileFormat: net.sourceforge.plantuml.FileFormat SVG>;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.FileFormatOption: void <init>(net.sourceforge.plantuml.FileFormat)>($r3);
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.Option: void setFileFormatOption(net.sourceforge.plantuml.FileFormatOption)>($r2);
+
+     label2:
+        return;
+    }
+}

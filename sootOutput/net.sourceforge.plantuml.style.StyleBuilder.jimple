@@ -1,0 +1,475 @@
+public class net.sourceforge.plantuml.style.StyleBuilder extends java.lang.Object implements net.sourceforge.plantuml.style.AutomaticCounter
+{
+    private final java.util.Map stylesMap;
+    private final java.util.Set printedForLog;
+    private final net.sourceforge.plantuml.SkinParam skinParam;
+    private int counter;
+
+    public void printMe()
+    {
+        net.sourceforge.plantuml.style.StyleBuilder r0;
+        java.util.Map $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4, $r6;
+        java.util.Map$Entry r5;
+        net.sourceforge.plantuml.style.Style $r7;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set entrySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.util.Map$Entry) $r4;
+
+        $r6 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r7 = (net.sourceforge.plantuml.style.Style) $r6;
+
+        virtualinvoke $r7.<net.sourceforge.plantuml.style.Style: void printMe()>();
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    private void <init>(net.sourceforge.plantuml.SkinParam, java.util.Set)
+    {
+        net.sourceforge.plantuml.style.StyleBuilder r0;
+        java.util.LinkedHashMap $r1;
+        net.sourceforge.plantuml.SkinParam r2;
+        java.util.LinkedHashSet $r3;
+        java.util.Set r4;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r2 := @parameter0: net.sourceforge.plantuml.SkinParam;
+
+        r4 := @parameter1: java.util.Set;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.LinkedHashMap;
+
+        specialinvoke $r1.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap> = $r1;
+
+        r0.<net.sourceforge.plantuml.style.StyleBuilder: net.sourceforge.plantuml.SkinParam skinParam> = r2;
+
+        $r3 = new java.util.LinkedHashSet;
+
+        specialinvoke $r3.<java.util.LinkedHashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Set printedForLog> = $r3;
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.SkinParam)
+    {
+        net.sourceforge.plantuml.style.StyleBuilder r0;
+        net.sourceforge.plantuml.SkinParam r1;
+        java.util.LinkedHashSet $r2;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.SkinParam;
+
+        $r2 = new java.util.LinkedHashSet;
+
+        specialinvoke $r2.<java.util.LinkedHashSet: void <init>()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.style.StyleBuilder: void <init>(net.sourceforge.plantuml.SkinParam,java.util.Set)>(r1, $r2);
+
+        return;
+    }
+
+    public final net.sourceforge.plantuml.SkinParam getSkinParam()
+    {
+        net.sourceforge.plantuml.style.StyleBuilder r0;
+        net.sourceforge.plantuml.SkinParam $r1;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        $r1 = r0.<net.sourceforge.plantuml.style.StyleBuilder: net.sourceforge.plantuml.SkinParam skinParam>;
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.style.Style createStyle(java.lang.String)
+    {
+        boolean $z0;
+        net.sourceforge.plantuml.style.StyleSignature $r0;
+        net.sourceforge.plantuml.style.StyleBuilder r2;
+        java.util.Map $r3;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.style.Style r5, $r6;
+        java.util.EnumMap $r7;
+        java.lang.IllegalArgumentException $r8;
+        java.lang.String r9, r10;
+
+        r2 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r9 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r9.<java.lang.String: boolean contains(java.lang.CharSequence)>("*");
+
+        if $z0 == 0 goto label1;
+
+        $r8 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r8.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r8;
+
+     label1:
+        r10 = virtualinvoke r9.<java.lang.String: java.lang.String toLowerCase()>();
+
+        $r0 = new net.sourceforge.plantuml.style.StyleSignature;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.style.StyleSignature: void <init>(java.lang.String)>(r10);
+
+        $r3 = r2.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.lang.Object get(java.lang.Object)>($r0);
+
+        r5 = (net.sourceforge.plantuml.style.Style) $r4;
+
+        if r5 != null goto label2;
+
+        $r6 = new net.sourceforge.plantuml.style.Style;
+
+        $r7 = new java.util.EnumMap;
+
+        specialinvoke $r7.<java.util.EnumMap: void <init>(java.lang.Class)>(class "Lnet/sourceforge/plantuml/style/PName;");
+
+        specialinvoke $r6.<net.sourceforge.plantuml.style.Style: void <init>(net.sourceforge.plantuml.style.StyleSignature,java.util.Map)>($r0, $r7);
+
+        return $r6;
+
+     label2:
+        return r5;
+    }
+
+    public net.sourceforge.plantuml.style.StyleBuilder muteStyle(net.sourceforge.plantuml.style.Style)
+    {
+        java.util.LinkedHashMap $r0;
+        net.sourceforge.plantuml.style.StyleBuilder r1, $r9;
+        java.util.Map $r2, $r12;
+        net.sourceforge.plantuml.style.Style r4, r7, r14;
+        net.sourceforge.plantuml.style.StyleSignature r5;
+        java.lang.Object $r6;
+        java.util.Set $r10;
+        net.sourceforge.plantuml.SkinParam $r11;
+        int $i0;
+
+        r1 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r4 := @parameter0: net.sourceforge.plantuml.style.Style;
+
+        $r0 = new java.util.LinkedHashMap;
+
+        $r2 = r1.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        specialinvoke $r0.<java.util.LinkedHashMap: void <init>(java.util.Map)>($r2);
+
+        r5 = virtualinvoke r4.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.StyleSignature getSignature()>();
+
+        $r6 = interfaceinvoke $r0.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        r7 = (net.sourceforge.plantuml.style.Style) $r6;
+
+        if r7 != null goto label1;
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r5, r4);
+
+        goto label2;
+
+     label1:
+        r14 = virtualinvoke r7.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Style mergeWith(net.sourceforge.plantuml.style.Style)>(r4);
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r5, r14);
+
+     label2:
+        $r9 = new net.sourceforge.plantuml.style.StyleBuilder;
+
+        $r11 = r1.<net.sourceforge.plantuml.style.StyleBuilder: net.sourceforge.plantuml.SkinParam skinParam>;
+
+        $r10 = r1.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Set printedForLog>;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.style.StyleBuilder: void <init>(net.sourceforge.plantuml.SkinParam,java.util.Set)>($r11, $r10);
+
+        $r12 = $r9.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        interfaceinvoke $r12.<java.util.Map: void putAll(java.util.Map)>($r0);
+
+        $i0 = r1.<net.sourceforge.plantuml.style.StyleBuilder: int counter>;
+
+        $r9.<net.sourceforge.plantuml.style.StyleBuilder: int counter> = $i0;
+
+        return $r9;
+    }
+
+    public void loadInternal(net.sourceforge.plantuml.style.StyleSignature, net.sourceforge.plantuml.style.Style)
+    {
+        net.sourceforge.plantuml.style.StyleSignature r0;
+        boolean $z0;
+        net.sourceforge.plantuml.style.StyleBuilder r1;
+        java.util.Map $r2, $r7, $r9;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.style.Style r4, r5, r6;
+        java.lang.IllegalArgumentException $r11;
+
+        r1 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r0 := @parameter0: net.sourceforge.plantuml.style.StyleSignature;
+
+        r5 := @parameter1: net.sourceforge.plantuml.style.Style;
+
+        $z0 = virtualinvoke r0.<net.sourceforge.plantuml.style.StyleSignature: boolean isStarred()>();
+
+        if $z0 == 0 goto label1;
+
+        $r11 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r11.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r11;
+
+     label1:
+        $r2 = r1.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r0);
+
+        r4 = (net.sourceforge.plantuml.style.Style) $r3;
+
+        if r4 != null goto label2;
+
+        $r9 = r1.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        interfaceinvoke $r9.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r0, r5);
+
+        goto label3;
+
+     label2:
+        r6 = virtualinvoke r4.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Style mergeWith(net.sourceforge.plantuml.style.Style)>(r5);
+
+        $r7 = r1.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        interfaceinvoke $r7.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r0, r6);
+
+     label3:
+        return;
+    }
+
+    public int getNextInt()
+    {
+        net.sourceforge.plantuml.style.StyleBuilder r0;
+        int $i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        $i0 = r0.<net.sourceforge.plantuml.style.StyleBuilder: int counter>;
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.style.StyleBuilder: int counter> = $i1;
+
+        return $i1;
+    }
+
+    public net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleSignature)
+    {
+        net.sourceforge.plantuml.style.StyleBuilder r0;
+        net.sourceforge.plantuml.style.StyleSignature r1, r9;
+        java.util.Set $r2, $r4;
+        boolean z0, $z1, $z2;
+        java.util.Map $r3;
+        java.util.Iterator r5;
+        java.lang.Object $r6, $r8, $r10, $r12;
+        java.util.Map$Entry r7;
+        net.sourceforge.plantuml.style.Style $r11, r17;
+        java.lang.StringBuilder $r13, $r14, $r15;
+        java.lang.String $r16;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.style.StyleSignature;
+
+        $r2 = r0.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Set printedForLog>;
+
+        z0 = interfaceinvoke $r2.<java.util.Set: boolean add(java.lang.Object)>(r1);
+
+        if z0 == 0 goto label1;
+
+        $r13 = new java.lang.StringBuilder;
+
+        specialinvoke $r13.<java.lang.StringBuilder: void <init>()>();
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Using style ");
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r16);
+
+     label1:
+        r17 = null;
+
+        $r3 = r0.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Set entrySet()>();
+
+        r5 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z2 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label6;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (java.util.Map$Entry) $r6;
+
+        $r8 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r9 = (net.sourceforge.plantuml.style.StyleSignature) $r8;
+
+        $z1 = virtualinvoke r9.<net.sourceforge.plantuml.style.StyleSignature: boolean matchAll(net.sourceforge.plantuml.style.StyleSignature)>(r1);
+
+        if $z1 != 0 goto label3;
+
+        goto label2;
+
+     label3:
+        if r17 != null goto label4;
+
+        $r12 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r17 = (net.sourceforge.plantuml.style.Style) $r12;
+
+        goto label5;
+
+     label4:
+        $r10 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r11 = (net.sourceforge.plantuml.style.Style) $r10;
+
+        r17 = virtualinvoke r17.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Style mergeWith(net.sourceforge.plantuml.style.Style)>($r11);
+
+     label5:
+        goto label2;
+
+     label6:
+        return r17;
+    }
+
+    public net.sourceforge.plantuml.style.Style getMergedStyleSpecial(net.sourceforge.plantuml.style.StyleSignature, int)
+    {
+        net.sourceforge.plantuml.style.StyleBuilder r0;
+        net.sourceforge.plantuml.style.StyleSignature r1, r9;
+        java.util.Set $r2, $r4;
+        boolean z0, $z1, $z2, $z3;
+        java.util.Map $r3;
+        java.util.Iterator r5;
+        java.lang.Object $r6, $r8, $r10;
+        java.util.Map$Entry r7;
+        int i0;
+        java.lang.StringBuilder $r11, $r12, $r13;
+        java.lang.String $r14;
+        net.sourceforge.plantuml.style.Style r15, r16;
+
+        r0 := @this: net.sourceforge.plantuml.style.StyleBuilder;
+
+        r1 := @parameter0: net.sourceforge.plantuml.style.StyleSignature;
+
+        i0 := @parameter1: int;
+
+        $r2 = r0.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Set printedForLog>;
+
+        z0 = interfaceinvoke $r2.<java.util.Set: boolean add(java.lang.Object)>(r1);
+
+        if z0 == 0 goto label1;
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Using style ");
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(r1);
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r14);
+
+     label1:
+        r15 = null;
+
+        $r3 = r0.<net.sourceforge.plantuml.style.StyleBuilder: java.util.Map stylesMap>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Set entrySet()>();
+
+        r5 = interfaceinvoke $r4.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z3 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 == 0 goto label7;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (java.util.Map$Entry) $r6;
+
+        $r8 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r9 = (net.sourceforge.plantuml.style.StyleSignature) $r8;
+
+        $z1 = virtualinvoke r9.<net.sourceforge.plantuml.style.StyleSignature: boolean matchAll(net.sourceforge.plantuml.style.StyleSignature)>(r1);
+
+        if $z1 != 0 goto label3;
+
+        goto label2;
+
+     label3:
+        $r10 = interfaceinvoke r7.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r16 = (net.sourceforge.plantuml.style.Style) $r10;
+
+        $z2 = virtualinvoke r9.<net.sourceforge.plantuml.style.StyleSignature: boolean isStarred()>();
+
+        if $z2 == 0 goto label4;
+
+        r16 = virtualinvoke r16.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Style deltaPriority(int)>(i0);
+
+     label4:
+        if r15 != null goto label5;
+
+        r15 = r16;
+
+        goto label6;
+
+     label5:
+        r15 = virtualinvoke r15.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Style mergeWith(net.sourceforge.plantuml.style.Style)>(r16);
+
+     label6:
+        goto label2;
+
+     label7:
+        return r15;
+    }
+}

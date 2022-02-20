@@ -1,0 +1,114 @@
+public class net.sourceforge.plantuml.picoweb.RenderRequest extends java.lang.Object
+{
+    private final java.lang.String[] options;
+    private final java.lang.String source;
+
+    public void <init>(java.lang.String[], java.lang.String)
+    {
+        net.sourceforge.plantuml.picoweb.RenderRequest r0;
+        java.lang.String[] r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.picoweb.RenderRequest;
+
+        r1 := @parameter0: java.lang.String[];
+
+        r2 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.picoweb.RenderRequest: java.lang.String[] options> = r1;
+
+        r0.<net.sourceforge.plantuml.picoweb.RenderRequest: java.lang.String source> = r2;
+
+        return;
+    }
+
+    public java.lang.String[] getOptions()
+    {
+        net.sourceforge.plantuml.picoweb.RenderRequest r0;
+        java.lang.String[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.picoweb.RenderRequest;
+
+        $r1 = r0.<net.sourceforge.plantuml.picoweb.RenderRequest: java.lang.String[] options>;
+
+        return $r1;
+    }
+
+    public java.lang.String getSource()
+    {
+        net.sourceforge.plantuml.picoweb.RenderRequest r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.picoweb.RenderRequest;
+
+        $r1 = r0.<net.sourceforge.plantuml.picoweb.RenderRequest: java.lang.String source>;
+
+        return $r1;
+    }
+
+    public static net.sourceforge.plantuml.picoweb.RenderRequest fromJson(java.lang.String)
+    {
+        java.lang.String r0, $r5, $r9;
+        net.sourceforge.plantuml.json.JsonValue $r1, $r4, $r6, $r8;
+        net.sourceforge.plantuml.json.JsonObject r2;
+        boolean $z0;
+        net.sourceforge.plantuml.picoweb.RenderRequest $r3;
+        net.sourceforge.plantuml.json.JsonArray r7;
+        int $i0, $i1, i2;
+        java.lang.String[] r10;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue parse(java.lang.String)>(r0);
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonValue: net.sourceforge.plantuml.json.JsonObject asObject()>();
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonObject: boolean contains(java.lang.String)>("options");
+
+        if $z0 == 0 goto label3;
+
+        $r6 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>("options");
+
+        r7 = virtualinvoke $r6.<net.sourceforge.plantuml.json.JsonValue: net.sourceforge.plantuml.json.JsonArray asArray()>();
+
+        $i0 = virtualinvoke r7.<net.sourceforge.plantuml.json.JsonArray: int size()>();
+
+        r10 = newarray (java.lang.String)[$i0];
+
+        i2 = 0;
+
+     label1:
+        $i1 = virtualinvoke r7.<net.sourceforge.plantuml.json.JsonArray: int size()>();
+
+        if i2 >= $i1 goto label2;
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.json.JsonArray: net.sourceforge.plantuml.json.JsonValue get(int)>(i2);
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.json.JsonValue: java.lang.String asString()>();
+
+        r10[i2] = $r9;
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label2:
+        goto label4;
+
+     label3:
+        r10 = newarray (java.lang.String)[0];
+
+     label4:
+        $r3 = new net.sourceforge.plantuml.picoweb.RenderRequest;
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>("source");
+
+        $r5 = virtualinvoke $r4.<net.sourceforge.plantuml.json.JsonValue: java.lang.String asString()>();
+
+        specialinvoke $r3.<net.sourceforge.plantuml.picoweb.RenderRequest: void <init>(java.lang.String[],java.lang.String)>(r10, $r5);
+
+        return $r3;
+    }
+}

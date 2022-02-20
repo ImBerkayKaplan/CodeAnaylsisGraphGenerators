@@ -1,0 +1,142 @@
+public class net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing extends java.lang.Object implements net.sourceforge.plantuml.flashcode.FlashCodeUtils
+{
+    private static final java.util.concurrent.locks.Lock lock;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing r0;
+
+        r0 := @this: net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.awt.image.BufferedImage exportFlashcode(java.lang.String, java.awt.Color, java.awt.Color)
+    {
+        java.util.concurrent.locks.Lock $r0, $r15, $r18, $r24;
+        boolean $z0;
+        ext.plantuml.com.google.zxing.qrcode.QRCodeWriter $r1;
+        java.util.Hashtable $r2;
+        ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel $r4;
+        ext.plantuml.com.google.zxing.EncodeHintType $r5, $r7;
+        java.lang.String r9, $r23;
+        ext.plantuml.com.google.zxing.BarcodeFormat $r10;
+        ext.plantuml.com.google.zxing.common.BitMatrix r11;
+        java.awt.Color r12, r13;
+        int $i0, $i1, $i2, $i3;
+        java.awt.image.BufferedImage r14;
+        java.lang.Throwable $r16;
+        java.lang.Exception $r19;
+        java.lang.StringBuilder $r20, $r21, $r22;
+        net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing r25;
+
+        r25 := @this: net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing;
+
+        r9 := @parameter0: java.lang.String;
+
+        r12 := @parameter1: java.awt.Color;
+
+        r13 := @parameter2: java.awt.Color;
+
+        $r0 = <net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing: java.util.concurrent.locks.Lock lock>;
+
+        $z0 = interfaceinvoke $r0.<java.util.concurrent.locks.Lock: boolean tryLock()>();
+
+        if $z0 == 0 goto label7;
+
+     label1:
+        $r1 = new ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
+
+        specialinvoke $r1.<ext.plantuml.com.google.zxing.qrcode.QRCodeWriter: void <init>()>();
+
+        $r2 = new java.util.Hashtable;
+
+        specialinvoke $r2.<java.util.Hashtable: void <init>()>();
+
+        $r5 = <ext.plantuml.com.google.zxing.EncodeHintType: ext.plantuml.com.google.zxing.EncodeHintType ERROR_CORRECTION>;
+
+        $r4 = <ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel: ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel L>;
+
+        virtualinvoke $r2.<java.util.Hashtable: java.lang.Object put(java.lang.Object,java.lang.Object)>($r5, $r4);
+
+        $r7 = <ext.plantuml.com.google.zxing.EncodeHintType: ext.plantuml.com.google.zxing.EncodeHintType CHARACTER_SET>;
+
+        virtualinvoke $r2.<java.util.Hashtable: java.lang.Object put(java.lang.Object,java.lang.Object)>($r7, "UTF8");
+
+        $r10 = <ext.plantuml.com.google.zxing.BarcodeFormat: ext.plantuml.com.google.zxing.BarcodeFormat QR_CODE>;
+
+        r11 = virtualinvoke $r1.<ext.plantuml.com.google.zxing.qrcode.QRCodeWriter: ext.plantuml.com.google.zxing.common.BitMatrix encode(java.lang.String,ext.plantuml.com.google.zxing.BarcodeFormat,int,java.util.Hashtable)>(r9, $r10, 1, $r2);
+
+        $i0 = virtualinvoke r12.<java.awt.Color: int getRGB()>();
+
+        $i1 = $i0 | -16777216;
+
+        $i2 = virtualinvoke r13.<java.awt.Color: int getRGB()>();
+
+        $i3 = $i2 | -16777216;
+
+        r14 = staticinvoke <ext.plantuml.com.google.zxing.client.j2se.MatrixToImageWriter: java.awt.image.BufferedImage toBufferedImage(ext.plantuml.com.google.zxing.common.BitMatrix,int,int)>(r11, $i1, $i3);
+
+     label2:
+        $r15 = <net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing: java.util.concurrent.locks.Lock lock>;
+
+        interfaceinvoke $r15.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        return r14;
+
+     label3:
+        $r19 := @caughtexception;
+
+        $r20 = new java.lang.StringBuilder;
+
+        specialinvoke $r20.<java.lang.StringBuilder: void <init>()>();
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Cannot create qrcode ");
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r19);
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void debug(java.lang.String)>($r23);
+
+     label4:
+        $r24 = <net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing: java.util.concurrent.locks.Lock lock>;
+
+        interfaceinvoke $r24.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        goto label7;
+
+     label5:
+        $r16 := @caughtexception;
+
+     label6:
+        $r18 = <net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing: java.util.concurrent.locks.Lock lock>;
+
+        interfaceinvoke $r18.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        throw $r16;
+
+     label7:
+        return null;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+        catch java.lang.Throwable from label1 to label2 with label5;
+        catch java.lang.Throwable from label3 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    static void <clinit>()
+    {
+        java.util.concurrent.locks.ReentrantLock $r0;
+
+        $r0 = new java.util.concurrent.locks.ReentrantLock;
+
+        specialinvoke $r0.<java.util.concurrent.locks.ReentrantLock: void <init>()>();
+
+        <net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing: java.util.concurrent.locks.Lock lock> = $r0;
+
+        return;
+    }
+}

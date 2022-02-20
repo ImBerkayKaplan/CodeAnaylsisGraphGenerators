@@ -1,0 +1,177 @@
+public class net.sourceforge.plantuml.command.CommandDecoratorMultine extends java.lang.Object implements net.sourceforge.plantuml.command.Command
+{
+    private final net.sourceforge.plantuml.command.SingleLineCommand2 cmd;
+    private final boolean removeEmptyColumn;
+    private final int nbMaxLines;
+
+    public void <init>(net.sourceforge.plantuml.command.SingleLineCommand2, int)
+    {
+        net.sourceforge.plantuml.command.CommandDecoratorMultine r0;
+        net.sourceforge.plantuml.command.SingleLineCommand2 r1;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandDecoratorMultine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.command.SingleLineCommand2;
+
+        i0 := @parameter1: int;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: void <init>(net.sourceforge.plantuml.command.SingleLineCommand2,boolean,int)>(r1, 0, i0);
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.command.SingleLineCommand2, boolean, int)
+    {
+        net.sourceforge.plantuml.command.CommandDecoratorMultine r0;
+        net.sourceforge.plantuml.command.SingleLineCommand2 r1;
+        boolean z0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandDecoratorMultine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.command.SingleLineCommand2;
+
+        z0 := @parameter1: boolean;
+
+        i0 := @parameter2: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: net.sourceforge.plantuml.command.SingleLineCommand2 cmd> = r1;
+
+        r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: boolean removeEmptyColumn> = z0;
+
+        r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: int nbMaxLines> = i0;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.core.Diagram, net.sourceforge.plantuml.command.BlocLines)
+    {
+        net.sourceforge.plantuml.command.CommandDecoratorMultine r0;
+        boolean $z0;
+        net.sourceforge.plantuml.core.Diagram r1;
+        net.sourceforge.plantuml.command.SingleLineCommand2 $r2;
+        net.sourceforge.plantuml.command.CommandExecutionResult $r3;
+        net.sourceforge.plantuml.command.BlocLines r4, r5;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandDecoratorMultine;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.Diagram;
+
+        r4 := @parameter1: net.sourceforge.plantuml.command.BlocLines;
+
+        $z0 = r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: boolean removeEmptyColumn>;
+
+        if $z0 == 0 goto label1;
+
+        r4 = virtualinvoke r4.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines removeEmptyColumns()>();
+
+     label1:
+        r5 = virtualinvoke r4.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines toSingleLineWithHiddenNewLine()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: net.sourceforge.plantuml.command.SingleLineCommand2 cmd>;
+
+        $r3 = virtualinvoke $r2.<net.sourceforge.plantuml.command.SingleLineCommand2: net.sourceforge.plantuml.command.CommandExecutionResult execute(net.sourceforge.plantuml.core.Diagram,net.sourceforge.plantuml.command.BlocLines)>(r1, r5);
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.command.CommandControl isValid(net.sourceforge.plantuml.command.BlocLines)
+    {
+        net.sourceforge.plantuml.command.CommandDecoratorMultine r0;
+        net.sourceforge.plantuml.command.SingleLineCommand2 $r1, $r2, $r5;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.StringLocated $r3;
+        java.lang.String $r4;
+        net.sourceforge.plantuml.command.CommandControl r6, $r7, $r8, $r9, $r11, $r12;
+        java.lang.IllegalStateException $r10;
+        net.sourceforge.plantuml.command.BlocLines r13, r14;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandDecoratorMultine;
+
+        r13 := @parameter0: net.sourceforge.plantuml.command.BlocLines;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: net.sourceforge.plantuml.command.SingleLineCommand2 cmd>;
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.command.SingleLineCommand2: boolean isCommandForbidden()>();
+
+        if $z0 == 0 goto label1;
+
+        $r12 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl NOT_OK>;
+
+        return $r12;
+
+     label1:
+        r14 = virtualinvoke r13.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.command.BlocLines toSingleLineWithHiddenNewLine()>();
+
+        $r2 = r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: net.sourceforge.plantuml.command.SingleLineCommand2 cmd>;
+
+        $r3 = virtualinvoke r14.<net.sourceforge.plantuml.command.BlocLines: net.sourceforge.plantuml.StringLocated getFirst()>();
+
+        $r4 = virtualinvoke $r3.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $z1 = virtualinvoke $r2.<net.sourceforge.plantuml.command.SingleLineCommand2: boolean isForbidden(java.lang.CharSequence)>($r4);
+
+        if $z1 == 0 goto label2;
+
+        $r11 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl NOT_OK>;
+
+        return $r11;
+
+     label2:
+        $r5 = r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: net.sourceforge.plantuml.command.SingleLineCommand2 cmd>;
+
+        r6 = virtualinvoke $r5.<net.sourceforge.plantuml.command.SingleLineCommand2: net.sourceforge.plantuml.command.CommandControl isValid(net.sourceforge.plantuml.command.BlocLines)>(r14);
+
+        $r7 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK_PARTIAL>;
+
+        if r6 != $r7 goto label3;
+
+        $r10 = new java.lang.IllegalStateException;
+
+        specialinvoke $r10.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r10;
+
+     label3:
+        $r8 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK>;
+
+        if r6 != $r8 goto label4;
+
+        return r6;
+
+     label4:
+        $r9 = <net.sourceforge.plantuml.command.CommandControl: net.sourceforge.plantuml.command.CommandControl OK_PARTIAL>;
+
+        return $r9;
+    }
+
+    public java.lang.String[] getDescription()
+    {
+        net.sourceforge.plantuml.command.CommandDecoratorMultine r0;
+        net.sourceforge.plantuml.command.SingleLineCommand2 $r1;
+        java.lang.String[] $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandDecoratorMultine;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: net.sourceforge.plantuml.command.SingleLineCommand2 cmd>;
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.command.SingleLineCommand2: java.lang.String[] getDescription()>();
+
+        return $r2;
+    }
+
+    public int getNbMaxLines()
+    {
+        net.sourceforge.plantuml.command.CommandDecoratorMultine r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.command.CommandDecoratorMultine;
+
+        $i0 = r0.<net.sourceforge.plantuml.command.CommandDecoratorMultine: int nbMaxLines>;
+
+        return $i0;
+    }
+}

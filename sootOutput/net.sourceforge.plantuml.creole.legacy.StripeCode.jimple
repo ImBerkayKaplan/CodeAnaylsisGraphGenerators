@@ -1,0 +1,260 @@
+public class net.sourceforge.plantuml.creole.legacy.StripeCode extends java.lang.Object implements net.sourceforge.plantuml.creole.Stripe, net.sourceforge.plantuml.creole.atom.Atom
+{
+    private final net.sourceforge.plantuml.graphic.FontConfiguration fontConfiguration;
+    private final java.util.List raw;
+    private boolean terminated;
+
+    public void <init>(net.sourceforge.plantuml.graphic.FontConfiguration, net.sourceforge.plantuml.ISkinSimple, java.lang.String)
+    {
+        net.sourceforge.plantuml.creole.legacy.StripeCode r0;
+        java.util.ArrayList $r1;
+        net.sourceforge.plantuml.graphic.FontConfiguration r2;
+        net.sourceforge.plantuml.ISkinSimple r3;
+        java.lang.String r4;
+
+        r0 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        r2 := @parameter0: net.sourceforge.plantuml.graphic.FontConfiguration;
+
+        r3 := @parameter1: net.sourceforge.plantuml.ISkinSimple;
+
+        r4 := @parameter2: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.creole.legacy.StripeCode: java.util.List raw> = $r1;
+
+        r0.<net.sourceforge.plantuml.creole.legacy.StripeCode: net.sourceforge.plantuml.graphic.FontConfiguration fontConfiguration> = r2;
+
+        return;
+    }
+
+    public java.util.List getAtoms()
+    {
+        net.sourceforge.plantuml.creole.legacy.StripeCode r0;
+        java.util.List $r1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        $r1 = staticinvoke <java.util.Collections: java.util.List singletonList(java.lang.Object)>(r0);
+
+        return $r1;
+    }
+
+    public net.sourceforge.plantuml.creole.atom.Atom getLHeader()
+    {
+        net.sourceforge.plantuml.creole.legacy.StripeCode r0;
+
+        r0 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        return null;
+    }
+
+    public boolean addAndCheckTermination(java.lang.String)
+    {
+        java.lang.String r0;
+        boolean $z0;
+        net.sourceforge.plantuml.creole.legacy.StripeCode r1;
+        java.util.List $r2;
+
+        r1 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = staticinvoke <net.sourceforge.plantuml.creole.Parser: boolean isCodeEnd(java.lang.String)>(r0);
+
+        if $z0 == 0 goto label1;
+
+        r1.<net.sourceforge.plantuml.creole.legacy.StripeCode: boolean terminated> = 1;
+
+        return 1;
+
+     label1:
+        $r2 = r1.<net.sourceforge.plantuml.creole.legacy.StripeCode: java.util.List raw>;
+
+        interfaceinvoke $r2.<java.util.List: boolean add(java.lang.Object)>(r0);
+
+        return 0;
+    }
+
+    public final boolean isTerminated()
+    {
+        net.sourceforge.plantuml.creole.legacy.StripeCode r0;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        $z0 = r0.<net.sourceforge.plantuml.creole.legacy.StripeCode: boolean terminated>;
+
+        return $z0;
+    }
+
+    public net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.creole.legacy.StripeCode r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        net.sourceforge.plantuml.Dimension2DDouble $r3;
+        java.lang.Object $r4;
+        java.lang.String r5;
+        net.sourceforge.plantuml.graphic.StringBounder r6;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r7;
+        net.sourceforge.plantuml.ugraphic.UFont $r8;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r9;
+        double $d0, $d1, d2, d3;
+
+        r0 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        r6 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        d2 = 0.0;
+
+        d3 = 0.0;
+
+        $r1 = r0.<net.sourceforge.plantuml.creole.legacy.StripeCode: java.util.List raw>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.lang.String) $r4;
+
+        $r7 = r0.<net.sourceforge.plantuml.creole.legacy.StripeCode: net.sourceforge.plantuml.graphic.FontConfiguration fontConfiguration>;
+
+        $r8 = virtualinvoke $r7.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.ugraphic.UFont getFont()>();
+
+        r9 = interfaceinvoke r6.<net.sourceforge.plantuml.graphic.StringBounder: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.ugraphic.UFont,java.lang.String)>($r8, r5);
+
+        $d0 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        d2 = staticinvoke <java.lang.Math: double max(double,double)>(d2, $d0);
+
+        $d1 = virtualinvoke r9.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d3 = d3 + $d1;
+
+        goto label1;
+
+     label2:
+        $r3 = new net.sourceforge.plantuml.Dimension2DDouble;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.Dimension2DDouble: void <init>(double,double)>(d2, d3);
+
+        return $r3;
+    }
+
+    public double getStartingAltitude(net.sourceforge.plantuml.graphic.StringBounder)
+    {
+        net.sourceforge.plantuml.creole.legacy.StripeCode r0;
+        net.sourceforge.plantuml.graphic.StringBounder r1;
+
+        r0 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        r1 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        return 0.0;
+    }
+
+    public void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)
+    {
+        net.sourceforge.plantuml.creole.legacy.StripeCode r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0;
+        java.lang.Object $r3;
+        java.lang.String r4;
+        net.sourceforge.plantuml.ugraphic.UText $r5;
+        net.sourceforge.plantuml.graphic.FontConfiguration $r6, $r10;
+        net.sourceforge.plantuml.ugraphic.UGraphic r8, $r14;
+        net.sourceforge.plantuml.graphic.StringBounder r9;
+        net.sourceforge.plantuml.ugraphic.UFont $r11;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r12;
+        double $d0, $d1, $d2, d3;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r13;
+
+        r0 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        r8 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        d3 = 0.0;
+
+        $r1 = r0.<net.sourceforge.plantuml.creole.legacy.StripeCode: java.util.List raw>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (java.lang.String) $r3;
+
+        $r5 = new net.sourceforge.plantuml.ugraphic.UText;
+
+        $r6 = r0.<net.sourceforge.plantuml.creole.legacy.StripeCode: net.sourceforge.plantuml.graphic.FontConfiguration fontConfiguration>;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.ugraphic.UText: void <init>(java.lang.String,net.sourceforge.plantuml.graphic.FontConfiguration)>(r4, $r6);
+
+        r9 = interfaceinvoke r8.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r10 = r0.<net.sourceforge.plantuml.creole.legacy.StripeCode: net.sourceforge.plantuml.graphic.FontConfiguration fontConfiguration>;
+
+        $r11 = virtualinvoke $r10.<net.sourceforge.plantuml.graphic.FontConfiguration: net.sourceforge.plantuml.ugraphic.UFont getFont()>();
+
+        r12 = interfaceinvoke r9.<net.sourceforge.plantuml.graphic.StringBounder: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.ugraphic.UFont,java.lang.String)>($r11, r4);
+
+        $d0 = virtualinvoke r12.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        d3 = d3 + $d0;
+
+        $d1 = virtualinvoke $r5.<net.sourceforge.plantuml.ugraphic.UText: double getDescent(net.sourceforge.plantuml.graphic.StringBounder)>(r9);
+
+        $d2 = d3 - $d1;
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d2);
+
+        $r14 = interfaceinvoke r8.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r13);
+
+        interfaceinvoke $r14.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>($r5);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public java.util.List splitInTwo(net.sourceforge.plantuml.graphic.StringBounder, double)
+    {
+        net.sourceforge.plantuml.creole.atom.Atom[] $r0;
+        net.sourceforge.plantuml.creole.legacy.StripeCode r1;
+        java.util.List $r2;
+        net.sourceforge.plantuml.graphic.StringBounder r3;
+        double d0;
+
+        r1 := @this: net.sourceforge.plantuml.creole.legacy.StripeCode;
+
+        r3 := @parameter0: net.sourceforge.plantuml.graphic.StringBounder;
+
+        d0 := @parameter1: double;
+
+        $r0 = newarray (net.sourceforge.plantuml.creole.atom.Atom)[1];
+
+        $r0[0] = r1;
+
+        $r2 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r0);
+
+        return $r2;
+    }
+}

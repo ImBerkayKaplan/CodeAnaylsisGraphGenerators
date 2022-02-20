@@ -1,0 +1,156 @@
+public class net.sourceforge.plantuml.sprite.SpriteImage extends java.lang.Object implements net.sourceforge.plantuml.sprite.Sprite
+{
+    private final net.sourceforge.plantuml.ugraphic.UImage img;
+
+    public void <init>(java.awt.image.BufferedImage)
+    {
+        net.sourceforge.plantuml.sprite.SpriteImage r0;
+        net.sourceforge.plantuml.ugraphic.UImage $r1;
+        net.sourceforge.plantuml.ugraphic.PixelImage $r2;
+        java.awt.image.BufferedImage r3, $r6;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r5;
+
+        r0 := @this: net.sourceforge.plantuml.sprite.SpriteImage;
+
+        r3 := @parameter0: java.awt.image.BufferedImage;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new net.sourceforge.plantuml.ugraphic.UImage;
+
+        $r2 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r4 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r3);
+
+        $r6 = (java.awt.image.BufferedImage) $r4;
+
+        $r5 = <net.sourceforge.plantuml.ugraphic.AffineTransformType: net.sourceforge.plantuml.ugraphic.AffineTransformType TYPE_BILINEAR>;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType)>($r6, $r5);
+
+        specialinvoke $r1.<net.sourceforge.plantuml.ugraphic.UImage: void <init>(net.sourceforge.plantuml.ugraphic.MutableImage)>($r2);
+
+        r0.<net.sourceforge.plantuml.sprite.SpriteImage: net.sourceforge.plantuml.ugraphic.UImage img> = $r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.graphic.TextBlock asTextBlock(net.sourceforge.plantuml.ugraphic.color.HColor, double)
+    {
+        net.sourceforge.plantuml.sprite.SpriteImage$1 $r0;
+        net.sourceforge.plantuml.sprite.SpriteImage r1;
+        net.sourceforge.plantuml.ugraphic.color.HColor r2;
+        double d0;
+
+        r1 := @this: net.sourceforge.plantuml.sprite.SpriteImage;
+
+        r2 := @parameter0: net.sourceforge.plantuml.ugraphic.color.HColor;
+
+        d0 := @parameter1: double;
+
+        $r0 = new net.sourceforge.plantuml.sprite.SpriteImage$1;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.sprite.SpriteImage$1: void <init>(net.sourceforge.plantuml.sprite.SpriteImage,net.sourceforge.plantuml.ugraphic.color.HColor,double)>(r1, r2, d0);
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.sprite.Sprite fromInternal(java.lang.String)
+    {
+        java.lang.String r0, $r4;
+        boolean $z0;
+        java.lang.StringBuilder $r1, $r2, $r3;
+        java.io.InputStream r5;
+        net.sourceforge.plantuml.sprite.SpriteImage $r6;
+        java.awt.image.BufferedImage $r7;
+        java.lang.IllegalArgumentException $r8;
+        java.io.IOException $r9;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean endsWith(java.lang.String)>(".png");
+
+        if $z0 == 0 goto label1;
+
+        $r8 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r8.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r8;
+
+     label1:
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r0);
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".png");
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r5 = staticinvoke <net.sourceforge.plantuml.sprite.SpriteImage: java.io.InputStream getInternalSprite(java.lang.String)>($r4);
+
+        if r5 != null goto label2;
+
+        return null;
+
+     label2:
+        $r6 = new net.sourceforge.plantuml.sprite.SpriteImage;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.security.SImageIO: java.awt.image.BufferedImage read(java.io.InputStream)>(r5);
+
+        specialinvoke $r6.<net.sourceforge.plantuml.sprite.SpriteImage: void <init>(java.awt.image.BufferedImage)>($r7);
+
+     label3:
+        return $r6;
+
+     label4:
+        $r9 := @caughtexception;
+
+        virtualinvoke $r9.<java.io.IOException: void printStackTrace()>();
+
+        return null;
+
+        catch java.io.IOException from label2 to label3 with label4;
+    }
+
+    public static java.io.InputStream getInternalSprite(java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r1, $r3;
+        java.lang.String r2, r4;
+        java.lang.Class $r5;
+        java.io.InputStream r6;
+
+        r2 := @parameter0: java.lang.String;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/sprites/");
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r5 = class "Lnet/sourceforge/plantuml/sprite/SpriteImage;";
+
+        r6 = virtualinvoke $r5.<java.lang.Class: java.io.InputStream getResourceAsStream(java.lang.String)>(r4);
+
+        return r6;
+    }
+
+    static net.sourceforge.plantuml.ugraphic.UImage access$000(net.sourceforge.plantuml.sprite.SpriteImage)
+    {
+        net.sourceforge.plantuml.sprite.SpriteImage r0;
+        net.sourceforge.plantuml.ugraphic.UImage $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.sprite.SpriteImage;
+
+        $r1 = r0.<net.sourceforge.plantuml.sprite.SpriteImage: net.sourceforge.plantuml.ugraphic.UImage img>;
+
+        return $r1;
+    }
+}

@@ -1,0 +1,282 @@
+public class smetana.core.CArray extends smetana.core.UnsupportedC
+{
+    private final java.lang.Class cl;
+    private final java.util.List data;
+    private final int offset;
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r1, $r4, $r5, $r6, $r7, $r9, $r10, $r12;
+        smetana.core.CArray r2;
+        java.lang.Class $r3;
+        int $i0, $i1;
+        java.util.List $r8, $r11;
+        java.lang.String $r13;
+
+        r2 := @this: smetana.core.CArray;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Array ");
+
+        $r3 = r2.<smetana.core.CArray: java.lang.Class cl>;
+
+        $r4 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" offset=");
+
+        $i0 = r2.<smetana.core.CArray: int offset>;
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" [");
+
+        $r8 = r2.<smetana.core.CArray: java.util.List data>;
+
+        $i1 = interfaceinvoke $r8.<java.util.List: int size()>();
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("]");
+
+        $r11 = r2.<smetana.core.CArray: java.util.List data>;
+
+        $r12 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r11);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r13;
+    }
+
+    public static smetana.core.CArray ALLOC__(int, java.lang.Class)
+    {
+        smetana.core.CArray $r0;
+        java.util.ArrayList $r1;
+        java.lang.Class r2;
+        int i0;
+
+        i0 := @parameter0: int;
+
+        r2 := @parameter1: java.lang.Class;
+
+        $r0 = new smetana.core.CArray;
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        specialinvoke $r0.<smetana.core.CArray: void <init>(java.util.List,int,java.lang.Class)>($r1, 0, r2);
+
+        specialinvoke $r0.<smetana.core.CArray: void reallocWithStructure(int)>(i0);
+
+        return $r0;
+    }
+
+    public static smetana.core.CArray REALLOC__(int, smetana.core.CArray, java.lang.Class)
+    {
+        smetana.core.CArray r0, $r2;
+        int i0;
+        java.lang.Class r1;
+
+        i0 := @parameter0: int;
+
+        r0 := @parameter1: smetana.core.CArray;
+
+        r1 := @parameter2: java.lang.Class;
+
+        if r0 != null goto label1;
+
+        $r2 = staticinvoke <smetana.core.CArray: smetana.core.CArray ALLOC__(int,java.lang.Class)>(i0, r1);
+
+        return $r2;
+
+     label1:
+        specialinvoke r0.<smetana.core.CArray: void reallocWithStructure(int)>(i0);
+
+        return r0;
+    }
+
+    private void <init>(java.util.List, int, java.lang.Class)
+    {
+        smetana.core.CArray r0;
+        int i0;
+        java.util.List r1;
+        java.lang.Class r2;
+
+        r0 := @this: smetana.core.CArray;
+
+        r1 := @parameter0: java.util.List;
+
+        i0 := @parameter1: int;
+
+        r2 := @parameter2: java.lang.Class;
+
+        specialinvoke r0.<smetana.core.UnsupportedC: void <init>()>();
+
+        if i0 <= 0 goto label1;
+
+     label1:
+        r0.<smetana.core.CArray: java.util.List data> = r1;
+
+        r0.<smetana.core.CArray: int offset> = i0;
+
+        r0.<smetana.core.CArray: java.lang.Class cl> = r2;
+
+        return;
+    }
+
+    public smetana.core.CArray plus_(int)
+    {
+        smetana.core.CArray $r0, r1;
+        int i0, $i1, $i2;
+        java.lang.Class $r2;
+        java.util.List $r3;
+
+        r1 := @this: smetana.core.CArray;
+
+        i0 := @parameter0: int;
+
+        $r0 = new smetana.core.CArray;
+
+        $r3 = r1.<smetana.core.CArray: java.util.List data>;
+
+        $i1 = r1.<smetana.core.CArray: int offset>;
+
+        $i2 = $i1 + i0;
+
+        $r2 = r1.<smetana.core.CArray: java.lang.Class cl>;
+
+        specialinvoke $r0.<smetana.core.CArray: void <init>(java.util.List,int,java.lang.Class)>($r3, $i2, $r2);
+
+        return $r0;
+    }
+
+    public int minus_(smetana.core.CArray)
+    {
+        smetana.core.CArray r0, r1;
+        java.util.List $r2, $r3;
+        int $i0, $i1, $i2;
+        java.lang.IllegalArgumentException $r4;
+
+        r0 := @this: smetana.core.CArray;
+
+        r1 := @parameter0: smetana.core.CArray;
+
+        $r3 = r0.<smetana.core.CArray: java.util.List data>;
+
+        $r2 = r1.<smetana.core.CArray: java.util.List data>;
+
+        if $r3 == $r2 goto label1;
+
+        $r4 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r4.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r4;
+
+     label1:
+        $i1 = r0.<smetana.core.CArray: int offset>;
+
+        $i0 = r1.<smetana.core.CArray: int offset>;
+
+        $i2 = $i1 - $i0;
+
+        return $i2;
+    }
+
+    public java.lang.Object get__(int)
+    {
+        smetana.core.CArray r0;
+        int i0, $i1, $i2;
+        java.util.List $r1;
+        java.lang.Object $r2;
+
+        r0 := @this: smetana.core.CArray;
+
+        i0 := @parameter0: int;
+
+        $r1 = r0.<smetana.core.CArray: java.util.List data>;
+
+        $i1 = r0.<smetana.core.CArray: int offset>;
+
+        $i2 = i0 + $i1;
+
+        $r2 = interfaceinvoke $r1.<java.util.List: java.lang.Object get(int)>($i2);
+
+        return $r2;
+    }
+
+    private void reallocWithStructure(int)
+    {
+        smetana.core.CArray r0;
+        int $i0, i1, i2;
+        java.lang.Class[] $r1;
+        java.lang.Class $r2;
+        java.util.List $r3;
+        java.lang.reflect.Constructor $r4;
+        java.lang.Object[] $r5;
+        java.lang.Object $r6;
+        java.lang.IllegalStateException $r7;
+        java.lang.Exception $r8;
+        java.lang.UnsupportedOperationException $r9;
+
+        r0 := @this: smetana.core.CArray;
+
+        i1 := @parameter0: int;
+
+        $i0 = r0.<smetana.core.CArray: int offset>;
+
+        if $i0 == 0 goto label1;
+
+        $r7 = new java.lang.IllegalStateException;
+
+        specialinvoke $r7.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r7;
+
+     label1:
+        i2 = 0;
+
+     label2:
+        if i2 >= i1 goto label3;
+
+        $r3 = r0.<smetana.core.CArray: java.util.List data>;
+
+        $r2 = r0.<smetana.core.CArray: java.lang.Class cl>;
+
+        $r1 = newarray (java.lang.Class)[0];
+
+        $r4 = virtualinvoke $r2.<java.lang.Class: java.lang.reflect.Constructor getDeclaredConstructor(java.lang.Class[])>($r1);
+
+        $r5 = newarray (java.lang.Object)[0];
+
+        $r6 = virtualinvoke $r4.<java.lang.reflect.Constructor: java.lang.Object newInstance(java.lang.Object[])>($r5);
+
+        interfaceinvoke $r3.<java.util.List: boolean add(java.lang.Object)>($r6);
+
+        i2 = i2 + 1;
+
+        goto label2;
+
+     label3:
+        goto label5;
+
+     label4:
+        $r8 := @caughtexception;
+
+        virtualinvoke $r8.<java.lang.Exception: void printStackTrace()>();
+
+        $r9 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r9.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r9;
+
+     label5:
+        return;
+
+        catch java.lang.Exception from label1 to label3 with label4;
+    }
+}

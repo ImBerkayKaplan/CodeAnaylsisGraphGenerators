@@ -1,0 +1,130 @@
+public abstract class jcckit.plot.AbstractSymbolFactory extends java.lang.Object implements jcckit.plot.SymbolFactory
+{
+    protected final double _size;
+    protected final jcckit.graphic.GraphicAttributes _attributes;
+
+    public void <init>(jcckit.util.ConfigParameters)
+    {
+        jcckit.plot.AbstractSymbolFactory r0;
+        jcckit.util.ConfigParameters r1, $r2;
+        double $d0;
+        java.lang.Object $r3;
+        jcckit.graphic.GraphicAttributes $r4;
+
+        r0 := @this: jcckit.plot.AbstractSymbolFactory;
+
+        r1 := @parameter0: jcckit.util.ConfigParameters;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $d0 = virtualinvoke r1.<jcckit.util.ConfigParameters: double getDouble(java.lang.String,double)>("size", 0.01);
+
+        r0.<jcckit.plot.AbstractSymbolFactory: double _size> = $d0;
+
+        $r2 = virtualinvoke r1.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>("attributes");
+
+        $r3 = staticinvoke <jcckit.util.Factory: java.lang.Object createOrGet(jcckit.util.ConfigParameters,java.lang.Object)>($r2, null);
+
+        $r4 = (jcckit.graphic.GraphicAttributes) $r3;
+
+        r0.<jcckit.plot.AbstractSymbolFactory: jcckit.graphic.GraphicAttributes _attributes> = $r4;
+
+        return;
+    }
+
+    public jcckit.plot.Symbol createSymbol(jcckit.graphic.GraphPoint, jcckit.plot.Hint, jcckit.plot.Hint)
+    {
+        jcckit.plot.AbstractSymbolFactory r0;
+        jcckit.plot.Hint r1, r3, r8;
+        boolean $z0;
+        jcckit.graphic.GraphPoint r2;
+        jcckit.plot.Symbol $r4;
+        jcckit.plot.AttributesHint $r5, $r6;
+        jcckit.graphic.GraphicAttributes r7;
+
+        r0 := @this: jcckit.plot.AbstractSymbolFactory;
+
+        r2 := @parameter0: jcckit.graphic.GraphPoint;
+
+        r1 := @parameter1: jcckit.plot.Hint;
+
+        r3 := @parameter2: jcckit.plot.Hint;
+
+        r7 = r0.<jcckit.plot.AbstractSymbolFactory: jcckit.graphic.GraphicAttributes _attributes>;
+
+        r8 = r1;
+
+        $z0 = r1 instanceof jcckit.plot.AttributesHint;
+
+        if $z0 == 0 goto label1;
+
+        $r5 = (jcckit.plot.AttributesHint) r1;
+
+        r7 = interfaceinvoke $r5.<jcckit.plot.AttributesHint: jcckit.graphic.GraphicAttributes getAttributes()>();
+
+        $r6 = (jcckit.plot.AttributesHint) r1;
+
+        r8 = interfaceinvoke $r6.<jcckit.plot.AttributesHint: jcckit.plot.AttributesHint getNextHint()>();
+
+     label1:
+        $r4 = virtualinvoke r0.<jcckit.plot.AbstractSymbolFactory: jcckit.plot.Symbol createSymbol(jcckit.graphic.GraphPoint,jcckit.graphic.GraphicAttributes,jcckit.plot.Hint,jcckit.plot.Hint)>(r2, r7, r8, r3);
+
+        return $r4;
+    }
+
+    protected jcckit.plot.Symbol createSymbol(jcckit.graphic.GraphPoint, jcckit.graphic.GraphicAttributes, jcckit.plot.Hint, jcckit.plot.Hint)
+    {
+        jcckit.plot.Symbol $r0;
+        jcckit.plot.AbstractSymbolFactory r1;
+        jcckit.graphic.GraphPoint r2;
+        jcckit.graphic.GraphicAttributes r3;
+        double $d0;
+        jcckit.graphic.GraphicalElement $r4;
+        jcckit.plot.Hint r5, r6;
+
+        r1 := @this: jcckit.plot.AbstractSymbolFactory;
+
+        r2 := @parameter0: jcckit.graphic.GraphPoint;
+
+        r3 := @parameter1: jcckit.graphic.GraphicAttributes;
+
+        r5 := @parameter2: jcckit.plot.Hint;
+
+        r6 := @parameter3: jcckit.plot.Hint;
+
+        $r0 = new jcckit.plot.Symbol;
+
+        $d0 = r1.<jcckit.plot.AbstractSymbolFactory: double _size>;
+
+        $r4 = virtualinvoke r1.<jcckit.plot.AbstractSymbolFactory: jcckit.graphic.GraphicalElement createPlainSymbol(jcckit.graphic.GraphPoint,double,jcckit.graphic.GraphicAttributes)>(r2, $d0, r3);
+
+        specialinvoke $r0.<jcckit.plot.Symbol: void <init>(jcckit.graphic.GraphicalElement,jcckit.plot.Hint,jcckit.plot.Hint)>($r4, r5, r6);
+
+        return $r0;
+    }
+
+    public jcckit.graphic.GraphicalElement createLegendSymbol(jcckit.graphic.GraphPoint, double)
+    {
+        jcckit.plot.AbstractSymbolFactory r0;
+        jcckit.graphic.GraphPoint r1;
+        jcckit.graphic.GraphicAttributes $r2;
+        double $d0, d1;
+        jcckit.graphic.GraphicalElement $r3;
+
+        r0 := @this: jcckit.plot.AbstractSymbolFactory;
+
+        r1 := @parameter0: jcckit.graphic.GraphPoint;
+
+        d1 := @parameter1: double;
+
+        $d0 = r0.<jcckit.plot.AbstractSymbolFactory: double _size>;
+
+        $r2 = r0.<jcckit.plot.AbstractSymbolFactory: jcckit.graphic.GraphicAttributes _attributes>;
+
+        $r3 = virtualinvoke r0.<jcckit.plot.AbstractSymbolFactory: jcckit.graphic.GraphicalElement createPlainSymbol(jcckit.graphic.GraphPoint,double,jcckit.graphic.GraphicAttributes)>(r1, $d0, $r2);
+
+        return $r3;
+    }
+
+    protected abstract jcckit.graphic.GraphicalElement createPlainSymbol(jcckit.graphic.GraphPoint, double, jcckit.graphic.GraphicAttributes);
+}

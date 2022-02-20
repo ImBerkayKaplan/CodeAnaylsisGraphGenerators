@@ -1,0 +1,3652 @@
+final class net.sourceforge.plantuml.brotli.Decode extends java.lang.Object
+{
+    private static final int UNINITIALIZED;
+    private static final int BLOCK_START;
+    private static final int COMPRESSED_BLOCK_START;
+    private static final int MAIN_LOOP;
+    private static final int READ_METADATA;
+    private static final int COPY_UNCOMPRESSED;
+    private static final int INSERT_LOOP;
+    private static final int COPY_LOOP;
+    private static final int COPY_WRAP_BUFFER;
+    private static final int TRANSFORM;
+    private static final int FINISHED;
+    private static final int CLOSED;
+    private static final int WRITE;
+    private static final int DEFAULT_CODE_LENGTH;
+    private static final int CODE_LENGTH_REPEAT_CODE;
+    private static final int NUM_LITERAL_CODES;
+    private static final int NUM_INSERT_AND_COPY_CODES;
+    private static final int NUM_BLOCK_LENGTH_CODES;
+    private static final int LITERAL_CONTEXT_BITS;
+    private static final int DISTANCE_CONTEXT_BITS;
+    private static final int HUFFMAN_TABLE_BITS;
+    private static final int HUFFMAN_TABLE_MASK;
+    static final int HUFFMAN_TABLE_SIZE;
+    private static final int CODE_LENGTH_CODES;
+    private static final int[] CODE_LENGTH_CODE_ORDER;
+    private static final int NUM_DISTANCE_SHORT_CODES;
+    private static final int[] DISTANCE_SHORT_CODE_INDEX_OFFSET;
+    private static final int[] DISTANCE_SHORT_CODE_VALUE_OFFSET;
+    private static final int[] FIXED_TABLE;
+    static final int[] DICTIONARY_OFFSETS_BY_LENGTH;
+    static final int[] DICTIONARY_SIZE_BITS_BY_LENGTH;
+    static final int MIN_WORD_LENGTH;
+    static final int MAX_WORD_LENGTH;
+    static final int MAX_TRANSFORMED_WORD_LENGTH;
+    static final int[] BLOCK_LENGTH_OFFSET;
+    static final int[] BLOCK_LENGTH_N_BITS;
+    static final int[] INSERT_LENGTH_OFFSET;
+    static final int[] INSERT_LENGTH_N_BITS;
+    static final int[] COPY_LENGTH_OFFSET;
+    static final int[] COPY_LENGTH_N_BITS;
+    static final int[] INSERT_RANGE_LUT;
+    static final int[] COPY_RANGE_LUT;
+
+    void <init>()
+    {
+        net.sourceforge.plantuml.brotli.Decode r0;
+
+        r0 := @this: net.sourceforge.plantuml.brotli.Decode;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static int decodeWindowBits(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, i3, i4;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i0 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        if $i0 != 0 goto label1;
+
+        return 16;
+
+     label1:
+        i3 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 3);
+
+        if i3 == 0 goto label2;
+
+        $i2 = 17 + i3;
+
+        return $i2;
+
+     label2:
+        i4 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 3);
+
+        if i4 == 0 goto label3;
+
+        $i1 = 8 + i4;
+
+        return $i1;
+
+     label3:
+        return 17;
+    }
+
+    static void initState(net.sourceforge.plantuml.brotli.State, java.io.InputStream)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, i1, $i2, $i3, $i4;
+        int[] $r1;
+        java.io.InputStream r2;
+        net.sourceforge.plantuml.brotli.BrotliRuntimeException $r3;
+        java.lang.IllegalStateException $r4;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        r2 := @parameter1: java.io.InputStream;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i0 == 0 goto label1;
+
+        $r4 = new java.lang.IllegalStateException;
+
+        specialinvoke $r4.<java.lang.IllegalStateException: void <init>(java.lang.String)>("State MUST be uninitialized");
+
+        throw $r4;
+
+     label1:
+        $r1 = newarray (int)[6480];
+
+        r0.<net.sourceforge.plantuml.brotli.State: int[] blockTrees> = $r1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: java.io.InputStream input> = r2;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void initBitReader(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i1 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeWindowBits(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        if i1 != 9 goto label2;
+
+        $r3 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Invalid \'windowBits\' code");
+
+        throw $r3;
+
+     label2:
+        $i2 = 1 << i1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int maxRingBufferSize> = $i2;
+
+        $i3 = r0.<net.sourceforge.plantuml.brotli.State: int maxRingBufferSize>;
+
+        $i4 = $i3 - 16;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int maxBackwardDistance> = $i4;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 1;
+
+        return;
+    }
+
+    static void close(net.sourceforge.plantuml.brotli.State) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1;
+        java.io.InputStream $r1, $r2;
+        java.lang.IllegalStateException $r3;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i0 != 0 goto label1;
+
+        $r3 = new java.lang.IllegalStateException;
+
+        specialinvoke $r3.<java.lang.IllegalStateException: void <init>(java.lang.String)>("State MUST be initialized");
+
+        throw $r3;
+
+     label1:
+        $i1 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i1 != 11 goto label2;
+
+        return;
+
+     label2:
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 11;
+
+        $r1 = r0.<net.sourceforge.plantuml.brotli.State: java.io.InputStream input>;
+
+        if $r1 == null goto label3;
+
+        $r2 = r0.<net.sourceforge.plantuml.brotli.State: java.io.InputStream input>;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Utils: void closeInput(java.io.InputStream)>($r2);
+
+        r0.<net.sourceforge.plantuml.brotli.State: java.io.InputStream input> = null;
+
+     label3:
+        return;
+    }
+
+    private static int decodeVarLenUnsignedByte(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, i1, $i2, $i3, $i4;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i0 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        if $i0 == 0 goto label2;
+
+        i1 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 3);
+
+        if i1 != 0 goto label1;
+
+        return 1;
+
+     label1:
+        $i2 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, i1);
+
+        $i3 = 1 << i1;
+
+        $i4 = $i2 + $i3;
+
+        return $i4;
+
+     label2:
+        return 0;
+    }
+
+    private static void decodeMetaBlockLength(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, i3, $i4, $i5, $i6, $i7, $i8, $i9, i10, $i11, $i12, i13, i14, $i15, $i16, $i17, $i18, i19, i20, $i21, $i22, $i23, $i24;
+        net.sourceforge.plantuml.brotli.BrotliRuntimeException $r1, $r3, $r4;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i0 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int inputEnd> = $i0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int isUncompressed> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int isMetadata> = 0;
+
+        $i1 = r0.<net.sourceforge.plantuml.brotli.State: int inputEnd>;
+
+        if $i1 == 0 goto label01;
+
+        $i12 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        if $i12 == 0 goto label01;
+
+        return;
+
+     label01:
+        $i2 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 2);
+
+        i3 = $i2 + 4;
+
+        if i3 != 7 goto label07;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int isMetadata> = 1;
+
+        $i9 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        if $i9 == 0 goto label02;
+
+        $r4 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Corrupted reserved bit");
+
+        throw $r4;
+
+     label02:
+        i13 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 2);
+
+        if i13 != 0 goto label03;
+
+        return;
+
+     label03:
+        i14 = 0;
+
+     label04:
+        if i14 >= i13 goto label06;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i10 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 8);
+
+        if i10 != 0 goto label05;
+
+        $i11 = i14 + 1;
+
+        if $i11 != i13 goto label05;
+
+        if i13 <= 1 goto label05;
+
+        $r3 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Exuberant nibble");
+
+        throw $r3;
+
+     label05:
+        $i15 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i16 = i14 * 8;
+
+        $i17 = i10 << $i16;
+
+        $i18 = $i15 | $i17;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i18;
+
+        i14 = i14 + 1;
+
+        goto label04;
+
+     label06:
+        goto label10;
+
+     label07:
+        i19 = 0;
+
+     label08:
+        if i19 >= i3 goto label10;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i20 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 4);
+
+        if i20 != 0 goto label09;
+
+        $i8 = i19 + 1;
+
+        if $i8 != i3 goto label09;
+
+        if i3 <= 4 goto label09;
+
+        $r1 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Exuberant nibble");
+
+        throw $r1;
+
+     label09:
+        $i21 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i22 = i19 * 4;
+
+        $i23 = i20 << $i22;
+
+        $i24 = $i21 | $i23;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i24;
+
+        i19 = i19 + 1;
+
+        goto label08;
+
+     label10:
+        $i4 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i5 = $i4 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i5;
+
+        $i6 = r0.<net.sourceforge.plantuml.brotli.State: int inputEnd>;
+
+        if $i6 != 0 goto label11;
+
+        $i7 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int isUncompressed> = $i7;
+
+     label11:
+        return;
+    }
+
+    private static int readSymbol(int[], int, net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int i0, $i1, $i2, i3, $i4, i5, $i6, i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, i19, i20, i21, i22;
+        int[] r1;
+
+        r1 := @parameter0: int[];
+
+        i19 := @parameter1: int;
+
+        r0 := @parameter2: net.sourceforge.plantuml.brotli.State;
+
+        i0 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int peekBits(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i1 = i0 & 255;
+
+        i20 = i19 + $i1;
+
+        $i2 = r1[i20];
+
+        i3 = $i2 >> 16;
+
+        $i4 = r1[i20];
+
+        i5 = $i4 & 65535;
+
+        if i3 > 8 goto label1;
+
+        $i17 = r0.<net.sourceforge.plantuml.brotli.State: int bitOffset>;
+
+        $i18 = $i17 + i3;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bitOffset> = $i18;
+
+        return i5;
+
+     label1:
+        i21 = i20 + i5;
+
+        $i6 = 1 << i3;
+
+        i7 = $i6 - 1;
+
+        $i8 = i0 & i7;
+
+        $i9 = $i8 >>> 8;
+
+        i22 = i21 + $i9;
+
+        $i13 = r0.<net.sourceforge.plantuml.brotli.State: int bitOffset>;
+
+        $i10 = r1[i22];
+
+        $i11 = $i10 >> 16;
+
+        $i12 = $i11 + 8;
+
+        $i14 = $i13 + $i12;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bitOffset> = $i14;
+
+        $i15 = r1[i22];
+
+        $i16 = $i15 & 65535;
+
+        return $i16;
+    }
+
+    private static int readBlockLength(int[], int, net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int[] r1, $r2, $r3;
+        int i0, i1, i2, $i3, $i4, $i5;
+
+        r1 := @parameter0: int[];
+
+        i0 := @parameter1: int;
+
+        r0 := @parameter2: net.sourceforge.plantuml.brotli.State;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i1 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readSymbol(int[],int,net.sourceforge.plantuml.brotli.State)>(r1, i0, r0);
+
+        $r2 = <net.sourceforge.plantuml.brotli.Decode: int[] BLOCK_LENGTH_N_BITS>;
+
+        i2 = $r2[i1];
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $r3 = <net.sourceforge.plantuml.brotli.Decode: int[] BLOCK_LENGTH_OFFSET>;
+
+        $i3 = $r3[i1];
+
+        $i4 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readBits(net.sourceforge.plantuml.brotli.State,int)>(r0, i2);
+
+        $i5 = $i3 + $i4;
+
+        return $i5;
+    }
+
+    private static int translateShortCodes(int, int[], int)
+    {
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, i7, i8, i9;
+        int[] $r0, r1, $r2;
+
+        i0 := @parameter0: int;
+
+        r1 := @parameter1: int[];
+
+        i7 := @parameter2: int;
+
+        if i0 >= 16 goto label1;
+
+        $r0 = <net.sourceforge.plantuml.brotli.Decode: int[] DISTANCE_SHORT_CODE_INDEX_OFFSET>;
+
+        $i3 = $r0[i0];
+
+        i8 = i7 + $i3;
+
+        i9 = i8 & 3;
+
+        $i5 = r1[i9];
+
+        $r2 = <net.sourceforge.plantuml.brotli.Decode: int[] DISTANCE_SHORT_CODE_VALUE_OFFSET>;
+
+        $i4 = $r2[i0];
+
+        $i6 = $i5 + $i4;
+
+        return $i6;
+
+     label1:
+        $i1 = i0 - 16;
+
+        $i2 = $i1 + 1;
+
+        return $i2;
+    }
+
+    private static void moveToFront(int[], int)
+    {
+        int[] r0;
+        int i0, $i1, $i2, i3;
+
+        r0 := @parameter0: int[];
+
+        i3 := @parameter1: int;
+
+        i0 = r0[i3];
+
+     label1:
+        if i3 <= 0 goto label2;
+
+        $i1 = i3 - 1;
+
+        $i2 = r0[$i1];
+
+        r0[i3] = $i2;
+
+        i3 = i3 + -1;
+
+        goto label1;
+
+     label2:
+        r0[0] = i0;
+
+        return;
+    }
+
+    private static void inverseMoveToFrontTransform(byte[], int)
+    {
+        int[] r0;
+        int i0, i2, $i3, i5, i6;
+        byte[] r1;
+        byte $b1, $b4;
+
+        r1 := @parameter0: byte[];
+
+        i0 := @parameter1: int;
+
+        r0 = newarray (int)[256];
+
+        i5 = 0;
+
+     label1:
+        if i5 >= 256 goto label2;
+
+        r0[i5] = i5;
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label2:
+        i6 = 0;
+
+     label3:
+        if i6 >= i0 goto label5;
+
+        $b1 = r1[i6];
+
+        i2 = $b1 & 255;
+
+        $i3 = r0[i2];
+
+        $b4 = (byte) $i3;
+
+        r1[i6] = $b4;
+
+        if i2 == 0 goto label4;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void moveToFront(int[],int)>(r0, i2);
+
+     label4:
+        i6 = i6 + 1;
+
+        goto label3;
+
+     label5:
+        return;
+    }
+
+    private static void readHuffmanCodeLengths(int[], int, int[], net.sourceforge.plantuml.brotli.State)
+    {
+        int[] r0, r1, r2;
+        int i0, $i1, i2, $i3, $i4, $i5, $i6, $i7, i8, i9, i10, $i11, $i12, i13, $i14, $i15, $i16, $i17, $i18, $i19, i20, i21, i22, i23, i24, i25, i26, i27;
+        net.sourceforge.plantuml.brotli.BrotliRuntimeException $r3, $r5;
+        net.sourceforge.plantuml.brotli.State r4;
+
+        r1 := @parameter0: int[];
+
+        i0 := @parameter1: int;
+
+        r2 := @parameter2: int[];
+
+        r4 := @parameter3: net.sourceforge.plantuml.brotli.State;
+
+        i20 = 0;
+
+        i21 = 8;
+
+        i22 = 0;
+
+        i23 = 0;
+
+        i24 = 32768;
+
+        r0 = newarray (int)[32];
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Huffman: void buildHuffmanTable(int[],int,int,int[],int)>(r0, 0, 5, r1, 18);
+
+     label01:
+        if i20 >= i0 goto label10;
+
+        if i24 <= 0 goto label10;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r4);
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r4);
+
+        $i1 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int peekBits(net.sourceforge.plantuml.brotli.State)>(r4);
+
+        i2 = $i1 & 31;
+
+        $i5 = r4.<net.sourceforge.plantuml.brotli.State: int bitOffset>;
+
+        $i3 = r0[i2];
+
+        $i4 = $i3 >> 16;
+
+        $i6 = $i5 + $i4;
+
+        r4.<net.sourceforge.plantuml.brotli.State: int bitOffset> = $i6;
+
+        $i7 = r0[i2];
+
+        i8 = $i7 & 65535;
+
+        if i8 >= 16 goto label02;
+
+        i22 = 0;
+
+        $i18 = i20;
+
+        i20 = i20 + 1;
+
+        r2[$i18] = i8;
+
+        if i8 == 0 goto label09;
+
+        i21 = i8;
+
+        $i19 = 32768 >> i8;
+
+        i24 = i24 - $i19;
+
+        goto label09;
+
+     label02:
+        i9 = i8 - 14;
+
+        i25 = 0;
+
+        if i8 != 16 goto label03;
+
+        i25 = i21;
+
+     label03:
+        if i23 == i25 goto label04;
+
+        i22 = 0;
+
+        i23 = i25;
+
+     label04:
+        i10 = i22;
+
+        if i22 <= 0 goto label05;
+
+        i26 = i22 + -2;
+
+        i22 = i26 << i9;
+
+     label05:
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r4);
+
+        $i11 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r4, i9);
+
+        $i12 = $i11 + 3;
+
+        i22 = i22 + $i12;
+
+        i13 = i22 - i10;
+
+        $i14 = i20 + i13;
+
+        if $i14 <= i0 goto label06;
+
+        $r5 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("symbol + repeatDelta > numSymbols");
+
+        throw $r5;
+
+     label06:
+        i27 = 0;
+
+     label07:
+        if i27 >= i13 goto label08;
+
+        $i17 = i20;
+
+        i20 = i20 + 1;
+
+        r2[$i17] = i23;
+
+        i27 = i27 + 1;
+
+        goto label07;
+
+     label08:
+        if i23 == 0 goto label09;
+
+        $i15 = 15 - i23;
+
+        $i16 = i13 << $i15;
+
+        i24 = i24 - $i16;
+
+     label09:
+        goto label01;
+
+     label10:
+        if i24 == 0 goto label11;
+
+        $r3 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Unused space");
+
+        throw $r3;
+
+     label11:
+        staticinvoke <net.sourceforge.plantuml.brotli.Utils: void fillIntsWithZeroes(int[],int,int)>(r2, i20, i0);
+
+        return;
+    }
+
+    static int checkDupes(int[], int)
+    {
+        int i0, $i1, $i2, $i3, i4, i5;
+        int[] r0;
+
+        r0 := @parameter0: int[];
+
+        i0 := @parameter1: int;
+
+        i4 = 0;
+
+     label1:
+        $i1 = i0 - 1;
+
+        if i4 >= $i1 goto label5;
+
+        i5 = i4 + 1;
+
+     label2:
+        if i5 >= i0 goto label4;
+
+        $i3 = r0[i4];
+
+        $i2 = r0[i5];
+
+        if $i3 != $i2 goto label3;
+
+        return 0;
+
+     label3:
+        i5 = i5 + 1;
+
+        goto label2;
+
+     label4:
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label5:
+        return 1;
+    }
+
+    static void readHuffmanCode(int, int[], int, net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int i0, i1, i2, $i3, i4, $i5, $i6, $i7, $i8, $i9, i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, i22, i23, i24, i25, i26, i27, i28, i29, i30;
+        int[] r1, r2, $r4, $r5, $r6, r7, r8;
+        net.sourceforge.plantuml.brotli.BrotliRuntimeException $r3;
+
+        i0 := @parameter0: int;
+
+        r2 := @parameter1: int[];
+
+        i2 := @parameter2: int;
+
+        r0 := @parameter3: net.sourceforge.plantuml.brotli.State;
+
+        i22 = 1;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        r1 = newarray (int)[i0];
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i1 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 2);
+
+        if i1 != 1 goto label09;
+
+        i23 = i0 - 1;
+
+        i24 = 0;
+
+        r7 = newarray (int)[4];
+
+        $i12 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 2);
+
+        i25 = $i12 + 1;
+
+     label01:
+        if i23 == 0 goto label02;
+
+        i23 = i23 >> 1;
+
+        i24 = i24 + 1;
+
+        goto label01;
+
+     label02:
+        i26 = 0;
+
+     label03:
+        if i26 >= i25 goto label04;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i19 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, i24);
+
+        $i20 = $i19 % i0;
+
+        r7[i26] = $i20;
+
+        $i21 = r7[i26];
+
+        r1[$i21] = 2;
+
+        i26 = i26 + 1;
+
+        goto label03;
+
+     label04:
+        $i13 = r7[0];
+
+        r1[$i13] = 1;
+
+        lookupswitch(i25)
+        {
+            case 2: goto label05;
+            case 4: goto label06;
+            default: goto label08;
+        };
+
+     label05:
+        $i18 = r7[1];
+
+        r1[$i18] = 1;
+
+        goto label08;
+
+     label06:
+        $i14 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        if $i14 != 1 goto label07;
+
+        $i16 = r7[2];
+
+        r1[$i16] = 3;
+
+        $i17 = r7[3];
+
+        r1[$i17] = 3;
+
+        goto label08;
+
+     label07:
+        $i15 = r7[0];
+
+        r1[$i15] = 2;
+
+        goto label08;
+
+     label08:
+        i22 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int checkDupes(int[],int)>(r7, i25);
+
+        goto label14;
+
+     label09:
+        r8 = newarray (int)[18];
+
+        i27 = 32;
+
+        i28 = 0;
+
+        i29 = i1;
+
+     label10:
+        if i29 >= 18 goto label12;
+
+        if i27 <= 0 goto label12;
+
+        $r4 = <net.sourceforge.plantuml.brotli.Decode: int[] CODE_LENGTH_CODE_ORDER>;
+
+        i30 = $r4[i29];
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i3 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int peekBits(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i4 = $i3 & 15;
+
+        $i7 = r0.<net.sourceforge.plantuml.brotli.State: int bitOffset>;
+
+        $r5 = <net.sourceforge.plantuml.brotli.Decode: int[] FIXED_TABLE>;
+
+        $i5 = $r5[i4];
+
+        $i6 = $i5 >> 16;
+
+        $i8 = $i7 + $i6;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bitOffset> = $i8;
+
+        $r6 = <net.sourceforge.plantuml.brotli.Decode: int[] FIXED_TABLE>;
+
+        $i9 = $r6[i4];
+
+        i10 = $i9 & 65535;
+
+        r8[i30] = i10;
+
+        if i10 == 0 goto label11;
+
+        $i11 = 32 >> i10;
+
+        i27 = i27 - $i11;
+
+        i28 = i28 + 1;
+
+     label11:
+        i29 = i29 + 1;
+
+        goto label10;
+
+     label12:
+        if i27 == 0 goto label13;
+
+        if i28 == 1 goto label13;
+
+        i22 = 0;
+
+     label13:
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void readHuffmanCodeLengths(int[],int,int[],net.sourceforge.plantuml.brotli.State)>(r8, i0, r1, r0);
+
+     label14:
+        if i22 != 0 goto label15;
+
+        $r3 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Can\'t readHuffmanCode");
+
+        throw $r3;
+
+     label15:
+        staticinvoke <net.sourceforge.plantuml.brotli.Huffman: void buildHuffmanTable(int[],int,int,int[],int)>(r2, i2, 8, r1, i0);
+
+        return;
+    }
+
+    private static int decodeContextMap(int, byte[], net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, i1, i2, $i3, i4, $i5, i6, $i7, $i9, $i10, $i11, i12, i13, i14;
+        int[] r1;
+        byte[] r2;
+        byte $b8;
+        net.sourceforge.plantuml.brotli.BrotliRuntimeException $r3;
+
+        i4 := @parameter0: int;
+
+        r2 := @parameter1: byte[];
+
+        r0 := @parameter2: net.sourceforge.plantuml.brotli.State;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i0 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeVarLenUnsignedByte(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i1 = $i0 + 1;
+
+        if i1 != 1 goto label01;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Utils: void fillBytesWithZeroes(byte[],int,int)>(r2, 0, i4);
+
+        return i1;
+
+     label01:
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i2 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        i12 = 0;
+
+        if i2 == 0 goto label02;
+
+        $i11 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 4);
+
+        i12 = $i11 + 1;
+
+     label02:
+        r1 = newarray (int)[1080];
+
+        $i3 = i1 + i12;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void readHuffmanCode(int,int[],int,net.sourceforge.plantuml.brotli.State)>($i3, r1, 0, r0);
+
+        i13 = 0;
+
+     label03:
+        if i13 >= i4 goto label10;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i6 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readSymbol(int[],int,net.sourceforge.plantuml.brotli.State)>(r1, 0, r0);
+
+        if i6 != 0 goto label04;
+
+        r2[i13] = 0;
+
+        i13 = i13 + 1;
+
+        goto label09;
+
+     label04:
+        if i6 > i12 goto label08;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i9 = 1 << i6;
+
+        $i10 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, i6);
+
+        i14 = $i9 + $i10;
+
+     label05:
+        if i14 == 0 goto label07;
+
+        if i13 < i4 goto label06;
+
+        $r3 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Corrupted context map");
+
+        throw $r3;
+
+     label06:
+        r2[i13] = 0;
+
+        i13 = i13 + 1;
+
+        i14 = i14 + -1;
+
+        goto label05;
+
+     label07:
+        goto label09;
+
+     label08:
+        $i7 = i6 - i12;
+
+        $b8 = (byte) $i7;
+
+        r2[i13] = $b8;
+
+        i13 = i13 + 1;
+
+     label09:
+        goto label03;
+
+     label10:
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i5 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+        if $i5 != 1 goto label11;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void inverseMoveToFrontTransform(byte[],int)>(r2, i4);
+
+     label11:
+        return i1;
+    }
+
+    private static int decodeBlockTypeAndLength(net.sourceforge.plantuml.brotli.State, int, int)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int[] r1, $r2, $r3;
+        int i0, $i1, i2, $i3, $i4, $i5, i6, i7, $i8, $i9, $i10, $i11, $i12, i13, i14;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        i0 := @parameter1: int;
+
+        i7 := @parameter2: int;
+
+        r1 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $i1 = i0 * 2;
+
+        i2 = 4 + $i1;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $r2 = r0.<net.sourceforge.plantuml.brotli.State: int[] blockTrees>;
+
+        $i3 = i0 * 1080;
+
+        i13 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readSymbol(int[],int,net.sourceforge.plantuml.brotli.State)>($r2, $i3, r0);
+
+        $r3 = r0.<net.sourceforge.plantuml.brotli.State: int[] blockTrees>;
+
+        $i4 = i0 + 3;
+
+        $i5 = $i4 * 1080;
+
+        i6 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readBlockLength(int[],int,net.sourceforge.plantuml.brotli.State)>($r3, $i5, r0);
+
+        if i13 != 1 goto label1;
+
+        $i11 = i2 + 1;
+
+        $i12 = r1[$i11];
+
+        i14 = $i12 + 1;
+
+        goto label3;
+
+     label1:
+        if i13 != 0 goto label2;
+
+        i14 = r1[i2];
+
+        goto label3;
+
+     label2:
+        i14 = i13 + -2;
+
+     label3:
+        if i14 < i7 goto label4;
+
+        i14 = i14 - i7;
+
+     label4:
+        $i8 = i2 + 1;
+
+        $i9 = r1[$i8];
+
+        r1[i2] = $i9;
+
+        $i10 = i2 + 1;
+
+        r1[$i10] = i14;
+
+        return i6;
+    }
+
+    private static void decodeLiteralBlockSwitch(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, i2, $i3, $i4, $i6, $i7, $i8, $i10, $i11, $i12;
+        int[] $r1, $r3;
+        byte[] $r2, $r4;
+        byte $b5, b9;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes>;
+
+        $i1 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeBlockTypeAndLength(net.sourceforge.plantuml.brotli.State,int,int)>(r0, 0, $i0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int literalBlockLength> = $i1;
+
+        $r1 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        i2 = $r1[5];
+
+        $i3 = i2 << 6;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int contextMapSlice> = $i3;
+
+        $r2 = r0.<net.sourceforge.plantuml.brotli.State: byte[] contextMap>;
+
+        $i4 = r0.<net.sourceforge.plantuml.brotli.State: int contextMapSlice>;
+
+        $b5 = $r2[$i4];
+
+        $i6 = $b5 & 255;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int literalTreeIndex> = $i6;
+
+        $r3 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup0>;
+
+        $i7 = r0.<net.sourceforge.plantuml.brotli.State: int literalTreeIndex>;
+
+        $i8 = $r3[$i7];
+
+        r0.<net.sourceforge.plantuml.brotli.State: int literalTree> = $i8;
+
+        $r4 = r0.<net.sourceforge.plantuml.brotli.State: byte[] contextModes>;
+
+        b9 = $r4[i2];
+
+        $i10 = b9 << 9;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int contextLookupOffset1> = $i10;
+
+        $i11 = r0.<net.sourceforge.plantuml.brotli.State: int contextLookupOffset1>;
+
+        $i12 = $i11 + 256;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int contextLookupOffset2> = $i12;
+
+        return;
+    }
+
+    private static void decodeCommandBlockSwitch(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, $i3;
+        int[] $r1, $r2;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int numCommandBlockTypes>;
+
+        $i1 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeBlockTypeAndLength(net.sourceforge.plantuml.brotli.State,int,int)>(r0, 1, $i0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int commandBlockLength> = $i1;
+
+        $r2 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup1>;
+
+        $r1 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $i2 = $r1[7];
+
+        $i3 = $r2[$i2];
+
+        r0.<net.sourceforge.plantuml.brotli.State: int treeCommandOffset> = $i3;
+
+        return;
+    }
+
+    private static void decodeDistanceBlockSwitch(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, $i3;
+        int[] $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int numDistanceBlockTypes>;
+
+        $i1 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeBlockTypeAndLength(net.sourceforge.plantuml.brotli.State,int,int)>(r0, 2, $i0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceBlockLength> = $i1;
+
+        $r1 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $i2 = $r1[9];
+
+        $i3 = $i2 << 2;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distContextMapSlice> = $i3;
+
+        return;
+    }
+
+    private static void maybeReallocateRingBuffer(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6, i7, $i8, i9;
+        byte[] r1, $r2, $r3;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        i6 = r0.<net.sourceforge.plantuml.brotli.State: int maxRingBufferSize>;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int expectedTotalSize>;
+
+        if i6 <= $i0 goto label3;
+
+        i7 = r0.<net.sourceforge.plantuml.brotli.State: int expectedTotalSize>;
+
+     label1:
+        $i3 = i6 >> 1;
+
+        if $i3 <= i7 goto label2;
+
+        i6 = i6 >> 1;
+
+        goto label1;
+
+     label2:
+        $i4 = r0.<net.sourceforge.plantuml.brotli.State: int inputEnd>;
+
+        if $i4 != 0 goto label3;
+
+        if i6 >= 16384 goto label3;
+
+        $i5 = r0.<net.sourceforge.plantuml.brotli.State: int maxRingBufferSize>;
+
+        if $i5 < 16384 goto label3;
+
+        i6 = 16384;
+
+     label3:
+        $i8 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        if i6 > $i8 goto label4;
+
+        return;
+
+     label4:
+        i9 = i6 + 37;
+
+        r1 = newarray (byte)[i9];
+
+        $r2 = r0.<net.sourceforge.plantuml.brotli.State: byte[] ringBuffer>;
+
+        $i1 = lengthof $r2;
+
+        if $i1 == 0 goto label5;
+
+        $r3 = r0.<net.sourceforge.plantuml.brotli.State: byte[] ringBuffer>;
+
+        $i2 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r3, 0, r1, 0, $i2);
+
+     label5:
+        r0.<net.sourceforge.plantuml.brotli.State: byte[] ringBuffer> = r1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize> = i6;
+
+        return;
+    }
+
+    private static void readNextMetablockHeader(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13;
+        int[] $r1, $r2, $r3;
+        byte $b14;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int inputEnd>;
+
+        if $i0 == 0 goto label01;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int nextRunningState> = 10;
+
+        $i13 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesToWrite> = $i13;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 12;
+
+        return;
+
+     label01:
+        $r1 = newarray (int)[0];
+
+        r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup0> = $r1;
+
+        $r2 = newarray (int)[0];
+
+        r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup1> = $r2;
+
+        $r3 = newarray (int)[0];
+
+        r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup2> = $r3;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void decodeMetaBlockLength(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i1 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        if $i1 != 0 goto label02;
+
+        $i12 = r0.<net.sourceforge.plantuml.brotli.State: int isMetadata>;
+
+        if $i12 != 0 goto label02;
+
+        return;
+
+     label02:
+        $i2 = r0.<net.sourceforge.plantuml.brotli.State: int isUncompressed>;
+
+        if $i2 != 0 goto label03;
+
+        $i11 = r0.<net.sourceforge.plantuml.brotli.State: int isMetadata>;
+
+        if $i11 == 0 goto label06;
+
+     label03:
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void jumpToByteBoundary(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i3 = r0.<net.sourceforge.plantuml.brotli.State: int isMetadata>;
+
+        if $i3 == 0 goto label04;
+
+        $b14 = 4;
+
+        goto label05;
+
+     label04:
+        $b14 = 5;
+
+     label05:
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = $b14;
+
+        goto label07;
+
+     label06:
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 2;
+
+     label07:
+        $i4 = r0.<net.sourceforge.plantuml.brotli.State: int isMetadata>;
+
+        if $i4 == 0 goto label08;
+
+        return;
+
+     label08:
+        $i6 = r0.<net.sourceforge.plantuml.brotli.State: int expectedTotalSize>;
+
+        $i5 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i7 = $i6 + $i5;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int expectedTotalSize> = $i7;
+
+        $i8 = r0.<net.sourceforge.plantuml.brotli.State: int expectedTotalSize>;
+
+        if $i8 <= 1073741824 goto label09;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int expectedTotalSize> = 1073741824;
+
+     label09:
+        $i10 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        $i9 = r0.<net.sourceforge.plantuml.brotli.State: int maxRingBufferSize>;
+
+        if $i10 >= $i9 goto label10;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void maybeReallocateRingBuffer(net.sourceforge.plantuml.brotli.State)>(r0);
+
+     label10:
+        return;
+    }
+
+    private static int readMetablockPartition(net.sourceforge.plantuml.brotli.State, int, int)
+    {
+        int i0, i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8;
+        net.sourceforge.plantuml.brotli.State r0;
+        int[] $r1, $r2, $r3;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        i1 := @parameter1: int;
+
+        i0 := @parameter2: int;
+
+        if i0 > 1 goto label1;
+
+        return 268435456;
+
+     label1:
+        $i3 = i0 + 2;
+
+        $r1 = r0.<net.sourceforge.plantuml.brotli.State: int[] blockTrees>;
+
+        $i2 = i1 * 1080;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void readHuffmanCode(int,int[],int,net.sourceforge.plantuml.brotli.State)>($i3, $r1, $i2, r0);
+
+        $r2 = r0.<net.sourceforge.plantuml.brotli.State: int[] blockTrees>;
+
+        $i4 = i1 + 3;
+
+        $i5 = $i4 * 1080;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void readHuffmanCode(int,int[],int,net.sourceforge.plantuml.brotli.State)>(26, $r2, $i5, r0);
+
+        $r3 = r0.<net.sourceforge.plantuml.brotli.State: int[] blockTrees>;
+
+        $i6 = i1 + 3;
+
+        $i7 = $i6 * 1080;
+
+        $i8 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readBlockLength(int[],int,net.sourceforge.plantuml.brotli.State)>($r3, $i7, r0);
+
+        return $i8;
+    }
+
+    private static void readMetablockHuffmanCodesAndContextMaps(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, i23, $i24, $i25, $i26, $i27, $i28, $i29, $i30, $i31, $i32, $i33, $i34, $i35, $i36, $i38, $i39, $i40, $i41, $i42, $i43, $i45, $i46, $i47, i49, i50, i51, i52, i53;
+        byte[] $r1, $r2, $r3, $r4, $r5, $r9, $r18, $r19;
+        int[] $r6, $r7, $r8, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17;
+        byte $b37, $b44, $b48;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        $i0 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeVarLenUnsignedByte(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i1 = $i0 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes> = $i1;
+
+        $i2 = r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes>;
+
+        $i3 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readMetablockPartition(net.sourceforge.plantuml.brotli.State,int,int)>(r0, 0, $i2);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int literalBlockLength> = $i3;
+
+        $i4 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeVarLenUnsignedByte(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i5 = $i4 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int numCommandBlockTypes> = $i5;
+
+        $i6 = r0.<net.sourceforge.plantuml.brotli.State: int numCommandBlockTypes>;
+
+        $i7 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readMetablockPartition(net.sourceforge.plantuml.brotli.State,int,int)>(r0, 1, $i6);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int commandBlockLength> = $i7;
+
+        $i8 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeVarLenUnsignedByte(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i9 = $i8 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int numDistanceBlockTypes> = $i9;
+
+        $i10 = r0.<net.sourceforge.plantuml.brotli.State: int numDistanceBlockTypes>;
+
+        $i11 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readMetablockPartition(net.sourceforge.plantuml.brotli.State,int,int)>(r0, 2, $i10);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceBlockLength> = $i11;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i12 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 2);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distancePostfixBits> = $i12;
+
+        $i13 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 4);
+
+        $i14 = r0.<net.sourceforge.plantuml.brotli.State: int distancePostfixBits>;
+
+        $i15 = $i13 << $i14;
+
+        $i16 = 16 + $i15;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int numDirectDistanceCodes> = $i16;
+
+        $i17 = r0.<net.sourceforge.plantuml.brotli.State: int distancePostfixBits>;
+
+        $i18 = 1 << $i17;
+
+        $i19 = $i18 - 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distancePostfixMask> = $i19;
+
+        $i22 = r0.<net.sourceforge.plantuml.brotli.State: int numDirectDistanceCodes>;
+
+        $i20 = r0.<net.sourceforge.plantuml.brotli.State: int distancePostfixBits>;
+
+        $i21 = 48 << $i20;
+
+        i23 = $i22 + $i21;
+
+        $i24 = r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes>;
+
+        $r1 = newarray (byte)[$i24];
+
+        r0.<net.sourceforge.plantuml.brotli.State: byte[] contextModes> = $r1;
+
+        i49 = 0;
+
+     label1:
+        $i25 = r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes>;
+
+        if i49 >= $i25 goto label4;
+
+        $i46 = i49 + 96;
+
+        $i45 = r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes>;
+
+        i50 = staticinvoke <java.lang.Math: int min(int,int)>($i46, $i45);
+
+     label2:
+        if i49 >= i50 goto label3;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $r19 = r0.<net.sourceforge.plantuml.brotli.State: byte[] contextModes>;
+
+        $i47 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 2);
+
+        $b48 = (byte) $i47;
+
+        $r19[i49] = $b48;
+
+        i49 = i49 + 1;
+
+        goto label2;
+
+     label3:
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        goto label1;
+
+     label4:
+        $i26 = r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes>;
+
+        $i27 = $i26 << 6;
+
+        $r2 = newarray (byte)[$i27];
+
+        r0.<net.sourceforge.plantuml.brotli.State: byte[] contextMap> = $r2;
+
+        $i28 = r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes>;
+
+        $i29 = $i28 << 6;
+
+        $r3 = r0.<net.sourceforge.plantuml.brotli.State: byte[] contextMap>;
+
+        i51 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeContextMap(int,byte[],net.sourceforge.plantuml.brotli.State)>($i29, $r3, r0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int trivialLiteralContext> = 1;
+
+        i52 = 0;
+
+     label5:
+        $i30 = r0.<net.sourceforge.plantuml.brotli.State: int numLiteralBlockTypes>;
+
+        $i31 = $i30 << 6;
+
+        if i52 >= $i31 goto label7;
+
+        $r18 = r0.<net.sourceforge.plantuml.brotli.State: byte[] contextMap>;
+
+        $b44 = $r18[i52];
+
+        $i43 = i52 >> 6;
+
+        if $b44 == $i43 goto label6;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int trivialLiteralContext> = 0;
+
+        goto label7;
+
+     label6:
+        i52 = i52 + 1;
+
+        goto label5;
+
+     label7:
+        $i32 = r0.<net.sourceforge.plantuml.brotli.State: int numDistanceBlockTypes>;
+
+        $i33 = $i32 << 2;
+
+        $r4 = newarray (byte)[$i33];
+
+        r0.<net.sourceforge.plantuml.brotli.State: byte[] distContextMap> = $r4;
+
+        $i34 = r0.<net.sourceforge.plantuml.brotli.State: int numDistanceBlockTypes>;
+
+        $i35 = $i34 << 2;
+
+        $r5 = r0.<net.sourceforge.plantuml.brotli.State: byte[] distContextMap>;
+
+        i53 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int decodeContextMap(int,byte[],net.sourceforge.plantuml.brotli.State)>($i35, $r5, r0);
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int[] decodeHuffmanTreeGroup(int,int,net.sourceforge.plantuml.brotli.State)>(256, i51, r0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup0> = $r6;
+
+        $i36 = r0.<net.sourceforge.plantuml.brotli.State: int numCommandBlockTypes>;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int[] decodeHuffmanTreeGroup(int,int,net.sourceforge.plantuml.brotli.State)>(704, $i36, r0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup1> = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int[] decodeHuffmanTreeGroup(int,int,net.sourceforge.plantuml.brotli.State)>(i23, i53, r0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup2> = $r8;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int contextMapSlice> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distContextMapSlice> = 0;
+
+        $r9 = r0.<net.sourceforge.plantuml.brotli.State: byte[] contextModes>;
+
+        $b37 = $r9[0];
+
+        $i38 = $b37 << 9;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int contextLookupOffset1> = $i38;
+
+        $i39 = r0.<net.sourceforge.plantuml.brotli.State: int contextLookupOffset1>;
+
+        $i40 = $i39 + 256;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int contextLookupOffset2> = $i40;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int literalTreeIndex> = 0;
+
+        $r10 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup0>;
+
+        $i41 = $r10[0];
+
+        r0.<net.sourceforge.plantuml.brotli.State: int literalTree> = $i41;
+
+        $r11 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup1>;
+
+        $i42 = $r11[0];
+
+        r0.<net.sourceforge.plantuml.brotli.State: int treeCommandOffset> = $i42;
+
+        $r12 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $r12[4] = 1;
+
+        $r13 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $r13[5] = 0;
+
+        $r14 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $r14[6] = 1;
+
+        $r15 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $r15[7] = 0;
+
+        $r16 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $r16[8] = 1;
+
+        $r17 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $r17[9] = 0;
+
+        return;
+    }
+
+    private static void copyUncompressedData(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        byte[] r1;
+        int $i0, $i1, $i2, $i3, $i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        r1 = r0.<net.sourceforge.plantuml.brotli.State: byte[] ringBuffer>;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        if $i0 > 0 goto label1;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void reload(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 1;
+
+        return;
+
+     label1:
+        $i2 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        $i1 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i4 = $i2 - $i1;
+
+        $i3 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        i5 = staticinvoke <java.lang.Math: int min(int,int)>($i4, $i3);
+
+        $i6 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void copyBytes(net.sourceforge.plantuml.brotli.State,byte[],int,int)>(r0, r1, $i6, i5);
+
+        $i7 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i8 = $i7 - i5;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i8;
+
+        $i9 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i10 = $i9 + i5;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int pos> = $i10;
+
+        $i12 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i11 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        if $i12 != $i11 goto label2;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int nextRunningState> = 5;
+
+        $i13 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesToWrite> = $i13;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 12;
+
+        return;
+
+     label2:
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void reload(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 1;
+
+        return;
+    }
+
+    private static int writeRingBuffer(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16;
+        byte[] $r1, $r2;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        $i1 = r0.<net.sourceforge.plantuml.brotli.State: int outputLength>;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int outputUsed>;
+
+        $i5 = $i1 - $i0;
+
+        $i3 = r0.<net.sourceforge.plantuml.brotli.State: int bytesToWrite>;
+
+        $i2 = r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten>;
+
+        $i4 = $i3 - $i2;
+
+        i6 = staticinvoke <java.lang.Math: int min(int,int)>($i5, $i4);
+
+        if i6 == 0 goto label1;
+
+        $r2 = r0.<net.sourceforge.plantuml.brotli.State: byte[] ringBuffer>;
+
+        $i12 = r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten>;
+
+        $r1 = r0.<net.sourceforge.plantuml.brotli.State: byte[] output>;
+
+        $i10 = r0.<net.sourceforge.plantuml.brotli.State: int outputOffset>;
+
+        $i9 = r0.<net.sourceforge.plantuml.brotli.State: int outputUsed>;
+
+        $i11 = $i10 + $i9;
+
+        staticinvoke <java.lang.System: void arraycopy(java.lang.Object,int,java.lang.Object,int,int)>($r2, $i12, $r1, $i11, i6);
+
+        $i13 = r0.<net.sourceforge.plantuml.brotli.State: int outputUsed>;
+
+        $i14 = $i13 + i6;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int outputUsed> = $i14;
+
+        $i15 = r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten>;
+
+        $i16 = $i15 + i6;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten> = $i16;
+
+     label1:
+        $i8 = r0.<net.sourceforge.plantuml.brotli.State: int outputUsed>;
+
+        $i7 = r0.<net.sourceforge.plantuml.brotli.State: int outputLength>;
+
+        if $i8 >= $i7 goto label2;
+
+        return 1;
+
+     label2:
+        return 0;
+    }
+
+    private static int[] decodeHuffmanTreeGroup(int, int, net.sourceforge.plantuml.brotli.State)
+    {
+        int i0, $i1, $i2, i3, i4, i5;
+        int[] r0;
+        net.sourceforge.plantuml.brotli.State r1;
+
+        i3 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        r1 := @parameter2: net.sourceforge.plantuml.brotli.State;
+
+        $i1 = i0 * 1080;
+
+        $i2 = i0 + $i1;
+
+        r0 = newarray (int)[$i2];
+
+        i4 = i0;
+
+        i5 = 0;
+
+     label1:
+        if i5 >= i0 goto label2;
+
+        r0[i5] = i4;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void readHuffmanCode(int,int[],int,net.sourceforge.plantuml.brotli.State)>(i3, r0, i4, r1);
+
+        i4 = i4 + 1080;
+
+        i5 = i5 + 1;
+
+        goto label1;
+
+     label2:
+        return r0;
+    }
+
+    static void decompress(net.sourceforge.plantuml.brotli.State)
+    {
+        net.sourceforge.plantuml.brotli.State r0;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, i19, $i20, i21, $i22, i23, i24, i25, $i26, $i27, $i28, $i29, i30, $i31, $i32, $i33, $i34, $i35, $i36, $i37, $i38, $i39, $i40, $i41, $i42, $i43, $i44, $i45, $i46, i47, $i48, $i49, $i50, $i51, $i53, $i54, $i55, $i56, $i57, $i58, $i59, $i60, $i61, $i62, $i64, $i65, $i66, $i68, $i69, $i70, $i72, $i73, $i74, $i75, $i76, $i77, $i78, $i79, $i80, $i81, $i82, $i83, $i84, $i85, $i86, $i87, $i88, $i89, $i90, $i91, $i92, $i93, $i94, $i95, $i96, $i97, $i98, $i99, $i101, $i102, $i103, $i104, $i105, $i106, $i107, $i108, $i109, $i110, $i111, $i112, $i113, $i114, $i115, $i116, $i117, $i118, $i119, $i120, $i121, $i122, $i123, $i124, $i125, $i126, $i127, $i128, $i129, $i130, $i131, $i132, $i133, $i134, $i135, $i137, $i138, $i139, $i141, $i142, $i143, $i144, $i145, $i146, $i147, $i148, $i149, $i150, $i151, $i152, $i153, $i154, $i156, $i157, $i158, $i159, $i160, $i161, $i163, $i164, $i165, $i166, $i167, $i168, $i169, i170, $i171, $i172, $i173, i174, i175, i176, $i177, $i178, $i179, $i180, i181, i182, i183, $i184, $i185, $i186, $i187, $i188, i189, $i190, i191, $i192, i193, i194, i195, $i196, $i197, i198, i199, i200, i201, $i202, $i203, $i204, $i205, $i206, $i207, $i208, i209, i210, i211, i212, i213, $i214, $i215, $i216, $i217, $i218, $i219, $i220, $i221, $i222, i223, i224;
+        net.sourceforge.plantuml.brotli.BrotliRuntimeException $r1, $r3, $r6, $r8, $r10, $r36, $r37;
+        int[] $r4, $r5, $r9, $r12, $r13, $r16, $r17, $r19, $r20, $r24, $r28, $r29, $r30, $r31, $r32, $r33, $r34, $r45;
+        java.nio.ByteBuffer $r7;
+        byte $b52, $b63, $b67, $b71, $b100, $b136, $b140, $b155;
+        byte[] $r11, $r18, r44;
+        java.lang.StringBuilder $r38, $r39, $r40;
+        java.lang.String $r41;
+        java.lang.IllegalStateException $r42, $r43;
+
+        r0 := @parameter0: net.sourceforge.plantuml.brotli.State;
+
+        $i0 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i0 != 0 goto label01;
+
+        $r43 = new java.lang.IllegalStateException;
+
+        specialinvoke $r43.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Can\'t decompress until initialized");
+
+        throw $r43;
+
+     label01:
+        $i1 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i1 != 11 goto label02;
+
+        $r42 = new java.lang.IllegalStateException;
+
+        specialinvoke $r42.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Can\'t decompress after close");
+
+        throw $r42;
+
+     label02:
+        $i2 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        i189 = $i2 - 1;
+
+        r44 = r0.<net.sourceforge.plantuml.brotli.State: byte[] ringBuffer>;
+
+     label03:
+        $i190 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i190 == 10 goto label53;
+
+        $i5 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        tableswitch($i5)
+        {
+            case 1: goto label04;
+            case 2: goto label06;
+            case 3: goto label07;
+            case 4: goto label46;
+            case 5: goto label48;
+            case 6: goto label11;
+            case 7: goto label31;
+            case 8: goto label45;
+            case 9: goto label39;
+            case 10: goto label52;
+            case 11: goto label52;
+            case 12: goto label49;
+            default: goto label52;
+        };
+
+     label04:
+        $i186 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        if $i186 >= 0 goto label05;
+
+        $r36 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r36.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Invalid metablock length");
+
+        throw $r36;
+
+     label05:
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void readNextMetablockHeader(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i187 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        i189 = $i187 - 1;
+
+        r44 = r0.<net.sourceforge.plantuml.brotli.State: byte[] ringBuffer>;
+
+        goto label03;
+
+     label06:
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void readMetablockHuffmanCodesAndContextMaps(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 3;
+
+     label07:
+        $i165 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        if $i165 > 0 goto label08;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 1;
+
+        goto label03;
+
+     label08:
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i166 = r0.<net.sourceforge.plantuml.brotli.State: int commandBlockLength>;
+
+        if $i166 != 0 goto label09;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void decodeCommandBlockSwitch(net.sourceforge.plantuml.brotli.State)>(r0);
+
+     label09:
+        $i167 = r0.<net.sourceforge.plantuml.brotli.State: int commandBlockLength>;
+
+        $i168 = $i167 - 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int commandBlockLength> = $i168;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $r28 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup1>;
+
+        $i169 = r0.<net.sourceforge.plantuml.brotli.State: int treeCommandOffset>;
+
+        i170 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readSymbol(int[],int,net.sourceforge.plantuml.brotli.State)>($r28, $i169, r0);
+
+        i191 = i170 >>> 6;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceCode> = 0;
+
+        if i191 < 2 goto label10;
+
+        i191 = i191 + -2;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceCode> = -1;
+
+     label10:
+        $r29 = <net.sourceforge.plantuml.brotli.Decode: int[] INSERT_RANGE_LUT>;
+
+        $i173 = $r29[i191];
+
+        $i171 = i170 >>> 3;
+
+        $i172 = $i171 & 7;
+
+        i174 = $i173 + $i172;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $r30 = <net.sourceforge.plantuml.brotli.Decode: int[] INSERT_LENGTH_N_BITS>;
+
+        i175 = $r30[i174];
+
+        i176 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readBits(net.sourceforge.plantuml.brotli.State,int)>(r0, i175);
+
+        $r31 = <net.sourceforge.plantuml.brotli.Decode: int[] INSERT_LENGTH_OFFSET>;
+
+        $i177 = $r31[i174];
+
+        $i178 = $i177 + i176;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int insertLength> = $i178;
+
+        $r32 = <net.sourceforge.plantuml.brotli.Decode: int[] COPY_RANGE_LUT>;
+
+        $i180 = $r32[i191];
+
+        $i179 = i170 & 7;
+
+        i181 = $i180 + $i179;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $r33 = <net.sourceforge.plantuml.brotli.Decode: int[] COPY_LENGTH_N_BITS>;
+
+        i182 = $r33[i181];
+
+        i183 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readBits(net.sourceforge.plantuml.brotli.State,int)>(r0, i182);
+
+        $r34 = <net.sourceforge.plantuml.brotli.Decode: int[] COPY_LENGTH_OFFSET>;
+
+        $i184 = $r34[i181];
+
+        $i185 = $i184 + i183;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int copyLength> = $i185;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int j> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 6;
+
+     label11:
+        $i192 = r0.<net.sourceforge.plantuml.brotli.State: int trivialLiteralContext>;
+
+        if $i192 == 0 goto label14;
+
+     label12:
+        $i148 = r0.<net.sourceforge.plantuml.brotli.State: int j>;
+
+        $i147 = r0.<net.sourceforge.plantuml.brotli.State: int insertLength>;
+
+        if $i148 >= $i147 goto label18;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i149 = r0.<net.sourceforge.plantuml.brotli.State: int literalBlockLength>;
+
+        if $i149 != 0 goto label13;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void decodeLiteralBlockSwitch(net.sourceforge.plantuml.brotli.State)>(r0);
+
+     label13:
+        $i150 = r0.<net.sourceforge.plantuml.brotli.State: int literalBlockLength>;
+
+        $i151 = $i150 - 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int literalBlockLength> = $i151;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i153 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $r24 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup0>;
+
+        $i152 = r0.<net.sourceforge.plantuml.brotli.State: int literalTree>;
+
+        $i154 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readSymbol(int[],int,net.sourceforge.plantuml.brotli.State)>($r24, $i152, r0);
+
+        $b155 = (byte) $i154;
+
+        r44[$i153] = $b155;
+
+        $i156 = r0.<net.sourceforge.plantuml.brotli.State: int j>;
+
+        $i157 = $i156 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int j> = $i157;
+
+        $i158 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i159 = $i158 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int pos> = $i159;
+
+        if $i158 != i189 goto label12;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int nextRunningState> = 6;
+
+        $i160 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesToWrite> = $i160;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 12;
+
+        goto label18;
+
+     label14:
+        $i64 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i65 = $i64 - 1;
+
+        $i66 = $i65 & i189;
+
+        $b67 = r44[$i66];
+
+        i193 = $b67 & 255;
+
+        $i68 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i69 = $i68 - 2;
+
+        $i70 = $i69 & i189;
+
+        $b71 = r44[$i70];
+
+        i194 = $b71 & 255;
+
+     label15:
+        $i73 = r0.<net.sourceforge.plantuml.brotli.State: int j>;
+
+        $i72 = r0.<net.sourceforge.plantuml.brotli.State: int insertLength>;
+
+        if $i73 >= $i72 goto label18;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i126 = r0.<net.sourceforge.plantuml.brotli.State: int literalBlockLength>;
+
+        if $i126 != 0 goto label16;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void decodeLiteralBlockSwitch(net.sourceforge.plantuml.brotli.State)>(r0);
+
+     label16:
+        $r18 = r0.<net.sourceforge.plantuml.brotli.State: byte[] contextMap>;
+
+        $i134 = r0.<net.sourceforge.plantuml.brotli.State: int contextMapSlice>;
+
+        $r16 = <net.sourceforge.plantuml.brotli.Context: int[] LOOKUP>;
+
+        $i127 = r0.<net.sourceforge.plantuml.brotli.State: int contextLookupOffset1>;
+
+        $i128 = $i127 + i193;
+
+        $i132 = $r16[$i128];
+
+        $r17 = <net.sourceforge.plantuml.brotli.Context: int[] LOOKUP>;
+
+        $i129 = r0.<net.sourceforge.plantuml.brotli.State: int contextLookupOffset2>;
+
+        $i130 = $i129 + i194;
+
+        $i131 = $r17[$i130];
+
+        $i133 = $i132 | $i131;
+
+        $i135 = $i134 + $i133;
+
+        $b136 = $r18[$i135];
+
+        i195 = $b136 & 255;
+
+        $i137 = r0.<net.sourceforge.plantuml.brotli.State: int literalBlockLength>;
+
+        $i138 = $i137 - 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int literalBlockLength> = $i138;
+
+        i194 = i193;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $r20 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup0>;
+
+        $r19 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup0>;
+
+        $i139 = $r19[i195];
+
+        i193 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readSymbol(int[],int,net.sourceforge.plantuml.brotli.State)>($r20, $i139, r0);
+
+        $i141 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $b140 = (byte) i193;
+
+        r44[$i141] = $b140;
+
+        $i142 = r0.<net.sourceforge.plantuml.brotli.State: int j>;
+
+        $i143 = $i142 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int j> = $i143;
+
+        $i144 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i145 = $i144 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int pos> = $i145;
+
+        if $i144 != i189 goto label17;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int nextRunningState> = 6;
+
+        $i146 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesToWrite> = $i146;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 12;
+
+        goto label18;
+
+     label17:
+        goto label15;
+
+     label18:
+        $i196 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i196 == 6 goto label19;
+
+        goto label03;
+
+     label19:
+        $i75 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i74 = r0.<net.sourceforge.plantuml.brotli.State: int insertLength>;
+
+        $i76 = $i75 - $i74;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i76;
+
+        $i77 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        if $i77 > 0 goto label20;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 3;
+
+        goto label03;
+
+     label20:
+        $i78 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        if $i78 >= 0 goto label24;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $i93 = r0.<net.sourceforge.plantuml.brotli.State: int distanceBlockLength>;
+
+        if $i93 != 0 goto label21;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void decodeDistanceBlockSwitch(net.sourceforge.plantuml.brotli.State)>(r0);
+
+     label21:
+        $i94 = r0.<net.sourceforge.plantuml.brotli.State: int distanceBlockLength>;
+
+        $i95 = $i94 - 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceBlockLength> = $i95;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        $r13 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup2>;
+
+        $r12 = r0.<net.sourceforge.plantuml.brotli.State: int[] hGroup2>;
+
+        $r11 = r0.<net.sourceforge.plantuml.brotli.State: byte[] distContextMap>;
+
+        $i98 = r0.<net.sourceforge.plantuml.brotli.State: int distContextMapSlice>;
+
+        $i96 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        if $i96 <= 4 goto label22;
+
+        $i197 = 3;
+
+        goto label23;
+
+     label22:
+        $i97 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        $i197 = $i97 - 2;
+
+     label23:
+        $i99 = $i98 + $i197;
+
+        $b100 = $r11[$i99];
+
+        $i101 = $b100 & 255;
+
+        $i102 = $r12[$i101];
+
+        $i103 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int readSymbol(int[],int,net.sourceforge.plantuml.brotli.State)>($r13, $i102, r0);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceCode> = $i103;
+
+        $i105 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        $i104 = r0.<net.sourceforge.plantuml.brotli.State: int numDirectDistanceCodes>;
+
+        if $i105 < $i104 goto label24;
+
+        $i107 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        $i106 = r0.<net.sourceforge.plantuml.brotli.State: int numDirectDistanceCodes>;
+
+        $i108 = $i107 - $i106;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceCode> = $i108;
+
+        $i110 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        $i109 = r0.<net.sourceforge.plantuml.brotli.State: int distancePostfixMask>;
+
+        i198 = $i110 & $i109;
+
+        $i112 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        $i111 = r0.<net.sourceforge.plantuml.brotli.State: int distancePostfixBits>;
+
+        $i113 = $i112 >>> $i111;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceCode> = $i113;
+
+        $i114 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        $i115 = $i114 >>> 1;
+
+        i199 = $i115 + 1;
+
+        $i116 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        $i117 = $i116 & 1;
+
+        $i118 = 2 + $i117;
+
+        $i119 = $i118 << i199;
+
+        i200 = $i119 - 4;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        i201 = staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readBits(net.sourceforge.plantuml.brotli.State,int)>(r0, i199);
+
+        $i120 = r0.<net.sourceforge.plantuml.brotli.State: int numDirectDistanceCodes>;
+
+        $i124 = $i120 + i198;
+
+        $i122 = i200 + i201;
+
+        $i121 = r0.<net.sourceforge.plantuml.brotli.State: int distancePostfixBits>;
+
+        $i123 = $i122 << $i121;
+
+        $i125 = $i124 + $i123;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distanceCode> = $i125;
+
+     label24:
+        $i202 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        $r45 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $i203 = r0.<net.sourceforge.plantuml.brotli.State: int distRbIdx>;
+
+        $i204 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int translateShortCodes(int,int[],int)>($i202, $r45, $i203);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distance> = $i204;
+
+        $i205 = r0.<net.sourceforge.plantuml.brotli.State: int distance>;
+
+        if $i205 >= 0 goto label25;
+
+        $r10 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r10.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Negative distance");
+
+        throw $r10;
+
+     label25:
+        $i80 = r0.<net.sourceforge.plantuml.brotli.State: int maxDistance>;
+
+        $i79 = r0.<net.sourceforge.plantuml.brotli.State: int maxBackwardDistance>;
+
+        if $i80 == $i79 goto label26;
+
+        $i91 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i90 = r0.<net.sourceforge.plantuml.brotli.State: int maxBackwardDistance>;
+
+        if $i91 >= $i90 goto label26;
+
+        $i92 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int maxDistance> = $i92;
+
+        goto label27;
+
+     label26:
+        $i81 = r0.<net.sourceforge.plantuml.brotli.State: int maxBackwardDistance>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int maxDistance> = $i81;
+
+     label27:
+        $i206 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int copyDst> = $i206;
+
+        $i207 = r0.<net.sourceforge.plantuml.brotli.State: int distance>;
+
+        $i208 = r0.<net.sourceforge.plantuml.brotli.State: int maxDistance>;
+
+        if $i207 <= $i208 goto label28;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 9;
+
+        goto label03;
+
+     label28:
+        $i82 = r0.<net.sourceforge.plantuml.brotli.State: int distanceCode>;
+
+        if $i82 <= 0 goto label29;
+
+        $r9 = r0.<net.sourceforge.plantuml.brotli.State: int[] rings>;
+
+        $i85 = r0.<net.sourceforge.plantuml.brotli.State: int distRbIdx>;
+
+        $i87 = $i85 & 3;
+
+        $i86 = r0.<net.sourceforge.plantuml.brotli.State: int distance>;
+
+        $r9[$i87] = $i86;
+
+        $i88 = r0.<net.sourceforge.plantuml.brotli.State: int distRbIdx>;
+
+        $i89 = $i88 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int distRbIdx> = $i89;
+
+     label29:
+        $i84 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        $i83 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        if $i84 <= $i83 goto label30;
+
+        $r8 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r8.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Invalid backward reference");
+
+        throw $r8;
+
+     label30:
+        r0.<net.sourceforge.plantuml.brotli.State: int j> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 7;
+
+     label31:
+        $i43 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i42 = r0.<net.sourceforge.plantuml.brotli.State: int distance>;
+
+        $i44 = $i43 - $i42;
+
+        i209 = $i44 & i189;
+
+        i210 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i46 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        $i45 = r0.<net.sourceforge.plantuml.brotli.State: int j>;
+
+        i211 = $i46 - $i45;
+
+        i212 = i209 + i211;
+
+        i47 = i210 + i211;
+
+        if i212 >= i189 goto label37;
+
+        if i47 >= i189 goto label37;
+
+        if i211 < 12 goto label32;
+
+        if i212 <= i210 goto label35;
+
+        if i47 <= i209 goto label35;
+
+     label32:
+        i213 = 0;
+
+     label33:
+        if i213 >= i211 goto label34;
+
+        $i61 = i210;
+
+        i210 = i210 + 1;
+
+        $i62 = i209;
+
+        i209 = i209 + 1;
+
+        $b63 = r44[$i62];
+
+        r44[$i61] = $b63;
+
+        i213 = i213 + 1;
+
+        goto label33;
+
+     label34:
+        goto label36;
+
+     label35:
+        staticinvoke <net.sourceforge.plantuml.brotli.Utils: void copyBytesWithin(byte[],int,int,int)>(r44, i210, i209, i212);
+
+     label36:
+        $i214 = r0.<net.sourceforge.plantuml.brotli.State: int j>;
+
+        $i215 = $i214 + i211;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int j> = $i215;
+
+        $i216 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i217 = $i216 - i211;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i217;
+
+        $i218 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i219 = $i218 + i211;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int pos> = $i219;
+
+        goto label38;
+
+     label37:
+        $i220 = r0.<net.sourceforge.plantuml.brotli.State: int j>;
+
+        $i221 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        if $i220 >= $i221 goto label38;
+
+        $i53 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i49 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i48 = r0.<net.sourceforge.plantuml.brotli.State: int distance>;
+
+        $i50 = $i49 - $i48;
+
+        $i51 = $i50 & i189;
+
+        $b52 = r44[$i51];
+
+        r44[$i53] = $b52;
+
+        $i54 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i55 = $i54 - 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i55;
+
+        $i56 = r0.<net.sourceforge.plantuml.brotli.State: int j>;
+
+        $i57 = $i56 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int j> = $i57;
+
+        $i58 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i59 = $i58 + 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int pos> = $i59;
+
+        if $i58 != i189 goto label37;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int nextRunningState> = 7;
+
+        $i60 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesToWrite> = $i60;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 12;
+
+        goto label38;
+
+     label38:
+        $i222 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i222 != 7 goto label03;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 3;
+
+        goto label03;
+
+     label39:
+        $i13 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        if $i13 < 4 goto label43;
+
+        $i14 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        if $i14 > 24 goto label43;
+
+        $r4 = <net.sourceforge.plantuml.brotli.Decode: int[] DICTIONARY_OFFSETS_BY_LENGTH>;
+
+        $i15 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        i223 = $r4[$i15];
+
+        $i17 = r0.<net.sourceforge.plantuml.brotli.State: int distance>;
+
+        $i16 = r0.<net.sourceforge.plantuml.brotli.State: int maxDistance>;
+
+        $i18 = $i17 - $i16;
+
+        i19 = $i18 - 1;
+
+        $r5 = <net.sourceforge.plantuml.brotli.Decode: int[] DICTIONARY_SIZE_BITS_BY_LENGTH>;
+
+        $i20 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        i21 = $r5[$i20];
+
+        $i22 = 1 << i21;
+
+        i23 = $i22 - 1;
+
+        i24 = i19 & i23;
+
+        i25 = i19 >>> i21;
+
+        $i26 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        $i27 = i24 * $i26;
+
+        i224 = i223 + $i27;
+
+        if i25 >= 121 goto label41;
+
+        $i28 = r0.<net.sourceforge.plantuml.brotli.State: int copyDst>;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.brotli.Dictionary: java.nio.ByteBuffer getData()>();
+
+        $i29 = r0.<net.sourceforge.plantuml.brotli.State: int copyLength>;
+
+        i30 = staticinvoke <net.sourceforge.plantuml.brotli.Transform: int transformDictionaryWord(byte[],int,java.nio.ByteBuffer,int,int,int)>(r44, $i28, $r7, i224, $i29, i25);
+
+        $i31 = r0.<net.sourceforge.plantuml.brotli.State: int copyDst>;
+
+        $i32 = $i31 + i30;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int copyDst> = $i32;
+
+        $i33 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i34 = $i33 + i30;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int pos> = $i34;
+
+        $i35 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i36 = $i35 - i30;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i36;
+
+        $i38 = r0.<net.sourceforge.plantuml.brotli.State: int copyDst>;
+
+        $i37 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        if $i38 < $i37 goto label40;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int nextRunningState> = 8;
+
+        $i39 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesToWrite> = $i39;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int bytesWritten> = 0;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 12;
+
+        goto label03;
+
+     label40:
+        goto label42;
+
+     label41:
+        $r6 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Invalid backward reference");
+
+        throw $r6;
+
+     label42:
+        goto label44;
+
+     label43:
+        $r3 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Invalid backward reference");
+
+        throw $r3;
+
+     label44:
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 3;
+
+        goto label03;
+
+     label45:
+        $i41 = r0.<net.sourceforge.plantuml.brotli.State: int ringBufferSize>;
+
+        $i40 = r0.<net.sourceforge.plantuml.brotli.State: int copyDst>;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.Utils: void copyBytesWithin(byte[],int,int,int)>(r44, 0, $i41, $i40);
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 3;
+
+        goto label03;
+
+     label46:
+        $i161 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        if $i161 <= 0 goto label47;
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void readMoreInput(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void fillBitWindow(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: int readFewBits(net.sourceforge.plantuml.brotli.State,int)>(r0, 8);
+
+        $i163 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        $i164 = $i163 - 1;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength> = $i164;
+
+        goto label46;
+
+     label47:
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = 1;
+
+        goto label03;
+
+     label48:
+        staticinvoke <net.sourceforge.plantuml.brotli.Decode: void copyUncompressedData(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        goto label03;
+
+     label49:
+        $i6 = staticinvoke <net.sourceforge.plantuml.brotli.Decode: int writeRingBuffer(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        if $i6 != 0 goto label50;
+
+        return;
+
+     label50:
+        $i8 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i7 = r0.<net.sourceforge.plantuml.brotli.State: int maxBackwardDistance>;
+
+        if $i8 < $i7 goto label51;
+
+        $i12 = r0.<net.sourceforge.plantuml.brotli.State: int maxBackwardDistance>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int maxDistance> = $i12;
+
+     label51:
+        $i9 = r0.<net.sourceforge.plantuml.brotli.State: int pos>;
+
+        $i10 = $i9 & i189;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int pos> = $i10;
+
+        $i11 = r0.<net.sourceforge.plantuml.brotli.State: int nextRunningState>;
+
+        r0.<net.sourceforge.plantuml.brotli.State: int runningState> = $i11;
+
+        goto label03;
+
+     label52:
+        $r37 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        $r38 = new java.lang.StringBuilder;
+
+        specialinvoke $r38.<java.lang.StringBuilder: void <init>()>();
+
+        $r39 = virtualinvoke $r38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Unexpected state ");
+
+        $i188 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        $r40 = virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i188);
+
+        $r41 = virtualinvoke $r40.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r37.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>($r41);
+
+        throw $r37;
+
+     label53:
+        $i3 = r0.<net.sourceforge.plantuml.brotli.State: int runningState>;
+
+        if $i3 != 10 goto label55;
+
+        $i4 = r0.<net.sourceforge.plantuml.brotli.State: int metaBlockLength>;
+
+        if $i4 >= 0 goto label54;
+
+        $r1 = new net.sourceforge.plantuml.brotli.BrotliRuntimeException;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.brotli.BrotliRuntimeException: void <init>(java.lang.String)>("Invalid metablock length");
+
+        throw $r1;
+
+     label54:
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void jumpToByteBoundary(net.sourceforge.plantuml.brotli.State)>(r0);
+
+        staticinvoke <net.sourceforge.plantuml.brotli.BitReader: void checkHealth(net.sourceforge.plantuml.brotli.State,int)>(r0, 1);
+
+     label55:
+        return;
+    }
+
+    static void <clinit>()
+    {
+        int[] $r0, $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r9, $r10, $r11, $r12, $r13;
+
+        <net.sourceforge.plantuml.brotli.Decode: int MAX_TRANSFORMED_WORD_LENGTH> = 37;
+
+        <net.sourceforge.plantuml.brotli.Decode: int MAX_WORD_LENGTH> = 24;
+
+        <net.sourceforge.plantuml.brotli.Decode: int MIN_WORD_LENGTH> = 4;
+
+        <net.sourceforge.plantuml.brotli.Decode: int NUM_DISTANCE_SHORT_CODES> = 16;
+
+        <net.sourceforge.plantuml.brotli.Decode: int CODE_LENGTH_CODES> = 18;
+
+        <net.sourceforge.plantuml.brotli.Decode: int HUFFMAN_TABLE_SIZE> = 1080;
+
+        <net.sourceforge.plantuml.brotli.Decode: int HUFFMAN_TABLE_MASK> = 255;
+
+        <net.sourceforge.plantuml.brotli.Decode: int HUFFMAN_TABLE_BITS> = 8;
+
+        <net.sourceforge.plantuml.brotli.Decode: int DISTANCE_CONTEXT_BITS> = 2;
+
+        <net.sourceforge.plantuml.brotli.Decode: int LITERAL_CONTEXT_BITS> = 6;
+
+        <net.sourceforge.plantuml.brotli.Decode: int NUM_BLOCK_LENGTH_CODES> = 26;
+
+        <net.sourceforge.plantuml.brotli.Decode: int NUM_INSERT_AND_COPY_CODES> = 704;
+
+        <net.sourceforge.plantuml.brotli.Decode: int NUM_LITERAL_CODES> = 256;
+
+        <net.sourceforge.plantuml.brotli.Decode: int CODE_LENGTH_REPEAT_CODE> = 16;
+
+        <net.sourceforge.plantuml.brotli.Decode: int DEFAULT_CODE_LENGTH> = 8;
+
+        <net.sourceforge.plantuml.brotli.Decode: int WRITE> = 12;
+
+        <net.sourceforge.plantuml.brotli.Decode: int CLOSED> = 11;
+
+        <net.sourceforge.plantuml.brotli.Decode: int FINISHED> = 10;
+
+        <net.sourceforge.plantuml.brotli.Decode: int TRANSFORM> = 9;
+
+        <net.sourceforge.plantuml.brotli.Decode: int COPY_WRAP_BUFFER> = 8;
+
+        <net.sourceforge.plantuml.brotli.Decode: int COPY_LOOP> = 7;
+
+        <net.sourceforge.plantuml.brotli.Decode: int INSERT_LOOP> = 6;
+
+        <net.sourceforge.plantuml.brotli.Decode: int COPY_UNCOMPRESSED> = 5;
+
+        <net.sourceforge.plantuml.brotli.Decode: int READ_METADATA> = 4;
+
+        <net.sourceforge.plantuml.brotli.Decode: int MAIN_LOOP> = 3;
+
+        <net.sourceforge.plantuml.brotli.Decode: int COMPRESSED_BLOCK_START> = 2;
+
+        <net.sourceforge.plantuml.brotli.Decode: int BLOCK_START> = 1;
+
+        <net.sourceforge.plantuml.brotli.Decode: int UNINITIALIZED> = 0;
+
+        $r0 = newarray (int)[18];
+
+        $r0[0] = 1;
+
+        $r0[1] = 2;
+
+        $r0[2] = 3;
+
+        $r0[3] = 4;
+
+        $r0[4] = 0;
+
+        $r0[5] = 5;
+
+        $r0[6] = 17;
+
+        $r0[7] = 6;
+
+        $r0[8] = 16;
+
+        $r0[9] = 7;
+
+        $r0[10] = 8;
+
+        $r0[11] = 9;
+
+        $r0[12] = 10;
+
+        $r0[13] = 11;
+
+        $r0[14] = 12;
+
+        $r0[15] = 13;
+
+        $r0[16] = 14;
+
+        $r0[17] = 15;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] CODE_LENGTH_CODE_ORDER> = $r0;
+
+        $r1 = newarray (int)[16];
+
+        $r1[0] = 3;
+
+        $r1[1] = 2;
+
+        $r1[2] = 1;
+
+        $r1[3] = 0;
+
+        $r1[4] = 3;
+
+        $r1[5] = 3;
+
+        $r1[6] = 3;
+
+        $r1[7] = 3;
+
+        $r1[8] = 3;
+
+        $r1[9] = 3;
+
+        $r1[10] = 2;
+
+        $r1[11] = 2;
+
+        $r1[12] = 2;
+
+        $r1[13] = 2;
+
+        $r1[14] = 2;
+
+        $r1[15] = 2;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] DISTANCE_SHORT_CODE_INDEX_OFFSET> = $r1;
+
+        $r2 = newarray (int)[16];
+
+        $r2[0] = 0;
+
+        $r2[1] = 0;
+
+        $r2[2] = 0;
+
+        $r2[3] = 0;
+
+        $r2[4] = -1;
+
+        $r2[5] = 1;
+
+        $r2[6] = -2;
+
+        $r2[7] = 2;
+
+        $r2[8] = -3;
+
+        $r2[9] = 3;
+
+        $r2[10] = -1;
+
+        $r2[11] = 1;
+
+        $r2[12] = -2;
+
+        $r2[13] = 2;
+
+        $r2[14] = -3;
+
+        $r2[15] = 3;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] DISTANCE_SHORT_CODE_VALUE_OFFSET> = $r2;
+
+        $r3 = newarray (int)[16];
+
+        $r3[0] = 131072;
+
+        $r3[1] = 131076;
+
+        $r3[2] = 131075;
+
+        $r3[3] = 196610;
+
+        $r3[4] = 131072;
+
+        $r3[5] = 131076;
+
+        $r3[6] = 131075;
+
+        $r3[7] = 262145;
+
+        $r3[8] = 131072;
+
+        $r3[9] = 131076;
+
+        $r3[10] = 131075;
+
+        $r3[11] = 196610;
+
+        $r3[12] = 131072;
+
+        $r3[13] = 131076;
+
+        $r3[14] = 131075;
+
+        $r3[15] = 262149;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] FIXED_TABLE> = $r3;
+
+        $r4 = newarray (int)[25];
+
+        $r4[0] = 0;
+
+        $r4[1] = 0;
+
+        $r4[2] = 0;
+
+        $r4[3] = 0;
+
+        $r4[4] = 0;
+
+        $r4[5] = 4096;
+
+        $r4[6] = 9216;
+
+        $r4[7] = 21504;
+
+        $r4[8] = 35840;
+
+        $r4[9] = 44032;
+
+        $r4[10] = 53248;
+
+        $r4[11] = 63488;
+
+        $r4[12] = 74752;
+
+        $r4[13] = 87040;
+
+        $r4[14] = 93696;
+
+        $r4[15] = 100864;
+
+        $r4[16] = 104704;
+
+        $r4[17] = 106752;
+
+        $r4[18] = 108928;
+
+        $r4[19] = 113536;
+
+        $r4[20] = 115968;
+
+        $r4[21] = 118528;
+
+        $r4[22] = 119872;
+
+        $r4[23] = 121280;
+
+        $r4[24] = 122016;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] DICTIONARY_OFFSETS_BY_LENGTH> = $r4;
+
+        $r5 = newarray (int)[25];
+
+        $r5[0] = 0;
+
+        $r5[1] = 0;
+
+        $r5[2] = 0;
+
+        $r5[3] = 0;
+
+        $r5[4] = 10;
+
+        $r5[5] = 10;
+
+        $r5[6] = 11;
+
+        $r5[7] = 11;
+
+        $r5[8] = 10;
+
+        $r5[9] = 10;
+
+        $r5[10] = 10;
+
+        $r5[11] = 10;
+
+        $r5[12] = 10;
+
+        $r5[13] = 9;
+
+        $r5[14] = 9;
+
+        $r5[15] = 8;
+
+        $r5[16] = 7;
+
+        $r5[17] = 7;
+
+        $r5[18] = 8;
+
+        $r5[19] = 7;
+
+        $r5[20] = 7;
+
+        $r5[21] = 6;
+
+        $r5[22] = 6;
+
+        $r5[23] = 5;
+
+        $r5[24] = 5;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] DICTIONARY_SIZE_BITS_BY_LENGTH> = $r5;
+
+        $r6 = newarray (int)[26];
+
+        $r6[0] = 1;
+
+        $r6[1] = 5;
+
+        $r6[2] = 9;
+
+        $r6[3] = 13;
+
+        $r6[4] = 17;
+
+        $r6[5] = 25;
+
+        $r6[6] = 33;
+
+        $r6[7] = 41;
+
+        $r6[8] = 49;
+
+        $r6[9] = 65;
+
+        $r6[10] = 81;
+
+        $r6[11] = 97;
+
+        $r6[12] = 113;
+
+        $r6[13] = 145;
+
+        $r6[14] = 177;
+
+        $r6[15] = 209;
+
+        $r6[16] = 241;
+
+        $r6[17] = 305;
+
+        $r6[18] = 369;
+
+        $r6[19] = 497;
+
+        $r6[20] = 753;
+
+        $r6[21] = 1265;
+
+        $r6[22] = 2289;
+
+        $r6[23] = 4337;
+
+        $r6[24] = 8433;
+
+        $r6[25] = 16625;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] BLOCK_LENGTH_OFFSET> = $r6;
+
+        $r7 = newarray (int)[26];
+
+        $r7[0] = 2;
+
+        $r7[1] = 2;
+
+        $r7[2] = 2;
+
+        $r7[3] = 2;
+
+        $r7[4] = 3;
+
+        $r7[5] = 3;
+
+        $r7[6] = 3;
+
+        $r7[7] = 3;
+
+        $r7[8] = 4;
+
+        $r7[9] = 4;
+
+        $r7[10] = 4;
+
+        $r7[11] = 4;
+
+        $r7[12] = 5;
+
+        $r7[13] = 5;
+
+        $r7[14] = 5;
+
+        $r7[15] = 5;
+
+        $r7[16] = 6;
+
+        $r7[17] = 6;
+
+        $r7[18] = 7;
+
+        $r7[19] = 8;
+
+        $r7[20] = 9;
+
+        $r7[21] = 10;
+
+        $r7[22] = 11;
+
+        $r7[23] = 12;
+
+        $r7[24] = 13;
+
+        $r7[25] = 24;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] BLOCK_LENGTH_N_BITS> = $r7;
+
+        $r8 = newarray (int)[24];
+
+        $r8[0] = 0;
+
+        $r8[1] = 1;
+
+        $r8[2] = 2;
+
+        $r8[3] = 3;
+
+        $r8[4] = 4;
+
+        $r8[5] = 5;
+
+        $r8[6] = 6;
+
+        $r8[7] = 8;
+
+        $r8[8] = 10;
+
+        $r8[9] = 14;
+
+        $r8[10] = 18;
+
+        $r8[11] = 26;
+
+        $r8[12] = 34;
+
+        $r8[13] = 50;
+
+        $r8[14] = 66;
+
+        $r8[15] = 98;
+
+        $r8[16] = 130;
+
+        $r8[17] = 194;
+
+        $r8[18] = 322;
+
+        $r8[19] = 578;
+
+        $r8[20] = 1090;
+
+        $r8[21] = 2114;
+
+        $r8[22] = 6210;
+
+        $r8[23] = 22594;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] INSERT_LENGTH_OFFSET> = $r8;
+
+        $r9 = newarray (int)[24];
+
+        $r9[0] = 0;
+
+        $r9[1] = 0;
+
+        $r9[2] = 0;
+
+        $r9[3] = 0;
+
+        $r9[4] = 0;
+
+        $r9[5] = 0;
+
+        $r9[6] = 1;
+
+        $r9[7] = 1;
+
+        $r9[8] = 2;
+
+        $r9[9] = 2;
+
+        $r9[10] = 3;
+
+        $r9[11] = 3;
+
+        $r9[12] = 4;
+
+        $r9[13] = 4;
+
+        $r9[14] = 5;
+
+        $r9[15] = 5;
+
+        $r9[16] = 6;
+
+        $r9[17] = 7;
+
+        $r9[18] = 8;
+
+        $r9[19] = 9;
+
+        $r9[20] = 10;
+
+        $r9[21] = 12;
+
+        $r9[22] = 14;
+
+        $r9[23] = 24;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] INSERT_LENGTH_N_BITS> = $r9;
+
+        $r10 = newarray (int)[24];
+
+        $r10[0] = 2;
+
+        $r10[1] = 3;
+
+        $r10[2] = 4;
+
+        $r10[3] = 5;
+
+        $r10[4] = 6;
+
+        $r10[5] = 7;
+
+        $r10[6] = 8;
+
+        $r10[7] = 9;
+
+        $r10[8] = 10;
+
+        $r10[9] = 12;
+
+        $r10[10] = 14;
+
+        $r10[11] = 18;
+
+        $r10[12] = 22;
+
+        $r10[13] = 30;
+
+        $r10[14] = 38;
+
+        $r10[15] = 54;
+
+        $r10[16] = 70;
+
+        $r10[17] = 102;
+
+        $r10[18] = 134;
+
+        $r10[19] = 198;
+
+        $r10[20] = 326;
+
+        $r10[21] = 582;
+
+        $r10[22] = 1094;
+
+        $r10[23] = 2118;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] COPY_LENGTH_OFFSET> = $r10;
+
+        $r11 = newarray (int)[24];
+
+        $r11[0] = 0;
+
+        $r11[1] = 0;
+
+        $r11[2] = 0;
+
+        $r11[3] = 0;
+
+        $r11[4] = 0;
+
+        $r11[5] = 0;
+
+        $r11[6] = 0;
+
+        $r11[7] = 0;
+
+        $r11[8] = 1;
+
+        $r11[9] = 1;
+
+        $r11[10] = 2;
+
+        $r11[11] = 2;
+
+        $r11[12] = 3;
+
+        $r11[13] = 3;
+
+        $r11[14] = 4;
+
+        $r11[15] = 4;
+
+        $r11[16] = 5;
+
+        $r11[17] = 5;
+
+        $r11[18] = 6;
+
+        $r11[19] = 7;
+
+        $r11[20] = 8;
+
+        $r11[21] = 9;
+
+        $r11[22] = 10;
+
+        $r11[23] = 24;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] COPY_LENGTH_N_BITS> = $r11;
+
+        $r12 = newarray (int)[9];
+
+        $r12[0] = 0;
+
+        $r12[1] = 0;
+
+        $r12[2] = 8;
+
+        $r12[3] = 8;
+
+        $r12[4] = 0;
+
+        $r12[5] = 16;
+
+        $r12[6] = 8;
+
+        $r12[7] = 16;
+
+        $r12[8] = 16;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] INSERT_RANGE_LUT> = $r12;
+
+        $r13 = newarray (int)[9];
+
+        $r13[0] = 0;
+
+        $r13[1] = 8;
+
+        $r13[2] = 0;
+
+        $r13[3] = 8;
+
+        $r13[4] = 16;
+
+        $r13[5] = 0;
+
+        $r13[6] = 16;
+
+        $r13[7] = 8;
+
+        $r13[8] = 16;
+
+        <net.sourceforge.plantuml.brotli.Decode: int[] COPY_RANGE_LUT> = $r13;
+
+        return;
+    }
+}

@@ -1,0 +1,81 @@
+public class net.sourceforge.plantuml.sudoku.PSystemSudokuFactory extends net.sourceforge.plantuml.command.PSystemSingleLineFactory
+{
+    private static final net.sourceforge.plantuml.command.regex.Pattern2 p;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.sudoku.PSystemSudokuFactory r0;
+
+        r0 := @this: net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.PSystemSingleLineFactory: void <init>()>();
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.AbstractPSystem executeLine(net.sourceforge.plantuml.core.UmlSource, java.lang.String)
+    {
+        java.lang.String r0, $r3, $r6, $r7;
+        net.sourceforge.plantuml.command.regex.Pattern2 $r1;
+        net.sourceforge.plantuml.command.regex.Matcher2 r2;
+        boolean $z0;
+        net.sourceforge.plantuml.sudoku.PSystemSudoku $r4, $r9;
+        net.sourceforge.plantuml.core.UmlSource r5;
+        long $l0;
+        java.lang.Long $r8;
+        net.sourceforge.plantuml.sudoku.PSystemSudokuFactory r10;
+
+        r10 := @this: net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
+
+        r5 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        r0 := @parameter1: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.sudoku.PSystemSudokuFactory: net.sourceforge.plantuml.command.regex.Pattern2 p>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.command.regex.Pattern2: net.sourceforge.plantuml.command.regex.Matcher2 matcher(java.lang.CharSequence)>(r0);
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: boolean find()>();
+
+        if $z0 != 0 goto label1;
+
+        return null;
+
+     label1:
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        if $r3 != null goto label2;
+
+        $r9 = new net.sourceforge.plantuml.sudoku.PSystemSudoku;
+
+        specialinvoke $r9.<net.sourceforge.plantuml.sudoku.PSystemSudoku: void <init>(net.sourceforge.plantuml.core.UmlSource,java.lang.Long)>(r5, null);
+
+        return $r9;
+
+     label2:
+        $r4 = new net.sourceforge.plantuml.sudoku.PSystemSudoku;
+
+        $r6 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.Matcher2: java.lang.String group(int)>(1);
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String goLowerCase(java.lang.String)>($r6);
+
+        $l0 = staticinvoke <java.lang.Long: long parseLong(java.lang.String,int)>($r7, 36);
+
+        $r8 = staticinvoke <java.lang.Long: java.lang.Long valueOf(long)>($l0);
+
+        specialinvoke $r4.<net.sourceforge.plantuml.sudoku.PSystemSudoku: void <init>(net.sourceforge.plantuml.core.UmlSource,java.lang.Long)>(r5, $r8);
+
+        return $r4;
+    }
+
+    static void <clinit>()
+    {
+        net.sourceforge.plantuml.command.regex.Pattern2 $r0;
+
+        $r0 = staticinvoke <net.sourceforge.plantuml.command.regex.MyPattern: net.sourceforge.plantuml.command.regex.Pattern2 cmpile(java.lang.String)>("^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
+
+        <net.sourceforge.plantuml.sudoku.PSystemSudokuFactory: net.sourceforge.plantuml.command.regex.Pattern2 p> = $r0;
+
+        return;
+    }
+}

@@ -1,0 +1,1321 @@
+public class net.sourceforge.plantuml.jsondiagram.SmetanaForJson extends java.lang.Object
+{
+    private static int NUM;
+    private static final boolean printFirst;
+    private static final boolean exitAfterFirst;
+    private final net.sourceforge.plantuml.ugraphic.UGraphic ug;
+    private final net.sourceforge.plantuml.ISkinParam skinParam;
+    private int num;
+    private h.ST_Agraph_s g;
+    private net.sourceforge.plantuml.graphic.StringBounder stringBounder;
+    private final java.util.List nodes;
+    private final java.util.List edges;
+    private net.sourceforge.plantuml.jsondiagram.Mirror xMirror;
+
+    public void <init>(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.ISkinParam)
+    {
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r0;
+        java.util.ArrayList $r1, $r2;
+        net.sourceforge.plantuml.ugraphic.UGraphic r3;
+        net.sourceforge.plantuml.graphic.StringBounder $r4;
+        net.sourceforge.plantuml.ISkinParam r5;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r3 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r5 := @parameter1: net.sourceforge.plantuml.ISkinParam;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.util.List nodes> = $r1;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.util.List edges> = $r2;
+
+        $r4 = interfaceinvoke r3.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.graphic.StringBounder stringBounder> = $r4;
+
+        r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam> = r5;
+
+        r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ugraphic.UGraphic ug> = r3;
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.style.SName getDiagramType()
+    {
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r0;
+        net.sourceforge.plantuml.ISkinParam $r1;
+        net.sourceforge.plantuml.UmlDiagramType $r2, $r3;
+        net.sourceforge.plantuml.style.SName $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        $r1 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r2 = interfaceinvoke $r1.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.UmlDiagramType getUmlDiagramType()>();
+
+        $r3 = <net.sourceforge.plantuml.UmlDiagramType: net.sourceforge.plantuml.UmlDiagramType JSON>;
+
+        if $r2 != $r3 goto label1;
+
+        $r5 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName jsonDiagram>;
+
+        return $r5;
+
+     label1:
+        $r4 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName yamlDiagram>;
+
+        return $r4;
+    }
+
+    private net.sourceforge.plantuml.style.Style getStyleArrow()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r4, $r5;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r3;
+        net.sourceforge.plantuml.style.StyleSignature $r6;
+        net.sourceforge.plantuml.ISkinParam $r7;
+        net.sourceforge.plantuml.style.StyleBuilder $r8;
+        net.sourceforge.plantuml.style.Style $r9;
+
+        r3 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r4 = specialinvoke r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.SName getDiagramType()>();
+
+        $r0[2] = $r4;
+
+        $r5 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName arrow>;
+
+        $r0[3] = $r5;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r7 = r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r8 = interfaceinvoke $r7.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r9 = virtualinvoke $r6.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r8);
+
+        return $r9;
+    }
+
+    private net.sourceforge.plantuml.style.Style getStyleNode()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r4, $r5;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r3;
+        net.sourceforge.plantuml.style.StyleSignature $r6;
+        net.sourceforge.plantuml.ISkinParam $r7;
+        net.sourceforge.plantuml.style.StyleBuilder $r8;
+        net.sourceforge.plantuml.style.Style $r9;
+
+        r3 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[4];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r4 = specialinvoke r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.SName getDiagramType()>();
+
+        $r0[2] = $r4;
+
+        $r5 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName node>;
+
+        $r0[3] = $r5;
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r7 = r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r8 = interfaceinvoke $r7.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r9 = virtualinvoke $r6.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r8);
+
+        return $r9;
+    }
+
+    private net.sourceforge.plantuml.style.Style getStyleNodeHeader()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r4, $r5, $r6;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r3;
+        net.sourceforge.plantuml.style.StyleSignature $r7;
+        net.sourceforge.plantuml.ISkinParam $r8;
+        net.sourceforge.plantuml.style.StyleBuilder $r9;
+        net.sourceforge.plantuml.style.Style $r10;
+
+        r3 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[5];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r4 = specialinvoke r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.SName getDiagramType()>();
+
+        $r0[2] = $r4;
+
+        $r5 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName header>;
+
+        $r0[3] = $r5;
+
+        $r6 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName node>;
+
+        $r0[4] = $r6;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r8 = r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r9 = interfaceinvoke $r8.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r10 = virtualinvoke $r7.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r9);
+
+        return $r10;
+    }
+
+    private net.sourceforge.plantuml.style.Style getStyleNodeHighlight()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r4, $r5, $r6;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r3;
+        net.sourceforge.plantuml.style.StyleSignature $r7;
+        net.sourceforge.plantuml.ISkinParam $r8;
+        net.sourceforge.plantuml.style.StyleBuilder $r9;
+        net.sourceforge.plantuml.style.Style $r10;
+
+        r3 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[5];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r4 = specialinvoke r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.SName getDiagramType()>();
+
+        $r0[2] = $r4;
+
+        $r5 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName node>;
+
+        $r0[3] = $r5;
+
+        $r6 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName highlight>;
+
+        $r0[4] = $r6;
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r8 = r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r9 = interfaceinvoke $r8.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r10 = virtualinvoke $r7.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r9);
+
+        return $r10;
+    }
+
+    private net.sourceforge.plantuml.style.Style getStyleNodeHeaderHighlight()
+    {
+        net.sourceforge.plantuml.style.SName[] $r0;
+        net.sourceforge.plantuml.style.SName $r1, $r2, $r4, $r5, $r6, $r7;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r3;
+        net.sourceforge.plantuml.style.StyleSignature $r8;
+        net.sourceforge.plantuml.ISkinParam $r9;
+        net.sourceforge.plantuml.style.StyleBuilder $r10;
+        net.sourceforge.plantuml.style.Style $r11;
+
+        r3 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        $r0 = newarray (net.sourceforge.plantuml.style.SName)[6];
+
+        $r1 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName root>;
+
+        $r0[0] = $r1;
+
+        $r2 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName element>;
+
+        $r0[1] = $r2;
+
+        $r4 = specialinvoke r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.SName getDiagramType()>();
+
+        $r0[2] = $r4;
+
+        $r5 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName header>;
+
+        $r0[3] = $r5;
+
+        $r6 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName node>;
+
+        $r0[4] = $r6;
+
+        $r7 = <net.sourceforge.plantuml.style.SName: net.sourceforge.plantuml.style.SName highlight>;
+
+        $r0[5] = $r7;
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.StyleSignature of(net.sourceforge.plantuml.style.SName[])>($r0);
+
+        $r9 = r3.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r10 = interfaceinvoke $r9.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.style.StyleBuilder getCurrentStyleBuilder()>();
+
+        $r11 = virtualinvoke $r8.<net.sourceforge.plantuml.style.StyleSignature: net.sourceforge.plantuml.style.Style getMergedStyle(net.sourceforge.plantuml.style.StyleBuilder)>($r10);
+
+        return $r11;
+    }
+
+    private h.ST_Agnode_s manageOneNode(net.sourceforge.plantuml.json.JsonValue, java.util.List)
+    {
+        net.sourceforge.plantuml.jsondiagram.TextBlockJson $r0;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r1;
+        net.sourceforge.plantuml.json.JsonValue r2, r20;
+        java.util.List r3, $r16, r17, r18, $r23, $r26;
+        net.sourceforge.plantuml.ISkinParam $r4;
+        net.sourceforge.plantuml.style.Style $r5, $r6, $r7, $r8;
+        net.sourceforge.plantuml.graphic.StringBounder $r10, $r12, $r13;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r11;
+        int $i0, $i1, $i2, $i3, i4;
+        boolean $z0;
+        double $d0, $d1;
+        h.ST_Agnode_s r14, r24;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode $r15;
+        java.lang.Object $r19, $r21;
+        java.lang.String $r22;
+        h.ST_Agedge_s r25;
+
+        r1 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r2 := @parameter0: net.sourceforge.plantuml.json.JsonValue;
+
+        r3 := @parameter1: java.util.List;
+
+        $r0 = new net.sourceforge.plantuml.jsondiagram.TextBlockJson;
+
+        $r4 = r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r5 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.Style getStyleNode()>();
+
+        $r6 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.Style getStyleNodeHighlight()>();
+
+        $r7 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.Style getStyleNodeHeader()>();
+
+        $r8 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.Style getStyleNodeHeaderHighlight()>();
+
+        specialinvoke $r0.<net.sourceforge.plantuml.jsondiagram.TextBlockJson: void <init>(net.sourceforge.plantuml.ISkinParam,net.sourceforge.plantuml.json.JsonValue,java.util.List,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.Style)>($r4, r2, r3, $r5, $r6, $r7, $r8);
+
+        $r10 = r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $r11 = virtualinvoke $r0.<net.sourceforge.plantuml.jsondiagram.TextBlockJson: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r10);
+
+        $i0 = virtualinvoke $r0.<net.sourceforge.plantuml.jsondiagram.TextBlockJson: int size()>();
+
+        $z0 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonValue: boolean isArray()>();
+
+        $r12 = r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $d0 = virtualinvoke $r0.<net.sourceforge.plantuml.jsondiagram.TextBlockJson: double getWidthColA(net.sourceforge.plantuml.graphic.StringBounder)>($r12);
+
+        $i1 = (int) $d0;
+
+        $r13 = r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.graphic.StringBounder stringBounder>;
+
+        $d1 = virtualinvoke $r0.<net.sourceforge.plantuml.jsondiagram.TextBlockJson: double getWidthColB(net.sourceforge.plantuml.graphic.StringBounder)>($r13);
+
+        $i2 = (int) $d1;
+
+        r14 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agnode_s createNode(net.sourceforge.plantuml.awt.geom.Dimension2D,int,boolean,int,int)>($r11, $i0, $z0, $i1, $i2);
+
+        $r16 = r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.util.List nodes>;
+
+        $r15 = new net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode;
+
+        specialinvoke $r15.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode: void <init>(net.sourceforge.plantuml.jsondiagram.TextBlockJson,h.ST_Agnode_s)>($r0, r14);
+
+        interfaceinvoke $r16.<java.util.List: boolean add(java.lang.Object)>($r15);
+
+        r17 = virtualinvoke $r0.<net.sourceforge.plantuml.jsondiagram.TextBlockJson: java.util.List children()>();
+
+        r18 = virtualinvoke $r0.<net.sourceforge.plantuml.jsondiagram.TextBlockJson: java.util.List keys()>();
+
+        i4 = 0;
+
+     label1:
+        $i3 = interfaceinvoke r17.<java.util.List: int size()>();
+
+        if i4 >= $i3 goto label3;
+
+        $r19 = interfaceinvoke r17.<java.util.List: java.lang.Object get(int)>(i4);
+
+        r20 = (net.sourceforge.plantuml.json.JsonValue) $r19;
+
+        if r20 == null goto label2;
+
+        $r21 = interfaceinvoke r18.<java.util.List: java.lang.Object get(int)>(i4);
+
+        $r22 = (java.lang.String) $r21;
+
+        $r23 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.util.List removeOneLevel(java.lang.String,java.util.List)>($r22, r3);
+
+        r24 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agnode_s manageOneNode(net.sourceforge.plantuml.json.JsonValue,java.util.List)>(r20, $r23);
+
+        r25 = specialinvoke r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agedge_s createEdge(h.ST_Agnode_s,h.ST_Agnode_s,int)>(r14, r24, i4);
+
+        $r26 = r1.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.util.List edges>;
+
+        interfaceinvoke $r26.<java.util.List: boolean add(java.lang.Object)>(r25);
+
+     label2:
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label3:
+        return r14;
+    }
+
+    private java.util.List removeOneLevel(java.lang.String, java.util.List)
+    {
+        java.util.ArrayList $r0;
+        java.util.List r2, $r4;
+        java.util.Iterator r3;
+        java.lang.Object $r5;
+        java.lang.StringBuilder $r6, $r7, $r9, $r10;
+        java.lang.String r8, $r11, $r12, $r13, $r14, r16, r17, r18;
+        boolean $z0, $z2;
+        int $i0;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r15;
+
+        r15 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r8 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.util.List;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        r3 = interfaceinvoke r2.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z2 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label4;
+
+        $r5 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r16 = (java.lang.String) $r5;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"");
+
+        $r9 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"");
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $z0 = virtualinvoke r16.<java.lang.String: boolean startsWith(java.lang.String)>($r11);
+
+        if $z0 != 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r12 = virtualinvoke r16.<java.lang.String: java.lang.String trim()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.String: java.lang.String replaceFirst(java.lang.String,java.lang.String)>("\"([^\"]+)\"", "");
+
+        r17 = virtualinvoke $r13.<java.lang.String: java.lang.String trim()>();
+
+        $i0 = virtualinvoke r17.<java.lang.String: int length()>();
+
+        if $i0 <= 0 goto label3;
+
+        $r14 = virtualinvoke r17.<java.lang.String: java.lang.String substring(int)>(1);
+
+        r18 = virtualinvoke $r14.<java.lang.String: java.lang.String trim()>();
+
+        interfaceinvoke $r0.<java.util.List: boolean add(java.lang.Object)>(r18);
+
+     label3:
+        goto label1;
+
+     label4:
+        $r4 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r0);
+
+        return $r4;
+    }
+
+    public void drawMe(net.sourceforge.plantuml.json.JsonValue, java.util.List)
+    {
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r0;
+        net.sourceforge.plantuml.json.JsonValue r1;
+        java.util.List r2, $r3, $r5, $r13;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.jsondiagram.Mirror $r4;
+        net.sourceforge.plantuml.style.Style $r6, $r17, $r24, $r35;
+        net.sourceforge.plantuml.style.PName $r7;
+        net.sourceforge.plantuml.style.Value $r8;
+        net.sourceforge.plantuml.ISkinParam $r9, $r11, $r18, $r21, $r25, $r28, $r36, $r39;
+        net.sourceforge.plantuml.api.ThemeStyle $r10, $r22, $r29, $r40;
+        net.sourceforge.plantuml.ugraphic.color.HColorSet $r12, $r20, $r27, $r38;
+        java.lang.Object $r14, $r33, $r45;
+        h.ST_Agedge_s r15;
+        net.sourceforge.plantuml.jsondiagram.JsonCurve r16;
+        net.sourceforge.plantuml.ugraphic.UGraphic $r19, $r23, $r26, $r30, $r32, $r37, $r41, $r44;
+        net.sourceforge.plantuml.ugraphic.UBackground $r31;
+        net.sourceforge.plantuml.jsondiagram.TextBlockJson $r34;
+        h.ST_Agnode_s $r42;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r43;
+        double $d0, d1;
+        java.util.Iterator r46, r48, r51;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode r47, r49;
+        net.sourceforge.plantuml.ugraphic.color.HColor r50;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r1 := @parameter0: net.sourceforge.plantuml.json.JsonValue;
+
+        r2 := @parameter1: java.util.List;
+
+        specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: void initGraph(net.sourceforge.plantuml.json.JsonValue,java.util.List)>(r1, r2);
+
+        d1 = 0.0;
+
+        $r3 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.util.List nodes>;
+
+        r46 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r46.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r45 = interfaceinvoke r46.<java.util.Iterator: java.lang.Object next()>();
+
+        r47 = (net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode) $r45;
+
+        $d0 = virtualinvoke r47.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode: double getMaxX()>();
+
+        d1 = staticinvoke <java.lang.Math: double max(double,double)>(d1, $d0);
+
+        goto label1;
+
+     label2:
+        $r4 = new net.sourceforge.plantuml.jsondiagram.Mirror;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.jsondiagram.Mirror: void <init>(double)>(d1);
+
+        r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.jsondiagram.Mirror xMirror> = $r4;
+
+        $r5 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.util.List nodes>;
+
+        r48 = interfaceinvoke $r5.<java.util.List: java.util.Iterator iterator()>();
+
+     label3:
+        $z1 = interfaceinvoke r48.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r33 = interfaceinvoke r48.<java.util.Iterator: java.lang.Object next()>();
+
+        r49 = (net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode) $r33;
+
+        $r34 = staticinvoke <net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode: net.sourceforge.plantuml.jsondiagram.TextBlockJson access$100(net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode)>(r49);
+
+        $r35 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.Style getStyleNode()>();
+
+        $r37 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ugraphic.UGraphic ug>;
+
+        $r36 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r38 = interfaceinvoke $r36.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r39 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r40 = interfaceinvoke $r39.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r41 = virtualinvoke $r35.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.ugraphic.UGraphic applyStrokeAndLineColor(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle)>($r37, $r38, $r40);
+
+        $r42 = staticinvoke <net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode: h.ST_Agnode_s access$000(net.sourceforge.plantuml.jsondiagram.SmetanaForJson$InternalNode)>(r49);
+
+        $r43 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ugraphic.UTranslate getPosition(h.ST_Agnode_s)>($r42);
+
+        $r44 = interfaceinvoke $r41.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r43);
+
+        virtualinvoke $r34.<net.sourceforge.plantuml.jsondiagram.TextBlockJson: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>($r44);
+
+        goto label3;
+
+     label4:
+        $r6 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.Style getStyleArrow()>();
+
+        $r7 = <net.sourceforge.plantuml.style.PName: net.sourceforge.plantuml.style.PName LineColor>;
+
+        $r8 = virtualinvoke $r6.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.style.Value value(net.sourceforge.plantuml.style.PName)>($r7);
+
+        $r9 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r10 = interfaceinvoke $r9.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r11 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r12 = interfaceinvoke $r11.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        r50 = interfaceinvoke $r8.<net.sourceforge.plantuml.style.Value: net.sourceforge.plantuml.ugraphic.color.HColor asColor(net.sourceforge.plantuml.api.ThemeStyle,net.sourceforge.plantuml.ugraphic.color.HColorSet)>($r10, $r12);
+
+        $r13 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.util.List edges>;
+
+        r51 = interfaceinvoke $r13.<java.util.List: java.util.Iterator iterator()>();
+
+     label5:
+        $z2 = interfaceinvoke r51.<java.util.Iterator: boolean hasNext()>();
+
+        if $z2 == 0 goto label6;
+
+        $r14 = interfaceinvoke r51.<java.util.Iterator: java.lang.Object next()>();
+
+        r15 = (h.ST_Agedge_s) $r14;
+
+        r16 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.jsondiagram.JsonCurve getCurve(h.ST_Agedge_s,double)>(r15, 13.0);
+
+        $r17 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.Style getStyleArrow()>();
+
+        $r19 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ugraphic.UGraphic ug>;
+
+        $r18 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r20 = interfaceinvoke $r18.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r21 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r22 = interfaceinvoke $r21.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r23 = virtualinvoke $r17.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.ugraphic.UGraphic applyStrokeAndLineColor(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle)>($r19, $r20, $r22);
+
+        virtualinvoke r16.<net.sourceforge.plantuml.jsondiagram.JsonCurve: void drawCurve(net.sourceforge.plantuml.ugraphic.color.HColor,net.sourceforge.plantuml.ugraphic.UGraphic)>(r50, $r23);
+
+        $r24 = specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.style.Style getStyleArrow()>();
+
+        $r26 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ugraphic.UGraphic ug>;
+
+        $r25 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r27 = interfaceinvoke $r25.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.ugraphic.color.HColorSet getIHtmlColorSet()>();
+
+        $r28 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.ISkinParam skinParam>;
+
+        $r29 = interfaceinvoke $r28.<net.sourceforge.plantuml.ISkinParam: net.sourceforge.plantuml.api.ThemeStyle getThemeStyle()>();
+
+        $r30 = virtualinvoke $r24.<net.sourceforge.plantuml.style.Style: net.sourceforge.plantuml.ugraphic.UGraphic applyStrokeAndLineColor(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.ugraphic.color.HColorSet,net.sourceforge.plantuml.api.ThemeStyle)>($r26, $r27, $r29);
+
+        $r31 = interfaceinvoke r50.<net.sourceforge.plantuml.ugraphic.color.HColor: net.sourceforge.plantuml.ugraphic.UBackground bg()>();
+
+        $r32 = interfaceinvoke $r30.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r31);
+
+        virtualinvoke r16.<net.sourceforge.plantuml.jsondiagram.JsonCurve: void drawSpot(net.sourceforge.plantuml.ugraphic.UGraphic)>($r32);
+
+        goto label5;
+
+     label6:
+        return;
+    }
+
+    private void initGraph(net.sourceforge.plantuml.json.JsonValue, java.util.List)
+    {
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r0;
+        h.ST_Agraph_s $r1, $r5, $r11;
+        smetana.core.CString $r2;
+        smetana.core.Z $r3;
+        h.ST_Agdesc_s $r4;
+        net.sourceforge.plantuml.json.JsonValue r6;
+        java.util.List r7;
+        java.lang.Object[] $r9;
+        h.ST_GVC_s r10;
+        int $i1, $i2, $i3, $i4;
+        java.lang.Throwable $r12;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r6 := @parameter0: net.sourceforge.plantuml.json.JsonValue;
+
+        r7 := @parameter1: java.util.List;
+
+        $r1 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agraph_s g>;
+
+        if $r1 == null goto label1;
+
+        return;
+
+     label1:
+        staticinvoke <smetana.core.Z: void open()>();
+
+     label2:
+        $r2 = new smetana.core.CString;
+
+        specialinvoke $r2.<smetana.core.CString: void <init>(java.lang.String)>("g");
+
+        $r3 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r4 = $r3.<smetana.core.Z: h.ST_Agdesc_s Agdirected>;
+
+        $r5 = staticinvoke <gen.lib.cgraph.graph__c: h.ST_Agraph_s agopen(smetana.core.CString,h.ST_Agdesc_s,h.ST_Agdisc_s)>($r2, $r4, null);
+
+        r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agraph_s g> = $r5;
+
+        specialinvoke r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agnode_s manageOneNode(net.sourceforge.plantuml.json.JsonValue,java.util.List)>(r6, r7);
+
+        $r9 = newarray (java.lang.Object)[0];
+
+        r10 = staticinvoke <gen.lib.gvc.gvc__c: h.ST_GVC_s gvContext(java.lang.Object[])>($r9);
+
+        $r11 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agraph_s g>;
+
+        staticinvoke <gen.lib.gvc.gvlayout__c: int gvLayoutJobs(h.ST_GVC_s,h.ST_Agraph_s)>(r10, $r11);
+
+     label3:
+        staticinvoke <smetana.core.Z: void close()>();
+
+        $i1 = <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int NUM>;
+
+        $i2 = $i1 + 1;
+
+        <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int NUM> = $i2;
+
+        goto label6;
+
+     label4:
+        $r12 := @caughtexception;
+
+     label5:
+        staticinvoke <smetana.core.Z: void close()>();
+
+        $i3 = <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int NUM>;
+
+        $i4 = $i3 + 1;
+
+        <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int NUM> = $i4;
+
+        throw $r12;
+
+     label6:
+        return;
+
+        catch java.lang.Throwable from label2 to label3 with label4;
+        catch java.lang.Throwable from label4 to label5 with label4;
+    }
+
+    private net.sourceforge.plantuml.ugraphic.UTranslate getPosition(h.ST_Agnode_s)
+    {
+        h.ST_Agnode_s r0;
+        h.ST_Agrec_s $r1;
+        h.ST_Agnodeinfo_t r2;
+        double $d0, d1, $d2, d3, d4, d5, $d6, $d7, $d8, $d9, $d10;
+        h.ST_pointf $r3, $r4;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r5, $r8;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r6;
+        net.sourceforge.plantuml.jsondiagram.Mirror $r7;
+
+        r6 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r0 := @parameter0: h.ST_Agnode_s;
+
+        $r1 = staticinvoke <smetana.core.Macro: h.ST_Agrec_s AGDATA(h.ST_Agobj_s)>(r0);
+
+        r2 = (h.ST_Agnodeinfo_t) $r1;
+
+        $d0 = r2.<h.ST_Agnodeinfo_t: double width>;
+
+        d1 = $d0 * 72.0;
+
+        $d2 = r2.<h.ST_Agnodeinfo_t: double height>;
+
+        d3 = $d2 * 72.0;
+
+        $r3 = r2.<h.ST_Agnodeinfo_t: h.ST_pointf coord>;
+
+        d4 = $r3.<h.ST_pointf: double x>;
+
+        $r4 = r2.<h.ST_Agnodeinfo_t: h.ST_pointf coord>;
+
+        d5 = $r4.<h.ST_pointf: double y>;
+
+        $r5 = new net.sourceforge.plantuml.ugraphic.UTranslate;
+
+        $d6 = d1 / 2.0;
+
+        $d9 = d4 - $d6;
+
+        $r7 = r6.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        $d7 = d3 / 2.0;
+
+        $d8 = d5 + $d7;
+
+        $d10 = virtualinvoke $r7.<net.sourceforge.plantuml.jsondiagram.Mirror: double inv(double)>($d8);
+
+        specialinvoke $r5.<net.sourceforge.plantuml.ugraphic.UTranslate: void <init>(double,double)>($d9, $d10);
+
+        $r8 = virtualinvoke $r5.<net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate sym()>();
+
+        return $r8;
+    }
+
+    private net.sourceforge.plantuml.jsondiagram.JsonCurve getCurve(h.ST_Agedge_s, double)
+    {
+        h.ST_Agedge_s r0;
+        h.ST_Agrec_s $r1;
+        h.ST_Agedgeinfo_t r2;
+        net.sourceforge.plantuml.jsondiagram.JsonCurve $r3;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r4;
+        double d0;
+        net.sourceforge.plantuml.jsondiagram.Mirror $r5;
+
+        r4 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r0 := @parameter0: h.ST_Agedge_s;
+
+        d0 := @parameter1: double;
+
+        $r1 = staticinvoke <smetana.core.Macro: h.ST_Agrec_s AGDATA(h.ST_Agobj_s)>(r0);
+
+        r2 = (h.ST_Agedgeinfo_t) $r1;
+
+        $r3 = new net.sourceforge.plantuml.jsondiagram.JsonCurve;
+
+        $r5 = r4.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: net.sourceforge.plantuml.jsondiagram.Mirror xMirror>;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.jsondiagram.JsonCurve: void <init>(h.ST_Agedgeinfo_t,net.sourceforge.plantuml.jsondiagram.Mirror,double)>(r2, $r5, d0);
+
+        return $r3;
+    }
+
+    private h.ST_Agedge_s createEdge(h.ST_Agnode_s, h.ST_Agnode_s, int)
+    {
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r0;
+        h.ST_Agnode_s r1, r2;
+        h.ST_Agraph_s $r3;
+        h.ST_Agedge_s r4;
+        java.lang.StringBuilder $r5, $r7, $r8, $r10, $r23, $r24, $r25, $r28, $r30, $r31, $r32, $r33, $r34, $r35, $r36, $r37;
+        java.lang.String $r6, $r9, $r11, $r26, $r38;
+        smetana.core.CString $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r22, $r27;
+        int i3, $i5, $i6, $i7;
+
+        r0 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r1 := @parameter0: h.ST_Agnode_s;
+
+        r2 := @parameter1: h.ST_Agnode_s;
+
+        i3 := @parameter2: int;
+
+        $r3 = r0.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agraph_s g>;
+
+        r4 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agedge_s agedge(h.ST_Agraph_s,h.ST_Agnode_s,h.ST_Agnode_s,smetana.core.CString,boolean)>($r3, r1, r2, null, 1);
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = r1.<h.ST_Agnode_s: java.lang.String NAME>;
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("-");
+
+        $r9 = r2.<h.ST_Agnode_s: java.lang.String NAME>;
+
+        $r10 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r9);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r4.<h.ST_Agedge_s: java.lang.String NAME> = $r11;
+
+        $r12 = new smetana.core.CString;
+
+        specialinvoke $r12.<smetana.core.CString: void <init>(java.lang.String)>("arrowsize");
+
+        $r13 = new smetana.core.CString;
+
+        specialinvoke $r13.<smetana.core.CString: void <init>(java.lang.String)>(".75");
+
+        $r14 = new smetana.core.CString;
+
+        specialinvoke $r14.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r4, $r12, $r13, $r14);
+
+        $r15 = new smetana.core.CString;
+
+        specialinvoke $r15.<smetana.core.CString: void <init>(java.lang.String)>("arrowtail");
+
+        $r16 = new smetana.core.CString;
+
+        specialinvoke $r16.<smetana.core.CString: void <init>(java.lang.String)>("none");
+
+        $r17 = new smetana.core.CString;
+
+        specialinvoke $r17.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r4, $r15, $r16, $r17);
+
+        $r18 = new smetana.core.CString;
+
+        specialinvoke $r18.<smetana.core.CString: void <init>(java.lang.String)>("arrowhead");
+
+        $r19 = new smetana.core.CString;
+
+        specialinvoke $r19.<smetana.core.CString: void <init>(java.lang.String)>("normal");
+
+        $r20 = new smetana.core.CString;
+
+        specialinvoke $r20.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r4, $r18, $r19, $r20);
+
+        $r21 = new smetana.core.CString;
+
+        specialinvoke $r21.<smetana.core.CString: void <init>(java.lang.String)>("tailport");
+
+        $r22 = new smetana.core.CString;
+
+        $r23 = new java.lang.StringBuilder;
+
+        specialinvoke $r23.<java.lang.StringBuilder: void <init>()>();
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("P");
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r26 = virtualinvoke $r25.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r22.<smetana.core.CString: void <init>(java.lang.String)>($r26);
+
+        $r27 = new smetana.core.CString;
+
+        specialinvoke $r27.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r4, $r21, $r22, $r27);
+
+        $r28 = new java.lang.StringBuilder;
+
+        specialinvoke $r28.<java.lang.StringBuilder: void <init>()>();
+
+        $r30 = new java.lang.StringBuilder;
+
+        specialinvoke $r30.<java.lang.StringBuilder: void <init>()>();
+
+        $r31 = virtualinvoke $r30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("N");
+
+        $i5 = r1.<h.ST_Agnode_s: int UID>;
+
+        $r32 = virtualinvoke $r31.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i5);
+
+        $r33 = virtualinvoke $r32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" -> N");
+
+        $i6 = r2.<h.ST_Agnode_s: int UID>;
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i6);
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" [tailport=\"P");
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r37 = virtualinvoke $r36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\", arrowsize=.75]");
+
+        $r38 = virtualinvoke $r37.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r28.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r38);
+
+        $i7 = <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int NUM>;
+
+        if $i7 != 0 goto label1;
+
+     label1:
+        return r4;
+    }
+
+    private h.ST_Agnode_s createNode(net.sourceforge.plantuml.awt.geom.Dimension2D, int, boolean, int, int)
+    {
+        java.lang.StringBuilder $r0, $r1, $r3, $r5, $r6, $r7, $r11, $r13, $r14, $r17, $r18, $r19, $r26, $r27, $r28, $r33, $r34, $r35, $r39, $r41, $r42, $r43, $r44, $r47, $r48, $r49, $r50, $r51, $r52, $r54, $r55;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r2;
+        double $d0, $d1, $d2, $d3;
+        java.lang.String r4, r8, $r15, $r20, $r29, $r36, r38, $r45, $r53, $r56;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r9;
+        smetana.core.CString $r10, $r21, $r22, $r23, $r24, $r25, $r30, $r31, $r32, $r37, $r58, $r59, $r60;
+        h.ST_Agraph_s $r12;
+        int $i0, $i1, $i2, $i3, i7, i8, i9, $i10, $i11, $i12, $i13;
+        h.ST_Agnode_s r16;
+        boolean z1;
+
+        r9 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        r2 := @parameter0: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        i7 := @parameter1: int;
+
+        z1 := @parameter2: boolean;
+
+        i8 := @parameter3: int;
+
+        i9 := @parameter4: int;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d0 = virtualinvoke r2.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d1 = $d0 / 72.0;
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d1);
+
+        r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r5 = new java.lang.StringBuilder;
+
+        specialinvoke $r5.<java.lang.StringBuilder: void <init>()>();
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $d2 = virtualinvoke r2.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d3 = $d2 / 72.0;
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(double)>($d3);
+
+        r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r12 = r9.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: h.ST_Agraph_s g>;
+
+        $r10 = new smetana.core.CString;
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("N");
+
+        $i0 = r9.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int num>;
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r10.<smetana.core.CString: void <init>(java.lang.String)>($r15);
+
+        r16 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agnode(h.ST_Agraph_s,smetana.core.CString,boolean)>($r12, $r10, 1);
+
+        $r17 = new java.lang.StringBuilder;
+
+        specialinvoke $r17.<java.lang.StringBuilder: void <init>()>();
+
+        $r18 = virtualinvoke $r17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("N ");
+
+        $i1 = r9.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int num>;
+
+        $r19 = virtualinvoke $r18.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r16.<h.ST_Agnode_s: java.lang.String NAME> = $r20;
+
+        $i2 = r9.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int num>;
+
+        $i3 = $i2 + 1;
+
+        r9.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int num> = $i3;
+
+        $r21 = new smetana.core.CString;
+
+        specialinvoke $r21.<smetana.core.CString: void <init>(java.lang.String)>("shape");
+
+        $r22 = new smetana.core.CString;
+
+        specialinvoke $r22.<smetana.core.CString: void <init>(java.lang.String)>("record");
+
+        $r23 = new smetana.core.CString;
+
+        specialinvoke $r23.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r16, $r21, $r22, $r23);
+
+        $r24 = new smetana.core.CString;
+
+        specialinvoke $r24.<smetana.core.CString: void <init>(java.lang.String)>("height");
+
+        $r25 = new smetana.core.CString;
+
+        $r26 = new java.lang.StringBuilder;
+
+        specialinvoke $r26.<java.lang.StringBuilder: void <init>()>();
+
+        $r27 = virtualinvoke $r26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r28 = virtualinvoke $r27.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r4);
+
+        $r29 = virtualinvoke $r28.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r25.<smetana.core.CString: void <init>(java.lang.String)>($r29);
+
+        $r30 = new smetana.core.CString;
+
+        specialinvoke $r30.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r16, $r24, $r25, $r30);
+
+        $r31 = new smetana.core.CString;
+
+        specialinvoke $r31.<smetana.core.CString: void <init>(java.lang.String)>("width");
+
+        $r32 = new smetana.core.CString;
+
+        $r33 = new java.lang.StringBuilder;
+
+        specialinvoke $r33.<java.lang.StringBuilder: void <init>()>();
+
+        $r34 = virtualinvoke $r33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r35 = virtualinvoke $r34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r8);
+
+        $r36 = virtualinvoke $r35.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r32.<smetana.core.CString: void <init>(java.lang.String)>($r36);
+
+        $r37 = new smetana.core.CString;
+
+        specialinvoke $r37.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r16, $r31, $r32, $r37);
+
+        $i11 = i8 - 8;
+
+        $i10 = i9 - 8;
+
+        r38 = specialinvoke r9.<net.sourceforge.plantuml.jsondiagram.SmetanaForJson: java.lang.String getDotLabel(int,boolean,int,int,int)>(i7, z1, $i11, $i10, 0);
+
+        if i7 <= 0 goto label1;
+
+        $r58 = new smetana.core.CString;
+
+        specialinvoke $r58.<smetana.core.CString: void <init>(java.lang.String)>("label");
+
+        $r59 = new smetana.core.CString;
+
+        specialinvoke $r59.<smetana.core.CString: void <init>(java.lang.String)>(r38);
+
+        $r60 = new smetana.core.CString;
+
+        specialinvoke $r60.<smetana.core.CString: void <init>(java.lang.String)>("");
+
+        staticinvoke <gen.lib.cgraph.attr__c: int agsafeset(h.ST_Agobj_s,smetana.core.CString,smetana.core.CString,smetana.core.CString)>(r16, $r58, $r59, $r60);
+
+     label1:
+        $r39 = new java.lang.StringBuilder;
+
+        specialinvoke $r39.<java.lang.StringBuilder: void <init>()>();
+
+        $r41 = new java.lang.StringBuilder;
+
+        specialinvoke $r41.<java.lang.StringBuilder: void <init>()>();
+
+        $r42 = virtualinvoke $r41.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("N");
+
+        $i12 = r16.<h.ST_Agnode_s: int UID>;
+
+        $r43 = virtualinvoke $r42.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i12);
+
+        $r44 = virtualinvoke $r43.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" [");
+
+        $r45 = virtualinvoke $r44.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r45);
+
+        $r47 = new java.lang.StringBuilder;
+
+        specialinvoke $r47.<java.lang.StringBuilder: void <init>()>();
+
+        $r48 = virtualinvoke $r47.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("shape=record, height=");
+
+        $r49 = virtualinvoke $r48.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r4);
+
+        $r50 = virtualinvoke $r49.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", width=");
+
+        $r51 = virtualinvoke $r50.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r8);
+
+        $r52 = virtualinvoke $r51.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", label=\"");
+
+        $r53 = virtualinvoke r38.<java.lang.String: java.lang.String replace(char,char)>(120, 46);
+
+        $r54 = virtualinvoke $r52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r53);
+
+        $r55 = virtualinvoke $r54.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\"]");
+
+        $r56 = virtualinvoke $r55.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r56);
+
+        $i13 = <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int NUM>;
+
+        if $i13 != 0 goto label2;
+
+     label2:
+        return r16;
+    }
+
+    private java.lang.String getDotLabel(int, boolean, int, int, int)
+    {
+        java.lang.StringBuilder $r0, $r4, $r5, $r6, $r7, $r10, $r11, $r12, $r13, $r14, $r15, $r19, $r20, $r21, $r22, $r23, $r24;
+        boolean z0;
+        int i0, i1, i2, $i3, i4, i5;
+        java.lang.String $r2, $r8, $r16, $r25;
+        net.sourceforge.plantuml.jsondiagram.SmetanaForJson r27;
+
+        r27 := @this: net.sourceforge.plantuml.jsondiagram.SmetanaForJson;
+
+        i0 := @parameter0: int;
+
+        z0 := @parameter1: boolean;
+
+        i4 := @parameter2: int;
+
+        i2 := @parameter3: int;
+
+        i1 := @parameter4: int;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>(java.lang.String)>("");
+
+        if z0 != 0 goto label1;
+
+        $r19 = new java.lang.StringBuilder;
+
+        specialinvoke $r19.<java.lang.StringBuilder: void <init>()>();
+
+        $r20 = virtualinvoke $r19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("{_dim_");
+
+        $r21 = virtualinvoke $r20.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r22 = virtualinvoke $r21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
+
+        $r23 = virtualinvoke $r22.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i4);
+
+        $r24 = virtualinvoke $r23.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_|{");
+
+        $r25 = virtualinvoke $r24.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r25);
+
+     label1:
+        i5 = 0;
+
+     label2:
+        if i5 >= i0 goto label4;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<P");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i5);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(">");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        $r10 = new java.lang.StringBuilder;
+
+        specialinvoke $r10.<java.lang.StringBuilder: void <init>()>();
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_dim_");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i1);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
+
+        $r14 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i2);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("_");
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r16);
+
+        $i3 = i0 - 1;
+
+        if i5 >= $i3 goto label3;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("|");
+
+     label3:
+        i5 = i5 + 1;
+
+        goto label2;
+
+     label4:
+        if z0 != 0 goto label5;
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("}}");
+
+     label5:
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r2;
+    }
+
+    static void <clinit>()
+    {
+        <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: boolean exitAfterFirst> = 0;
+
+        <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: boolean printFirst> = 0;
+
+        <net.sourceforge.plantuml.jsondiagram.SmetanaForJson: int NUM> = 0;
+
+        return;
+    }
+}

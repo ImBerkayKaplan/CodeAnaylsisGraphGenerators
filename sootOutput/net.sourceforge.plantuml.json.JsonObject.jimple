@@ -1,0 +1,1180 @@
+public class net.sourceforge.plantuml.json.JsonObject extends net.sourceforge.plantuml.json.JsonValue implements java.lang.Iterable
+{
+    private final java.util.List names;
+    private final java.util.List values;
+    private transient net.sourceforge.plantuml.json.JsonObject$HashIndexTable table;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.util.ArrayList $r1, $r2;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable $r3;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonValue: void <init>()>();
+
+        $r1 = new java.util.ArrayList;
+
+        specialinvoke $r1.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names> = $r1;
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List values> = $r2;
+
+        $r3 = new net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject$HashIndexTable table> = $r3;
+
+        return;
+    }
+
+    public void <init>(net.sourceforge.plantuml.json.JsonObject)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0, r1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: net.sourceforge.plantuml.json.JsonObject;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonObject: void <init>(net.sourceforge.plantuml.json.JsonObject,boolean)>(r1, 0);
+
+        return;
+    }
+
+    private void <init>(net.sourceforge.plantuml.json.JsonObject, boolean)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0, r1;
+        boolean z0;
+        java.util.ArrayList $r2, $r4;
+        java.util.List $r3, $r5, $r7, $r8, $r9, $r10;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable $r6;
+        java.lang.NullPointerException $r11;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: net.sourceforge.plantuml.json.JsonObject;
+
+        z0 := @parameter1: boolean;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonValue: void <init>()>();
+
+        if r1 != null goto label1;
+
+        $r11 = new java.lang.NullPointerException;
+
+        specialinvoke $r11.<java.lang.NullPointerException: void <init>(java.lang.String)>("object is null");
+
+        throw $r11;
+
+     label1:
+        if z0 == 0 goto label2;
+
+        $r7 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $r8 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r7);
+
+        r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names> = $r8;
+
+        $r9 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        $r10 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r9);
+
+        r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List values> = $r10;
+
+        goto label3;
+
+     label2:
+        $r2 = new java.util.ArrayList;
+
+        $r3 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>(java.util.Collection)>($r3);
+
+        r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names> = $r2;
+
+        $r4 = new java.util.ArrayList;
+
+        $r5 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        specialinvoke $r4.<java.util.ArrayList: void <init>(java.util.Collection)>($r5);
+
+        r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List values> = $r4;
+
+     label3:
+        $r6 = new net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject$HashIndexTable table> = $r6;
+
+        specialinvoke r0.<net.sourceforge.plantuml.json.JsonObject: void updateHashIndex()>();
+
+        return;
+    }
+
+    public static net.sourceforge.plantuml.json.JsonObject readFrom(java.io.Reader) throws java.io.IOException
+    {
+        java.io.Reader r0;
+        net.sourceforge.plantuml.json.JsonValue $r1;
+        net.sourceforge.plantuml.json.JsonObject $r2;
+
+        r0 := @parameter0: java.io.Reader;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.json.JsonValue: net.sourceforge.plantuml.json.JsonValue readFrom(java.io.Reader)>(r0);
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonValue: net.sourceforge.plantuml.json.JsonObject asObject()>();
+
+        return $r2;
+    }
+
+    public static net.sourceforge.plantuml.json.JsonObject readFrom(java.lang.String)
+    {
+        java.lang.String r0;
+        net.sourceforge.plantuml.json.JsonValue $r1;
+        net.sourceforge.plantuml.json.JsonObject $r2;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.json.JsonValue: net.sourceforge.plantuml.json.JsonValue readFrom(java.lang.String)>(r0);
+
+        $r2 = virtualinvoke $r1.<net.sourceforge.plantuml.json.JsonValue: net.sourceforge.plantuml.json.JsonObject asObject()>();
+
+        return $r2;
+    }
+
+    public static net.sourceforge.plantuml.json.JsonObject unmodifiableObject(net.sourceforge.plantuml.json.JsonObject)
+    {
+        net.sourceforge.plantuml.json.JsonObject $r0, r1;
+
+        r1 := @parameter0: net.sourceforge.plantuml.json.JsonObject;
+
+        $r0 = new net.sourceforge.plantuml.json.JsonObject;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.json.JsonObject: void <init>(net.sourceforge.plantuml.json.JsonObject,boolean)>(r1, 1);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject add(java.lang.String, int)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        int i0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(int)>(i0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject add(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject add(java.lang.String, long)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        long l0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        l0 := @parameter1: long;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(long)>(l0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject add(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject add(java.lang.String, float)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        float f0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        f0 := @parameter1: float;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(float)>(f0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject add(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject add(java.lang.String, double)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        double d0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        d0 := @parameter1: double;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(double)>(d0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject add(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject add(java.lang.String, boolean)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        boolean z0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        z0 := @parameter1: boolean;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(boolean)>(z0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject add(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject add(java.lang.String, java.lang.String)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1, r2;
+        net.sourceforge.plantuml.json.JsonValue $r3;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.lang.String;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(java.lang.String)>(r2);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject add(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r3);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject add(java.lang.String, net.sourceforge.plantuml.json.JsonValue)
+    {
+        java.lang.String r0;
+        net.sourceforge.plantuml.json.JsonValue r1;
+        net.sourceforge.plantuml.json.JsonObject r2;
+        java.util.List $r3, $r5, $r6;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable $r4;
+        int $i0;
+        java.lang.NullPointerException $r7, $r8;
+
+        r2 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: net.sourceforge.plantuml.json.JsonValue;
+
+        if r0 != null goto label1;
+
+        $r8 = new java.lang.NullPointerException;
+
+        specialinvoke $r8.<java.lang.NullPointerException: void <init>(java.lang.String)>("name is null");
+
+        throw $r8;
+
+     label1:
+        if r1 != null goto label2;
+
+        $r7 = new java.lang.NullPointerException;
+
+        specialinvoke $r7.<java.lang.NullPointerException: void <init>(java.lang.String)>("value is null");
+
+        throw $r7;
+
+     label2:
+        $r4 = r2.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject$HashIndexTable table>;
+
+        $r3 = r2.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $i0 = interfaceinvoke $r3.<java.util.List: int size()>();
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: void add(java.lang.String,int)>(r0, $i0);
+
+        $r5 = r2.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        interfaceinvoke $r5.<java.util.List: boolean add(java.lang.Object)>(r0);
+
+        $r6 = r2.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        interfaceinvoke $r6.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+        return r2;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject set(java.lang.String, int)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        int i0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(int)>(i0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject set(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject set(java.lang.String, long)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        long l0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        l0 := @parameter1: long;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(long)>(l0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject set(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject set(java.lang.String, float)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        float f0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        f0 := @parameter1: float;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(float)>(f0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject set(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject set(java.lang.String, double)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        double d0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        d0 := @parameter1: double;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(double)>(d0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject set(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject set(java.lang.String, boolean)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        boolean z0;
+        net.sourceforge.plantuml.json.JsonValue $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        z0 := @parameter1: boolean;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(boolean)>(z0);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject set(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r2);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject set(java.lang.String, java.lang.String)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1, r2;
+        net.sourceforge.plantuml.json.JsonValue $r3;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        r2 := @parameter1: java.lang.String;
+
+        $r3 = staticinvoke <net.sourceforge.plantuml.json.Json: net.sourceforge.plantuml.json.JsonValue value(java.lang.String)>(r2);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject set(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>(r1, $r3);
+
+        return r0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject set(java.lang.String, net.sourceforge.plantuml.json.JsonValue)
+    {
+        java.lang.String r0;
+        net.sourceforge.plantuml.json.JsonValue r1;
+        net.sourceforge.plantuml.json.JsonObject r2;
+        int i0, $i1;
+        java.util.List $r3, $r5, $r6, $r7;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable $r4;
+        java.lang.NullPointerException $r9, $r10;
+
+        r2 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r0 := @parameter0: java.lang.String;
+
+        r1 := @parameter1: net.sourceforge.plantuml.json.JsonValue;
+
+        if r0 != null goto label1;
+
+        $r10 = new java.lang.NullPointerException;
+
+        specialinvoke $r10.<java.lang.NullPointerException: void <init>(java.lang.String)>("name is null");
+
+        throw $r10;
+
+     label1:
+        if r1 != null goto label2;
+
+        $r9 = new java.lang.NullPointerException;
+
+        specialinvoke $r9.<java.lang.NullPointerException: void <init>(java.lang.String)>("value is null");
+
+        throw $r9;
+
+     label2:
+        i0 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonObject: int indexOf(java.lang.String)>(r0);
+
+        if i0 == -1 goto label3;
+
+        $r7 = r2.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        interfaceinvoke $r7.<java.util.List: java.lang.Object set(int,java.lang.Object)>(i0, r1);
+
+        goto label4;
+
+     label3:
+        $r4 = r2.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject$HashIndexTable table>;
+
+        $r3 = r2.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $i1 = interfaceinvoke $r3.<java.util.List: int size()>();
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: void add(java.lang.String,int)>(r0, $i1);
+
+        $r5 = r2.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        interfaceinvoke $r5.<java.util.List: boolean add(java.lang.Object)>(r0);
+
+        $r6 = r2.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        interfaceinvoke $r6.<java.util.List: boolean add(java.lang.Object)>(r1);
+
+     label4:
+        return r2;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject remove(java.lang.String)
+    {
+        java.lang.String r0;
+        net.sourceforge.plantuml.json.JsonObject r1;
+        int i0;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable $r2;
+        java.util.List $r3, $r5;
+        java.lang.NullPointerException $r7;
+
+        r1 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r0 := @parameter0: java.lang.String;
+
+        if r0 != null goto label1;
+
+        $r7 = new java.lang.NullPointerException;
+
+        specialinvoke $r7.<java.lang.NullPointerException: void <init>(java.lang.String)>("name is null");
+
+        throw $r7;
+
+     label1:
+        i0 = virtualinvoke r1.<net.sourceforge.plantuml.json.JsonObject: int indexOf(java.lang.String)>(r0);
+
+        if i0 == -1 goto label2;
+
+        $r2 = r1.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject$HashIndexTable table>;
+
+        virtualinvoke $r2.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: void remove(int)>(i0);
+
+        $r3 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        interfaceinvoke $r3.<java.util.List: java.lang.Object remove(int)>(i0);
+
+        $r5 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        interfaceinvoke $r5.<java.util.List: java.lang.Object remove(int)>(i0);
+
+     label2:
+        return r1;
+    }
+
+    public boolean contains(java.lang.String)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        java.util.List $r2;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $z0 = interfaceinvoke $r2.<java.util.List: boolean contains(java.lang.Object)>(r1);
+
+        return $z0;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject merge(net.sourceforge.plantuml.json.JsonObject)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0, r2;
+        java.util.Iterator r1;
+        boolean $z0;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.json.JsonObject$Member r4;
+        java.lang.String $r5;
+        net.sourceforge.plantuml.json.JsonValue $r6;
+        java.lang.NullPointerException $r8;
+
+        r2 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r0 := @parameter0: net.sourceforge.plantuml.json.JsonObject;
+
+        if r0 != null goto label1;
+
+        $r8 = new java.lang.NullPointerException;
+
+        specialinvoke $r8.<java.lang.NullPointerException: void <init>(java.lang.String)>("object is null");
+
+        throw $r8;
+
+     label1:
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: java.util.Iterator iterator()>();
+
+     label2:
+        $z0 = interfaceinvoke r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r1.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.json.JsonObject$Member) $r3;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.json.JsonObject$Member: java.lang.String access$000(net.sourceforge.plantuml.json.JsonObject$Member)>(r4);
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.json.JsonObject$Member: net.sourceforge.plantuml.json.JsonValue access$100(net.sourceforge.plantuml.json.JsonObject$Member)>(r4);
+
+        virtualinvoke r2.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject set(java.lang.String,net.sourceforge.plantuml.json.JsonValue)>($r5, $r6);
+
+        goto label2;
+
+     label3:
+        return r2;
+    }
+
+    public net.sourceforge.plantuml.json.JsonValue get(java.lang.String)
+    {
+        java.lang.String r0;
+        net.sourceforge.plantuml.json.JsonObject r1;
+        int i0;
+        java.util.List $r2;
+        java.lang.Object $r3;
+        java.lang.NullPointerException $r4;
+        net.sourceforge.plantuml.json.JsonValue $r5;
+
+        r1 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r0 := @parameter0: java.lang.String;
+
+        if r0 != null goto label1;
+
+        $r4 = new java.lang.NullPointerException;
+
+        specialinvoke $r4.<java.lang.NullPointerException: void <init>(java.lang.String)>("name is null");
+
+        throw $r4;
+
+     label1:
+        i0 = virtualinvoke r1.<net.sourceforge.plantuml.json.JsonObject: int indexOf(java.lang.String)>(r0);
+
+        if i0 == -1 goto label2;
+
+        $r2 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        $r3 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i0);
+
+        $r5 = (net.sourceforge.plantuml.json.JsonValue) $r3;
+
+        goto label3;
+
+     label2:
+        $r5 = null;
+
+     label3:
+        return $r5;
+    }
+
+    public int getInt(java.lang.String, int)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.json.JsonValue r2;
+        int i0, $i1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        i0 := @parameter1: int;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>(r1);
+
+        if r2 == null goto label1;
+
+        $i1 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonValue: int asInt()>();
+
+        goto label2;
+
+     label1:
+        $i1 = i0;
+
+     label2:
+        return $i1;
+    }
+
+    public long getLong(java.lang.String, long)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.json.JsonValue r2;
+        long l0, $l1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        l0 := @parameter1: long;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>(r1);
+
+        if r2 == null goto label1;
+
+        $l1 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonValue: long asLong()>();
+
+        goto label2;
+
+     label1:
+        $l1 = l0;
+
+     label2:
+        return $l1;
+    }
+
+    public float getFloat(java.lang.String, float)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.json.JsonValue r2;
+        float f0, $f1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        f0 := @parameter1: float;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>(r1);
+
+        if r2 == null goto label1;
+
+        $f1 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonValue: float asFloat()>();
+
+        goto label2;
+
+     label1:
+        $f1 = f0;
+
+     label2:
+        return $f1;
+    }
+
+    public double getDouble(java.lang.String, double)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.json.JsonValue r2;
+        double d0, $d1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        d0 := @parameter1: double;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>(r1);
+
+        if r2 == null goto label1;
+
+        $d1 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonValue: double asDouble()>();
+
+        goto label2;
+
+     label1:
+        $d1 = d0;
+
+     label2:
+        return $d1;
+    }
+
+    public boolean getBoolean(java.lang.String, boolean)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.json.JsonValue r2;
+        boolean z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        z0 := @parameter1: boolean;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>(r1);
+
+        if r2 == null goto label1;
+
+        $z1 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonValue: boolean asBoolean()>();
+
+        goto label2;
+
+     label1:
+        $z1 = z0;
+
+     label2:
+        return $z1;
+    }
+
+    public java.lang.String getString(java.lang.String, java.lang.String)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1, r3, $r4;
+        net.sourceforge.plantuml.json.JsonValue r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: java.lang.String;
+
+        r2 = virtualinvoke r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonValue get(java.lang.String)>(r1);
+
+        if r2 == null goto label1;
+
+        $r4 = virtualinvoke r2.<net.sourceforge.plantuml.json.JsonValue: java.lang.String asString()>();
+
+        goto label2;
+
+     label1:
+        $r4 = r3;
+
+     label2:
+        return $r4;
+    }
+
+    public int size()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.util.List $r1;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        return $i0;
+    }
+
+    public boolean isEmpty()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.util.List $r1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $z0 = interfaceinvoke $r1.<java.util.List: boolean isEmpty()>();
+
+        return $z0;
+    }
+
+    public java.util.List names()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.util.List $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    public java.util.Iterator iterator()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.util.List $r1, $r3;
+        java.util.Iterator r2, r4;
+        net.sourceforge.plantuml.json.JsonObject$1 $r5;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+        $r5 = new net.sourceforge.plantuml.json.JsonObject$1;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.json.JsonObject$1: void <init>(net.sourceforge.plantuml.json.JsonObject,java.util.Iterator,java.util.Iterator)>(r0, r2, r4);
+
+        return $r5;
+    }
+
+    void write(net.sourceforge.plantuml.json.JsonWriter) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.json.JsonWriter r0;
+        net.sourceforge.plantuml.json.JsonObject r1;
+        java.util.List $r2, $r4;
+        java.util.Iterator r3, r5;
+        boolean $z0, $z1;
+        java.lang.Object $r6, $r8, $r10, $r12;
+        java.lang.String $r7, $r11;
+        net.sourceforge.plantuml.json.JsonValue $r9, $r13;
+
+        r1 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r0 := @parameter0: net.sourceforge.plantuml.json.JsonWriter;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonWriter: void writeObjectOpen()>();
+
+        $r2 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        r3 = interfaceinvoke $r2.<java.util.List: java.util.Iterator iterator()>();
+
+        $r4 = r1.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        r5 = interfaceinvoke $r4.<java.util.List: java.util.Iterator iterator()>();
+
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        $r7 = (java.lang.String) $r6;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonWriter: void writeMemberName(java.lang.String)>($r7);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonWriter: void writeMemberSeparator()>();
+
+        $r8 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        $r9 = (net.sourceforge.plantuml.json.JsonValue) $r8;
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.json.JsonValue: void write(net.sourceforge.plantuml.json.JsonWriter)>(r0);
+
+     label1:
+        $z1 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label2;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonWriter: void writeObjectSeparator()>();
+
+        $r10 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        $r11 = (java.lang.String) $r10;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonWriter: void writeMemberName(java.lang.String)>($r11);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonWriter: void writeMemberSeparator()>();
+
+        $r12 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        $r13 = (net.sourceforge.plantuml.json.JsonValue) $r12;
+
+        virtualinvoke $r13.<net.sourceforge.plantuml.json.JsonValue: void write(net.sourceforge.plantuml.json.JsonWriter)>(r0);
+
+        goto label1;
+
+     label2:
+        virtualinvoke r0.<net.sourceforge.plantuml.json.JsonWriter: void writeObjectClose()>();
+
+        return;
+    }
+
+    public boolean isObject()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        return 1;
+    }
+
+    public net.sourceforge.plantuml.json.JsonObject asObject()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        return r0;
+    }
+
+    public int hashCode()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.util.List $r1, $r2;
+        int $i0, $i1, $i2, $i3, i5, i6;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        $i0 = 31 * 1;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $i1 = interfaceinvoke $r1.<java.util.List: int hashCode()>();
+
+        i5 = $i0 + $i1;
+
+        $i2 = 31 * i5;
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        $i3 = interfaceinvoke $r2.<java.util.List: int hashCode()>();
+
+        i6 = $i2 + $i3;
+
+        return i6;
+    }
+
+    public boolean equals(java.lang.Object)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0, r4;
+        java.lang.Object r1;
+        java.lang.Class $r2, $r3;
+        java.util.List $r5, $r6, $r7, $r8;
+        boolean $z0, $z1, $z2;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.Object;
+
+        if r0 != r1 goto label1;
+
+        return 1;
+
+     label1:
+        if r1 != null goto label2;
+
+        return 0;
+
+     label2:
+        $r2 = virtualinvoke r0.<java.lang.Object: java.lang.Class getClass()>();
+
+        $r3 = virtualinvoke r1.<java.lang.Object: java.lang.Class getClass()>();
+
+        if $r2 == $r3 goto label3;
+
+        return 0;
+
+     label3:
+        r4 = (net.sourceforge.plantuml.json.JsonObject) r1;
+
+        $r6 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $r5 = r4.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $z0 = interfaceinvoke $r6.<java.util.List: boolean equals(java.lang.Object)>($r5);
+
+        if $z0 == 0 goto label4;
+
+        $r8 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        $r7 = r4.<net.sourceforge.plantuml.json.JsonObject: java.util.List values>;
+
+        $z1 = interfaceinvoke $r8.<java.util.List: boolean equals(java.lang.Object)>($r7);
+
+        if $z1 == 0 goto label4;
+
+        $z2 = 1;
+
+        goto label5;
+
+     label4:
+        $z2 = 0;
+
+     label5:
+        return $z2;
+    }
+
+    int indexOf(java.lang.String)
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable $r2;
+        int i0, $i1;
+        java.util.List $r3, $r4;
+        java.lang.Object $r5;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject$HashIndexTable table>;
+
+        i0 = virtualinvoke $r2.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: int get(java.lang.Object)>(r1);
+
+        if i0 == -1 goto label1;
+
+        $r4 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $r5 = interfaceinvoke $r4.<java.util.List: java.lang.Object get(int)>(i0);
+
+        $z0 = virtualinvoke r1.<java.lang.String: boolean equals(java.lang.Object)>($r5);
+
+        if $z0 == 0 goto label1;
+
+        return i0;
+
+     label1:
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $i1 = interfaceinvoke $r3.<java.util.List: int lastIndexOf(java.lang.Object)>(r1);
+
+        return $i1;
+    }
+
+    private synchronized void readObject(java.io.ObjectInputStream) throws java.io.IOException, java.lang.ClassNotFoundException
+    {
+        java.io.ObjectInputStream r0;
+        net.sourceforge.plantuml.json.JsonObject r1;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable $r2;
+
+        r1 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        r0 := @parameter0: java.io.ObjectInputStream;
+
+        virtualinvoke r0.<java.io.ObjectInputStream: void defaultReadObject()>();
+
+        $r2 = new net.sourceforge.plantuml.json.JsonObject$HashIndexTable;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: void <init>()>();
+
+        r1.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject$HashIndexTable table> = $r2;
+
+        specialinvoke r1.<net.sourceforge.plantuml.json.JsonObject: void updateHashIndex()>();
+
+        return;
+    }
+
+    private void updateHashIndex()
+    {
+        net.sourceforge.plantuml.json.JsonObject r0;
+        java.util.List $r1, $r2;
+        int i0, i1;
+        net.sourceforge.plantuml.json.JsonObject$HashIndexTable $r3;
+        java.lang.Object $r4;
+        java.lang.String $r5;
+
+        r0 := @this: net.sourceforge.plantuml.json.JsonObject;
+
+        $r1 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        i0 = interfaceinvoke $r1.<java.util.List: int size()>();
+
+        i1 = 0;
+
+     label1:
+        if i1 >= i0 goto label2;
+
+        $r3 = r0.<net.sourceforge.plantuml.json.JsonObject: net.sourceforge.plantuml.json.JsonObject$HashIndexTable table>;
+
+        $r2 = r0.<net.sourceforge.plantuml.json.JsonObject: java.util.List names>;
+
+        $r4 = interfaceinvoke $r2.<java.util.List: java.lang.Object get(int)>(i1);
+
+        $r5 = (java.lang.String) $r4;
+
+        virtualinvoke $r3.<net.sourceforge.plantuml.json.JsonObject$HashIndexTable: void add(java.lang.String,int)>($r5, i1);
+
+        i1 = i1 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+}

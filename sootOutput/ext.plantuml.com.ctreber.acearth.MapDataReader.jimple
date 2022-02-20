@@ -1,0 +1,300 @@
+public class ext.plantuml.com.ctreber.acearth.MapDataReader extends java.lang.Object
+{
+    private static final double MAP_DATA_SCALE;
+    private static java.util.List fData;
+    private static java.util.List fPolygons;
+    private static int fIndex;
+
+    public void <init>()
+    {
+        ext.plantuml.com.ctreber.acearth.MapDataReader r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.MapDataReader;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static ext.plantuml.com.ctreber.acearth.util.Polygon[] readMapData() throws java.io.IOException
+    {
+        ext.plantuml.com.ctreber.acearth.MapData $r0;
+        java.util.List r1, $r6, $r15;
+        java.util.ArrayList $r2, $r4;
+        java.util.Iterator r3;
+        int $i0, $i1;
+        ext.plantuml.com.ctreber.acearth.util.Polygon[] $r5, $r8;
+        java.lang.Object[] $r7;
+        java.lang.Object $r9;
+        java.lang.String r10, r13;
+        boolean $z0, $z1, $z3;
+        java.util.StringTokenizer $r11;
+        java.lang.Integer r14;
+
+        $r0 = new ext.plantuml.com.ctreber.acearth.MapData;
+
+        specialinvoke $r0.<ext.plantuml.com.ctreber.acearth.MapData: void <init>()>();
+
+        r1 = virtualinvoke $r0.<ext.plantuml.com.ctreber.acearth.MapData: java.util.List getLines()>();
+
+        $r2 = new java.util.ArrayList;
+
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: java.util.List fData> = $r2;
+
+        r3 = interfaceinvoke r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z3 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z3 == 0 goto label5;
+
+        $r9 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (java.lang.String) $r9;
+
+        $z0 = virtualinvoke r10.<java.lang.String: boolean contains(java.lang.CharSequence)>("/*");
+
+        if $z0 == 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $r11 = new java.util.StringTokenizer;
+
+        specialinvoke $r11.<java.util.StringTokenizer: void <init>(java.lang.String,java.lang.String)>(r10, ", ");
+
+     label3:
+        $z1 = virtualinvoke $r11.<java.util.StringTokenizer: boolean hasMoreTokens()>();
+
+        if $z1 == 0 goto label4;
+
+        r13 = virtualinvoke $r11.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        r14 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(java.lang.String)>(r13);
+
+        $r15 = <ext.plantuml.com.ctreber.acearth.MapDataReader: java.util.List fData>;
+
+        interfaceinvoke $r15.<java.util.List: boolean add(java.lang.Object)>(r14);
+
+        goto label3;
+
+     label4:
+        goto label1;
+
+     label5:
+        $r4 = new java.util.ArrayList;
+
+        specialinvoke $r4.<java.util.ArrayList: void <init>()>();
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: java.util.List fPolygons> = $r4;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = 0;
+
+     label6:
+        $i0 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i1 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i0);
+
+        if $i1 == 0 goto label7;
+
+        staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: void processCurve()>();
+
+        goto label6;
+
+     label7:
+        $r6 = <ext.plantuml.com.ctreber.acearth.MapDataReader: java.util.List fPolygons>;
+
+        $r5 = newarray (ext.plantuml.com.ctreber.acearth.util.Polygon)[0];
+
+        $r7 = interfaceinvoke $r6.<java.util.List: java.lang.Object[] toArray(java.lang.Object[])>($r5);
+
+        $r8 = (ext.plantuml.com.ctreber.acearth.util.Polygon[]) $r7;
+
+        return $r8;
+    }
+
+    private static void processCurve()
+    {
+        int $i0, $i1, i2, $i3, $i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, $i15, $i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, $i26, i27;
+        ext.plantuml.com.ctreber.acearth.util.Point3D[] r0;
+        ext.plantuml.com.ctreber.acearth.util.Point3D $r1, $r5, $r6, $r7, $r8;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17;
+        ext.plantuml.com.ctreber.acearth.util.Polygon $r3;
+        java.util.List $r4;
+
+        $i0 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i1 = $i0 + 1;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = $i1;
+
+        i2 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i0);
+
+        $i3 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i4 = $i3 + 1;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = $i4;
+
+        i5 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i3);
+
+        r0 = newarray (ext.plantuml.com.ctreber.acearth.util.Point3D)[i2];
+
+        $r1 = new ext.plantuml.com.ctreber.acearth.util.Point3D;
+
+        $i6 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i7 = $i6 + 1;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = $i7;
+
+        $i8 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i6);
+
+        $d0 = (double) $i8;
+
+        $d1 = $d0 / 30000.0;
+
+        $i9 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i10 = $i9 + 1;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = $i10;
+
+        $i11 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i9);
+
+        $d2 = (double) $i11;
+
+        $d3 = $d2 / 30000.0;
+
+        $i12 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i13 = $i12 + 1;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = $i13;
+
+        $i14 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i12);
+
+        $d4 = (double) $i14;
+
+        $d5 = $d4 / 30000.0;
+
+        specialinvoke $r1.<ext.plantuml.com.ctreber.acearth.util.Point3D: void <init>(double,double,double)>($d1, $d3, $d5);
+
+        r0[0] = $r1;
+
+        i27 = 1;
+
+     label1:
+        if i27 >= i2 goto label2;
+
+        $r5 = new ext.plantuml.com.ctreber.acearth.util.Point3D;
+
+        $i15 = i27 - 1;
+
+        $r6 = r0[$i15];
+
+        $d6 = virtualinvoke $r6.<ext.plantuml.com.ctreber.acearth.util.Point3D: double getX()>();
+
+        $i16 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i17 = $i16 + 1;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = $i17;
+
+        $i18 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i16);
+
+        $d7 = (double) $i18;
+
+        $d8 = $d7 / 30000.0;
+
+        $d9 = $d6 + $d8;
+
+        $i19 = i27 - 1;
+
+        $r7 = r0[$i19];
+
+        $d10 = virtualinvoke $r7.<ext.plantuml.com.ctreber.acearth.util.Point3D: double getY()>();
+
+        $i20 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i21 = $i20 + 1;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = $i21;
+
+        $i22 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i20);
+
+        $d11 = (double) $i22;
+
+        $d12 = $d11 / 30000.0;
+
+        $d13 = $d10 + $d12;
+
+        $i23 = i27 - 1;
+
+        $r8 = r0[$i23];
+
+        $d14 = virtualinvoke $r8.<ext.plantuml.com.ctreber.acearth.util.Point3D: double getZ()>();
+
+        $i24 = <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex>;
+
+        $i25 = $i24 + 1;
+
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: int fIndex> = $i25;
+
+        $i26 = staticinvoke <ext.plantuml.com.ctreber.acearth.MapDataReader: int getValue(int)>($i24);
+
+        $d15 = (double) $i26;
+
+        $d16 = $d15 / 30000.0;
+
+        $d17 = $d14 + $d16;
+
+        specialinvoke $r5.<ext.plantuml.com.ctreber.acearth.util.Point3D: void <init>(double,double,double)>($d9, $d13, $d17);
+
+        r0[i27] = $r5;
+
+        i27 = i27 + 1;
+
+        goto label1;
+
+     label2:
+        $r3 = new ext.plantuml.com.ctreber.acearth.util.Polygon;
+
+        specialinvoke $r3.<ext.plantuml.com.ctreber.acearth.util.Polygon: void <init>(int,ext.plantuml.com.ctreber.acearth.util.Point3D[])>(i5, r0);
+
+        $r4 = <ext.plantuml.com.ctreber.acearth.MapDataReader: java.util.List fPolygons>;
+
+        interfaceinvoke $r4.<java.util.List: boolean add(java.lang.Object)>($r3);
+
+        return;
+    }
+
+    private static int getValue(int)
+    {
+        int i0, $i1;
+        java.util.List $r0;
+        java.lang.Object $r1;
+        java.lang.Integer $r2;
+
+        i0 := @parameter0: int;
+
+        $r0 = <ext.plantuml.com.ctreber.acearth.MapDataReader: java.util.List fData>;
+
+        $r1 = interfaceinvoke $r0.<java.util.List: java.lang.Object get(int)>(i0);
+
+        $r2 = (java.lang.Integer) $r1;
+
+        $i1 = virtualinvoke $r2.<java.lang.Integer: int intValue()>();
+
+        return $i1;
+    }
+
+    public static void <clinit>()
+    {
+        <ext.plantuml.com.ctreber.acearth.MapDataReader: double MAP_DATA_SCALE> = 30000.0;
+
+        return;
+    }
+}

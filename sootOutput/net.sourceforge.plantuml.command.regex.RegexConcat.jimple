@@ -1,0 +1,450 @@
+public final class net.sourceforge.plantuml.command.regex.RegexConcat extends net.sourceforge.plantuml.command.regex.RegexComposed implements net.sourceforge.plantuml.command.regex.IRegex
+{
+    private static final java.util.concurrent.ConcurrentMap cache;
+    private final java.util.concurrent.atomic.AtomicLong foxRegex;
+    private int limitSize;
+    static final boolean $assertionsDisabled;
+
+    public static void printCacheInfo()
+    {
+        java.util.concurrent.ConcurrentMap $r0, $r5;
+        java.util.Collection $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1, $z2;
+        java.lang.StringBuilder $r3, $r4, $r6, $r7, $r8, $r9, $r10, $r12, $r13, $r15;
+        int $i0, $i1, i2, i3;
+        java.lang.String $r11, $r16;
+        java.util.concurrent.atomic.AtomicInteger $r14;
+        java.lang.Object $r17;
+        net.sourceforge.plantuml.command.regex.RegexConcat r18;
+
+        i2 = 0;
+
+        i3 = 0;
+
+        $r0 = <net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.ConcurrentMap cache>;
+
+        $r1 = interfaceinvoke $r0.<java.util.concurrent.ConcurrentMap: java.util.Collection values()>();
+
+        r2 = interfaceinvoke $r1.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r17 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r18 = (net.sourceforge.plantuml.command.regex.RegexConcat) $r17;
+
+        $z1 = virtualinvoke r18.<net.sourceforge.plantuml.command.regex.RegexConcat: boolean isCompiled()>();
+
+        if $z1 == 0 goto label2;
+
+        i2 = i2 + 1;
+
+     label2:
+        $z2 = specialinvoke r18.<net.sourceforge.plantuml.command.regex.RegexConcat: boolean invoked()>();
+
+        if $z2 == 0 goto label3;
+
+        i3 = i3 + 1;
+
+     label3:
+        goto label1;
+
+     label4:
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Regex total/invoked/compiled ");
+
+        $r5 = <net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.ConcurrentMap cache>;
+
+        $i0 = interfaceinvoke $r5.<java.util.concurrent.ConcurrentMap: int size()>();
+
+        $r6 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i3);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("/");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i2);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r11);
+
+        $r12 = new java.lang.StringBuilder;
+
+        specialinvoke $r12.<java.lang.StringBuilder: void <init>()>();
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Matches created ");
+
+        $r14 = <net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.atomic.AtomicInteger nbCreateMatches>;
+
+        $i1 = virtualinvoke $r14.<java.util.concurrent.atomic.AtomicInteger: int get()>();
+
+        $r15 = virtualinvoke $r13.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i1);
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r16);
+
+        return;
+    }
+
+    public transient void <init>(net.sourceforge.plantuml.command.regex.IRegex[])
+    {
+        net.sourceforge.plantuml.command.regex.RegexConcat r0;
+        net.sourceforge.plantuml.command.regex.IRegex[] r1;
+        java.util.concurrent.atomic.AtomicLong $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        r1 := @parameter0: net.sourceforge.plantuml.command.regex.IRegex[];
+
+        specialinvoke r0.<net.sourceforge.plantuml.command.regex.RegexComposed: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>(r1);
+
+        $r2 = new java.util.concurrent.atomic.AtomicLong;
+
+        specialinvoke $r2.<java.util.concurrent.atomic.AtomicLong: void <init>(long)>(-1L);
+
+        r0.<net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.atomic.AtomicLong foxRegex> = $r2;
+
+        return;
+    }
+
+    private long foxRegex()
+    {
+        net.sourceforge.plantuml.command.regex.RegexConcat r0;
+        java.util.concurrent.atomic.AtomicLong $r1, $r2, $r4;
+        long $l0, $l2, $l5, l6;
+        byte $b1;
+        java.util.List $r3, $r5;
+        int $i3, $i4, i7;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.command.regex.IRegex r7;
+        boolean $z0;
+        net.sourceforge.plantuml.command.regex.RegexLeaf r8;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.atomic.AtomicLong foxRegex>;
+
+        $l0 = virtualinvoke $r1.<java.util.concurrent.atomic.AtomicLong: long get()>();
+
+        $b1 = $l0 cmp -1L;
+
+        if $b1 != 0 goto label4;
+
+        l6 = 0L;
+
+        i7 = 1;
+
+     label1:
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexConcat: java.util.List partials()>();
+
+        $i3 = interfaceinvoke $r3.<java.util.List: int size()>();
+
+        $i4 = $i3 - 1;
+
+        if i7 >= $i4 goto label3;
+
+        $r5 = virtualinvoke r0.<net.sourceforge.plantuml.command.regex.RegexConcat: java.util.List partials()>();
+
+        $r6 = interfaceinvoke $r5.<java.util.List: java.lang.Object get(int)>(i7);
+
+        r7 = (net.sourceforge.plantuml.command.regex.IRegex) $r6;
+
+        $z0 = r7 instanceof net.sourceforge.plantuml.command.regex.RegexLeaf;
+
+        if $z0 == 0 goto label2;
+
+        r8 = (net.sourceforge.plantuml.command.regex.RegexLeaf) r7;
+
+        $l5 = virtualinvoke r8.<net.sourceforge.plantuml.command.regex.RegexLeaf: long getFoxSignature()>();
+
+        l6 = l6 | $l5;
+
+     label2:
+        i7 = i7 + 1;
+
+        goto label1;
+
+     label3:
+        $r4 = r0.<net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.atomic.AtomicLong foxRegex>;
+
+        virtualinvoke $r4.<java.util.concurrent.atomic.AtomicLong: void set(long)>(l6);
+
+     label4:
+        $r2 = r0.<net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.atomic.AtomicLong foxRegex>;
+
+        $l2 = virtualinvoke $r2.<java.util.concurrent.atomic.AtomicLong: long get()>();
+
+        return $l2;
+    }
+
+    public static transient net.sourceforge.plantuml.command.regex.RegexConcat build(java.lang.String, net.sourceforge.plantuml.command.regex.IRegex[])
+    {
+        java.lang.String r0;
+        java.util.concurrent.ConcurrentMap $r1, $r4, $r7;
+        java.lang.Object $r2, $r8;
+        net.sourceforge.plantuml.command.regex.IRegex[] r3;
+        net.sourceforge.plantuml.command.regex.RegexConcat $r5, r9;
+
+        r0 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: net.sourceforge.plantuml.command.regex.IRegex[];
+
+        $r1 = <net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.ConcurrentMap cache>;
+
+        $r2 = interfaceinvoke $r1.<java.util.concurrent.ConcurrentMap: java.lang.Object get(java.lang.Object)>(r0);
+
+        r9 = (net.sourceforge.plantuml.command.regex.RegexConcat) $r2;
+
+        if r9 != null goto label1;
+
+        $r4 = <net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.ConcurrentMap cache>;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexConcat: net.sourceforge.plantuml.command.regex.RegexConcat buildInternal(net.sourceforge.plantuml.command.regex.IRegex[])>(r3);
+
+        interfaceinvoke $r4.<java.util.concurrent.ConcurrentMap: java.lang.Object putIfAbsent(java.lang.Object,java.lang.Object)>(r0, $r5);
+
+        $r7 = <net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.ConcurrentMap cache>;
+
+        $r8 = interfaceinvoke $r7.<java.util.concurrent.ConcurrentMap: java.lang.Object get(java.lang.Object)>(r0);
+
+        r9 = (net.sourceforge.plantuml.command.regex.RegexConcat) $r8;
+
+     label1:
+        return r9;
+    }
+
+    private static transient net.sourceforge.plantuml.command.regex.RegexConcat buildInternal(net.sourceforge.plantuml.command.regex.IRegex[])
+    {
+        net.sourceforge.plantuml.command.regex.RegexConcat $r0;
+        net.sourceforge.plantuml.command.regex.IRegex[] r1;
+        boolean $z0, $z1;
+        int $i0, $i1;
+        net.sourceforge.plantuml.command.regex.IRegex $r3, $r6;
+        net.sourceforge.plantuml.command.regex.RegexLeaf $r4, $r7;
+        java.lang.AssertionError $r5, $r8;
+
+        r1 := @parameter0: net.sourceforge.plantuml.command.regex.IRegex[];
+
+        $r0 = new net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.command.regex.RegexConcat: void <init>(net.sourceforge.plantuml.command.regex.IRegex[])>(r1);
+
+        $z0 = <net.sourceforge.plantuml.command.regex.RegexConcat: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        $r6 = r1[0];
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf start()>();
+
+        if $r6 == $r7 goto label1;
+
+        $r8 = new java.lang.AssertionError;
+
+        specialinvoke $r8.<java.lang.AssertionError: void <init>()>();
+
+        throw $r8;
+
+     label1:
+        $z1 = <net.sourceforge.plantuml.command.regex.RegexConcat: boolean $assertionsDisabled>;
+
+        if $z1 != 0 goto label2;
+
+        $i0 = lengthof r1;
+
+        $i1 = $i0 - 1;
+
+        $r3 = r1[$i1];
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.command.regex.RegexLeaf: net.sourceforge.plantuml.command.regex.RegexLeaf end()>();
+
+        if $r3 == $r4 goto label2;
+
+        $r5 = new java.lang.AssertionError;
+
+        specialinvoke $r5.<java.lang.AssertionError: void <init>()>();
+
+        throw $r5;
+
+     label2:
+        return $r0;
+    }
+
+    private boolean invoked()
+    {
+        net.sourceforge.plantuml.command.regex.RegexConcat r0;
+        java.util.concurrent.atomic.AtomicLong $r1;
+        long $l0;
+        byte $b1;
+        boolean $z0;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r1 = r0.<net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.atomic.AtomicLong foxRegex>;
+
+        $l0 = virtualinvoke $r1.<java.util.concurrent.atomic.AtomicLong: long get()>();
+
+        $b1 = $l0 cmp -1L;
+
+        if $b1 == 0 goto label1;
+
+        $z0 = 1;
+
+        goto label2;
+
+     label1:
+        $z0 = 0;
+
+     label2:
+        return $z0;
+    }
+
+    public boolean match(net.sourceforge.plantuml.StringLocated)
+    {
+        net.sourceforge.plantuml.command.regex.RegexConcat r0;
+        int $i0, $i6, $i7;
+        long l1, l3, l4;
+        byte $b2, $b5;
+        net.sourceforge.plantuml.StringLocated r1;
+        boolean $z0;
+        java.lang.String $r2;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        r1 := @parameter0: net.sourceforge.plantuml.StringLocated;
+
+        $i0 = r0.<net.sourceforge.plantuml.command.regex.RegexConcat: int limitSize>;
+
+        if $i0 == 0 goto label1;
+
+        $r2 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: java.lang.String getString()>();
+
+        $i6 = virtualinvoke $r2.<java.lang.String: int length()>();
+
+        $i7 = r0.<net.sourceforge.plantuml.command.regex.RegexConcat: int limitSize>;
+
+        if $i6 <= $i7 goto label1;
+
+        return 0;
+
+     label1:
+        l1 = specialinvoke r0.<net.sourceforge.plantuml.command.regex.RegexConcat: long foxRegex()>();
+
+        $b2 = l1 cmp 0L;
+
+        if $b2 == 0 goto label2;
+
+        l3 = virtualinvoke r1.<net.sourceforge.plantuml.StringLocated: long getFoxSignature()>();
+
+        l4 = l1 & l3;
+
+        $b5 = l4 cmp l1;
+
+        if $b5 == 0 goto label2;
+
+        return 0;
+
+     label2:
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.command.regex.RegexComposed: boolean match(net.sourceforge.plantuml.StringLocated)>(r1);
+
+        return $z0;
+    }
+
+    protected java.lang.String getFullSlow()
+    {
+        java.lang.StringBuilder $r0;
+        net.sourceforge.plantuml.command.regex.RegexConcat r2;
+        java.util.List $r3;
+        java.util.Iterator r4;
+        boolean $z0;
+        java.lang.String $r5, $r8;
+        java.lang.Object $r6;
+        net.sourceforge.plantuml.command.regex.IRegex r7;
+
+        r2 := @this: net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke r2.<net.sourceforge.plantuml.command.regex.RegexConcat: java.util.List partials()>();
+
+        r4 = interfaceinvoke $r3.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r4.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = interfaceinvoke r4.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.command.regex.IRegex) $r6;
+
+        $r8 = interfaceinvoke r7.<net.sourceforge.plantuml.command.regex.IRegex: java.lang.String getPattern()>();
+
+        virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r8);
+
+        goto label1;
+
+     label2:
+        $r5 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r5;
+    }
+
+    public net.sourceforge.plantuml.command.regex.RegexConcat protectSize(int)
+    {
+        net.sourceforge.plantuml.command.regex.RegexConcat r0;
+        int i0;
+
+        r0 := @this: net.sourceforge.plantuml.command.regex.RegexConcat;
+
+        i0 := @parameter0: int;
+
+        r0.<net.sourceforge.plantuml.command.regex.RegexConcat: int limitSize> = i0;
+
+        return r0;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+        java.util.concurrent.ConcurrentHashMap $r1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/command/regex/RegexConcat;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.command.regex.RegexConcat: boolean $assertionsDisabled> = $z1;
+
+        $r1 = new java.util.concurrent.ConcurrentHashMap;
+
+        specialinvoke $r1.<java.util.concurrent.ConcurrentHashMap: void <init>()>();
+
+        <net.sourceforge.plantuml.command.regex.RegexConcat: java.util.concurrent.ConcurrentMap cache> = $r1;
+
+        return;
+    }
+}

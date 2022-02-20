@@ -1,0 +1,877 @@
+public final class net.sourceforge.plantuml.code.deflate.Decompressor extends java.lang.Object
+{
+    private net.sourceforge.plantuml.code.deflate.BitInputStream input;
+    private net.sourceforge.plantuml.code.deflate.OutputStreamProtected output;
+    private net.sourceforge.plantuml.code.deflate.ByteHistory dictionary;
+    private static final net.sourceforge.plantuml.code.deflate.CanonicalCode FIXED_LITERAL_LENGTH_CODE;
+    private static final net.sourceforge.plantuml.code.deflate.CanonicalCode FIXED_DISTANCE_CODE;
+
+    public static byte[] decompress(net.sourceforge.plantuml.code.deflate.BitInputStream) throws java.io.IOException, java.util.zip.DataFormatException
+    {
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected $r0;
+        net.sourceforge.plantuml.code.deflate.BitInputStream r2;
+        byte[] $r3;
+
+        r2 := @parameter0: net.sourceforge.plantuml.code.deflate.BitInputStream;
+
+        $r0 = new net.sourceforge.plantuml.code.deflate.OutputStreamProtected;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: void <init>()>();
+
+        staticinvoke <net.sourceforge.plantuml.code.deflate.Decompressor: void decompress(net.sourceforge.plantuml.code.deflate.BitInputStream,net.sourceforge.plantuml.code.deflate.OutputStreamProtected)>(r2, $r0);
+
+        $r3 = virtualinvoke $r0.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: byte[] toByteArray()>();
+
+        return $r3;
+    }
+
+    public static void decompress(net.sourceforge.plantuml.code.deflate.BitInputStream, net.sourceforge.plantuml.code.deflate.OutputStreamProtected) throws java.io.IOException, java.util.zip.DataFormatException
+    {
+        net.sourceforge.plantuml.code.deflate.Decompressor $r0;
+        net.sourceforge.plantuml.code.deflate.BitInputStream r1;
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected r2;
+
+        r1 := @parameter0: net.sourceforge.plantuml.code.deflate.BitInputStream;
+
+        r2 := @parameter1: net.sourceforge.plantuml.code.deflate.OutputStreamProtected;
+
+        $r0 = new net.sourceforge.plantuml.code.deflate.Decompressor;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.code.deflate.Decompressor: void <init>(net.sourceforge.plantuml.code.deflate.BitInputStream,net.sourceforge.plantuml.code.deflate.OutputStreamProtected)>(r1, r2);
+
+        return;
+    }
+
+    private void <init>(net.sourceforge.plantuml.code.deflate.BitInputStream, net.sourceforge.plantuml.code.deflate.OutputStreamProtected) throws java.io.IOException, java.util.zip.DataFormatException
+    {
+        net.sourceforge.plantuml.code.deflate.Decompressor r0;
+        net.sourceforge.plantuml.code.deflate.BitInputStream r1, $r3;
+        java.lang.Object $r2, $r5;
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected r4, $r6;
+        net.sourceforge.plantuml.code.deflate.ByteHistory $r7;
+        int $i0, i1;
+        boolean z0, $z1;
+        java.lang.IllegalStateException $r8;
+        java.util.zip.DataFormatException $r9;
+        net.sourceforge.plantuml.code.deflate.CanonicalCode[] r10;
+        net.sourceforge.plantuml.code.deflate.CanonicalCode $r11, $r12, $r13, $r14;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.Decompressor;
+
+        r1 := @parameter0: net.sourceforge.plantuml.code.deflate.BitInputStream;
+
+        r4 := @parameter1: net.sourceforge.plantuml.code.deflate.OutputStreamProtected;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r3 = (net.sourceforge.plantuml.code.deflate.BitInputStream) $r2;
+
+        r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.BitInputStream input> = $r3;
+
+        $r5 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r4);
+
+        $r6 = (net.sourceforge.plantuml.code.deflate.OutputStreamProtected) $r5;
+
+        r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.OutputStreamProtected output> = $r6;
+
+        $r7 = new net.sourceforge.plantuml.code.deflate.ByteHistory;
+
+        specialinvoke $r7.<net.sourceforge.plantuml.code.deflate.ByteHistory: void <init>(int)>(32768);
+
+        r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.ByteHistory dictionary> = $r7;
+
+     label1:
+        $i0 = interfaceinvoke r1.<net.sourceforge.plantuml.code.deflate.BitInputStream: int readNoEof()>();
+
+        if $i0 != 1 goto label2;
+
+        $z1 = 1;
+
+        goto label3;
+
+     label2:
+        $z1 = 0;
+
+     label3:
+        z0 = $z1;
+
+        i1 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(2);
+
+        if i1 != 0 goto label4;
+
+        specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: void decompressUncompressedBlock()>();
+
+        goto label8;
+
+     label4:
+        if i1 != 1 goto label5;
+
+        $r14 = <net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.CanonicalCode FIXED_LITERAL_LENGTH_CODE>;
+
+        $r13 = <net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.CanonicalCode FIXED_DISTANCE_CODE>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: void decompressHuffmanBlock(net.sourceforge.plantuml.code.deflate.CanonicalCode,net.sourceforge.plantuml.code.deflate.CanonicalCode)>($r14, $r13);
+
+        goto label8;
+
+     label5:
+        if i1 != 2 goto label6;
+
+        r10 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.CanonicalCode[] decodeHuffmanCodes()>();
+
+        $r12 = r10[0];
+
+        $r11 = r10[1];
+
+        specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: void decompressHuffmanBlock(net.sourceforge.plantuml.code.deflate.CanonicalCode,net.sourceforge.plantuml.code.deflate.CanonicalCode)>($r12, $r11);
+
+        goto label8;
+
+     label6:
+        if i1 != 3 goto label7;
+
+        $r9 = new java.util.zip.DataFormatException;
+
+        specialinvoke $r9.<java.util.zip.DataFormatException: void <init>(java.lang.String)>("Reserved block type");
+
+        throw $r9;
+
+     label7:
+        $r8 = new java.lang.IllegalStateException;
+
+        specialinvoke $r8.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Impossible value");
+
+        throw $r8;
+
+     label8:
+        if z0 == 0 goto label1;
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.code.deflate.CanonicalCode[] decodeHuffmanCodes() throws java.io.IOException, java.util.zip.DataFormatException
+    {
+        net.sourceforge.plantuml.code.deflate.Decompressor r0;
+        int $i0, i1, $i2, i3, $i4, i5, $i6, $i7, $i8, $i9, $i10, $i11, $i12, $i13, $i14, i15, i16, $i17, $i18, $i19, $i20, $i21, $i22, $i23, $i24, $i25, i26, $i27, i29, i30, i31, i32, i33, $i34, i35, i36, i37;
+        int[] r1, r20, r21, r24, r26;
+        net.sourceforge.plantuml.code.deflate.CanonicalCode $r2, $r3, r25, $r27;
+        net.sourceforge.plantuml.code.deflate.CanonicalCode[] $r4;
+        net.sourceforge.plantuml.code.deflate.BitInputStream $r5;
+        java.lang.IllegalStateException $r6;
+        java.util.zip.DataFormatException $r7, $r8, $r10, $r13, $r16;
+        java.lang.IllegalArgumentException $r9, $r12, $r15;
+        java.lang.String $r11, $r14, $r17;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.Decompressor;
+
+        $i0 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(5);
+
+        i1 = $i0 + 257;
+
+        $i2 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(5);
+
+        i3 = $i2 + 1;
+
+        $i4 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(4);
+
+        i5 = $i4 + 4;
+
+        r1 = newarray (int)[19];
+
+        $i6 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(3);
+
+        r1[16] = $i6;
+
+        $i7 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(3);
+
+        r1[17] = $i7;
+
+        $i8 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(3);
+
+        r1[18] = $i8;
+
+        $i9 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(3);
+
+        r1[0] = $i9;
+
+        i26 = 0;
+
+     label01:
+        $i10 = i5 - 4;
+
+        if i26 >= $i10 goto label04;
+
+        $i22 = i26 % 2;
+
+        if $i22 != 0 goto label02;
+
+        $i25 = i26 / 2;
+
+        $i27 = 8 + $i25;
+
+        goto label03;
+
+     label02:
+        $i23 = i26 / 2;
+
+        $i27 = 7 - $i23;
+
+     label03:
+        $i24 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(3);
+
+        r1[$i27] = $i24;
+
+        i26 = i26 + 1;
+
+        goto label01;
+
+     label04:
+        $r2 = new net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.code.deflate.CanonicalCode: void <init>(int[])>(r1);
+
+     label05:
+        goto label07;
+
+     label06:
+        $r15 := @caughtexception;
+
+        $r16 = new java.util.zip.DataFormatException;
+
+        $r17 = virtualinvoke $r15.<java.lang.IllegalArgumentException: java.lang.String getMessage()>();
+
+        specialinvoke $r16.<java.util.zip.DataFormatException: void <init>(java.lang.String)>($r17);
+
+        throw $r16;
+
+     label07:
+        $i11 = i1 + i3;
+
+        r20 = newarray (int)[$i11];
+
+        i29 = 0;
+
+     label08:
+        $i12 = lengthof r20;
+
+        if i29 >= $i12 goto label17;
+
+        $r5 = r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.BitInputStream input>;
+
+        i30 = virtualinvoke $r2.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int decodeNextSymbol(net.sourceforge.plantuml.code.deflate.BitInputStream)>($r5);
+
+        if 0 > i30 goto label09;
+
+        if i30 > 15 goto label09;
+
+        r20[i29] = i30;
+
+        i29 = i29 + 1;
+
+        goto label16;
+
+     label09:
+        i31 = 0;
+
+        if i30 != 16 goto label11;
+
+        if i29 != 0 goto label10;
+
+        $r8 = new java.util.zip.DataFormatException;
+
+        specialinvoke $r8.<java.util.zip.DataFormatException: void <init>(java.lang.String)>("No code length value to copy");
+
+        throw $r8;
+
+     label10:
+        $i20 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(2);
+
+        i32 = $i20 + 3;
+
+        $i21 = i29 - 1;
+
+        i31 = r20[$i21];
+
+        goto label14;
+
+     label11:
+        if i30 != 17 goto label12;
+
+        $i19 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(3);
+
+        i32 = $i19 + 3;
+
+        goto label14;
+
+     label12:
+        if i30 != 18 goto label13;
+
+        $i18 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(7);
+
+        i32 = $i18 + 11;
+
+        goto label14;
+
+     label13:
+        $r6 = new java.lang.IllegalStateException;
+
+        specialinvoke $r6.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Symbol out of range");
+
+        throw $r6;
+
+     label14:
+        i33 = i29 + i32;
+
+        $i34 = lengthof r20;
+
+        if i33 <= $i34 goto label15;
+
+        $r7 = new java.util.zip.DataFormatException;
+
+        specialinvoke $r7.<java.util.zip.DataFormatException: void <init>(java.lang.String)>("Run exceeds number of codes");
+
+        throw $r7;
+
+     label15:
+        staticinvoke <java.util.Arrays: void fill(int[],int,int,int)>(r20, i29, i33, i31);
+
+        i29 = i33;
+
+     label16:
+        goto label08;
+
+     label17:
+        r21 = staticinvoke <java.util.Arrays: int[] copyOf(int[],int)>(r20, i1);
+
+     label18:
+        $r3 = new net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.code.deflate.CanonicalCode: void <init>(int[])>(r21);
+
+     label19:
+        goto label21;
+
+     label20:
+        $r12 := @caughtexception;
+
+        $r13 = new java.util.zip.DataFormatException;
+
+        $r14 = virtualinvoke $r12.<java.lang.IllegalArgumentException: java.lang.String getMessage()>();
+
+        specialinvoke $r13.<java.util.zip.DataFormatException: void <init>(java.lang.String)>($r14);
+
+        throw $r13;
+
+     label21:
+        $i13 = lengthof r20;
+
+        r24 = staticinvoke <java.util.Arrays: int[] copyOfRange(int[],int,int)>(r20, i1, $i13);
+
+        $i14 = lengthof r24;
+
+        if $i14 != 1 goto label22;
+
+        $i17 = r24[0];
+
+        if $i17 != 0 goto label22;
+
+        r25 = null;
+
+        goto label30;
+
+     label22:
+        i35 = 0;
+
+        i36 = 0;
+
+        r26 = r24;
+
+        i15 = lengthof r24;
+
+        i37 = 0;
+
+     label23:
+        if i37 >= i15 goto label26;
+
+        i16 = r26[i37];
+
+        if i16 != 1 goto label24;
+
+        i35 = i35 + 1;
+
+        goto label25;
+
+     label24:
+        if i16 <= 1 goto label25;
+
+        i36 = i36 + 1;
+
+     label25:
+        i37 = i37 + 1;
+
+        goto label23;
+
+     label26:
+        if i35 != 1 goto label27;
+
+        if i36 != 0 goto label27;
+
+        r24 = staticinvoke <java.util.Arrays: int[] copyOf(int[],int)>(r24, 32);
+
+        r24[31] = 1;
+
+     label27:
+        $r27 = new net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        specialinvoke $r27.<net.sourceforge.plantuml.code.deflate.CanonicalCode: void <init>(int[])>(r24);
+
+        r25 = $r27;
+
+     label28:
+        goto label30;
+
+     label29:
+        $r9 := @caughtexception;
+
+        $r10 = new java.util.zip.DataFormatException;
+
+        $r11 = virtualinvoke $r9.<java.lang.IllegalArgumentException: java.lang.String getMessage()>();
+
+        specialinvoke $r10.<java.util.zip.DataFormatException: void <init>(java.lang.String)>($r11);
+
+        throw $r10;
+
+     label30:
+        $r4 = newarray (net.sourceforge.plantuml.code.deflate.CanonicalCode)[2];
+
+        $r4[0] = $r3;
+
+        $r4[1] = r25;
+
+        return $r4;
+
+        catch java.lang.IllegalArgumentException from label04 to label05 with label06;
+        catch java.lang.IllegalArgumentException from label18 to label19 with label20;
+        catch java.lang.IllegalArgumentException from label27 to label28 with label29;
+    }
+
+    private void decompressUncompressedBlock() throws java.io.IOException, java.util.zip.DataFormatException
+    {
+        net.sourceforge.plantuml.code.deflate.Decompressor r0;
+        net.sourceforge.plantuml.code.deflate.BitInputStream $r1, $r2, $r7;
+        int $i0, i1, i2, $i3, i4, i6;
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected $r3;
+        net.sourceforge.plantuml.code.deflate.ByteHistory $r4;
+        java.io.EOFException $r5;
+        java.util.zip.DataFormatException $r6;
+
+        r0 := @this: net.sourceforge.plantuml.code.deflate.Decompressor;
+
+     label1:
+        $r1 = r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.BitInputStream input>;
+
+        $i0 = interfaceinvoke $r1.<net.sourceforge.plantuml.code.deflate.BitInputStream: int getBitPosition()>();
+
+        if $i0 == 0 goto label2;
+
+        $r7 = r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.BitInputStream input>;
+
+        interfaceinvoke $r7.<net.sourceforge.plantuml.code.deflate.BitInputStream: int readNoEof()>();
+
+        goto label1;
+
+     label2:
+        i1 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(16);
+
+        i2 = specialinvoke r0.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(16);
+
+        $i3 = i1 ^ 65535;
+
+        if $i3 == i2 goto label3;
+
+        $r6 = new java.util.zip.DataFormatException;
+
+        specialinvoke $r6.<java.util.zip.DataFormatException: void <init>(java.lang.String)>("Invalid length in uncompressed block");
+
+        throw $r6;
+
+     label3:
+        i6 = 0;
+
+     label4:
+        if i6 >= i1 goto label6;
+
+        $r2 = r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.BitInputStream input>;
+
+        i4 = interfaceinvoke $r2.<net.sourceforge.plantuml.code.deflate.BitInputStream: int readByte()>();
+
+        if i4 != -1 goto label5;
+
+        $r5 = new java.io.EOFException;
+
+        specialinvoke $r5.<java.io.EOFException: void <init>()>();
+
+        throw $r5;
+
+     label5:
+        $r3 = r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.OutputStreamProtected output>;
+
+        virtualinvoke $r3.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: void write(int)>(i4);
+
+        $r4 = r0.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.ByteHistory dictionary>;
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.code.deflate.ByteHistory: void append(int)>(i4);
+
+        i6 = i6 + 1;
+
+        goto label4;
+
+     label6:
+        return;
+    }
+
+    private void decompressHuffmanBlock(net.sourceforge.plantuml.code.deflate.CanonicalCode, net.sourceforge.plantuml.code.deflate.CanonicalCode) throws java.io.IOException, java.util.zip.DataFormatException
+    {
+        net.sourceforge.plantuml.code.deflate.CanonicalCode r0, r5;
+        net.sourceforge.plantuml.code.deflate.Decompressor r2;
+        net.sourceforge.plantuml.code.deflate.BitInputStream $r3, $r6;
+        int i0, i1, i2, i3;
+        java.lang.IllegalStateException $r4, $r7;
+        net.sourceforge.plantuml.code.deflate.OutputStreamProtected $r8, $r11;
+        net.sourceforge.plantuml.code.deflate.ByteHistory $r9, $r12;
+        java.util.zip.DataFormatException $r10;
+
+        r2 := @this: net.sourceforge.plantuml.code.deflate.Decompressor;
+
+        r0 := @parameter0: net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        r5 := @parameter1: net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+     label01:
+        $r3 = r2.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.BitInputStream input>;
+
+        i0 = virtualinvoke r0.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int decodeNextSymbol(net.sourceforge.plantuml.code.deflate.BitInputStream)>($r3);
+
+        if i0 != 256 goto label02;
+
+        goto label10;
+
+     label02:
+        if i0 >= 256 goto label03;
+
+        $r11 = r2.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.OutputStreamProtected output>;
+
+        virtualinvoke $r11.<net.sourceforge.plantuml.code.deflate.OutputStreamProtected: void write(int)>(i0);
+
+        $r12 = r2.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.ByteHistory dictionary>;
+
+        virtualinvoke $r12.<net.sourceforge.plantuml.code.deflate.ByteHistory: void append(int)>(i0);
+
+        goto label09;
+
+     label03:
+        i1 = specialinvoke r2.<net.sourceforge.plantuml.code.deflate.Decompressor: int decodeRunLength(int)>(i0);
+
+        if i1 < 3 goto label04;
+
+        if i1 <= 258 goto label05;
+
+     label04:
+        $r4 = new java.lang.IllegalStateException;
+
+        specialinvoke $r4.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Invalid run length");
+
+        throw $r4;
+
+     label05:
+        if r5 != null goto label06;
+
+        $r10 = new java.util.zip.DataFormatException;
+
+        specialinvoke $r10.<java.util.zip.DataFormatException: void <init>(java.lang.String)>("Length symbol encountered with empty distance code");
+
+        throw $r10;
+
+     label06:
+        $r6 = r2.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.BitInputStream input>;
+
+        i2 = virtualinvoke r5.<net.sourceforge.plantuml.code.deflate.CanonicalCode: int decodeNextSymbol(net.sourceforge.plantuml.code.deflate.BitInputStream)>($r6);
+
+        i3 = specialinvoke r2.<net.sourceforge.plantuml.code.deflate.Decompressor: int decodeDistance(int)>(i2);
+
+        if i3 < 1 goto label07;
+
+        if i3 <= 32768 goto label08;
+
+     label07:
+        $r7 = new java.lang.IllegalStateException;
+
+        specialinvoke $r7.<java.lang.IllegalStateException: void <init>(java.lang.String)>("Invalid distance");
+
+        throw $r7;
+
+     label08:
+        $r9 = r2.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.ByteHistory dictionary>;
+
+        $r8 = r2.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.OutputStreamProtected output>;
+
+        virtualinvoke $r9.<net.sourceforge.plantuml.code.deflate.ByteHistory: void copy(int,int,net.sourceforge.plantuml.code.deflate.OutputStreamProtected)>(i3, i1, $r8);
+
+     label09:
+        goto label01;
+
+     label10:
+        return;
+    }
+
+    private int decodeRunLength(int) throws java.io.IOException, java.util.zip.DataFormatException
+    {
+        int i0, $i1, i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9, $i10;
+        java.lang.IllegalStateException $r0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r6, $r7, $r8;
+        java.lang.String $r4, $r9;
+        java.util.zip.DataFormatException $r5;
+        net.sourceforge.plantuml.code.deflate.Decompressor r10;
+
+        r10 := @this: net.sourceforge.plantuml.code.deflate.Decompressor;
+
+        i0 := @parameter0: int;
+
+        if i0 < 257 goto label1;
+
+        if i0 <= 287 goto label2;
+
+     label1:
+        $r0 = new java.lang.IllegalStateException;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Invalid run length symbol: ");
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r0.<java.lang.IllegalStateException: void <init>(java.lang.String)>($r4);
+
+        throw $r0;
+
+     label2:
+        if i0 > 264 goto label3;
+
+        $i10 = i0 - 254;
+
+        return $i10;
+
+     label3:
+        if i0 > 284 goto label4;
+
+        $i1 = i0 - 261;
+
+        i2 = $i1 / 4;
+
+        $i3 = i0 - 265;
+
+        $i4 = $i3 % 4;
+
+        $i5 = $i4 + 4;
+
+        $i6 = $i5 << i2;
+
+        $i7 = $i6 + 3;
+
+        $i8 = specialinvoke r10.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(i2);
+
+        $i9 = $i7 + $i8;
+
+        return $i9;
+
+     label4:
+        if i0 != 285 goto label5;
+
+        return 258;
+
+     label5:
+        $r5 = new java.util.zip.DataFormatException;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Reserved length symbol: ");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r5.<java.util.zip.DataFormatException: void <init>(java.lang.String)>($r9);
+
+        throw $r5;
+    }
+
+    private int decodeDistance(int) throws java.io.IOException, java.util.zip.DataFormatException
+    {
+        int i0, $i1, i2, $i3, $i4, $i5, $i6, $i7, $i8, $i9;
+        java.lang.IllegalStateException $r0;
+        java.lang.StringBuilder $r1, $r2, $r3, $r6, $r7, $r8;
+        java.lang.String $r4, $r9;
+        java.util.zip.DataFormatException $r5;
+        net.sourceforge.plantuml.code.deflate.Decompressor r10;
+
+        r10 := @this: net.sourceforge.plantuml.code.deflate.Decompressor;
+
+        i0 := @parameter0: int;
+
+        if i0 < 0 goto label1;
+
+        if i0 <= 31 goto label2;
+
+     label1:
+        $r0 = new java.lang.IllegalStateException;
+
+        $r1 = new java.lang.StringBuilder;
+
+        specialinvoke $r1.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Invalid distance symbol: ");
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r0.<java.lang.IllegalStateException: void <init>(java.lang.String)>($r4);
+
+        throw $r0;
+
+     label2:
+        if i0 > 3 goto label3;
+
+        $i9 = i0 + 1;
+
+        return $i9;
+
+     label3:
+        if i0 > 29 goto label4;
+
+        $i1 = i0 / 2;
+
+        i2 = $i1 - 1;
+
+        $i3 = i0 % 2;
+
+        $i4 = $i3 + 2;
+
+        $i5 = $i4 << i2;
+
+        $i6 = $i5 + 1;
+
+        $i7 = specialinvoke r10.<net.sourceforge.plantuml.code.deflate.Decompressor: int readInt(int)>(i2);
+
+        $i8 = $i6 + $i7;
+
+        return $i8;
+
+     label4:
+        $r5 = new java.util.zip.DataFormatException;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Reserved distance symbol: ");
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $r5.<java.util.zip.DataFormatException: void <init>(java.lang.String)>($r9);
+
+        throw $r5;
+    }
+
+    private int readInt(int) throws java.io.IOException
+    {
+        int i0, $i1, $i2, i3, i4;
+        java.lang.IllegalArgumentException $r0;
+        net.sourceforge.plantuml.code.deflate.Decompressor r1;
+        net.sourceforge.plantuml.code.deflate.BitInputStream $r2;
+
+        r1 := @this: net.sourceforge.plantuml.code.deflate.Decompressor;
+
+        i0 := @parameter0: int;
+
+        if i0 < 0 goto label1;
+
+        if i0 <= 31 goto label2;
+
+     label1:
+        $r0 = new java.lang.IllegalArgumentException;
+
+        specialinvoke $r0.<java.lang.IllegalArgumentException: void <init>()>();
+
+        throw $r0;
+
+     label2:
+        i3 = 0;
+
+        i4 = 0;
+
+     label3:
+        if i4 >= i0 goto label4;
+
+        $r2 = r1.<net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.BitInputStream input>;
+
+        $i1 = interfaceinvoke $r2.<net.sourceforge.plantuml.code.deflate.BitInputStream: int readNoEof()>();
+
+        $i2 = $i1 << i4;
+
+        i3 = i3 | $i2;
+
+        i4 = i4 + 1;
+
+        goto label3;
+
+     label4:
+        return i3;
+    }
+
+    static void <clinit>()
+    {
+        int[] r0, r2;
+        net.sourceforge.plantuml.code.deflate.CanonicalCode $r1, $r3;
+
+        r0 = newarray (int)[288];
+
+        staticinvoke <java.util.Arrays: void fill(int[],int,int,int)>(r0, 0, 144, 8);
+
+        staticinvoke <java.util.Arrays: void fill(int[],int,int,int)>(r0, 144, 256, 9);
+
+        staticinvoke <java.util.Arrays: void fill(int[],int,int,int)>(r0, 256, 280, 7);
+
+        staticinvoke <java.util.Arrays: void fill(int[],int,int,int)>(r0, 280, 288, 8);
+
+        $r1 = new net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.code.deflate.CanonicalCode: void <init>(int[])>(r0);
+
+        <net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.CanonicalCode FIXED_LITERAL_LENGTH_CODE> = $r1;
+
+        r2 = newarray (int)[32];
+
+        staticinvoke <java.util.Arrays: void fill(int[],int)>(r2, 5);
+
+        $r3 = new net.sourceforge.plantuml.code.deflate.CanonicalCode;
+
+        specialinvoke $r3.<net.sourceforge.plantuml.code.deflate.CanonicalCode: void <init>(int[])>(r2);
+
+        <net.sourceforge.plantuml.code.deflate.Decompressor: net.sourceforge.plantuml.code.deflate.CanonicalCode FIXED_DISTANCE_CODE> = $r3;
+
+        return;
+    }
+}

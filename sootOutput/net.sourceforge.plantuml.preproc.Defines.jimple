@@ -1,0 +1,942 @@
+public class net.sourceforge.plantuml.preproc.Defines extends java.lang.Object implements net.sourceforge.plantuml.preproc.Truth
+{
+    private final java.util.Map environment;
+    private final java.util.Map values;
+    private java.util.Map magic;
+    private static final java.lang.String DATE;
+    private static final java.util.regex.Pattern datePattern;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.util.LinkedHashMap $r1, $r2;
+        java.lang.StringBuilder $r3, $r5, $r7;
+        java.util.Map $r4;
+        java.lang.String $r6, $r8;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.LinkedHashMap;
+
+        specialinvoke $r1.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment> = $r1;
+
+        $r2 = new java.util.LinkedHashMap;
+
+        specialinvoke $r2.<java.util.LinkedHashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values> = $r2;
+
+        $r4 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("");
+
+        $r6 = staticinvoke <net.sourceforge.plantuml.version.Version: java.lang.String versionString()>();
+
+        $r7 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r6);
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        interfaceinvoke $r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("PLANTUML_VERSION", $r8);
+
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r5, $r6, $r9;
+        net.sourceforge.plantuml.preproc.Defines r1;
+        java.util.Map $r2, $r7;
+        java.util.Set $r3, $r8;
+        java.lang.String $r4, $r10;
+
+        r1 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = r1.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.util.Set keySet()>();
+
+        $r4 = virtualinvoke $r3.<java.lang.Object: java.lang.String toString()>();
+
+        $r5 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $r7 = r1.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r8 = interfaceinvoke $r7.<java.util.Map: java.util.Set keySet()>();
+
+        $r9 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r8);
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r10;
+    }
+
+    public static net.sourceforge.plantuml.preproc.Defines createEmpty()
+    {
+        net.sourceforge.plantuml.preproc.Defines $r0;
+
+        $r0 = new net.sourceforge.plantuml.preproc.Defines;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.preproc.Defines: void <init>()>();
+
+        return $r0;
+    }
+
+    public void copyTo(net.sourceforge.plantuml.tim.TMemory) throws net.sourceforge.plantuml.tim.EaterException
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.util.Map $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4, $r6, $r8;
+        java.util.Map$Entry r5;
+        java.lang.String r7;
+        net.sourceforge.plantuml.preproc.Define r9;
+        net.sourceforge.plantuml.tim.TMemory r10;
+        net.sourceforge.plantuml.tim.expression.TValue $r11;
+        net.sourceforge.plantuml.tim.TVariableScope $r12;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r10 := @parameter0: net.sourceforge.plantuml.tim.TMemory;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set entrySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.util.Map$Entry) $r4;
+
+        $r6 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r7 = (java.lang.String) $r6;
+
+        $r8 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r9 = (net.sourceforge.plantuml.preproc.Define) $r8;
+
+        $r11 = virtualinvoke r9.<net.sourceforge.plantuml.preproc.Define: net.sourceforge.plantuml.tim.expression.TValue asTVariable()>();
+
+        $r12 = <net.sourceforge.plantuml.tim.TVariableScope: net.sourceforge.plantuml.tim.TVariableScope GLOBAL>;
+
+        interfaceinvoke r10.<net.sourceforge.plantuml.tim.TMemory: void putVariable(java.lang.String,net.sourceforge.plantuml.tim.expression.TValue,net.sourceforge.plantuml.tim.TVariableScope)>(r7, $r11, $r12);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public void overrideFilename(java.lang.String)
+    {
+        java.lang.String r0, $r5;
+        net.sourceforge.plantuml.preproc.Defines r1;
+        java.util.Map $r2, $r4;
+
+        r1 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r0 := @parameter0: java.lang.String;
+
+        if r0 == null goto label1;
+
+        $r2 = r1.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        interfaceinvoke $r2.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("filename", r0);
+
+        $r4 = r1.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r5 = staticinvoke <net.sourceforge.plantuml.preproc.Defines: java.lang.String nameNoExtension(java.lang.String)>(r0);
+
+        interfaceinvoke $r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("filenameNoExtension", $r5);
+
+     label1:
+        return;
+    }
+
+    public void importFrom(net.sourceforge.plantuml.preproc.Defines)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0, r1;
+        java.util.Map $r2, $r3, $r4, $r5;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r1 := @parameter0: net.sourceforge.plantuml.preproc.Defines;
+
+        $r3 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r2 = r1.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        interfaceinvoke $r3.<java.util.Map: void putAll(java.util.Map)>($r2);
+
+        $r5 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        $r4 = r1.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        interfaceinvoke $r5.<java.util.Map: void putAll(java.util.Map)>($r4);
+
+        r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map magic> = null;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.preproc.Defines cloneMe()
+    {
+        net.sourceforge.plantuml.preproc.Defines $r0, r2;
+
+        r2 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        $r0 = new net.sourceforge.plantuml.preproc.Defines;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.preproc.Defines: void <init>()>();
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.preproc.Defines: void importFrom(net.sourceforge.plantuml.preproc.Defines)>(r2);
+
+        return $r0;
+    }
+
+    public static net.sourceforge.plantuml.preproc.Defines createWithFileName(net.sourceforge.plantuml.security.SFile)
+    {
+        net.sourceforge.plantuml.security.SFile r0, $r11, $r12;
+        net.sourceforge.plantuml.preproc.Defines r2;
+        java.lang.String $r3, $r6, $r13, $r14;
+        java.util.Date $r4;
+        java.util.Map $r5, $r10;
+        long $l0;
+        net.sourceforge.plantuml.security.SecurityProfile $r8, $r9;
+
+        r0 := @parameter0: net.sourceforge.plantuml.security.SFile;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        r2 = staticinvoke <net.sourceforge.plantuml.preproc.Defines: net.sourceforge.plantuml.preproc.Defines createEmpty()>();
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.security.SFile: java.lang.String getName()>();
+
+        virtualinvoke r2.<net.sourceforge.plantuml.preproc.Defines: void overrideFilename(java.lang.String)>($r3);
+
+        $r5 = r2.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r4 = new java.util.Date;
+
+        $l0 = virtualinvoke r0.<net.sourceforge.plantuml.security.SFile: long lastModified()>();
+
+        specialinvoke $r4.<java.util.Date: void <init>(long)>($l0);
+
+        $r6 = virtualinvoke $r4.<java.util.Date: java.lang.String toString()>();
+
+        interfaceinvoke $r5.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("filedate", $r6);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $r9 = <net.sourceforge.plantuml.security.SecurityProfile: net.sourceforge.plantuml.security.SecurityProfile UNSECURE>;
+
+        if $r8 != $r9 goto label1;
+
+        $r10 = r2.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r11 = virtualinvoke r0.<net.sourceforge.plantuml.security.SFile: net.sourceforge.plantuml.security.SFile getAbsoluteFile()>();
+
+        $r12 = virtualinvoke $r11.<net.sourceforge.plantuml.security.SFile: net.sourceforge.plantuml.security.SFile getParentFile()>();
+
+        $r13 = virtualinvoke $r12.<net.sourceforge.plantuml.security.SFile: java.lang.String getAbsolutePath()>();
+
+        $r14 = virtualinvoke $r13.<java.lang.String: java.lang.String replace(char,char)>(92, 47);
+
+        interfaceinvoke $r10.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("dirpath", $r14);
+
+     label1:
+        return r2;
+    }
+
+    public static net.sourceforge.plantuml.preproc.Defines createWithFileName(java.io.File)
+    {
+        java.io.File r0, $r11, $r12;
+        net.sourceforge.plantuml.preproc.Defines r2;
+        java.lang.String $r3, $r6, $r13, $r14;
+        java.util.Date $r4;
+        java.util.Map $r5, $r10;
+        long $l0;
+        net.sourceforge.plantuml.security.SecurityProfile $r8, $r9;
+
+        r0 := @parameter0: java.io.File;
+
+        staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0);
+
+        r2 = staticinvoke <net.sourceforge.plantuml.preproc.Defines: net.sourceforge.plantuml.preproc.Defines createEmpty()>();
+
+        $r3 = virtualinvoke r0.<java.io.File: java.lang.String getName()>();
+
+        virtualinvoke r2.<net.sourceforge.plantuml.preproc.Defines: void overrideFilename(java.lang.String)>($r3);
+
+        $r5 = r2.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r4 = new java.util.Date;
+
+        $l0 = virtualinvoke r0.<java.io.File: long lastModified()>();
+
+        specialinvoke $r4.<java.util.Date: void <init>(long)>($l0);
+
+        $r6 = virtualinvoke $r4.<java.util.Date: java.lang.String toString()>();
+
+        interfaceinvoke $r5.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("filedate", $r6);
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.security.SecurityUtils: net.sourceforge.plantuml.security.SecurityProfile getSecurityProfile()>();
+
+        $r9 = <net.sourceforge.plantuml.security.SecurityProfile: net.sourceforge.plantuml.security.SecurityProfile UNSECURE>;
+
+        if $r8 != $r9 goto label1;
+
+        $r10 = r2.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r11 = virtualinvoke r0.<java.io.File: java.io.File getAbsoluteFile()>();
+
+        $r12 = virtualinvoke $r11.<java.io.File: java.io.File getParentFile()>();
+
+        $r13 = virtualinvoke $r12.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        $r14 = virtualinvoke $r13.<java.lang.String: java.lang.String replace(char,char)>(92, 47);
+
+        interfaceinvoke $r10.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>("dirpath", $r14);
+
+     label1:
+        return r2;
+    }
+
+    private static net.sourceforge.plantuml.preproc.Defines createWithMap(java.util.Map)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.util.Map r1, $r6;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4, $r7, $r9;
+        java.util.Map$Entry r5;
+        java.lang.String $r8, $r10;
+
+        r1 := @parameter0: java.util.Map;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.preproc.Defines: net.sourceforge.plantuml.preproc.Defines createEmpty()>();
+
+        $r2 = interfaceinvoke r1.<java.util.Map: java.util.Set entrySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.util.Map$Entry) $r4;
+
+        $r6 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r7 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r8 = (java.lang.String) $r7;
+
+        $r9 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r10 = (java.lang.String) $r9;
+
+        interfaceinvoke $r6.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r8, $r10);
+
+        goto label1;
+
+     label2:
+        return r0;
+    }
+
+    public java.lang.String getEnvironmentValue(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.lang.String r1, $r4;
+        java.util.Map $r2;
+        java.lang.Object $r3;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r3 = interfaceinvoke $r2.<java.util.Map: java.lang.Object get(java.lang.Object)>(r1);
+
+        $r4 = (java.lang.String) $r3;
+
+        return $r4;
+    }
+
+    private static java.lang.String nameNoExtension(java.lang.String)
+    {
+        java.lang.String r0, $r1;
+        int i0;
+
+        r0 := @parameter0: java.lang.String;
+
+        i0 = virtualinvoke r0.<java.lang.String: int lastIndexOf(int)>(46);
+
+        if i0 != -1 goto label1;
+
+        return r0;
+
+     label1:
+        $r1 = virtualinvoke r0.<java.lang.String: java.lang.String substring(int,int)>(0, i0);
+
+        return $r1;
+    }
+
+    public void define(java.lang.String, java.util.List, boolean, net.sourceforge.plantuml.AParentFolder)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.lang.String r1;
+        net.sourceforge.plantuml.preproc.Define $r2;
+        java.util.List r3;
+        boolean z0;
+        net.sourceforge.plantuml.AParentFolder r4;
+        java.util.Map $r5;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r1 := @parameter0: java.lang.String;
+
+        r3 := @parameter1: java.util.List;
+
+        z0 := @parameter2: boolean;
+
+        r4 := @parameter3: net.sourceforge.plantuml.AParentFolder;
+
+        $r5 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        $r2 = new net.sourceforge.plantuml.preproc.Define;
+
+        specialinvoke $r2.<net.sourceforge.plantuml.preproc.Define: void <init>(java.lang.String,java.util.List,boolean,net.sourceforge.plantuml.AParentFolder)>(r1, r3, z0, r4);
+
+        interfaceinvoke $r5.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(r1, $r2);
+
+        r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map magic> = null;
+
+        return;
+    }
+
+    public boolean isDefine(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.EvalBoolean $r0;
+        java.lang.String r1, $r7;
+        net.sourceforge.plantuml.preproc.Defines r2;
+        boolean $z0;
+        java.lang.IllegalArgumentException $r3;
+        java.lang.StringBuilder $r4, $r5, $r6;
+
+        r2 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r1 := @parameter0: java.lang.String;
+
+     label1:
+        $r0 = new net.sourceforge.plantuml.preproc.EvalBoolean;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.preproc.EvalBoolean: void <init>(java.lang.String,net.sourceforge.plantuml.preproc.Truth)>(r1, r2);
+
+        $z0 = virtualinvoke $r0.<net.sourceforge.plantuml.preproc.EvalBoolean: boolean eval()>();
+
+     label2:
+        return $z0;
+
+     label3:
+        $r3 := @caughtexception;
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Error in ");
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r1);
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>($r7);
+
+        return 0;
+
+        catch java.lang.IllegalArgumentException from label1 to label2 with label3;
+    }
+
+    public boolean isTrue(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.util.Map $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0, $z1, $z2;
+        java.lang.Object $r4;
+        java.lang.String r5, r6, $r10;
+        java.lang.StringBuilder $r7, $r8, $r9;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r6 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set keySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label4;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.lang.String) $r4;
+
+        $z1 = virtualinvoke r5.<java.lang.String: boolean equals(java.lang.Object)>(r6);
+
+        if $z1 != 0 goto label2;
+
+        $r7 = new java.lang.StringBuilder;
+
+        specialinvoke $r7.<java.lang.StringBuilder: void <init>()>();
+
+        $r8 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r6);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $z2 = virtualinvoke r5.<java.lang.String: boolean startsWith(java.lang.String)>($r10);
+
+        if $z2 == 0 goto label3;
+
+     label2:
+        return 1;
+
+     label3:
+        goto label1;
+
+     label4:
+        return 0;
+    }
+
+    public void undefine(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.lang.String r1;
+        java.util.Map $r2;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        interfaceinvoke $r2.<java.util.Map: java.lang.Object remove(java.lang.Object)>(r1);
+
+        r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map magic> = null;
+
+        return;
+    }
+
+    public java.util.List applyDefines(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.lang.String[] $r1;
+        java.util.List $r2;
+        java.lang.String r3, r4, r5, r6;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r3 := @parameter0: java.lang.String;
+
+        r4 = specialinvoke r0.<net.sourceforge.plantuml.preproc.Defines: java.lang.String manageDate(java.lang.String)>(r3);
+
+        r5 = specialinvoke r0.<net.sourceforge.plantuml.preproc.Defines: java.lang.String manageEnvironment(java.lang.String)>(r4);
+
+        r6 = specialinvoke r0.<net.sourceforge.plantuml.preproc.Defines: java.lang.String method1(java.lang.String)>(r5);
+
+        $r1 = virtualinvoke r6.<java.lang.String: java.lang.String[] split(java.lang.String)>("\n");
+
+        $r2 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($r1);
+
+        return $r2;
+    }
+
+    private java.lang.String method1(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.util.Map $r1;
+        java.util.Collection $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4;
+        net.sourceforge.plantuml.preproc.Define r5;
+        java.lang.String r6;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r6 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Collection values()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (net.sourceforge.plantuml.preproc.Define) $r4;
+
+        r6 = virtualinvoke r5.<net.sourceforge.plantuml.preproc.Define: java.lang.String apply(java.lang.String)>(r6);
+
+        goto label1;
+
+     label2:
+        return r6;
+    }
+
+    private java.util.Map getAll()
+    {
+        java.util.LinkedHashMap $r0;
+        net.sourceforge.plantuml.preproc.Defines r2;
+        java.util.Map $r3;
+        java.util.Collection $r4, r13;
+        java.util.Iterator r5;
+        boolean $z0;
+        java.lang.Object $r6, $r9;
+        net.sourceforge.plantuml.preproc.Define r7;
+        java.lang.String $r8, $r11;
+        java.util.ArrayList $r10;
+
+        r2 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        $r0 = new java.util.LinkedHashMap;
+
+        specialinvoke $r0.<java.util.LinkedHashMap: void <init>()>();
+
+        $r3 = r2.<net.sourceforge.plantuml.preproc.Defines: java.util.Map values>;
+
+        $r4 = interfaceinvoke $r3.<java.util.Map: java.util.Collection values()>();
+
+        r5 = interfaceinvoke $r4.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r5.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r6 = interfaceinvoke r5.<java.util.Iterator: java.lang.Object next()>();
+
+        r7 = (net.sourceforge.plantuml.preproc.Define) $r6;
+
+        $r8 = virtualinvoke r7.<net.sourceforge.plantuml.preproc.Define: java.lang.String getFunctionName()>();
+
+        $r9 = interfaceinvoke $r0.<java.util.Map: java.lang.Object get(java.lang.Object)>($r8);
+
+        r13 = (java.util.Collection) $r9;
+
+        if r13 != null goto label2;
+
+        $r10 = new java.util.ArrayList;
+
+        specialinvoke $r10.<java.util.ArrayList: void <init>()>();
+
+        r13 = $r10;
+
+        $r11 = virtualinvoke r7.<net.sourceforge.plantuml.preproc.Define: java.lang.String getFunctionName()>();
+
+        interfaceinvoke $r0.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r11, $r10);
+
+     label2:
+        interfaceinvoke r13.<java.util.Collection: boolean add(java.lang.Object)>(r7);
+
+        goto label1;
+
+     label3:
+        return $r0;
+    }
+
+    private java.lang.String method2(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.util.Set r1;
+        java.util.Map $r2, $r6, $r12;
+        java.util.Iterator r3, r9;
+        java.lang.Object $r4, $r7, $r10;
+        java.lang.String r5, r13;
+        java.util.Collection r8;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.preproc.Define r11;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r13 := @parameter0: java.lang.String;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Set words(java.lang.String)>(r13);
+
+        $r2 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map magic>;
+
+        if $r2 != null goto label1;
+
+        $r12 = specialinvoke r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map getAll()>();
+
+        r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map magic> = $r12;
+
+     label1:
+        r3 = interfaceinvoke r1.<java.util.Set: java.util.Iterator iterator()>();
+
+     label2:
+        $z1 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label6;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.lang.String) $r4;
+
+        $r6 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map magic>;
+
+        $r7 = interfaceinvoke $r6.<java.util.Map: java.lang.Object get(java.lang.Object)>(r5);
+
+        r8 = (java.util.Collection) $r7;
+
+        if r8 != null goto label3;
+
+        goto label2;
+
+     label3:
+        r9 = interfaceinvoke r8.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label4:
+        $z0 = interfaceinvoke r9.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label5;
+
+        $r10 = interfaceinvoke r9.<java.util.Iterator: java.lang.Object next()>();
+
+        r11 = (net.sourceforge.plantuml.preproc.Define) $r10;
+
+        r13 = virtualinvoke r11.<net.sourceforge.plantuml.preproc.Define: java.lang.String apply(java.lang.String)>(r13);
+
+        goto label4;
+
+     label5:
+        goto label2;
+
+     label6:
+        return r13;
+    }
+
+    private java.util.Set words(java.lang.String)
+    {
+        java.util.regex.Pattern r1;
+        java.lang.String r2, $r6;
+        java.util.regex.Matcher r3;
+        java.util.HashSet $r4;
+        boolean $z0;
+        net.sourceforge.plantuml.preproc.Defines r7;
+
+        r7 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r2 := @parameter0: java.lang.String;
+
+        r1 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("[A-Za-z_][A-Za-z_0-9]*");
+
+        r3 = virtualinvoke r1.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r2);
+
+        $r4 = new java.util.HashSet;
+
+        specialinvoke $r4.<java.util.HashSet: void <init>()>();
+
+     label1:
+        $z0 = virtualinvoke r3.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label2;
+
+        $r6 = virtualinvoke r3.<java.util.regex.Matcher: java.lang.String group(int)>(0);
+
+        interfaceinvoke $r4.<java.util.Set: boolean add(java.lang.Object)>($r6);
+
+        goto label1;
+
+     label2:
+        return $r4;
+    }
+
+    private java.lang.String manageEnvironment(java.lang.String)
+    {
+        net.sourceforge.plantuml.preproc.Defines r0;
+        java.util.Map $r1;
+        java.util.Set $r2;
+        java.util.Iterator r3;
+        boolean $z0;
+        java.lang.Object $r4, $r8, $r14;
+        java.util.Map$Entry r5;
+        java.lang.StringBuilder $r6, $r7, $r10, $r11;
+        java.lang.String $r9, $r12, r13, $r15, r16;
+
+        r0 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r16 := @parameter0: java.lang.String;
+
+        $r1 = r0.<net.sourceforge.plantuml.preproc.Defines: java.util.Map environment>;
+
+        $r2 = interfaceinvoke $r1.<java.util.Map: java.util.Set entrySet()>();
+
+        r3 = interfaceinvoke $r2.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r3.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r4 = interfaceinvoke r3.<java.util.Iterator: java.lang.Object next()>();
+
+        r5 = (java.util.Map$Entry) $r4;
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("%");
+
+        $r8 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        $r9 = (java.lang.String) $r8;
+
+        $r10 = virtualinvoke $r7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r9);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("%");
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        r13 = staticinvoke <java.util.regex.Pattern: java.lang.String quote(java.lang.String)>($r12);
+
+        $r14 = interfaceinvoke r5.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        $r15 = (java.lang.String) $r14;
+
+        r16 = virtualinvoke r16.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>(r13, $r15);
+
+        goto label1;
+
+     label2:
+        return r16;
+    }
+
+    private java.lang.String manageDate(java.lang.String)
+    {
+        java.util.regex.Pattern $r0;
+        java.util.regex.Matcher r1;
+        boolean $z0;
+        java.lang.String r2, r13, r14;
+        java.text.SimpleDateFormat $r3;
+        java.util.Date $r4, $r5;
+        java.lang.Exception $r6;
+        java.lang.StringBuilder $r8, $r9, $r10, $r11;
+        net.sourceforge.plantuml.preproc.Defines r12;
+
+        r12 := @this: net.sourceforge.plantuml.preproc.Defines;
+
+        r13 := @parameter0: java.lang.String;
+
+        $r0 = <net.sourceforge.plantuml.preproc.Defines: java.util.regex.Pattern datePattern>;
+
+        r1 = virtualinvoke $r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r13);
+
+        $z0 = virtualinvoke r1.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label5;
+
+        r2 = virtualinvoke r1.<java.util.regex.Matcher: java.lang.String group(int)>(2);
+
+        if r2 != null goto label1;
+
+        $r5 = new java.util.Date;
+
+        specialinvoke $r5.<java.util.Date: void <init>()>();
+
+        r14 = virtualinvoke $r5.<java.util.Date: java.lang.String toString()>();
+
+        goto label4;
+
+     label1:
+        $r3 = new java.text.SimpleDateFormat;
+
+        specialinvoke $r3.<java.text.SimpleDateFormat: void <init>(java.lang.String)>(r2);
+
+        $r4 = new java.util.Date;
+
+        specialinvoke $r4.<java.util.Date: void <init>()>();
+
+        r14 = virtualinvoke $r3.<java.text.SimpleDateFormat: java.lang.String format(java.util.Date)>($r4);
+
+     label2:
+        goto label4;
+
+     label3:
+        $r6 := @caughtexception;
+
+        $r8 = new java.lang.StringBuilder;
+
+        specialinvoke $r8.<java.lang.StringBuilder: void <init>()>();
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(BAD DATE PATTERN:");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r2);
+
+        $r11 = virtualinvoke $r10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        r14 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.String toString()>();
+
+     label4:
+        r13 = virtualinvoke r13.<java.lang.String: java.lang.String replaceAll(java.lang.String,java.lang.String)>("(?i)%date(\\[(.+?)\\])?%", r14);
+
+     label5:
+        return r13;
+
+        catch java.lang.Exception from label1 to label2 with label3;
+    }
+
+    static void <clinit>()
+    {
+        java.util.regex.Pattern $r0;
+
+        <net.sourceforge.plantuml.preproc.Defines: java.lang.String DATE> = "(?i)%date(\\[(.+?)\\])?%";
+
+        $r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("(?i)%date(\\[(.+?)\\])?%");
+
+        <net.sourceforge.plantuml.preproc.Defines: java.util.regex.Pattern datePattern> = $r0;
+
+        return;
+    }
+}

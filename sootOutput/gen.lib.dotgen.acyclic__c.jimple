@@ -1,0 +1,235 @@
+public class gen.lib.dotgen.acyclic__c extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        gen.lib.dotgen.acyclic__c r0;
+
+        r0 := @this: gen.lib.dotgen.acyclic__c;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void reverse_edge(h.ST_Agedge_s)
+    {
+        h.ST_Agedge_s r0, $r3;
+        h.ST_Agnode_s $r1, $r2, $r5, $r6;
+        java.lang.Throwable $r8;
+
+        r0 := @parameter0: h.ST_Agedge_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("9hm902ya6q6bq246ewuh67h38", "reverse_edge");
+
+     label1:
+        staticinvoke <gen.lib.dotgen.fastgr__c: void delete_fast_edge(h.ST_Agedge_s)>(r0);
+
+        $r1 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s aghead(smetana.core.__ptr__)>(r0);
+
+        $r2 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s agtail(h.ST_Agedge_s)>(r0);
+
+        $r3 = staticinvoke <gen.lib.dotgen.fastgr__c: h.ST_Agedge_s find_fast_edge(h.ST_Agnode_s,h.ST_Agnode_s)>($r1, $r2);
+
+        if $r3 == null goto label2;
+
+        staticinvoke <gen.lib.dotgen.fastgr__c: void merge_oneway(h.ST_Agedge_s,h.ST_Agedge_s)>(r0, $r3);
+
+        goto label3;
+
+     label2:
+        $r5 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s aghead(smetana.core.__ptr__)>(r0);
+
+        $r6 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s agtail(h.ST_Agedge_s)>(r0);
+
+        staticinvoke <gen.lib.dotgen.fastgr__c: h.ST_Agedge_s virtual_edge(h.ST_Agnode_s,h.ST_Agnode_s,h.ST_Agedge_s)>($r5, $r6, r0);
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9hm902ya6q6bq246ewuh67h38", "reverse_edge");
+
+        goto label5;
+
+     label4:
+        $r8 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("9hm902ya6q6bq246ewuh67h38", "reverse_edge");
+
+        throw $r8;
+
+     label5:
+        return;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static void dfs(h.ST_Agnode_s)
+    {
+        h.ST_Agnode_s r0, r6;
+        int $i0, $i1, i2;
+        h.ST_elist $r1;
+        smetana.core.CArrayOfStar $r2;
+        java.lang.Object $r3;
+        h.ST_Agedge_s $r4;
+        boolean $z0;
+        java.lang.Throwable $r7;
+
+        r0 := @parameter0: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("e9h7n52fs8rucrug9tr0zebe2", "dfs");
+
+     label01:
+        $i0 = staticinvoke <smetana.core.Macro: int ND_mark(h.ST_Agnode_s)>(r0);
+
+        if $i0 == 0 goto label03;
+
+     label02:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("e9h7n52fs8rucrug9tr0zebe2", "dfs");
+
+        return;
+
+     label03:
+        staticinvoke <smetana.core.Macro: void ND_mark(h.ST_Agnode_s,int)>(r0, 1);
+
+        staticinvoke <smetana.core.Macro: void ND_onstack(h.ST_Agnode_s,int)>(r0, 1);
+
+        i2 = 0;
+
+     label04:
+        $r1 = staticinvoke <smetana.core.Macro: h.ST_elist ND_out(h.ST_Agnode_s)>(r0);
+
+        $r2 = $r1.<h.ST_elist: smetana.core.CArrayOfStar list>;
+
+        $r3 = virtualinvoke $r2.<smetana.core.CArrayOfStar: java.lang.Object get_(int)>(i2);
+
+        $r4 = (h.ST_Agedge_s) $r3;
+
+        if $r4 == null goto label07;
+
+        r6 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agnode_s aghead(smetana.core.__ptr__)>($r4);
+
+        $z0 = staticinvoke <smetana.core.Macro: boolean ND_onstack(h.ST_Agnode_s)>(r6);
+
+        if $z0 == 0 goto label05;
+
+        staticinvoke <gen.lib.dotgen.acyclic__c: void reverse_edge(h.ST_Agedge_s)>($r4);
+
+        i2 = i2 + -1;
+
+        goto label06;
+
+     label05:
+        $i1 = staticinvoke <smetana.core.Macro: int ND_mark(h.ST_Agnode_s)>(r6);
+
+        if $i1 != 0 goto label06;
+
+        staticinvoke <gen.lib.dotgen.acyclic__c: void dfs(h.ST_Agnode_s)>(r6);
+
+     label06:
+        i2 = i2 + 1;
+
+        goto label04;
+
+     label07:
+        staticinvoke <smetana.core.Macro: void ND_onstack(h.ST_Agnode_s,int)>(r0, 0);
+
+     label08:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("e9h7n52fs8rucrug9tr0zebe2", "dfs");
+
+        goto label11;
+
+     label09:
+        $r7 := @caughtexception;
+
+     label10:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("e9h7n52fs8rucrug9tr0zebe2", "dfs");
+
+        throw $r7;
+
+     label11:
+        return;
+
+        catch java.lang.Throwable from label01 to label02 with label09;
+        catch java.lang.Throwable from label03 to label08 with label09;
+        catch java.lang.Throwable from label09 to label10 with label09;
+    }
+
+    public static void acyclic_(h.ST_Agraph_s)
+    {
+        h.ST_Agraph_s r0;
+        h.ST_nlist_t $r1, $r2;
+        int $i0, i1;
+        smetana.core.CArrayOfStar $r3;
+        java.lang.Object $r4;
+        h.ST_Agnode_s $r5, r8, r9;
+        java.lang.Throwable $r6;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("1ejgnwd7ek344caegjwg46n6h", "acyclic_");
+
+     label1:
+        i1 = 0;
+
+     label2:
+        $r1 = staticinvoke <smetana.core.Macro: h.ST_nlist_t GD_comp(h.ST_Agraph_s)>(r0);
+
+        $i0 = $r1.<h.ST_nlist_t: int size>;
+
+        if i1 >= $i0 goto label7;
+
+        $r2 = staticinvoke <smetana.core.Macro: h.ST_nlist_t GD_comp(h.ST_Agraph_s)>(r0);
+
+        $r3 = $r2.<h.ST_nlist_t: smetana.core.CArrayOfStar list>;
+
+        $r4 = virtualinvoke $r3.<smetana.core.CArrayOfStar: java.lang.Object get_(int)>(i1);
+
+        $r5 = (h.ST_Agnode_s) $r4;
+
+        staticinvoke <smetana.core.Macro: void GD_nlist(h.ST_Agraph_s,h.ST_Agnode_s)>(r0, $r5);
+
+        r8 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s GD_nlist(h.ST_Agraph_s)>(r0);
+
+     label3:
+        if r8 == null goto label4;
+
+        staticinvoke <smetana.core.Macro: void ND_mark(h.ST_Agnode_s,int)>(r8, 0);
+
+        r8 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_next(h.ST_Agnode_s)>(r8);
+
+        goto label3;
+
+     label4:
+        r9 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s GD_nlist(h.ST_Agraph_s)>(r0);
+
+     label5:
+        if r9 == null goto label6;
+
+        staticinvoke <gen.lib.dotgen.acyclic__c: void dfs(h.ST_Agnode_s)>(r9);
+
+        r9 = staticinvoke <smetana.core.Macro: h.ST_Agnode_s ND_next(h.ST_Agnode_s)>(r9);
+
+        goto label5;
+
+     label6:
+        i1 = i1 + 1;
+
+        goto label2;
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("1ejgnwd7ek344caegjwg46n6h", "acyclic_");
+
+        goto label9;
+
+     label8:
+        $r6 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("1ejgnwd7ek344caegjwg46n6h", "acyclic_");
+
+        throw $r6;
+
+     label9:
+        return;
+
+        catch java.lang.Throwable from label1 to label7 with label8;
+    }
+}

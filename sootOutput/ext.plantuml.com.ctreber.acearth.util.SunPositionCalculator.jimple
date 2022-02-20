@@ -1,0 +1,584 @@
+public class ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator extends java.lang.Object
+{
+    private static final long EPOCH_START;
+    private static final double RADS_PER_DAY;
+    private static final double EPSILON_G;
+    private static final double OMEGA_BAR_G;
+    private static final double ECCENTRICITY;
+    private static final double MOON_MEAN_LONGITUDE;
+    private static final double MOON_MEAN_LONGITUDE_PERIGEE;
+    private static final double MOON_MEAN_LONGITUDE_NODE;
+    private static final double MOON_INCLINATION;
+    private static final double SIDERAL_MONTH;
+
+    public void <init>()
+    {
+        ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator r0;
+
+        r0 := @this: ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    private static double getMeanSunLongitude(double)
+    {
+        double d0, $d1, $d2, $d3, d4, d5, d6;
+        byte $b0, $b1;
+
+        d0 := @parameter0: double;
+
+        d4 = 0.017202791632524146 * d0;
+
+        d5 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double fmod(double,double,double)>(d4, 0.0, 6.283185307179586);
+
+        $b0 = d5 cmpg 0.0;
+
+        if $b0 >= 0 goto label1;
+
+        d5 = d5 + 6.283185307179586;
+
+     label1:
+        $d1 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double EPSILON_G>;
+
+        $d3 = d5 + $d1;
+
+        $d2 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double OMEGA_BAR_G>;
+
+        d6 = $d3 - $d2;
+
+        $b1 = d6 cmpg 0.0;
+
+        if $b1 >= 0 goto label2;
+
+        d6 = d6 + 6.283185307179586;
+
+     label2:
+        return d6;
+    }
+
+    private static double getSunEclipticLongitude(long)
+    {
+        long l0;
+        double d0, d1, d2, $d3, $d4, $d5, $d6, $d7, d8, $d9, $d10;
+
+        l0 := @parameter0: long;
+
+        d0 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double daysSinceEpoch(long)>(l0);
+
+        d1 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double getMeanSunLongitude(double)>(d0);
+
+        d2 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double doKepler(double)>(d1);
+
+        $d3 = staticinvoke <java.lang.Math: double sqrt(double)>(1.033994144130859);
+
+        $d4 = d2 / 2.0;
+
+        $d5 = staticinvoke <java.lang.Math: double tan(double)>($d4);
+
+        $d6 = $d3 * $d5;
+
+        $d7 = staticinvoke <java.lang.Math: double atan(double)>($d6);
+
+        d8 = 2.0 * $d7;
+
+        $d9 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double OMEGA_BAR_G>;
+
+        $d10 = d8 + $d9;
+
+        return $d10;
+    }
+
+    static double daysSinceEpoch(long)
+    {
+        long l0, $l1;
+        double $d0, $d1, $d2, $d3;
+
+        l0 := @parameter0: long;
+
+        $l1 = l0 - 631065600000L;
+
+        $d0 = (double) $l1;
+
+        $d1 = $d0 / 24.0;
+
+        $d2 = $d1 / 3600.0;
+
+        $d3 = $d2 / 1000.0;
+
+        return $d3;
+    }
+
+    private static double doKepler(double)
+    {
+        double d0, $d1, $d2, $d3, d4, $d5, $d6, $d7, $d8, $d9, d10;
+        byte $b0;
+
+        d0 := @parameter0: double;
+
+        d10 = d0;
+
+     label1:
+        $d1 = staticinvoke <java.lang.Math: double sin(double)>(d10);
+
+        $d2 = 0.016713 * $d1;
+
+        $d3 = d10 - $d2;
+
+        d4 = $d3 - d0;
+
+        $d5 = staticinvoke <java.lang.Math: double abs(double)>(d4);
+
+        $b0 = $d5 cmpg 1.0E-10;
+
+        if $b0 > 0 goto label2;
+
+        goto label3;
+
+     label2:
+        $d6 = staticinvoke <java.lang.Math: double cos(double)>(d10);
+
+        $d7 = 0.016713 * $d6;
+
+        $d8 = 1.0 - $d7;
+
+        $d9 = d4 / $d8;
+
+        d10 = d10 - $d9;
+
+        goto label1;
+
+     label3:
+        return d10;
+    }
+
+    private static double getJulianDate(int, int, int)
+    {
+        int i0, i1, i2, i3, i4, i5, i6, $i7, $i8, $i9, $i10, $i11, $i12;
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        i5 := @parameter0: int;
+
+        i6 := @parameter1: int;
+
+        i4 := @parameter2: int;
+
+        if i6 == 1 goto label1;
+
+        if i6 != 2 goto label2;
+
+     label1:
+        i5 = i5 + -1;
+
+        i6 = i6 + 12;
+
+     label2:
+        i0 = i5 / 100;
+
+        $i7 = 2 - i0;
+
+        $i8 = i0 / 4;
+
+        i1 = $i7 + $i8;
+
+        $d0 = (double) i5;
+
+        $d1 = 365.25 * $d0;
+
+        i2 = (int) $d1;
+
+        $i9 = i6 + 1;
+
+        $d2 = (double) $i9;
+
+        $d3 = 30.6001 * $d2;
+
+        i3 = (int) $d3;
+
+        $i10 = i1 + i2;
+
+        $i11 = $i10 + i3;
+
+        $i12 = $i11 + i4;
+
+        $d4 = (double) $i12;
+
+        $d5 = $d4 + 1720994.5;
+
+        return $d5;
+    }
+
+    private static double getGST(long)
+    {
+        java.util.TimeZone $r0;
+        java.util.Calendar r1;
+        java.util.Date $r2;
+        long l0;
+        int $i1, $i2, $i3, $i4, $i6, $i7, $i8;
+        double d0, $d1, d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, d13, $d14, d15, d16, d17, d18;
+        byte $b5, $b9;
+
+        l0 := @parameter0: long;
+
+        $r0 = staticinvoke <java.util.TimeZone: java.util.TimeZone getTimeZone(java.lang.String)>("GMT");
+
+        r1 = staticinvoke <java.util.Calendar: java.util.Calendar getInstance(java.util.TimeZone)>($r0);
+
+        $r2 = new java.util.Date;
+
+        specialinvoke $r2.<java.util.Date: void <init>(long)>(l0);
+
+        virtualinvoke r1.<java.util.Calendar: void setTime(java.util.Date)>($r2);
+
+        $i1 = virtualinvoke r1.<java.util.Calendar: int get(int)>(1);
+
+        $i2 = virtualinvoke r1.<java.util.Calendar: int get(int)>(2);
+
+        $i3 = $i2 + 1;
+
+        $i4 = virtualinvoke r1.<java.util.Calendar: int get(int)>(5);
+
+        d0 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double getJulianDate(int,int,int)>($i1, $i3, $i4);
+
+        $d1 = d0 - 2451545.0;
+
+        d2 = $d1 / 36525.0;
+
+        $d3 = d2 + 2.5862E-5;
+
+        $d4 = $d3 * d2;
+
+        $d5 = $d4 + 2400.051336;
+
+        $d6 = $d5 * d2;
+
+        d15 = $d6 + 6.697374558;
+
+        d16 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double fmod(double,double,double)>(d15, 0.0, 24.0);
+
+        $b5 = d16 cmpg 0.0;
+
+        if $b5 >= 0 goto label1;
+
+        d16 = d16 + 24.0;
+
+     label1:
+        $i6 = virtualinvoke r1.<java.util.Calendar: int get(int)>(11);
+
+        $d7 = (double) $i6;
+
+        $i7 = virtualinvoke r1.<java.util.Calendar: int get(int)>(12);
+
+        $d8 = (double) $i7;
+
+        $i8 = virtualinvoke r1.<java.util.Calendar: int get(int)>(13);
+
+        $d9 = (double) $i8;
+
+        $d10 = $d9 / 60.0;
+
+        $d11 = $d8 + $d10;
+
+        $d12 = $d11 / 60.0;
+
+        d13 = $d7 + $d12;
+
+        $d14 = d13 * 1.002737909;
+
+        d17 = d16 + $d14;
+
+        d18 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double fmod(double,double,double)>(d17, 0.0, 24.0);
+
+        $b9 = d18 cmpg 0.0;
+
+        if $b9 >= 0 goto label2;
+
+        d18 = d18 + 24.0;
+
+     label2:
+        return d18;
+    }
+
+    public static ext.plantuml.com.ctreber.acearth.util.Coordinate getSunPositionOnEarth(long)
+    {
+        ext.plantuml.com.ctreber.acearth.util.Coordinate $r0, r2, $r3;
+        long l0;
+        double $d0, $d1, $d2, $d3, $d4, d5, $d6, $d7, $d8;
+
+        l0 := @parameter0: long;
+
+        $r0 = new ext.plantuml.com.ctreber.acearth.util.Coordinate;
+
+        $d0 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double getSunEclipticLongitude(long)>(l0);
+
+        specialinvoke $r0.<ext.plantuml.com.ctreber.acearth.util.Coordinate: void <init>(double,double)>(0.0, $d0);
+
+        r2 = virtualinvoke $r0.<ext.plantuml.com.ctreber.acearth.util.Coordinate: ext.plantuml.com.ctreber.acearth.util.Coordinate eclipticToEquatorial()>();
+
+        $d1 = virtualinvoke r2.<ext.plantuml.com.ctreber.acearth.util.Coordinate: double getRA()>();
+
+        $d2 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double getGST(long)>(l0);
+
+        $d3 = 0.2617993877991494 * $d2;
+
+        $d4 = $d1 - $d3;
+
+        d5 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double limitRads(double)>($d4);
+
+        $r3 = new ext.plantuml.com.ctreber.acearth.util.Coordinate;
+
+        $d6 = virtualinvoke r2.<ext.plantuml.com.ctreber.acearth.util.Coordinate: double getDE()>();
+
+        $d7 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double radsToDegs(double)>($d6);
+
+        $d8 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double radsToDegs(double)>(d5);
+
+        specialinvoke $r3.<ext.plantuml.com.ctreber.acearth.util.Coordinate: void <init>(double,double)>($d7, $d8);
+
+        return $r3;
+    }
+
+    public static ext.plantuml.com.ctreber.acearth.util.Coordinate getMoonPositionOnEarth(long)
+    {
+        long l0;
+        double d0, d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, $d11, $d12, $d13, $d14, $d15, $d16, $d17, $d18, $d19, $d20, d21, $d22, $d23, d24, $d25, $d26, $d27, $d28, $d29, $d30, $d31, d32, $d33, $d34, $d35, $d36, $d37, $d38, $d39, $d40, $d41, $d42, $d43, $d44, $d45, $d46, $d47, $d48, $d49, $d50, $d51, $d52, $d53, $d54, $d55, $d56, $d57, $d58, $d59, d60, $d61, $d62, $d63, $d64, d65, $d66, $d67, $d68, $d69, $d70, $d71, $d72, $d73, $d74, d75, d76, d77, d78, d79, d80, d81, d82, d83, $d84, d85;
+        byte $b1;
+        ext.plantuml.com.ctreber.acearth.util.Coordinate $r0, r1, $r2;
+
+        l0 := @parameter0: long;
+
+        d0 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double daysSinceEpoch(long)>(l0);
+
+        d75 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double getSunEclipticLongitude(long)>(l0);
+
+        d1 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double getMeanSunLongitude(double)>(d0);
+
+        $d2 = d0 / 27.3217;
+
+        $d3 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double fmod(double,double,double)>($d2, 0.0, 1.0);
+
+        $d5 = $d3 * 6.283185307179586;
+
+        $d4 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_MEAN_LONGITUDE>;
+
+        $d6 = $d5 + $d4;
+
+        d76 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double limitRads(double)>($d6);
+
+        $d7 = 0.1114041 * d0;
+
+        $d8 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>($d7);
+
+        $d10 = d76 - $d8;
+
+        $d9 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_MEAN_LONGITUDE_PERIGEE>;
+
+        $d11 = $d10 - $d9;
+
+        d77 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double limitRads(double)>($d11);
+
+        $d13 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_MEAN_LONGITUDE_NODE>;
+
+        $d12 = 0.0529539 * d0;
+
+        $d14 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>($d12);
+
+        $d15 = $d13 - $d14;
+
+        d78 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double limitRads(double)>($d15);
+
+        $d16 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(1.2739);
+
+        $d17 = d76 - d75;
+
+        $d18 = 2.0 * $d17;
+
+        $d19 = $d18 - d77;
+
+        $d20 = staticinvoke <java.lang.Math: double sin(double)>($d19);
+
+        d21 = $d16 * $d20;
+
+        $d22 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(0.1858);
+
+        $d23 = staticinvoke <java.lang.Math: double sin(double)>(d1);
+
+        d24 = $d22 * $d23;
+
+        $d25 = d21 - d24;
+
+        $d26 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(0.37);
+
+        $d27 = staticinvoke <java.lang.Math: double sin(double)>(d1);
+
+        $d28 = $d26 * $d27;
+
+        $d29 = $d25 - $d28;
+
+        d79 = d77 + $d29;
+
+        $d30 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(6.2886);
+
+        $d31 = staticinvoke <java.lang.Math: double sin(double)>(d79);
+
+        d32 = $d30 * $d31;
+
+        $d33 = d21 + d32;
+
+        $d34 = $d33 - d24;
+
+        $d35 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(0.214);
+
+        $d36 = 2.0 * d79;
+
+        $d37 = staticinvoke <java.lang.Math: double sin(double)>($d36);
+
+        $d38 = $d35 * $d37;
+
+        $d39 = $d34 + $d38;
+
+        d80 = d76 + $d39;
+
+        $d40 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(0.6583);
+
+        $d41 = d80 - d75;
+
+        $d42 = 2.0 * $d41;
+
+        $d43 = staticinvoke <java.lang.Math: double sin(double)>($d42);
+
+        $d44 = $d40 * $d43;
+
+        d81 = d80 + $d44;
+
+        $d45 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(0.16);
+
+        $d46 = staticinvoke <java.lang.Math: double sin(double)>(d1);
+
+        $d47 = $d45 * $d46;
+
+        d82 = d78 - $d47;
+
+        d83 = d81 - d82;
+
+        $d48 = staticinvoke <java.lang.Math: double cos(double)>(d83);
+
+        $d49 = staticinvoke <java.lang.Math: double abs(double)>($d48);
+
+        $b1 = $d49 cmpg 1.0E-12;
+
+        if $b1 >= 0 goto label1;
+
+        $d69 = staticinvoke <java.lang.Math: double sin(double)>(d83);
+
+        $d70 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_INCLINATION>;
+
+        $d71 = staticinvoke <java.lang.Math: double cos(double)>($d70);
+
+        $d72 = $d69 * $d71;
+
+        $d73 = $d72 * 3.141592653589793;
+
+        $d74 = $d73 / 2.0;
+
+        $d84 = d82 + $d74;
+
+        goto label2;
+
+     label1:
+        $d50 = staticinvoke <java.lang.Math: double sin(double)>(d83);
+
+        $d51 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_INCLINATION>;
+
+        $d52 = staticinvoke <java.lang.Math: double cos(double)>($d51);
+
+        $d53 = $d50 * $d52;
+
+        $d54 = staticinvoke <java.lang.Math: double cos(double)>(d83);
+
+        $d55 = staticinvoke <java.lang.Math: double atan2(double,double)>($d53, $d54);
+
+        $d84 = d82 + $d55;
+
+     label2:
+        d85 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double limitRads(double)>($d84);
+
+        $d56 = staticinvoke <java.lang.Math: double sin(double)>(d83);
+
+        $d57 = <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_INCLINATION>;
+
+        $d58 = staticinvoke <java.lang.Math: double sin(double)>($d57);
+
+        $d59 = $d56 * $d58;
+
+        d60 = staticinvoke <java.lang.Math: double asin(double)>($d59);
+
+        $r0 = new ext.plantuml.com.ctreber.acearth.util.Coordinate;
+
+        specialinvoke $r0.<ext.plantuml.com.ctreber.acearth.util.Coordinate: void <init>(double,double)>(d60, d85);
+
+        r1 = virtualinvoke $r0.<ext.plantuml.com.ctreber.acearth.util.Coordinate: ext.plantuml.com.ctreber.acearth.util.Coordinate eclipticToEquatorial()>();
+
+        $d61 = virtualinvoke r1.<ext.plantuml.com.ctreber.acearth.util.Coordinate: double getRA()>();
+
+        $d62 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double getGST(long)>(l0);
+
+        $d63 = 0.2617993877991494 * $d62;
+
+        $d64 = $d61 - $d63;
+
+        d65 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double limitRads(double)>($d64);
+
+        $r2 = new ext.plantuml.com.ctreber.acearth.util.Coordinate;
+
+        $d66 = virtualinvoke r1.<ext.plantuml.com.ctreber.acearth.util.Coordinate: double getDE()>();
+
+        $d67 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double radsToDegs(double)>($d66);
+
+        $d68 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double radsToDegs(double)>(d65);
+
+        specialinvoke $r2.<ext.plantuml.com.ctreber.acearth.util.Coordinate: void <init>(double,double)>($d67, $d68);
+
+        return $r2;
+    }
+
+    static void <clinit>()
+    {
+        double $d0, $d1, $d2, $d3, $d4, $d5;
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double SIDERAL_MONTH> = 27.3217;
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double ECCENTRICITY> = 0.016713;
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double RADS_PER_DAY> = 0.017202791632524146;
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: long EPOCH_START> = 631065600000L;
+
+        $d0 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(279.403303);
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double EPSILON_G> = $d0;
+
+        $d1 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(282.768422);
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double OMEGA_BAR_G> = $d1;
+
+        $d2 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(318.351648);
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_MEAN_LONGITUDE> = $d2;
+
+        $d3 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(36.34041);
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_MEAN_LONGITUDE_PERIGEE> = $d3;
+
+        $d4 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(318.510107);
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_MEAN_LONGITUDE_NODE> = $d4;
+
+        $d5 = staticinvoke <ext.plantuml.com.ctreber.acearth.util.Toolkit: double degsToRads(double)>(5.145396);
+
+        <ext.plantuml.com.ctreber.acearth.util.SunPositionCalculator: double MOON_INCLINATION> = $d5;
+
+        return;
+    }
+}

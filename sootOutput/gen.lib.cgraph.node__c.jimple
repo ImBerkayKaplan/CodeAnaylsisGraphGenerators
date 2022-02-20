@@ -1,0 +1,875 @@
+public class gen.lib.cgraph.node__c extends java.lang.Object
+{
+    public static smetana.core.CFunction agsubnodeidcmpf;
+    public static smetana.core.CFunction agsubnodeseqcmpf;
+    public static smetana.core.CFunction free_subnode;
+
+    public void <init>()
+    {
+        gen.lib.cgraph.node__c r0;
+
+        r0 := @this: gen.lib.cgraph.node__c;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static h.ST_Agnode_s agfindnode_by_id(h.ST_Agraph_s, int)
+    {
+        smetana.core.Z $r0, $r4, $r6, $r10;
+        h.ST_Agnode_s $r1, $r7, $r17;
+        h.ST_Agobj_s $r2;
+        int i0;
+        h.ST_Agtag_s $r3;
+        h.ST_Agsubnode_s $r5, $r11, r13;
+        h.ST_Agraph_s r8;
+        h.ST_dt_s $r9;
+        java.lang.Object $r12;
+        java.lang.Throwable $r15;
+
+        r8 := @parameter0: h.ST_Agraph_s;
+
+        i0 := @parameter1: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("4w89du6uel405pm3vxsr3ayxt", "agfindnode_by_id");
+
+     label1:
+        $r0 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r1 = $r0.<smetana.core.Z: h.ST_Agnode_s dummy>;
+
+        $r2 = $r1.<h.ST_Agnode_s: h.ST_Agobj_s base>;
+
+        $r3 = $r2.<h.ST_Agobj_s: h.ST_Agtag_s tag>;
+
+        $r3.<h.ST_Agtag_s: int id> = i0;
+
+        $r4 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r5 = $r4.<smetana.core.Z: h.ST_Agsubnode_s template>;
+
+        $r6 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r7 = $r6.<smetana.core.Z: h.ST_Agnode_s dummy>;
+
+        $r5.<h.ST_Agsubnode_s: h.ST_Agnode_s node> = $r7;
+
+        $r9 = r8.<h.ST_Agraph_s: h.ST_dt_s n_id>;
+
+        $r10 = staticinvoke <smetana.core.Z: smetana.core.Z z()>();
+
+        $r11 = $r10.<smetana.core.Z: h.ST_Agsubnode_s template>;
+
+        $r12 = staticinvoke <smetana.core.Macro: java.lang.Object dtsearch(h.ST_dt_s,java.lang.Object)>($r9, $r11);
+
+        r13 = (h.ST_Agsubnode_s) $r12;
+
+        if r13 == null goto label2;
+
+        $r17 = r13.<h.ST_Agsubnode_s: h.ST_Agnode_s node>;
+
+        goto label3;
+
+     label2:
+        $r17 = null;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4w89du6uel405pm3vxsr3ayxt", "agfindnode_by_id");
+
+        return $r17;
+
+     label4:
+        $r15 := @caughtexception;
+
+     label5:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4w89du6uel405pm3vxsr3ayxt", "agfindnode_by_id");
+
+        throw $r15;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+        catch java.lang.Throwable from label4 to label5 with label4;
+    }
+
+    public static h.ST_Agnode_s agfstnode(h.ST_Agraph_s)
+    {
+        h.ST_Agraph_s r0;
+        h.ST_dt_s $r1;
+        java.lang.Object $r2;
+        h.ST_Agsubnode_s r3;
+        java.lang.Throwable $r5;
+        h.ST_Agnode_s $r7;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("55wopi2gd93zpmycxoywlxm0y", "agfstnode");
+
+     label1:
+        $r1 = r0.<h.ST_Agraph_s: h.ST_dt_s n_seq>;
+
+        $r2 = staticinvoke <smetana.core.Macro: java.lang.Object dtfirst(h.ST_dt_s)>($r1);
+
+        r3 = (h.ST_Agsubnode_s) $r2;
+
+        if r3 == null goto label2;
+
+        $r7 = r3.<h.ST_Agsubnode_s: h.ST_Agnode_s node>;
+
+        goto label3;
+
+     label2:
+        $r7 = null;
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("55wopi2gd93zpmycxoywlxm0y", "agfstnode");
+
+        return $r7;
+
+     label4:
+        $r5 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("55wopi2gd93zpmycxoywlxm0y", "agfstnode");
+
+        throw $r5;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static h.ST_Agnode_s agnxtnode(h.ST_Agraph_s, h.ST_Agnode_s)
+    {
+        h.ST_Agraph_s r0;
+        h.ST_Agnode_s r1, $r8;
+        h.ST_dt_s $r3;
+        java.lang.Object $r4;
+        java.lang.Throwable $r5;
+        h.ST_Agsubnode_s r7;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        r1 := @parameter1: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("bek79ccvjys1j9q404i3y6oh8", "agnxtnode");
+
+     label1:
+        r7 = staticinvoke <gen.lib.cgraph.edge__c: h.ST_Agsubnode_s agsubrep(h.ST_Agraph_s,h.ST_Agnode_s)>(r0, r1);
+
+        if r7 == null goto label2;
+
+        $r3 = r0.<h.ST_Agraph_s: h.ST_dt_s n_seq>;
+
+        $r4 = staticinvoke <smetana.core.Macro: java.lang.Object dtnext(h.ST_dt_s,java.lang.Object)>($r3, r7);
+
+        r7 = (h.ST_Agsubnode_s) $r4;
+
+     label2:
+        if r7 == null goto label3;
+
+        $r8 = r7.<h.ST_Agsubnode_s: h.ST_Agnode_s node>;
+
+        goto label4;
+
+     label3:
+        $r8 = null;
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("bek79ccvjys1j9q404i3y6oh8", "agnxtnode");
+
+        return $r8;
+
+     label5:
+        $r5 := @caughtexception;
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("bek79ccvjys1j9q404i3y6oh8", "agnxtnode");
+
+        throw $r5;
+
+        catch java.lang.Throwable from label1 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    public static h.ST_Agnode_s newnode(h.ST_Agraph_s, int, int)
+    {
+        h.ST_Agraph_s r0, $r4, $r5;
+        smetana.core.size_t $r1, $r9;
+        smetana.core.__ptr__ $r2;
+        h.ST_Agnode_s r3;
+        int i0, i1, $i2;
+        h.ST_Agdesc_s $r6;
+        smetana.core.CString $r8;
+        java.lang.Throwable $r11;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("dzb7m0p5xsngvtyr8zs912og4", "newnode");
+
+     label1:
+        $r1 = staticinvoke <smetana.core.JUtils: smetana.core.size_t sizeof(java.lang.Class)>(class "Lh/ST_Agnode_s;");
+
+        $r2 = staticinvoke <gen.lib.cgraph.mem__c: smetana.core.__ptr__ agalloc(h.ST_Agraph_s,smetana.core.size_t)>(r0, $r1);
+
+        r3 = (h.ST_Agnode_s) $r2;
+
+        staticinvoke <smetana.core.Macro: void AGTYPE(h.ST_Agobj_s,int)>(r3, 1);
+
+        staticinvoke <smetana.core.Macro: void AGID(h.ST_Agobj_s,int)>(r3, i0);
+
+        staticinvoke <smetana.core.Macro: void AGSEQ(h.ST_Agobj_s,int)>(r3, i1);
+
+        $r4 = staticinvoke <gen.lib.cgraph.obj__c: h.ST_Agraph_s agroot(h.ST_Agobj_s)>(r0);
+
+        r3.<h.ST_Agnode_s: h.ST_Agraph_s root> = $r4;
+
+        $r5 = staticinvoke <gen.lib.cgraph.obj__c: h.ST_Agraph_s agroot(h.ST_Agobj_s)>(r0);
+
+        $r6 = $r5.<h.ST_Agraph_s: h.ST_Agdesc_s desc>;
+
+        $i2 = $r6.<h.ST_Agdesc_s: int has_attrs>;
+
+        if $i2 == 0 goto label2;
+
+        $r8 = <gen.lib.cgraph.attr__c: smetana.core.CString AgDataRecName>;
+
+        $r9 = staticinvoke <smetana.core.JUtils: smetana.core.size_t sizeof(java.lang.Class)>(class "Lh/ST_Agattr_s;");
+
+        staticinvoke <gen.lib.cgraph.rec__c: smetana.core.__ptr__ agbindrec(smetana.core.__ptr__,smetana.core.CString,smetana.core.size_t,boolean)>(r3, $r8, $r9, 0);
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("dzb7m0p5xsngvtyr8zs912og4", "newnode");
+
+        return r3;
+
+     label3:
+        $r11 := @caughtexception;
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("dzb7m0p5xsngvtyr8zs912og4", "newnode");
+
+        throw $r11;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public static void installnode(h.ST_Agraph_s, h.ST_Agnode_s)
+    {
+        h.ST_Agraph_s r0, $r2;
+        h.ST_dt_s $r1, $r7, $r9, $r13, $r15;
+        boolean $z0;
+        smetana.core.size_t $r3;
+        smetana.core.__ptr__ $r4, $r5;
+        h.ST_Agnode_s r6;
+        java.lang.Object[] $r8, $r14;
+        smetana.core.CFunction $r10, $r16;
+        java.lang.Integer $r11, $r17;
+        java.lang.Throwable $r19;
+        h.ST_Agsubnode_s r21;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        r6 := @parameter1: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("4m26dpgaiw44hcleugjy71eus", "installnode");
+
+     label1:
+        $r1 = r0.<h.ST_Agraph_s: h.ST_dt_s n_id>;
+
+        staticinvoke <gen.lib.cdt.dtsize__c: int dtsize_(h.ST_dt_s)>($r1);
+
+        $r2 = staticinvoke <gen.lib.cgraph.obj__c: h.ST_Agraph_s agroot(h.ST_Agobj_s)>(r0);
+
+        $z0 = staticinvoke <smetana.core.JUtils: boolean EQ(java.lang.Object,java.lang.Object)>(r0, $r2);
+
+        if $z0 == 0 goto label2;
+
+        r21 = r6.<h.ST_Agnode_s: h.ST_Agsubnode_s mainsub>;
+
+        goto label3;
+
+     label2:
+        $r3 = staticinvoke <smetana.core.JUtils: smetana.core.size_t sizeof(java.lang.Class)>(class "Lh/ST_Agsubnode_s;");
+
+        $r4 = staticinvoke <gen.lib.cgraph.mem__c: smetana.core.__ptr__ agalloc(h.ST_Agraph_s,smetana.core.size_t)>(r0, $r3);
+
+        $r5 = interfaceinvoke $r4.<smetana.core.__ptr__: smetana.core.__ptr__ castTo(java.lang.Class)>(class "Lh/ST_Agsubnode_s;");
+
+        r21 = (h.ST_Agsubnode_s) $r5;
+
+     label3:
+        r21.<h.ST_Agsubnode_s: h.ST_Agnode_s node> = r6;
+
+        $r7 = r0.<h.ST_Agraph_s: h.ST_dt_s n_id>;
+
+        $r10 = $r7.<h.ST_dt_s: smetana.core.CFunction searchf>;
+
+        $r8 = newarray (java.lang.Object)[3];
+
+        $r9 = r0.<h.ST_Agraph_s: h.ST_dt_s n_id>;
+
+        $r8[0] = $r9;
+
+        $r8[1] = r21;
+
+        $r11 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(1);
+
+        $r8[2] = $r11;
+
+        interfaceinvoke $r10.<smetana.core.CFunction: java.lang.Object exe(java.lang.Object[])>($r8);
+
+        $r13 = r0.<h.ST_Agraph_s: h.ST_dt_s n_seq>;
+
+        $r16 = $r13.<h.ST_dt_s: smetana.core.CFunction searchf>;
+
+        $r14 = newarray (java.lang.Object)[3];
+
+        $r15 = r0.<h.ST_Agraph_s: h.ST_dt_s n_seq>;
+
+        $r14[0] = $r15;
+
+        $r14[1] = r21;
+
+        $r17 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>(1);
+
+        $r14[2] = $r17;
+
+        interfaceinvoke $r16.<smetana.core.CFunction: java.lang.Object exe(java.lang.Object[])>($r14);
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4m26dpgaiw44hcleugjy71eus", "installnode");
+
+        goto label7;
+
+     label5:
+        $r19 := @caughtexception;
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4m26dpgaiw44hcleugjy71eus", "installnode");
+
+        throw $r19;
+
+     label7:
+        return;
+
+        catch java.lang.Throwable from label1 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    public static void installnodetoroot(h.ST_Agraph_s, h.ST_Agnode_s)
+    {
+        h.ST_Agraph_s r0, $r2;
+        h.ST_Agnode_s r1;
+        java.lang.Throwable $r4;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        r1 := @parameter1: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("3mfxjcaeepn8nitirs3yoqaed", "installnodetoroot");
+
+     label1:
+        staticinvoke <gen.lib.cgraph.node__c: void installnode(h.ST_Agraph_s,h.ST_Agnode_s)>(r0, r1);
+
+        $r2 = staticinvoke <gen.lib.cgraph.subg__c: h.ST_Agraph_s agparent(h.ST_Agraph_s)>(r0);
+
+        if $r2 == null goto label2;
+
+        staticinvoke <gen.lib.cgraph.node__c: void installnodetoroot(h.ST_Agraph_s,h.ST_Agnode_s)>($r2, r1);
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("3mfxjcaeepn8nitirs3yoqaed", "installnodetoroot");
+
+        goto label4;
+
+     label3:
+        $r4 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("3mfxjcaeepn8nitirs3yoqaed", "installnodetoroot");
+
+        throw $r4;
+
+     label4:
+        return;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+    }
+
+    public static void initnode(h.ST_Agraph_s, h.ST_Agnode_s)
+    {
+        h.ST_Agraph_s r0, $r1;
+        h.ST_Agdesc_s $r2;
+        int $i0;
+        h.ST_Agnode_s r3;
+        java.lang.Throwable $r4;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        r3 := @parameter1: h.ST_Agnode_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("85bb9mezhsgtzar3kqz95mq1", "initnode");
+
+     label1:
+        $r1 = staticinvoke <gen.lib.cgraph.obj__c: h.ST_Agraph_s agroot(h.ST_Agobj_s)>(r0);
+
+        $r2 = $r1.<h.ST_Agraph_s: h.ST_Agdesc_s desc>;
+
+        $i0 = $r2.<h.ST_Agdesc_s: int has_attrs>;
+
+        if $i0 == 0 goto label2;
+
+        staticinvoke <gen.lib.cgraph.attr__c: void agnodeattr_init(h.ST_Agraph_s,h.ST_Agnode_s)>(r0, r3);
+
+     label2:
+        staticinvoke <gen.lib.cgraph.obj__c: void agmethod_init(h.ST_Agraph_s,smetana.core.__ptr__)>(r0, r3);
+
+     label3:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("85bb9mezhsgtzar3kqz95mq1", "initnode");
+
+        goto label5;
+
+     label4:
+        $r4 := @caughtexception;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("85bb9mezhsgtzar3kqz95mq1", "initnode");
+
+        throw $r4;
+
+     label5:
+        return;
+
+        catch java.lang.Throwable from label1 to label3 with label4;
+    }
+
+    public static h.ST_Agnode_s agidnode(h.ST_Agraph_s, int, int)
+    {
+        h.ST_Agraph_s r0;
+        int i0, i1;
+        h.ST_Agnode_s r1;
+        java.lang.Throwable $r14;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("1m6sl9df2yaolmufyq5i577a3", "agidnode");
+
+     label1:
+        r1 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agfindnode_by_id(h.ST_Agraph_s,int)>(r0, i0);
+
+        if r1 != null goto label2;
+
+        if i1 == 0 goto label2;
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("7zol2448bccu90sqoxkvnbuif");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("1zcb29h7sxm7axw8qeuz9f38w");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("9fusma9293koujpr79eyfhxn6");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("8k75h069sv2k9b6tgz77dscwd");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5pefvv55zys4ya7lgh0v8595s");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("dfn6cx0kwd44mv0ntbzf3p463");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("6qcjp92a88ggl3ea7mxel9cn");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("45uf6o7ubd9hy5s65g0f0bbgj");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("afk9bpom7x393euamnvwwkx6b");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("5l8briolxhuic5avv0112aj90");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("flupwh3kosf3fkhkxllllt1");
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("1m6sl9df2yaolmufyq5i577a3", "agidnode");
+
+        return r1;
+
+     label3:
+        $r14 := @caughtexception;
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("1m6sl9df2yaolmufyq5i577a3", "agidnode");
+
+        throw $r14;
+
+        catch java.lang.Throwable from label1 to label2 with label3;
+        catch java.lang.Throwable from label3 to label4 with label3;
+    }
+
+    public static h.ST_Agnode_s agnode(h.ST_Agraph_s, smetana.core.CString, boolean)
+    {
+        int[] r0;
+        h.ST_Agraph_s r1, r2;
+        smetana.core.CString r3;
+        int $i0, $i1, $i2, $i3, $i4, $i5;
+        boolean z0, $z1, $z2, $z3;
+        h.ST_Agnode_s $r4, $r5, r11, r12;
+        java.lang.Throwable $r6;
+
+        r1 := @parameter0: h.ST_Agraph_s;
+
+        r3 := @parameter1: smetana.core.CString;
+
+        z0 := @parameter2: boolean;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("4yh1h1cwoitzb1t8869b79e3g", "agnode");
+
+     label1:
+        r0 = newarray (int)[1];
+
+        r2 = staticinvoke <gen.lib.cgraph.obj__c: h.ST_Agraph_s agroot(h.ST_Agobj_s)>(r1);
+
+        $i0 = staticinvoke <gen.lib.cgraph.id__c: int agmapnametoid(h.ST_Agraph_s,int,smetana.core.CString,int[],boolean)>(r1, 1, r3, r0, 0);
+
+        if $i0 == 0 goto label5;
+
+        $i4 = r0[0];
+
+        $r4 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agfindnode_by_id(h.ST_Agraph_s,int)>(r1, $i4);
+
+        if $r4 == null goto label3;
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4yh1h1cwoitzb1t8869b79e3g", "agnode");
+
+        return $r4;
+
+     label3:
+        if z0 == 0 goto label5;
+
+        $z2 = staticinvoke <smetana.core.JUtils: boolean NEQ(java.lang.Object,java.lang.Object)>(r1, r2);
+
+        if $z2 == 0 goto label5;
+
+        $i5 = r0[0];
+
+        $r5 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agfindnode_by_id(h.ST_Agraph_s,int)>(r2, $i5);
+
+        if $r5 == null goto label5;
+
+        $z3 = staticinvoke <smetana.core.Macro: boolean N(int)>(0);
+
+        r11 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agsubnode(h.ST_Agraph_s,h.ST_Agnode_s,boolean)>(r1, $r5, $z3);
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4yh1h1cwoitzb1t8869b79e3g", "agnode");
+
+        return r11;
+
+     label5:
+        if z0 == 0 goto label7;
+
+        $z1 = staticinvoke <smetana.core.Macro: boolean N(int)>(0);
+
+        $i1 = staticinvoke <gen.lib.cgraph.id__c: int agmapnametoid(h.ST_Agraph_s,int,smetana.core.CString,int[],boolean)>(r1, 1, r3, r0, $z1);
+
+        if $i1 == 0 goto label7;
+
+        $i2 = r0[0];
+
+        $i3 = staticinvoke <gen.lib.cgraph.graph__c: int agnextseq(h.ST_Agraph_s,int)>(r1, 1);
+
+        r12 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s newnode(h.ST_Agraph_s,int,int)>(r1, $i2, $i3);
+
+        staticinvoke <gen.lib.cgraph.node__c: void installnodetoroot(h.ST_Agraph_s,h.ST_Agnode_s)>(r1, r12);
+
+        staticinvoke <gen.lib.cgraph.node__c: void initnode(h.ST_Agraph_s,h.ST_Agnode_s)>(r1, r12);
+
+        staticinvoke <gen.lib.cgraph.id__c: void agregister(h.ST_Agraph_s,int,java.lang.Object)>(r1, 1, r12);
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4yh1h1cwoitzb1t8869b79e3g", "agnode");
+
+        return r12;
+
+     label7:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4yh1h1cwoitzb1t8869b79e3g", "agnode");
+
+        return null;
+
+     label8:
+        $r6 := @caughtexception;
+
+     label9:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("4yh1h1cwoitzb1t8869b79e3g", "agnode");
+
+        throw $r6;
+
+        catch java.lang.Throwable from label1 to label2 with label8;
+        catch java.lang.Throwable from label3 to label4 with label8;
+        catch java.lang.Throwable from label5 to label6 with label8;
+        catch java.lang.Throwable from label8 to label9 with label8;
+    }
+
+    public static h.ST_Agnode_s agsubnode(h.ST_Agraph_s, h.ST_Agnode_s, boolean)
+    {
+        h.ST_Agraph_s r0, $r1, $r3, $r4;
+        h.ST_Agnode_s r2, r8;
+        boolean $z0, z1;
+        int $i0;
+        java.lang.Throwable $r6;
+
+        r0 := @parameter0: h.ST_Agraph_s;
+
+        r2 := @parameter1: h.ST_Agnode_s;
+
+        z1 := @parameter2: boolean;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("d5farp22buvesyi4pydjam4g2", "agsubnode");
+
+     label1:
+        $r1 = staticinvoke <gen.lib.cgraph.obj__c: h.ST_Agraph_s agroot(h.ST_Agobj_s)>(r0);
+
+        $r3 = r2.<h.ST_Agnode_s: h.ST_Agraph_s root>;
+
+        $z0 = staticinvoke <smetana.core.JUtils: boolean NEQ(java.lang.Object,java.lang.Object)>($r1, $r3);
+
+        if $z0 == 0 goto label3;
+
+     label2:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d5farp22buvesyi4pydjam4g2", "agsubnode");
+
+        return null;
+
+     label3:
+        $i0 = staticinvoke <smetana.core.Macro: int AGID(h.ST_Agobj_s)>(r2);
+
+        r8 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agfindnode_by_id(h.ST_Agraph_s,int)>(r0, $i0);
+
+        if r8 != null goto label4;
+
+        if z1 == 0 goto label4;
+
+        $r4 = staticinvoke <gen.lib.cgraph.subg__c: h.ST_Agraph_s agparent(h.ST_Agraph_s)>(r0);
+
+        if $r4 == null goto label4;
+
+        r8 = staticinvoke <gen.lib.cgraph.node__c: h.ST_Agnode_s agsubnode(h.ST_Agraph_s,h.ST_Agnode_s,boolean)>($r4, r2, z1);
+
+        staticinvoke <gen.lib.cgraph.node__c: void installnode(h.ST_Agraph_s,h.ST_Agnode_s)>(r0, r8);
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d5farp22buvesyi4pydjam4g2", "agsubnode");
+
+        return r8;
+
+     label5:
+        $r6 := @caughtexception;
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("d5farp22buvesyi4pydjam4g2", "agsubnode");
+
+        throw $r6;
+
+        catch java.lang.Throwable from label1 to label2 with label5;
+        catch java.lang.Throwable from label3 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    public static int agsubnodeidcmpf(h.ST_dt_s, smetana.core.__ptr__, smetana.core.__ptr__, h.ST_dtdisc_s)
+    {
+        smetana.core.__ptr__ r0, $r1, r3, $r4;
+        h.ST_Agsubnode_s r2, r5;
+        h.ST_Agnode_s $r6, $r7;
+        int $i0, $i1, i2;
+        java.lang.Throwable $r8;
+        h.ST_dt_s r10;
+        h.ST_dtdisc_s r11;
+        byte $b4;
+
+        r10 := @parameter0: h.ST_dt_s;
+
+        r0 := @parameter1: smetana.core.__ptr__;
+
+        r3 := @parameter2: smetana.core.__ptr__;
+
+        r11 := @parameter3: h.ST_dtdisc_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("awwiazixy9c76hvyxlkvvb3vo", "agsubnodeidcmpf");
+
+     label1:
+        $r1 = interfaceinvoke r0.<smetana.core.__ptr__: smetana.core.__ptr__ castTo(java.lang.Class)>(class "Lh/ST_Agsubnode_s;");
+
+        r2 = (h.ST_Agsubnode_s) $r1;
+
+        $r4 = interfaceinvoke r3.<smetana.core.__ptr__: smetana.core.__ptr__ castTo(java.lang.Class)>(class "Lh/ST_Agsubnode_s;");
+
+        r5 = (h.ST_Agsubnode_s) $r4;
+
+        $r6 = r2.<h.ST_Agsubnode_s: h.ST_Agnode_s node>;
+
+        $i0 = staticinvoke <smetana.core.Macro: int AGID(h.ST_Agobj_s)>($r6);
+
+        $r7 = r5.<h.ST_Agsubnode_s: h.ST_Agnode_s node>;
+
+        $i1 = staticinvoke <smetana.core.Macro: int AGID(h.ST_Agobj_s)>($r7);
+
+        i2 = $i0 - $i1;
+
+        if i2 != 0 goto label2;
+
+        $b4 = 0;
+
+        goto label4;
+
+     label2:
+        if i2 >= 0 goto label3;
+
+        $b4 = -1;
+
+        goto label4;
+
+     label3:
+        $b4 = 1;
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("awwiazixy9c76hvyxlkvvb3vo", "agsubnodeidcmpf");
+
+        return $b4;
+
+     label5:
+        $r8 := @caughtexception;
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("awwiazixy9c76hvyxlkvvb3vo", "agsubnodeidcmpf");
+
+        throw $r8;
+
+        catch java.lang.Throwable from label1 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    public static int agsubnodeseqcmpf(h.ST_dt_s, smetana.core.__ptr__, smetana.core.__ptr__, h.ST_dtdisc_s)
+    {
+        smetana.core.__ptr__ r0, $r1, r3, $r4;
+        h.ST_Agsubnode_s r2, r5;
+        h.ST_Agnode_s $r6, $r7;
+        int $i0, $i1, i2;
+        java.lang.Throwable $r8;
+        h.ST_dt_s r10;
+        h.ST_dtdisc_s r11;
+        byte $b4;
+
+        r10 := @parameter0: h.ST_dt_s;
+
+        r0 := @parameter1: smetana.core.__ptr__;
+
+        r3 := @parameter2: smetana.core.__ptr__;
+
+        r11 := @parameter3: h.ST_dtdisc_s;
+
+        staticinvoke <smetana.core.debug.SmetanaDebug: void ENTERING(java.lang.String,java.lang.String)>("41fjseux0nxzpr0aq7igym9ux", "agsubnodeseqcmpf");
+
+     label1:
+        $r1 = interfaceinvoke r0.<smetana.core.__ptr__: smetana.core.__ptr__ castTo(java.lang.Class)>(class "Lh/ST_Agsubnode_s;");
+
+        r2 = (h.ST_Agsubnode_s) $r1;
+
+        $r4 = interfaceinvoke r3.<smetana.core.__ptr__: smetana.core.__ptr__ castTo(java.lang.Class)>(class "Lh/ST_Agsubnode_s;");
+
+        r5 = (h.ST_Agsubnode_s) $r4;
+
+        $r6 = r2.<h.ST_Agsubnode_s: h.ST_Agnode_s node>;
+
+        $i0 = staticinvoke <smetana.core.Macro: int AGSEQ(h.ST_Agobj_s)>($r6);
+
+        $r7 = r5.<h.ST_Agsubnode_s: h.ST_Agnode_s node>;
+
+        $i1 = staticinvoke <smetana.core.Macro: int AGSEQ(h.ST_Agobj_s)>($r7);
+
+        i2 = $i0 - $i1;
+
+        if i2 != 0 goto label2;
+
+        $b4 = 0;
+
+        goto label4;
+
+     label2:
+        if i2 >= 0 goto label3;
+
+        $b4 = -1;
+
+        goto label4;
+
+     label3:
+        $b4 = 1;
+
+     label4:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("41fjseux0nxzpr0aq7igym9ux", "agsubnodeseqcmpf");
+
+        return $b4;
+
+     label5:
+        $r8 := @caughtexception;
+
+     label6:
+        staticinvoke <smetana.core.debug.SmetanaDebug: void LEAVING(java.lang.String,java.lang.String)>("41fjseux0nxzpr0aq7igym9ux", "agsubnodeseqcmpf");
+
+        throw $r8;
+
+        catch java.lang.Throwable from label1 to label4 with label5;
+        catch java.lang.Throwable from label5 to label6 with label5;
+    }
+
+    public static transient java.lang.Object free_subnode(java.lang.Object[])
+    {
+        java.lang.UnsupportedOperationException $r6;
+        java.lang.Object[] r7;
+
+        r7 := @parameter0: java.lang.Object[];
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("e2z2o5ybnr5tgpkt8ty7hwan1");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("9e4h6d4hxsvsnaiuubzlmccsm");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("erg9i1970wdri39osu8hx2a6e");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("eiac02o593gy0a55vv1w8mkmi");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("263bmzd9ilyyeb9w34squ7iw8");
+
+        staticinvoke <smetana.core.Macro: smetana.core.__ptr__ UNSUPPORTED(java.lang.String)>("c24nfmv9i7o5eoqaymbibp7m7");
+
+        $r6 = new java.lang.UnsupportedOperationException;
+
+        specialinvoke $r6.<java.lang.UnsupportedOperationException: void <init>()>();
+
+        throw $r6;
+    }
+
+    static void <clinit>()
+    {
+        gen.lib.cgraph.node__c$1 $r0;
+        gen.lib.cgraph.node__c$2 $r1;
+        gen.lib.cgraph.node__c$3 $r2;
+
+        $r0 = new gen.lib.cgraph.node__c$1;
+
+        specialinvoke $r0.<gen.lib.cgraph.node__c$1: void <init>(java.lang.String)>("agsubnodeidcmpf");
+
+        <gen.lib.cgraph.node__c: smetana.core.CFunction agsubnodeidcmpf> = $r0;
+
+        $r1 = new gen.lib.cgraph.node__c$2;
+
+        specialinvoke $r1.<gen.lib.cgraph.node__c$2: void <init>(java.lang.String)>("agsubnodeseqcmpf");
+
+        <gen.lib.cgraph.node__c: smetana.core.CFunction agsubnodeseqcmpf> = $r1;
+
+        $r2 = new gen.lib.cgraph.node__c$3;
+
+        specialinvoke $r2.<gen.lib.cgraph.node__c$3: void <init>(java.lang.String)>("free_subnode");
+
+        <gen.lib.cgraph.node__c: smetana.core.CFunction free_subnode> = $r2;
+
+        return;
+    }
+}

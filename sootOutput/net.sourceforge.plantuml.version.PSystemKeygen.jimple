@@ -1,0 +1,366 @@
+public class net.sourceforge.plantuml.version.PSystemKeygen extends net.sourceforge.plantuml.PlainDiagram
+{
+    private final java.lang.String key;
+
+    public void <init>(net.sourceforge.plantuml.core.UmlSource, java.lang.String)
+    {
+        net.sourceforge.plantuml.version.PSystemKeygen r0;
+        net.sourceforge.plantuml.core.UmlSource r1;
+        java.lang.String r2;
+
+        r0 := @this: net.sourceforge.plantuml.version.PSystemKeygen;
+
+        r1 := @parameter0: net.sourceforge.plantuml.core.UmlSource;
+
+        r2 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<net.sourceforge.plantuml.PlainDiagram: void <init>(net.sourceforge.plantuml.core.UmlSource)>(r1);
+
+        r0.<net.sourceforge.plantuml.version.PSystemKeygen: java.lang.String key> = r2;
+
+        return;
+    }
+
+    protected net.sourceforge.plantuml.graphic.UDrawable getRootDrawable(net.sourceforge.plantuml.FileFormatOption)
+    {
+        net.sourceforge.plantuml.version.PSystemKeygen$1 $r0;
+        net.sourceforge.plantuml.version.PSystemKeygen r1;
+        net.sourceforge.plantuml.FileFormatOption r2;
+
+        r1 := @this: net.sourceforge.plantuml.version.PSystemKeygen;
+
+        r2 := @parameter0: net.sourceforge.plantuml.FileFormatOption;
+
+        $r0 = new net.sourceforge.plantuml.version.PSystemKeygen$1;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.version.PSystemKeygen$1: void <init>(net.sourceforge.plantuml.version.PSystemKeygen)>(r1);
+
+        return $r0;
+    }
+
+    public net.sourceforge.plantuml.core.DiagramDescription getDescription()
+    {
+        net.sourceforge.plantuml.core.DiagramDescription $r0;
+        net.sourceforge.plantuml.version.PSystemKeygen r1;
+
+        r1 := @this: net.sourceforge.plantuml.version.PSystemKeygen;
+
+        $r0 = new net.sourceforge.plantuml.core.DiagramDescription;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.core.DiagramDescription: void <init>(java.lang.String)>("(Key)");
+
+        return $r0;
+    }
+
+    private void drawInternal(net.sourceforge.plantuml.ugraphic.UGraphic) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.version.LicenseInfo r0, r4;
+        net.sourceforge.plantuml.version.PSystemKeygen r1;
+        java.lang.String $r2, $r3, $r6, $r11;
+        int $i0;
+        boolean $z0, $z4, $z10;
+        java.util.ArrayList r5;
+        net.sourceforge.plantuml.ugraphic.UGraphic r7;
+        java.util.Collection $r8;
+        java.lang.Object $r9;
+        net.sourceforge.plantuml.security.SFile r10;
+        java.util.prefs.BackingStoreException $r12;
+        java.util.Iterator r14;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r15;
+
+        r1 := @this: net.sourceforge.plantuml.version.PSystemKeygen;
+
+        r7 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r0 = staticinvoke <net.sourceforge.plantuml.version.LicenseInfo: net.sourceforge.plantuml.version.LicenseInfo retrieveNamedSlow()>();
+
+        $r2 = r1.<net.sourceforge.plantuml.version.PSystemKeygen: java.lang.String key>;
+
+        $i0 = virtualinvoke $r2.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label01;
+
+        specialinvoke r1.<net.sourceforge.plantuml.version.PSystemKeygen: void drawFlash(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.version.LicenseInfo)>(r7, r0);
+
+        return;
+
+     label01:
+        $r3 = r1.<net.sourceforge.plantuml.version.PSystemKeygen: java.lang.String key>;
+
+        r4 = staticinvoke <net.sourceforge.plantuml.version.LicenseInfo: net.sourceforge.plantuml.version.LicenseInfo retrieveNamed(java.lang.String)>($r3);
+
+        $z0 = virtualinvoke r4.<net.sourceforge.plantuml.version.LicenseInfo: boolean isNone()>();
+
+        if $z0 == 0 goto label02;
+
+        specialinvoke r1.<net.sourceforge.plantuml.version.PSystemKeygen: void drawFlash(net.sourceforge.plantuml.ugraphic.UGraphic,net.sourceforge.plantuml.version.LicenseInfo)>(r7, r0);
+
+        return;
+
+     label02:
+        r5 = specialinvoke r1.<net.sourceforge.plantuml.version.PSystemKeygen: java.util.ArrayList header()>();
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>("<u>Provided license information</u>:");
+
+        staticinvoke <net.sourceforge.plantuml.version.License: void addLicenseInfo(java.util.List,net.sourceforge.plantuml.version.LicenseInfo)>(r5, r4);
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>("========================================================================");
+
+     label03:
+        $r6 = r1.<net.sourceforge.plantuml.version.PSystemKeygen: java.lang.String key>;
+
+        staticinvoke <net.sourceforge.plantuml.version.LicenseInfo: void persistMe(java.lang.String)>($r6);
+
+     label04:
+        goto label06;
+
+     label05:
+        $r12 := @caughtexception;
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>("<i>Error: Cannot store license key.</i>");
+
+     label06:
+        $z4 = virtualinvoke r0.<net.sourceforge.plantuml.version.LicenseInfo: boolean isNone()>();
+
+        if $z4 == 0 goto label09;
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>("No license currently installed.");
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>("<b>Please copy license.txt to one of those files</b>:");
+
+        $r8 = staticinvoke <net.sourceforge.plantuml.version.LicenseInfo: java.util.Collection fileCandidates()>();
+
+        r14 = interfaceinvoke $r8.<java.util.Collection: java.util.Iterator iterator()>();
+
+     label07:
+        $z10 = interfaceinvoke r14.<java.util.Iterator: boolean hasNext()>();
+
+        if $z10 == 0 goto label08;
+
+        $r9 = interfaceinvoke r14.<java.util.Iterator: java.lang.Object next()>();
+
+        r10 = (net.sourceforge.plantuml.security.SFile) $r9;
+
+        $r11 = virtualinvoke r10.<net.sourceforge.plantuml.security.SFile: java.lang.String getAbsolutePath()>();
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>($r11);
+
+        goto label07;
+
+     label08:
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        goto label10;
+
+     label09:
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>("<u>Installed license</u>:");
+
+        staticinvoke <net.sourceforge.plantuml.version.License: void addLicenseInfo(java.util.List,net.sourceforge.plantuml.version.LicenseInfo)>(r5, r0);
+
+        interfaceinvoke r5.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+     label10:
+        r15 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.svek.TextBlockBackcolored createBlackOnWhite(java.util.List)>(r5);
+
+        interfaceinvoke r15.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r7);
+
+        return;
+
+        catch java.util.prefs.BackingStoreException from label03 to label04 with label05;
+    }
+
+    private java.util.ArrayList header()
+    {
+        java.util.ArrayList $r0;
+        java.lang.StringBuilder $r2, $r3, $r5, $r6, $r8, $r9, $r11, $r12, $r14, $r15;
+        java.lang.String $r4, $r7, $r10, $r16;
+        net.sourceforge.plantuml.version.License $r13;
+        net.sourceforge.plantuml.version.PSystemKeygen r17;
+
+        r17 := @this: net.sourceforge.plantuml.version.PSystemKeygen;
+
+        $r0 = new java.util.ArrayList;
+
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+
+        $r2 = new java.lang.StringBuilder;
+
+        specialinvoke $r2.<java.lang.StringBuilder: void <init>()>();
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("<b>PlantUML version ");
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.version.Version: java.lang.String versionString()>();
+
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r4);
+
+        $r6 = virtualinvoke $r5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("</b> (");
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.version.Version: java.lang.String compileTimeString()>();
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")");
+
+        $r10 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r10);
+
+        $r11 = new java.lang.StringBuilder;
+
+        specialinvoke $r11.<java.lang.StringBuilder: void <init>()>();
+
+        $r12 = virtualinvoke $r11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("(");
+
+        $r13 = staticinvoke <net.sourceforge.plantuml.version.License: net.sourceforge.plantuml.version.License getCurrent()>();
+
+        $r14 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($r13);
+
+        $r15 = virtualinvoke $r14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" source distribution)");
+
+        $r16 = virtualinvoke $r15.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>($r16);
+
+        virtualinvoke $r0.<java.util.ArrayList: boolean add(java.lang.Object)>(" ");
+
+        return $r0;
+    }
+
+    private void drawFlash(net.sourceforge.plantuml.ugraphic.UGraphic, net.sourceforge.plantuml.version.LicenseInfo) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.version.PSystemKeygen r0;
+        java.util.ArrayList r1;
+        net.sourceforge.plantuml.graphic.StringBounder $r2;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r3;
+        double $d0, $d1;
+        net.sourceforge.plantuml.ugraphic.UTranslate $r4, $r22;
+        net.sourceforge.plantuml.flashcode.FlashCodeUtils r5;
+        java.lang.StringBuilder $r6, $r8, $r9, $r12;
+        java.lang.String $r7, $r11, $r13;
+        byte[] $r10;
+        java.awt.Color $r14, $r15;
+        java.awt.image.BufferedImage r16;
+        net.sourceforge.plantuml.version.LicenseInfo r17;
+        boolean $z2;
+        net.sourceforge.plantuml.ugraphic.UImage $r18, r21;
+        net.sourceforge.plantuml.ugraphic.PixelImage $r19;
+        net.sourceforge.plantuml.ugraphic.AffineTransformType $r20;
+        int $i0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r23, r25;
+        net.sourceforge.plantuml.svek.TextBlockBackcolored r24, r26;
+
+        r0 := @this: net.sourceforge.plantuml.version.PSystemKeygen;
+
+        r23 := @parameter0: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        r17 := @parameter1: net.sourceforge.plantuml.version.LicenseInfo;
+
+        r1 = specialinvoke r0.<net.sourceforge.plantuml.version.PSystemKeygen: java.util.ArrayList header()>();
+
+        interfaceinvoke r1.<java.util.List: boolean add(java.lang.Object)>("To get your <i>Professional Edition License</i>,");
+
+        interfaceinvoke r1.<java.util.List: boolean add(java.lang.Object)>("please send this qrcode to <b>plantuml@gmail.com</b> :");
+
+        r24 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.svek.TextBlockBackcolored createBlackOnWhite(java.util.List)>(r1);
+
+        interfaceinvoke r24.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r23);
+
+        $r2 = interfaceinvoke r23.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.graphic.StringBounder getStringBounder()>();
+
+        $r3 = interfaceinvoke r24.<net.sourceforge.plantuml.graphic.TextBlock: net.sourceforge.plantuml.awt.geom.Dimension2D calculateDimension(net.sourceforge.plantuml.graphic.StringBounder)>($r2);
+
+        $d0 = virtualinvoke $r3.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $r4 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d0);
+
+        r25 = interfaceinvoke r23.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r4);
+
+        r5 = staticinvoke <net.sourceforge.plantuml.flashcode.FlashCodeFactory: net.sourceforge.plantuml.flashcode.FlashCodeUtils getFlashCodeUtils()>();
+
+        $r6 = new java.lang.StringBuilder;
+
+        specialinvoke $r6.<java.lang.StringBuilder: void <init>()>();
+
+        $r7 = staticinvoke <net.sourceforge.plantuml.version.Version: java.lang.String versionString()>();
+
+        $r8 = virtualinvoke $r6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r7);
+
+        $r9 = virtualinvoke $r8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n");
+
+        $r10 = staticinvoke <net.sourceforge.plantuml.version.PLSSignature: byte[] signature()>();
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.SignatureUtils: java.lang.String toHexString(byte[])>($r10);
+
+        $r12 = virtualinvoke $r9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($r11);
+
+        $r13 = virtualinvoke $r12.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $r15 = <java.awt.Color: java.awt.Color BLACK>;
+
+        $r14 = <java.awt.Color: java.awt.Color WHITE>;
+
+        r16 = interfaceinvoke r5.<net.sourceforge.plantuml.flashcode.FlashCodeUtils: java.awt.image.BufferedImage exportFlashcode(java.lang.String,java.awt.Color,java.awt.Color)>($r13, $r15, $r14);
+
+        if r16 == null goto label1;
+
+        $r18 = new net.sourceforge.plantuml.ugraphic.UImage;
+
+        $r19 = new net.sourceforge.plantuml.ugraphic.PixelImage;
+
+        $r20 = <net.sourceforge.plantuml.ugraphic.AffineTransformType: net.sourceforge.plantuml.ugraphic.AffineTransformType TYPE_NEAREST_NEIGHBOR>;
+
+        specialinvoke $r19.<net.sourceforge.plantuml.ugraphic.PixelImage: void <init>(java.awt.image.BufferedImage,net.sourceforge.plantuml.ugraphic.AffineTransformType)>(r16, $r20);
+
+        specialinvoke $r18.<net.sourceforge.plantuml.ugraphic.UImage: void <init>(net.sourceforge.plantuml.ugraphic.MutableImage)>($r19);
+
+        r21 = virtualinvoke $r18.<net.sourceforge.plantuml.ugraphic.UImage: net.sourceforge.plantuml.ugraphic.UImage scale(double)>(4.0);
+
+        interfaceinvoke r25.<net.sourceforge.plantuml.ugraphic.UGraphic: void draw(net.sourceforge.plantuml.ugraphic.UShape)>(r21);
+
+        $i0 = virtualinvoke r21.<net.sourceforge.plantuml.ugraphic.UImage: int getHeight()>();
+
+        $d1 = (double) $i0;
+
+        $r22 = staticinvoke <net.sourceforge.plantuml.ugraphic.UTranslate: net.sourceforge.plantuml.ugraphic.UTranslate dy(double)>($d1);
+
+        r25 = interfaceinvoke r25.<net.sourceforge.plantuml.ugraphic.UGraphic: net.sourceforge.plantuml.ugraphic.UGraphic apply(net.sourceforge.plantuml.ugraphic.UChange)>($r22);
+
+     label1:
+        $z2 = virtualinvoke r17.<net.sourceforge.plantuml.version.LicenseInfo: boolean isNone()>();
+
+        if $z2 != 0 goto label2;
+
+        interfaceinvoke r1.<java.util.List: void clear()>();
+
+        interfaceinvoke r1.<java.util.List: boolean add(java.lang.Object)>("<u>Installed license</u>:");
+
+        staticinvoke <net.sourceforge.plantuml.version.License: void addLicenseInfo(java.util.List,net.sourceforge.plantuml.version.LicenseInfo)>(r1, r17);
+
+        interfaceinvoke r1.<java.util.List: boolean add(java.lang.Object)>(" ");
+
+        r26 = staticinvoke <net.sourceforge.plantuml.graphic.GraphicStrings: net.sourceforge.plantuml.svek.TextBlockBackcolored createBlackOnWhite(java.util.List)>(r1);
+
+        interfaceinvoke r26.<net.sourceforge.plantuml.graphic.TextBlock: void drawU(net.sourceforge.plantuml.ugraphic.UGraphic)>(r25);
+
+     label2:
+        return;
+    }
+
+    static void access$000(net.sourceforge.plantuml.version.PSystemKeygen, net.sourceforge.plantuml.ugraphic.UGraphic) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.version.PSystemKeygen r0;
+        net.sourceforge.plantuml.ugraphic.UGraphic r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.version.PSystemKeygen;
+
+        r1 := @parameter1: net.sourceforge.plantuml.ugraphic.UGraphic;
+
+        specialinvoke r0.<net.sourceforge.plantuml.version.PSystemKeygen: void drawInternal(net.sourceforge.plantuml.ugraphic.UGraphic)>(r1);
+
+        return;
+    }
+}

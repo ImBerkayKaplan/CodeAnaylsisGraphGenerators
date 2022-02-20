@@ -1,0 +1,108 @@
+public class net.sourceforge.plantuml.style.CssVariables extends java.lang.Object
+{
+    private final java.util.Map variables;
+    private final java.util.regex.Pattern learnPattern;
+    private final java.util.regex.Pattern retrieve;
+
+    public void <init>()
+    {
+        net.sourceforge.plantuml.style.CssVariables r0;
+        java.util.HashMap $r1;
+        java.util.regex.Pattern $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.style.CssVariables;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = new java.util.HashMap;
+
+        specialinvoke $r1.<java.util.HashMap: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.style.CssVariables: java.util.Map variables> = $r1;
+
+        $r2 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("^--([_\\w][-_\\w]+)[ :]+(.*?);?");
+
+        r0.<net.sourceforge.plantuml.style.CssVariables: java.util.regex.Pattern learnPattern> = $r2;
+
+        $r3 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("var\\(-*([_\\w][-_\\w]+)\\)");
+
+        r0.<net.sourceforge.plantuml.style.CssVariables: java.util.regex.Pattern retrieve> = $r3;
+
+        return;
+    }
+
+    public void learn(java.lang.String)
+    {
+        net.sourceforge.plantuml.style.CssVariables r0;
+        java.lang.String r1, $r5, $r6;
+        java.util.regex.Pattern $r2;
+        java.util.regex.Matcher r3;
+        boolean $z0;
+        java.util.Map $r4;
+
+        r0 := @this: net.sourceforge.plantuml.style.CssVariables;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r2 = r0.<net.sourceforge.plantuml.style.CssVariables: java.util.regex.Pattern learnPattern>;
+
+        r3 = virtualinvoke $r2.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r1);
+
+        $z0 = virtualinvoke r3.<java.util.regex.Matcher: boolean matches()>();
+
+        if $z0 == 0 goto label1;
+
+        $r4 = r0.<net.sourceforge.plantuml.style.CssVariables: java.util.Map variables>;
+
+        $r5 = virtualinvoke r3.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        $r6 = virtualinvoke r3.<java.util.regex.Matcher: java.lang.String group(int)>(2);
+
+        interfaceinvoke $r4.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>($r5, $r6);
+
+     label1:
+        return;
+    }
+
+    public java.lang.String value(java.lang.String)
+    {
+        java.lang.String r0, r4, r7;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.style.CssVariables r1;
+        java.util.regex.Pattern $r2;
+        java.util.regex.Matcher r3;
+        java.util.Map $r5;
+        java.lang.Object $r6;
+
+        r1 := @this: net.sourceforge.plantuml.style.CssVariables;
+
+        r0 := @parameter0: java.lang.String;
+
+        $z0 = virtualinvoke r0.<java.lang.String: boolean startsWith(java.lang.String)>("var(");
+
+        if $z0 == 0 goto label1;
+
+        $r2 = r1.<net.sourceforge.plantuml.style.CssVariables: java.util.regex.Pattern retrieve>;
+
+        r3 = virtualinvoke $r2.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r0);
+
+        $z1 = virtualinvoke r3.<java.util.regex.Matcher: boolean matches()>();
+
+        if $z1 == 0 goto label1;
+
+        r4 = virtualinvoke r3.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        $r5 = r1.<net.sourceforge.plantuml.style.CssVariables: java.util.Map variables>;
+
+        $r6 = interfaceinvoke $r5.<java.util.Map: java.lang.Object get(java.lang.Object)>(r4);
+
+        r7 = (java.lang.String) $r6;
+
+        if r7 == null goto label1;
+
+        return r7;
+
+     label1:
+        return r0;
+    }
+}

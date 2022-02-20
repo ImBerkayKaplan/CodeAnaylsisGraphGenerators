@@ -1,0 +1,412 @@
+public class net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner extends java.lang.Object
+{
+    private final java.lang.String[] cmd;
+    private java.lang.String error;
+    private java.lang.String out;
+    private volatile net.sourceforge.plantuml.cucadiagram.dot.ProcessState state;
+    private final java.util.concurrent.locks.Lock changeState;
+    static final boolean $assertionsDisabled;
+
+    public void <init>(java.lang.String[])
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessState $r1;
+        java.util.concurrent.locks.ReentrantLock $r2;
+        java.lang.String[] r3;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        r3 := @parameter0: java.lang.String[];
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState INIT()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state> = $r1;
+
+        $r2 = new java.util.concurrent.locks.ReentrantLock;
+
+        specialinvoke $r2.<java.util.concurrent.locks.ReentrantLock: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.util.concurrent.locks.Lock changeState> = $r2;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String[] cmd> = r3;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.dot.ProcessState run(byte[], java.io.OutputStream)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        byte[] r1;
+        java.io.OutputStream r2;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessState $r3;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        r1 := @parameter0: byte[];
+
+        r2 := @parameter1: java.io.OutputStream;
+
+        $r3 = virtualinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState run(byte[],java.io.OutputStream,net.sourceforge.plantuml.security.SFile)>(r1, r2, null);
+
+        return $r3;
+    }
+
+    public net.sourceforge.plantuml.cucadiagram.dot.ProcessState run(byte[], java.io.OutputStream, net.sourceforge.plantuml.security.SFile)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessState $r1, $r2, $r3, $r13, $r14, $r16, $r17, $r21, $r29, $r30, $r32, $r36;
+        boolean $z0, $z2, $z3, $z4, $z5;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner$MainThread $r4;
+        net.sourceforge.plantuml.security.SFile r5;
+        java.io.OutputStream r6;
+        byte[] r7;
+        java.lang.String[] $r8;
+        net.sourceforge.plantuml.OptionFlags $r10;
+        long l0;
+        net.sourceforge.plantuml.api.TimeoutExecutor $r11;
+        java.util.concurrent.locks.Lock $r12, $r15, $r25, $r28, $r31, $r35;
+        java.lang.String $r18, $r19;
+        java.lang.AssertionError $r20;
+        java.lang.IllegalStateException $r22;
+        java.lang.Throwable $r23, $r26, $r33;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        r7 := @parameter0: byte[];
+
+        r6 := @parameter1: java.io.OutputStream;
+
+        r5 := @parameter2: net.sourceforge.plantuml.security.SFile;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState INIT()>();
+
+        $z0 = virtualinvoke $r1.<net.sourceforge.plantuml.cucadiagram.dot.ProcessState: boolean differs(net.sourceforge.plantuml.cucadiagram.dot.ProcessState)>($r2);
+
+        if $z0 == 0 goto label01;
+
+        $r22 = new java.lang.IllegalStateException;
+
+        specialinvoke $r22.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r22;
+
+     label01:
+        $r3 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState RUNNING()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state> = $r3;
+
+        $r4 = new net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner$MainThread;
+
+        $r8 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String[] cmd>;
+
+        specialinvoke $r4.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner$MainThread: void <init>(net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner,java.lang.String[],net.sourceforge.plantuml.security.SFile,java.io.OutputStream,byte[])>(r0, $r8, r5, r6, r7);
+
+     label02:
+        $r10 = staticinvoke <net.sourceforge.plantuml.OptionFlags: net.sourceforge.plantuml.OptionFlags getInstance()>();
+
+        l0 = virtualinvoke $r10.<net.sourceforge.plantuml.OptionFlags: long getTimeoutMs()>();
+
+        $r11 = new net.sourceforge.plantuml.api.TimeoutExecutor;
+
+        specialinvoke $r11.<net.sourceforge.plantuml.api.TimeoutExecutor: void <init>(long)>(l0);
+
+        virtualinvoke $r11.<net.sourceforge.plantuml.api.TimeoutExecutor: boolean executeNow(net.sourceforge.plantuml.api.MyRunnable)>($r4);
+
+     label03:
+        $r12 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.util.concurrent.locks.Lock changeState>;
+
+        interfaceinvoke $r12.<java.util.concurrent.locks.Lock: void lock()>();
+
+     label04:
+        $r13 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state>;
+
+        $r14 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState RUNNING()>();
+
+        $z2 = virtualinvoke $r13.<net.sourceforge.plantuml.cucadiagram.dot.ProcessState: boolean equals(java.lang.Object)>($r14);
+
+        if $z2 == 0 goto label05;
+
+        $r21 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState TIMEOUT()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state> = $r21;
+
+     label05:
+        $r15 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.util.concurrent.locks.Lock changeState>;
+
+        interfaceinvoke $r15.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        goto label08;
+
+     label06:
+        $r33 := @caughtexception;
+
+     label07:
+        $r35 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.util.concurrent.locks.Lock changeState>;
+
+        interfaceinvoke $r35.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        throw $r33;
+
+     label08:
+        goto label16;
+
+     label09:
+        $r26 := @caughtexception;
+
+     label10:
+        $r28 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.util.concurrent.locks.Lock changeState>;
+
+        interfaceinvoke $r28.<java.util.concurrent.locks.Lock: void lock()>();
+
+     label11:
+        $r29 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state>;
+
+        $r30 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState RUNNING()>();
+
+        $z5 = virtualinvoke $r29.<net.sourceforge.plantuml.cucadiagram.dot.ProcessState: boolean equals(java.lang.Object)>($r30);
+
+        if $z5 == 0 goto label12;
+
+        $r32 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState TIMEOUT()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state> = $r32;
+
+     label12:
+        $r31 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.util.concurrent.locks.Lock changeState>;
+
+        interfaceinvoke $r31.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        goto label15;
+
+     label13:
+        $r23 := @caughtexception;
+
+     label14:
+        $r25 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.util.concurrent.locks.Lock changeState>;
+
+        interfaceinvoke $r25.<java.util.concurrent.locks.Lock: void unlock()>();
+
+        throw $r23;
+
+     label15:
+        throw $r26;
+
+     label16:
+        $r16 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state>;
+
+        $r17 = staticinvoke <net.sourceforge.plantuml.cucadiagram.dot.ProcessState: net.sourceforge.plantuml.cucadiagram.dot.ProcessState TERMINATED_OK()>();
+
+        $z3 = virtualinvoke $r16.<net.sourceforge.plantuml.cucadiagram.dot.ProcessState: boolean equals(java.lang.Object)>($r17);
+
+        if $z3 == 0 goto label18;
+
+        $z4 = <net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: boolean $assertionsDisabled>;
+
+        if $z4 != 0 goto label17;
+
+        if $r4 != null goto label17;
+
+        $r20 = new java.lang.AssertionError;
+
+        specialinvoke $r20.<java.lang.AssertionError: void <init>()>();
+
+        throw $r20;
+
+     label17:
+        $r18 = virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner$MainThread: java.lang.String getError()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String error> = $r18;
+
+        $r19 = virtualinvoke $r4.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner$MainThread: java.lang.String getOut()>();
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String out> = $r19;
+
+     label18:
+        $r36 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state>;
+
+        return $r36;
+
+        catch java.lang.Throwable from label04 to label05 with label06;
+        catch java.lang.Throwable from label06 to label07 with label06;
+        catch java.lang.Throwable from label02 to label03 with label09;
+        catch java.lang.Throwable from label11 to label12 with label13;
+        catch java.lang.Throwable from label13 to label14 with label13;
+        catch java.lang.Throwable from label09 to label10 with label09;
+    }
+
+    public final java.lang.String getError()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String error>;
+
+        return $r1;
+    }
+
+    public final java.lang.String getOut()
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        java.lang.String $r1;
+
+        r0 := @this: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.lang.String out>;
+
+        return $r1;
+    }
+
+    private void close(java.io.InputStream)
+    {
+        java.io.InputStream r0;
+        java.io.IOException $r1;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r3;
+
+        r3 := @this: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        r0 := @parameter0: java.io.InputStream;
+
+     label1:
+        if r0 == null goto label2;
+
+        virtualinvoke r0.<java.io.InputStream: void close()>();
+
+     label2:
+        goto label4;
+
+     label3:
+        $r1 := @caughtexception;
+
+        virtualinvoke $r1.<java.io.IOException: void printStackTrace()>();
+
+     label4:
+        return;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+
+    private void close(java.io.OutputStream)
+    {
+        java.io.OutputStream r0;
+        java.io.IOException $r1;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r3;
+
+        r3 := @this: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        r0 := @parameter0: java.io.OutputStream;
+
+     label1:
+        if r0 == null goto label2;
+
+        virtualinvoke r0.<java.io.OutputStream: void close()>();
+
+     label2:
+        goto label4;
+
+     label3:
+        $r1 := @caughtexception;
+
+        virtualinvoke $r1.<java.io.IOException: void printStackTrace()>();
+
+     label4:
+        return;
+
+        catch java.io.IOException from label1 to label2 with label3;
+    }
+
+    static net.sourceforge.plantuml.cucadiagram.dot.ProcessState access$000(net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessState $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state>;
+
+        return $r1;
+    }
+
+    static java.util.concurrent.locks.Lock access$100(net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        java.util.concurrent.locks.Lock $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        $r1 = r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: java.util.concurrent.locks.Lock changeState>;
+
+        return $r1;
+    }
+
+    static net.sourceforge.plantuml.cucadiagram.dot.ProcessState access$002(net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner, net.sourceforge.plantuml.cucadiagram.dot.ProcessState)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessState r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        r1 := @parameter1: net.sourceforge.plantuml.cucadiagram.dot.ProcessState;
+
+        r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: net.sourceforge.plantuml.cucadiagram.dot.ProcessState state> = r1;
+
+        return r1;
+    }
+
+    static void access$200(net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner, java.io.InputStream)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        java.io.InputStream r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        r1 := @parameter1: java.io.InputStream;
+
+        specialinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: void close(java.io.InputStream)>(r1);
+
+        return;
+    }
+
+    static void access$300(net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner, java.io.OutputStream)
+    {
+        net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner r0;
+        java.io.OutputStream r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner;
+
+        r1 := @parameter1: java.io.OutputStream;
+
+        specialinvoke r0.<net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: void close(java.io.OutputStream)>(r1);
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/cucadiagram/dot/ProcessRunner;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.cucadiagram.dot.ProcessRunner: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

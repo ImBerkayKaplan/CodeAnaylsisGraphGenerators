@@ -1,0 +1,1096 @@
+public class net.sourceforge.plantuml.swing.MainWindow extends javax.swing.JFrame
+{
+    private static final java.util.prefs.Preferences prefs;
+    private static final java.lang.String KEY_DIR;
+    private static final java.lang.String KEY_PATTERN;
+    private final javax.swing.JList jList1;
+    private final javax.swing.JScrollPane scrollPane;
+    private final javax.swing.JButton changeDirButton;
+    private final javax.swing.JTextField extensions;
+    private final int period;
+    private final java.util.List currentDirectoryListing2;
+    private final java.util.Set openWindows2;
+    private final net.sourceforge.plantuml.Option option;
+    private net.sourceforge.plantuml.DirWatcher2 dirWatcher;
+
+    private java.lang.String getExtensions()
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.util.prefs.Preferences $r1;
+        java.lang.String $r2, $r3;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        $r1 = <net.sourceforge.plantuml.swing.MainWindow: java.util.prefs.Preferences prefs>;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.lang.String getDefaultFileExtensions()>();
+
+        $r3 = virtualinvoke $r1.<java.util.prefs.Preferences: java.lang.String get(java.lang.String,java.lang.String)>("pat", $r2);
+
+        return $r3;
+    }
+
+    private java.lang.String getDefaultFileExtensions()
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        return "txt, tex, java, htm, html, c, h, cpp, apt, pu, puml, hpp, hh";
+    }
+
+    private void changeExtensions(java.lang.String)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.lang.String $r1, r10, r13, r14;
+        boolean $z0, $z1;
+        java.util.regex.Pattern r2;
+        java.util.regex.Matcher r3;
+        java.lang.StringBuilder $r4;
+        int $i0, $i1;
+        javax.swing.JTextField $r6;
+        java.util.prefs.Preferences $r7;
+        net.sourceforge.plantuml.DirWatcher2 $r8;
+        java.io.File $r9;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        r13 := @parameter0: java.lang.String;
+
+        $r1 = specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.lang.String getExtensions()>();
+
+        $z0 = virtualinvoke r13.<java.lang.String: boolean equals(java.lang.Object)>($r1);
+
+        if $z0 == 0 goto label1;
+
+        return;
+
+     label1:
+        r2 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("\\w+");
+
+        r3 = virtualinvoke r2.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r13);
+
+        $r4 = new java.lang.StringBuilder;
+
+        specialinvoke $r4.<java.lang.StringBuilder: void <init>()>();
+
+     label2:
+        $z1 = virtualinvoke r3.<java.util.regex.Matcher: boolean find()>();
+
+        if $z1 == 0 goto label4;
+
+        r10 = virtualinvoke r3.<java.util.regex.Matcher: java.lang.String group()>();
+
+        $i1 = virtualinvoke $r4.<java.lang.StringBuilder: int length()>();
+
+        if $i1 <= 0 goto label3;
+
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(", ");
+
+     label3:
+        virtualinvoke $r4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r10);
+
+        goto label2;
+
+     label4:
+        r14 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $i0 = virtualinvoke r14.<java.lang.String: int length()>();
+
+        if $i0 != 0 goto label5;
+
+        r14 = specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.lang.String getDefaultFileExtensions()>();
+
+     label5:
+        $r6 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JTextField extensions>;
+
+        virtualinvoke $r6.<javax.swing.JTextField: void setText(java.lang.String)>(r14);
+
+        $r7 = <net.sourceforge.plantuml.swing.MainWindow: java.util.prefs.Preferences prefs>;
+
+        virtualinvoke $r7.<java.util.prefs.Preferences: void put(java.lang.String,java.lang.String)>("pat", r14);
+
+        $r8 = r0.<net.sourceforge.plantuml.swing.MainWindow: net.sourceforge.plantuml.DirWatcher2 dirWatcher>;
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.DirWatcher2: java.io.File getDir()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void changeDir(java.io.File)>($r9);
+
+        return;
+    }
+
+    private java.lang.String getRegexpPattern(java.lang.String)
+    {
+        java.util.regex.Pattern r0;
+        java.lang.String r1, $r5, $r6, $r8, r9, $r10;
+        java.util.regex.Matcher r2;
+        java.lang.StringBuilder $r3;
+        boolean $z0, $z1, $z2;
+        net.sourceforge.plantuml.swing.MainWindow r13;
+
+        r13 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        r1 := @parameter0: java.lang.String;
+
+        r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("\\w+");
+
+        r2 = virtualinvoke r0.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r1);
+
+        $r3 = new java.lang.StringBuilder;
+
+        specialinvoke $r3.<java.lang.StringBuilder: void <init>(java.lang.String)>("(?i)^.*\\.(");
+
+     label1:
+        $z0 = virtualinvoke r2.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label3;
+
+        r9 = virtualinvoke r2.<java.util.regex.Matcher: java.lang.String group()>();
+
+        $r10 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $z2 = virtualinvoke $r10.<java.lang.String: boolean endsWith(java.lang.String)>("(");
+
+        if $z2 != 0 goto label2;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("|");
+
+     label2:
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r9);
+
+        goto label1;
+
+     label3:
+        $r5 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        $z1 = virtualinvoke $r5.<java.lang.String: boolean endsWith(java.lang.String)>("(");
+
+        if $z1 != 0 goto label4;
+
+        virtualinvoke $r3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(")$");
+
+        $r8 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r8;
+
+     label4:
+        $r6 = staticinvoke <net.sourceforge.plantuml.Option: java.lang.String getPattern()>();
+
+        return $r6;
+    }
+
+    public void <init>(net.sourceforge.plantuml.Option, java.io.File)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.io.File r1, $r2, r10;
+        java.lang.String $r3, $r14, $r15, $r26;
+        javax.swing.JList $r4, $r17, $r38, $r42;
+        javax.swing.JButton $r5, $r32, $r40;
+        javax.swing.JTextField $r6, $r25, $r31, $r44, $r46;
+        java.util.ArrayList $r7;
+        java.util.HashSet $r8;
+        java.awt.image.BufferedImage $r11;
+        net.sourceforge.plantuml.Option r12;
+        net.sourceforge.plantuml.DirWatcher2 $r13;
+        javax.swing.JScrollPane $r16, $r18, $r35;
+        javax.swing.border.Border $r19, $r27, $r28, $r29, $r30;
+        javax.swing.JPanel $r20;
+        java.awt.BorderLayout $r21;
+        javax.swing.JLabel $r23;
+        java.awt.Container $r33, $r34, $r64;
+        net.sourceforge.plantuml.swing.MainWindow$1 $r36;
+        net.sourceforge.plantuml.swing.MainWindow$2 $r39;
+        net.sourceforge.plantuml.swing.MainWindow$3 $r41;
+        net.sourceforge.plantuml.swing.MainWindow$4 $r43;
+        net.sourceforge.plantuml.swing.MainWindow$5 $r45;
+        javax.swing.JMenuBar $r47;
+        javax.swing.JMenu $r49;
+        javax.swing.JMenuItem $r52, $r56, $r60;
+        net.sourceforge.plantuml.swing.MainWindow$6 $r55;
+        net.sourceforge.plantuml.swing.MainWindow$7 $r59;
+        net.sourceforge.plantuml.swing.MainWindow$8 $r63;
+        javax.swing.border.CompoundBorder r65, r66;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        r12 := @parameter0: net.sourceforge.plantuml.Option;
+
+        r1 := @parameter1: java.io.File;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.swing.MainWindow: java.io.File getDirectory(java.io.File)>(r1);
+
+        $r3 = virtualinvoke $r2.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        specialinvoke r0.<javax.swing.JFrame: void <init>(java.lang.String)>($r3);
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: int period> = 300;
+
+        $r4 = new javax.swing.JList;
+
+        specialinvoke $r4.<javax.swing.JList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JList jList1> = $r4;
+
+        $r5 = new javax.swing.JButton;
+
+        specialinvoke $r5.<javax.swing.JButton: void <init>(java.lang.String)>("Change Directory");
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JButton changeDirButton> = $r5;
+
+        $r6 = new javax.swing.JTextField;
+
+        specialinvoke $r6.<javax.swing.JTextField: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JTextField extensions> = $r6;
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: int period> = 300;
+
+        $r7 = new java.util.ArrayList;
+
+        specialinvoke $r7.<java.util.ArrayList: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2> = $r7;
+
+        $r8 = new java.util.HashSet;
+
+        specialinvoke $r8.<java.util.HashSet: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.Set openWindows2> = $r8;
+
+        staticinvoke <java.lang.System: java.lang.String setProperty(java.lang.String,java.lang.String)>("PLANTUML_SECURITY_PROFILE", "UNSECURE");
+
+        r10 = staticinvoke <net.sourceforge.plantuml.swing.MainWindow: java.io.File getDirectory(java.io.File)>(r1);
+
+        $r11 = staticinvoke <net.sourceforge.plantuml.version.PSystemVersion: java.awt.image.BufferedImage getPlantumlSmallIcon2()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void setIconImage(java.awt.Image)>($r11);
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: net.sourceforge.plantuml.Option option> = r12;
+
+        $r13 = new net.sourceforge.plantuml.DirWatcher2;
+
+        $r14 = specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.lang.String getExtensions()>();
+
+        $r15 = specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.lang.String getRegexpPattern(java.lang.String)>($r14);
+
+        specialinvoke $r13.<net.sourceforge.plantuml.DirWatcher2: void <init>(java.io.File,net.sourceforge.plantuml.Option,java.lang.String)>(r10, r12, $r15);
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: net.sourceforge.plantuml.DirWatcher2 dirWatcher> = $r13;
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Showing MainWindow");
+
+        $r16 = new javax.swing.JScrollPane;
+
+        $r17 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JList jList1>;
+
+        specialinvoke $r16.<javax.swing.JScrollPane: void <init>(java.awt.Component)>($r17);
+
+        r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JScrollPane scrollPane> = $r16;
+
+        $r18 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JScrollPane scrollPane>;
+
+        $r19 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.Border createEmptyBorder(int,int,int,int)>(10, 10, 10, 10);
+
+        virtualinvoke $r18.<javax.swing.JScrollPane: void setBorder(javax.swing.border.Border)>($r19);
+
+        $r20 = new javax.swing.JPanel;
+
+        $r21 = new java.awt.BorderLayout;
+
+        specialinvoke $r21.<java.awt.BorderLayout: void <init>()>();
+
+        specialinvoke $r20.<javax.swing.JPanel: void <init>(java.awt.LayoutManager)>($r21);
+
+        $r23 = new javax.swing.JLabel;
+
+        specialinvoke $r23.<javax.swing.JLabel: void <init>(java.lang.String)>("File extensions: ");
+
+        $r25 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JTextField extensions>;
+
+        $r26 = specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.lang.String getExtensions()>();
+
+        virtualinvoke $r25.<javax.swing.JTextField: void setText(java.lang.String)>($r26);
+
+        $r27 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.Border createEmptyBorder(int,int,int,int)>(6, 6, 6, 6);
+
+        virtualinvoke $r23.<javax.swing.JLabel: void setBorder(javax.swing.border.Border)>($r27);
+
+        $r28 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.Border createEmptyBorder(int,int,int,int)>(10, 10, 10, 10);
+
+        $r29 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.Border createEtchedBorder()>();
+
+        r65 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.CompoundBorder createCompoundBorder(javax.swing.border.Border,javax.swing.border.Border)>($r28, $r29);
+
+        $r30 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.Border createEmptyBorder(int,int,int,int)>(5, 5, 5, 5);
+
+        r66 = staticinvoke <javax.swing.BorderFactory: javax.swing.border.CompoundBorder createCompoundBorder(javax.swing.border.Border,javax.swing.border.Border)>(r65, $r30);
+
+        virtualinvoke $r20.<javax.swing.JPanel: void setBorder(javax.swing.border.Border)>(r66);
+
+        virtualinvoke $r20.<javax.swing.JPanel: void add(java.awt.Component,java.lang.Object)>($r23, "West");
+
+        $r31 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JTextField extensions>;
+
+        virtualinvoke $r20.<javax.swing.JPanel: void add(java.awt.Component,java.lang.Object)>($r31, "Center");
+
+        $r32 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JButton changeDirButton>;
+
+        virtualinvoke $r20.<javax.swing.JPanel: void add(java.awt.Component,java.lang.Object)>($r32, "South");
+
+        $r33 = virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.awt.Container getContentPane()>();
+
+        virtualinvoke $r33.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r20, "South");
+
+        $r34 = virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.awt.Container getContentPane()>();
+
+        $r35 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JScrollPane scrollPane>;
+
+        virtualinvoke $r34.<java.awt.Container: void add(java.awt.Component,java.lang.Object)>($r35, "Center");
+
+        $r36 = new net.sourceforge.plantuml.swing.MainWindow$1;
+
+        specialinvoke $r36.<net.sourceforge.plantuml.swing.MainWindow$1: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r0);
+
+        $r38 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JList jList1>;
+
+        virtualinvoke $r38.<javax.swing.JList: void addMouseListener(java.awt.event.MouseListener)>($r36);
+
+        $r40 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JButton changeDirButton>;
+
+        $r39 = new net.sourceforge.plantuml.swing.MainWindow$2;
+
+        specialinvoke $r39.<net.sourceforge.plantuml.swing.MainWindow$2: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r0);
+
+        virtualinvoke $r40.<javax.swing.JButton: void addActionListener(java.awt.event.ActionListener)>($r39);
+
+        $r42 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JList jList1>;
+
+        $r41 = new net.sourceforge.plantuml.swing.MainWindow$3;
+
+        specialinvoke $r41.<net.sourceforge.plantuml.swing.MainWindow$3: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r0);
+
+        virtualinvoke $r42.<javax.swing.JList: void addKeyListener(java.awt.event.KeyListener)>($r41);
+
+        $r44 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JTextField extensions>;
+
+        $r43 = new net.sourceforge.plantuml.swing.MainWindow$4;
+
+        specialinvoke $r43.<net.sourceforge.plantuml.swing.MainWindow$4: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r0);
+
+        virtualinvoke $r44.<javax.swing.JTextField: void addActionListener(java.awt.event.ActionListener)>($r43);
+
+        $r46 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JTextField extensions>;
+
+        $r45 = new net.sourceforge.plantuml.swing.MainWindow$5;
+
+        specialinvoke $r45.<net.sourceforge.plantuml.swing.MainWindow$5: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r0);
+
+        virtualinvoke $r46.<javax.swing.JTextField: void addFocusListener(java.awt.event.FocusListener)>($r45);
+
+        $r47 = new javax.swing.JMenuBar;
+
+        specialinvoke $r47.<javax.swing.JMenuBar: void <init>()>();
+
+        $r49 = new javax.swing.JMenu;
+
+        specialinvoke $r49.<javax.swing.JMenu: void <init>(java.lang.String)>("File");
+
+        virtualinvoke $r47.<javax.swing.JMenuBar: javax.swing.JMenu add(javax.swing.JMenu)>($r49);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void setJMenuBar(javax.swing.JMenuBar)>($r47);
+
+        $r52 = new javax.swing.JMenuItem;
+
+        specialinvoke $r52.<javax.swing.JMenuItem: void <init>(java.lang.String)>("Open Sprite Window");
+
+        virtualinvoke $r49.<javax.swing.JMenu: javax.swing.JMenuItem add(javax.swing.JMenuItem)>($r52);
+
+        $r55 = new net.sourceforge.plantuml.swing.MainWindow$6;
+
+        specialinvoke $r55.<net.sourceforge.plantuml.swing.MainWindow$6: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r0);
+
+        virtualinvoke $r52.<javax.swing.JMenuItem: void addActionListener(java.awt.event.ActionListener)>($r55);
+
+        $r56 = new javax.swing.JMenuItem;
+
+        specialinvoke $r56.<javax.swing.JMenuItem: void <init>(java.lang.String)>("About");
+
+        virtualinvoke $r49.<javax.swing.JMenu: javax.swing.JMenuItem add(javax.swing.JMenuItem)>($r56);
+
+        $r59 = new net.sourceforge.plantuml.swing.MainWindow$7;
+
+        specialinvoke $r59.<net.sourceforge.plantuml.swing.MainWindow$7: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r0);
+
+        virtualinvoke $r56.<javax.swing.JMenuItem: void addActionListener(java.awt.event.ActionListener)>($r59);
+
+        $r60 = new javax.swing.JMenuItem;
+
+        specialinvoke $r60.<javax.swing.JMenuItem: void <init>(java.lang.String)>("Exit");
+
+        virtualinvoke $r49.<javax.swing.JMenu: javax.swing.JMenuItem add(javax.swing.JMenuItem)>($r60);
+
+        $r63 = new net.sourceforge.plantuml.swing.MainWindow$8;
+
+        specialinvoke $r63.<net.sourceforge.plantuml.swing.MainWindow$8: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r0);
+
+        virtualinvoke $r60.<javax.swing.JMenuItem: void addActionListener(java.awt.event.ActionListener)>($r63);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void setSize(int,int)>(640, 400);
+
+        $r64 = virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: java.awt.Container getParent()>();
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void setLocationRelativeTo(java.awt.Component)>($r64);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void setVisible(boolean)>(1);
+
+        virtualinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void setDefaultCloseOperation(int)>(3);
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void startTimer()>();
+
+        return;
+    }
+
+    private static java.io.File getDirectory(java.io.File)
+    {
+        java.io.File r0, $r1;
+        boolean $z0, $z1;
+        java.util.prefs.Preferences $r2;
+        java.lang.String $r3;
+
+        r0 := @parameter0: java.io.File;
+
+        if r0 == null goto label1;
+
+        $z0 = virtualinvoke r0.<java.io.File: boolean exists()>();
+
+        if $z0 == 0 goto label1;
+
+        $z1 = virtualinvoke r0.<java.io.File: boolean isDirectory()>();
+
+        if $z1 == 0 goto label1;
+
+        return r0;
+
+     label1:
+        $r1 = new java.io.File;
+
+        $r2 = <net.sourceforge.plantuml.swing.MainWindow: java.util.prefs.Preferences prefs>;
+
+        $r3 = virtualinvoke $r2.<java.util.prefs.Preferences: java.lang.String get(java.lang.String,java.lang.String)>("cur", ".");
+
+        specialinvoke $r1.<java.io.File: void <init>(java.lang.String)>($r3);
+
+        return $r1;
+    }
+
+    private void startTimer()
+    {
+        javax.swing.Timer $r0;
+        net.sourceforge.plantuml.swing.MainWindow$9 $r1;
+        net.sourceforge.plantuml.swing.MainWindow r2;
+
+        r2 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Init done");
+
+        $r0 = new javax.swing.Timer;
+
+        $r1 = new net.sourceforge.plantuml.swing.MainWindow$9;
+
+        specialinvoke $r1.<net.sourceforge.plantuml.swing.MainWindow$9: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r2);
+
+        specialinvoke $r0.<javax.swing.Timer: void <init>(int,java.awt.event.ActionListener)>(300, $r1);
+
+        virtualinvoke $r0.<javax.swing.Timer: void setInitialDelay(int)>(0);
+
+        virtualinvoke $r0.<javax.swing.Timer: void start()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Timer started");
+
+        return;
+    }
+
+    private void displayDialogChangeDir()
+    {
+        javax.swing.JFileChooser $r0;
+        java.util.prefs.Preferences $r2;
+        java.lang.String r3;
+        java.io.File $r4, r6;
+        net.sourceforge.plantuml.swing.MainWindow r5;
+        int i0;
+
+        r5 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        $r0 = new javax.swing.JFileChooser;
+
+        specialinvoke $r0.<javax.swing.JFileChooser: void <init>()>();
+
+        virtualinvoke $r0.<javax.swing.JFileChooser: void setDialogType(int)>(2);
+
+        virtualinvoke $r0.<javax.swing.JFileChooser: void setDialogTitle(java.lang.String)>("Directory to watch:");
+
+        virtualinvoke $r0.<javax.swing.JFileChooser: void setFileSelectionMode(int)>(1);
+
+        virtualinvoke $r0.<javax.swing.JFileChooser: void setAcceptAllFileFilterUsed(boolean)>(0);
+
+        $r2 = <net.sourceforge.plantuml.swing.MainWindow: java.util.prefs.Preferences prefs>;
+
+        r3 = virtualinvoke $r2.<java.util.prefs.Preferences: java.lang.String get(java.lang.String,java.lang.String)>("cur", ".");
+
+        $r4 = new java.io.File;
+
+        specialinvoke $r4.<java.io.File: void <init>(java.lang.String)>(r3);
+
+        virtualinvoke $r0.<javax.swing.JFileChooser: void setCurrentDirectory(java.io.File)>($r4);
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Showing OpenDialog");
+
+        i0 = virtualinvoke $r0.<javax.swing.JFileChooser: int showOpenDialog(java.awt.Component)>(r5);
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Closing OpenDialog");
+
+        if i0 != 0 goto label1;
+
+        r6 = virtualinvoke $r0.<javax.swing.JFileChooser: java.io.File getSelectedFile()>();
+
+        specialinvoke r5.<net.sourceforge.plantuml.swing.MainWindow: void changeDir(java.io.File)>(r6);
+
+     label1:
+        return;
+    }
+
+    private void changeDir(java.io.File)
+    {
+        java.io.File r0;
+        java.util.prefs.Preferences $r1;
+        java.lang.String $r2, $r7, $r8, $r9;
+        net.sourceforge.plantuml.swing.MainWindow r3;
+        net.sourceforge.plantuml.DirWatcher2 $r4, $r5;
+        net.sourceforge.plantuml.Option $r6;
+        java.util.List $r10, $r12;
+        java.util.Vector $r11;
+        javax.swing.JList $r13, $r14;
+
+        r3 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        r0 := @parameter0: java.io.File;
+
+        $r1 = <net.sourceforge.plantuml.swing.MainWindow: java.util.prefs.Preferences prefs>;
+
+        $r2 = virtualinvoke r0.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        virtualinvoke $r1.<java.util.prefs.Preferences: void put(java.lang.String,java.lang.String)>("cur", $r2);
+
+        $r4 = r3.<net.sourceforge.plantuml.swing.MainWindow: net.sourceforge.plantuml.DirWatcher2 dirWatcher>;
+
+        virtualinvoke $r4.<net.sourceforge.plantuml.DirWatcher2: void cancel()>();
+
+        $r5 = new net.sourceforge.plantuml.DirWatcher2;
+
+        $r6 = r3.<net.sourceforge.plantuml.swing.MainWindow: net.sourceforge.plantuml.Option option>;
+
+        $r7 = specialinvoke r3.<net.sourceforge.plantuml.swing.MainWindow: java.lang.String getExtensions()>();
+
+        $r8 = specialinvoke r3.<net.sourceforge.plantuml.swing.MainWindow: java.lang.String getRegexpPattern(java.lang.String)>($r7);
+
+        specialinvoke $r5.<net.sourceforge.plantuml.DirWatcher2: void <init>(java.io.File,net.sourceforge.plantuml.Option,java.lang.String)>(r0, $r6, $r8);
+
+        r3.<net.sourceforge.plantuml.swing.MainWindow: net.sourceforge.plantuml.DirWatcher2 dirWatcher> = $r5;
+
+        $r9 = virtualinvoke r0.<java.io.File: java.lang.String getAbsolutePath()>();
+
+        virtualinvoke r3.<net.sourceforge.plantuml.swing.MainWindow: void setTitle(java.lang.String)>($r9);
+
+        staticinvoke <net.sourceforge.plantuml.Log: void info(java.lang.String)>("Creating DirWatcher");
+
+        $r10 = r3.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        interfaceinvoke $r10.<java.util.List: void clear()>();
+
+        $r13 = r3.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JList jList1>;
+
+        $r11 = new java.util.Vector;
+
+        $r12 = r3.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        specialinvoke $r11.<java.util.Vector: void <init>(java.util.Collection)>($r12);
+
+        virtualinvoke $r13.<javax.swing.JList: void setListData(java.util.Vector)>($r11);
+
+        $r14 = r3.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JList jList1>;
+
+        virtualinvoke $r14.<javax.swing.JList: void setVisible(boolean)>(1);
+
+        return;
+    }
+
+    private void doubleClick(net.sourceforge.plantuml.swing.SimpleLine, javax.swing.ListModel, int)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.util.Set $r1, $r7;
+        java.util.Iterator r2;
+        boolean $z0, $z2;
+        net.sourceforge.plantuml.swing.SimpleLine r3, $r10;
+        net.sourceforge.plantuml.GeneratedImage $r4;
+        net.sourceforge.plantuml.swing.ImageWindow $r5, r9;
+        javax.swing.ListModel r6;
+        int i0;
+        java.lang.Object $r8;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        r3 := @parameter0: net.sourceforge.plantuml.swing.SimpleLine;
+
+        r6 := @parameter1: javax.swing.ListModel;
+
+        i0 := @parameter2: int;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.Set openWindows2>;
+
+        r2 = interfaceinvoke $r1.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r8 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r9 = (net.sourceforge.plantuml.swing.ImageWindow) $r8;
+
+        $r10 = virtualinvoke r9.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine getSimpleLine()>();
+
+        $z2 = virtualinvoke $r10.<java.lang.Object: boolean equals(java.lang.Object)>(r3);
+
+        if $z2 == 0 goto label2;
+
+        virtualinvoke r9.<net.sourceforge.plantuml.swing.ImageWindow: void setVisible(boolean)>(1);
+
+        virtualinvoke r9.<net.sourceforge.plantuml.swing.ImageWindow: void setExtendedState(int)>(0);
+
+        return;
+
+     label2:
+        goto label1;
+
+     label3:
+        $r4 = virtualinvoke r3.<net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.GeneratedImage getGeneratedImage()>();
+
+        if $r4 == null goto label4;
+
+        $r7 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.Set openWindows2>;
+
+        $r5 = new net.sourceforge.plantuml.swing.ImageWindow;
+
+        specialinvoke $r5.<net.sourceforge.plantuml.swing.ImageWindow: void <init>(net.sourceforge.plantuml.swing.SimpleLine,net.sourceforge.plantuml.swing.MainWindow,javax.swing.ListModel,int)>(r3, r0, r6, i0);
+
+        interfaceinvoke $r7.<java.util.Set: boolean add(java.lang.Object)>($r5);
+
+     label4:
+        return;
+    }
+
+    private void tick()
+    {
+        net.sourceforge.plantuml.swing.MainWindow$10 $r0;
+        net.sourceforge.plantuml.swing.MainWindow r1;
+
+        r1 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        $r0 = new net.sourceforge.plantuml.swing.MainWindow$10;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.swing.MainWindow$10: void <init>(net.sourceforge.plantuml.swing.MainWindow)>(r1);
+
+        staticinvoke <javax.swing.SwingUtilities: void invokeLater(java.lang.Runnable)>($r0);
+
+        return;
+    }
+
+    private boolean refreshDir() throws java.io.IOException, java.lang.InterruptedException, java.util.concurrent.ExecutionException
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        net.sourceforge.plantuml.DirWatcher2 $r1;
+        java.util.Map r2;
+        java.util.Set $r3;
+        boolean $z0, $z1, $z2, $z4, z7;
+        java.util.ArrayList $r4;
+        java.util.List $r5, $r6, $r8, $r10, $r15, $r19;
+        java.lang.Object $r7, $r9, $r11, $r16, $r17, $r18;
+        java.io.File $r12, $r13, r22;
+        net.sourceforge.plantuml.swing.SimpleLine r14, r24, r26;
+        java.util.Iterator r20, r25, r28;
+        java.util.Map$Entry r21;
+        java.util.concurrent.Future r23, r27;
+        net.sourceforge.plantuml.GeneratedImage r29;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.MainWindow: net.sourceforge.plantuml.DirWatcher2 dirWatcher>;
+
+        r2 = virtualinvoke $r1.<net.sourceforge.plantuml.DirWatcher2: java.util.Map buildCreatedFiles()>();
+
+        z7 = 0;
+
+        $r3 = interfaceinvoke r2.<java.util.Map: java.util.Set entrySet()>();
+
+        r20 = interfaceinvoke $r3.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r20.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label2;
+
+        $r16 = interfaceinvoke r20.<java.util.Iterator: java.lang.Object next()>();
+
+        r21 = (java.util.Map$Entry) $r16;
+
+        $r17 = interfaceinvoke r21.<java.util.Map$Entry: java.lang.Object getKey()>();
+
+        r22 = (java.io.File) $r17;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void removeAllThatUseThisFile(java.io.File)>(r22);
+
+        $r18 = interfaceinvoke r21.<java.util.Map$Entry: java.lang.Object getValue()>();
+
+        r23 = (java.util.concurrent.Future) $r18;
+
+        r24 = staticinvoke <net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.swing.SimpleLine fromFuture(java.io.File,java.util.concurrent.Future)>(r22, r23);
+
+        $r19 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        interfaceinvoke $r19.<java.util.List: boolean add(java.lang.Object)>(r24);
+
+        z7 = 1;
+
+        goto label1;
+
+     label2:
+        $r4 = new java.util.ArrayList;
+
+        $r5 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        specialinvoke $r4.<java.util.ArrayList: void <init>(java.util.Collection)>($r5);
+
+        r25 = virtualinvoke $r4.<java.util.ArrayList: java.util.Iterator iterator()>();
+
+     label3:
+        $z1 = interfaceinvoke r25.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label6;
+
+        $r7 = interfaceinvoke r25.<java.util.Iterator: java.lang.Object next()>();
+
+        r26 = (net.sourceforge.plantuml.swing.SimpleLine) $r7;
+
+        $z2 = virtualinvoke r26.<net.sourceforge.plantuml.swing.SimpleLine: boolean pendingAndFinished()>();
+
+        if $z2 == 0 goto label5;
+
+        $r8 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        interfaceinvoke $r8.<java.util.List: boolean remove(java.lang.Object)>(r26);
+
+        z7 = 1;
+
+        r27 = virtualinvoke r26.<net.sourceforge.plantuml.swing.SimpleLine: java.util.concurrent.Future getFuture()>();
+
+        $r9 = interfaceinvoke r27.<java.util.concurrent.Future: java.lang.Object get()>();
+
+        $r10 = (java.util.List) $r9;
+
+        r28 = interfaceinvoke $r10.<java.util.List: java.util.Iterator iterator()>();
+
+     label4:
+        $z4 = interfaceinvoke r28.<java.util.Iterator: boolean hasNext()>();
+
+        if $z4 == 0 goto label5;
+
+        $r11 = interfaceinvoke r28.<java.util.Iterator: java.lang.Object next()>();
+
+        r29 = (net.sourceforge.plantuml.GeneratedImage) $r11;
+
+        $r12 = interfaceinvoke r29.<net.sourceforge.plantuml.GeneratedImage: java.io.File getPngFile()>();
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void mayRefreshImageWindow(java.io.File)>($r12);
+
+        $r13 = virtualinvoke r26.<net.sourceforge.plantuml.swing.SimpleLine: java.io.File getFile()>();
+
+        r14 = staticinvoke <net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.swing.SimpleLine fromGeneratedImage(java.io.File,net.sourceforge.plantuml.GeneratedImage)>($r13, r29);
+
+        $r15 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        interfaceinvoke $r15.<java.util.List: boolean add(java.lang.Object)>(r14);
+
+        goto label4;
+
+     label5:
+        goto label3;
+
+     label6:
+        $r6 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        staticinvoke <java.util.Collections: void sort(java.util.List)>($r6);
+
+        return z7;
+    }
+
+    private void removeAllThatUseThisFile(java.io.File)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.util.List $r1;
+        java.util.Iterator r2;
+        boolean $z0, $z1;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.swing.SimpleLine r4;
+        java.io.File $r5, r6;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        r6 := @parameter0: java.io.File;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        r2 = interfaceinvoke $r1.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $z0 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z0 == 0 goto label3;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.swing.SimpleLine) $r3;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.swing.SimpleLine: java.io.File getFile()>();
+
+        $z1 = virtualinvoke $r5.<java.io.File: boolean equals(java.lang.Object)>(r6);
+
+        if $z1 == 0 goto label2;
+
+        interfaceinvoke r2.<java.util.Iterator: void remove()>();
+
+     label2:
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    private void mayRefreshImageWindow(java.io.File)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.util.Set $r1;
+        java.util.Iterator r2;
+        java.lang.Object $r3;
+        net.sourceforge.plantuml.swing.ImageWindow r4;
+        net.sourceforge.plantuml.swing.SimpleLine $r5, $r8;
+        net.sourceforge.plantuml.GeneratedImage $r6, $r9;
+        java.io.File r7, $r10;
+        boolean $z0, $z1;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        r7 := @parameter0: java.io.File;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.Set openWindows2>;
+
+        r2 = interfaceinvoke $r1.<java.util.Set: java.util.Iterator iterator()>();
+
+     label1:
+        $z1 = interfaceinvoke r2.<java.util.Iterator: boolean hasNext()>();
+
+        if $z1 == 0 goto label4;
+
+        $r3 = interfaceinvoke r2.<java.util.Iterator: java.lang.Object next()>();
+
+        r4 = (net.sourceforge.plantuml.swing.ImageWindow) $r3;
+
+        $r5 = virtualinvoke r4.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine getSimpleLine()>();
+
+        $r6 = virtualinvoke $r5.<net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.GeneratedImage getGeneratedImage()>();
+
+        if $r6 != null goto label2;
+
+        goto label1;
+
+     label2:
+        $r8 = virtualinvoke r4.<net.sourceforge.plantuml.swing.ImageWindow: net.sourceforge.plantuml.swing.SimpleLine getSimpleLine()>();
+
+        $r9 = virtualinvoke $r8.<net.sourceforge.plantuml.swing.SimpleLine: net.sourceforge.plantuml.GeneratedImage getGeneratedImage()>();
+
+        $r10 = interfaceinvoke $r9.<net.sourceforge.plantuml.GeneratedImage: java.io.File getPngFile()>();
+
+        $z0 = virtualinvoke r7.<java.io.File: boolean equals(java.lang.Object)>($r10);
+
+        if $z0 == 0 goto label3;
+
+        virtualinvoke r4.<net.sourceforge.plantuml.swing.ImageWindow: void refreshImage(boolean)>(1);
+
+     label3:
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    public void closing(net.sourceforge.plantuml.swing.ImageWindow)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        net.sourceforge.plantuml.swing.ImageWindow r1;
+        java.util.Set $r2;
+        boolean z0;
+        java.lang.IllegalStateException $r3;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        r1 := @parameter0: net.sourceforge.plantuml.swing.ImageWindow;
+
+        $r2 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.Set openWindows2>;
+
+        z0 = interfaceinvoke $r2.<java.util.Set: boolean remove(java.lang.Object)>(r1);
+
+        if z0 != 0 goto label1;
+
+        $r3 = new java.lang.IllegalStateException;
+
+        specialinvoke $r3.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r3;
+
+     label1:
+        return;
+    }
+
+    public java.util.List getCurrentDirectoryListing2()
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.util.List $r1, $r2;
+
+        r0 := @this: net.sourceforge.plantuml.swing.MainWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        $r2 = staticinvoke <java.util.Collections: java.util.List unmodifiableList(java.util.List)>($r1);
+
+        return $r2;
+    }
+
+    static javax.swing.JList access$000(net.sourceforge.plantuml.swing.MainWindow)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        javax.swing.JList $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.MainWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JList jList1>;
+
+        return $r1;
+    }
+
+    static void access$100(net.sourceforge.plantuml.swing.MainWindow, net.sourceforge.plantuml.swing.SimpleLine, javax.swing.ListModel, int)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        net.sourceforge.plantuml.swing.SimpleLine r1;
+        javax.swing.ListModel r2;
+        int i0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.MainWindow;
+
+        r1 := @parameter1: net.sourceforge.plantuml.swing.SimpleLine;
+
+        r2 := @parameter2: javax.swing.ListModel;
+
+        i0 := @parameter3: int;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void doubleClick(net.sourceforge.plantuml.swing.SimpleLine,javax.swing.ListModel,int)>(r1, r2, i0);
+
+        return;
+    }
+
+    static void access$200(net.sourceforge.plantuml.swing.MainWindow)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.MainWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void displayDialogChangeDir()>();
+
+        return;
+    }
+
+    static javax.swing.JTextField access$300(net.sourceforge.plantuml.swing.MainWindow)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        javax.swing.JTextField $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.MainWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.MainWindow: javax.swing.JTextField extensions>;
+
+        return $r1;
+    }
+
+    static void access$400(net.sourceforge.plantuml.swing.MainWindow, java.lang.String)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.lang.String r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.MainWindow;
+
+        r1 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void changeExtensions(java.lang.String)>(r1);
+
+        return;
+    }
+
+    static void access$500(net.sourceforge.plantuml.swing.MainWindow)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.MainWindow;
+
+        specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: void tick()>();
+
+        return;
+    }
+
+    static boolean access$600(net.sourceforge.plantuml.swing.MainWindow) throws java.io.IOException, java.lang.InterruptedException, java.util.concurrent.ExecutionException
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        boolean $z0;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.MainWindow;
+
+        $z0 = specialinvoke r0.<net.sourceforge.plantuml.swing.MainWindow: boolean refreshDir()>();
+
+        return $z0;
+    }
+
+    static java.util.List access$700(net.sourceforge.plantuml.swing.MainWindow)
+    {
+        net.sourceforge.plantuml.swing.MainWindow r0;
+        java.util.List $r1;
+
+        r0 := @parameter0: net.sourceforge.plantuml.swing.MainWindow;
+
+        $r1 = r0.<net.sourceforge.plantuml.swing.MainWindow: java.util.List currentDirectoryListing2>;
+
+        return $r1;
+    }
+
+    static void <clinit>()
+    {
+        java.util.prefs.Preferences $r0;
+
+        <net.sourceforge.plantuml.swing.MainWindow: java.lang.String KEY_PATTERN> = "pat";
+
+        <net.sourceforge.plantuml.swing.MainWindow: java.lang.String KEY_DIR> = "cur";
+
+        $r0 = staticinvoke <java.util.prefs.Preferences: java.util.prefs.Preferences userNodeForPackage(java.lang.Class)>(class "Lnet/sourceforge/plantuml/swing/MainWindow;");
+
+        <net.sourceforge.plantuml.swing.MainWindow: java.util.prefs.Preferences prefs> = $r0;
+
+        return;
+    }
+}

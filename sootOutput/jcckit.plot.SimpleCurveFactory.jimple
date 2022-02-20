@@ -1,0 +1,123 @@
+public class jcckit.plot.SimpleCurveFactory extends java.lang.Object implements jcckit.plot.CurveFactory
+{
+    public static final java.lang.String DEFINITIONS_KEY;
+    private jcckit.util.ConfigParameters[] _configs;
+
+    public void <init>(jcckit.util.ConfigParameters)
+    {
+        jcckit.plot.SimpleCurveFactory r0;
+        jcckit.util.ConfigParameters[] $r1, $r9, $r10, $r11;
+        jcckit.util.ConfigParameters $r2, r5, $r13;
+        jcckit.util.PropertiesBasedConfigData $r3;
+        java.util.Properties $r4;
+        java.lang.String r6, $r12;
+        java.util.StringTokenizer $r7;
+        int $i0, $i1, i2;
+
+        r0 := @this: jcckit.plot.SimpleCurveFactory;
+
+        r5 := @parameter0: jcckit.util.ConfigParameters;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r1 = newarray (jcckit.util.ConfigParameters)[1];
+
+        $r2 = new jcckit.util.ConfigParameters;
+
+        $r3 = new jcckit.util.PropertiesBasedConfigData;
+
+        $r4 = new java.util.Properties;
+
+        specialinvoke $r4.<java.util.Properties: void <init>()>();
+
+        specialinvoke $r3.<jcckit.util.PropertiesBasedConfigData: void <init>(java.util.Properties)>($r4);
+
+        specialinvoke $r2.<jcckit.util.ConfigParameters: void <init>(jcckit.util.ConfigData)>($r3);
+
+        $r1[0] = $r2;
+
+        r0.<jcckit.plot.SimpleCurveFactory: jcckit.util.ConfigParameters[] _configs> = $r1;
+
+        r6 = virtualinvoke r5.<jcckit.util.ConfigParameters: java.lang.String get(java.lang.String,java.lang.String)>("definitions", null);
+
+        if r6 == null goto label2;
+
+        $r7 = new java.util.StringTokenizer;
+
+        specialinvoke $r7.<java.util.StringTokenizer: void <init>(java.lang.String)>(r6);
+
+        $i0 = virtualinvoke $r7.<java.util.StringTokenizer: int countTokens()>();
+
+        $r9 = newarray (jcckit.util.ConfigParameters)[$i0];
+
+        r0.<jcckit.plot.SimpleCurveFactory: jcckit.util.ConfigParameters[] _configs> = $r9;
+
+        i2 = 0;
+
+     label1:
+        $r10 = r0.<jcckit.plot.SimpleCurveFactory: jcckit.util.ConfigParameters[] _configs>;
+
+        $i1 = lengthof $r10;
+
+        if i2 >= $i1 goto label2;
+
+        $r11 = r0.<jcckit.plot.SimpleCurveFactory: jcckit.util.ConfigParameters[] _configs>;
+
+        $r12 = virtualinvoke $r7.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        $r13 = virtualinvoke r5.<jcckit.util.ConfigParameters: jcckit.util.ConfigParameters getNode(java.lang.String)>($r12);
+
+        $r11[i2] = $r13;
+
+        i2 = i2 + 1;
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public jcckit.plot.Curve create(int, int, jcckit.graphic.ClippingShape, jcckit.plot.Legend)
+    {
+        jcckit.plot.SimpleCurve $r0;
+        jcckit.plot.SimpleCurveFactory r1;
+        int i0, $i1, $i2, i3;
+        jcckit.util.ConfigParameters[] $r2, $r3;
+        jcckit.graphic.ClippingShape r4;
+        jcckit.plot.Legend r5;
+        jcckit.util.ConfigParameters $r6;
+
+        r1 := @this: jcckit.plot.SimpleCurveFactory;
+
+        i0 := @parameter0: int;
+
+        i3 := @parameter1: int;
+
+        r4 := @parameter2: jcckit.graphic.ClippingShape;
+
+        r5 := @parameter3: jcckit.plot.Legend;
+
+        $r0 = new jcckit.plot.SimpleCurve;
+
+        $r3 = r1.<jcckit.plot.SimpleCurveFactory: jcckit.util.ConfigParameters[] _configs>;
+
+        $r2 = r1.<jcckit.plot.SimpleCurveFactory: jcckit.util.ConfigParameters[] _configs>;
+
+        $i1 = lengthof $r2;
+
+        $i2 = i0 % $i1;
+
+        $r6 = $r3[$i2];
+
+        specialinvoke $r0.<jcckit.plot.SimpleCurve: void <init>(jcckit.util.ConfigParameters,int,int,jcckit.graphic.ClippingShape,jcckit.plot.Legend)>($r6, i0, i3, r4, r5);
+
+        return $r0;
+    }
+
+    public static void <clinit>()
+    {
+        <jcckit.plot.SimpleCurveFactory: java.lang.String DEFINITIONS_KEY> = "definitions";
+
+        return;
+    }
+}

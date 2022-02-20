@@ -1,0 +1,88 @@
+public final class net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker extends java.lang.Object
+{
+    private final net.sourceforge.plantuml.statediagram.StateDiagram diagram;
+
+    public void <init>(net.sourceforge.plantuml.statediagram.StateDiagram) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker r0;
+        net.sourceforge.plantuml.statediagram.StateDiagram r1;
+
+        r0 := @this: net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
+
+        r1 := @parameter0: net.sourceforge.plantuml.statediagram.StateDiagram;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker: net.sourceforge.plantuml.statediagram.StateDiagram diagram> = r1;
+
+        return;
+    }
+
+    public void createFiles(java.io.OutputStream) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.xmlsc.ScxmlStateDiagramStandard $r0;
+        net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker r1;
+        net.sourceforge.plantuml.statediagram.StateDiagram $r2;
+        java.io.OutputStream r3;
+        javax.xml.transform.TransformerException $r4;
+        java.lang.String $r5, $r7, $r9, $r11;
+        java.io.IOException $r6, $r10;
+        javax.xml.parsers.ParserConfigurationException $r8;
+
+        r1 := @this: net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
+
+        r3 := @parameter0: java.io.OutputStream;
+
+     label1:
+        $r0 = new net.sourceforge.plantuml.xmlsc.ScxmlStateDiagramStandard;
+
+        $r2 = r1.<net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker: net.sourceforge.plantuml.statediagram.StateDiagram diagram>;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.xmlsc.ScxmlStateDiagramStandard: void <init>(net.sourceforge.plantuml.statediagram.StateDiagram)>($r2);
+
+        virtualinvoke $r0.<net.sourceforge.plantuml.xmlsc.ScxmlStateDiagramStandard: void transformerXml(java.io.OutputStream)>(r3);
+
+     label2:
+        goto label5;
+
+     label3:
+        $r8 := @caughtexception;
+
+        $r9 = virtualinvoke $r8.<javax.xml.parsers.ParserConfigurationException: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r9);
+
+        virtualinvoke $r8.<javax.xml.parsers.ParserConfigurationException: void printStackTrace()>();
+
+        $r10 = new java.io.IOException;
+
+        $r11 = virtualinvoke $r8.<javax.xml.parsers.ParserConfigurationException: java.lang.String toString()>();
+
+        specialinvoke $r10.<java.io.IOException: void <init>(java.lang.String)>($r11);
+
+        throw $r10;
+
+     label4:
+        $r4 := @caughtexception;
+
+        $r5 = virtualinvoke $r4.<javax.xml.transform.TransformerException: java.lang.String toString()>();
+
+        staticinvoke <net.sourceforge.plantuml.Log: void error(java.lang.String)>($r5);
+
+        virtualinvoke $r4.<javax.xml.transform.TransformerException: void printStackTrace()>();
+
+        $r6 = new java.io.IOException;
+
+        $r7 = virtualinvoke $r4.<javax.xml.transform.TransformerException: java.lang.String toString()>();
+
+        specialinvoke $r6.<java.io.IOException: void <init>(java.lang.String)>($r7);
+
+        throw $r6;
+
+     label5:
+        return;
+
+        catch javax.xml.parsers.ParserConfigurationException from label1 to label2 with label3;
+        catch javax.xml.transform.TransformerException from label1 to label2 with label4;
+    }
+}

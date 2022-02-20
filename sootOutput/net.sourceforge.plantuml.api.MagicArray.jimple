@@ -1,0 +1,230 @@
+public final class net.sourceforge.plantuml.api.MagicArray extends java.lang.Object
+{
+    private final int[] data;
+    private final int size;
+    private long lastUpdatedKey;
+    private int lastUpdatedValue;
+    private long sum;
+    private long maxSum;
+
+    public void <init>(int)
+    {
+        net.sourceforge.plantuml.api.MagicArray r0;
+        int i0;
+        int[] $r1;
+
+        r0 := @this: net.sourceforge.plantuml.api.MagicArray;
+
+        i0 := @parameter0: int;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.api.MagicArray: long lastUpdatedKey> = -1L;
+
+        $r1 = newarray (int)[i0];
+
+        r0.<net.sourceforge.plantuml.api.MagicArray: int[] data> = $r1;
+
+        r0.<net.sourceforge.plantuml.api.MagicArray: int size> = i0;
+
+        return;
+    }
+
+    public synchronized void incKey(long)
+    {
+        net.sourceforge.plantuml.api.MagicArray r0;
+        long l0;
+
+        r0 := @this: net.sourceforge.plantuml.api.MagicArray;
+
+        l0 := @parameter0: long;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.api.MagicArray: void incKey(long,int)>(l0, 1);
+
+        return;
+    }
+
+    public synchronized void incKey(long, int)
+    {
+        long l0, $l1, $l3, $l6, $l9, $l10, l12;
+        net.sourceforge.plantuml.api.MagicArray r0;
+        byte $b2, $b4, $b7, $b11;
+        int i5, $i8, $i13, $i14;
+
+        r0 := @this: net.sourceforge.plantuml.api.MagicArray;
+
+        l0 := @parameter0: long;
+
+        i5 := @parameter1: int;
+
+        $l1 = r0.<net.sourceforge.plantuml.api.MagicArray: long lastUpdatedKey>;
+
+        $b2 = l0 cmp $l1;
+
+        if $b2 >= 0 goto label1;
+
+        return;
+
+     label1:
+        $l3 = r0.<net.sourceforge.plantuml.api.MagicArray: long lastUpdatedKey>;
+
+        $b4 = l0 cmp $l3;
+
+        if $b4 == 0 goto label4;
+
+        $l6 = r0.<net.sourceforge.plantuml.api.MagicArray: long lastUpdatedKey>;
+
+        $b7 = $l6 cmp -1L;
+
+        if $b7 == 0 goto label3;
+
+        $l9 = r0.<net.sourceforge.plantuml.api.MagicArray: long lastUpdatedKey>;
+
+        $i8 = r0.<net.sourceforge.plantuml.api.MagicArray: int lastUpdatedValue>;
+
+        specialinvoke r0.<net.sourceforge.plantuml.api.MagicArray: void setValue(long,int)>($l9, $i8);
+
+        $l10 = r0.<net.sourceforge.plantuml.api.MagicArray: long lastUpdatedKey>;
+
+        l12 = $l10 + 1L;
+
+     label2:
+        $b11 = l12 cmp l0;
+
+        if $b11 >= 0 goto label3;
+
+        specialinvoke r0.<net.sourceforge.plantuml.api.MagicArray: void setValue(long,int)>(l12, 0);
+
+        l12 = l12 + 1L;
+
+        goto label2;
+
+     label3:
+        r0.<net.sourceforge.plantuml.api.MagicArray: int lastUpdatedValue> = 0;
+
+        r0.<net.sourceforge.plantuml.api.MagicArray: long lastUpdatedKey> = l0;
+
+     label4:
+        $i13 = r0.<net.sourceforge.plantuml.api.MagicArray: int lastUpdatedValue>;
+
+        $i14 = $i13 + i5;
+
+        r0.<net.sourceforge.plantuml.api.MagicArray: int lastUpdatedValue> = $i14;
+
+        return;
+    }
+
+    private void setValue(long, int)
+    {
+        long l0, $l2, $l3, $l8, $l9, $l10, $l11, $l12, $l14;
+        net.sourceforge.plantuml.api.MagicArray r0;
+        int $i1, i4, i5, $i6, $i7;
+        int[] $r1, $r2;
+        byte $b13;
+
+        r0 := @this: net.sourceforge.plantuml.api.MagicArray;
+
+        l0 := @parameter0: long;
+
+        i5 := @parameter1: int;
+
+        $i1 = r0.<net.sourceforge.plantuml.api.MagicArray: int size>;
+
+        $l2 = (long) $i1;
+
+        $l3 = l0 % $l2;
+
+        i4 = (int) $l3;
+
+        $l9 = r0.<net.sourceforge.plantuml.api.MagicArray: long sum>;
+
+        $r1 = r0.<net.sourceforge.plantuml.api.MagicArray: int[] data>;
+
+        $i6 = $r1[i4];
+
+        $i7 = i5 - $i6;
+
+        $l8 = (long) $i7;
+
+        $l10 = $l9 + $l8;
+
+        r0.<net.sourceforge.plantuml.api.MagicArray: long sum> = $l10;
+
+        $l12 = r0.<net.sourceforge.plantuml.api.MagicArray: long sum>;
+
+        $l11 = r0.<net.sourceforge.plantuml.api.MagicArray: long maxSum>;
+
+        $b13 = $l12 cmp $l11;
+
+        if $b13 <= 0 goto label1;
+
+        $l14 = r0.<net.sourceforge.plantuml.api.MagicArray: long sum>;
+
+        r0.<net.sourceforge.plantuml.api.MagicArray: long maxSum> = $l14;
+
+     label1:
+        $r2 = r0.<net.sourceforge.plantuml.api.MagicArray: int[] data>;
+
+        $r2[i4] = i5;
+
+        return;
+    }
+
+    public synchronized long getSum()
+    {
+        net.sourceforge.plantuml.api.MagicArray r0;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.api.MagicArray;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.MagicArray: long sum>;
+
+        return $l0;
+    }
+
+    public synchronized long getMaxSum()
+    {
+        net.sourceforge.plantuml.api.MagicArray r0;
+        long $l0;
+
+        r0 := @this: net.sourceforge.plantuml.api.MagicArray;
+
+        $l0 = r0.<net.sourceforge.plantuml.api.MagicArray: long maxSum>;
+
+        return $l0;
+    }
+
+    private long getSumSlow()
+    {
+        net.sourceforge.plantuml.api.MagicArray r0;
+        int[] r1;
+        int i0, i1, i4;
+        long $l2, l3;
+
+        r0 := @this: net.sourceforge.plantuml.api.MagicArray;
+
+        l3 = 0L;
+
+        r1 = r0.<net.sourceforge.plantuml.api.MagicArray: int[] data>;
+
+        i0 = lengthof r1;
+
+        i4 = 0;
+
+     label1:
+        if i4 >= i0 goto label2;
+
+        i1 = r1[i4];
+
+        $l2 = (long) i1;
+
+        l3 = l3 + $l2;
+
+        i4 = i4 + 1;
+
+        goto label1;
+
+     label2:
+        return l3;
+    }
+}

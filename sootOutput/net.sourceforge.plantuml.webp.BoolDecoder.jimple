@@ -1,0 +1,312 @@
+public class net.sourceforge.plantuml.webp.BoolDecoder extends java.lang.Object
+{
+    int bit_count;
+    javax.imageio.stream.ImageInputStream data;
+    private long offset;
+    private int range;
+    private int value;
+
+    void <init>(javax.imageio.stream.ImageInputStream, long) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+        javax.imageio.stream.ImageInputStream r1;
+        long l0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        r1 := @parameter0: javax.imageio.stream.ImageInputStream;
+
+        l0 := @parameter1: long;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: javax.imageio.stream.ImageInputStream data> = r1;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: long offset> = l0;
+
+        specialinvoke r0.<net.sourceforge.plantuml.webp.BoolDecoder: void initBoolDecoder()>();
+
+        return;
+    }
+
+    private void initBoolDecoder() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+        long $l0, $l3, $l4;
+        javax.imageio.stream.ImageInputStream $r1, $r2;
+        int $i1, $i2;
+
+        r0 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: int value> = 0;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: javax.imageio.stream.ImageInputStream data>;
+
+        $l0 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: long offset>;
+
+        interfaceinvoke $r1.<javax.imageio.stream.ImageInputStream: void seek(long)>($l0);
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: javax.imageio.stream.ImageInputStream data>;
+
+        $i1 = interfaceinvoke $r2.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i2 = $i1 << 8;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: int value> = $i2;
+
+        $l3 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: long offset>;
+
+        $l4 = $l3 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: long offset> = $l4;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: int range> = 255;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: int bit_count> = 0;
+
+        return;
+    }
+
+    public int readBit() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+        int $i0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        $i0 = virtualinvoke r0.<net.sourceforge.plantuml.webp.BoolDecoder: int readBool(int)>(128);
+
+        return $i0;
+    }
+
+    public int readBool(int) throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+        int i0, $i1, $i2, $i3, i4, i5, i6, $i7, $i8, $i9, $i12, i14, i15, i16, i17, i18, i19, i20;
+        int[] $r1;
+        javax.imageio.stream.ImageInputStream $r2;
+        long $l10, $l11;
+        byte b13;
+
+        r0 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        i0 := @parameter0: int;
+
+        b13 = 0;
+
+        i14 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: int range>;
+
+        i15 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: int value>;
+
+        $i1 = i14 - 1;
+
+        $i2 = $i1 * i0;
+
+        $i3 = $i2 >> 8;
+
+        i4 = 1 + $i3;
+
+        i5 = i4 << 8;
+
+        i16 = i4;
+
+        if i15 < i5 goto label1;
+
+        $i12 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: int range>;
+
+        i16 = $i12 - i4;
+
+        i15 = i15 - i5;
+
+        b13 = 1;
+
+     label1:
+        i17 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: int bit_count>;
+
+        $r1 = <net.sourceforge.plantuml.webp.Globals: int[] vp8dxBitreaderNorm>;
+
+        i6 = $r1[i16];
+
+        i18 = i16 << i6;
+
+        i19 = i15 << i6;
+
+        i20 = i17 - i6;
+
+        if i20 > 0 goto label2;
+
+        $r2 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: javax.imageio.stream.ImageInputStream data>;
+
+        $i7 = interfaceinvoke $r2.<javax.imageio.stream.ImageInputStream: int readUnsignedByte()>();
+
+        $i8 = neg i20;
+
+        $i9 = $i7 << $i8;
+
+        i19 = i19 | $i9;
+
+        $l10 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: long offset>;
+
+        $l11 = $l10 + 1L;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: long offset> = $l11;
+
+        i20 = i20 + 8;
+
+     label2:
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: int bit_count> = i20;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: int value> = i19;
+
+        r0.<net.sourceforge.plantuml.webp.BoolDecoder: int range> = i18;
+
+        return b13;
+    }
+
+    public int readLiteral(int) throws java.io.IOException
+    {
+        int $i0, $i1, $i2, i3, i4;
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+
+        r0 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        i3 := @parameter0: int;
+
+        i4 = 0;
+
+     label1:
+        $i0 = i3;
+
+        i3 = i3 + -1;
+
+        if $i0 <= 0 goto label2;
+
+        $i1 = i4 << 1;
+
+        $i2 = virtualinvoke r0.<net.sourceforge.plantuml.webp.BoolDecoder: int readBool(int)>(128);
+
+        i4 = $i1 + $i2;
+
+        goto label1;
+
+     label2:
+        return i4;
+    }
+
+    int readTree(int[], int[]) throws java.io.IOException
+    {
+        int[] r0, r2;
+        net.sourceforge.plantuml.webp.BoolDecoder r1;
+        int $i0, $i1, $i2, $i3, $i4, $i5, i6;
+
+        r1 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        r0 := @parameter0: int[];
+
+        r2 := @parameter1: int[];
+
+        i6 = 0;
+
+     label1:
+        $i0 = i6 >> 1;
+
+        $i1 = r2[$i0];
+
+        $i2 = virtualinvoke r1.<net.sourceforge.plantuml.webp.BoolDecoder: int readBool(int)>($i1);
+
+        $i3 = i6 + $i2;
+
+        $i4 = r0[$i3];
+
+        i6 = $i4;
+
+        if $i4 <= 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $i5 = neg $i4;
+
+        return $i5;
+    }
+
+    int readTreeSkip(int[], int[], int) throws java.io.IOException
+    {
+        int i0, $i1, $i2, $i3, $i4, $i5, $i6, i7;
+        int[] r0, r2;
+        net.sourceforge.plantuml.webp.BoolDecoder r1;
+
+        r1 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        r0 := @parameter0: int[];
+
+        r2 := @parameter1: int[];
+
+        i0 := @parameter2: int;
+
+        i7 = i0 * 2;
+
+     label1:
+        $i1 = i7 >> 1;
+
+        $i2 = r2[$i1];
+
+        $i3 = virtualinvoke r1.<net.sourceforge.plantuml.webp.BoolDecoder: int readBool(int)>($i2);
+
+        $i4 = i7 + $i3;
+
+        $i5 = r0[$i4];
+
+        i7 = $i5;
+
+        if $i5 <= 0 goto label2;
+
+        goto label1;
+
+     label2:
+        $i6 = neg $i5;
+
+        return $i6;
+    }
+
+    public void seek() throws java.io.IOException
+    {
+        net.sourceforge.plantuml.webp.BoolDecoder r0;
+        long $l0;
+        javax.imageio.stream.ImageInputStream $r1;
+
+        r0 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        $r1 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: javax.imageio.stream.ImageInputStream data>;
+
+        $l0 = r0.<net.sourceforge.plantuml.webp.BoolDecoder: long offset>;
+
+        interfaceinvoke $r1.<javax.imageio.stream.ImageInputStream: void seek(long)>($l0);
+
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        java.lang.StringBuilder $r0, $r1, $r3;
+        net.sourceforge.plantuml.webp.BoolDecoder r2;
+        int $i0;
+        java.lang.String $r4;
+
+        r2 := @this: net.sourceforge.plantuml.webp.BoolDecoder;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r1 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("bc: ");
+
+        $i0 = r2.<net.sourceforge.plantuml.webp.BoolDecoder: int value>;
+
+        $r3 = virtualinvoke $r1.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>($i0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        return $r4;
+    }
+}

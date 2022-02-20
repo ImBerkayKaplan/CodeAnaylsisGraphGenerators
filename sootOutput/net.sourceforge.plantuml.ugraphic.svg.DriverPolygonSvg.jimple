@@ -1,0 +1,181 @@
+public class net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg extends java.lang.Object implements net.sourceforge.plantuml.ugraphic.UDriver
+{
+    private final net.sourceforge.plantuml.ugraphic.ClipContainer clipContainer;
+    static final boolean $assertionsDisabled;
+
+    public void <init>(net.sourceforge.plantuml.ugraphic.ClipContainer)
+    {
+        net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg r0;
+        net.sourceforge.plantuml.ugraphic.ClipContainer r1;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.ClipContainer;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        r0.<net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg: net.sourceforge.plantuml.ugraphic.ClipContainer clipContainer> = r1;
+
+        return;
+    }
+
+    public void draw(net.sourceforge.plantuml.ugraphic.UPolygon, double, double, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.UParam, net.sourceforge.plantuml.svg.SvgGraphics)
+    {
+        net.sourceforge.plantuml.ugraphic.UPolygon r0;
+        double d0, d1, $d2, $d3, $d4, $d5;
+        double[] r1;
+        boolean $z0, $z1;
+        net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg r2;
+        net.sourceforge.plantuml.ugraphic.ClipContainer $r3;
+        net.sourceforge.plantuml.ugraphic.UClip r4;
+        net.sourceforge.plantuml.svg.SvgGraphics r5;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r6;
+        net.sourceforge.plantuml.ugraphic.UParam r7;
+        net.sourceforge.plantuml.ugraphic.UStroke $r8, $r9;
+        java.lang.String $r10;
+        int $i0, $i1, $i2, $i3, i4;
+        java.lang.AssertionError $r11;
+
+        r2 := @this: net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg;
+
+        r0 := @parameter0: net.sourceforge.plantuml.ugraphic.UPolygon;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        r6 := @parameter3: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r7 := @parameter4: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r5 := @parameter5: net.sourceforge.plantuml.svg.SvgGraphics;
+
+        r1 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: double[] getPointArray(double,double)>(d0, d1);
+
+        $z0 = <net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg: boolean $assertionsDisabled>;
+
+        if $z0 != 0 goto label1;
+
+        $i2 = lengthof r1;
+
+        $i3 = $i2 % 2;
+
+        if $i3 == 0 goto label1;
+
+        $r11 = new java.lang.AssertionError;
+
+        specialinvoke $r11.<java.lang.AssertionError: void <init>()>();
+
+        throw $r11;
+
+     label1:
+        $r3 = r2.<net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg: net.sourceforge.plantuml.ugraphic.ClipContainer clipContainer>;
+
+        r4 = interfaceinvoke $r3.<net.sourceforge.plantuml.ugraphic.ClipContainer: net.sourceforge.plantuml.ugraphic.UClip getClip()>();
+
+        if r4 == null goto label4;
+
+        i4 = 0;
+
+     label2:
+        $i0 = lengthof r1;
+
+        if i4 >= $i0 goto label4;
+
+        $d5 = r1[i4];
+
+        $i1 = i4 + 1;
+
+        $d4 = r1[$i1];
+
+        $z1 = virtualinvoke r4.<net.sourceforge.plantuml.ugraphic.UClip: boolean isInside(double,double)>($d5, $d4);
+
+        if $z1 != 0 goto label3;
+
+        return;
+
+     label3:
+        i4 = i4 + 2;
+
+        goto label2;
+
+     label4:
+        staticinvoke <net.sourceforge.plantuml.ugraphic.svg.DriverRectangleSvg: void applyFillColor(net.sourceforge.plantuml.svg.SvgGraphics,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.ugraphic.UParam)>(r5, r6, r7);
+
+        staticinvoke <net.sourceforge.plantuml.ugraphic.svg.DriverRectangleSvg: void applyStrokeColor(net.sourceforge.plantuml.svg.SvgGraphics,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.ugraphic.UParam)>(r5, r6, r7);
+
+        $r8 = interfaceinvoke r7.<net.sourceforge.plantuml.ugraphic.UParam: net.sourceforge.plantuml.ugraphic.UStroke getStroke()>();
+
+        $d2 = virtualinvoke $r8.<net.sourceforge.plantuml.ugraphic.UStroke: double getThickness()>();
+
+        $r9 = interfaceinvoke r7.<net.sourceforge.plantuml.ugraphic.UParam: net.sourceforge.plantuml.ugraphic.UStroke getStroke()>();
+
+        $r10 = virtualinvoke $r9.<net.sourceforge.plantuml.ugraphic.UStroke: java.lang.String getDasharraySvg()>();
+
+        virtualinvoke r5.<net.sourceforge.plantuml.svg.SvgGraphics: void setStrokeWidth(double,java.lang.String)>($d2, $r10);
+
+        $d3 = virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.UPolygon: double getDeltaShadow()>();
+
+        virtualinvoke r5.<net.sourceforge.plantuml.svg.SvgGraphics: void svgPolygon(double,double[])>($d3, r1);
+
+        return;
+    }
+
+    public volatile void draw(net.sourceforge.plantuml.ugraphic.UShape, double, double, net.sourceforge.plantuml.ugraphic.color.ColorMapper, net.sourceforge.plantuml.ugraphic.UParam, java.lang.Object)
+    {
+        net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg r0;
+        net.sourceforge.plantuml.ugraphic.UShape r1;
+        double d0, d1;
+        net.sourceforge.plantuml.ugraphic.color.ColorMapper r2;
+        net.sourceforge.plantuml.ugraphic.UParam r3;
+        java.lang.Object r4;
+        net.sourceforge.plantuml.svg.SvgGraphics $r5;
+        net.sourceforge.plantuml.ugraphic.UPolygon $r6;
+
+        r0 := @this: net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg;
+
+        r1 := @parameter0: net.sourceforge.plantuml.ugraphic.UShape;
+
+        d0 := @parameter1: double;
+
+        d1 := @parameter2: double;
+
+        r2 := @parameter3: net.sourceforge.plantuml.ugraphic.color.ColorMapper;
+
+        r3 := @parameter4: net.sourceforge.plantuml.ugraphic.UParam;
+
+        r4 := @parameter5: java.lang.Object;
+
+        $r6 = (net.sourceforge.plantuml.ugraphic.UPolygon) r1;
+
+        $r5 = (net.sourceforge.plantuml.svg.SvgGraphics) r4;
+
+        virtualinvoke r0.<net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg: void draw(net.sourceforge.plantuml.ugraphic.UPolygon,double,double,net.sourceforge.plantuml.ugraphic.color.ColorMapper,net.sourceforge.plantuml.ugraphic.UParam,net.sourceforge.plantuml.svg.SvgGraphics)>($r6, d0, d1, r2, r3, $r5);
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.Class $r0;
+        boolean $z0, $z1;
+
+        $r0 = class "Lnet/sourceforge/plantuml/ugraphic/svg/DriverPolygonSvg;";
+
+        $z0 = virtualinvoke $r0.<java.lang.Class: boolean desiredAssertionStatus()>();
+
+        if $z0 != 0 goto label1;
+
+        $z1 = 1;
+
+        goto label2;
+
+     label1:
+        $z1 = 0;
+
+     label2:
+        <net.sourceforge.plantuml.ugraphic.svg.DriverPolygonSvg: boolean $assertionsDisabled> = $z1;
+
+        return;
+    }
+}

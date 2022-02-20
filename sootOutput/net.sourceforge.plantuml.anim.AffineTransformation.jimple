@@ -1,0 +1,418 @@
+public class net.sourceforge.plantuml.anim.AffineTransformation extends java.lang.Object
+{
+    private static final java.util.regex.Pattern rotate;
+    private static final java.util.regex.Pattern shear;
+    private static final java.util.regex.Pattern translate;
+    private static final java.util.regex.Pattern scale;
+    private static final java.util.regex.Pattern color;
+    private final java.awt.geom.AffineTransform affineTransform;
+    private net.sourceforge.plantuml.awt.geom.Dimension2D dimension;
+
+    private void <init>(java.awt.geom.AffineTransform)
+    {
+        net.sourceforge.plantuml.anim.AffineTransformation r0;
+        java.awt.geom.AffineTransform r1, $r3;
+        java.lang.Object $r2;
+
+        r0 := @this: net.sourceforge.plantuml.anim.AffineTransformation;
+
+        r1 := @parameter0: java.awt.geom.AffineTransform;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $r2 = staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r1);
+
+        $r3 = (java.awt.geom.AffineTransform) $r2;
+
+        r0.<net.sourceforge.plantuml.anim.AffineTransformation: java.awt.geom.AffineTransform affineTransform> = $r3;
+
+        return;
+    }
+
+    private net.sourceforge.plantuml.anim.AffineTransformation compose(net.sourceforge.plantuml.anim.AffineTransformation)
+    {
+        java.awt.geom.AffineTransform $r0, $r2, $r5;
+        net.sourceforge.plantuml.anim.AffineTransformation r1, r4, $r6;
+
+        r1 := @this: net.sourceforge.plantuml.anim.AffineTransformation;
+
+        r4 := @parameter0: net.sourceforge.plantuml.anim.AffineTransformation;
+
+        $r0 = new java.awt.geom.AffineTransform;
+
+        $r2 = r1.<net.sourceforge.plantuml.anim.AffineTransformation: java.awt.geom.AffineTransform affineTransform>;
+
+        specialinvoke $r0.<java.awt.geom.AffineTransform: void <init>(java.awt.geom.AffineTransform)>($r2);
+
+        $r5 = r4.<net.sourceforge.plantuml.anim.AffineTransformation: java.awt.geom.AffineTransform affineTransform>;
+
+        virtualinvoke $r0.<java.awt.geom.AffineTransform: void concatenate(java.awt.geom.AffineTransform)>($r5);
+
+        $r6 = new net.sourceforge.plantuml.anim.AffineTransformation;
+
+        specialinvoke $r6.<net.sourceforge.plantuml.anim.AffineTransformation: void <init>(java.awt.geom.AffineTransform)>($r0);
+
+        return $r6;
+    }
+
+    public static net.sourceforge.plantuml.anim.AffineTransformation 'from'(java.awt.geom.AffineTransform)
+    {
+        net.sourceforge.plantuml.anim.AffineTransformation $r0;
+        java.awt.geom.AffineTransform r1;
+
+        r1 := @parameter0: java.awt.geom.AffineTransform;
+
+        $r0 = new net.sourceforge.plantuml.anim.AffineTransformation;
+
+        specialinvoke $r0.<net.sourceforge.plantuml.anim.AffineTransformation: void <init>(java.awt.geom.AffineTransform)>(r1);
+
+        return $r0;
+    }
+
+    static net.sourceforge.plantuml.anim.AffineTransformation create(java.lang.String)
+    {
+        java.util.StringTokenizer $r0;
+        java.lang.String r1, r3;
+        boolean $z0;
+        net.sourceforge.plantuml.anim.AffineTransformation r4, r5;
+
+        r1 := @parameter0: java.lang.String;
+
+        $r0 = new java.util.StringTokenizer;
+
+        specialinvoke $r0.<java.util.StringTokenizer: void <init>(java.lang.String,java.lang.String)>(r1, "|");
+
+        r5 = null;
+
+     label1:
+        $z0 = virtualinvoke $r0.<java.util.StringTokenizer: boolean hasMoreTokens()>();
+
+        if $z0 == 0 goto label4;
+
+        r3 = virtualinvoke $r0.<java.util.StringTokenizer: java.lang.String nextToken()>();
+
+        r4 = staticinvoke <net.sourceforge.plantuml.anim.AffineTransformation: net.sourceforge.plantuml.anim.AffineTransformation createSimple(java.lang.String)>(r3);
+
+        if r4 == null goto label3;
+
+        if r5 != null goto label2;
+
+        r5 = r4;
+
+        goto label3;
+
+     label2:
+        r5 = specialinvoke r5.<net.sourceforge.plantuml.anim.AffineTransformation: net.sourceforge.plantuml.anim.AffineTransformation compose(net.sourceforge.plantuml.anim.AffineTransformation)>(r4);
+
+     label3:
+        goto label1;
+
+     label4:
+        return r5;
+    }
+
+    private static net.sourceforge.plantuml.anim.AffineTransformation createSimple(java.lang.String)
+    {
+        java.lang.String r0, $r2, $r9, $r10, $r13, $r14, $r17, $r18, $r21;
+        java.util.regex.Pattern $r1, $r3, $r4, $r5, $r6;
+        boolean $z0, $z1, $z2, $z3, $z4;
+        net.sourceforge.plantuml.anim.AffineTransformation $r7, $r11, $r15, $r19, $r22;
+        java.awt.geom.AffineTransform $r8, $r12, $r16, $r20, $r23;
+        double $d0, $d1, d2, d3, d4, d5, d6, d7, d8;
+        java.util.regex.Matcher r24, r25, r26, r27, r28;
+
+        r0 := @parameter0: java.lang.String;
+
+        $r1 = <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern rotate>;
+
+        $r2 = staticinvoke <net.sourceforge.plantuml.StringUtils: java.lang.String trin(java.lang.String)>(r0);
+
+        r24 = virtualinvoke $r1.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>($r2);
+
+        $z0 = virtualinvoke r24.<java.util.regex.Matcher: boolean find()>();
+
+        if $z0 == 0 goto label1;
+
+        $r21 = virtualinvoke r24.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        d2 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r21);
+
+        $r22 = new net.sourceforge.plantuml.anim.AffineTransformation;
+
+        $d0 = d2 * 3.141592653589793;
+
+        $d1 = $d0 / 180.0;
+
+        $r23 = staticinvoke <java.awt.geom.AffineTransform: java.awt.geom.AffineTransform getRotateInstance(double)>($d1);
+
+        specialinvoke $r22.<net.sourceforge.plantuml.anim.AffineTransformation: void <init>(java.awt.geom.AffineTransform)>($r23);
+
+        return $r22;
+
+     label1:
+        $r3 = <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern shear>;
+
+        r25 = virtualinvoke $r3.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r0);
+
+        $z1 = virtualinvoke r25.<java.util.regex.Matcher: boolean find()>();
+
+        if $z1 == 0 goto label2;
+
+        $r17 = virtualinvoke r25.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        d3 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r17);
+
+        $r18 = virtualinvoke r25.<java.util.regex.Matcher: java.lang.String group(int)>(2);
+
+        d4 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r18);
+
+        $r19 = new net.sourceforge.plantuml.anim.AffineTransformation;
+
+        $r20 = staticinvoke <java.awt.geom.AffineTransform: java.awt.geom.AffineTransform getShearInstance(double,double)>(d3, d4);
+
+        specialinvoke $r19.<net.sourceforge.plantuml.anim.AffineTransformation: void <init>(java.awt.geom.AffineTransform)>($r20);
+
+        return $r19;
+
+     label2:
+        $r4 = <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern translate>;
+
+        r26 = virtualinvoke $r4.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r0);
+
+        $z2 = virtualinvoke r26.<java.util.regex.Matcher: boolean find()>();
+
+        if $z2 == 0 goto label3;
+
+        $r13 = virtualinvoke r26.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        d5 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r13);
+
+        $r14 = virtualinvoke r26.<java.util.regex.Matcher: java.lang.String group(int)>(2);
+
+        d6 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r14);
+
+        $r15 = new net.sourceforge.plantuml.anim.AffineTransformation;
+
+        $r16 = staticinvoke <java.awt.geom.AffineTransform: java.awt.geom.AffineTransform getTranslateInstance(double,double)>(d5, d6);
+
+        specialinvoke $r15.<net.sourceforge.plantuml.anim.AffineTransformation: void <init>(java.awt.geom.AffineTransform)>($r16);
+
+        return $r15;
+
+     label3:
+        $r5 = <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern scale>;
+
+        r27 = virtualinvoke $r5.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r0);
+
+        $z3 = virtualinvoke r27.<java.util.regex.Matcher: boolean find()>();
+
+        if $z3 == 0 goto label4;
+
+        $r9 = virtualinvoke r27.<java.util.regex.Matcher: java.lang.String group(int)>(1);
+
+        d7 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r9);
+
+        $r10 = virtualinvoke r27.<java.util.regex.Matcher: java.lang.String group(int)>(2);
+
+        d8 = staticinvoke <java.lang.Double: double parseDouble(java.lang.String)>($r10);
+
+        $r11 = new net.sourceforge.plantuml.anim.AffineTransformation;
+
+        $r12 = staticinvoke <java.awt.geom.AffineTransform: java.awt.geom.AffineTransform getScaleInstance(double,double)>(d7, d8);
+
+        specialinvoke $r11.<net.sourceforge.plantuml.anim.AffineTransformation: void <init>(java.awt.geom.AffineTransform)>($r12);
+
+        return $r11;
+
+     label4:
+        $r6 = <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern color>;
+
+        r28 = virtualinvoke $r6.<java.util.regex.Pattern: java.util.regex.Matcher matcher(java.lang.CharSequence)>(r0);
+
+        $z4 = virtualinvoke r28.<java.util.regex.Matcher: boolean find()>();
+
+        if $z4 == 0 goto label5;
+
+        $r7 = new net.sourceforge.plantuml.anim.AffineTransformation;
+
+        $r8 = new java.awt.geom.AffineTransform;
+
+        specialinvoke $r8.<java.awt.geom.AffineTransform: void <init>()>();
+
+        specialinvoke $r7.<net.sourceforge.plantuml.anim.AffineTransformation: void <init>(java.awt.geom.AffineTransform)>($r8);
+
+        return $r7;
+
+     label5:
+        return null;
+    }
+
+    public final java.awt.geom.AffineTransform getAffineTransform()
+    {
+        net.sourceforge.plantuml.anim.AffineTransformation r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D $r1;
+        java.awt.geom.AffineTransform $r2;
+
+        r0 := @this: net.sourceforge.plantuml.anim.AffineTransformation;
+
+        $r1 = r0.<net.sourceforge.plantuml.anim.AffineTransformation: net.sourceforge.plantuml.awt.geom.Dimension2D dimension>;
+
+        $r2 = specialinvoke r0.<net.sourceforge.plantuml.anim.AffineTransformation: java.awt.geom.AffineTransform getAffineTransform(net.sourceforge.plantuml.awt.geom.Dimension2D)>($r1);
+
+        return $r2;
+    }
+
+    private java.awt.geom.AffineTransform getAffineTransform(net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        net.sourceforge.plantuml.awt.geom.Dimension2D r0;
+        double $d0, $d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9;
+        java.awt.geom.AffineTransform r1, $r3;
+        net.sourceforge.plantuml.anim.AffineTransformation r2;
+        java.lang.IllegalStateException $r4;
+
+        r2 := @this: net.sourceforge.plantuml.anim.AffineTransformation;
+
+        r0 := @parameter0: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        if r0 != null goto label1;
+
+        $r4 = new java.lang.IllegalStateException;
+
+        specialinvoke $r4.<java.lang.IllegalStateException: void <init>()>();
+
+        throw $r4;
+
+     label1:
+        $d0 = virtualinvoke r0.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d1 = $d0 / 2.0;
+
+        $d2 = virtualinvoke r0.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d3 = $d2 / 2.0;
+
+        r1 = staticinvoke <java.awt.geom.AffineTransform: java.awt.geom.AffineTransform getTranslateInstance(double,double)>($d1, $d3);
+
+        $r3 = r2.<net.sourceforge.plantuml.anim.AffineTransformation: java.awt.geom.AffineTransform affineTransform>;
+
+        virtualinvoke r1.<java.awt.geom.AffineTransform: void concatenate(java.awt.geom.AffineTransform)>($r3);
+
+        $d4 = virtualinvoke r0.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d5 = neg $d4;
+
+        $d6 = $d5 / 2.0;
+
+        $d7 = virtualinvoke r0.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        $d8 = neg $d7;
+
+        $d9 = $d8 / 2.0;
+
+        virtualinvoke r1.<java.awt.geom.AffineTransform: void translate(double,double)>($d6, $d9);
+
+        return r1;
+    }
+
+    public void setDimension(net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        net.sourceforge.plantuml.anim.AffineTransformation r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r1;
+
+        r0 := @this: net.sourceforge.plantuml.anim.AffineTransformation;
+
+        r1 := @parameter0: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        r0.<net.sourceforge.plantuml.anim.AffineTransformation: net.sourceforge.plantuml.awt.geom.Dimension2D dimension> = r1;
+
+        return;
+    }
+
+    public net.sourceforge.plantuml.ugraphic.MinMax getMinMax(net.sourceforge.plantuml.awt.geom.Dimension2D)
+    {
+        net.sourceforge.plantuml.anim.AffineTransformation r0;
+        net.sourceforge.plantuml.awt.geom.Dimension2D r1;
+        java.awt.geom.AffineTransform r2;
+        java.awt.geom.Point2D$Double $r3, $r5, $r7, $r9;
+        java.awt.geom.Point2D $r4, $r6, $r8, $r10;
+        double $d0, $d1, $d2, $d3;
+        net.sourceforge.plantuml.ugraphic.MinMax r11, r12, r13, r14, r15;
+
+        r0 := @this: net.sourceforge.plantuml.anim.AffineTransformation;
+
+        r1 := @parameter0: net.sourceforge.plantuml.awt.geom.Dimension2D;
+
+        r11 = staticinvoke <net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.ugraphic.MinMax getEmpty(boolean)>(0);
+
+        r2 = specialinvoke r0.<net.sourceforge.plantuml.anim.AffineTransformation: java.awt.geom.AffineTransform getAffineTransform(net.sourceforge.plantuml.awt.geom.Dimension2D)>(r1);
+
+        $r3 = new java.awt.geom.Point2D$Double;
+
+        specialinvoke $r3.<java.awt.geom.Point2D$Double: void <init>(double,double)>(0.0, 0.0);
+
+        $r4 = virtualinvoke r2.<java.awt.geom.AffineTransform: java.awt.geom.Point2D transform(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r3, null);
+
+        r12 = virtualinvoke r11.<net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.ugraphic.MinMax addPoint(java.awt.geom.Point2D)>($r4);
+
+        $r5 = new java.awt.geom.Point2D$Double;
+
+        $d0 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        specialinvoke $r5.<java.awt.geom.Point2D$Double: void <init>(double,double)>(0.0, $d0);
+
+        $r6 = virtualinvoke r2.<java.awt.geom.AffineTransform: java.awt.geom.Point2D transform(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r5, null);
+
+        r13 = virtualinvoke r12.<net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.ugraphic.MinMax addPoint(java.awt.geom.Point2D)>($r6);
+
+        $r7 = new java.awt.geom.Point2D$Double;
+
+        $d1 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        specialinvoke $r7.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d1, 0.0);
+
+        $r8 = virtualinvoke r2.<java.awt.geom.AffineTransform: java.awt.geom.Point2D transform(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r7, null);
+
+        r14 = virtualinvoke r13.<net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.ugraphic.MinMax addPoint(java.awt.geom.Point2D)>($r8);
+
+        $r9 = new java.awt.geom.Point2D$Double;
+
+        $d2 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getWidth()>();
+
+        $d3 = virtualinvoke r1.<net.sourceforge.plantuml.awt.geom.Dimension2D: double getHeight()>();
+
+        specialinvoke $r9.<java.awt.geom.Point2D$Double: void <init>(double,double)>($d2, $d3);
+
+        $r10 = virtualinvoke r2.<java.awt.geom.AffineTransform: java.awt.geom.Point2D transform(java.awt.geom.Point2D,java.awt.geom.Point2D)>($r9, null);
+
+        r15 = virtualinvoke r14.<net.sourceforge.plantuml.ugraphic.MinMax: net.sourceforge.plantuml.ugraphic.MinMax addPoint(java.awt.geom.Point2D)>($r10);
+
+        return r15;
+    }
+
+    static void <clinit>()
+    {
+        java.util.regex.Pattern $r0, $r1, $r2, $r3, $r4;
+
+        $r0 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("rotate\\s+(-?\\d+\\.?\\d*)");
+
+        <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern rotate> = $r0;
+
+        $r1 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("shear\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
+
+        <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern shear> = $r1;
+
+        $r2 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("translate\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
+
+        <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern translate> = $r2;
+
+        $r3 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("scale\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+\\.?\\d*)");
+
+        <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern scale> = $r3;
+
+        $r4 = staticinvoke <java.util.regex.Pattern: java.util.regex.Pattern compile(java.lang.String)>("color\\s+.*");
+
+        <net.sourceforge.plantuml.anim.AffineTransformation: java.util.regex.Pattern color> = $r4;
+
+        return;
+    }
+}
